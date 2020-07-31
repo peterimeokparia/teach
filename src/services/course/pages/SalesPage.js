@@ -1,0 +1,93 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from '@reach/router';
+import { getCoursesByCourseIdSelector  } from '../Selectors';
+import { addToSalesCart, loginUser  } from '../actions';
+// import './SalesPage.css';
+
+
+const SalesPage = ({ course, courseId, navigate, addToSalesCart, currentUser, loginUser  }) => {
+
+
+    if ( currentUser?.paymentStatus === "approved" ) {
+
+        navigate('/');
+    }
+    
+
+    const userOwnsCourse = (user, courseId) => {
+
+        if ( ! user ) {
+
+            return false;
+        }
+    
+        if ( user.userRole === 'admin' ) {
+    
+            return true;
+        }
+    
+        return user?.courses?.includes(parseInt(courseId));
+    }
+
+
+
+   if ( userOwnsCourse(currentUser, courseId) ) {
+    
+        return <Redirect to={`/courses/${courseId}`} noThrow/>
+   }
+   
+
+
+   const addToCartAndReturnToCourses = () => {
+
+      addCourseToCart(course);
+   }
+   
+
+   const addCourseToCart = (course) => {
+ 
+       let duplicateItemsExist = ( (currentUser?.cart.filter(item => item.id === parseInt(courseId, 10) ))?.length > 0 );
+
+       if ( duplicateItemsExist ) {
+          
+            alert(`Duplicate. ${course?.name} is already in your cart.`); // change from alert to inline div
+
+            navigate('/courses');
+
+          return;
+        }
+      else{
+
+           addToSalesCart( course );
+
+           navigate('/courses');
+
+      }
+
+      
+   }
+
+
+
+
+   
+    return (<div className="SalesPage">
+        
+        <h1> ADD TO CART { course  && course.name }</h1>
+
+        <button onClick={addToCartAndReturnToCourses}>ADD TO CART</button>
+      
+    </div>)
+}
+
+
+const mapState = (state, props) => ({
+     currentUser: state.users.user,
+     course: getCoursesByCourseIdSelector(state, props),
+//   userOwnsCourse: userOwnsCourse(state, props)
+
+});
+
+
+export default connect(mapState, { addToSalesCart, loginUser })(SalesPage);

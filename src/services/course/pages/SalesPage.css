@@ -1,0 +1,29 @@
+video {
+  border: 0px solid #999;
+  /* width: 98%;
+  max-width: 860px; */
+  /* width: 600px;
+  height: 300px;
+  max-width: 700px;
+  max-height: 500px;
+  padding-left: 1%; */
+
+  width: 0px;
+  height: 0px;
+  max-width: 0px;
+  max-height: 0px;
+  padding-left: 0%;
+}
+
+.error {
+  color: red;
+}
+
+.warn {
+  color: orange;
+}
+
+.info {
+  color: darkgreen;
+}
+

@@ -16,7 +16,7 @@ const MeetingIframeComponent = ({ className, name, source, width, height, allow,
                         source={source}
                         width={width}
                         height={height}
-                        allow={allow}
+                        allow="camera;microphone"
                         scrolling={scrolling}
                         frameBorder={frameBorder}
                 />  

@@ -67,7 +67,7 @@ function Meeting({teach}) {
    {loading }
 
    <div
-    id="mycontainer"
+    // id="mycontainer"
     // style={jitsiContainerStyle}
    />
   </div>

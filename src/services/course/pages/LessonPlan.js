@@ -42,7 +42,7 @@ const LessonPlan = ({
   // const recorderUrl = `http://localhost:3000/LessonPlan/VideoModal/${courseId}/${lessonId}/${lessonTitle}`   
   
   const editorUrl = urls.editor.prod;
-  const canvasUrl = urls.canvas.prod;
+  const canvasUrl = urls.canvas.dev;
   const meetingUrl = urls.meeting.prod; 
   const recorderUrl = urls.recorder.prod;    
   

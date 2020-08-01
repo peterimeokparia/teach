@@ -2147,6 +2147,22 @@
       "purchaseHistoryTimeStamp": null,
       "userRole": "",
       "id": 123
+    },
+    {
+      "username": "testuser0000003",
+      "password": "testuser0000003",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZW5hbWUiOiJ0ZXN0dXNlcjAwMDAwMDMiLCJwYXNzd29yZCI6InRlc3R1c2VyMDAwMDAwMyJ9LCJpYXQiOjE1OTYzMDA0MjV9.Sja5DVVoBaofCwjfH13zfNjMhYO7TBCaSCWzMHfU_1A",
+      "role": "",
+      "courses": [
+        1
+      ],
+      "cart": [],
+      "cartTotal": 0,
+      "paymentStatus": "",
+      "userId": 123,
+      "purchaseHistoryTimeStamp": null,
+      "userRole": "",
+      "id": 124
     }
   ],
   "buy": [

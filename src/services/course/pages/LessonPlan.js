@@ -25,12 +25,26 @@ const LessonPlan = ({
       toggleVideoCapture,
       children }) => {
 
-    
+
   const page = `${courseId}_${lessonId}_${lessonTitle}`;
-  const editorUrl = `http://localhost:9002/p/${page}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false`;
-  const canvasUrl = `http://localhost:8080/?whiteboardid=${page}`; 
-  const meetingUrl = `https://connect.247meetings.net/${page}`
-  const recorderUrl = `http://localhost:3000/LessonPlan/VideoModal/${courseId}/${lessonId}/${lessonTitle}`      
+        
+  let urls = {
+      meeting:{ prod: `https://connect.247meetings.net/${page}`, dev:`https://connect.247meetings.net/${page}`},
+      editor:{ prod:'http://padsconnect247.com/editor/p/${lessonTitle}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false', dev:`http://localhost:9002/p/${lessonTitle}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false` },
+      canvas:{ prod:`http://padsconnect247.com/whiteboard/?whiteboardid=${page}`, dev:`http://localhost:8080/?whiteboardid=${page}`},
+      recorder:{ prod:'http://padsconnect247.com/LessonPlan/VideoModal/${courseId}/${lessonId}/${lessonTitle}', dev:`http://localhost:3000/LessonPlan/VideoModal/${courseId}/${lessonId}/${lessonTitle}`}
+  };     
+    
+  // const page = `${courseId}_${lessonId}_${lessonTitle}`;
+  // const editorUrl = `http://localhost:9002/p/${page}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false`;
+  // const canvasUrl = `http://localhost:8080/?whiteboardid=${page}`; 
+  // const meetingUrl = `https://connect.247meetings.net/${page}`
+  // const recorderUrl = `http://localhost:3000/LessonPlan/VideoModal/${courseId}/${lessonId}/${lessonTitle}`   
+  
+  const editorUrl = urls.editor.prod;
+  const canvasUrl = urls.canvas.prod;
+  const meetingUrl = urls.meeting.prod; 
+  const recorderUrl = urls.recorder.prod;    
   
   const fullScreenSize = "1440px";
   const mainStageSize = "900px";

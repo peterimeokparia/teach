@@ -12,10 +12,13 @@ const LessonPage = ({ lesson, previewMode, togglePreviewMode  }) => {
 
     return  previewMode ? (    
          <div> 
+
             <LessonEditor lesson={lesson}/>
+            
          </div> 
           ) : (    
           <div> 
+
             <MarkDown source={lesson?.markDown} />
       
           </div> 

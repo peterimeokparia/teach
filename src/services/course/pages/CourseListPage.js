@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React  from 'react';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
 import { Link, navigate } from '@reach/router';
@@ -49,7 +49,7 @@ const CourseListPage = ({
         navigate('/mycourses');
     }
                
-      
+      //make courses.length a static value instead of calling courses all the time
     return (( courses?.length === 0 ) ? (
 
         <div className="CreateCourse">

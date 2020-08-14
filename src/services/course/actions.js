@@ -48,6 +48,9 @@ export const PURCHASE_HISTORY_BEGIN = "PURCHASE HISTORY BEGIN";
 export const PURCHASE_HISTORY_SUCCESS = "PURCHASE HISTORY SUCCESS";
 export const PURCHASE_HISTORY_ERROR = "PURCHASE HISTORY ERROR";
 export const RESET_USERS_CART = "RESET USERS CART";
+export const LESSON_VIDEO_METADATA = "LESSON VIDEO METADATA";
+export const SELECTED_LESSON_URL = "SELECTED LESSON URL";
+export const UPLOAD_FILE_SUCCESS = "UPLOAD FILE SUCCESS";
 
 
  export const addNewCourse = ( name, price, user ) => {
@@ -355,6 +358,11 @@ export const setLessonMarkDown = ( lesson, markDown ) => {
 }
 
 
+export const getLessonVideoUrl = (videoUrl) => {
+    return dispatch => {
+        dispatch({ type: SELECTED_LESSON_URL, payload: videoUrl})
+    }
+}
 
 
 export const loginUser = (newUser) => {
@@ -387,10 +395,23 @@ export const createUser = (newUser) => {
 }
 
 
+export const sendVideoMetaData = ( videoMetaData ) => {
+    return dispatch => {
+          dispatch({ type: LESSON_VIDEO_METADATA, payload: videoMetaData  })
+    }
+}
+
 
 export const sendMediaStream = ( mediaStream ) => {
     return dispatch => { 
         dispatch({ type: STREAMING_SUCCESS, payload: mediaStream });
+    }
+}
+
+
+export const uploadFiles = ( files ) => {
+    return dispatch => {
+        dispatch({ type: UPLOAD_FILE_SUCCESS, payload: files})
     }
 }
 
@@ -413,4 +434,6 @@ export const resetLessonError = () => ({
 export const logOut = () => ({
     type: LOGOUT_SUCCESS
 });
+
+
 

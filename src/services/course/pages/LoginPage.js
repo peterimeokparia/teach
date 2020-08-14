@@ -3,6 +3,7 @@ import { Redirect } from '@reach/router';
 import { connect } from 'react-redux';
 import { loginUser, createUser, loadUsers } from '../actions';
 import { getLastUsersState } from '../api';
+import { Validations } from  '../../../helpers/validations';
 import Loading from './Loading';
 import './LoginPage.css';
 
@@ -12,20 +13,26 @@ const LoginPage = ({ error, loading, loginUser, createUser, loadUsers, user, use
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [userRole, setUserRole] = useState('');
+  const [currentAccount, setAccountIfAccounExists] = useState(false)
 
   
   const newUser = {
-               username: userName,
-               password: password,
-               token: null,
-               role: userRole,
-               courses: [],
-               cart: [],
-               cartTotal: 0,
-               paymentStatus:"",
-               userId: null,
-               purchaseHistoryTimeStamp: null
+      username: userName,
+      password: password,
+      token: null,
+      role: null,
+      courses: [],
+      cart: [],
+      cartTotal: 0,
+      paymentStatus:"",
+      userId: null,
+      purchaseHistoryTimeStamp: null
   };
+
+  const usersRole = {
+       Tutor: "Tutor",
+       Student: "Student" 
+  }
    
 
 
@@ -36,7 +43,7 @@ const LoginPage = ({ error, loading, loginUser, createUser, loadUsers, user, use
 
 
   const currentUser =  () => {
-    return (user?.username === userName && user?.password === user?.password);
+    return (user?.username === userName && user?.password === password);
   }  
 
 
@@ -68,14 +75,38 @@ const LoginPage = ({ error, loading, loginUser, createUser, loadUsers, user, use
       e.preventDefault();
    }
 
+
    const handleCreateUser = (e) => {
        e.preventDefault();
-       createUser(newUser);
+
+       if ( Validations.checkFormInputString("User Name", userName ) && 
+                Validations.checkFormInputString("Password", password)) {
+
+                  setAccountIfAccounExists( true );    
+       }  
    }
 
 
+   const handleLoginOnRoleSelection = ( role ) => {
+        
+        setUserRole(role);
+        
+        if ( role ) {
 
-   const handleloginUser = (e) => {
+            newUser.role = role;
+
+            createUser(newUser);
+
+         } else {
+
+            Validations.checkFormInputString("Role", role)
+        
+       }
+        
+   }
+
+   
+   const handleLoginUser = (e) => {
       e.preventDefault();
 
       if ( !(currentUser()) && 
@@ -83,24 +114,31 @@ const LoginPage = ({ error, loading, loginUser, createUser, loadUsers, user, use
               ! getLastUsersState())
       {
 
-        alert("Account does not exist. Please create a new account"); // change from alert to inline div
+        Validations.warn("Account does not exist. Please create a new account");
 
-        return (<div>Please create a new account</div>);
+        return ( <div>Please create a new account</div>);
 
       }
 
+   
 
-      if(currentUserFromUsers() || getLastUsersState()){
+      if ( currentUserFromUsers() || getLastUsersState() ) {
  
         let currentUser = getLastUsersState() ? getLastUsersState() : currentUserFromUsers();
 
         newUser.courses = currentUser?.courses;
         newUser.userId = currentUser?.id;
-        newUser.userRole = userRole ? userRole : currentUser?.role;
+        newUser.userRole = currentUser?.role;
+
        }
 
+       if ( Validations.checkFormInputString("User Name", userName ) && 
+                 Validations.checkFormInputString("Password", password) ) {
 
-      loginUser(newUser);
+          loginUser(newUser);
+
+       }
+      
   }
 
   
@@ -140,59 +178,63 @@ const LoginPage = ({ error, loading, loginUser, createUser, loadUsers, user, use
                   </label>
 
                   <div>
-                  <span>
-                  <label>
-
-                          Tutor   
-
-                          <input
-                              type="radio"
-                              value="Tutor"
-                              onChange={ e => setUserRole( e.target.value ) }
-                              checked={userRole === "Tutor"}
-                          >
-                          </input>
-                          </label>
-
-
+                    { currentAccount && 
+                        <span>  
                           <label>
-
-                            Student   
-
-                            <input
-                                type="radio"
-                                value="Student"
-                                onChange={ e => setUserRole( e.target.value ) }
-                                checked={userRole === "Student"}
-                            >
-                            </input>
-                            </label>
-                         </span>
-                         </div>
+        
+                                  Tutor   
+        
+                                  <input
+                                      type="radio"
+                                      value={usersRole.Tutor}
+                                      onChange={ e => handleLoginOnRoleSelection( e.target.value ) }
+                                      checked={userRole === usersRole.Tutor}
+                                  >
+                                  </input>
+                                  </label>
+        
+        
+                                  <label>
+        
+                                    Student   
+        
+                                    <input
+                                        type="radio"
+                                        value={usersRole.Student}
+                                        onChange={ e => handleLoginOnRoleSelection( e.target.value ) }
+                                        checked={userRole === usersRole.Student}
+                                    >
+                                    </input>
+                                    </label>
+                                </span>
+                    }
+                  
+                  </div>
 
                     { error  && (<div className="error"> { error.message }</div>)}
                      <div></div>
-                      <button
-                          type="submit"
-                          disabled={loading}
-                          onClick={e => handleCreateUser(e)}
-                      >
-
-                       Create User
-
-                      </button>
-
-                      <button
-                          type="submit"
-                          disabled={loading}
-                          onClick={e => handleloginUser(e)}
-                      >
-
-                       Sign in
-
-                      </button>
-
+                     <button
+                             type="submit"
+                             disabled={loading}
+                             onClick={e => handleLoginUser(e)}
+                         >
+   
+                             Sign In
+   
+                         </button>
+                      
+                        <button
+                             type="submit"
+                             disabled={loading}
+                             onClick={e => handleCreateUser(e)}
+                         >
+   
+                            Create User
+   
+                         </button>
                </form> 
+
+               {Validations.setErrorMessageContainer()}
                        
             </div> 
     );

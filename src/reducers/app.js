@@ -1,14 +1,19 @@
 import produce from 'immer';
-import { TOGGLE_PREVIEW_MODE } from '../services/course/actions';
+import { TOGGLE_PREVIEW_MODE, UPLOAD_FILE_SUCCESS } from '../services/course/actions';
 
 const initialState = {
-    previewMode : false
+    previewMode : false,
+    selectedFile: null
 }
 
 
 const reducer = produce((draft, action) => {
 
       switch ( action.type ) {
+
+          case UPLOAD_FILE_SUCCESS:
+             draft.selectedFile = action.payload;
+             return
 
           case TOGGLE_PREVIEW_MODE:
              draft.previewMode = ! draft.previewMode;

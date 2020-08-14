@@ -18,8 +18,8 @@ import NotFoundPage from '../services/course/pages/NotFoundPage';
 import SalesPage from '../services/course/pages/SalesPage';
 import Cart from '../services/course/pages/Cart';
 import UpdateCart from '../services/course/pages/UpdateCart';
+import FileUpload from '../services/course/pages/FileUpload';
 import { Router, Redirect } from '@reach/router';
-
 import TestLayOut from '../services/course/pages/TestLayOut';
 
 
@@ -49,6 +49,8 @@ const PodDetailPage = () => {
              <VideoPage path="/video"/>
               <ShowMeeting path="/meeting/:teach" /> 
               <MyCourses path="/mycourses"/>
+              {/* <FileBrowser path="/files/Users/peterimeokparia/Documents/VsCode/Work/Projects/Teach/teach-platform/BackEnd/public/videos/*"/> */}
+              <FileUpload path="/files" /> 
              <NotFoundPage default />
 
              <TestLayOut path="/testlayout"/>

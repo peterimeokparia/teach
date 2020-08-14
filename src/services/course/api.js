@@ -1,4 +1,4 @@
-import { postData, putData, deleteData } from '../../helpers/serverHelper';
+import { postData, putData, deleteData,  deleteFiles} from '../../helpers/serverHelper';
 import { tokenGenerator, verifyToken, ensureToken, privateKey} from './authentication';
 
 
@@ -45,16 +45,18 @@ export const updateLessons = ( lesson ) => {
 };
 
 
+export const deleteLessonFile = file => {
+   return deleteFiles( file );
+}
+
 
 export const updateUser = ( currentUser ) => {
-
 
     updateCurrentUser(currentUser);
 
     localStorage.removeItem('currentuser');
     
     localStorage.setItem('currentuser', JSON.stringify(currentUser));
-
 }
 
 
@@ -178,14 +180,6 @@ export const signUp = (user) => {
 
 
 
-// export const getUser = ( username ) => {
-//   return fetch(PREFIX + `/users?username=${username}` )
-//     .then(handleErrors)
-//      .then(response => response.json());
-// }
-
-
-
 export const getUsers = () => {
   return fetch(PREFIX + '/users')
    .then(handleErrors)
@@ -228,6 +222,7 @@ export const approvePayment = (curentUser) => {
 }
 
 
+
 let paymentGatewayProvider = {provider: "xyz", approvalStatus: "approved"}
 
 // paymentgateway integration and logic
@@ -244,6 +239,7 @@ let paymentGatewayProvider = {provider: "xyz", approvalStatus: "approved"}
 }
 
 
+
 export const getDateTime = () =>  {
 
   var currentdate = new Date(); 
@@ -255,6 +251,42 @@ export const getDateTime = () =>  {
                   + currentdate.getMinutes() + ":" 
                   + currentdate.getSeconds();
 }
+
+
+
+
+
+
+
+
+// export const uploadVideos = (videoData) => {
+
+//   let url = 'http://localhost:9009/uploads';
+
+//   let headers = new Headers();
+//   headers.append('Content-Type', 'video/webm'); 
+//   headers.append('Accept', 'video/webm');
+//   headers.append('Authorization',  authToken ? `Bearer ${authToken}` : undefined);
+//   headers.append('Origin', 'http://localhost:3000');
+
+//   let formData = new FormData();
+//   formData.append('fname','test.webm');
+//   formData.append('video', videoData);
+  
+//   return fetch(url, {
+//     method,
+//     headers, 
+//     body: formData
+//     // cache: "reload",
+//  })
+//   .then(resp => resp.json())
+//    .catch(err => console.log(err));
+
+
+//   // return postData('http://localhost:9009/uploads', { formData });
+// }
+
+
 
 
 function handleErrors(response){

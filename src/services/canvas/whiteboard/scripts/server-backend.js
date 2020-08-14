@@ -107,7 +107,8 @@ function startBackendServer(port) {
             webdavaccess = false;
         }
 
-        const savingDir = path.join("./public/uploads", readOnlyWid);
+        
+        const savingDir = path.join("./whiteboard/public/uploads", readOnlyWid);
         fs.ensureDir(savingDir, function (err) {
             if (err) {
                 console.log("Could not create upload folder!", err);

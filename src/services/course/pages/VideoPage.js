@@ -1,7 +1,12 @@
 import React  from 'react';
 import { connect } from 'react-redux';
 import { sendMediaStream } from '../actions';
+// import { uploadVideos } from '../api';
+import { uploadVideos } from  '../../../helpers/serverHelper';
+import { StoreDataToFireBase } from  '../../../firebase/StoreDataToFireBase';
 import { saveAs } from 'file-saver';
+// import  fse  from 'fs-extra';
+// import fs from 'fs';
 import { toggleVideoCapture } from '../../recorder/actions.js';
 import './VideoPage.css';
 
@@ -105,11 +110,17 @@ class VideoPage extends React.PureComponent {
       this.theStream.getTracks().forEach( track => track.stop() );
  
       this.blob = new Blob(this.recordedChunks, {type: "video/webm"});
- 
+
       this.url =  URL.createObjectURL(this.blob);
+
+      let videoData = {videoBlob: this.blob,  videoMetaData: this.props.lesson};
+
+      uploadVideos( videoData ); 
+
+      StoreDataToFireBase(this.blob);
  
-      saveAs(this.url, "//test//test.webm");
- 
+      saveAs(this.url, "test.webm");
+
       this.theStream = null;
     }
 
@@ -128,9 +139,6 @@ class VideoPage extends React.PureComponent {
       .then(screen  => {
          navigator.mediaDevices.getUserMedia({audio:true}).then(function(mic) {
            screen.addTrack(mic.getTracks()[0]);
-  
-           console.log('screen', screen)
-  
            getStream(screen);
        });
       }).catch(e => { 
@@ -143,8 +151,6 @@ class VideoPage extends React.PureComponent {
 
      let getStream = stream => {
 
-      console.log('getStream', stream);
-  
       this.theStream = stream;
       this.videoRef.current.srcObject  = stream;
   

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState  } from 'react';
 import { connect } from 'react-redux';
 import LessonEditor from './LessonEditor';
 // import ResizePanel from "react-resize-panel";
@@ -11,6 +11,8 @@ import { toggleTeachBoardOrEditor } from '../actions';
 import { toggleVideoCapture } from '../../recorder/actions.js';
 import ReactModal from 'react-modal-resizable-draggable';
 import { Link, navigate } from '@reach/router';
+import { Validations } from  '../../../helpers/validations';
+import NavLinks  from './NavLinks';
 import './LessonPlan.css';
 // import Portal from 'src/pages/Portal'
 
@@ -19,32 +21,28 @@ const LessonPlan = ({
       courseId,  
       lessonId, 
       lessonTitle,
+      lessons,
+      currentUser,
       boardOrEditor,
       setVideoCapture,
       toggleTeachBoardOrEditor,
       toggleVideoCapture,
       children }) => {
-
+   
 
   const page = `${courseId}_${lessonId}_${lessonTitle}`;
-        
   let urls = {
       meeting:{ prod: `https://connect.247meetings.net/${page}`, dev:`https://connect.247meetings.net/${page}`},
-      editor:{ prod:'http://padsconnect247.com/editor/p/${lessonTitle}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false', dev:`http://localhost:9002/p/${lessonTitle}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false` },
-      canvas:{ prod:`http://padsconnect247.com/whiteboard/?whiteboardid=${page}`, dev:`http://localhost:8080/?whiteboardid=${page}`},
-      recorder:{ prod:'http://padsconnect247.com/LessonPlan/VideoModal/${courseId}/${lessonId}/${lessonTitle}', dev:`http://localhost:3000/LessonPlan/VideoModal/${courseId}/${lessonId}/${lessonTitle}`}
+      editor:{ prod:`https://padsconnect247.com/editor/p/${lessonTitle}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false`, dev:`http://localhost:9002/p/${lessonTitle}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false` },
+      canvas:{ prod:`https://padsconnect247.com/whiteboard/?whiteboardid=${page}&username=${currentUser?.username}`, dev:`http://localhost:8080/?whiteboardid=${page}&username=${currentUser?.username}`},
+      recorder:{ prod:`https://padsconnect247.com/LessonPlan/VideoModal/${courseId}/${lessonId}/${lessonTitle}`, dev:`http://localhost:3000/LessonPlan/VideoModal/${courseId}/${lessonId}/${lessonTitle}`}
   };     
     
-  // const page = `${courseId}_${lessonId}_${lessonTitle}`;
-  // const editorUrl = `http://localhost:9002/p/${page}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false`;
-  // const canvasUrl = `http://localhost:8080/?whiteboardid=${page}`; 
-  // const meetingUrl = `https://connect.247meetings.net/${page}`
-  // const recorderUrl = `http://localhost:3000/LessonPlan/VideoModal/${courseId}/${lessonId}/${lessonTitle}`   
-  
-  const editorUrl = urls.editor.prod;
+    
+  const editorUrl = urls.editor.dev;
   const canvasUrl = urls.canvas.dev;
-  const meetingUrl = urls.meeting.prod; 
-  const recorderUrl = urls.recorder.prod;    
+  const meetingUrl = urls.meeting.dev; 
+  const recorderUrl = urls.recorder.dev;    
   
   const fullScreenSize = "1440px";
   const mainStageSize = "900px";
@@ -55,11 +53,13 @@ const LessonPlan = ({
   const [fullMeetingStage, setFullMeetingStage] = useState(false);
   const [videoModalModeOn,  setVideoModalMode] = useState(false);
   const [session, setSession] = useState(false);
+  
+  const lesson = Object.values(lessons).filter(thisLesson => thisLesson.id === parseInt(lessonId, 10)) 
 
 
 
   const alertRecording = () => {
-    alert('Recording In Progress. To end this teaching session, please stop the recording.');
+    Validations.warn('Recording In Progress. To end this teaching session, please stop the recording.');
   };
 
 
@@ -148,8 +148,7 @@ const LessonPlan = ({
 
 
 
-   const recordSessionLink = () => (<span>  <a href={recorderUrl} target="_blank">Start Recording</a></span>)
-  
+   const recordSessionLink = () => ( <span>  <a href={recorderUrl} target="_blank">Start Recording</a></span> );
 
 
     return (
@@ -157,10 +156,12 @@ const LessonPlan = ({
         <div className="CourseDetail"> 
               
               <header> 
-                {/* navigation links back to course and back to lesson page */}
-                {courseId} -  {lessonId} - {lessonTitle} 
+
+                <NavLinks to={`/courses/${courseId}/lessons/${lessonId}`}> {lessonTitle}   </NavLinks>
+                
   
                 <div className="lesson-item"> 
+
                       <span className="span-btns">  
                           {/* images / gif */}
 
@@ -170,7 +171,7 @@ const LessonPlan = ({
 
                             <button className={`toggle-stage-btns${(session) ? (fullMeetingStage) ?  "-hide" : "-show" : "-hide" }`}  onClick={meetingStage}> { ( session && hideMeetingStage ) ? "Show Meeting Stage"  :  "Hide Meeting Stage"  } </button> 
                             
-                            <VideoPage buttonClassName={`toggle-stage-btns${( session ) ? "-show" : "-hide"}`} recordStream={session} resetAllStartSettings={all => resetAllStartSettings(all)}  resetAllStopSettings={stage => resetAllStopSettings(stage)}   setVideoModalMode={stage => setVideoModalMode(stage)}/>
+                            <VideoPage buttonClassName={`toggle-stage-btns${( session ) ? "-show" : "-hide"}`} recordStream={session} resetAllStartSettings={all => resetAllStartSettings(all)}  resetAllStopSettings={stage => resetAllStopSettings(stage)}   setVideoModalMode={stage => setVideoModalMode(stage)} lesson={lesson}/>
                             
                             <button className={`toggle-stage-btns${(session) ? "-show" : "-hide"}`}  onClick={showFullMeetingStage}> { ( fullMeetingStage ) ? "Meeting Stage Half" : "Meeting Stage Full"   } </button> 
                         </span>
@@ -219,41 +220,44 @@ const LessonPlan = ({
                                                           
                                         } 
 
-                </div>
+                              </div>
            
-                <div className="meeting"> 
-            
-                                  <div>
-                { session ?  <MeetingIframeComponent  
-                                                name="embed_readwrite" 
-                                                source={meetingUrl}
-                                                width= { (fullMeetingStage) ?  hideMeetingStageSize : (hideMeetingStage) ? hideMeetingStageSize : showMeetingStageSize }
-                                                height="900px"
-                                                allow="camera;microphone"
-                                                scrolling="auto"
-                                                frameBorder="0"
-                                                recorderLink={recordSessionLink}
-                                     />
-                                    : <div> </div>
-                                                
-                }
+                                          <div className="meeting"> 
+                                      
+                                                            <div>
+                                          { session ?  <MeetingIframeComponent  
+                                                                          name="embed_readwrite" 
+                                                                          source={meetingUrl}
+                                                                          width= { (fullMeetingStage) ?  hideMeetingStageSize : (hideMeetingStage) ? hideMeetingStageSize : showMeetingStageSize }
+                                                                          height="900px"
+                                                                          allow="camera;microphone"
+                                                                          scrolling="auto"
+                                                                          frameBorder="0"
+                                                                          recorderLink={recordSessionLink}
+                                                              />
+                                                              : <div> </div>
+                                                                          
+                                          }
+                                                                  
+                                                            </div>
+                                                    
                                         
+                                        </div>
+                                        {Validations.setErrorMessageContainer()}
                                   </div>
-                           
-              
-              </div>
-              </div>
-        </div>
+                            </div>
 
-    );
+                  );
 
 
 }
 
 
 
-const mapState = (state)   => {
+const mapState = ( state )   => {
   return {
+         currentUser: state.users.user,
+         lessons: state.lessons.lessons,
          boardOrEditor: state.lessons.toggleTeachBoardOrEditor,
          setVideoCapture: state.streams.setVideoCapture
   };

@@ -124,10 +124,10 @@
 .preview-btn {
   margin: 10px;
   background-color: #fff;
-  color: #333;
+  color: #555;
   font-size: 14px;
   border: none;
-  border-radius: 2px;
+  border-radius: 2px;  
 }
 .preview-btn:active {
   background-color: #f7f2ff;

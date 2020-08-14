@@ -53,11 +53,12 @@
   padding-top: 10px;
   height: 110vh;
 }
+
 .toggle-stage-btns-show,
 .plan-lesson-btn,
 .delete-lesson-btn,
 .edit-lesson-btn {
-  opacity: 0;
+  opacity: 1;
   border: none;
   font-size: 10px;
   cursor: pointer;
@@ -78,16 +79,17 @@
 .toggle-stage-btns-hide {
   visibility: hidden;
 }
-.lesson-item:hover .toggle-stage-btns-show,
-.toggle-stage-btns-show:focus,
-.lesson-item:hover .plan-lesson-btn,
-.plan-lesson-btn:focus,
-.lesson-item:hover .delete-lesson-btn,
-.delete-lesson-btn:focus,
-.lesson-item:hover .edit-lesson-btn,
-.edit-lesson-btn:focus {
-  opacity: 1;
-}
+
+  .lesson-item:hover .toggle-stage-btns-show,
+  .toggle-stage-btns-show:focus,
+  .lesson-item:hover .plan-lesson-btn,
+  .plan-lesson-btn:focus,
+  .lesson-item:hover .delete-lesson-btn,
+  .delete-lesson-btn:focus,
+  .lesson-item:hover .edit-lesson-btn,
+  .edit-lesson-btn:focus {
+    opacity: 1;
+  }
 .lesson-item.selected {
   background: #e9e5ff;
   color: #222;
@@ -116,7 +118,7 @@
   justify-content: space-between;
 }
 .preview-btn {
-  margin: 10px;
+  margin: 1px;
   background-color: #fff;
   color: #333;
   font-size: 14px;

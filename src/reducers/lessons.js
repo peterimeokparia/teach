@@ -2,7 +2,8 @@ import produce from 'immer';
 import { ADD_NEW_LESSON_SUCCESS, ADD_NEW_LESSON_BEGIN,
             ADD_NEW_LESSON_ERROR, LOAD_LESSONS_BEGIN, LOAD_LESSONS_SUCCESS, LOAD_LESSONS_ERROR,
               SAVE_LESSON_SUCCESS, SAVE_LESSON_BEGIN, SAVE_LESSON_ERROR, RESET_LESSON_ERROR, 
-               DELETE_LESSON_SUCCESS, DELETE_LESSON_BEGIN, DELETE_LESSON_ERROR, SET_LESSON_MARKDOWN, TOGGLE_BOARD_OR_EDITOR } from '../services/course/actions';
+               DELETE_LESSON_SUCCESS, DELETE_LESSON_BEGIN, DELETE_LESSON_ERROR, SET_LESSON_MARKDOWN, TOGGLE_BOARD_OR_EDITOR,
+               SELECTED_LESSON_URL } from '../services/course/actions';
 
 
 
@@ -12,7 +13,8 @@ const initialState = {
     onSaveLessonError: null,
     lessonsLoading: false,
     onLessonsLoadingError: null,
-    toggleTeachBoardOrEditor: false
+    toggleTeachBoardOrEditor: false,
+    currentVideoUrl: ''
 };
 
 const reducer = produce((draft, action) => {
@@ -61,6 +63,10 @@ const reducer = produce((draft, action) => {
        return; 
        case TOGGLE_BOARD_OR_EDITOR:
             draft.toggleTeachBoardOrEditor = !draft.toggleTeachBoardOrEditor;
+       return;
+       case SELECTED_LESSON_URL:
+            draft.currentVideoUrl = action.payload;
+      return;
 
 
         default:

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { addNewCourse } from '../actions';
+import { Validations } from  '../../../helpers/validations';
 import './NewCourse.css'
 
 
@@ -17,6 +18,7 @@ const NewCourse = ({
     const inputRef = useRef();
     let currentUser = user;
     
+    
     useEffect (() =>{
         inputRef.current.focus();
     }, []); 
@@ -25,8 +27,14 @@ const NewCourse = ({
     const handleSubmit = e => { 
         e.preventDefault(); 
 
-        dispatch(addNewCourse(courseName, coursePrice, currentUser));
+        if ( (Validations.checkFormInputString("Course Title", courseName)) && 
+              (Validations.checkFormInputNumber("Course Price", coursePrice)))
+         {
 
+            dispatch(addNewCourse(courseName, coursePrice, currentUser));
+
+         }
+        
      };
 
 
@@ -80,6 +88,9 @@ const NewCourse = ({
 
             <button type="submit" disabled={saveInProgress} >Create Course</button>
         </form>
+
+        {Validations.setErrorMessageContainer()}
+
     </div>
     );
 };

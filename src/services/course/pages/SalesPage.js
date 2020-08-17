@@ -53,7 +53,7 @@ const SalesPage = ({ course, courseId, navigate, addToSalesCart, currentUser, lo
           
             alert(`Duplicate. ${course?.name} is already in your cart.`); // change from alert to inline div
 
-            navigate('/courses');
+            navigate('/mycourses2');
 
           return;
         }
@@ -61,7 +61,7 @@ const SalesPage = ({ course, courseId, navigate, addToSalesCart, currentUser, lo
 
            addToSalesCart( course );
 
-           navigate('/courses');
+           navigate('/mycourses2');
 
       }
 

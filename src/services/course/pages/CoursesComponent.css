@@ -58,23 +58,23 @@
     border-bottom: 2px solid #f0e9fd;
   }
   /***** Course Listing *****/
-  .CourseList {
+  .ComponentCourseList {
     padding: 20px;
     display: flex;
     flex-direction: column;
   }
-  .CourseList h1 {
+  .ComponentCourseList h1 {
     font-family: 'Bebas Neue', 'Helvetica Neue', arial,
       sans-serif;
     font-size: 60px;
     color: #43005a;
     margin-top: 0.2em;
   }
-  .CourseList ul {
+  .ComponentCourseList ul {
     list-style: none;
     padding: 0;
   }
-  .CourseList li > a {
+  .ComponentCourseList li > a {
     margin-bottom: 20px;
     line-height: 1.5;
     font-weight: 600;
@@ -85,11 +85,18 @@
     text-decoration: none;
     color: #222;
   }
-  .CourseList .price {
+  .ComponentCourseList .price {
     opacity: 0.5;
   }
+  .ComponentCourseList .list-items {
+    padding-top: 10px;
+    /* margin-bottom: 5px; */
+    border-style: outset;
+    border-radius: 3px;
+    font-size: 20px; 
+  }
   
-  .CourseList .new-course-btn {
+  .ComponentCourseList .new-course-btn {
     align-self: flex-end;
     color: #fff;
     font-size: 16px;
@@ -100,11 +107,11 @@
     padding: 4px 10px;
     border-radius: 1px;
   }
-  .CourseList .new-course-btn:focus {
+  .ComponentCourseList .new-course-btn:focus {
     outline: none;
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5),
       0 0 5px 2px #9c27b0;
   }
-  .CourseList .new-course-btn:active {
+  .ComponentCourseList .new-course-btn:active {
     background-color: purple;
   }

@@ -1,16 +1,10 @@
 import React, { useState  } from 'react';
 import { connect } from 'react-redux';
-import LessonEditor from './LessonEditor';
-// import ResizePanel from "react-resize-panel";
-import ReactIframe from './ReactIframe';
 import LessonPlanIframeComponent from './LessonPlanIframeComponent'
 import MeetingIframeComponent from './MeetingIframeComponent';
 import VideoPage from './VideoPage';
-import MarkDown from 'react-markdown';
 import { toggleTeachBoardOrEditor } from '../actions';
 import { toggleVideoCapture } from '../../recorder/actions.js';
-import ReactModal from 'react-modal-resizable-draggable';
-import { Link, navigate } from '@reach/router';
 import { Validations } from  '../../../helpers/validations';
 import NavLinks  from './NavLinks';
 import './LessonPlan.css';
@@ -24,10 +18,7 @@ const LessonPlan = ({
       lessons,
       currentUser,
       boardOrEditor,
-      setVideoCapture,
-      toggleTeachBoardOrEditor,
-      toggleVideoCapture,
-      children }) => {
+      toggleTeachBoardOrEditor }) => {
    
 
   const page = `${courseId}_${lessonId}_${lessonTitle}`;
@@ -147,17 +138,17 @@ const LessonPlan = ({
  }
 
 
-
-   const recordSessionLink = () => ( <span>  <a href={recorderUrl} target="_blank">Start Recording</a></span> );
-
+  const recordSessionLink = () => ( <span>  <a href={recorderUrl} target="_blank">Start Recording</a></span> );
 
     return (
 
-        <div className="CourseDetail"> 
+        <div className="LessonPlan"> 
               
               <header> 
 
+                <h1>
                 <NavLinks to={`/courses/${courseId}/lessons/${lessonId}`}> {lessonTitle}   </NavLinks>
+                </h1>
                 
   
                 <div className="lesson-item"> 
@@ -178,9 +169,9 @@ const LessonPlan = ({
                 </div>
 
               </header>
+
              <div className="content">
                
-     
               <div className="sidebar"> 
                     
                { (fullMeetingStage) ? <div>  <MeetingIframeComponent  

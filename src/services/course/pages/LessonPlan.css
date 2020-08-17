@@ -1,10 +1,10 @@
-.CourseDetail {
+.LessonPlan {
   height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-.CourseDetail header {
+.LessonPlan header {
   background-color: #673ab7;
   color: #fff;
   display: flex;
@@ -12,33 +12,33 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 20px;
+  /* padding-right: 450px; */
 }
-.CourseDetail header h1 {
+.LessonPlan header h1 {
   background-color: #673ab7;
   margin: 0;
   font-size: 24px;
 }
-.CourseDetail header .current-lesson {
+.LessonPlan header .current-lesson {
   margin: 0;
   font-size: 16px;
   font-weight: 400;
   opacity: 0.8;
 }
 
-.CourseDetail .content {
+.LessonPlan .content {
   display: flex;
   height: 100vh;
 }
 
-.CourseDetail .sidebar {
-  /* padding: 10px;  */
+.LessonPlan .sidebar {
   padding-right: 0px;
   padding-left: 0px;
   display: flex;
   flex-direction: column;
 }
 
-.CourseDetail .sidebar .lessons {
+.LessonPlan .sidebar .lessons {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -140,29 +140,29 @@
 } */
 
 @media only screen and (min-width: 638px) {
-  .CourseDetail .content {
+  .LessonPlan .content {
     flex-direction: row;
     height: 100%;
   }
-  .CourseDetail .sidebar {
+  .LessonPlan .sidebar {
     flex-basis: 300px;
     background: #fbf9ff;
     border-right: 1px solid #bba0ea;
   }
-  .CourseDetail .lesson {
+  .LessonPlan .lesson {
     flex: 1;
   }
 }
 @media only screen and (max-width: 637px) {
-  .CourseDetail .content {
+  .LessonPlan .content {
     flex-direction: column;
   }
-  .CourseDetail .sidebar {
+  .LessonPlan .sidebar {
     background: #fbf9ff;
     border-bottom: 1px solid #bba0ea;
     min-height: 50px;
   }
-  .CourseDetail .lesson {
+  .LessonPlan .lesson {
     flex: 1;
   }
 }

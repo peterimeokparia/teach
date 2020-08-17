@@ -11,7 +11,7 @@ import LoginLogout from './LoginLogout';
 import LessonPlanIframeComponent from './LessonPlanIframeComponent';
 import FileUpload from './FileUpload';
 import { Validations } from  '../../../helpers/validations';
-import './TestLayOut.css';
+import './CourseDetailPage.css';
 
 
 const CourseDetaiPage = ({
@@ -26,8 +26,6 @@ const CourseDetaiPage = ({
        saveLesson,
        togglePreviewMode,
        previewMode,
-       getLessonVideoUrl,
-       currentVideoUrl,
       //userOwnsCourse,
        children}) => {
 
@@ -45,11 +43,6 @@ const CourseDetaiPage = ({
         
     }, [ courseId, loadLessons, currentLessonVideoUrl ]);  
       
-
-    
-
-    let courseTitle, videoUrl;  //  needs placeholder
-    
 
     const userOwnsCourse = (user, courseId) => {
 
@@ -106,8 +99,6 @@ const CourseDetaiPage = ({
     return (     
 
              <div className="CourseDetail"> 
-
-                        {courseTitle = course?.name}    
                             
                         <header>
                         <h1>{course.name}</h1>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
 import { Link, navigate } from '@reach/router';
@@ -7,23 +7,18 @@ import Loading from './Loading';
 import LoginLogout from './LoginLogout'
 import CoursesComponent from './CoursesComponent';
 import NewCourse from './NewCourse';
-import Cart from './Cart'
-import './CourseListPage.css';
-
+import './MyCourses.css';
 
 
 const MyCourses = ({ 
 
-       courses,
+       user,
+       yourCourses,
        coursesLoading,
        onCoursesError,
        openNewCourseModal,
        closeNewCourseModal,
-       isModalOpen,
-       user,
-        }) => {
-
-    let yourcourses;
+       isModalOpen}) => {
 
 
     if ( ! user ){
@@ -44,12 +39,6 @@ const MyCourses = ({
         return <div> { onCoursesError.message } </div> ;
     }
     
-    
-    if ( user && user?.courses?.length > 0 ){
-
-      yourcourses = courses?.filter(course => user?.courses?.includes(course.id));
-
-    }
 
 
     const viewAllCourses = () => {
@@ -59,9 +48,8 @@ const MyCourses = ({
      
     return (( user?.courses?.length === 0 ) ? (
 
+       
         <div className="CreateCourse">
-
-             {/* <NewCourse user={user} /> */}
              <div> 
                  {`Welcome ${user.username}`}
              </div>
@@ -78,21 +66,28 @@ const MyCourses = ({
 
         ) : (
 
-            <div className="CourseList">
-              <h2>{`Welcome ${user.username}! Your course list.`}</h2>
-               <span>
-               <button className="new-course-btn" onClick={openNewCourseModal}>New Course</button> 
-               </span>
-               <button className="new-course-btn" onClick={viewAllCourses}>View All Courses</button> 
-               
-                
-                <div className="content">
+            <div className="MyCourses">
+
+       
+
+            <header> 
+                <h1>  {`Welcome ${user?.username}! `} </h1>
+    
+                <h2> Your course list </h2>
+
+                <div className="lesson-item">  
+                <LoginLogout/>
+                </div>
+            </header>
+
+            <br></br>   
+
+              <button className="view-courses-btn" onClick={viewAllCourses}>View All Courses</button> 
+              <button className="new-course-btn" onClick={openNewCourseModal}>New Course</button> 
 
                     <CoursesComponent 
-                               courses={yourcourses}
-                   /> 
-              
-                </div>
+                               courses={yourCourses}
+                   />     
  
                  <Modal isOpen={isModalOpen} onRequestClose={closeNewCourseModal}> <NewCourse user={user}/> </Modal>
 
@@ -110,10 +105,11 @@ const mapDispatch = {
 
 const mapState = state => ({
     user: state?.users?.user,
+    yourCourses: state?.courses?.courses?.filter(course => state?.users.user?.courses?.includes(course?.id)),
     courses: state?.courses?.courses,
-    coursesLoading: state.courses.coursesLoading,
-    onCoursesError: state.courses.onCoursesError,
-    isModalOpen: state.courses.isModalOpen
+    coursesLoading: state?.courses?.coursesLoading,
+    onCoursesError: state?.courses?.onCoursesError,
+    isModalOpen: state?.courses?.isModalOpen
 })
 
 export default connect(mapState, mapDispatch)(MyCourses);

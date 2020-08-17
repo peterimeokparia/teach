@@ -23,6 +23,7 @@ export const saveAuthToken = store => next =>  action => {
 
         setToken(null);
         localStorage.removeItem('currentuser');
+        localStorage.removeItem('lastState');
      }
 
      next(action);

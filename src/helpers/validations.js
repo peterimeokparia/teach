@@ -78,8 +78,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
     confirmDelete: function ( item ) {
 
-        // toast.warn( `Are you sure you want to delete ${item}?`);
-
         if ( window?.confirm( `Are you sure you want to delete ${item}?`)) {
             
             return true;

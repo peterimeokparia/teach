@@ -116,8 +116,6 @@ export const UPLOAD_FILE_SUCCESS = "UPLOAD FILE SUCCESS";
                     cartTotal: 0,
                  }   
                 }); 
-
-                // dispatch({ type: LOGIN_SUCCESS, payload: user})  LAST_LOGGEDIN_USER
         
                 dispatch({ type: LAST_LOGGEDIN_USER, payload: { 
                     ...user,
@@ -131,7 +129,6 @@ export const UPLOAD_FILE_SUCCESS = "UPLOAD FILE SUCCESS";
 
         })
          .catch(error => { 
-             //dispatch({ type: BUY_COURSE_ERROR, error })
              dispatch({ type: RESET_USERS_CART, payload: { 
                 ...resetUsersCartOnError,
                 paymentStatus: ""
@@ -240,8 +237,6 @@ export const lastLoggedInUser = () => {
       try{
            
         let user = JSON.parse(localStorage.getItem('currentuser'));
-     
-        // dispatch({ type: LOGIN_SUCCESS, payload: user})
         
         dispatch({ type: LAST_LOGGEDIN_USER, payload: user})     
 

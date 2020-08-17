@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
 import { Link, navigate } from '@reach/router';
@@ -7,23 +7,19 @@ import Loading from './Loading';
 import LoginLogout from './LoginLogout'
 import CoursesComponent from './CoursesComponent';
 import NewCourse from './NewCourse';
-import Cart from './Cart'
-import './CourseListPage.css';
-
+import Cart from './Cart';
+import './MyCourses.css';
 
 
 const CourseListPage = ({ 
 
+       user,
        courses,
        coursesLoading,
        onCoursesError,
        openNewCourseModal,
        closeNewCourseModal,
-       isModalOpen,
-       user,
-        }) => {
-
-    let yourcourses;
+       isModalOpen}) => {
 
 
     if ( ! user ){
@@ -45,43 +41,54 @@ const CourseListPage = ({
     }
     
 
+
     const viewMyCourses = () => {
         navigate('/mycourses');
     }
-               
-      //make courses.length a static value instead of calling courses all the time
-    return (( courses?.length === 0 ) ? (
+           
+     
+    return (( user?.courses?.length === 0 ) ? (
 
+       
         <div className="CreateCourse">
+             <div> 
+                 {`Welcome ${user.username}`}
+             </div>
 
-             <NewCourse user={user} />
+             <div>
+                You are not subscribed to any courses.
+             </div>
+
+             <div>
+             <Link to={"/courses"}>View all courses</Link>
+             </div>
 
          </div>
 
         ) : (
 
-            <div className="CourseList">
+            <div className="MyCourses">
 
-                <LoginLogout/>
+            <header> 
+                <h1>  {`Welcome ${user?.username}! `} </h1>
+    
+                <h2> All Courses </h2>
 
-                <Cart />
-                
-               {/* <span>
-                <button className="new-course-btn" onClick={openNewCourseModal}>New Course</button> 
-               </span> */}
+                <div>  
+                  <LoginLogout/>
+                  {/* <LoginLogout/> */}
+                  <Cart />
+                </div>
+            </header>
 
-                <button className="new-course-btn" onClick={viewMyCourses}>My Courses</button> 
+            <br></br>   
 
-                <div className="content">
-
-                    <CoursesComponent 
-                               title={`All Courses`}
-                               courses={courses}
-                   /> 
- 
+              <button className="view-courses-btn" onClick={viewMyCourses}>My Courses</button> 
               
-            </div>
-
+                    <CoursesComponent 
+                               courses={courses}
+                   />     
+ 
                  <Modal isOpen={isModalOpen} onRequestClose={closeNewCourseModal}> <NewCourse user={user}/> </Modal>
 
             </div>
@@ -99,9 +106,9 @@ const mapDispatch = {
 const mapState = state => ({
     user: state?.users?.user,
     courses: state?.courses?.courses,
-    coursesLoading: state.courses.coursesLoading,
-    onCoursesError: state.courses.onCoursesError,
-    isModalOpen: state.courses.isModalOpen
+    coursesLoading: state?.courses?.coursesLoading,
+    onCoursesError: state?.courses?.onCoursesError,
+    isModalOpen: state?.courses?.isModalOpen
 })
 
 export default connect(mapState, mapDispatch)(CourseListPage);

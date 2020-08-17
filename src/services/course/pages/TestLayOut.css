@@ -1,10 +1,10 @@
-.CourseDetail {
+.TestLayOut {
   height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-.CourseDetail header {
+.TestLayOut header {
   background-color: #673ab7;
   color: #fff;
   display: flex;
@@ -12,25 +12,26 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 20px;
+  text-align: center;
 }
-.CourseDetail header h1 {
+.TestLayOut header h1 {
   background-color: #673ab7;
   margin: 0;
   font-size: 24px;
 }
-.CourseDetail header .current-lesson {
+.TestLayOut header .current-lesson {
   margin: 0;
   font-size: 16px;
   font-weight: 400;
   opacity: 0.8;
 }
 
-.CourseDetail .content {
+.TestLayOut .content {
   display: flex;
   height: 100vh;
 }
 
-.CourseDetail .sidebar {
+.TestLayOut .sidebar {
   /* padding: 10px;  */
   padding-right: 0px;
   padding-left: 5px;
@@ -38,15 +39,15 @@
   flex-direction: column;
 }
 
-.CourseDetail .sidebar .lessons {
+.TestLayOut .sidebar .lessons {
   list-style: none;
   margin: 0;
   padding: 0;
   top: 50%;
-  left: 50%;
-  margin-right: 35%;
+  left: 10%;
+  margin-right: 40%;
 }
-.lesson {
+.lesson1 {
   margin-left: 300px;
   padding-top: 10px;
   height: 110vh;
@@ -60,6 +61,7 @@
   /* margin-left: 300px;
   padding-top: 10px;
   height: 110vh; */
+  margin-left: 150px;
   width: 50vh; 
 } 
 .textbox {
@@ -159,7 +161,8 @@
   justify-content: space-between;
 }
 .preview-btn {
-  margin: 10px;
+  /* margin: 10px; */
+  margin-right: 100px;
   background-color: #fff;
   color: #333;
   font-size: 14px;
@@ -181,29 +184,29 @@
 } */
 
 @media only screen and (min-width: 638px) {
-  .CourseDetail .content {
+  .TestLayOut .content {
     flex-direction: row;
     height: 100%;
   }
-  .CourseDetail .sidebar {
+  .TestLayOut .sidebar {
     flex-basis: 300px;
     background: #fbf9ff;
     border-right: 1px solid #bba0ea;
   }
-  .CourseDetail .lesson {
+  .TestLayOut .lesson {
     flex: 1;
   }
 }
 @media only screen and (max-width: 637px) {
-  .CourseDetail .content {
+  .TestLayOut .content {
     flex-direction: column;
   }
-  .CourseDetail .sidebar {
+  .TestLayOut .sidebar {
     background: #fbf9ff;
     border-bottom: 1px solid #bba0ea;
     min-height: 50px;
   }
-  .CourseDetail .lesson {
+  .TestLayOut .lesson {
     flex: 1;
   }
 }

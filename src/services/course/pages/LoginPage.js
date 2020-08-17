@@ -179,8 +179,9 @@ const LoginPage = ({ error, loading, loginUser, createUser, loadUsers, user, use
 
                   <div>
                     { currentAccount && 
-                        <span>  
-                          <label>
+                        <span> 
+
+                           <label>
         
                                   Tutor   
         
@@ -191,10 +192,10 @@ const LoginPage = ({ error, loading, loginUser, createUser, loadUsers, user, use
                                       checked={userRole === usersRole.Tutor}
                                   >
                                   </input>
-                                  </label>
+                              </label>
         
         
-                                  <label>
+                              <label> 
         
                                     Student   
         
@@ -205,7 +206,7 @@ const LoginPage = ({ error, loading, loginUser, createUser, loadUsers, user, use
                                         checked={userRole === usersRole.Student}
                                     >
                                     </input>
-                                    </label>
+                                   </label>
                                 </span>
                     }
                   

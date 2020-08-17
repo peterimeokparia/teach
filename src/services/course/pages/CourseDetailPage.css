@@ -47,10 +47,17 @@
   margin-right: 40%;
 }
 .lesson {
-  margin-left: 500px;
+  margin-left: 280px;
   padding-top: 10px;
   height: 110vh;
 }
+.lesson2 {
+  /* margin-left: 300px;
+  padding-top: 10px;
+  height: 110vh; */
+  margin-left: 10px;
+  width: 50vh; 
+} 
 .lessons .lesson-item {
   margin-bottom: 5px;
   border-style: solid;

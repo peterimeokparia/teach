@@ -11,13 +11,13 @@ const UpdateCart = ({ courseId, course, removeItemFromCart }) => {
 
         removeItemFromCart( course );
         
-        navigate('/');
+        navigate('/mycourses2');
     }
 
 
     const returnToCourseListPage = () => {
      
-        navigate('/');
+        navigate('/mycourses2');
     }
 
 

@@ -25,15 +25,18 @@ const LoginLogout = ({createUser,  logOut}) => {
 
     }
 
-    return (<button
-                className="LoginLogout"
-                onClick={e => performLoginLogOut(e)}
-            > 
+    return (<span>
+                <button
+                     className="LoginLogout"
+                     onClick={e => performLoginLogOut(e)}
+                > 
 
-               { createUser  ? "LogOut" : "Login" }
+                 { createUser  ? "LogOut" : "Login" }
             
-            </button>
-            ) 
+              </button>
+            </span>
+            
+        ) 
          
 }
 

@@ -31,21 +31,21 @@ const CoursesComponent = ({
     }  
            
     return (
-                <div className="sidebar">
+                <div className="ComponentCourseList">
                  <ul>
        
                     { courses?.map( course => ( 
 
                        <li key={course.id}>
 
-                           <div>
+                           <div className="list-items">
 
                             <Link to={`/courses/${course?.id}`}>
 
-                                <div className="courseDetails"> {course?.name}</div>
+                                <span> {course?.name}</span>
 
                             </Link>
-                                <div className="price"> ${ course?.price.toFixed(2) }   </div> 
+                                <span className="price"> ${ course?.price.toFixed(2) }   </span> 
                            </div>
                            
                        </li>

@@ -62,13 +62,29 @@
   padding: 20px;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  
 }
-.CourseList h1 {
-  font-family: 'Bebas Neue', 'Helvetica Neue', arial,
-    sans-serif;
-  font-size: 60px;
+.CourseList header {
+  background-color: #673ab7;
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 800px;
+} 
+.CourseList header h1 {
+  background-color: #673ab7;
+  margin: 0;
+  font-size: 24px;
+} 
+.CourseList h1, h2 {
+  font-family: 'Bebas Neue', 'Helvetica Neue', arial, sans-serif;
+  font-size: 25px;
   color: #43005a;
   margin-top: 0.2em;
+  text-align: center;
 }
 .CourseList ul {
   list-style: none;
@@ -94,11 +110,33 @@
   color: #fff;
   font-size: 16px;
   font-family: 'Source Sans Pro', helvetica, sans-serif;
-  background: #9c27b0;
+  background: #673ab7;
   border: none;
   font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 1px;
+  padding: 5px 12px 10px;
+  padding-left: 10px;
+  border-radius: 3px;
+}
+.CourseList .new-course-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5),
+    0 0 5px 2px #673ab7;
+}
+.CourseList .new-course-btn:active {
+  background-color: purple;
+}
+
+.CourseList .view-courses-btn {
+  align-self: flex-end;
+  color: #fff;
+  font-size: 16px;
+  font-family: 'Source Sans Pro', helvetica, sans-serif;
+  background: #673ab7;
+  border: none;
+  font-weight: 600;
+  padding: 5px 12px 10px;
+  margin-left: 10px;
+  border-radius: 3px;
 }
 .CourseList .new-course-btn:focus {
   outline: none;

@@ -30,7 +30,6 @@ const reducer = produce((draft, action) => {
              draft.loading = false;
              draft.user = action.payload;   
         return;
-        return;
         case SIGN_UP_ERROR:
         case LOGIN_ERROR:
         case BUY_COURSE_ERROR:      
@@ -51,7 +50,6 @@ const reducer = produce((draft, action) => {
              draft.loading = false;
              draft.login = action.payload;   
         return;
-        return;
         case LOAD_USERS_ERROR:
         case LOAD_LOGGEDIN_USERS_ERROR:    
              draft.loading = false;
@@ -65,6 +63,7 @@ const reducer = produce((draft, action) => {
         return;
         case LAST_LOGGEDIN_USER:    
              draft.lastLoggedInUser = action.payload;
+             draft.user = action.payload;
         return;
         case ADD_TO_SALES_CART:
              draft.user.cart.push(action.payload);
@@ -80,7 +79,7 @@ const reducer = produce((draft, action) => {
              draft.user.cartTotal -= action.payload.price;   
         return;
         case RESET_USERS_CART:
-        draft.user = action.payload;
+             draft.user = action.payload;
         return        
         default:
         return;

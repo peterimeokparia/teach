@@ -49,17 +49,33 @@ const MyCourses = ({
     return (( user?.courses?.length === 0 ) ? (
 
        
-        <div className="CreateCourse">
+        <div className="MyCourses">
+
+            <header> 
+                    <h1>  {`Welcome ${user?.username}! `} </h1>
+
+                   
+                    <div>  
+                    <LoginLogout/>
+                    {/* <LoginLogout/> */}
+               
+                    </div>
+                </header>
+
+        <br></br>   
+
+
+    
              <div> 
-                 {`Welcome ${user.username}`}
+
              </div>
 
              <div>
-                You are not subscribed to any courses.
+                <h3>You are not subscribed to any courses.</h3>
              </div>
 
              <div>
-             <Link to={"/courses"}>View all courses</Link>
+                <h4><Link to={"/courses"}>View all courses </Link></h4>
              </div>
 
          </div>
@@ -67,8 +83,6 @@ const MyCourses = ({
         ) : (
 
             <div className="MyCourses">
-
-       
 
             <header> 
                 <h1>  {`Welcome ${user?.username}! `} </h1>

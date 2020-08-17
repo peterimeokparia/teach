@@ -8,6 +8,8 @@
 }
 .CreateCourse {
   background-image: url(../images/geometry2.png);
+  /* background-size: auto; */
+  background-size: 300px 100px;
 }
 .CreateCourse form {
   max-width: 600px;

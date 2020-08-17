@@ -10,6 +10,7 @@ export const saveAuthToken = store => next =>  action => {
 
         setAuthToken(action.payload?.token);
     
+        localStorage.removeItem('lastState');
         localStorage.setItem('currentuser', JSON.stringify(action.payload));
         localStorage.setItem('lastState', JSON.stringify(action.payload));
      }
@@ -23,7 +24,6 @@ export const saveAuthToken = store => next =>  action => {
 
         setToken(null);
         localStorage.removeItem('currentuser');
-        localStorage.removeItem('lastState');
      }
 
      next(action);

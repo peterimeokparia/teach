@@ -46,54 +46,34 @@ const CourseListPage = ({
         navigate('/mycourses');
     }
            
-     
-    return (( user?.courses?.length === 0 ) ? (
+    return (
 
-       
-        <div className="CreateCourse">
-             <div> 
-                 {`Welcome ${user.username}`}
-             </div>
+        <div className="MyCourses">
 
-             <div>
-                You are not subscribed to any courses.
-             </div>
+        <header> 
+            <h1>  {`Welcome ${user?.username}! `} </h1>
 
-             <div>
-             <Link to={"/courses"}>View all courses</Link>
-             </div>
+            <h2> All Courses </h2>
 
-         </div>
-
-        ) : (
-
-            <div className="MyCourses">
-
-            <header> 
-                <h1>  {`Welcome ${user?.username}! `} </h1>
-    
-                <h2> All Courses </h2>
-
-                <div>  
-                  <LoginLogout/>
-                  {/* <LoginLogout/> */}
-                  <Cart />
-                </div>
-            </header>
-
-            <br></br>   
-
-              <button className="view-courses-btn" onClick={viewMyCourses}>My Courses</button> 
-              
-                    <CoursesComponent 
-                               courses={courses}
-                   />     
- 
-                 <Modal isOpen={isModalOpen} onRequestClose={closeNewCourseModal}> <NewCourse user={user}/> </Modal>
-
+            <div>  
+              <LoginLogout/>
+              {/* <LoginLogout/> */}
+              <Cart />
             </div>
-        )
-    )     
+        </header>
+
+        <br></br>   
+
+          <button className="view-courses-btn" onClick={viewMyCourses}>My Courses</button> 
+          
+                <CoursesComponent 
+                           courses={courses}
+               />     
+
+             <Modal isOpen={isModalOpen} onRequestClose={closeNewCourseModal}> <NewCourse user={user}/> </Modal>
+
+        </div>
+    )
 }
 
 

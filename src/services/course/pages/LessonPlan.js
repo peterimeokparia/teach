@@ -30,10 +30,10 @@ const LessonPlan = ({
   };     
     
     
-  const editorUrl = urls.editor.dev;
-  const canvasUrl = urls.canvas.dev;
-  const meetingUrl = urls.meeting.dev; 
-  const recorderUrl = urls.recorder.dev;    
+  const editorUrl = urls.editor.prod;
+  const canvasUrl = urls.canvas.prod;
+  const meetingUrl = urls.meeting.prod; 
+  const recorderUrl = urls.recorder.prod;    
   
   const fullScreenSize = "1440px";
   const mainStageSize = "900px";
@@ -46,8 +46,6 @@ const LessonPlan = ({
   const [session, setSession] = useState(false);
   
   const lesson = Object.values(lessons).filter(thisLesson => thisLesson.id === parseInt(lessonId, 10)) 
-
-
 
   const alertRecording = () => {
     Validations.warn('Recording In Progress. To end this teaching session, please stop the recording.');

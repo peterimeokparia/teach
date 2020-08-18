@@ -57,7 +57,7 @@ const CourseListPage = ({
 
             <div>  
               <LoginLogout/>
-              {/* <LoginLogout/> */}
+
               <Cart />
             </div>
         </header>

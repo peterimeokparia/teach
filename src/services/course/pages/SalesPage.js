@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect } from '@reach/router';
 import { getCoursesByCourseIdSelector  } from '../Selectors';
 import { addToSalesCart, loginUser  } from '../actions';
+import { Validations } from  '../../../helpers/validations';
 // import './SalesPage.css';
 
 
@@ -51,9 +52,11 @@ const SalesPage = ({ course, courseId, navigate, addToSalesCart, currentUser, lo
 
        if ( duplicateItemsExist ) {
           
-            alert(`Duplicate. ${course?.name} is already in your cart.`); // change from alert to inline div
+            Validations.warn(`Duplicate. ${course?.name} is already in your cart.`);
 
-            navigate('/mycourses2');
+            //alert(`Duplicate. ${course?.name} is already in your cart.`); // change from alert to inline div
+
+            navigate('/courses');
 
           return;
         }
@@ -61,7 +64,7 @@ const SalesPage = ({ course, courseId, navigate, addToSalesCart, currentUser, lo
 
            addToSalesCart( course );
 
-           navigate('/mycourses2');
+           navigate('/courses');
 
       }
 
@@ -69,14 +72,13 @@ const SalesPage = ({ course, courseId, navigate, addToSalesCart, currentUser, lo
    }
 
 
-
-
-   
     return (<div className="SalesPage">
         
         <h1> ADD TO CART { course  && course.name }</h1>
 
         <button onClick={addToCartAndReturnToCourses}>ADD TO CART</button>
+
+        {Validations.setErrorMessageContainer()}
       
     </div>)
 }

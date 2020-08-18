@@ -7,6 +7,7 @@ import Loading from './Loading';
 import LoginLogout from './LoginLogout'
 import CoursesComponent from './CoursesComponent';
 import NewCourse from './NewCourse';
+import Cart from './Cart';
 import './MyCourses.css';
 
 
@@ -56,9 +57,9 @@ const MyCourses = ({
 
                    
                     <div>  
-                    <LoginLogout/>
-                    {/* <LoginLogout/> */}
-               
+                    <LoginLogout/>    
+
+                    <Cart />
                     </div>
                 </header>
 
@@ -87,10 +88,12 @@ const MyCourses = ({
             <header> 
                 <h1>  {`Welcome ${user?.username}! `} </h1>
     
-                <h2> Your course list </h2>
+                <h2> Your Course List </h2>
 
                 <div className="lesson-item">  
                 <LoginLogout/>
+
+                <Cart />
                 </div>
             </header>
 

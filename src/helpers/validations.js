@@ -1,6 +1,7 @@
  import React from 'react';
  import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Swal from 'sweetalert2'
  
 //https://programmingwithmosh.com/javascript/react-file-upload-proper-server-side-nodejs-easy/
 //https://fkhadra.github.io/react-toastify/introduction/
@@ -12,7 +13,8 @@ import 'react-toastify/dist/ReactToastify.css';
           if(!inputValue || inputValue === null || inputValue === '' || inputValue === undefined) {
               const msg = `Please enter a valid ${fieldName}`; // change
               console.log(msg);
-              toast.error(msg);
+            //toast.error(msg);
+              Swal.fire(msg)
               return false;
           }
           return true;
@@ -23,7 +25,8 @@ import 'react-toastify/dist/ReactToastify.css';
    
         if(!inputValue || inputValue === null || inputValue === undefined || inputValue === '') {
             const msg = `Please enter a valid ${fieldName}`;
-            toast.error(msg);
+            // toast.error(msg);
+            Swal.fire(msg)
             console.log(msg);
             return false;
         }
@@ -35,7 +38,8 @@ import 'react-toastify/dist/ReactToastify.css';
         let files = event.target.files;
         if (files?.length > 3){
             const msg = "Only 3 images can be uploaded at one time";
-            toast.error(msg);
+            Swal.fire(msg)
+            //toast.error(msg);
             event.target.value = null;
             console.log(msg);
             return false;
@@ -87,7 +91,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
     warn: function ( message ) {
 
-        toast.warn(message);
+        // toast.warn(message);
+        Swal.fire(message)
     },
 
     setErrorMessageContainer: function () {
@@ -107,7 +112,8 @@ const displayErrorMessage = (event, err, toast) => {
     for(var x = 0; x < err?.length; x++){
         event.target.value = null;
         console.log(err[x]);
-        toast.error(err[x]);
+        // toast.error(err[x]);
+        Swal.fire(err[x])
         return false;
     }
 }

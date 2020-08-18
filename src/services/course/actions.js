@@ -94,41 +94,50 @@ export const UPLOAD_FILE_SUCCESS = "UPLOAD FILE SUCCESS";
     return ( dispatch, getState ) => {
 
         let resetUsersCartOnError; 
+        
         dispatch({ type: BUY_COURSE_BEGIN });
 
         return purchase(currentUser, getState().users.buy)
         .then(user => {
 
-            dispatch({ type: BUY_COURSE_SUCCESS, payload: user });
+             dispatch({ type: BUY_COURSE_SUCCESS, payload: user });
 
-            addToPurchaseHistory(user);
+             addToPurchaseHistory(user);
      
-            updateCurrentUserOnPurchase(user);
+             updateCurrentUser( user?.userId, user)
+              .then(response => { 
             
-                localStorage.removeItem('currentuser');
-
-                localStorage.setItem('currentuser', JSON.stringify(user));
-
                 dispatch({ type: RESET_USERS_CART, payload: { 
-                    ...user,
-                    cart: [],
-                    paymentStatus: "",
-                    cartTotal: 0,
+                    response
+                    // ...user,
+                    // cart: [],
+                    // paymentStatus: "",
+                    // cartTotal: 0,
                  }   
                 }); 
         
-                dispatch({ type: LAST_LOGGEDIN_USER, payload: { 
-                    ...user,
-                    cart: [],
-                    paymentStatus: "",
-                    cartTotal: 0
+                dispatch({ type: LAST_LOGGEDIN_USER, payload: {
+                    response 
                  }   
                 }); 
 
-                resetUsersCartOnError = user;
+             })
+               .catch(error => { 
+
+                   console.log( error );
+
+                   resetUsersCartOnError = user;
+                
+                })
+            
+                // localStorage.removeItem('currentuser');
+                // localStorage.setItem('currentuser', JSON.stringify(user));
 
         })
          .catch(error => { 
+
+            console.log( error );
+
              dispatch({ type: RESET_USERS_CART, payload: { 
                 ...resetUsersCartOnError,
                 paymentStatus: ""

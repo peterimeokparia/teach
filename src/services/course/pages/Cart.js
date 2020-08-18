@@ -24,7 +24,7 @@ const Cart = ({ currentUser, buyCourse }) => {
 
     return (    <span> 
                     {/* <h1> Buy { currentUser?.course  && currentUser?.course?.name }</h1> */}
-                    <ReactModal initWidth={400} initHeight={300}top left className="test-modal" isOpen={currentUser?.cart?.length > 0} onRequestClose={currentUser?.cart?.length === 0}>  
+                    <ReactModal initWidth={400} initHeight={300}top left className="cart" isOpen={currentUser?.cart?.length > 0} onRequestClose={currentUser?.cart?.length === 0}>  
                     
 
                             <h3>My Cart</h3>
@@ -38,12 +38,16 @@ const Cart = ({ currentUser, buyCourse }) => {
                                             currentUser?.cart?.map(course => (
                                             
                                               <li key={course?.id}>
-                
-                                                    <span>{course?.name}</span>
-                
-                                                    <span>{course?.price}</span>
-                
-                                                    <span> <Link to={`/updatecart/${course?.id}`}>X</Link> </span>
+
+                                                   <span className="list-items">
+
+                                                        <span className="">{course?.name}</span>
+                      
+                                                          <span className="price">{course?.price}</span>
+
+                                                          <span> <Link to={`/updatecart/${course?.id}`}>X</Link> </span>
+
+                                                   </span>
                 
                                               </li>
                 
@@ -62,7 +66,7 @@ const Cart = ({ currentUser, buyCourse }) => {
                                               } 
                                           
                                           
-                                         </span>
+                                      </span>
                                       </ul> 
                                          
                           

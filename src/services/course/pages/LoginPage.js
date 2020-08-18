@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { loginUser, createUser, loadUsers } from '../actions';
 import { getLastUsersState } from '../api';
 import { Validations } from  '../../../helpers/validations';
+import Swal from 'sweetalert2'
 import Loading from './Loading';
 import './LoginPage.css';
 
@@ -84,6 +85,12 @@ const LoginPage = ({ error, loading, loginUser, createUser, loadUsers, user, use
 
                   setAccountIfAccounExists( true );    
        }  
+
+
+       if ( ( userName && password ) && ! ( userRole )) {
+           
+           Validations.checkFormInputString("role", userRole)
+       }
    }
 
 
@@ -121,24 +128,29 @@ const LoginPage = ({ error, loading, loginUser, createUser, loadUsers, user, use
       }
 
    
-
-      if ( currentUserFromUsers() || getLastUsersState() ) {
- 
-        let currentUser = getLastUsersState() ? getLastUsersState() : currentUserFromUsers();
-
-        newUser.courses = currentUser?.courses;
-        newUser.userId = currentUser?.id;
-        newUser.userRole = currentUser?.role;
-
-       }
-
        if ( Validations.checkFormInputString("User Name", userName ) && 
                  Validations.checkFormInputString("Password", password) ) {
 
-          loginUser(newUser);
+          let currentUser = getLastUsersState(newUser) ? getLastUsersState(newUser) : currentUserFromUsers();
+
+          loginUser( updateCurrentUserAccount(newUser, currentUser) );
 
        }
-      
+  }
+
+
+  const updateCurrentUserAccount = (user, currentAccount) => {
+
+        user.courses = currentAccount?.courses;
+        user.userId = currentAccount?.id;
+        user.userRole = currentAccount?.role;
+        user.role = currentAccount?.role;
+        user.courses = currentAccount?.courses;
+        user.cart = currentAccount?.cart;
+        user.cartTotal = currentAccount?.cartTotal;
+        user.paymentStatus = currentAccount?.paymentStatus;
+
+        return user;
   }
 
   
@@ -235,7 +247,7 @@ const LoginPage = ({ error, loading, loginUser, createUser, loadUsers, user, use
                          </button>
                </form> 
 
-               {Validations.setErrorMessageContainer()}
+               {/* {Validations.setErrorMessageContainer()} */}
                        
             </div> 
     );

@@ -52,16 +52,16 @@ export const deleteLessonFile = file => {
 
 export const updateUser = ( currentUser ) => {
 
-    updateCurrentUser(currentUser);
+    updateCurrentUser(currentUser?.id, currentUser);
 
-    localStorage.removeItem('currentuser');
+    // localStorage.removeItem('currentuser');
     
     localStorage.setItem('currentuser', JSON.stringify(currentUser));
 }
 
 
-export const updateCurrentUser = ( user ) => {
-  return putData(PREFIX + `/users/${ user.id }`, 
+export const updateCurrentUser = ( userId,  user ) => {
+  return putData(PREFIX + `/users/${ userId }`, 
  {
   ...user,
   cart: [], 
@@ -71,17 +71,6 @@ export const updateCurrentUser = ( user ) => {
   );
 };
 
-
-export const updateCurrentUserOnPurchase = ( user ) => {
-  return putData(PREFIX + `/users/${ user.userId }`, 
- {
-  ...user,
-  cart: [], 
-  cartTotal: 0,
-  paymentStatus: ""
-} 
-  );
-};
 
 
 
@@ -195,8 +184,21 @@ export const getLoggedInUsers = () => {
 }
 
 
-export const getLastUsersState = () => {
-  return JSON.parse(localStorage.getItem('lastState'));
+
+export const getLastUsersState = ( newUser ) => {
+
+  let lastUsersSessionState =  JSON.parse(localStorage.getItem('lastState'));
+
+     if ( newUser && newUser?.username !== lastUsersSessionState?.username ) {
+
+         lastUsersSessionState = null;
+
+         return lastUsersSessionState;
+
+     } 
+       
+     return lastUsersSessionState;
+      
 }
 
 

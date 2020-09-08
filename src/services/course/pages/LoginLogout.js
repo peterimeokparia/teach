@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { navigate } from '@reach/router';
+import { Redirect, navigate } from '@reach/router';
 import { logOut } from '../actions';
 import { Validations } from  '../../../helpers/validations';
 import Swal from 'sweetalert2'
@@ -14,51 +14,54 @@ const LoginLogout = ({user,  logOut}) => {
 
         e.preventDefault();
 
-        if ( user && user?.cart?.length > 0 ) {
+        if ( user ) {
 
-          Swal.fire({
-            title: 'You forgot something.',
-            text:  "The following items are in your cart:" +  user.cart.map((item, index) => (  " " + item?.name + " " )) + "Do you still want to log out?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Get course(s)',
-            cancelButtonText: 'Next time'
-          }).then( (response) => {
+          if ( user?.cart?.length > 0 ) {
 
-              if ( response?.value ) {
+            Swal.fire({
+              title: 'Courses you are interested in.',
+              icon: 'warning',
+              html: user.cart.map((item, index) => '<ul><li key=' + `${index}` + '>' + `${item?.name}` + '</li></ul') + "Do you still want to log out?",
+              showCancelButton: true,
+              confirmButtonText: 'Get course(s)',
+              cancelButtonText: 'Next time'
+            }).then( (response) => {
+  
+                  if ( response?.value ) {
+                    
+                    return;
+    
+                  } else {
+               
+                    userLogOut();
+                    
+                  }
+  
+            })
+          } else {
 
-                 return;
-
-              } else {
-
-                logOut();
-                navigate('/login'); 
-
-              }
-
-          })
-        }
-
-
-        if ( user && user?.cart?.length === 0 ) {
-
-            logOut();
-            navigate('/login'); 
-             
+                   userLogOut();
+          }
+  
+        } else {
+ 
+          navigate('/login')
+          // return <Redirect to="/login" noThrow />  
         } 
 
+    }
 
-        if ( ! user ) {
-     
-            navigate('/login');  
+    const userLogOut = () => {
 
-        }
+        logOut();
 
+        navigate('/login')
+      // return <Redirect to="/login" noThrow />  
     }
 
     return (<span>
                 <button
-                     className="LoginLogout"
+                     className="preview-btn"
                      onClick={e => performLoginLogOut(e)}
                 > 
 

@@ -1,14 +1,34 @@
 import produce from 'immer';
-import {LOGIN_BEGIN, LOGIN_SUCCESS, LOGIN_ERROR, SIGN_UP_BEGIN, SIGN_UP_SUCCESS,
-          SIGN_UP_ERROR, LOAD_USERS_BEGIN, LOAD_USERS_SUCCESS,  LOAD_USERS_ERROR,
-          LOAD_LOGGEDIN_USERS_BEGIN, LOAD_LOGGEDIN_USERS_SUCCESS, LOAD_LOGGEDIN_USERS_ERROR, 
-            LOGOUT_SUCCESS, LAST_LOGGEDIN_USER, ADD_TO_SALES_CART, REMOVE_FROM_SALES_CART,
-              BUY_COURSE_BEGIN, BUY_COURSE_SUCCESS, BUY_COURSE_ERROR, RESET_USERS_CART } from '../services/course/actions';
+import {
+LOGIN_BEGIN, 
+LOGIN_SUCCESS, 
+LOGIN_ERROR, 
+SIGN_UP_BEGINS, 
+SIGN_UP_SUCCESSS,
+SIGN_UP_ERRORS, 
+LOAD_USERS_BEGIN, 
+LOAD_USERS_SUCCESS,  
+LOAD_USERS_ERROR,
+LOAD_LOGGEDIN_USERS_BEGIN, 
+LOAD_LOGGEDIN_USERS_SUCCESS, 
+LOAD_LOGGEDIN_USERS_ERROR, 
+LOGOUT_SUCCESS, 
+LAST_LOGGEDIN_USER, 
+ADD_TO_SALES_CART, 
+REMOVE_FROM_SALES_CART,
+BUY_COURSE_BEGIN, 
+BUY_COURSE_SUCCESS, 
+BUY_COURSE_ERROR, 
+RESET_USERS_CART,
+INVITEES_TO_LEARNING_SESSION,
+FAILED_INVITATION,
+UPDATE_INVITEE_SESSION_URL} from '../services/course/actions';
 
 
 const initialState = {
-    users: [],
+    users: {},
     user:{},
+    invitees:new Map(),
     login:[],
     lastLoggedInUser:{},
     error: null,
@@ -19,18 +39,18 @@ const initialState = {
 
 const reducer = produce((draft, action) => {
     switch(action.type){
-        case SIGN_UP_BEGIN:
+        case SIGN_UP_BEGINS:
         case LOGIN_BEGIN:
         case BUY_COURSE_BEGIN:     
             draft.loading = true;
             draft.error = null;
         return;
-        case SIGN_UP_SUCCESS:
+        case SIGN_UP_SUCCESSS:
         case LOGIN_SUCCESS:      
              draft.loading = false;
              draft.user = action.payload;   
         return;
-        case SIGN_UP_ERROR:
+        case SIGN_UP_ERRORS:
         case LOGIN_ERROR:
         case BUY_COURSE_ERROR:      
              draft.loading = false;
@@ -44,7 +64,9 @@ const reducer = produce((draft, action) => {
         return;
         case LOAD_USERS_SUCCESS: 
             draft.loading = false;
-            draft.users = action.payload;  
+            action.payload.forEach(user => {
+                draft.users[user?._id] = user; 
+            });
         return;
         case LOAD_LOGGEDIN_USERS_SUCCESS:   
              draft.loading = false;
@@ -59,7 +81,7 @@ const reducer = produce((draft, action) => {
             draft.loading = false;
             draft.error = null;
             draft.user = null;
-            draft.users = []   
+            draft.users = {}   
         return;
         case LAST_LOGGEDIN_USER:    
              draft.lastLoggedInUser = action.payload;
@@ -75,12 +97,21 @@ const reducer = produce((draft, action) => {
              draft.buy = action.payload;
         return;     
         case REMOVE_FROM_SALES_CART:
-             draft.user.cart = draft.user.cart.filter(course => course.id !== action.payload.id)
+             draft.user.cart = draft.user.cart.filter(course => course._id !== action.payload._id)
              draft.user.cartTotal -= action.payload.price;   
         return;
         case RESET_USERS_CART:
              draft.user = action.payload;
-        return        
+        return 
+        case INVITEES_TO_LEARNING_SESSION:
+             draft.invitees = action.payload;
+        return;
+        case FAILED_INVITATION:
+             draft.error = action.error;
+        return 
+        case UPDATE_INVITEE_SESSION_URL: 
+             draft.users[action.payload._id] = action.payload;
+        return;                 
         default:
         return;
 

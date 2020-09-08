@@ -17,9 +17,13 @@ import VideoPage from '../services/course/pages/VideoPage';
 import NotFoundPage from '../services/course/pages/NotFoundPage';
 import SalesPage from '../services/course/pages/SalesPage';
 import Cart from '../services/course/pages/Cart';
+import Users from '../services/course/pages/Users';
+import IndividualUsersCourseList from '../services/course/pages/IndividualUsersCourseList';
 import UpdateCart from '../services/course/pages/UpdateCart';
 import FileUpload from '../services/course/pages/FileUpload';
+import CheckBoxComponent from '../services/course/pages/CheckBoxComponent';
 import { Router, Redirect } from '@reach/router';
+
 
 
 
@@ -27,8 +31,9 @@ import { Router, Redirect } from '@reach/router';
 const PodDetailPage = () => {
     return (
         <Router>
-             <Redirect noThrow from="/" to="/mycourses" />
+             {/* <Redirect noThrow from="/" to="/mycourses" /> */}
              {/* <Redirect noThrow from="/" to="/login" /> */}
+             <Redirect noThrow from="/" to="/users" />
              <StreamHeader path="streams/header"/>
              <StreamCreate path="streams/create"/>
              <StreamDelete path="streams/delete"/>
@@ -44,13 +49,17 @@ const PodDetailPage = () => {
               </SalesPage>
               <UpdateCart path="/updatecart/:courseId"/>
              <LessonPlan path="/LessonPlan/:courseId/:lessonId/:lessonTitle"/>
+             <LessonPlan path="/LessonPlan/:courseId/:lessonId/:lessonTitle/:userId"/>
              <LoginPage path="/login"/>
              <VideoPlayer path="/videoplayer/:stream" />
              <VideoPage path="/video"/>
               <ShowMeeting path="/meeting/:teach" /> 
-              <MyCourses path="/mycourses"/>
               {/* <FileBrowser path="/files/Users/peterimeokparia/Documents/VsCode/Work/Projects/Teach/teach-platform/BackEnd/public/videos/*"/> */}
               <FileUpload path="/files" /> 
+              <Users path="/users"/>
+              <MyCourses path="/mycourses" />
+              <IndividualUsersCourseList path="coursestaught/:userId" />
+              <CheckBoxComponent path="/students/:courseId" />
              <NotFoundPage default />
         </Router>
     )

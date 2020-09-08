@@ -7,11 +7,52 @@ import fse from 'fs-extra';
 import path from 'path';
 import replaceExt from 'replace-ext';
 import axios from 'axios';
+import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
+import courseRoute from './Routes/courseRoute.js'
+import lessonRoute from './Routes/lessonRoute.js'
+import userRoute from './Routes/userRoute.js'
+import meetingRoute from './Routes/meetingRoute.js'
+import emailRoute from './Routes/emailRoute.js'
+
+
+//https://dev.to/pacheco/my-fullstack-setup-node-js-react-js-and-mongodb-2a4k
+
+
 const app = express();
 const server = http.createServer(app);
+
 app.use('/static', express.static('public/videos'))
 app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+   extended: true
+}));
 
+app.use('/courses', courseRoute);
+
+app.use('/lessons', lessonRoute);
+
+app.use('/users', userRoute);
+
+app.use('/meetings', meetingRoute);
+
+app.use('/emails', emailRoute)
+
+
+mongoose.connect('mongodb+srv://dbuser:dbuser2020@cluster0.8heal.mongodb.net/teach?retryWrites=true&w=majority', {
+   useNewUrlParser: true, 
+   useUnifiedTopology: true,
+   useCreateIndex: true
+});
+
+var db = mongoose.connection;
+
+db.on("error", console.error.bind(console, "connection error:"));
+
+db.once("open", function() {
+  console.log("Connection Successful!");
+});
 
 
 
@@ -50,13 +91,14 @@ app.post('/uploads', upload.single('video'), ( request, response, next ) => {
 
           console.log('uploading');
  
-          let lessonUrl = `http://localhost:3000/api/lessons?id=${parseInt(request?.file?.originalname, 10)}`;
-          let videoUrl = `http://localhost:3000/videos/${videoFileName}`;
-          let lessonVideoAndMetaData = `http://localhost:3000/api/lessons/${parseInt(request?.file?.originalname, 10)}`;
+         let lessonUrl = `http://localhost:9005/lessons?_id=${request?.file?.originalname}`;
+         let videoUrl = `http://localhost:3000/videos/${videoFileName}`;
+         let lessonVideoAndMetaData = `http://localhost:9005/lessons/${request?.file?.originalname}`;
 
 
           getContent(lessonUrl)
            .then( resp  =>  {
+              console.log('resp resp resp', resp);
             sendMetaData(lessonVideoAndMetaData, { 
                   ...resp.data[0],
                   videoUrl 
@@ -109,9 +151,10 @@ app.post('/fileUploads',  ( request, response ) => {
      }
      
    
-        let lessonUrl = `http://localhost:3000/api/lessons?id=${parseInt(request.body?.fileName, 10)}`;
-        let lessonMetaData = `http://localhost:3000/api/lessons/${parseInt(request.body?.fileName, 10)}`;
-         
+        let lessonUrl = `http://localhost:9005/lessons?_id=${request.body?.fileName}`;
+        let lessonMetaData = `http://localhost:9005/lessons/${request.body?.fileName}`;
+
+        
          if ( lessonMetaData ) {
 
           getContent( lessonUrl )
@@ -181,8 +224,6 @@ app.post('/delete', upload.single('delete'), ( request, response, next) => {
 })
 
  
-
-
  
 const localPort = 9005;
 
@@ -215,7 +256,3 @@ function updateContent( url, data = {}  ){
 
 }
 
-
-   // const res = axios.post('http://localhost:3000/api/uploads', {
-        //     videoMetadata: { ...request.file, referer: request.headers.referer} 
-        // }); 

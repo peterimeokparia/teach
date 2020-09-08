@@ -1,10 +1,11 @@
+
 .LessonPlan {
   height: 100vh;
   display: flex;
   flex-direction: column;
   text-align: center;
   background-image: url(../images/geometry2.png);
-  background-size: 300px 300px;
+  /* background-size: 300px 300px; */
 }
 
 .LessonPlan header {
@@ -38,7 +39,6 @@
   padding-right: 0px;
   padding-left: 0px;
   display: flex;
-  flex-direction: column;
 }
 
 .LessonPlan .sidebar .lessons {
@@ -52,9 +52,32 @@
   border-radius: 3px;
 }
 .meeting {
+  margin-left: 1308px;
+  margin-right: auto;
+} 
+.meeting-full {
+  margin-left: 400px;
+  margin-right: 0px;
+  border: 10px;
+  transform: translate(-1300px, -45px);
+  /* transform: rotateZ(90deg); */
+}
+.meeting-hide {
   margin-left: 0px;
-  padding-top: 10px;
+  padding-top: 0px;
   height: 110vh;
+  display: none;
+}
+.tools {
+  margin-left: 0px;
+  padding-top: 0px;
+  height: 110vh;
+}
+.tools-hide {
+  margin-left: 0px;
+  padding-top: 0px;
+  height: 110vh;
+  display: none;
 }
 
 .toggle-stage-btns-show,
@@ -65,6 +88,10 @@
   border: none;
   font-size: 10px;
   cursor: pointer;
+  box-shadow: 10px 10px;
+}
+.span-btns {
+  padding-bottom: 5px;
 }
 .toggle-stage-btns-show {
   visibility: visible;

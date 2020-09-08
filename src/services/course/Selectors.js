@@ -1,10 +1,12 @@
 import { createSelector }  from 'reselect';
 
 const getLessons = state => state.lessons.lessons;
-const getParsedCourseId = ( state, props ) => parseInt( props.courseId, 10 );
+const getParsedCourseId = ( state, props ) => props.courseId;
 const getCourses = state => state.courses.courses;
-const parseCourseId = (state, props) => parseInt(props.courseId, 10);
+const parseCourseId = (state, props) => props.courseId;
 const getCurrentUser = state => state.users.user;
+// const getParsedCourseId = ( state, props ) => parseInt( props.courseId, 10 );
+// const parseCourseId = (state, props) => parseInt(props.courseId, 10);
 
 
 // export const userOwnsCourse = createSelector(
@@ -54,7 +56,7 @@ export const getLessonsByCourseIdSelector = createSelector(
     getSortedLessonsSelector,
     getParsedCourseId,
     (lessons , courseId) => 
-           lessons.filter(lesson =>  parseInt(lesson.courseId, 10) === courseId)
+           lessons.filter(lesson =>  lesson.courseId === courseId)
            
 );
 
@@ -63,6 +65,6 @@ export const getCoursesByCourseIdSelector = createSelector(
     getCourses,
     getParsedCourseId,
     (courses , courseId) => 
-        courses.find(course =>  course.id === courseId)
+        Object.values(courses).find(course =>  course._id === courseId)
            
 );

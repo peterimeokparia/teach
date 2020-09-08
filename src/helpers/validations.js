@@ -92,7 +92,39 @@ import Swal from 'sweetalert2'
     warn: function ( message ) {
 
         // toast.warn(message);
-        Swal.fire(message)
+        Swal.fire(message);
+    },
+
+    duplicateCheck: function ( item, collection, description, propertyName ) {
+
+        if( collection?.find( record => record[propertyName] === item) ) {
+            const msg = `${item} exists. Please use a unique ${description}`;
+            // toast.error(msg);
+            Swal.fire({
+                title: msg,
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#673ab7'
+            })
+            console.log(msg);
+            return true;
+        }
+        return false;
+    },
+
+    itemNotSelected: function ( item, message ) {
+
+        if( item === undefined )  {
+            const msg = message;
+            // toast.error(msg);
+            Swal.fire({
+                title: msg,
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#673ab7'
+            })
+            console.log(msg);
+            return true;
+        }
+        return false;
     },
 
     setErrorMessageContainer: function () {

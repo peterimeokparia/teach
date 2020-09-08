@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, Match, navigate, useNavigate, Redirect } from '@reach/router';
-import { loadLessons, addNewLesson, saveLesson, togglePreviewMode, getLessonVideoUrl } from '../actions';
+import { loadLessons, addNewLesson, saveLesson, togglePreviewMode, getLessonVideoUrl, updateUserInvitationUrl, setLessonInProgressStatus, addNewMeeting} from '../actions';
 import { getLessonsByCourseIdSelector, getCoursesByCourseIdSelector, userOwnsCourse } from '../Selectors';
 import { getLastUsersState, updateLessons, deleteLessonFile } from '../api';
 import NotFoundPage from './NotFoundPage';
@@ -9,6 +9,7 @@ import Loading from './Loading';
 import NewLessonPage from './NewLessonPage';
 import LoginLogout from './LoginLogout';
 import LessonPlanIframeComponent from './LessonPlanIframeComponent';
+import CheckBoxComponent from './CheckBoxComponent';
 import FileUpload from './FileUpload';
 import { Validations } from  '../../../helpers/validations';
 import './CourseDetailPage.css';
@@ -17,7 +18,7 @@ import './CourseDetailPage.css';
 const CourseDetaiPage = ({
        currentUser, 
        courseId,
-       isLoading,
+       isCourseLoading,
        course,
        lessons,
        isLessonsLoading, 
@@ -26,14 +27,22 @@ const CourseDetaiPage = ({
        saveLesson,
        togglePreviewMode,
        previewMode,
-      //userOwnsCourse,
+       setLessonInProgressStatus,
+       studentsSubscribedToThisCourse,
+       updateUserInvitationUrl,
+       addNewMeeting,
+       lessonStarted,
+       onLessonError,
        children}) => {
 
 
- 
+
   const [ currentLessonVideoUrl, setVideoUrl ] = useState( undefined );
-  let [ currentLesson, setCurrentLesson ] = useState( undefined );
+  let  [ currentLesson, setCurrentLesson ] = useState( undefined );
   const [ fileToRemove, setFileToRemove ] = useState( undefined );
+  const [ lessonPlanUrl, setLessonPlanUrl ] = useState( "" );
+  const [ teachPlatformEnabled, setTeachPlatform ] = useState( false );
+  const [ inviteeList, setInviteeList ] = useState([]);
 
 
 
@@ -41,8 +50,9 @@ const CourseDetaiPage = ({
 
         loadLessons( courseId );
         
-    }, [ courseId, loadLessons, currentLessonVideoUrl ]);  
+    }, [ courseId,  loadLessons, currentLessonVideoUrl ]);  
       
+
 
     const userOwnsCourse = (user, courseId) => {
 
@@ -56,7 +66,8 @@ const CourseDetaiPage = ({
             return true;
         }
 
-        return user?.courses?.includes(parseInt(courseId));
+        return user?.courses?.includes(courseId);
+        // return user?.courses?.includes(parseInt(courseId));
     }
  
     
@@ -75,26 +86,87 @@ const CourseDetaiPage = ({
     }
     
 
-    if ((! userOwnsCourse( currentUser, courseId )) && (! getLastUsersState()?.courses?.includes(parseInt(courseId)))) {
+    if ((! userOwnsCourse( currentUser, courseId )) && (! getLastUsersState()?.courses?.includes(courseId))) {
   
         return <Redirect to={`/courses/${courseId}/buy`} noThrow/>
     }     
 
     
 
-    if( isLoading ){
-       return <Loading />  
+    if( isCourseLoading ){
+
+     return <Loading />  
     }
 
 
     if( ! course ){
-        return <NotFoundPage />  
+        
+     return <NotFoundPage />  
     }
 
 
     if( isLessonsLoading ){
-        return <Loading />  
+
+     return <Loading />  
     }
+
+
+    if ( onLessonError ) {
+
+     return <div> { onLessonError.message } </div> ;
+    }
+
+
+    const enableTeachPlatform = () => {
+        
+       if ( ! currentLesson ) {
+
+        Validations.itemNotSelected( currentLesson,  "Click on the lesson title link before clicking on 'Teach'" )
+       }
+
+        navigate( lessonPlanUrl );
+
+        setTeachPlatform(true);
+
+        setLessonInProgressStatus();
+
+        inviteStudentsToLearningSession(currentLesson);
+         
+    }
+
+
+    const inviteStudentsToLearningSession = (courseLesson) => {
+     
+        let invitees = [];
+        
+        inviteeList.map(invitee => {
+    
+          let setInvitationUrl =  window.location.href + `/${invitee?._id}`;
+          let nameOfLessonInProgress = courseLesson.title;     
+          let lessonInProgress = true;    
+
+          invitees.push( invitee?._id );
+    
+           updateUserInvitationUrl(invitee, setInvitationUrl, nameOfLessonInProgress, lessonInProgress); 
+
+        });
+ 
+          addNewMeeting(
+                // inviteeList,
+                invitees, 
+                currentUser?._id, 
+                Date.now(), 
+                courseId, 
+                courseLesson?._id,
+                course?.name,
+                courseLesson?.title,
+                "http://localhost:3000" + lessonPlanUrl,
+                currentUser
+         )
+
+    }
+
+
 
     return (     
 
@@ -122,8 +194,8 @@ const CourseDetaiPage = ({
                             {lessons.map(lesson => 
                             (
                              <Match 
-                                   key={lesson.id}
-                                   path={`lessons/${lesson.id}`}>   
+                                   key={lesson._id}
+                                   path={`lessons/${lesson._id}`}>   
                               {({ match } ) => {  
                                            
                                 if( match ){
@@ -131,6 +203,8 @@ const CourseDetaiPage = ({
                                     setVideoUrl( lesson?.videoUrl );
 
                                     setCurrentLesson( lesson );
+
+                                    setLessonPlanUrl(`/LessonPlan/${courseId}/${lesson._id}/${lesson.title}`);
 
                                 }
          
@@ -140,12 +214,13 @@ const CourseDetaiPage = ({
                                              something={lesson.title}
                                              className="lesson-item"
                                              lesson={lesson}
+                                             courseId={courseId}
                                              onSubmit={(title) => saveLesson({...lesson, title})}
                                     >
                                     { (edit, remove) => (  
                                     <div>      
                                         <div>
-                                            <Link to={`lessons/${lesson.id}`}> <span>{ lesson?.title } </span> </Link> 
+                                            <Link to={`lessons/${lesson._id}`}> <span>{ lesson?.title } </span> </Link> 
 
                                             <div> 
 
@@ -166,10 +241,11 @@ const CourseDetaiPage = ({
 
                                             </button>
 
+
                                             <button
                                                 className="plan-lesson-btn"
-                                                 onClick={()=> navigate(`/LessonPlan/${courseId}/${lesson.id}/${lesson.title}`)}
-                                    
+                                                onClick={enableTeachPlatform}
+                                                 //onClick={()=> navigate(`/LessonPlan/${courseId}/${lesson._id}/${lesson.title}`)}
                                             >
 
                                                 Teach
@@ -191,6 +267,7 @@ const CourseDetaiPage = ({
                         < NewLessonPage 
                                  className="add-lesson-button"
                                  onSubmit={title => addNewLesson(title, courseId)}
+                                 courseId={courseId}
                         >
                            { (edit) =>  (
                                    <button 
@@ -207,7 +284,7 @@ const CourseDetaiPage = ({
                     
                         <div className="lesson"> 
                     
-                            <div className=""> 
+                            <div> 
             
                                {
                                  (currentLessonVideoUrl ) ?      < LessonPlanIframeComponent 
@@ -263,7 +340,7 @@ const CourseDetaiPage = ({
                                                           { currentLesson?.files?.length > 0 && (
                                                              <ul>
                                                                  {
-                                                                    currentLesson?.files?.map( (file, index)  =>  ( <li key={index}> <Link to={file}> {file.split('-')[1]} </Link> </li> )  )
+                                                                    currentLesson?.files?.map( (file, index)  =>  ( <li key={index}> <Link to={file}> {file?.split('-')[1]} </Link> </li> )  )
                                                                     
                                                                  }
                                                             </ul> 
@@ -274,6 +351,17 @@ const CourseDetaiPage = ({
                              
                             </div>         
                         </div>
+                            { currentUser?.role === "Tutor" && <div className="sidebar"> 
+                                 <div>
+                                 <CheckBoxComponent 
+                                        collection={studentsSubscribedToThisCourse}
+                                        setCollection={meetingInvitees => setInviteeList(meetingInvitees)}
+                                        description={"firstname"}
+                                        lessonTitle={currentLesson?.title}
+                                /> 
+                                </div>
+                             </div>
+                            }
                           {Validations.setErrorMessageContainer()}
                         </div>
                 </div>
@@ -282,19 +370,33 @@ const CourseDetaiPage = ({
 }
 
 
+const mapDispatch = {
+    loadLessons, 
+    addNewLesson, 
+    saveLesson, 
+    togglePreviewMode, 
+    getLessonVideoUrl, 
+    updateUserInvitationUrl,
+    setLessonInProgressStatus, 
+    addNewMeeting
+}
+
 const mapState = (state, ownProps) => {
 
      return {
          currentUser: state.users.user,
          previewMode: state.app.previewMode,
          isLessonsLoading:state.lessons.lessonsLoading,
-         isLoading: state.courses.coursesLoading,
+         isCourseLoading: state.courses.coursesLoading,
+         onLessonError: state.lessons.onSaveLessonError,
          course: getCoursesByCourseIdSelector( state, ownProps ),
          lessons: getLessonsByCourseIdSelector( state, ownProps ),
-         currentVideoUrl: state.lessons.currentVideoUrl
-        //  userOwnsCourse: userOwnsCourse(state, ownProps)  
+         currentVideoUrl: state.lessons.currentVideoUrl,
+         studentsSubscribedToThisCourse : Object.values(state?.users?.users)?.filter(user => user?.role === "Student" && user?.courses?.includes(ownProps?.courseId)),
+         lessonStarted: state.lessons.lessonStarted,
+         //  userOwnsCourse: userOwnsCourse(state, ownProps)  
     }
 }
 
 
-export default connect(mapState, { loadLessons, addNewLesson, saveLesson, togglePreviewMode, getLessonVideoUrl  })(CourseDetaiPage);
+export default connect(mapState, mapDispatch)(CourseDetaiPage);

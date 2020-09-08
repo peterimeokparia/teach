@@ -2,16 +2,19 @@ import React, { useState, useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { resetLessonError, deleteLesson } from '../actions';
 import './NewLessonPage.css';
+import { Validations } from '../../../helpers/validations';
 
 
 const NewLessonPage = ({
        resetError, 
        saveLessonInProgress, 
        lesson,
+       lessons,
        error,
        className,
        onSubmit,
        deleteLesson,
+       courseId,
        children}) => {
 
         
@@ -31,6 +34,12 @@ const reset = () => {
 
 const commitEdit = (e) => {
     e.preventDefault();
+
+   if ( Validations.duplicateCheck( title,  lessons, "lesson title", "title" ) ) {
+      
+     return;
+   }
+
     onSubmit(title)
      .then(reset)
       .catch( error => {
@@ -95,8 +104,9 @@ useEffect (() =>{
 };
 
 
-const mapState = state => {
+const mapState = ( state, ownProps ) => {
     return {
+        lessons: Object.values(state.lessons.lessons)?.filter(item => item.courseId === ownProps?.courseId),
         saveLessonInProgress: state.lessons.saveLessonInProgress,
         error: state.lessons.onSaveLessonError
     }

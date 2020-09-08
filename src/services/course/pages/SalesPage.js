@@ -28,9 +28,8 @@ const SalesPage = ({ course, courseId, navigate, addToSalesCart, currentUser, lo
             return true;
         }
     
-        return user?.courses?.includes(parseInt(courseId));
+        return user?.courses?.includes(courseId);
     }
-
 
 
    if ( userOwnsCourse(currentUser, courseId) ) {
@@ -48,7 +47,7 @@ const SalesPage = ({ course, courseId, navigate, addToSalesCart, currentUser, lo
 
    const addCourseToCart = (course) => {
  
-       let duplicateItemsExist = ( (currentUser?.cart.filter(item => item.id === parseInt(courseId, 10) ))?.length > 0 );
+       let duplicateItemsExist = ( (currentUser?.cart?.filter(item => item._id === courseId ))?.length > 0 );
 
        if ( duplicateItemsExist ) {
           
@@ -56,7 +55,7 @@ const SalesPage = ({ course, courseId, navigate, addToSalesCart, currentUser, lo
 
             //alert(`Duplicate. ${course?.name} is already in your cart.`); // change from alert to inline div
 
-            navigate('/courses');
+            navigate('/mycourses');
 
           return;
         }
@@ -64,7 +63,7 @@ const SalesPage = ({ course, courseId, navigate, addToSalesCart, currentUser, lo
 
            addToSalesCart( course );
 
-           navigate('/courses');
+           navigate('/mycourses');
 
       }
 

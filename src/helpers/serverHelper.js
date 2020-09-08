@@ -26,7 +26,7 @@ export const uploadFiles = ( selectedFiles, lesson ) => {
     let url = 'http://localhost:9005/fileUploads';
 
     let formData = new FormData();
-        formData.append('fileName', lesson?.id?.toString());
+        formData.append('fileName', lesson?._id?.toString());
 
     for(var x = 0; x < selectedFiles.length; x++) {
 
@@ -46,7 +46,7 @@ export const deleteFiles = ( file ) => {
     let formData = new FormData();
     formData.append('delete', file);
 
-    return uploadContent(url, formData);;
+    return uploadContent(url, formData);
 }
 
 
@@ -56,16 +56,16 @@ export const uploadVideos = ( videoData ) => {
     let url = 'http://localhost:9005/uploads';
 
     let formData = new FormData();
-    formData.append('id', videoData?.videoMetaData[0].id.toString());
+    formData.append('id', videoData?.videoMetaData[0]._id.toString());
     formData.append('courseId', videoData?.videoMetaData[0].courseId.toString());
-    formData.append('video', videoData?.videoBlob, videoData?.videoMetaData[0].id.toString());
+    formData.append('video', videoData?.videoBlob, videoData?.videoMetaData[0]._id.toString());
 
     return uploadContent(url, formData);
 }
 
 
 
-const uploadContent = (url, formData, method = `POST`) => {
+export const uploadContent = (url, formData, method = `POST`) => {
 
   let headers = new Headers();
   // headers.append('Content-Type', 'video/webm'); 
@@ -83,6 +83,12 @@ const uploadContent = (url, formData, method = `POST`) => {
 
 
 
+export const forceReload = () => {
+    window.location.reload()
+}
+
+
+
 function fetchWithData( url =``, data = {}, method = 'POST') {
     return fetch(url, {
       method,
@@ -90,10 +96,11 @@ function fetchWithData( url =``, data = {}, method = 'POST') {
       'Content-Type': 'application/json',
       Authorization: authToken ? `Bearer ${authToken}` : undefined
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
       // cache: "reload",
     } 
-  ).then(response => response.json() )
-
+  ).then(response => { 
+     
+      return response.json() })
 }
 

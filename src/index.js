@@ -35,7 +35,6 @@ const store = createStore(
 
 store.dispatch(loadUsers());  
 store.dispatch(lastLoggedInUser());   
-store.dispatch(loadLoggedInUsers());  
 store.dispatch(loadCourses());
 
 

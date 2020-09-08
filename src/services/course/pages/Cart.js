@@ -15,6 +15,8 @@ const Cart = ({ currentUser, buyCourse }) => {
 
           buyCourse(currentUser);
 
+          return;
+
     } else {
      
            navigate('/login');
@@ -37,7 +39,7 @@ const Cart = ({ currentUser, buyCourse }) => {
                                           (
                                             currentUser?.cart?.map(course => (
                                             
-                                              <li key={course?.id}>
+                                              <li key={course?._id}>
 
                                                    <span className="list-items">
 
@@ -45,7 +47,7 @@ const Cart = ({ currentUser, buyCourse }) => {
                       
                                                           <span className="price">{course?.price}</span>
 
-                                                          <span> <Link to={`/updatecart/${course?.id}`}>X</Link> </span>
+                                                          <span> <Link to={`/updatecart/${course?._id}`}>X</Link> </span>
 
                                                    </span>
                 

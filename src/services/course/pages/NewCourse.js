@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { addNewCourse } from '../actions';
 import { Validations } from  '../../../helpers/validations';
+import { forceReload } from  '../../../helpers/serverHelper';
 import './NewCourse.css'
 
 
@@ -10,6 +11,7 @@ const NewCourse = ({
     saveInProgress,
     onSaveError,
     user,
+    courses,
     dispatch }) => {
 
 
@@ -27,14 +29,19 @@ const NewCourse = ({
     const handleSubmit = e => { 
         e.preventDefault(); 
 
+
         if ( (Validations.checkFormInputString("Course Title", courseName)) && 
               (Validations.checkFormInputNumber("Course Price", coursePrice)))
          {
 
+            if ( Validations.duplicateCheck( courseName,  courses, "course title", "name" ) ) {
+      
+                return;
+              }
+
             dispatch(addNewCourse(courseName, coursePrice, currentUser));
 
          }
-        
      };
 
 
@@ -51,7 +58,7 @@ const NewCourse = ({
 
     return (
         <div className="NewCourse">
-        <h1>{`Welcome ${ currentUser?.username }. Create your awesome course. The world is waiting!`}</h1> 
+        <h1>{`Welcome ${ currentUser?.firstname}. Create your awesome course. The world is waiting!`}</h1> 
         <br></br>
         <form onSubmit={handleSubmit}> 
             <label>
@@ -73,11 +80,11 @@ const NewCourse = ({
             </label>
             <label>
                    Enter course description:  
-                {/* <input
+                <input
                    disabled={saveInProgress} 
-                   value={coursePrice} 
+                //    value={coursePrice} 
                    onChange={(e) => setCoursePrice(e.target.value)}
-                />         */}
+                />         
             </label>
              
             { onSaveError && (
@@ -89,7 +96,7 @@ const NewCourse = ({
             <button type="submit" disabled={saveInProgress} >Create Course</button>
         </form>
 
-        {Validations.setErrorMessageContainer()}
+        {/* {Validations.setErrorMessageContainer()} */}
 
     </div>
     );
@@ -99,6 +106,7 @@ const NewCourse = ({
 
 
 const mapState = state => ({
+    courses: Object.values(state?.courses?.courses),
     saveInProgress: state.courses.saveInProgress,
     onSaveError: state.courses.onSaveError,
 });

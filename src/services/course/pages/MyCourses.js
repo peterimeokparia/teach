@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
-import { Link, navigate } from '@reach/router';
-import { openNewCourseModal, closeNewCourseModal } from '../actions';
-import Loading from './Loading';
+import { Link, navigate, Redirect } from '@reach/router';
+import { openNewCourseModal, closeNewCourseModal,  loginUser } from '../actions';
 import LoginLogout from './LoginLogout'
 import CoursesComponent from './CoursesComponent';
 import NewCourse from './NewCourse';
@@ -11,49 +10,41 @@ import Cart from './Cart';
 import './MyCourses.css';
 
 
-const MyCourses = ({ 
-
+const MyCourses = ({
        user,
-       yourCourses,
-       coursesLoading,
-       onCoursesError,
+       courses,
        openNewCourseModal,
        closeNewCourseModal,
        isModalOpen}) => {
 
 
-    if ( ! user ){
 
-        navigate('/login');
+
+    if ( ! user || user?.email === undefined ){
+
+        return <Redirect to="/login" noThrow />
     }
 
-
-    if ( coursesLoading) {
-
-        return <Loading />
-    }         
-
-
-   
-    if ( onCoursesError ) {
-
-        return <div> { onCoursesError.message } </div> ;
-    }
-    
-
+ 
 
     const viewAllCourses = () => {
         navigate('/courses')
     }
-           
-     
+          
+
+   
+    let yourCourses = courses?.filter(course => user?.courses?.includes(course?._id));
+
+    let usersFirstName = user?.firstname;
+   
+    
     return (( user?.courses?.length === 0 ) ? (
 
        
         <div className="MyCourses">
 
             <header> 
-                    <h1>  {`Welcome ${user?.username}! `} </h1>
+                    <h1>  {`Welcome ${usersFirstName}! `} </h1>
 
                    
                     <div>  
@@ -72,13 +63,15 @@ const MyCourses = ({
              </div>
 
              <div>
-                <h3>You are not subscribed to any courses.</h3>
+                <h3>You are not subscribed to any  <span><Link to={"/courses"}> courses. </Link></span></h3>
              </div>
 
              <div>
-                <h4><Link to={"/courses"}>View all courses </Link></h4>
+             { ( user?.role === "Tutor" ) && <button className="new-course-btn" onClick={openNewCourseModal}>New Course</button> }
+    
              </div>
-
+      
+             <Modal isOpen={isModalOpen} onRequestClose={closeNewCourseModal}> <NewCourse user={user}/> </Modal>
          </div>
 
         ) : (
@@ -86,7 +79,7 @@ const MyCourses = ({
             <div className="MyCourses">
 
             <header> 
-                <h1>  {`Welcome ${user?.username}! `} </h1>
+                <h1>  {`Welcome ${usersFirstName}! `} </h1>
     
                 <h2> Your Course List </h2>
 
@@ -100,9 +93,10 @@ const MyCourses = ({
             <br></br>   
 
               <button className="view-courses-btn" onClick={viewAllCourses}>View All Courses</button> 
-              <button className="new-course-btn" onClick={openNewCourseModal}>New Course</button> 
+              { ( user?.role === "Tutor" ) && <button className="new-course-btn" onClick={openNewCourseModal}>New Course</button> }
 
-                    <CoursesComponent 
+                    <CoursesComponent
+                               modal={isModalOpen} 
                                courses={yourCourses}
                    />     
  
@@ -122,8 +116,9 @@ const mapDispatch = {
 
 const mapState = state => ({
     user: state?.users?.user,
-    yourCourses: state?.courses?.courses?.filter(course => state?.users.user?.courses?.includes(course?.id)),
-    courses: state?.courses?.courses,
+    users: Object.values(state?.users?.users),
+    yourCourses: Object.values(state?.courses?.courses)?.filter(course => state?.users.user?.courses?.includes(course?._id)),
+    courses: Object.values(state?.courses?.courses),
     coursesLoading: state?.courses?.coursesLoading,
     onCoursesError: state?.courses?.onCoursesError,
     isModalOpen: state?.courses?.isModalOpen

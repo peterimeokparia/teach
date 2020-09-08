@@ -4,7 +4,9 @@ import { setAuthToken } from "./services/course/api";
 
 export const saveAuthToken = store => next =>  action => {
 
-    if ( action.type === LOGIN_SUCCESS || action.type === SIGN_UP_SUCCESS || action.type === LAST_LOGGEDIN_USER) {
+    // if ( action.type === LOGIN_SUCCESS || action.type === SIGN_UP_SUCCESS || action.type === LAST_LOGGEDIN_USER) {
+
+        if ( action.type === LOGIN_SUCCESS ||  action.type === LAST_LOGGEDIN_USER) {
 
         setToken(action.payload?.token);
 

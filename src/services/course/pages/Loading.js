@@ -5,7 +5,7 @@ const Loading = () => {
 
 
     return (    <div>  
-                    `...fooled you HAHAHAHA!!! I do!!!` 
+                    `Loading...fooled you HAHAHAHA!!! I do!!!` 
                 </div> 
               );
 }

@@ -24,8 +24,10 @@ courseRoute.post('/', (req, res) => {
 
     let courseData = {
         name: req.body.name, 
-        price:req.body.price, 
-        createdBy:req.body.createdBy
+        price:req.body.price,
+        description:req.body.description, 
+        createdBy:req.body.createdBy,
+        operatorId:req.body.operatorId
     }
  
     let courses = new courseModel(courseData);  
@@ -35,11 +37,7 @@ courseRoute.post('/', (req, res) => {
         console.log('saved', data);
         res.status(200).json(data)})
         .catch( error => console.log(error) )
-
-
 });
-
-
 
 
 

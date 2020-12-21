@@ -87,7 +87,7 @@ class VideoPage extends React.PureComponent {
 
   startCapture = () => {
      
-     this.props.resetAllStartSettings(true)
+     this.props.resetAllStartSettings()
 
      this.enableStreamTest();
 
@@ -124,7 +124,7 @@ class VideoPage extends React.PureComponent {
       this.theStream = null;
     }
 
-       this.props.resetAllStopSettings(true);
+       this.props.resetAllStopSettings();
       
   };
 

@@ -13,12 +13,14 @@ SAVE_COURSE_SUCCESS,
 SAVE_COURSE_ERROR, 
 DELETE_COURSE_SUCCESS,
 DELETE_COURSE_BEGIN, 
-DELETE_COURSE_ERROR } from '../services/course/actions';
+DELETE_COURSE_ERROR,
+UPDATE_CURRENT_CLASSROOM_TUTOR } from '../services/course/actions';
 
 
 
 const initialState = {
     courses: {},
+    courseTutor: {},
     saveInProgress: false,
     onSaveError: null,
     coursesLoading: false,
@@ -69,6 +71,9 @@ const reducer = produce((draft, action) => {
              draft.isModalOpen = false;
              draft.onSaveError = null;
         return;
+        case UPDATE_CURRENT_CLASSROOM_TUTOR:
+             draft.courseTutor = action.payload;   
+        return; 
         default:
         return;
 

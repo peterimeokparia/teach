@@ -4,6 +4,59 @@
   flex-direction: column;
 }
 
+.CourseDetail form {
+  display: flex;
+  flex-direction: column;
+  max-width: 250px;
+  margin: 0;
+}
+.CourseDetail form label {
+  /* display: flex;
+  flex-direction: column; */
+  margin-bottom: 1em;
+  font-weight: bold; 
+}
+.CourseDetail form input {
+  padding: 8px 6px 8px 8px 9px;
+  border: 1px solid #aaa;
+  border-radius: 2px;
+}
+.CourseDetail form input:focus {
+  outline: none;
+  border: 1px solid #5d2faf;
+}
+.CourseDetail form button {
+  background: #5d2faf;
+  font-size: 18px;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px #5d2faf;
+  transition: box-shadow, background-color 0.12s;
+  outline: none;
+  margin-bottom: 10px;
+}
+.CourseDetail form button + button {
+  opacity: 0.8;
+  font-size: 14px;
+  padding: 7px;
+  margin: initial 10px;
+}
+.CourseDetail form button:hover {
+  background-color: #753fd6;
+  cursor: pointer;
+}
+.CourseDetail form button[disabled] {
+  opacity: 0.4;
+}
+.CourseDetail form button:focus {
+  box-shadow: 0 1px 8px #5d2faf;
+}
+.CourseDetail form button:active {
+  transform: scale(0.98);
+}
+
 .CourseDetail header {
   background-color: #673ab7;
   color: #fff;
@@ -17,10 +70,21 @@
   background-color: #673ab7;
   margin: 0;
   font-size: 24px;
+
+   text-transform: uppercase;
+    letter-spacing: 0.5rem;
+    /* padding: 2rem 0; */
+    font-weight: bold; 
 }
 .CourseDetail header .current-lesson {
   margin: 0;
   font-size: 16px;
+  font-weight: 400;
+  opacity: 0.8;
+}
+.CourseDetail header .current-lesson-button {
+  margin: 0;
+  font-size: 12px;
   font-weight: 400;
   opacity: 0.8;
 }
@@ -66,9 +130,16 @@
   left: 50%;
   margin-right: 0%;
   padding-bottom: 15px;
+  padding-left: 0.5rem;
+
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  /* padding: 0.5rem 0;  */
+  font-weight: bold; 
 }
 .toggle-stage-btns-show,
 .plan-lesson-btn,
+.current-lesson-button,
 .delete-lesson-btn,
 .edit-lesson-btn {
   opacity: 0;
@@ -91,11 +162,13 @@
 }
 .toggle-stage-btns-hide {
   visibility: hidden;
-}
+} 
 .lesson-item:hover .toggle-stage-btns-show,
 .toggle-stage-btns-show:focus,
 .lesson-item:hover .plan-lesson-btn,
 .plan-lesson-btn:focus,
+.lesson-item:hover .current-lesson-button,
+.current-lesson-button:focus,
 .lesson-item:hover .delete-lesson-btn,
 .delete-lesson-btn:focus,
 .lesson-item:hover .edit-lesson-btn,
@@ -144,6 +217,78 @@
   padding-left: 50px;
   padding-top: 0px;
 }
+.StudentDetailPageLink{
+  padding-top: 20px;
+  font-size: 18px;
+  font-weight: 600;
+
+}
+.dropdownComponents {
+  /* display: flex;  */
+}
+.dropdownComponents .left {
+  /* flex: 1; */
+}
+.dropdownComponents .right {
+  /* flex: 1; */
+}
+.viewGradesLink, .checkBoxViewGradesLink {
+  color: blue;
+  cursor: pointer;
+}
+.viewGradesLink, .checkBoxViewGradesLink:hover {
+  color: #673ab7;
+}
+.checkBoxViewGradesLink {
+  color: white;
+  cursor: pointer;
+}
+.checkBoxViewGradesLink:hover {
+  color: greenyellow;
+}
+
+/* unvisited link */
+ a:link {
+  color: blue;
+}
+
+/* visited link */
+ /* a:visited {
+  color: green;
+}  */
+
+/* mouse over link */
+a:hover {
+  color: #673ab7;
+}
+
+/* selected link */
+/* a:active {
+  color: blue;
+} */ 
+
+.invite-btn-animation {
+
+  opacity: 1;
+  border: 2px;
+  font-size: 10px;
+  cursor: pointer;
+  padding-left: 30px;
+  margin-top: 15px;
+  padding-right: 30px;
+  margin-left: 25px;
+  box-shadow: 10px 10px;
+
+  /* width: 100px;
+  height: 100px; */
+  background-color: #20c997; 
+  position: relative;
+  animation-name: example;
+  animation-duration: 4s;
+  animation-iteration-count: 2;
+}
+
+
 /* .toggle-stage-btns-show {
   visibility: visible;
 }
@@ -178,7 +323,12 @@
     flex: 1;
   }
 }
-
+.CourseDetail .gradesHeader{
+  padding-left: 80px;
+}
+.CourseDetail .grades{
+  padding-left: 165px;
+}
 
 .flexible-modal {
   position: absolute;
@@ -213,5 +363,35 @@
   top:0;
   cursor:move;
 }
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
 
 
+@keyframes example {
+  0%   {background-color:red; left:0px; top:0px;}
+  25%  {background-color:yellow; left:200px; top:0px;}
+  50%  {background-color:blue; left:200px; top:200px;}
+  75%  {background-color:green; left:0px; top:200px;}
+  100% {background-color:red; left:0px; top:0px;}
+}

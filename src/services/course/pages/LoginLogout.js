@@ -1,14 +1,36 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Redirect, navigate } from '@reach/router';
-import { logOut } from '../actions';
-import { Validations } from  '../../../helpers/validations';
+
+import { 
+connect } from 'react-redux';
+
+import { 
+Redirect, 
+navigate } from '@reach/router';
+
+import { 
+logOut } from '../actions';
+
+import { 
+Validations } from  '../../../helpers/validations';
+
 import Swal from 'sweetalert2'
+
+import { 
+forceReload } from '../../../helpers/serverHelper';
+
+import { 
+getOperatorFromOperatorBusinessName } from '../Selectors';
+
 import './LoginLogout.css';
 
 
+const LoginLogout = ({ 
+operatorBusinessName,
+operator, 
+user,  
+logOut }) => {
 
-const LoginLogout = ({user,  logOut}) => {
+    const logInPage = `/${operatorBusinessName}/login`;
 
     const performLoginLogOut = (e) => {
 
@@ -33,30 +55,32 @@ const LoginLogout = ({user,  logOut}) => {
     
                   } else {
                
-                    userLogOut();
+                    userLogOut( user );
                     
                   }
   
             })
           } else {
 
-                   userLogOut();
+                   userLogOut( user );
           }
   
         } else {
  
-          navigate('/login')
-          // return <Redirect to="/login" noThrow />  
+          navigate(logInPage)
         } 
 
     }
 
-    const userLogOut = () => {
 
-        logOut();
 
-        navigate('/login')
-      // return <Redirect to="/login" noThrow />  
+    const userLogOut = ( usr ) => {
+
+        logOut( usr );
+
+        navigate(logInPage);
+
+        forceReload();
     }
 
     return (<span>
@@ -78,9 +102,10 @@ const LoginLogout = ({user,  logOut}) => {
 
 
 
-const mapState = (state)   => {
+const mapState = ( state, ownProps )   => {
   return {
-    user: state.users.user
+    user: state.users.user,
+    operator: getOperatorFromOperatorBusinessName(state, ownProps),
   };
 }
 

@@ -29,7 +29,7 @@ const Cart = ({ currentUser, buyCourse }) => {
                     <ReactModal initWidth={400} initHeight={300}top left className="cart" isOpen={currentUser?.cart?.length > 0} onRequestClose={currentUser?.cart?.length === 0}>  
                     
 
-                            <h3>My Cart</h3>
+                            <h3>New Sessions</h3>
 
                             <div className="body">
                                 <p></p>
@@ -39,15 +39,17 @@ const Cart = ({ currentUser, buyCourse }) => {
                                           (
                                             currentUser?.cart?.map(course => (
                                             
-                                              <li key={course?._id}>
+                                              <li key={course?.course?._id}>
 
                                                    <span className="list-items">
 
-                                                        <span className="">{course?.name}</span>
+                                                        <span className="">{course?.course?.name}</span>
                       
-                                                          <span className="price">{course?.price}</span>
+                                                          <span className="price">{course?.course?.price}</span>
 
-                                                          <span> <Link to={`/updatecart/${course?._id}`}>X</Link> </span>
+                                                          <span className="">{course?.numberOfSessions}</span>
+
+                                                          <span> <Link to={`/updatecart/${course?.course?._id}`}>remove</Link> </span>
 
                                                    </span>
                 
@@ -74,7 +76,7 @@ const Cart = ({ currentUser, buyCourse }) => {
                           
                                 }
                                              <div>
-                                             <button onClick={buyOrLogin}>buy</button>
+                                             <button onClick={buyOrLogin}>Add</button>
                                              </div>
                             </div>
                   

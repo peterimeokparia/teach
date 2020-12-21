@@ -54,6 +54,10 @@ const userSchema = new Schema ({
         type: Boolean, 
         required: false  
    },
+   userIsValidated: { 
+    type: Boolean, 
+    required: false  
+   },
    nameOfLessonInProgress: {
         type: String,
         required: false
@@ -65,6 +69,44 @@ const userSchema = new Schema ({
     meetingId: {
         type: String,
         required: false
+    },
+    meetings: {
+        type: Array,
+        required: false
+    },
+    sessions: {
+        type: Array,
+        require: false
+    },
+    markDown: { 
+        type: String, 
+        required: false  
+    },
+    avatarUrl: { 
+        type: String, 
+        required: false  
+    },
+    files: {
+        type: Array,
+        required: false
+    },
+    classRooms: {
+        type: Array,
+        required: false
+    },
+    operatorId: { 
+        type: String, 
+        required: true  
+    },
+    timeMeetingStarted: { 
+        type: Date, 
+        required: false,
+        default: Date.now  
+    },
+    timeMeetingEnded: { 
+         type: Date, 
+         required: false,
+         default: Date.now  
     }
 });
 

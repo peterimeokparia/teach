@@ -1,23 +1,42 @@
 import React  from 'react';
-import { connect } from 'react-redux';
-import { Link, navigate } from '@reach/router';
+
+import { 
+connect } from 'react-redux';
+
+import { 
+navigate } from '@reach/router';
+
 import Loading from './Loading';
-import LoginLogout from './LoginLogout'
+
+import LoginLogout from './LoginLogout';
+
+import MainMenu from './MainMenu';
+
+import { 
+navContent } from  '../../../helpers/navigationHelper.js';
+
+import { 
+getOperatorFromOperatorBusinessName, 
+getUsersByOperatorId,
+getCoursesByOperatorId } from '../Selectors';
+
 import './CoursesComponent.css';
 
 
+//shadow-panel
 
-const Users = ({ 
-       coursesLoading,
-       onCoursesError,
-       user,
-       users
-        }) => {
+const Users = ({
+operatorBusinessName,
+operator,     
+coursesLoading,
+onCoursesError,
+user,
+users}) => {
 
 
     if ( ! user ){
 
-        navigate('/login');
+        navigate(`/${operatorBusinessName}/login`);
     }
 
 
@@ -34,55 +53,70 @@ const Users = ({
     }
     
 
-    const viewMyCourses = () => {
-        navigate('/mycourses');
+    const viewCurrentUsersCourseList = ( userId ) => {
+        navigate(`/${operatorBusinessName}/coursestaught/${userId}`); 
     }
 
-    const viewCurrentUsersCourseList = (userId) => {
-        navigate(`/coursestaught/${userId}`); 
+
+    const gotToLessonPlan = ( user ) => { 
+
+          navigate(`/${operatorBusinessName}/classroom/${user._id}`);
+        //navigate(`/${operatorBusinessName}/LessonPlan/${user._id}/${user.firstname}`);
     }
                
-      //make courses.length a static value instead of calling courses all the time
+
+    let navigationContent = navContent( user, operatorBusinessName, user?.role,  "Student" ).users;
+
     return (
 
             <div className="MyCourses">
        
                <header> 
+
+               <MainMenu 
+                    navContent={navigationContent}
+               /> 
           
                  <h1>  {`Welcome ${user?.firstname}! `} </h1>
 
-                   <LoginLogout/>
+                   <LoginLogout
+                        user={user}
+                   />
                           
                </header>
 
-                 <div className="my-courses-btn">
-                    <button className="new-course-btn" onClick={viewMyCourses}>My Courses</button> 
-                 </div>
-                
-
                 <div className="ComponentCourseList">
 
-                <ul className={"component-seconday-list-body"}>
+                <ul >
+                    
                    {
                        users.map(singleUser => 
-                        <div className={ "user-list-items"}>
-                           <li> 
-                              
+                       
+                           <li className={"component-seconday-list-body"}> 
+                             <div className={ "user-list-items"}>
+
                               {singleUser?.firstname}
 
+                              <span className=""> <h6>{singleUser?.courses?.length} {singleUser?.courses?.length === 1  ? "Course.": "Courses."}  </h6></span>  
                                <button
                                         className="user-course-btn"
                                         onClick={() => viewCurrentUsersCourseList(singleUser?._id)}
                                         disabled={singleUser?.courses?.length === 0} 
-                                > 
-                                        
-                                        <span> {singleUser?.courses?.length} {singleUser?.courses?.length === 1  ? "Course.": "Courses."}  </span>  <span> {singleUser?.courses?.length === 1  ? "View Course." : (singleUser?.courses?.length === 0) ? "" : "View Courses."}  </span>
+                                >                                
+                                   <span> {singleUser?.courses?.length === 1  ? "View Course." : (singleUser?.courses?.length === 0) ? "" : "View Courses."}  </span>
                                         
                                  </button>
-                               
+                                 <button
+                                        className="user-course-btn"
+                                        onClick={() => gotToLessonPlan(singleUser)}
+                                        disabled={singleUser?.courses?.length === 0} 
+                                >                                
+                                   <span> {"Go to Class Room."}  </span>
+                                        
+                                 </button>
+                                </div> 
                            </li>
-                           </div>  
-
+                           
                        )
                    }
                 </ul>
@@ -96,10 +130,12 @@ const Users = ({
 
 
 
-const mapState = state => ({
+
+const mapState = (state, ownProps) => ({
     user: state?.users?.user,
-    users: Object.values(state?.users?.users)?.filter(user => user?.role === "Tutor"),
-    courses: Object.values(state?.courses?.courses),
+    operator: getOperatorFromOperatorBusinessName(state, ownProps),
+    users: getUsersByOperatorId(state, ownProps)?.filter(user => user?.role === "Tutor"),
+    courses: getCoursesByOperatorId(state, ownProps),
     coursesLoading: state?.courses?.coursesLoading,
     onCoursesError: state?.courses?.onCoursesError
     

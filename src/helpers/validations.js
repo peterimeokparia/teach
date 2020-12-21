@@ -1,10 +1,8 @@
- import React from 'react';
- import { ToastContainer, toast } from 'react-toastify';
+import React from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2'
  
-//https://programmingwithmosh.com/javascript/react-file-upload-proper-server-side-nodejs-easy/
-//https://fkhadra.github.io/react-toastify/introduction/
 
  export const Validations = {
 
@@ -91,10 +89,12 @@ import Swal from 'sweetalert2'
 
     warn: function ( message ) {
 
-        // toast.warn(message);
         Swal.fire(message);
     },
-
+    toastWarning: function ( message ) {
+        
+        toast.warn(message);   
+    },
     duplicateCheck: function ( item, collection, description, propertyName ) {
 
         if( collection?.find( record => record[propertyName] === item) ) {

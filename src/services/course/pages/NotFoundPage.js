@@ -5,7 +5,7 @@ const NotFoundPage = () => {
 
 
     return (    <div>  
-                    `...fooled you HAHAHAHA and you thought that I exist!!!` 
+                    `Not Found...fooled you HAHAHAHA and you thought that I exist!!!` 
                 </div> 
               );
 }

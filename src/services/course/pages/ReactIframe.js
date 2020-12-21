@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 
-const ReactIframe = ({  className, name, source, width, height, allow, scrolling, frameBorder}) => {
+const ReactIframe = ({  className, name, source, width, height, allow, scrolling, frameBorder }) => {
 
     return (
         <iframe
@@ -13,7 +13,6 @@ const ReactIframe = ({  className, name, source, width, height, allow, scrolling
             scrolling={scrolling}
             frameBorder={frameBorder}
             className={className}
-            allowFullScreen
         >
        </iframe>
     );

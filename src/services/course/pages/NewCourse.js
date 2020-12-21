@@ -1,27 +1,37 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { connect } from 'react-redux';
-import { addNewCourse } from '../actions';
-import { Validations } from  '../../../helpers/validations';
-import { forceReload } from  '../../../helpers/serverHelper';
+import React, { 
+useState, 
+useEffect, 
+useRef } from 'react';
+
+import { 
+connect } from 'react-redux';
+
+import { 
+addNewCourse } from '../actions';
+
+import { 
+Validations } from  '../../../helpers/validations';
+
 import './NewCourse.css'
 
 
 
 const NewCourse = ({
-    saveInProgress,
-    onSaveError,
-    user,
-    courses,
-    dispatch }) => {
-
+saveInProgress,
+onSaveError,
+user,
+courses,
+operator,
+dispatch }) => {
 
     const [ courseName, setCourseName ] = useState('');
     const [ coursePrice, setCoursePrice ] = useState('');
+    const [ courseDescription, setCourseDescription ] = useState('');
     const inputRef = useRef();
     let currentUser = user;
     
     
-    useEffect (() =>{
+    useEffect (() => {
         inputRef.current.focus();
     }, []); 
 
@@ -37,9 +47,9 @@ const NewCourse = ({
             if ( Validations.duplicateCheck( courseName,  courses, "course title", "name" ) ) {
       
                 return;
-              }
+            }
 
-            dispatch(addNewCourse(courseName, coursePrice, currentUser));
+            dispatch(addNewCourse(courseName, coursePrice, courseDescription, currentUser, operator));
 
          }
      };
@@ -58,7 +68,7 @@ const NewCourse = ({
 
     return (
         <div className="NewCourse">
-        <h1>{`Welcome ${ currentUser?.firstname}. Create your awesome course. The world is waiting!`}</h1> 
+        <h1>{`Create new course.`}</h1> 
         <br></br>
         <form onSubmit={handleSubmit}> 
             <label>
@@ -82,8 +92,8 @@ const NewCourse = ({
                    Enter course description:  
                 <input
                    disabled={saveInProgress} 
-                //    value={coursePrice} 
-                   onChange={(e) => setCoursePrice(e.target.value)}
+                   value={courseDescription} 
+                   onChange={(e) => setCourseDescription(e.target.value)}
                 />         
             </label>
              
@@ -91,12 +101,10 @@ const NewCourse = ({
                 <div className="saveError-message">
                     Error: { onSaveError.message }
                 </div>
-            )}; 
+            )}
 
             <button type="submit" disabled={saveInProgress} >Create Course</button>
         </form>
-
-        {/* {Validations.setErrorMessageContainer()} */}
 
     </div>
     );
@@ -105,8 +113,8 @@ const NewCourse = ({
 
 
 
-const mapState = state => ({
-    courses: Object.values(state?.courses?.courses),
+const mapState = (state, ownProps ) => ({
+    courses: Object.values(state?.courses?.courses)?.filter(crs => crs?.operatorId === ownProps.operator?._id),
     saveInProgress: state.courses.saveInProgress,
     onSaveError: state.courses.onSaveError,
 });

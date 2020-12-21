@@ -1,11 +1,10 @@
-import { postData, putData, deleteData,  deleteFiles, uploadContent} from '../../helpers/serverHelper';
+import { postData, putData, deleteData,  uploadFiles, deleteFiles, uploadContent } from '../../helpers/serverHelper';
 import { tokenGenerator, verifyToken, ensureToken, privateKey} from './authentication';
 import axios from 'axios'
 
 
-
-const PREFIX = "/api";
-const Url = "http://localhost:9005"; //dotenv.config
+ //dotenv.config
+const PREFIX = "/api/v1";
 
 
 let apiAuthToken = null;
@@ -16,39 +15,55 @@ export const setAuthToken = token => {
 }
 
 
-
-export const createCourse = ( name, price, createdBy ) => {
-  return postData(Url+ '/courses', {
+//api/v1 
+export const createCourse = ( name, price, description, createdBy, operatorId ) => {
+  return postData(PREFIX+ '/courses', {
     name,
     price: parseFloat(price),
-    createdBy
+    description,
+    createdBy,
+    operatorId
   });
 };
 
 
 
+//api/v2 
+export const createCourseNew = ( name, price, description, createdBy, operatorId ) => {
+  return postData(PREFIX+ '/courses', {
+    name,
+    price: parseFloat(price),
+    description,
+    createdBy,
+    operatorId
+  });
+};
 
+
+
+//api/v1
 export const getCourses = () => {
-  return fetch(Url + '/courses')
+  return fetch(PREFIX + '/courses')
    .then(handleErrors)
      .then(response => response?.json() );
 }
 
 
 
-
-export const addLessons = ( title, courseId ) => {
-  return postData(Url + '/lessons', {
+//api/v1
+export const addLessons = ( title, courseId, lessonDate ) => {
+  return postData(PREFIX + '/lessons', {
       title,
-      courseId
+      courseId,
+      lessonDate
   });
 };
 
 
 
-
+//api/v1
 export const getLessons = ( courseId ) => {
-  return fetch(Url + `/lessons?courseId=${courseId}`, {
+  return fetch(PREFIX + `/lessons?courseId=${courseId}`, {
     headers: {
       Authorization: `Bearer ${apiAuthToken}`
     }
@@ -58,58 +73,118 @@ export const getLessons = ( courseId ) => {
 }
 
 
-
+//api/v1
 export const updateLessons = ( lesson ) => {
-  return putData(Url + `/lessons/${ lesson._id }`, lesson );
+  return putData(PREFIX + `/lessons/${ lesson._id }`, lesson );
 };
 
 
-
+//api/v1
 export const removeLessons = lesson => {
-  return deleteData(Url + `/lessons/${ lesson._id }`);
+  return deleteData(PREFIX + `/lessons/${ lesson._id }`);
+}
+
+
+//api/v1
+export const updateCourse = ( course ) => {
+  return putData(PREFIX + `/courses/${ course._id }`, course );
+};
+
+
+//api/v1
+export const removeCourse = course => {
+  return deleteData(PREFIX + `/courses/${ course._id }`);
 }
 
 
 
-export const updateCourse = ( course ) => {
-  return putData(Url + `/courses/${ course._id }`, course );
+//api/v1
+export const createClassRoom = ( name, description, users, createdBy, operatorId ) => {
+  return postData(PREFIX+ '/classrooms', {
+    name,
+    description,
+    users,
+    createdBy,
+    operatorId
+  });
 };
 
 
 
-export const removeCourse = course => {
-  return deleteData(Url + `/courses/${ course._id }`);
+//api/v2
+export const createClassRoomNew = ( name, description, users, createdBy, operatorId ) => {
+  return postData(PREFIX+ '/classrooms', {
+    name,
+    description,
+    users,
+    createdBy,
+    operatorId
+  });
+};
+
+
+
+//api/v1
+export const getClassRooms = () => {
+  return fetch(PREFIX + '/classrooms')
+   .then(handleErrors)
+     .then(response => response?.json() );
 }
 
+
+
+export const updateClassRoom = ( classroom ) => {
+  return putData(PREFIX + `/classrooms/${ classroom._id }`, classroom );
+};
+
+
+
+export const removeClassRoom = classroom => {
+  return deleteData(PREFIX + `/classrooms/${ classroom._id }`);
+}
 
 
 
 
 export const addMeetings = ( invitees, 
                              userId,
+                             sessions,
                              timeStarted,
                              courseId,
                              lessonId,
                              courseTitle,
                              lessonTitle,
-                             meetingUrl ) => {
-  return postData(Url + '/meetings', {
+                             meetingUrl,
+                             user,
+                             usersWhoJoinedTheMeeting ) => {
+  return postData(PREFIX + '/meetings', {
         invitees, 
         userId,
+        sessions,
         timeStarted,
         courseId,
         lessonId,
         courseTitle,
         lessonTitle,
-        meetingUrl
+        meetingUrl,
+        user,
+        usersWhoJoinedTheMeeting
   });
 };
 
 
 
 
-export const getMeetings = ( userId ) => {
-  return fetch(Url + `/meetings?userId=${userId}`, {
+export const getMeetings = () => {
+  return fetch(PREFIX + '/meetings')
+   .then(handleErrors)
+     .then(response => response?.json() );
+}
+
+
+
+export const getMeetingsByUserId = ( userId ) => {
+  return fetch(PREFIX + `/meetings?userId=${userId}`, {
     headers: {
       Authorization: `Bearer ${apiAuthToken}`
     }
@@ -122,50 +197,41 @@ export const getMeetings = ( userId ) => {
 
 
 export const updateMeetings = ( meetingId, meeting ) => {
-  return putData(Url + `/meetings/${ meetingId }`, meeting );
+  return putData(PREFIX + `/meetings/${ meetingId }`, meeting );
 };
 
 
 
 
 export const removeMeetings = meeting => {
-  return deleteData(Url + `/meetings/${ meeting?._id }`);
-}
-
-
-
-export const deleteLessonFile = file => {
-   return deleteFiles( file );
+  return deleteData(PREFIX + `/meetings/${ meeting?._id }`);
 }
 
 
 
 
-
-export const updateUser = ( currentUser ) => {
-
-  localStorage.setItem('currentuser', JSON.stringify(currentUser));
-
-  return updateCurrentUser(currentUser?._id, currentUser);
+export const deleteLessonFileByFileName = ( fileName ) => {
+  return fetch(PREFIX + `/fileUploads/delete?fileName=${fileName}`) 
+    .then(handleErrors)
+     .then(response => response.json());
 }
 
 
 
-
-export const updateCurrentUser = ( userId,  user ) => {
-  return putData(Url + `/users/${ userId }`, 
-  {
-    ...user,
-    cart: [], 
-    cartTotal: 0,
-    paymentStatus: ""
-  } 
-)};
+export const updateUser = ( user ) => {
+  return putData(PREFIX + `/users/${ user._id }`, user );
+};
 
 
 
 export const updateInvitationUrl = ( userId,  user) => {
-  return putData(Url + `/users/${ userId }`, user)
+  return putData(PREFIX + `/users/${ userId }`, user)
+};
+
+
+
+export const uploadUserAvatar = ( selectedFiles,  file, prefix, teachObjectName ) => {
+  return uploadFiles( selectedFiles, file, prefix, teachObjectName );
 };
 
 
@@ -175,38 +241,254 @@ export const purchase = ( currentUser ) => {
   
   try {
 
-    if ( approvePayment(currentUser)){
+    if ( approvePayment(currentUser) ){
             
-      currentUser.cart.forEach( course => {
-  
-          currentUser.courses.push( course._id );
-      });
+         currentUser.cart.forEach(course  => {
+         
+          currentUser.courses.push( course?.course?._id );
 
+         });
 
-    return putData(Url + `/users/buy/${currentUser._id}`, {
-            ...currentUser,
-            courses: currentUser.courses,
-            paymentStatus: "approved"
-                          
-    });      
+         return updateUser({ 
+                ...currentUser,
+                courses: currentUser.courses,
+                sessions: currentUser.sessions,
+                paymentStatus: "approved"                     
+         });      
   }
 
   } catch (error) {
+
+    // check payment status
+    updateUser(
+      {
+          ...currentUser,
+          cart: [], 
+          cartTotal: 0,
+          paymentStatus: ""
+        })
+
+    throw new Error( error );
     
-      throw new Error("Payment processing failed!");
+      // throw new Error( "Payment processing failed!" );
   }
 }
 
 
 
 
+export const autoRenew = (currentUser, session) => {
+
+  let autoRenewStatus = {};
+
+  try { 
+
+    if ( approvePayment( currentUser ) ) { 
+
+       autoRenewStatus['Session'] =  updateSession( session?._id, {
+                                      ...session,
+                                      status: true,
+                                      autoRenewDates: [ ...session?.autoRenewDates, Date.now() ], 
+                                      numberOfSessions: 0
+                                    }); 
+
+       autoRenewStatus['User'] = {...currentUser, paymentStatus: "approved" };
+       
+       updateUser({ ...currentUser, paymentStatus: "" });
+    }
+
+    return autoRenewStatus;
+ 
+  } catch ( error ) {
+    
+    throw new Error( error );  
+    //  throw new Error( "Payment processing failed!" );  
+  }
+ 
+}
+
+
+
 export const purchaseHistory = (currentUser) => {
-  return postData(Url +  '/purchaseHistory', {
+  return postData(PREFIX +  '/purchaseHistory', {
        ...currentUser,
        purchaseHistoryTimeStamp:getDateTime()
   });
 }
 
+
+
+
+export const addSession = (session) => {
+  return postData(PREFIX + `/sessions`, { 
+    ...session 
+  });
+}
+
+
+
+
+export const getSessions = () => {
+  return fetch(PREFIX + '/sessions')
+   .then(handleErrors)
+     .then(response => response?.json() );
+}
+
+
+
+export const getSessionsById = ( sessionId ) => {
+  return fetch(PREFIX + `/sessions?sessionId=${sessionId}`) 
+    .then(handleErrors)
+     .then(response => response.json());
+}
+
+
+
+
+
+export const getSessionByUserId = ( userid ) => {
+  return fetch(PREFIX + `/sessions?userId=${userid}`) 
+    .then(handleErrors)
+     .then(response => response.json());
+}
+
+
+
+export const updateSession = (sessionId, session) => {
+  return putData(PREFIX + `/sessions/${ sessionId }`, 
+  {
+    ...session
+  });      
+}
+
+
+
+
+export const removeSessions = session => {
+  return deleteData(PREFIX + `/sessions/${ session?._id }`);
+}
+
+
+
+
+export const incrementSession = (session) => {
+  
+  session.numberOfSessions += 1;
+
+  return updateSession(session?._id, {
+        ...session
+        // numberOfSessions: session.numberOfSessions
+  });
+     
+}
+
+
+
+
+export const decrementSessionCount = (session) => {
+
+  if ( session.numberOfSessions === 0 ) return;
+
+  session.numberOfSessions  -= 1;
+
+  return updateSession(session, {
+        ...session,
+        numberOfSessions: session.numberOfSessions
+});
+  
+}
+
+
+
+export const addGrade = (grade) => {
+  return postData(PREFIX + `/grades`, { 
+    ...grade 
+  });
+}
+
+
+
+export const getGrades = (  ) => {
+  return fetch(PREFIX + `/grades`)
+   .then(handleErrors)
+     .then(response => response?.json() );
+}
+
+
+
+export const getGradesByStudentId = ( studentId ) => {
+  return fetch(PREFIX + `/grades?studentId=${studentId}`)
+   .then(handleErrors)
+     .then(response => response?.json() );
+}
+
+
+
+export const getGradesById = ( gradeId ) => {
+  return fetch(PREFIX + `/grades?gradeId=${gradeId}`) 
+    .then(handleErrors)
+     .then(response => response.json());
+}
+
+
+export const updateGrade = (grade) => {
+  return putData(PREFIX + `/grades/${ grade?._id }`, 
+  {
+    ...grade
+  });      
+}
+
+
+
+
+export const removeGrade = grade => {
+  return deleteData(PREFIX + `/grades/${ grade?._id }`);
+  
+}
+
+
+
+export const add = (data, route) => {
+  return postData(PREFIX + route, { 
+    ...data 
+  });
+}
+
+
+
+export const get = ( route ) => {
+  return fetch(PREFIX + route)
+   .then(handleErrors)
+     .then(response => response?.json() );
+}
+
+
+
+
+
+
+
+export const getById = ( id, routePlusId ) => {
+  return fetch(PREFIX + routePlusId + `${id}`) 
+    .then(handleErrors)
+     .then(response => response.json());
+}
+
+
+
+export const update = (data, route) => {
+  return putData(PREFIX + route + `${ data?._id }`, 
+  {
+    ...data
+  });      
+}
+
+
+
+
+export const remove = (data, route) => {
+  return deleteData(PREFIX + route +`${ data?._id }`);
+}
 
 
 
@@ -216,7 +498,12 @@ export const login = (user) => {
 
   let token = tokenGenerator({usename: user.username, password: user.password}, privateKey, { expiresIn: '1h' })
 
-  let loginCount = user?.loginCount;
+  let loginCount = user?.loginCount; 
+
+  let userIsValidated = true;
+
+  let operatorId = user?.operatorId;
+
 
   if ( loginCount === undefined || loginCount === 0 ) {
     
@@ -228,16 +515,13 @@ export const login = (user) => {
         
   }
 
-  return putData(Url + `/users/${ user._id }`, {
-    ...user,
+  return putData(PREFIX + `/users/${ user._id }`, {
+    //...user,
     token,
+    userIsValidated,
+    operatorId,
     loginCount
  })
-
-//   return postData(PREFIX + '/login', {
-//     ...user,
-//     token
-//  });
 }
 
 
@@ -246,8 +530,20 @@ export const signUp = (user) => {
 
   let token = tokenGenerator({usename: user.username, password: user.password}, privateKey, { expiresIn: '1h' })
 
-  return postData(Url + '/users', {
+  return postData(PREFIX + '/users', {
     ...user,
+    token
+ });
+}
+
+
+
+export const operatorSignUp = (operator) => {
+
+  let token = tokenGenerator({usename: operator.email, password: operator.password}, privateKey, { expiresIn: '1h' })
+
+  return postData(PREFIX + '/operators', {
+    ...operator,
     token
  });
 }
@@ -256,47 +552,62 @@ export const signUp = (user) => {
 
 
 export const getUsers = () => {
-  return fetch(Url + '/users')
+  return fetch(PREFIX + '/users')
    .then(handleErrors)
      .then(response => response?.json() );
 }
 
+
+
+
+export const getOperators = () => {
+  return fetch(PREFIX + '/operators')
+   .then(handleErrors)
+     .then(response => response?.json() );
+}
 
 
 
 
 export const getLoggedInUsers = () => {
-  return fetch(Url + '/login')
+  return fetch(PREFIX + '/login')
    .then(handleErrors)
      .then(response => response?.json() );
 }
+
 
 
 
 
 export const getLastUsersState = ( newUser ) => {
 
-  let lastUsersSessionState =  JSON.parse(localStorage.getItem('lastState'));
+  let lastUsersSessionState =  JSON.parse(sessionStorage.getItem('lastState'));
 
      if ( newUser && newUser?.username !== lastUsersSessionState?.username ) {
 
          lastUsersSessionState = null;
 
          return lastUsersSessionState;
-
      } 
        
-     return lastUsersSessionState;
-      
+     return lastUsersSessionState;   
 }
 
 
-export const getUserByUserName = ( username ) => {
-  return fetch(Url + `/users/user?username=${username}`, {
-    headers: {
-      Authorization: `Bearer ${apiAuthToken}`
-    }
-  }) 
+
+
+export const getCurrentUserByEmail = ( email ) => {
+  return fetch(PREFIX + `/users/user/byEmail?email=${email}`) //IT-Guy 
+    .then(handleErrors)
+     .then(response => response.json());
+}
+
+
+
+
+
+export const getCurrentUserById = ( id ) => {
+  return fetch(PREFIX + `/users/user?id=${id}`) 
     .then(handleErrors)
      .then(response => response.json());
 }
@@ -323,15 +634,15 @@ export const approvePayment = (curentUser) => {
     }
      
     return false;
-    
 }
+
 
 
 
 
 let paymentGatewayProvider = {provider: "xyz", approvalStatus: "approved"}
 
-// paymentgateway integration and logic
+// paymentgateway integration and logic - this is a stub
  const handlePayment = (curentUser, gatewayProvider = paymentGatewayProvider) => {
 
     let approvalCode;
@@ -363,7 +674,7 @@ export const getDateTime = () =>  {
 
 
 export const sendEmail = ( fromEmail, toEmail, subject, messageBody, userId ) => {
-  return postData(Url + '/emails', {
+  return postData(PREFIX + '/emails', {
     fromEmail,
     toEmail,
     subject,
@@ -374,13 +685,32 @@ export const sendEmail = ( fromEmail, toEmail, subject, messageBody, userId ) =>
 
 
 
+export const getCalendarEvents = () => {
+  return fetch(PREFIX + '/calendar')
+  .then(handleErrors)
+    .then(response => response?.json() );
+}
+
+
+
+export const addNewCalendarEvent = ( calendarEvent ) => {
+  return postData(PREFIX + '/calendar', {
+   
+    ...calendarEvent
+
+  });
+}
+
+
 
 function handleErrors(response){
    
    if ( ! response.ok ){
       
       return response.json()
-       .then( error =>  { throw new Error(  error.message ) });
+       .then( error =>  { 
+         throw new Error(  error.message ) 
+      });
    }
    
    return response;

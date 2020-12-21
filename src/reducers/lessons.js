@@ -67,7 +67,7 @@ const reducer = produce((draft, action) => {
              draft.lessonsLoading = false;
         return; 
         case SET_LESSON_MARKDOWN:
-             draft.lessons[action.payload.lesson._id].markDown = action.payload.markDown; 
+             draft.lessons[action.payload.teachObject._id].markDown = action.payload.markDown; 
         return;
         case RESET_LESSON_ERROR:
             draft.onSaveLessonError = null;

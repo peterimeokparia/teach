@@ -16,6 +16,10 @@ const meetingSchema = new Schema ({
         type: String, 
         required: false  
     },
+    sessions: { 
+        type: Array, 
+        required: false  
+    },
     courseTitle: { 
         type: String, 
         required: false  
@@ -41,7 +45,11 @@ const meetingSchema = new Schema ({
          type: Date, 
          required: false,
          default: Date.now  
-    }
+    },
+    usersWhoJoinedTheMeeting: { 
+        type: Array, 
+        required: false  
+    },
 });
 
 

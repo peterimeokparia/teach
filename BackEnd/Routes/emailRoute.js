@@ -56,7 +56,7 @@ emailRoute.post('/', (req, res) => {
 
 
 
- emailRoute.put('/:emailId', (req, res) => {
+ emailRoute.put('/:userId', (req, res) => {
  
     saveUpdatedData(req, emailModel, req.params.userId)
     .then( data => {
@@ -74,7 +74,7 @@ emailRoute.post('/', (req, res) => {
 
 emailRoute.delete('/:emailId', (req, res) => {
 
-    emailModel.findByIdAndDelete(req.params.courseId)
+    emailModel.findByIdAndDelete(req.params.emailId)
      .then(data => {
         console.log('data - doc', data);
         res.status(200).json(data)

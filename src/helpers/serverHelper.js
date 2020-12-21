@@ -20,13 +20,16 @@ export function deleteData(url = ``, data = {}) {
 
 
 
+export const uploadFiles = ( selectedFiles, file, url, teachObjectName ) => {
 
-export const uploadFiles = ( selectedFiles, lesson ) => {
+    if ( ! file  ) return;
 
-    let url = 'http://localhost:9005/fileUploads';
+    if ( selectedFiles.length === 0 ) return;
+
 
     let formData = new FormData();
-        formData.append('fileName', lesson?._id?.toString());
+        formData.append('fileName', file?._id);
+        formData.append('teachObjectName', teachObjectName);
 
     for(var x = 0; x < selectedFiles.length; x++) {
 
@@ -41,7 +44,7 @@ export const uploadFiles = ( selectedFiles, lesson ) => {
 
 export const deleteFiles = ( file ) => {
  
-    let url = 'http://localhost:9005/delete';
+    let url = 'http://localhost:9005/api/v1/delete';
 
     let formData = new FormData();
     formData.append('delete', file);
@@ -50,18 +53,22 @@ export const deleteFiles = ( file ) => {
 }
 
 
+
+
+
  
 export const uploadVideos = ( videoData ) => {
 
-    let url = 'http://localhost:9005/uploads';
+    let url = 'http://localhost:9005/api/v1/uploads';
 
     let formData = new FormData();
-    formData.append('id', videoData?.videoMetaData[0]._id.toString());
-    formData.append('courseId', videoData?.videoMetaData[0].courseId.toString());
-    formData.append('video', videoData?.videoBlob, videoData?.videoMetaData[0]._id.toString());
+    formData.append('id', videoData?.videoMetaData[0]._id);
+    formData.append('courseId', videoData?.videoMetaData[0].courseId);
+    formData.append('video', videoData?.videoBlob, videoData?.videoMetaData[0]._id);
 
     return uploadContent(url, formData);
 }
+
 
 
 
@@ -89,6 +96,7 @@ export const forceReload = () => {
 
 
 
+
 function fetchWithData( url =``, data = {}, method = 'POST') {
     return fetch(url, {
       method,
@@ -100,7 +108,24 @@ function fetchWithData( url =``, data = {}, method = 'POST') {
       // cache: "reload",
     } 
   ).then(response => { 
-     
-      return response.json() })
+
+      if ( response?.status >= 400 && response?.status < 600 ) {
+
+         throw new Error("Bad Server Response.");
+      } 
+
+      if ( ! response?.ok ) {
+        
+        throw new Error( "Something went wrong" + response?.json() ); 
+      }
+
+       return response.json() 
+
+    }).catch(error => {
+
+        console.log( error );
+
+      return error?.message;
+    })
 }
 

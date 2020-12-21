@@ -1,78 +1,117 @@
-import React, { useState, useEffect } from 'react';
-import { Redirect, navigate } from '@reach/router';
-import { connect } from 'react-redux';
-import { loginUser, createUser, loadUsers, lastLoggedInUser, getCreatedUser } from '../actions';
-import { getLastUsersState } from '../api';
-import { Validations } from  '../../../helpers/validations';
+import 
+React, { 
+useState, 
+useEffect } from 'react';
+
+import { 
+Redirect, 
+navigate, 
+Link } from '@reach/router';
+
+import { 
+connect } from 'react-redux';
+
+
+import { 
+loginUser, 
+createUser, 
+loadUsers,
+loadSessions, 
+lastLoggedInUser, 
+getCreatedUser,
+autoRenewSessionPackages,
+loginPageError } from '../actions';
+
+import { 
+getOperatorFromOperatorBusinessName, 
+getUsersByOperatorId } from '../Selectors';
+
+import { 
+Validations } from  '../../../helpers/validations';
+
+import { 
+newSiteUser } from  '../../../helpers/pageHelpers.js';
+
 import Swal from 'sweetalert2'
 import Loading from './Loading';
-import CreateUserExtraFormFields from './CreateUserExtraFormFields';
-import './LoginPage.css';
-import { json } from 'body-parser';
+import LoginForm from './LoginForm';
+import RegistrationForm from './RegistrationForm';
+import CoursePackageRenewal from './CoursePackageRenewal';
 
-//Security
-//SALT - password /
+import './LoginPage.css';
+
+
+
+// To do
+// Change from token to session storage
+// Security
+// SALT - password /
 // Jwt Token - validation on login
 // Prevent non users from navigating site
 // Styling
+// Linting rules
 // Daily automated tests 
 // Plan for unit tests
 
 
-const LoginPage = ({ 
+const LoginPage = ({
+  operatorBusinessName,
+  operator,
   error, 
   loading, 
   loginUser,
   lastLoggedInUser,
   createUser, 
   loadUsers,
-  getCreatedUser, 
+  loadSessions,
   user, 
   users,
-  lessonStarted }) => {
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [userRole, setUserRole] = useState('');
-  const [accountRole, setAccountRoleDisplay] = useState(false);
+  dispatch,
+  autoRenewSessionPackages,
+  loginPageError,
+  sessions }) => {
 
 
-  
-  const newUser = {
-      firstname:firstName, 
-      email: email,
-      password: password,
-      token: null,
-      role: null,
-      courses: [],
-      cart: [],
-      cartTotal: 0,
-      paymentStatus:"",
-      userId: null,
-      purchaseHistoryTimeStamp: null,
-      inviteeSessionUrl: "",
-      lessonInProgress: false,
-      nameOfLessonInProgress: "",
-      loginCount: 0,
-      meetingId: ""
-  };
+  const [ signUpOrLoginPreference, setSignUpOrLoginInPreference ] = useState(false);
 
+  newSiteUser.firstname = ""; 
+  newSiteUser.email = "";
+  newSiteUser.password = "";
+  newSiteUser.token = null;
+  newSiteUser.role = null;
+  newSiteUser.courses = [];
+  newSiteUser.numberOfCourseSessions = [];
+  newSiteUser.cart = [];
+  newSiteUser.cartTotal = 0;
+  newSiteUser.paymentStatus = "";
+  newSiteUser.userId = null;
+  newSiteUser.purchaseHistoryTimeStamp = null;
+  newSiteUser.inviteeSessionUrl = "";
+  newSiteUser.lessonInProgress = false;
+  newSiteUser.userIsValidated = false;
+  newSiteUser.nameOfLessonInProgress = "";
+  newSiteUser.loginCount = 0;
+  newSiteUser.meetingId = "";
+  newSiteUser.meetings = [];
+  newSiteUser.sessions = [];
+  newSiteUser.markDown = "";
+  newSiteUser.avatarUrl = "";
+  newSiteUser.files = [];
+  newSiteUser.classRooms = [];
+  newSiteUser.operatorId = "";
+  newSiteUser.timeMeetingStarted = null;
+  newSiteUser.timeMeetingEnded = null;
 
-  const roles = {
-       Tutor: "Tutor",
-       Student: "Student" 
-  }
-   
   
   let currentUser = null;
 
-
+  
   useEffect(() => {
 
      loadUsers();
+     loadSessions();
 
-  }, []); //user, accountRole, userRole
+  }, []);
   
  
                                           
@@ -88,80 +127,61 @@ const LoginPage = ({
    }  
 
 
-   if ( user?.email ) {
 
-       if ( user?.role === "Tutor") {
+   if ( user?.userIsValidated ) {
 
-        return <Redirect to="/mycourses" noThrow />
+       if ( user?.role === "Tutor" ) {
+
+
+        return <Redirect to={`/${operatorBusinessName}/classroomgroups`} noThrow />
        }
 
-       if ( user?.role === "Student") {
 
-        return <Redirect to="/users" noThrow />
+       if ( user?.role === "Student" ) {
+
+ 
+         CoursePackageRenewal( user, sessions, autoRenewSessionPackages, loadSessions, loadUsers );
+
+        return <Redirect to={`/${operatorBusinessName}/users`} noThrow />
        }
      
    }
 
    
-    
-   if ( accountRole ) {
-
-    CreateUserExtraFormFields(setUserRole, setFirstName); 
-
-     setAccountRoleDisplay(false);
-   }
-
-
-   if ( userRole ) {
-
-     createUserOnRoleSelection( userRole );
-   }
-   
   
 
-   const handleSubmit = (e) => {
-      e.preventDefault();
-   }
-
-
-
-   const handleCreateUser = (e) => {
-       e.preventDefault();
-
-        if ( ( Validations.checkFormInputString("User Name", email ) && 
-                  Validations.checkFormInputString("Password", password) ) && ! ( userRole ) ) {
-  
-            setAccountRoleDisplay( true );    
-        }
-   }
-
-
-   
-
-    function createUserOnRoleSelection( role ){
-        
-        if ( role ) {
-
-            newUser.role = role;
-
-            createUser(newUser);
-
-         } else {
-
-            Validations.checkFormInputString("Role", role)
-       }    
-   }
-
-
+  const handleCreateUser = (error, loading, email, password, firstname, role) => {
  
-   const handleLoginUser = (e) => {
-      e.preventDefault();
+
+     if ( ( Validations.checkFormInputString("User Name", email  ) && 
+               Validations.checkFormInputString("Password", password) ) && 
+                Validations.checkFormInputString("Role", role) ) {
+
+                  newSiteUser.email = email;
+                  newSiteUser.password = password;
+                  newSiteUser.firstname = firstname;
+                  newSiteUser.role = role;
+                  newSiteUser.operatorId = operator?._id;
+     }
+
+     createUser( newSiteUser );     
+}
 
 
-      currentUser =  users?.find(newuser => newuser?.email === email && newuser?.password === password);
 
+
+
+   const handleLoginUser = (email, password) => {
+
+      sessionStorage.clear();
+
+      loadUsers();
+
+      let currentUser =  getCurrentUser(email, password);
 
       if ( currentUser ) {
+
+          currentUser = { ...currentUser, operatorId: operator?._id };
 
           lastLoggedInUser( currentUser );
       }
@@ -176,11 +196,12 @@ const LoginPage = ({
       }
 
    
-
        if ( Validations.checkFormInputString("User Name", email ) && 
                  Validations.checkFormInputString("Password", password) ) {
 
+
           loginUser( currentUser );
+
          
           if ( currentUser?.lessonInProgress ) {
 
@@ -205,9 +226,14 @@ const LoginPage = ({
       
                 })       
             }
+              
+                CoursePackageRenewal( currentUser, sessions, autoRenewSessionPackages, loadSessions, loadUsers );
+              
                 directUserNavigation( currentUser );           
        }
   }
+
+
 
 
 
@@ -215,85 +241,62 @@ const LoginPage = ({
 
       if ( loggedInUser?.role === "Tutor" ) {
                                           
-          navigate('/mycourses'); 
+          navigate(`/${operatorBusinessName}/classroomgroups`); 
 
       } else {
 
-          navigate(`/users`); 
+          navigate(`/${operatorBusinessName}/users`); 
 
       }
   }
 
-
   
-  return   (    
-            <div className="LoginPage"> 
 
-              <p> Please log in or sign up to continue.</p>
-
-              <form onSubmit={ e => handleSubmit(e)}>
-       
-                  <label>  
-                 
-                    Email
-
-                    <input
-                        name="email"
-                        type="email"
-                        value={email}
-                        onChange={ e => setEmail( e.target.value ) }
-                        placeholder="email"
-                    >
-                    </input>
-                  </label>
+  function setSignUpOrLoginInPreferenceValue () {
+    
+     setSignUpOrLoginInPreference( !signUpOrLoginPreference );
+  }
 
 
-                   <label>
+  function getCurrentUser( email, password ){
 
-                    Password   
+    return users?.find(user => user?.email === email && user?.password === password);
+  }
 
-                    <input
-                        name="password"
-                        type="password"
-                        value={password}
-                        onChange={ e => setPassword( e.target.value ) }
-                        placeholder="password"
-                    >
-                    </input>
-                  </label>
 
-                  <div>
-                                  
-                  </div>
 
-                    { error  && (<div className="error"> { error.message }</div>)}
+  return (
 
-                     <div></div>
-                     <button
-                             type="submit"
-                             disabled={loading}
-                             onClick={e => handleLoginUser(e)}
-                         >
-   
-                             Sign In
-   
-                         </button>
-                      
-                        <button
-                             type="submit"
-                             disabled={loading}
-                             onClick={e => handleCreateUser(e)}
-                         >
-   
-                            Create User
-   
-                         </button>
-               </form> 
+ 
+    <div className="LoginPage"> 
 
-               {/* {Validations.setErrorMessageContainer()} */}
-                       
-            </div> 
-    );
+   {
+        signUpOrLoginPreference ? <p> Please <button className="buttonTest" onClick={setSignUpOrLoginInPreferenceValue}> log in </button> or  sign up to continue.</p>
+                                : <p> Please log in or <button className="buttonTest" onClick={setSignUpOrLoginInPreferenceValue}> sign up </button> to continue.</p>
+   } 
+    
+
+  {
+      signUpOrLoginPreference  ?     <RegistrationForm
+                                            error={error}
+                                            loading={loading}
+                                            users={users}
+                                            handleCreateUser={handleCreateUser}
+                                    />
+                              :     <LoginForm
+                                          error={error}
+                                          loading={loading}
+                                          handleLoginUser={handleLoginUser}
+                                    />
+  }
+
+  {
+    ( error ) && <div> { error.message } {error} </div>
+  }
+    </div>
+
+  );
+  
 
 }
 
@@ -301,17 +304,19 @@ const LoginPage = ({
 
 
 
-const mapState = (state)   => {
+const mapState = ( state, ownProps )   => {
 
   
   return {
          user: state?.users?.user,
-         users: Object.values(state?.users?.users),
+         operator: getOperatorFromOperatorBusinessName(state, ownProps),
+         users: getUsersByOperatorId(state, ownProps),
          lessonStarted: state?.lessons?.lessonStarted,
          error: state?.users?.error,
          loading: state?.users?.loading,
+         sessions: Object.values(state?.sessions?.sessions)?.filter(session => session?.UserId === ownProps?.currentUser?._id)
         
   };
 }
 
-export default connect(mapState, { loginUser, createUser, loadUsers, lastLoggedInUser, getCreatedUser  })(LoginPage);
+export default connect(mapState, { loginUser, createUser, loadUsers, lastLoggedInUser, getCreatedUser, autoRenewSessionPackages, loadSessions, loginPageError  })(LoginPage);

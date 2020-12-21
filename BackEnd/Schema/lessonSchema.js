@@ -22,7 +22,13 @@ const lessonSchema = new Schema ({
     files: {
         type: Array,
         required: false
+    },
+    lessonDate: {
+        type: Date, 
+        required: false,
+        default: Date.now  
     }
+
 });
 
 

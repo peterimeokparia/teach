@@ -1,24 +1,37 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { resetLessonError, deleteLesson } from '../actions';
+import React, { 
+useState, 
+useRef, 
+useEffect } from 'react';
+
+import { 
+connect } from 'react-redux';
+
+import { 
+resetLessonError, 
+deleteLesson } from '../actions';
+
+import { 
+Validations } from '../../../helpers/validations';
+
 import './NewLessonPage.css';
-import { Validations } from '../../../helpers/validations';
 
 
 const NewLessonPage = ({
-       resetError, 
-       saveLessonInProgress, 
-       lesson,
-       lessons,
-       error,
-       className,
-       onSubmit,
-       deleteLesson,
-       courseId,
-       children}) => {
+resetError,
+resetLessonError, 
+saveLessonInProgress, 
+lesson,
+lessons,
+error,
+className,
+onSubmit,
+deleteLesson,
+courseId,
+children}) => {
 
         
-let initialValue = lesson ? lesson?.title : ''; 
+let initialValue = lesson ? lesson?.title : '';
+let dateInitialValue = lesson ? lesson?.lessonDate : Date.now(); 
 const [ editing, setEditing ] = useState(false);
 const [ title, setTitle ] = useState(initialValue);
 const inputRef = useRef();
@@ -27,8 +40,9 @@ const inputRef = useRef();
 
 const reset = () => {
     setTitle(initialValue);
-    setEditing(false)
-    resetError();
+    setEditing(false);
+    resetLessonError();
+    //resetError();
 }
 
 
@@ -37,10 +51,10 @@ const commitEdit = (e) => {
 
    if ( Validations.duplicateCheck( title,  lessons, "lesson title", "title" ) ) {
       
-     return;
+       return;
    }
 
-    onSubmit(title)
+    onSubmit( title )
      .then(reset)
       .catch( error => {
         setEditing(false);
@@ -68,24 +82,30 @@ const recordLesson = () => {
      recordLesson()
 }
 
-useEffect (() =>{
-       if(editing){
-        inputRef.current.focus();
+useEffect (() => {
+
+       if ( editing ) {
+
+           inputRef.current.focus();
+
        }
+
 }, [ editing ]); 
 
 
-   if(saveLessonInProgress){
+   if ( saveLessonInProgress ){
+
        return <div>Save in progress, please wait.</div>
+
    }
 
 
     return editing ? (
            <>
                 <form
-                  className= {`${className || ''} editing ${error ? 'error' : ''}`}
+                  className= {`${className || ''} editing ${ error ? 'error' : '' }`}
                   onSubmit={commitEdit}            
-                >
+                >    
                 <input 
                     ref={ inputRef }
                     value={ title }
@@ -96,7 +116,7 @@ useEffect (() =>{
                 />
                 </form>
                    {error && <div>{error.message}</div>}
-                </>
+           </>
             ) : ( 
                    children(beginEditing, performDelete)
                 );         
@@ -106,11 +126,10 @@ useEffect (() =>{
 
 const mapState = ( state, ownProps ) => {
     return {
-        lessons: Object.values(state.lessons.lessons)?.filter(item => item.courseId === ownProps?.courseId),
         saveLessonInProgress: state.lessons.saveLessonInProgress,
         error: state.lessons.onSaveLessonError
     }
 }
 
 
-export default connect(mapState, { resetError: resetLessonError, deleteLesson} )(NewLessonPage);
+export default connect(mapState, { resetError: resetLessonError, resetLessonError, deleteLesson} )(NewLessonPage);

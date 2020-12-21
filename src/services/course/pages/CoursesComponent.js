@@ -1,37 +1,53 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { connect } from 'react-redux';
-import { saveCourse, deleteCourse, loadCourses, unSubscribeFromCourse } from '../actions';
+import React, { 
+useEffect, 
+useRef, 
+useState } from 'react';
+
+import { 
+connect } from 'react-redux';
+
+import { 
+saveCourse, 
+deleteCourse, 
+loadCourses, 
+unSubscribeFromCourse } from '../actions';
+
+import { 
+getUsersByOperatorId } from '../Selectors';
+
+import { 
+forceReload } from '../../../helpers/serverHelper';
+
 import Loading from './Loading';
 import NavLinks from './NavLinks';
 import Swal from 'sweetalert2';
+
 import './CoursesComponent.css';
 
 
 
-//https://stackoverflow.com/questions/53215285/how-can-i-force-component-to-re-render-with-hooks-in-react
-//https://www.npmjs.com/package/mongoose-reload
-//https://upmostly.com/tutorials/how-to-refresh-a-page-or-component-in-react#:~:text=If%20set%20to%20true%2C%20the,cached%20version%20of%20the%20page.&text=import%20React%20from%20'react'%3B,refreshPage%7D%3EClick%20to%20reload!
 
 const CoursesComponent = ({
-    //    loadCourses,
-       user,
-       users, 
-       courses,
-       coursesLoading,
-       onCoursesError,
-       lessons,
-       saveCourse,
-       deleteCourse,
-       unSubscribeFromCourse
-    //    resetError 
-    }) => {
+operatorBusinessName,
+user,
+users, 
+courses,
+coursesLoading,
+onCoursesError,
+lessons,
+saveCourse,
+deleteCourse,
+unSubscribeFromCourse,
+sessions }) => {
 
-    const inputRef = useRef();
-    const [ editing, setEditing ] = useState(false);
-    const [ name, setNewName ] = useState('');
-    const [ currentName, setCurrentName ] = useState('')
-    const [ currentCourse, setCurrentCourse ] = useState({});
-    const [ deleting, setDelete ] = useState(false);
+const inputRef = useRef();
+const [ editing, setEditing ] = useState(false);
+const [ name, setNewName ] = useState('');
+const [ currentName, setCurrentName ] = useState('')
+const [ description, setNewDescription ] = useState('');
+const [ currentDescription, setCurrentDescription ] = useState('')
+const [ currentCourse, setCurrentCourse ] = useState({});
+const [ deleting, setDelete ] = useState(false);
 
 
     useEffect(() => {
@@ -49,7 +65,7 @@ const CoursesComponent = ({
 
 
 
-    if ( coursesLoading) {
+    if ( coursesLoading ) {
 
         return <Loading />
     }         
@@ -64,7 +80,8 @@ const CoursesComponent = ({
     
     const beginEditing = ( course ) => {
         setCurrentCourse(course);
-        setCurrentName(course?.name)
+        setCurrentName(course?.name);
+        setCurrentDescription(course?.description);
         setEditing(true);
     }
 
@@ -72,7 +89,11 @@ const CoursesComponent = ({
 
     const submitForm = (e) => {
         e.preventDefault();
-        saveCourse({...currentCourse, name})
+        saveCourse({
+            ...currentCourse, 
+            name: (name === "") ? currentName : name, 
+            description: (description === "") ? currentDescription : description 
+        })
         .then(reset)
         .catch( error => {
           setEditing(false);
@@ -83,13 +104,17 @@ const CoursesComponent = ({
 
     const reset = () => {
         setEditing(false);
+        forceReload();
         // resetError();
     }
+
 
     
     const performDelete = ( course ) => {
 
-        let courseSubscribers = users?.filter(user => user?.courses?.includes(course?._id) && user?.role === "Student")
+        let courseSubscribers = users?.filter(user => user?.courses?.includes(course?._id) && user?.role === "Student");
+
+        let session = sessions.find(session => session?.courseId === course?._id && session?.userId === user?._id);
 
         if ( courseSubscribers?.length > 0 ) {
 
@@ -121,6 +146,9 @@ const CoursesComponent = ({
             return;
         }
 
+
+
+
         performCourseValidation('Delete ?', 'warning', "You are about to delete:", course)
             .then( (response) => {
 
@@ -130,7 +158,7 @@ const CoursesComponent = ({
 
                         deleteCourse(course);
 
-                        unSubscribeFromCourse( user, course?._id );
+                        unSubscribeFromCourse( user, course?._id, session?._id );
                     } 
 
                     setDelete(true);
@@ -146,20 +174,24 @@ const CoursesComponent = ({
     }
 
 
+
+
     const updateSubscription = ( course ) => {
+
+        let session = sessions.find(session => session?.courseId === course?._id && session?.userId === user?._id);
 
         performCourseValidation('Unsubscribe ?', 'warning', "You are about to unsubscribe from:", course)
             .then( (response) => {
 
                 if ( response?.value ) {
 
-                  unSubscribeFromCourse( user, course?._id )
+                  unSubscribeFromCourse( user, course?._id, session?._id )
                     
-                 return;
+                  return;
 
                 } else {
         
-                 return;
+                  return;
 
                 }
             });
@@ -179,23 +211,41 @@ const CoursesComponent = ({
             cancelButtonText: 'No'
           });
     }
+
     
     return  editing ? (<div>
            
                      <form
-                        className=""
                         onSubmit={submitForm}
                      >
                          <input
+                           name="courseTitle"
                            ref={inputRef}
                            value={name}
                            onChange={e => setNewName(e.target.value)}
-                           onBlur={reset}
+                           //onBlur={reset}
                            placeholder={currentName}
                          >
-                         
                          </input> 
+
                      </form>
+
+                     <form
+                        onSubmit={submitForm}
+                     >
+                       
+                         <input
+                           name="courseName"
+                           value={description}
+                           onChange={e => setNewDescription(e.target.value)}
+                           //onBlur={reset}
+                           placeholder={currentDescription}
+                         >
+                         </input> 
+
+                     </form>
+
+
                     </div>) : (
                 <div className="ComponentCourseList">
                    <ul>
@@ -205,18 +255,17 @@ const CoursesComponent = ({
                             className={"component-seconday-list-body"}
                        >
 
-                           <div className={ "user-list-items"}>
+                           <div className={"user-list-items"}>
 
-                            <NavLinks to={`/courses/${course?._id}`}>
+                            <NavLinks to={`/${operatorBusinessName}/courses/${course?._id}`}>
                                 <span> {course?.name}</span>
-                                <span> {course?.createdByName}</span>
                             </NavLinks>
-
+                             <div className="price"> { course?.description }   </div> 
                                 {/* <span className="price"> ${ course?.price.toFixed(2) }   </span>  */}
 
                                  {  
                                        <div>
-                                          {user._id ===  course?.createdBy && (
+                                          {user?._id ===  course?.createdBy && (
                                                 <span>
                                                     <button
                                                         className="edit-lesson-btn"  // rename
@@ -234,8 +283,9 @@ const CoursesComponent = ({
                                                         
                                                     </button>
                                                 </span>
-                                          )}  
-                                          {( ( user?.courses?.includes(course?._id) && user?.role === "Student") &&  <span>
+                                          )
+                                          }  
+                                          {( ( user?.courses?.find(mycourseId => mycourseId === course?._id) && user?.role === "Student") &&  <span>
                                                     <button
                                                         className="delete-lesson-btn"
                                                         onClick={() => updateSubscription(course)}> 
@@ -264,12 +314,13 @@ const CoursesComponent = ({
 
 
 
-const mapState = state => ({
+const mapState = ( state, ownProps) => ({
     user: state?.users?.user,
-    users: Object.values(state?.users?.users),
+    users: getUsersByOperatorId(state, ownProps),
     coursesLoading: state.courses.coursesLoading,
     onCoursesError: state.courses.onCoursesError,
-    lessons: Object.values(state.lessons.lessons)
+    lessons: Object.values(state.lessons.lessons),
+    sessions: Object.values(state.sessions.sessions)
 })
 
 export default connect(mapState, { saveCourse, deleteCourse, loadCourses, unSubscribeFromCourse })(CoursesComponent);

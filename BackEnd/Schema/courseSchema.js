@@ -11,9 +11,17 @@ const courseSchema = new Schema ({
          type: Number, 
          required: false  
     },
+    description: { 
+        type: String, 
+        required: false,
+    },
     createdBy: { 
           type: String, 
           required: true,
+    },
+    operatorId: { 
+        type: String, 
+        required: true  
     }
 });
 

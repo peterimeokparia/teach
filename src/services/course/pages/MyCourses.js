@@ -1,109 +1,134 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import 
+React, { 
+useEffect, 
+useState, 
+useRef } from 'react';
+
+import { 
+connect } from 'react-redux';
+
 import Modal from 'react-modal';
-import { Link, navigate, Redirect } from '@reach/router';
-import { openNewCourseModal, closeNewCourseModal,  loginUser } from '../actions';
+
+import { 
+Link, 
+navigate, 
+Redirect } from '@reach/router';
+
+import { 
+openNewCourseModal, 
+closeNewCourseModal } from '../actions';
+
+import { 
+navContent } from  '../../../helpers/navigationHelper.js';
+
+import { 
+getOperatorFromOperatorBusinessName, 
+getUsersByOperatorId,
+getCoursesByOperatorId } from '../Selectors';
+
 import LoginLogout from './LoginLogout'
 import CoursesComponent from './CoursesComponent';
 import NewCourse from './NewCourse';
+import MainMenu from './MainMenu';
 import Cart from './Cart';
+
 import './MyCourses.css';
 
 
-const MyCourses = ({
-       user,
-       courses,
-       openNewCourseModal,
-       closeNewCourseModal,
-       isModalOpen}) => {
+ 
+import { ThemeProvider } from 'styled-components';
+import { GlobalStyles } from './global';
+import { theme } from './theme';
+import { Burger, Menu } from './components/components';
+import { useOnClickOutside } from './hooks';
 
+
+
+const MyCourses = ({
+operatorBusinessName,
+operator,
+user,
+courses,
+openNewCourseModal,
+closeNewCourseModal,
+isModalOpen }) => {
+
+
+    const node = useRef(); 
+    useOnClickOutside(node, () => setOpen(false));
+    const [open, setOpen] = useState(false);
 
 
 
     if ( ! user || user?.email === undefined ){
 
-        return <Redirect to="/login" noThrow />
+        return <Redirect to={`/${operatorBusinessName}/login`} noThrow />
     }
 
- 
-
-    const viewAllCourses = () => {
-        navigate('/courses')
-    }
-          
-
-   
-    let yourCourses = courses?.filter(course => user?.courses?.includes(course?._id));
-
-    let usersFirstName = user?.firstname;
-   
     
-    return (( user?.courses?.length === 0 ) ? (
+    let navigationContent = navContent( user, operatorBusinessName ).users;
+
+    let myCourseList = courses?.filter(course => user?.courses?.includes(course?._id));
+
+       
+    return (
 
        
         <div className="MyCourses">
-
+ 
             <header> 
-                    <h1>  {`Welcome ${usersFirstName}! `} </h1>
+                
+                <MainMenu navContent={navigationContent} />
 
-                   
-                    <div>  
-                    <LoginLogout/>    
+                <h2> You are viewing your list of courses. </h2>
 
-                    <Cart />
-                    </div>
-                </header>
-
-        <br></br>   
-
-
-    
-             <div> 
-
-             </div>
-
-             <div>
-                <h3>You are not subscribed to any  <span><Link to={"/courses"}> courses. </Link></span></h3>
-             </div>
-
-             <div>
-             { ( user?.role === "Tutor" ) && <button className="new-course-btn" onClick={openNewCourseModal}>New Course</button> }
-    
-             </div>
-      
-             <Modal isOpen={isModalOpen} onRequestClose={closeNewCourseModal}> <NewCourse user={user}/> </Modal>
-         </div>
-
-        ) : (
-
-            <div className="MyCourses">
-
-            <header> 
-                <h1>  {`Welcome ${usersFirstName}! `} </h1>
-    
-                <h2> Your Course List </h2>
-
-                <div className="lesson-item">  
-                <LoginLogout/>
+                
+                <div>  
+                <LoginLogout
+                     operatorBusinessName={operatorBusinessName}
+                     user={user}
+                />    
 
                 <Cart />
                 </div>
             </header>
 
+             
+      {
+          ( user?.courses?.length === 0 ) && (<div> 
+               <div>
+                 <h3>You are not subscribed to any  <span><Link to={"/courses"}> courses. </Link></span></h3>
+               </div>
+
+              <div>   
+              { ( user?.role === "Tutor" ) && <button className="new-course-btn" onClick={openNewCourseModal}>New Course</button> }
+    
+              </div>
+      
+              <Modal isOpen={isModalOpen} onRequestClose={closeNewCourseModal}> <NewCourse user={user}/> </Modal>
+           </div>
+
+        )  
+      }
+        
+
+
+     
+
             <br></br>   
 
-              <button className="view-courses-btn" onClick={viewAllCourses}>View All Courses</button> 
-              { ( user?.role === "Tutor" ) && <button className="new-course-btn" onClick={openNewCourseModal}>New Course</button> }
+              { ( user?.role === "Tutor" ) && <button className="new-course-btn" onClick={openNewCourseModal}>Add New Course</button> }
 
                     <CoursesComponent
+                               operatorBusinessName={operatorBusinessName}
                                modal={isModalOpen} 
-                               courses={yourCourses}
+                               courses={myCourseList}
                    />     
  
                  <Modal isOpen={isModalOpen} onRequestClose={closeNewCourseModal}> <NewCourse user={user}/> </Modal>
 
-            </div>
-        )
+        </div>
+
     )     
 }
 
@@ -114,11 +139,12 @@ const mapDispatch = {
 };
 
 
-const mapState = state => ({
+const mapState = ( state, ownProps )  => ({
+    operator: getOperatorFromOperatorBusinessName(state, ownProps),
+    users: getUsersByOperatorId(state, ownProps),
+    courses: getCoursesByOperatorId(state, ownProps),
     user: state?.users?.user,
-    users: Object.values(state?.users?.users),
-    yourCourses: Object.values(state?.courses?.courses)?.filter(course => state?.users.user?.courses?.includes(course?._id)),
-    courses: Object.values(state?.courses?.courses),
+    yourCourses: getCoursesByOperatorId(state, ownProps)?.filter(course => state?.users.user?.courses?.includes(course?._id)),
     coursesLoading: state?.courses?.coursesLoading,
     onCoursesError: state?.courses?.onCoursesError,
     isModalOpen: state?.courses?.isModalOpen

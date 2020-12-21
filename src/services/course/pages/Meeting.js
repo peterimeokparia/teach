@@ -12,7 +12,7 @@ function Meeting({ roomName, width, height, containerWidth, containerHeight, use
 
   const jitsiContainerStyle = {
     display: (loading ? 'none' : 'block'),
-    width: ( containerWidth === "100%" ) ? 220 : 720,// clean - create object
+    width: ( containerWidth === "100%" ) ? 365 : 720,// clean - create object
     height: ( containerHeight === "100%" ) ? 200 : 720, 
   }
 
@@ -90,11 +90,6 @@ function Meeting({ roomName, width, height, containerWidth, containerHeight, use
 
    api.addEventListener('videoConferenceLeft', () => {
    
-    // https://github.com/jitsi/jitsi-meet/issues/3720
-    //https://dev.to/metamodal/add-jitsi-meet-to-your-react-app-33j9
-    //https://github.com/jitsi/jitsi-meet/blob/master/config.js
-    //https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-iframe
-
     console.log('Local User Left');
 
     api.executeCommand('displayName', userName);

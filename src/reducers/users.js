@@ -13,7 +13,8 @@ LOAD_LOGGEDIN_USERS_BEGIN,
 LOAD_LOGGEDIN_USERS_SUCCESS, 
 LOAD_LOGGEDIN_USERS_ERROR, 
 LOGOUT_SUCCESS, 
-LAST_LOGGEDIN_USER, 
+LAST_LOGGEDIN_USER,
+LAST_LOGGEDIN_USER_ERROR, 
 ADD_TO_SALES_CART, 
 REMOVE_FROM_SALES_CART,
 BUY_COURSE_BEGIN, 
@@ -22,7 +23,13 @@ BUY_COURSE_ERROR,
 RESET_USERS_CART,
 INVITEES_TO_LEARNING_SESSION,
 FAILED_INVITATION,
-UPDATE_INVITEE_SESSION_URL} from '../services/course/actions';
+UPDATE_INVITEE_SESSION_URL,
+SET_USER_BIO_MARKDOWN,
+SAVE_USER_BEGIN,
+SAVE_USER_SUCCESS,
+SAVE_USER_ERROR,
+UPDATE_USER,
+NAVIGATION_HISTORY  } from '../services/course/actions';
 
 
 const initialState = {
@@ -33,7 +40,10 @@ const initialState = {
     lastLoggedInUser:{},
     error: null,
     loading: false,
-    buy: []
+    buy: [],
+    sessionDecrementError: null,
+    sessionIncrementError: null,
+    navigationHistory: ""
 };
 
 
@@ -52,9 +62,10 @@ const reducer = produce((draft, action) => {
         return;
         case SIGN_UP_ERRORS:
         case LOGIN_ERROR:
-        case BUY_COURSE_ERROR:      
+        case BUY_COURSE_ERROR:
+        case LAST_LOGGEDIN_USER_ERROR:          
              draft.loading = false;
-             draft.error = action.error;
+             draft.error = action.payload;
              draft.user = null;
         return;
         case LOAD_USERS_BEGIN:
@@ -70,7 +81,7 @@ const reducer = produce((draft, action) => {
         return;
         case LOAD_LOGGEDIN_USERS_SUCCESS:   
              draft.loading = false;
-             draft.login = action.payload;   
+             draft.login[action.payload._id] = action.payload;   
         return;
         case LOAD_USERS_ERROR:
         case LOAD_LOGGEDIN_USERS_ERROR:    
@@ -86,20 +97,24 @@ const reducer = produce((draft, action) => {
         case LAST_LOGGEDIN_USER:    
              draft.lastLoggedInUser = action.payload;
              draft.user = action.payload;
+             draft.users[action.payload._id]= action.payload;
         return;
         case ADD_TO_SALES_CART:
-             draft.user.cart.push(action.payload);
-             draft.user.cartTotal +=  action.payload.price; 
+             draft.user.cart.push(action.payload); 
+             if ( action.payload.sessionType === "Package" )
+                  draft.user.cartTotal +=  ( action.payload.course.price * parseInt(action.payload.totalNumberOfSessions , 10)); 
+             else
+                  draft.user.cartTotal += action.payload.course.price; 
+        return;
+        case REMOVE_FROM_SALES_CART:
+             draft.user.cart = draft.user.cart.filter(course => course?.course?._id !== action.payload._id)
+             draft.user.cartTotal -= action.payload.price;   
         return;
         case BUY_COURSE_SUCCESS:
              draft.loading = false;  
              draft.user = action.payload;
              draft.buy = action.payload;
         return;     
-        case REMOVE_FROM_SALES_CART:
-             draft.user.cart = draft.user.cart.filter(course => course._id !== action.payload._id)
-             draft.user.cartTotal -= action.payload.price;   
-        return;
         case RESET_USERS_CART:
              draft.user = action.payload;
         return 
@@ -109,12 +124,32 @@ const reducer = produce((draft, action) => {
         case FAILED_INVITATION:
              draft.error = action.error;
         return 
-        case UPDATE_INVITEE_SESSION_URL: 
+        case UPDATE_INVITEE_SESSION_URL:
+        case UPDATE_USER:       
              draft.users[action.payload._id] = action.payload;
-        return;                 
+        return;
+        case SAVE_USER_BEGIN:
+             draft.saveUserInProgress = true;
+             draft.onSaveUserError = null;
+        return; 
+        case SAVE_USER_SUCCESS:    
+             console.log(action.payload)
+             draft.users[action.payload._id] = action.payload;
+             draft.user =  action.payload;
+             draft.saveUserInProgress = false;
+         case SAVE_USER_ERROR:
+             draft.saveUserInProgress = false;    
+             draft.onSaveUserError = action.error;
+        return;    
+        case NAVIGATION_HISTORY:
+             draft.navigationHistory = action.payload;
+        return;     
+        case SET_USER_BIO_MARKDOWN:
+             draft.user.markDown = action.payload.markDown; 
+             draft.users[action.payload.teachObject._id].markDown = action.payload.markDown; 
+        return; 
         default:
         return;
-
     }
     
 }, initialState);

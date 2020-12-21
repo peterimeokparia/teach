@@ -1,20 +1,33 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Link, navigate } from '@reach/router';
+
+import { 
+connect } from 'react-redux';
+
+import { 
+Link,
+navigate } from '@reach/router';
+
+import {  
+getUsersByOperatorId,
+getCoursesByOperatorId } from '../Selectors';
+
 import Loading from './Loading';
 import LoginLogout from './LoginLogout'
 import CoursesComponent from './CoursesComponent';
 import Cart from './Cart';
+
 import './MyCourses.css';
 
 
 const IndividualUsersCourseList = ({
-       userId,
-       users, 
-       user,
-       courses,
-       coursesLoading,
-       onCoursesError}) => {
+operatorBusinessName,
+operator,    
+userId,
+users, 
+user,
+courses,
+coursesLoading,
+onCoursesError }) => {
 
 
     if ( ! user ){
@@ -39,7 +52,11 @@ const IndividualUsersCourseList = ({
 
 
     const viewAllCourses = () => {
-        navigate('/courses')
+        navigate(`/${operatorBusinessName}/courses`)
+    }
+
+    const viewTutorsBio = () => {
+        navigate(`/${operatorBusinessName}/coursestaught/about/${userId}`)
     }
           
 
@@ -101,13 +118,13 @@ const IndividualUsersCourseList = ({
             </header>
 
             <br></br>   
-
+            <button className="view-courses-btn" onClick={viewTutorsBio}>Bio</button>     
               <button className="view-courses-btn" onClick={viewAllCourses}>View All Courses</button> 
 
                     <CoursesComponent
+                               operatorBusinessName={operatorBusinessName}
                                courses={tutorsCourses}
                    />     
- 
             </div>
         )
     )     
@@ -116,11 +133,11 @@ const IndividualUsersCourseList = ({
 
  
 
-const mapState = state => ({
+const mapState = ( state, ownProps)  => ({
     user: state?.users?.user,
-    users: Object.values(state?.users?.users),
-    yourCourses: Object.values(state?.courses?.courses)?.filter(course => state?.users.user?.courses?.includes(course?._id)),
-    courses: Object.values(state?.courses?.courses),
+    users: getUsersByOperatorId(state, ownProps),
+    yourCourses: getCoursesByOperatorId(state, ownProps)?.filter(course => state?.users.user?.courses?.includes(course?._id)),
+    courses: getCoursesByOperatorId(state, ownProps),
     coursesLoading: state?.courses?.coursesLoading,
     onCoursesError: state?.courses?.onCoursesError
 })

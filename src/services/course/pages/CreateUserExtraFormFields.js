@@ -16,6 +16,7 @@ const inputOptions = new Promise((resolve) => {
   const { value: role } = await Swal.fire({
     title: 'Select a role',
     input: 'radio',
+    confirmButtonColor: '#673ab7',
     inputOptions: inputOptions,
     inputValidator: (value) => {
       if (!value) {
@@ -29,11 +30,11 @@ const inputOptions = new Promise((resolve) => {
     const { value: text } = await Swal.fire({
       title: 'Enter your first name.',
       input: 'text',
-      inputPlaceholder: 'Enter your first name.'
+      inputPlaceholder: 'Enter your first name.',
+      confirmButtonColor: '#673ab7'
     })
     
     if (text) {
-      // Swal.fire(`Entered first name: ${text}`)
        firstNameToSet(text)
        userRoleToSet(role); 
     }

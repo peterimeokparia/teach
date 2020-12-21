@@ -1,29 +1,52 @@
 import React from 'react';
-import { connect } from 'react-redux';
+
+import { 
+connect } from 'react-redux';
+
 import Modal from 'react-modal';
-import { Link, navigate, Redirect } from '@reach/router';
-import { openNewCourseModal, closeNewCourseModal } from '../actions';
+
+import { 
+Link, 
+navigate, 
+Redirect } from '@reach/router';
+
+import { 
+openNewCourseModal, 
+closeNewCourseModal } from '../actions';
+
+import { 
+navContent } from  '../../../helpers/navigationHelper.js';
+
+import { 
+getCoursesByOperatorId,
+getOperatorFromOperatorBusinessName } from '../Selectors';
+
 import Loading from './Loading';
 import LoginLogout from './LoginLogout'
 import CoursesComponent from './CoursesComponent';
 import NewCourse from './NewCourse';
+import NewClassRoom from './NewClassRoomGroup';
 import Cart from './Cart';
+import MainMenu from './MainMenu';
+
 import './MyCourses.css';
 
 
 const CourseListPage = ({ 
-       user,
-       courses,
-       coursesLoading,
-       onCoursesError,
-       openNewCourseModal,
-       closeNewCourseModal,
-       isModalOpen}) => {
+operatorBusinessName,
+operator,
+user,
+courses,
+coursesLoading,
+onCoursesError,
+openNewCourseModal,
+closeNewCourseModal,
+isModalOpen }) => {
 
 
     if ( ! user ){
 
-        return <Redirect to="/login" noThrow />
+        return <Redirect to={`/${operatorBusinessName}/login`} noThrow />
     }
 
 
@@ -40,11 +63,7 @@ const CourseListPage = ({
     }
     
 
-
-    const viewMyCourses = () => {
-
-        navigate('/mycourses');
-    }
+    let navigationContent = navContent( user, operatorBusinessName ).users;
 
            
     return (
@@ -52,12 +71,17 @@ const CourseListPage = ({
         <div className="MyCourses">
 
         <header> 
-            <h1>  {`Welcome ${user?.firstname}! `} </h1>
 
-            <h2> All Courses </h2>
+           <MainMenu navContent={navigationContent} />
+
+            {/* <h1>  {`Welcome ${user?.firstname}! `} </h1> */}
+
+            <h2> You are viewing all courses. </h2>
 
             <div>  
-              <LoginLogout/>
+            <LoginLogout
+                 user={user}
+            />
 
               <Cart />
 
@@ -66,15 +90,15 @@ const CourseListPage = ({
 
         <br></br>   
 
-          <button className="view-courses-btn" onClick={viewMyCourses}>My Courses</button> 
-         { ( user?.role === "Tutor" ) && <button className="new-course-btn" onClick={openNewCourseModal}>New Course</button> }
-          
+         { ( user?.role === "Tutor" ) && <button className="new-course-btn" onClick={openNewCourseModal}>Add New Course</button> }
+  
                 <CoursesComponent
+                           operatorBusinessName={operatorBusinessName} 
                            user={user} 
                            courses={courses}
                />     
 
-             <Modal isOpen={isModalOpen} onRequestClose={closeNewCourseModal}> <NewCourse user={user}/> </Modal>
+             <Modal isOpen={isModalOpen} onRequestClose={closeNewCourseModal}> <NewCourse user={user} operator={operator}/> </Modal>
 
         </div>
     )
@@ -87,9 +111,12 @@ const mapDispatch = {
 };
 
 
-const mapState = state => ({
+
+
+const mapState = (state, ownProps) => ({
+    courses: getCoursesByOperatorId(state, ownProps),
+    operator: getOperatorFromOperatorBusinessName(state, ownProps),
     user: state?.users?.user,
-    courses: Object.values(state?.courses?.courses),
     coursesLoading: state?.courses?.coursesLoading,
     onCoursesError: state?.courses?.onCoursesError,
     isModalOpen: state?.courses?.isModalOpen

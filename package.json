@@ -56,7 +56,8 @@
     "replace-ext": "^2.0.0",
     "reselect": "^4.0.0",
     "styled-components": "^5.2.0",
-    "sweetalert2": "^9.17.1"
+    "sweetalert2": "^9.17.1",
+    "web-push": "^3.4.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -66,6 +67,7 @@
     "dev-server": "json-server db.json --routes routes.json -w -p 8082"
   },
   "proxy": "http://localhost:9005",
+  "secure": false,
   "eslintConfig": {
     "extends": "react-app"
   },

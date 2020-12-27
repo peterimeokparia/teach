@@ -5,38 +5,39 @@ import StreamDelete from '../services/recorder/stream/StreamDelete';
 import StreamEdit from '../services/recorder/stream/StreamEdit';
 import StreamList from '../services/recorder/stream/StreamList';
 import StreamShow from '../services/recorder/stream/StreamShow';
-import MyCourses from '../services/course/pages/MyCourses';
-import ShowMeeting from '../services/course/pages/ShowMeeting';
-import CourseListPage from '../services/course/pages/CourseListPage';
-import CourseDetailPage from '../services/course/pages/CourseDetailPage';
-import LessonPage from '../services/course/pages/LessonPage';
-import LoginPage from '../services/course/pages/LoginPage';
-import VideoPlayer  from '../services/course/pages/VideoPlayer';
-import LessonPlan from '../services/course/pages/LessonPlan';
-import LessonPlanInviteUserVerification from '../services/course/pages/LessonPlanInviteUserVerification'
-import LessonPlanInviteUserVerifiedPage from '../services/course/pages/LessonPlanInviteUserVerifiedPage'
-import VideoPage from '../services/course/pages/VideoPage';
-import NotFoundPage from '../services/course/pages/NotFoundPage';
-import SalesPage from '../services/course/pages/SalesPage';
-import Cart from '../services/course/pages/Cart';
-import Users from '../services/course/pages/Users';
-import IndividualUsersCourseList from '../services/course/pages/IndividualUsersCourseList';
-import IndividualUsersBio from '../services/course/pages/IndividualUsersBio';
-import UpdateCart from '../services/course/pages/UpdateCart';
-import FileUpload from '../services/course/pages/FileUpload';
-import CourseDetailCheckBoxComponent from '../services/course/pages/CourseDetailCheckBoxComponent';
-import CourseRatingsPage from '../services/course/pages/CourseRatingsPage';
-import StudyHall from '../services/course/pages/StudyHall';
-import CalendarPage from '../services/course/pages/CalendarPage'; 
-import ClassRoomPage from '../services/course/pages/ClassRoomPage';
-import CourseDropDownPage from '../services/course/pages/CourseDropDownPage';
-import ClassRoomGroupsPage from '../services/course/pages/ClassRoomGroupsPage';
-import OperatorSignUpPage from '../services/course/pages/OperatorSignUpPage'; 
-import StudentDetailPage from '../services/course/pages/StudentDetailPage'; 
-import StudentDisplayViewComponent from '../services/course/pages/StudentDisplayViewComponent';
-import SessionComponent from '../services/course/pages/SessionComponent';
-import GradeComponent from '../services/course/pages/GradeComponent';
-import AttendanceComponent from '../services/course/pages/AttendanceComponent';
+import MyCourses from '../services/course/pages/Courses/MyCourses';
+import ShowMeeting from '../services/course/pages/Meetings/ShowMeeting';
+import CourseListPage from '../services/course/pages/Courses/CourseListPage';
+import CourseDetailPage from '../services/course/pages/Courses/CourseDetailPage';
+import LessonPage from '../services/course/pages/Lessons/LessonPage';
+import LoginPage from '../services/course/pages/Login/LoginPage';
+import VideoPlayer  from '../services/course/pages/Video/VideoPlayer';
+import LessonPlan from '../services/course/pages/LessonPlan/LessonPlan';
+import LessonPlanInviteUserVerification from '../services/course/pages/LessonPlan/LessonPlanInviteUserVerification'
+import LessonPlanInviteUserVerifiedPage from '../services/course/pages/LessonPlan/LessonPlanInviteUserVerifiedPage'
+import VideoPage from '../services/course/pages/Video/VideoPage';
+import NotFoundPage from '../services/course/pages/Components/NotFoundPage';
+import SalesPage from '../services/course/pages/Sales/SalesPage';
+import Cart from '../services/course/pages/Sales/Cart/Cart';
+import Users from '../services/course/pages/Users/Users';
+import IndividualUsersCourseList from '../services/course/pages/Users/IndividualUsersCourseList';
+import IndividualUsersBio from '../services/course/pages/Users/IndividualUsersBio';
+import UpdateCart from '../services/course/pages/Sales/Cart/UpdateCart';
+import FileUpload from '../services/course/pages/FileUpload/FileUpload';
+import CourseDetailCheckBoxComponent from '../services/course/pages/Courses/CourseDetailCheckBoxComponent';
+import CourseRatingsPage from '../services/course/pages/Ratings/CourseRatingsPage';
+import StudyHall from '../services/course/pages/StudyHall/StudyHall';
+import CalendarPage from '../services/course/pages/Calendar/CalendarPage'; 
+import ClassRoomPage from '../services/course/pages/ClassRoom/ClassRoomPage';
+import CourseDropDownPage from '../services/course/pages/Courses/CourseDropDownPage';
+import ClassRoomGroupsPage from '../services/course/pages/ClassRoom/ClassRoomGroupsPage';
+import OperatorSignUpPage from '../services/course/pages/SignUp/OperatorSignUpPage'; 
+import Boards from '../services/course/pages/Board/Boards';
+import StudentDetailPage from '../services/course/pages/Users/Student/StudentDetailPage'; 
+import StudentDisplayViewComponent from '../services/course/pages/Users/Student/StudentDisplayViewComponent';
+import SessionComponent from '../services/course/pages/Sessions/SessionComponent';
+import GradeComponent from '../services/course/pages/Grades/GradeComponent';
+import AttendanceComponent from '../services/course/pages/Attendance/AttendanceComponent';
 import { Router, Redirect } from '@reach/router';
 
 
@@ -80,6 +81,7 @@ const PodDetailPage = () => {
              <LessonPlanInviteUserVerifiedPage path="/:operatorBusinessName/LessonPlan/invite/userverified/classRoom/:classRoomId"/> 
              <LoginPage path="/:operatorBusinessName/login"/>
              <OperatorSignUpPage path="/operator/signup" />
+             <Boards path="/boards" />
              <VideoPlayer path="/videoplayer/:stream" />
              <VideoPage path="/video"/>
              <ShowMeeting path="/meeting/:teach" /> 

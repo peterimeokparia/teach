@@ -1,11 +1,9 @@
 import React from 'react';
-import FileUpload from '../FileUpload';
+
+import FileUpload from '../FileUpload/FileUpload';
 
 import { 
-Link, 
-Match, 
-navigate, 
-Redirect } from '@reach/router';
+Link } from '@reach/router';
 
 
 export function FileUploadComponent({

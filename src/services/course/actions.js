@@ -57,6 +57,9 @@ add,
 update, 
 remove } from './api';
 
+import{ 
+NOTIFICATION_PREFIX } from './api';
+
 
 import { 
 newSiteUser } from '../../helpers/pageHelpers';
@@ -64,7 +67,7 @@ newSiteUser } from '../../helpers/pageHelpers';
 
 import { 
 sendEmailConfirmation,
-sendEmailToAdministrator } from '../../helpers/coursePackageRenewalHelpers';
+sendEmailToAdministrator } from './pages/Packages/coursePackageRenewalHelpers';
 
 
 export const ADD_COURSE_BEGIN = "ADD COURSE BEGIN";
@@ -225,6 +228,21 @@ export const DELETE_ATTENDANCE_BEGIN = "DELETE ATTENDANCE BEGIN";
 export const DELETE_ATTENDANCE_SUCCESS = "DELETE ATTENDANCE SUCCESS";
 export const DELETE_ATTENDANCE_ERROR = "DELETE ATTENDANCE ERROR";
 export const NAVIGATION_HISTORY = "NAVIGATION HISTORY";
+export const LOAD_PUSH_NOTIFICATION_USERS_BEGIN = "LOAD PUSH NOTIFICATION USERS BEGIN";  
+export const LOAD_PUSH_NOTIFICATION_USERS_SUCCESS = "LOAD PUSH NOTIFICATION USERS SUCCESS";
+export const LOAD_PUSH_NOTIFICATION_USERS_ERROR = "LOAD PUSH NOTIFICATION USERS ERROR";
+export const LOAD_PUSH_NOTIFICATION_USER_BEGIN = "LOAD PUSH NOTIFICATION USER BEGIN";  
+export const LOAD_PUSH_NOTIFICATION_USER_SUCCESS = "LOAD PUSH NOTIFICATION USER SUCCESS";
+export const LOAD_PUSH_NOTIFICATION_USER_ERROR = "LOAD PUSH NOTIFICATION USER ERROR";
+export const ADD_PUSH_NOTIFICATION_USER_BEGIN = "ADD PUSH NOTIFICATION USER BEGIN";
+export const ADD_PUSH_NOTIFICATION_USER_SUCCESS = "ADD PUSH NOTIFICATION USER SUCCESS";
+export const ADD_PUSH_NOTIFICATION_USER_ERROR = "ADD PUSH NOTIFICATION USER ERROR";
+export const UPDATE_PUSH_NOTIFICATION_USER_BEGIN = "UPDATE PUSH NOTIFICATION USER BEGIN";
+export const UPDATE_PUSH_NOTIFICATION_USER_SUCCESS = "UPDATE PUSH NOTIFICATION USER SUCCESS";
+export const UPDATE_PUSH_NOTIFICATION_USER_ERROR = "UPDATE PUSH NOTIFICATION USER ERROR";
+export const DELETE_PUSH_NOTIFICATION_USER_BEGIN = "DELETE PUSH NOTIFICATION USER BEGIN";
+export const DELETE_PUSH_NOTIFICATION_USER_SUCCESS = "DELETE PUSH NOTIFICATION USER SUCCESS";
+export const DELETE_PUSH_NOTIFICATION_USER_ERROR = "DELETE PUSH NOTIFICATION USER ERROR";
 
 
 
@@ -1184,6 +1202,96 @@ export const deleteAttendance = attendance => {
 
 
 
+export const loadSubscribedPushNotificationUsers = ( ) => {
+    return dispatch => {
+         dispatch({ type: LOAD_PUSH_NOTIFICATION_USERS_BEGIN })
+         return get(`/subscribedUsers`, NOTIFICATION_PREFIX)
+          .then( pushnotification => { 
+
+                   dispatch({ type: LOAD_PUSH_NOTIFICATION_USERS_SUCCESS, payload: pushnotification }) 
+    
+           }).catch( error => {
+               dispatch({ type: LOAD_PUSH_NOTIFICATION_USERS_ERROR , error })
+           });
+         
+    };
+};
+
+
+
+
+export const loadSubscribedPushNotificationUserByUserId = ( userId ) => {
+    return dispatch => {
+         dispatch({ type: LOAD_PUSH_NOTIFICATION_USER_BEGIN })
+         return getById( userId, `/subscribedUser?userId=`, NOTIFICATION_PREFIX )
+          .then( pushnotification => { 
+             
+                   dispatch({ type: LOAD_PUSH_NOTIFICATION_USER_SUCCESS, payload: pushnotification }) 
+    
+           }).catch( error => {
+               dispatch({ type: LOAD_PUSH_NOTIFICATION_USER_ERROR , error })
+           });
+         
+    };
+};
+
+
+
+
+
+
+export const subscribePushNotificationUser = ( pushNotificationUser ) => {
+    return dispatch  => {
+
+         dispatch({ type: ADD_PUSH_NOTIFICATION_USER_BEGIN })
+
+         return add( pushNotificationUser, `/subscribe/user`, NOTIFICATION_PREFIX )
+          .then( pushnotificationuser => { 
+                   dispatch({        
+                       type: ADD_PUSH_NOTIFICATION_USER_SUCCESS, payload: pushnotificationuser }) 
+    
+           }).catch( error => {
+               dispatch({ type: ADD_PUSH_NOTIFICATION_USER_ERROR , error })
+           });
+         
+    };
+};
+
+
+
+
+
+export const savePushNotificationUser = ( pushNotificationUser ) => {
+   return dispatch => {
+        dispatch({ type: UPDATE_PUSH_NOTIFICATION_USER_BEGIN })
+        return update( pushNotificationUser, `/subscribe/user/`, NOTIFICATION_PREFIX )
+         .then( pushnotificationuser => {  
+             dispatch({        
+              type: UPDATE_PUSH_NOTIFICATION_USER_SUCCESS, payload: pushnotificationuser }) 
+          }).catch( error => {
+              dispatch({ type: UPDATE_PUSH_NOTIFICATION_USER_ERROR , error })
+          });
+        
+   };
+};
+
+
+
+export const deletePushNotificationUser = pushNotificationUser => {
+   return dispatch => {
+       dispatch({ type: DELETE_PUSH_NOTIFICATION_USER_BEGIN })
+        return remove( pushNotificationUser, `/subscribe/user/`, NOTIFICATION_PREFIX )
+        .then( pushnotificationuser => {
+            dispatch({ type: DELETE_PUSH_NOTIFICATION_USER_SUCCESS, payload: pushnotificationuser });
+        })
+          .catch( error => {
+              dispatch({ type: DELETE_PUSH_NOTIFICATION_USER_ERROR , error })
+          });
+   }
+}
+
+
+
 
  
  export const openNewCourseModal = () => ({
@@ -1313,8 +1421,7 @@ export const setMarkDown = ( teachObject, markDown, teachObjectType="", actionTy
         dispatch({ type: actionType, payload: {   
             teachObject,
             markDown
-          }
-        });
+          }});
 
         if ( timerHandle ){
             clearTimeout( timerHandle );

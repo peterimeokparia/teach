@@ -1,10 +1,11 @@
 import { postData, putData, deleteData,  uploadFiles, deleteFiles, uploadContent } from '../../helpers/serverHelper';
-import { tokenGenerator, verifyToken, ensureToken, privateKey} from './authentication';
+import { tokenGenerator, verifyToken, ensureToken, privateKey} from './pages/Login/authentication';
 import axios from 'axios'
 
 
  //dotenv.config
 const PREFIX = "/api/v1";
+export const NOTIFICATION_PREFIX = "http:localhost:9007/api/v1/notifications";
 
 
 let apiAuthToken = null;
@@ -448,16 +449,18 @@ export const removeGrade = grade => {
 
 
 
-export const add = (data, route) => {
-  return postData(PREFIX + route, { 
+
+
+export const add = (data, route, prefix=PREFIX) => {
+  return postData(prefix + route, { 
     ...data 
   });
 }
 
 
 
-export const get = ( route ) => {
-  return fetch(PREFIX + route)
+export const get = ( route, prefix=PREFIX ) => {
+  return fetch(prefix + route)
    .then(handleErrors)
      .then(response => response?.json() );
 }
@@ -468,16 +471,16 @@ export const get = ( route ) => {
 
 
 
-export const getById = ( id, routePlusId ) => {
-  return fetch(PREFIX + routePlusId + `${id}`) 
+export const getById = ( id, routePlusId, prefix=PREFIX ) => {
+  return fetch(prefix + routePlusId + `${id}`) 
     .then(handleErrors)
      .then(response => response.json());
 }
 
 
 
-export const update = (data, route) => {
-  return putData(PREFIX + route + `${ data?._id }`, 
+export const update = (data, route, prefix=PREFIX) => {
+  return putData(prefix + route + `${ data?._id }`, 
   {
     ...data
   });      
@@ -486,8 +489,8 @@ export const update = (data, route) => {
 
 
 
-export const remove = (data, route) => {
-  return deleteData(PREFIX + route +`${ data?._id }`);
+export const remove = (data, route, prefix=PREFIX) => {
+  return deleteData(prefix + route +`${ data?._id }`);
 }
 
 

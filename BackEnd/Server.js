@@ -22,14 +22,13 @@ import gradeRoute from './Routes/gradeRoute.js';
 import attendanceRoute from './Routes/attendanceRoute.js';
 
 
-
 const app = express();
 const server = http.createServer(app);
 const db = mongoose.connection;
 const localPort = 9005;
 
 
-
+// app.use('/static', express.static('public/backEnd'))
 app.use('/static', express.static('public/videos'))
 
 app.use(cors());
@@ -63,7 +62,6 @@ app.use('/api/v1/operators', operatorRoute);
 app.use('/api/v1/grades', gradeRoute);
 
 app.use('/api/v1/attendance', attendanceRoute);
-
 
 
 

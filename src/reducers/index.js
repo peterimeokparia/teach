@@ -14,7 +14,26 @@ import classrooms from './classrooms';
 import operators from './operators';
 import grades from './grades';
 import attendance from './attendance';
+import notifications from './notifications';
 
-export default combineReducers({ courses, lessons, app, streams, users, purchases, meetings, emails, sessions, calendar, classrooms, operators, grades, attendance});
+let reducers = { 
+    courses, 
+    lessons, 
+    app, 
+    streams, 
+    users, 
+    purchases, 
+    meetings, 
+    emails, 
+    sessions, 
+    calendar, 
+    classrooms, 
+    operators, 
+    grades, 
+    attendance, 
+    notifications
+};
+
+export default combineReducers( reducers );
 
 

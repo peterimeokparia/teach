@@ -131,7 +131,6 @@ export async function saveUpdatedData( req, model, id ){
          console.log( error );
    }
     return;
-   
  }
 
 

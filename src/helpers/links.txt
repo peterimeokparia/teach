@@ -45,3 +45,21 @@ es lint0
 Fetch
 https://stackoverflow.com/questions/54163952/async-await-in-fetch-how-to-handle-errors
 https://gomakethings.com/error-handing-when-using-the-vanilla-js-fetch-method-with-async-and-await/
+
+
+Foresee
+https://www.foresee.com/solutions/apps-and-tools/ratings-reviews/%20cost
+
+
+Resizable - Draggable metamodal
+https://www.npmjs.com/package/react-modal-resizable-draggable
+
+ImageUpload
+https://www.geeksforgeeks.org/file-uploading-in-react-js/
+https://dev.to/asimdahall/client-side-image-upload-in-react-5ffc
+
+Forms
+https://reactjs.org/docs/forms.html
+
+Markup
+https://css-tricks.com/textarea-tricks/ for mark up language instructions

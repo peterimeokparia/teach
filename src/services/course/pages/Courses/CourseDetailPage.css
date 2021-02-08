@@ -7,7 +7,7 @@
 .CourseDetail form {
   display: flex;
   flex-direction: column;
-  max-width: 250px;
+  max-width: 300px;
   margin: 0;
 }
 .CourseDetail form label {
@@ -81,6 +81,13 @@
   font-size: 16px;
   font-weight: 400;
   opacity: 0.8;
+}
+.header-left{
+ /* margin-left: 10px; */
+}
+
+.header-right{
+  margin-left: 40px;
 }
 .CourseDetail header .current-lesson-button {
   margin: 0;

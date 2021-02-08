@@ -1,93 +1,101 @@
 import {
 UPDATE_INVITEE_SESSION_URL } from '../../actions.js';
 
+
 import {
-addNewMeeting } from '../../actions.js';
+addNewMeeting,  
+updateUserInvitationUrl } from '../../actions.js';
 
 
 
-jest.mock('../services/course/api');
+jest.mock('../../api');
 
 
 
 describe('addNewMeeting', () => {
 
-   const meetingId = "5fab4846c2a96278c56381c9";
-  
-   let meetingCollection = ["one", "two", "three", "four"];
+  const meetingId = "5fab4846c2a96278c56381c9";
+ 
+  let meetingCollection = ["one", "two", "three", "four"];
 
-   let currentUser = {
-      role: "Student",
-      meetings: [ ...meetingCollection ],
-      meetingId:  meetingId
+  
+  let currentUser = {
+     role: "Student",
+     meetings: [ "one", "two", "three", "four" ],
+     meetingId:  meetingId
+ };
+
+  let currentSession = { 
+     numberOfSessions: 5,
+     totalNumberOfSessions: 5,
+     typeOfSession: "Package",
+     autoRenew: true
   };
 
-   let currentSession = { 
-      numberOfSessions: 5,
-      totalNumberOfSessions: 5,
-      typeOfSession: "Package",
-      autoRenew: true
-   };
-
-   let meetingInitConfiguration = {
-      invitees: ["James", "and", "John"], 
-      userId: "007",
-      sessions: [currentSession],
-      timeStarted: "Today",
-      courseId: "C0001",
-      lessonId: "L001",
-      courseTitle: "Introduction to wood work",
-      lessonTitle: "Picking the right saw",
-      lessonPlanUrl: "www.test.com", 
-      currentUser: currentUser
-   }
-   
-
+  let meetingInitConfiguration = {
+     invitees: [ "one", "two", "three", "four" ], 
+     userId: "007",
+     sessions: [currentSession],
+     timeStarted: "Today",
+     courseId: "C0001",
+     lessonId: "L001",
+     courseTitle: "Introduction to wood work",
+     lessonTitle: "Picking the right saw",
+     lessonPlanUrl: "www.test.com", 
+     currentUser: currentUser
+  }
   
 
-   it('should add a new meeting', async () => {
+ 
 
-      const mockDispatch = jest.fn();
 
-      await addNewMeeting(
-         meetingInitConfiguration.invitees,
-         meetingInitConfiguration.userId,
-         meetingInitConfiguration.sessions,
-         meetingInitConfiguration.timeStarted,
-         meetingInitConfiguration.courseId,
-         meetingInitConfiguration.lessonId,
-         meetingInitConfiguration.courseTitle,
-         meetingInitConfiguration.lessonTitle,
-         meetingInitConfiguration.lessonPlanUrl,
-         meetingInitConfiguration.currentUser
 
-      )(mockDispatch);
+  it('should add a new meeting', async () => {
 
-      expect(mockDispatch.mock.calls.length).toBe(3);
-      expect(mockDispatch.mock.calls[0][0]).toEqual({
-         type: 'ADD NEW MEETING BEGIN'
-      });
-      expect(mockDispatch.mock.calls[1][0]).toEqual({
-         type: 'LAST LOGGEDIN USER',
-         payload: {
-            role: "Student",
-            meetings: currentUser.meetings,
-            meetingId: meetingId
+     const mockDispatch = jest.fn();
+
+     await addNewMeeting(
+        meetingInitConfiguration.invitees,
+        meetingInitConfiguration.userId,
+        meetingInitConfiguration.sessions,
+        meetingInitConfiguration.timeStarted,
+        meetingInitConfiguration.courseId,
+        meetingInitConfiguration.lessonId,
+        meetingInitConfiguration.courseTitle,
+        meetingInitConfiguration.lessonTitle,
+        meetingInitConfiguration.lessonPlanUrl,
+        meetingInitConfiguration.currentUser,
+        meetingInitConfiguration.usersWhoJoinedTheMeeting
+
+     )(mockDispatch);
+
+     expect(mockDispatch.mock.calls.length).toBe(3);
+     expect(mockDispatch.mock.calls[0][0]).toEqual({
+        type: 'ADD NEW MEETING BEGIN'
+     });
+     expect(mockDispatch.mock.calls[1][0]).toEqual({
+        type: 'LAST LOGGEDIN USER',
+        payload: {
+           role: "Student",
+           meetings: currentUser.meetings,
+           meetingId: meetingId
+        }
+     });
+     expect(mockDispatch.mock.calls[1][0].payload.meetings.includes(meetingId)).toBe(true);
+     expect(mockDispatch.mock.calls[2][0]).toEqual(
+        {
+           type: 'ADD NEW MEETING SUCCESS',
+           payload: {
+              _id: meetingId,
+              invitees: [ ...meetingInitConfiguration.invitees ],
+              currentUser,
+              meetings: [ ...currentUser.meetings ]
+           }
          }
-      });
-      expect(mockDispatch.mock.calls[1][0].payload.meetings.includes(meetingId)).toBe(true);
-      expect(mockDispatch.mock.calls[2][0]).toEqual(
-         {
-            type: 'ADD NEW MEETING SUCCESS',
-            payload: {
-               _id: meetingId, meetings: currentUser.meetings 
-            }
-          }
-      );
-      
-   });
+     );
+     
+  });
 });
-
 
 
 
@@ -137,4 +145,4 @@ it('should call 1 action', () => {
  
   });
  
- });
+});

@@ -1,0 +1,78 @@
+Dante
+--------
+
+const content = this.editor.emitSerializedOutput();
+this.uploadImagesAndFixUrls(content.blocks, html, id);
+
+private async uploadImagesAndFixUrls(blocks: any[], html: string, postId: string): Promise<string> {
+    let fixedHtml = html;
+
+    for (const block of blocks) {
+      if (block.type !== 'image') {
+        continue;
+      }
+
+      const {url} = block.data;
+
+      if (!url.startsWith('blob:')) {
+        continue;
+      }
+
+      const blob = await fetch(url).then(r => r.blob());
+
+      const uploadFormData = new FormData();
+      uploadFormData.append('file', blob);
+
+      const uploadRes = await fetch(`/post/${postId}/image`, {
+        method: 'POST',
+        body: uploadFormData,
+      });
+
+      switch (uploadRes.status) {
+        case 200: // OK
+          const {url: uploadedUrl} = await uploadRes.json();
+          block.data.url = uploadedUrl;
+          fixedHtml = fixedHtml.replace(url, uploadedUrl);
+          break;
+        case 500: // INTERNAL_SERVER_ERROR
+          throw new Error();
+      }
+    }
+
+    return fixedHtml;
+  }
+@kaloraat
+ 
+Author
+kaloraat commented on Sep 2, 2019
+@ALEUT
+With your code, I am able to do what was almost impossible :)
+Thanks heaps!!!
+
+@michelson
+ 
+Owner
+michelson commented on Sep 3, 2019
+you can use the upload_handler option for the image block in order to override the entire upload behavior with your own logic
+
+  import { EmbedBlockConfig } from 'Dante2/package/es/components/blocks/embed.js'
+  ...
+
+  uploadHandler = (file, imageBlock)=>{
+    // your logic here   
+  }
+
+  widgetsConfig = () => {
+    return [otherBlocks,
+    ImageBlockConfig({
+      options: {
+        upload_handler: this.uploadHandler,
+        image_caption_placeholder: "type a caption (optional)"
+      }
+    }),
+
+
+   <DanteEditor 
+       ....otherOptions
+       widgets={this.props.widgetsConfig()}
+   </DanteEditor>

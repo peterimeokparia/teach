@@ -268,7 +268,7 @@ const [ deleting, setDelete ] = useState(false);
                                           {user?._id ===  course?.createdBy && (
                                                 <span>
                                                     <button
-                                                        className="edit-lesson-btn"  // rename
+                                                        className="edit-course-btn"  // rename
                                                         onClick={() => beginEditing(course)}> 
                                                         
                                                         Edit 
@@ -276,7 +276,7 @@ const [ deleting, setDelete ] = useState(false);
                                                     </button>
 
                                                     <button
-                                                        className="delete-lesson-btn"
+                                                        className="delete-course-btn"
                                                         onClick={() => performDelete(course)}> 
                                                         
                                                         Delete 
@@ -287,7 +287,7 @@ const [ deleting, setDelete ] = useState(false);
                                           }  
                                           {( ( user?.courses?.find(mycourseId => mycourseId === course?._id) && user?.role === "Student") &&  <span>
                                                     <button
-                                                        className="delete-lesson-btn"
+                                                        className="unsubscribe-course-btn"
                                                         onClick={() => updateSubscription(course)}> 
 
                                                         Unsubscribe 

@@ -5,20 +5,19 @@ connect } from 'react-redux';
 
 
 const CourseRatingsPage = ({ 
-            courseId, 
-            users, 
-            currentUser, 
-            userId,
-            courses 
-          }) => {
+courseId, 
+users, 
+currentUser, 
+userId,
+courses 
+}) => {
 
-    return   (    
-            <span> 
-                courseId: {courseId} || userId: {userId}  || Review: Great course. Seasoned tutor.
-            </span> 
-    );
 
-}
+return   (    
+        <span> 
+            courseId: {courseId} || userId: {userId}  || Review: Great course. Seasoned tutor.
+        </span> 
+);}
 
 
 

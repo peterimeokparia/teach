@@ -11,29 +11,36 @@ Link } from '@reach/router';
 import { 
 connect } from 'react-redux';
 
-
 import { 
 loginUser, 
 createUser, 
 loadUsers,
-loadSessions, 
+loadSessions,
+loadSubscribedPushNotificationUsers, 
 lastLoggedInUser, 
 getCreatedUser,
 autoRenewSessionPackages,
-loginPageError } from '../../actions';
+loginPageError,
+subscribePushNotificationUser,
+savePushNotificationUser } from '../../actions';
 
 import { 
 getOperatorFromOperatorBusinessName, 
-getUsersByOperatorId } from '../../Selectors';
+getUsersByOperatorId,
+getPushNotificationUsersByOperatorId } from '../../Selectors';
 
 import { 
 Validations } from  '../../../../helpers/validations';
 
-import { 
-newSiteUser } from  '../../../../helpers/pageHelpers.js';
+import {
+role,   
+newSiteUser,
+handlePushNotificationSubscription,
+validateOperatorBusinessName } from  '../../../../helpers/pageHelpers.js';
 
 import Swal from 'sweetalert2'
 import Loading from '../Components/Loading';
+import NotFoundPage from '../Components/NotFoundPage';
 import LoginForm from '../Login/LoginForm';
 import RegistrationForm from '../SignUp/RegistrationForm';
 import CoursePackageRenewal from '../Packages/CoursePackageRenewal';
@@ -43,15 +50,17 @@ import './LoginPage.css';
 
 
 // To do
-// Change from token to session storage
+// Change from token to session storage - DONE :) :) :)
 // Security
 // SALT - password /
-// Jwt Token - validation on login
-// Prevent non users from navigating site
-// Styling
+// Jwt Token - validation on login - DONE :) :) :)
+// Prevent non users from navigating site - STARTED :)
+// Styling - STARTED :)
 // Linting rules
 // Daily automated tests 
-// Plan for unit tests
+// Plan for unit tests - STARTED :)
+// Get images / gifs for menu items, nav, links etc
+// Material Design
 
 
 const LoginPage = ({
@@ -64,12 +73,16 @@ const LoginPage = ({
   createUser, 
   loadUsers,
   loadSessions,
+  loadSubscribedPushNotificationUsers,
   user, 
   users,
   dispatch,
   autoRenewSessionPackages,
   loginPageError,
-  sessions }) => {
+  sessions,
+  pushNotificationSubscribers,
+  subscribePushNotificationUser,
+  savePushNotificationUser }) => {
 
 
   const [ signUpOrLoginPreference, setSignUpOrLoginInPreference ] = useState(false);
@@ -101,6 +114,8 @@ const LoginPage = ({
   newSiteUser.operatorId = "";
   newSiteUser.timeMeetingStarted = null;
   newSiteUser.timeMeetingEnded = null;
+  newSiteUser.assignments = [];
+  newSiteUser.exams = [];
 
   
   let currentUser = null;
@@ -110,10 +125,16 @@ const LoginPage = ({
 
      loadUsers();
      loadSessions();
+     loadSubscribedPushNotificationUsers();
 
   }, []);
   
- 
+
+   if ( ! operator  ) {
+
+     return <NotFoundPage />
+   }
+
                                           
    if ( loading ) {
 
@@ -130,19 +151,19 @@ const LoginPage = ({
 
    if ( user?.userIsValidated ) {
 
-       if ( user?.role === "Tutor" ) {
+       if ( user?.role === role.Tutor ) {
 
-
-        return <Redirect to={`/${operatorBusinessName}/classroomgroups`} noThrow />
+          // return <Redirect to={`/${operatorBusinessName}/classroom/${user?._id}`} noThrow />
+          return <Redirect to={`/${operatorBusinessName}/users`} noThrow />
        }
 
 
-       if ( user?.role === "Student" ) {
+       if ( user?.role === role.Student ) {
 
  
-         CoursePackageRenewal( user, sessions, autoRenewSessionPackages, loadSessions, loadUsers );
+          CoursePackageRenewal( user, sessions, autoRenewSessionPackages, loadSessions, loadUsers );
 
-        return <Redirect to={`/${operatorBusinessName}/users`} noThrow />
+          return <Redirect to={`/${operatorBusinessName}/users`} noThrow />
        }
      
    }
@@ -166,8 +187,8 @@ const LoginPage = ({
 
      createUser( newSiteUser );
 
-    // notification.subscribeUser     
-}
+     handlePushNotificationSubscription(pushNotificationSubscribers, currentUser, subscribePushNotificationUser, savePushNotificationUser );     
+  }
 
 
 
@@ -203,8 +224,9 @@ const LoginPage = ({
 
 
           loginUser( currentUser );
+          
 
-        //notification.checkIfNewDevice
+          handlePushNotificationSubscription(pushNotificationSubscribers, currentUser, subscribePushNotificationUser, savePushNotificationUser ); 
 
          
           if ( currentUser?.lessonInProgress ) {
@@ -243,13 +265,14 @@ const LoginPage = ({
 
   function directUserNavigation ( loggedInUser ) {
 
-      if ( loggedInUser?.role === "Tutor" ) {
-                                          
-          navigate(`/${operatorBusinessName}/classroomgroups`); 
+      if ( loggedInUser?.role === role.Tutor ) {
 
+        navigate(`/${operatorBusinessName}/users`); 
+                                          
+          // navigate(`/${operatorBusinessName}/classroom/${loggedInUser?._id}`); 
       } else {
 
-          navigate(`/${operatorBusinessName}/users`); 
+        navigate(`/${operatorBusinessName}/users`); 
 
       }
   }
@@ -281,17 +304,17 @@ const LoginPage = ({
     
 
   {
-      signUpOrLoginPreference  ?     <RegistrationForm
+        signUpOrLoginPreference  ?     <RegistrationForm
+                                              error={error}
+                                              loading={loading}
+                                              users={users}
+                                              handleCreateUser={handleCreateUser}
+                                      />
+                                :     <LoginForm
                                             error={error}
                                             loading={loading}
-                                            users={users}
-                                            handleCreateUser={handleCreateUser}
-                                    />
-                              :     <LoginForm
-                                          error={error}
-                                          loading={loading}
-                                          handleLoginUser={handleLoginUser}
-                                    />
+                                            handleLoginUser={handleLoginUser}
+                                      />
   }
 
   {
@@ -305,12 +328,23 @@ const LoginPage = ({
 }
 
 
-
+const mapDispatch = { 
+  loginUser, 
+  createUser, 
+  loadUsers, 
+  lastLoggedInUser, 
+  getCreatedUser, 
+  autoRenewSessionPackages, 
+  loadSessions, 
+  loginPageError, 
+  loadSubscribedPushNotificationUsers,
+  subscribePushNotificationUser,
+  savePushNotificationUser  
+}
 
 
 const mapState = ( state, ownProps )   => {
 
-  
   return {
          user: state?.users?.user,
          operator: getOperatorFromOperatorBusinessName(state, ownProps),
@@ -318,9 +352,10 @@ const mapState = ( state, ownProps )   => {
          lessonStarted: state?.lessons?.lessonStarted,
          error: state?.users?.error,
          loading: state?.users?.loading,
-         sessions: Object.values(state?.sessions?.sessions)?.filter(session => session?.UserId === ownProps?.currentUser?._id)
+         sessions: Object.values(state?.sessions?.sessions)?.filter(session => session?.UserId === ownProps?.currentUser?._id),
+         pushNotificationSubscribers: getPushNotificationUsersByOperatorId(state, ownProps),
         
   };
 }
 
-export default connect(mapState, { loginUser, createUser, loadUsers, lastLoggedInUser, getCreatedUser, autoRenewSessionPackages, loadSessions, loginPageError  })(LoginPage);
+export default connect(mapState, mapDispatch )(LoginPage);

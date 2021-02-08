@@ -1,6 +1,11 @@
 import express from 'express';
+
 import sessionModel from '../Model/sessionModel.js';
-import { saveUpdatedData } from './lessonRoute.js';
+
+import {
+getPostData,      
+saveUpdatedData   
+} from '../Helpers/storageHelper.js';
 
 
 const sessionRoute = express.Router();
@@ -46,16 +51,13 @@ sessionRoute.get('/:userId', (req, res) => {
 
 sessionRoute.post('/', (req, res) => {
 
-  console.log('...saving session', req?.body );
+    // let reqBodyKeys = Object.keys(req.body);
+    // let sessionData = {};
+    // reqBodyKeys.forEach(element => {
+    //   sessionData[element] = req.body[element];
+    // });
 
-    let reqBodyKeys = Object.keys(req.body);
-    let sessionData = {};
-
-    reqBodyKeys.forEach(element => {
-        
-      sessionData[element] = req.body[element];
-
-    });
+   let sessionData = getPostData( req );
 
    let session = new sessionModel(sessionData);  
 

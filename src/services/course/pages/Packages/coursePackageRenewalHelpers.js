@@ -95,10 +95,12 @@ export function checkIfPackageIsSetToAutoRenew( currentUser,  sessions ){
 
 
 
+
 export function autoRenewProcess( currentUser, currentSession, renewalPackageAction ){
 
     renewalPackageAction( currentUser, currentSession );
 }
+
 
 
 
@@ -116,6 +118,8 @@ export function sendRenewalNotification( currentUser, currentSession,  onrenewal
         return;
     }
 }
+
+
 
 
 export function sendEmailConfirmation( currentSession, currentUser ){
@@ -145,10 +149,11 @@ export function sendEmailConfirmation( currentSession, currentUser ){
 
 
 
+
 export function sendEmailToAdministrator( currentUser ){
-    const msg = `<h3> AutoRenewal Failed</h3>`  +
-    `<div>We were not able to renew your package. </div>`
-    `<div>An email has been sent to the administrator. </div>`
+    const msg = `<h3> AutoRenewal Failed</h3>`  + 
+                `<div>We were not able to renew your package. </div>` + 
+                `<div>An email has been sent to the administrator. </div>`
 
     let messageOptions = {
         from: "teachpadsconnect247@gmail.com",

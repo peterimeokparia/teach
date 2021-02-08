@@ -34,7 +34,6 @@ class DropDownSelectorComponent extends React.Component {
           <span className="dropDownSelector">
               <span>
                 <form onSubmit={this.handleSubmit}>
-                  {/* Number of sessions: */}
                   <label>
                      {this.props.label } 
                   </label>  

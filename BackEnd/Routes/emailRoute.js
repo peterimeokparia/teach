@@ -1,7 +1,13 @@
 import express from 'express';
+
 import emailModel from '../Model/emailModel.js';
+
 import emailClient from '../EmailClient/emailClient.js';
-import { saveUpdatedData } from './lessonRoute.js';
+
+import {
+getPostData,    
+saveUpdatedData   
+} from '../Helpers/storageHelper.js';
 
 
 const emailRoute = express.Router();
@@ -28,17 +34,11 @@ emailRoute.post('/', (req, res) => {
         to: req.body.toEmail, 
         subject: req.body.subject,
         text: req.body.messageBody
-    }
+    };
  
     emailClient( emailOptions );
 
-    let emailData = {
-        fromEmail: req.body.fromEmail, 
-        toEmail: req.body.toEmail, 
-        subject: req.body.subject,
-        messageBody: req.body.messageBody,
-        userId: req.body.userId
-    }
+    let emailData = getPostData( req );
 
     let email = new emailModel(emailData);  
 

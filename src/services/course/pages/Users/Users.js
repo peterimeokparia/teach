@@ -34,7 +34,7 @@ user,
 users}) => {
 
 
-    if ( ! user ){
+    if ( ! user?.userIsValidated || ! operator ){
 
         navigate(`/${operatorBusinessName}/login`);
     }
@@ -60,8 +60,8 @@ users}) => {
 
     const gotToLessonPlan = ( user ) => { 
 
-          navigate(`/${operatorBusinessName}/classroom/${user._id}`);
-        //navigate(`/${operatorBusinessName}/LessonPlan/${user._id}/${user.firstname}`);
+       navigate(`/${operatorBusinessName}/classroom/${user._id}`);
+       //navigate(`/${operatorBusinessName}/LessonPlan/${user._id}/${user.firstname}`);
     }
                
 
@@ -79,9 +79,10 @@ users}) => {
           
                  <h1>  {`Welcome ${user?.firstname}! `} </h1>
 
-                   <LoginLogout
-                        user={user}
-                   />
+                 <LoginLogout
+                        operatorBusinessName={operatorBusinessName}
+                        user 
+                  />
                           
                </header>
 

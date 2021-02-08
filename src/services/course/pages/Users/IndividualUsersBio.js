@@ -5,21 +5,35 @@ import {
 connect } from 'react-redux';
 
 import { 
+navigate } from '@reach/router';
+
+import {  
+getOperatorFromOperatorBusinessName } from '../../Selectors';
+
+
+import { 
 forceReload } from '../../../../helpers/serverHelper';
+
 
 import LoginLogout from '../Login/LoginLogout'
 import Cart from '../Sales/Cart/Cart';
 import UserBioEditor from './UserBioEditor';
-import MarkDown from 'react-markdown';
 import ImageComponent from '../Components/ImageComponent';
 
 import './MyCourses.css';
 
 
 
-const IndividualUsersBio = ({ user, users, userId }) => {
+const IndividualUsersBio = ({ user, users, userId, operatorBusinessName, operator }) => {
 
   const [ editing, setEditing ] = useState( false );
+
+
+  if ( ! user?.userIsValidated || ! operator ){
+
+      navigate(`/${operatorBusinessName}/login`);
+  }
+
 
 
   const toggleEditing = () => {
@@ -41,7 +55,7 @@ const IndividualUsersBio = ({ user, users, userId }) => {
 
   let tutor = Object.values(users)?.find(user => user?._id === userId);
 
-  const fileUploadUrl = 'http://localhost:9005/fileUploads';
+  const fileUploadUrl = 'http://localhost:9005/api/v1/fileUploads/avatar';
 
   return  (
 
@@ -53,13 +67,15 @@ const IndividualUsersBio = ({ user, users, userId }) => {
 
                                     {/* <h2> You are viewing {tutor?.firstname}'s Bio. </h2> */}
 
-                                    
                                         <div>  
+
                                         <LoginLogout
-                                            user={user}
-                                        /> 
+                                              operatorBusinessName
+                                              user 
+                                        />
 
                                         <Cart />
+
                                         </div>
                                     </header>
 
@@ -68,43 +84,38 @@ const IndividualUsersBio = ({ user, users, userId }) => {
                                      { (user?.role === "Tutor") && <button className="view-bio-btn" onClick={toggleEditing}>{editing ? 'Preview' : 'Edit'}</button> }
                             
                                      <h1>  {`${tutor?.firstname} `} </h1>
+               
+                                <div className="bio-image-btn">
 
-                                        <div className="bio-image-btn">
-
-                                     
                                         <ImageComponent
-                                                  user={tutor}
-                                                  url={fileUploadUrl} 
-                                                  editMode={editing}
-                                                  imageSrc={tutor?.avatarUrl}
-                                                  teachObjectName={"users"}
+                                              user={tutor}
+                                              url={fileUploadUrl} 
+                                              editMode={editing}
+                                              typeOfUpload={'useravatarbiourl'}
+                                              imageSrc={tutor?.avatarUrl}
+                                              teachObjectName={"users"}
                                         />
 
-                                        </div>
-                                       
-                               
-                                    <br></br>
-                                      {
-                                          editing ? (    
-                                                  <div> 
-                                                      {"Enter your bio."} 
-                                                      <UserBioEditor user={user}/>
-                                                      
-                                                  </div> 
-                                                  ) : (    
-                                                  <div> 
-                                                        
-                                                      <MarkDown source={tutor?.markDown} />
-                                              
-                                                  </div> 
-                                              )
-                                      }
+                                </div> 
 
+                                                <div className="content"> 
+                                                      
+                                                <div className="sidebar" />
+
+                                                   <div className={"bio-editor"}>
+                                                   <UserBioEditor user={user}/>
+                                                   </div> 
+                                                     
+                                                   
+
+                                                </div> 
+                                       
+                                    <br></br>
+                                 
                        </div>
                         
                     </div>
           
-    
                 );
             }
 
@@ -112,6 +123,7 @@ const IndividualUsersBio = ({ user, users, userId }) => {
 
 const mapState = (state, ownProps)   => {
   return {
+         operator: getOperatorFromOperatorBusinessName(state, ownProps),
          previewMode: state.app.previewMode,
          users: state.users.users,
          user:state.users.user

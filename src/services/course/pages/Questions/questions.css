@@ -1,0 +1,82 @@
+.questions {
+    height: 300vh;
+    /* max-width: 80vw; */
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    /* background-image:  */
+}
+.multipleChoice{
+    margin-right: 0%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 100px; 
+    padding-left: 5px;   
+}
+.multipleChoicelabel{
+    padding-right: 10px;
+}
+.answerDisplay{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.form-builder-btn, .input-field-builder-btn {
+    /* opacity: 1; */
+    /* border: 2px; */
+    /* position: relative; */
+    font-size: 10px;
+    cursor: pointer;
+    padding-left: 30px;
+    margin-top: 15px;
+    padding-right: 30px;
+    margin-left: 25px;
+    box-shadow: 10px 10px;
+    border-radius: 20%;
+    transition: all 0.2s;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+}
+.form-builder-btn {
+    color: #ab47bc;
+    margin-bottom: 10px;
+}
+.input-field-builder-btn {
+    color: #ec407a;
+    margin-bottom: 20px;
+}
+.form-builder-btn:hover, .form-builder-btn:focus, .form-builder-btn:active {
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+    -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+    transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+}
+.input-field-builder-btn:hover, .input-field-builder-btn:focus, .input-field-builder-btn:active {
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+    -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+    transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+}
+.input-field-builder-selector {
+    opacity: 1; 
+    border: 2px; 
+    right: 5px;
+    font-size: 10px;
+    cursor: pointer;
+    padding-left: 30px;
+    margin-bottom: 20px;
+    margin-top: 30px;
+    padding-right: 30px;
+    margin-left: 10px;
+    /* box-shadow: 10px 10px; */
+    /* box-shadow: 0px 10px 10px 10px;  */
+    /* border-radius: 0%; */
+    transition: all 0.2s;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+}

@@ -17,6 +17,7 @@ import './MyCourses.css';
 
 
 const StudyHall = ({ 
+       operatorBusinessName,
        user,
        courses,
        coursesLoading,
@@ -43,15 +44,7 @@ const StudyHall = ({
 
         return <div> { onCoursesError.message } </div> ;
     }
-    
-
-
-    let navContent = [
-        { id: 0, hrefValue: '/mycourses' , item: 'Study Hall' }, 
-        { id: 1, hrefValue: '/mycourses' , item: 'My Courses' },
-        { id: 2, hrefValue: '/users' , item: 'My Tutors' }  
-    ]
-           
+        
     return (
 
         <div className="">
@@ -73,7 +66,10 @@ const StudyHall = ({
 
         <br></br>   
 
-        <LessonPlan/>
+        <LessonPlan
+             currentUser={user}
+             operatorBusinessName={operatorBusinessName}
+         />
       
 
         </div>

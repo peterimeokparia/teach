@@ -2,7 +2,7 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-   text-align: center;
+  text-align: center;
   background-image: url(../../images/geometry2.png);
   background-size: 300px 300px;
 }
@@ -252,13 +252,19 @@
   .ComponentCourseList .new-course-btn:active {
     background-color: purple;
   }
-  .delete-lesson-btn,
-  .edit-lesson-btn{
-    opacity: 0;
+  .delete-course-btn,
+  .edit-course-btn{
+    opacity: 1;
     border: 1px;
     font-size: 10px;
     cursor: pointer;
     box-shadow: 10px 10px;
+  }
+  .delete-course-btn{
+   margin-left: 10px;
+  }
+  .edit-course-btn{
+   margin-right: 10px;
   }
   .Login-LogOut-btn {
     padding-left: 1280px; 

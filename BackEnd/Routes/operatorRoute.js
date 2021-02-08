@@ -1,6 +1,12 @@
 import express from 'express';
+
 import operatorModel from '../Model/operatorModel.js';
-import { saveUpdatedData, updatedData} from './lessonRoute.js';
+
+import {
+getPostData,      
+saveUpdatedData   
+} from '../Helpers/storageHelper.js';
+
 
 
 const operatorRoute = express.Router();
@@ -53,13 +59,15 @@ operatorRoute.get('/files', (req, res) => {
 
 operatorRoute.post('/', (req, res) => {
 
-    let reqBodyKeys = Object.keys(req.body);
-    let operatorData = {};
+    // let reqBodyKeys = Object.keys(req.body);
+    // let operatorData = {};
 
-    reqBodyKeys.forEach(element => {
+    // reqBodyKeys.forEach(element => {
         
-      operatorData[element] = req.body[element];
-    });
+    //   operatorData[element] = req.body[element];
+    // });
+
+    let operatorData = getPostData( req );
 
     let operator = new operatorModel(operatorData);  
 

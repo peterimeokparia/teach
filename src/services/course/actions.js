@@ -57,9 +57,6 @@ add,
 update, 
 remove } from './api';
 
-import{ 
-NOTIFICATION_PREFIX } from './api';
-
 
 import { 
 newSiteUser } from '../../helpers/pageHelpers';
@@ -68,6 +65,7 @@ newSiteUser } from '../../helpers/pageHelpers';
 import { 
 sendEmailConfirmation,
 sendEmailToAdministrator } from './pages/Packages/coursePackageRenewalHelpers';
+import { findAllByDisplayValue } from '@testing-library/react';
 
 
 export const ADD_COURSE_BEGIN = "ADD COURSE BEGIN";
@@ -190,6 +188,7 @@ export const DELETE_CLASSROOM_SUCCESS = "DELETE CLASSROOM SUCCESS";
 export const DELETE_CLASSROOM_BEGIN = "DELETE CLASSROOM BEGIN";
 export const DELETE_CLASSROOM_ERROR = "DELETE CLASSROOM ERROR";
 export const UPDATE_CURRENT_CLASSROOM_TUTOR = "UPDATE CURRENT CLASSROOM TUTOR";
+export const UPDATE_CURRENT_CLASSROOM_LESSON_PLAN = "UPDATE CURRENT CLASSROOM LESSON PLAN";
 export const OPERATOR_LOGIN_BEGIN = "OPERATOR LOGIN BEGIN";
 export const OPERATOR_LOGIN_SUCCESS = "OPERATOR LOGIN SUCCESS";
 export const OPERATOR_LOGIN_ERROR = "OPERATOR LOGIN ERROR";
@@ -240,9 +239,53 @@ export const ADD_PUSH_NOTIFICATION_USER_ERROR = "ADD PUSH NOTIFICATION USER ERRO
 export const UPDATE_PUSH_NOTIFICATION_USER_BEGIN = "UPDATE PUSH NOTIFICATION USER BEGIN";
 export const UPDATE_PUSH_NOTIFICATION_USER_SUCCESS = "UPDATE PUSH NOTIFICATION USER SUCCESS";
 export const UPDATE_PUSH_NOTIFICATION_USER_ERROR = "UPDATE PUSH NOTIFICATION USER ERROR";
+export const SEND_PUSH_NOTIFICATION_MESSAGE_BEGIN = "SEND PUSH NOTIFICATION MESSAGE BEGIN";
+export const SEND_PUSH_NOTIFICATION_MESSAGE_SUCCESS = "SEND PUSH NOTIFICATION MESSAGE SUCCESS";
+export const SEND_PUSH_NOTIFICATION_MESSAGE_ERROR = "SEND PUSH NOTIFICATION MESSAGE ERROR";
+export const SELECTED_PUSH_NOTIFICATION_SUBSCRIBERS = "SELECTED PUSH NOTIFICATION SUBSCRIBERS";
 export const DELETE_PUSH_NOTIFICATION_USER_BEGIN = "DELETE PUSH NOTIFICATION USER BEGIN";
 export const DELETE_PUSH_NOTIFICATION_USER_SUCCESS = "DELETE PUSH NOTIFICATION USER SUCCESS";
 export const DELETE_PUSH_NOTIFICATION_USER_ERROR = "DELETE PUSH NOTIFICATION USER ERROR";
+export const TOGGLE_SIDEBAR_DROPDOWN_MENU = "TOGGLE SIDEBAR DROPDOWN MENU";
+export const SET_QUESTION_MARKDOWN = "SET_QUESTION_MARKDOWN";
+export const ADD_QUESTION_BEGIN = "ADD QUESTION BEGIN";
+export const ADD_QUESTION_SUCCESS = "ADD QUESTION SUCCESS";
+export const ADD_QUESTION_ERROR = "ADD QUESTION ERROR";
+export const LOAD_QUESTIONS_BEGIN = "LOAD QUESTIONS BEGIN";
+export const LOAD_QUESTIONS_SUCCESS = "LOAD QUESTIONS SUCCESS";
+export const LOAD_LATEST_QUESTION_SUCCESS = "LOAD LATEST QUESTION SUCCESS";
+export const LOAD_QUESTIONS_ERROR = "LOAD QUESTIONS ERROR";
+export const DELETE_QUESTION_SUCCESS = "DELETE QUESTION SUCCESS";
+export const RESET_QUESTION_ERROR = "RESET QUESTION ERROR";
+export const SAVE_QUESTION_BEGIN = "SAVE QUESTION BEGIN";
+export const SAVE_QUESTION_ERROR = "SAVE QUESTION ERROR";
+export const SAVE_QUESTION_SUCCESS = "SAVE QUESTION SUCCESS";
+export const SET_EXPLANATION_ANSWER_MARKDOWN = "SET EXPLANATION ANSWER MARKDOWN";
+export const LOAD_ASSIGNMENTS_BEGIN = "LOAD ASSIGNMENTS BEGIN";
+export const LOAD_ASSIGNMENTS_SUCCESS = "LOAD ASSIGNMENTS SUCCESS";
+export const LOAD_ASSIGNMENTS_ERROR = "LOAD ASSIGNMENTS ERROR";
+export const SAVE_ASSIGNMENT_BEGIN = "SAVE ASSIGNMENT BEGIN";
+export const SAVE_ASSIGNMENT_SUCCESS = "SAVE ASSIGNMENT SUCCESS";
+export const SAVE_ASSIGNMENT_ERROR = "SAVE ASSIGNMENT ERROR";
+export const ADD_ASSIGNMENT_BEGIN = "ADD ASSIGNMENT BEGIN";
+export const ADD_ASSIGNMENT_SUCCESS = "ADD ASSIGNMENT SUCCESS"; 
+export const ADD_ASSIGNMENT_ERROR = "ADD ASSIGNMENT ERROR";
+export const LOAD_EXAMS_BEGIN = "LOAD EXAMS BEGIN";
+export const LOAD_EXAMS_SUCCESS = "LOAD EXAMS SUCCESS"; 
+export const LOAD_EXAMS_ERROR = "LOAD EXAMS ERROR";
+export const ADD_EXAM_BEGIN = "ADD EXAM BEGIN";
+export const ADD_EXAM_SUCCESS = "ADD EXAM SUCCESS";
+export const ADD_EXAM_ERROR = "ADD EXAM ERROR";
+export const SAVE_EXAM_BEGIN = "SAVE EXAM BEGIN";     
+export const SAVE_EXAM_SUCCESS = "SAVE COURSE SUCCESS";
+export const SAVE_EXAM_ERROR = "SAVE COURSE ERROR";
+export const DELETE_EXAM_SUCCESS = "DELETE EXAM SUCCESS";
+export const DELETE_EXAM_BEGIN = "DELETE EXAM BEGIN";
+export const DELETE_EXAM_ERROR = "DELETE EXAM ERROR";
+export const DELETE_ASSIGNMENT_SUCCESS = "DELETE ASSIGNMENT SUCCESS";
+export const DELETE_ASSIGNMENT_BEGIN = "DELETE ASSIGNMENT BEGIN";
+export const DELETE_ASSIGNMENT_ERROR = "DELETE ASSIGNMENT ERROR";
+
 
 
 
@@ -362,7 +405,6 @@ export const deleteCourse = course => {
     
          let sessions = currentUser?.sessions?.filter(id => id !== sessionId);
 
-        
         updateUser({ ...currentUser, courses: courseList, sessions: sessions })
          .then( user => {
 
@@ -462,7 +504,6 @@ export const buyCourse = ( currentUser ) => {
          });
     }
 }
-
 
 
 
@@ -811,14 +852,14 @@ export const updateUserInvitationUrl = (user, inviteeSessionUrl, nameOfLessonInP
     return dispatch  => {
 
       try{
-           
+
          updateInvitationUrl( user?._id, {...user, inviteeSessionUrl, nameOfLessonInProgress,  lessonInProgress} )
 
-        dispatch({ type: UPDATE_INVITEE_SESSION_URL, payload: {...user, inviteeSessionUrl, nameOfLessonInProgress, lessonInProgress} }) 
+         dispatch({ type: UPDATE_INVITEE_SESSION_URL, payload: {...user, inviteeSessionUrl, nameOfLessonInProgress, lessonInProgress} }) 
 
       } catch(error){
 
-         dispatch({ type: FAILED_INVITATION, error });
+        dispatch({ type: FAILED_INVITATION, error });
       } 
     }
 }
@@ -880,19 +921,22 @@ export const addNewMeeting = (
                         meetings: currentUser.meetings
                     }});
                         
+                    if (  meeting?.invitees ) {
 
-                    meeting.invitees.forEach(user => {
-
-                        updateUser({
-                            ...user, 
-                            meetingId: meeting?._id, 
-                            meetings: user.meetings
+                        console.log('meet meet meeting', meeting)
+                        meeting.invitees.forEach(user => {
+    
+                            updateUser({
+                                ...user, 
+                                meetingId: meeting?._id, 
+                                meetings: user.meetings
+                            });
+                            
                         });
-                        
-                    });
+
+                    }
+                  
                  
-
-
                     dispatch({        
 
                     type: ADD_NEW_MEETING_SUCCESS, payload: meeting }) 
@@ -901,7 +945,6 @@ export const addNewMeeting = (
 
                     dispatch({ type: ADD_NEW_MEETING_ERROR , error })
                 });
-                
             };
 };
 
@@ -925,6 +968,7 @@ export const saveMeeting = ( meetingId, meeting ) => {
 
 
 
+
 export const loadMeetings = () => {
     return dispatch => {
         dispatch({ type: LOAD_MEETINGS_BEGIN })
@@ -942,6 +986,7 @@ export const loadMeetings = () => {
 
 
 
+
 export const loadMeetingsByUserId = ( userId ) => {
    return dispatch => {
        dispatch({ type: LOAD_MEETINGS_BEGIN })
@@ -954,6 +999,7 @@ export const loadMeetingsByUserId = ( userId ) => {
           });
    }
 }
+
 
 
 
@@ -991,6 +1037,7 @@ export const loadGrades = ( ) => {
 
 
 
+
 export const loadGradesByStudentId = ( studentId ) => {
     return dispatch => {
          dispatch({ type: LOAD_GRADES_BEGIN })
@@ -1011,13 +1058,14 @@ export const loadGradesByStudentId = ( studentId ) => {
 
 
 
-export const addNewGrade = ( grade ) => {
-    return ( dispatch, getState ) => {
-         dispatch({ type: ADD_NEW_GRADE_BEGIN })
+export const addNewGrade = ( student, course, grade, currentGrades, pushNotificationUser ) => {
 
-         let grades = Object.values(getState()?.grades?.grades);
+    return dispatch => {
 
-         let currentGrades = grades?.filter(grd => grd?.studentId === grade?.studentId && grade?.courseId === grd?.courseId );
+       dispatch({ type: ADD_NEW_GRADE_BEGIN });
+         
+        // grade.selectedStudents.forEach(student => {  
+        // let currentGrades = grades?.filter( grd => grd?.studentId === student?._id );
 
          let result, symbol;
 
@@ -1026,49 +1074,55 @@ export const addNewGrade = ( grade ) => {
             let previousTestScore = currentGrades[currentGrades?.length -1]?.score;
 
             let currentTestScore = parseInt(grade?.score, 10);
+
+            // Change to switch
    
                if ( previousTestScore ) {
    
-                       if ( previousTestScore > currentTestScore ) {
-   
-                           result =  ( ( ( previousTestScore - currentTestScore ) / previousTestScore ) * 100 );
-           
-                           symbol = "<";
-           
-                   }
-               }
+                    if ( previousTestScore > currentTestScore ) {
+                        result =  ( ( ( previousTestScore - currentTestScore ) / previousTestScore ) * 100 );
+                        symbol = "<";
+                     }
+               
        
-               if ( currentTestScore > previousTestScore ) {
-       
-                       result =  ( ( ( currentTestScore - previousTestScore ) / previousTestScore ) * 100 );
-       
-                       symbol = ">";
-       
-               }
+                    if ( currentTestScore > previousTestScore ) {
+                        result =  ( ( ( currentTestScore - previousTestScore ) / previousTestScore ) * 100 );        
+                        symbol = ">";
+                    }
+
+
+                   if ( currentTestScore === previousTestScore ) {
+                        result = 0;
+                        symbol = "-";
+                    }
+                }      
 
          } else {
-             
             result = 0;
-    
             symbol = "-";
-             
          }
          
-
          
+        grade = { ...grade, studentId: student?._id, percentChange: result, symbol: symbol } 
 
-         
-         grade = { ...grade, percentChange: result, symbol: symbol } 
 
-         return addGrade( grade )
-          .then( grade => { 
-                   dispatch({        
-                       type: ADD_NEW_GRADE_SUCCESS, payload: grade }) 
-    
-           }).catch( error => {
-               dispatch({ type: ADD_NEW_GRADE_ERROR , error })
-           });
-         
+        return addGrade( grade )
+                .then( grade => { 
+                        dispatch({        
+                            type: ADD_NEW_GRADE_SUCCESS, payload: grade });
+
+                            dispatch( sendPushNotificationMessage( 
+                                 pushNotificationUser, { 
+                                 title:'Grade Added!', 
+                                 body:`New Grade Added for course: ${ course?.name }` 
+                            }));
+            
+                }).catch( error => {
+                    dispatch({ type: ADD_NEW_GRADE_ERROR , error });
+        });
+
+
+        // }); // END       
     };
 };
 
@@ -1089,6 +1143,7 @@ export const saveGrade = ( grade ) => {
         
    };
 };
+
 
 
 
@@ -1140,7 +1195,6 @@ export const loadAttendanceByStudentId = ( studentId ) => {
            }).catch( error => {
                dispatch({ type: LOAD_ATTENDANCE_ERROR , error })
            });
-         
     };
 };
 
@@ -1148,20 +1202,29 @@ export const loadAttendanceByStudentId = ( studentId ) => {
 
 
 
+export const markAttendance = ( student, course, attendanceData, pushNotificationUser ) => {
 
-export const markAttendance = ( attendance ) => {
     return dispatch  => {
 
          dispatch({ type: MARK_ATTENDANCE_BEGIN })
 
-         return add( attendance, `/attendance` )
-          .then( attendance => { 
-                   dispatch({        
-                       type: MARK_ATTENDANCE_SUCCESS, payload: attendance }) 
-    
-           }).catch( error => {
-               dispatch({ type: MARK_ATTENDANCE_ERROR , error })
-           });
+          //attendance.selectedStudents.forEach(student => {
+
+            // let attendanceData = { ...attendance, studentId: student?._id  }
+
+            return add( attendanceData, `/attendance` )
+                    .then( attendance => { 
+                        dispatch({        
+                            type: MARK_ATTENDANCE_SUCCESS, payload: attendance });
+                            
+                            dispatch( sendPushNotificationMessage( pushNotificationUser?.filter(pushuser => pushuser?.userId === student?._id), {title:'Attendance Taken!', body:`Attendance taken for course: ${ course?.name }`}) )
+            
+                }).catch( error => {
+                    dispatch({ type: MARK_ATTENDANCE_ERROR , error })
+                });
+
+        // });
+         
          
     };
 };
@@ -1187,6 +1250,7 @@ export const saveAttendance = ( attendance ) => {
 
 
 
+
 export const deleteAttendance = attendance => {
    return dispatch => {
        dispatch({ type: DELETE_ATTENDANCE_BEGIN })
@@ -1202,10 +1266,12 @@ export const deleteAttendance = attendance => {
 
 
 
+
+
 export const loadSubscribedPushNotificationUsers = ( ) => {
     return dispatch => {
          dispatch({ type: LOAD_PUSH_NOTIFICATION_USERS_BEGIN })
-         return get(`/subscribedUsers`, NOTIFICATION_PREFIX)
+         return get(`/notifications/subscribedUsers`)
           .then( pushnotification => { 
 
                    dispatch({ type: LOAD_PUSH_NOTIFICATION_USERS_SUCCESS, payload: pushnotification }) 
@@ -1220,10 +1286,11 @@ export const loadSubscribedPushNotificationUsers = ( ) => {
 
 
 
+
 export const loadSubscribedPushNotificationUserByUserId = ( userId ) => {
     return dispatch => {
          dispatch({ type: LOAD_PUSH_NOTIFICATION_USER_BEGIN })
-         return getById( userId, `/subscribedUser?userId=`, NOTIFICATION_PREFIX )
+         return getById( userId, `/notifications/subscribedUser?userId=` )
           .then( pushnotification => { 
              
                    dispatch({ type: LOAD_PUSH_NOTIFICATION_USER_SUCCESS, payload: pushnotification }) 
@@ -1238,14 +1305,12 @@ export const loadSubscribedPushNotificationUserByUserId = ( userId ) => {
 
 
 
-
-
 export const subscribePushNotificationUser = ( pushNotificationUser ) => {
     return dispatch  => {
 
          dispatch({ type: ADD_PUSH_NOTIFICATION_USER_BEGIN })
 
-         return add( pushNotificationUser, `/subscribe/user`, NOTIFICATION_PREFIX )
+         return add( pushNotificationUser, `/notifications/subscribe/user` )
           .then( pushnotificationuser => { 
                    dispatch({        
                        type: ADD_PUSH_NOTIFICATION_USER_SUCCESS, payload: pushnotificationuser }) 
@@ -1264,7 +1329,7 @@ export const subscribePushNotificationUser = ( pushNotificationUser ) => {
 export const savePushNotificationUser = ( pushNotificationUser ) => {
    return dispatch => {
         dispatch({ type: UPDATE_PUSH_NOTIFICATION_USER_BEGIN })
-        return update( pushNotificationUser, `/subscribe/user/`, NOTIFICATION_PREFIX )
+        return update( pushNotificationUser, `/notifications/subscribe/user/` )
          .then( pushnotificationuser => {  
              dispatch({        
               type: UPDATE_PUSH_NOTIFICATION_USER_SUCCESS, payload: pushnotificationuser }) 
@@ -1277,10 +1342,12 @@ export const savePushNotificationUser = ( pushNotificationUser ) => {
 
 
 
+
+
 export const deletePushNotificationUser = pushNotificationUser => {
    return dispatch => {
        dispatch({ type: DELETE_PUSH_NOTIFICATION_USER_BEGIN })
-        return remove( pushNotificationUser, `/subscribe/user/`, NOTIFICATION_PREFIX )
+        return remove( pushNotificationUser, `/notifications/subscribe/user/` )
         .then( pushnotificationuser => {
             dispatch({ type: DELETE_PUSH_NOTIFICATION_USER_SUCCESS, payload: pushnotificationuser });
         })
@@ -1290,6 +1357,145 @@ export const deletePushNotificationUser = pushNotificationUser => {
    }
 }
 
+
+
+
+
+export const sendPushNotificationMessage = ( users, message ) => {
+
+    return dispatch => {
+        dispatch({ type: SEND_PUSH_NOTIFICATION_MESSAGE_BEGIN })
+         
+        users.forEach(user => {
+
+            return update( { _id: user?._id,  user: user,  message: message,  messages: user?.messages }, `/notifications/sendPushNotifications/user/` )
+             .then( status => {
+                dispatch({ type: SEND_PUSH_NOTIFICATION_MESSAGE_SUCCESS, payload: status });
+            })
+              .catch( error => {
+                dispatch({ type: SEND_PUSH_NOTIFICATION_MESSAGE_ERROR , error })
+            })  
+        })
+    }
+}
+
+
+
+
+
+export const getSelectedPushNotificationUsers = ( selectedUsers, pushNotificationSubscribers ) => {
+    return dispatch => {
+
+        let selectedPushNotificationSubscribers  = pushNotificationSubscribers?.filter(pushuser => { selectedUsers.find(selecteduser => selecteduser?._id === pushuser?.userId)  })
+
+        dispatch({ type: SELECTED_PUSH_NOTIFICATION_SUBSCRIBERS, payload: selectedPushNotificationSubscribers });
+     }
+}
+
+
+
+
+export const loadExams = ( ) => {
+    return dispatch => {
+         dispatch({ type: LOAD_EXAMS_BEGIN })
+         return get(`/exams`)
+          .then( exam  => { 
+
+                   dispatch({ type: LOAD_EXAMS_SUCCESS, payload: exam }) 
+    
+           }).catch( error => {
+               dispatch({ type: LOAD_EXAMS_ERROR , error })
+           });       
+    };
+};
+
+
+
+
+export const loadExamsByExamId = ( examId ) => {
+    return dispatch => {
+         dispatch({ type: LOAD_EXAMS_BEGIN })
+         return getById( examId, `/exams?examId=`)
+          .then( examId  => { 
+
+                 dispatch({ type: LOAD_EXAMS_SUCCESS, payload: examId }) 
+
+           }).catch( error => {
+               dispatch({ type: LOAD_EXAMS_ERROR , error })
+           });       
+    };
+};
+
+
+
+
+export const addNewExam = ( user, operator, exam ) => {
+
+    let updateUser;
+
+    return dispatch => {
+        
+       dispatch({ type: ADD_EXAM_BEGIN })
+
+       return add( { ...exam, operatorId: operator?._id }, '/exams')
+        .then(exam => {
+
+           if ( exam?.createdBy === user._id ) {
+
+              updateUser = {...user, exams: user?.exams }
+
+              updateUser.exams.push( exam._id );
+           }
+
+           updateUser( updateUser );
+            
+           dispatch({ type: ADD_EXAM_SUCCESS, payload: exam }) 
+           
+           dispatch({ type: LAST_LOGGEDIN_USER, payload: user });  
+
+         //dispatch( sendPushNotificationMessage( pushNotificationUser?.
+                // filter(pushuser => pushuser?.userId === student?._id), {title:'Attendance Taken!', body:`Attendance taken for course: ${ course?.name }`}) )
+         
+        })
+         .catch(error => { 
+             dispatch({ type: ADD_EXAM_ERROR, error })
+         })
+    }
+}
+
+
+
+
+
+export const saveExam = ( exam ) => {
+   return dispatch => {
+        dispatch({ type: SAVE_EXAM_BEGIN })
+        return update( exam, '/exams/' )
+         .then( exam => {  
+             dispatch({        
+              type: SAVE_EXAM_SUCCESS, payload: exam }) 
+          }).catch( error => {
+              dispatch({ type: SAVE_EXAM_ERROR , error })
+          });
+        
+   };
+};
+
+
+
+
+export const deleteExam = exam => {
+   return dispatch => {
+       dispatch({ type: DELETE_EXAM_BEGIN })
+        return remove( exam, `/exams/` )
+        .then( () => {
+            dispatch({ type: DELETE_EXAM_SUCCESS, payload: exam });
+        })
+          .catch( error => {
+              dispatch({ type: DELETE_EXAM_ERROR , error })
+          });
+   }
+}
 
 
 
@@ -1367,7 +1573,10 @@ export const saveUser = ( user ) => {
          return updateUser( user )
           .then( user => {  
               dispatch({        
-               type: SAVE_USER_SUCCESS, payload: user }) 
+               type: SAVE_USER_SUCCESS, payload: user })
+               
+               dispatch(lastLoggedInUser(user))
+
            }).catch( error => {
                dispatch({ type: SAVE_USER_ERROR , error })
            });  
@@ -1393,9 +1602,6 @@ export const loadLessons = ( courseId ) => {
 
 
 
-
-
-
 export const deleteLesson = lesson => {
     return dispatch => {
         dispatch({ type: DELETE_LESSON_BEGIN })
@@ -1409,6 +1615,190 @@ export const deleteLesson = lesson => {
     }
 }
 
+
+
+
+export const addNewQuestion = ( lessonId, studentId, operatorId, coursesCovered, lessonsCovered, examId, assignmentId, questions ) => {
+    return dispatch => {
+        dispatch({ type: ADD_QUESTION_BEGIN });
+        
+        let questionData = { questions, lessonId, studentId, operatorId, coursesCovered, lessonsCovered, examId, assignmentId}
+        return add( questionData, `/questions` )
+        .then( response => { 
+            dispatch({        
+                type: ADD_QUESTION_SUCCESS, payload: response });
+                
+                // dispatch( sendPushNotificationMessage( pushNotificationUser?.
+                //     filter(pushuser => pushuser?.userId === student?._id), {title:'Attendance Taken!', body:`Attendance taken for course: ${ course?.name }`}) )
+    }).catch( error => {
+        dispatch({ type: ADD_QUESTION_ERROR , error })
+    });
+  }
+};
+
+
+
+
+
+export const saveQuestion = ( question ) => {
+    return dispatch => {
+         dispatch({ type: SAVE_QUESTION_BEGIN })
+         return update( question, `/questions/` )
+          .then( response => {
+
+              dispatch({ type: SAVE_QUESTION_SUCCESS, payload: response }); 
+
+              dispatch({ type: LOAD_LATEST_QUESTION_SUCCESS, payload: response }); 
+
+           }).catch( error => {
+               dispatch({ type: SAVE_QUESTION_ERROR , error })
+           }); 
+    };
+ };
+
+
+
+
+export const loadQuestions = ( ) => {
+    return dispatch => {
+         dispatch({ type: LOAD_QUESTIONS_BEGIN })
+         return get(`/questions`)
+          .then( questions  => { 
+
+                   dispatch({ type: LOAD_QUESTIONS_SUCCESS, payload: questions }) 
+    
+           }).catch( error => {
+               dispatch({ type: LOAD_QUESTIONS_ERROR , error })
+           });       
+    };
+};
+
+
+
+export const loadQuestionsByQuestionId = ( questionId ) => {
+    return dispatch => {
+         dispatch({ type: LOAD_QUESTIONS_BEGIN })
+         return getById( questionId, `/questions/test?questionId=`)
+          .then( questions  => { 
+
+                 dispatch({ type: LOAD_QUESTIONS_SUCCESS, payload: questions });
+                 
+                 dispatch({ type: LOAD_LATEST_QUESTION_SUCCESS, payload: questions });
+
+           }).catch( error => {
+               dispatch({ type: LOAD_QUESTIONS_ERROR , error })
+           });       
+    };
+};
+
+
+
+
+
+export const loadQuestionsByLessonId = ( lessonId ) => {
+    return dispatch => {
+         dispatch({ type: LOAD_QUESTIONS_BEGIN })
+         return getById( lessonId, `/questions?lessonId=`)
+          .then( questions  => { 
+
+                 dispatch({ type: LOAD_QUESTIONS_SUCCESS, payload: questions });
+                 
+                 dispatch({ type: LOAD_LATEST_QUESTION_SUCCESS, payload: questions });
+
+           }).catch( error => {
+               dispatch({ type: LOAD_QUESTIONS_ERROR , error })
+           });       
+    };
+};
+
+
+
+
+
+export const addNewAssignment = ( user, operator, assignment ) => {
+    
+    let updateUser; 
+
+    return dispatch => {
+        
+       dispatch({ type: ADD_ASSIGNMENT_BEGIN })
+
+       return add( { ...assignment,  operatorId: operator?._id }, '/assignments')
+        .then(assignment => {
+
+           if ( assignment?.createdBy === user._id ) {
+               
+                updateUser = {...user, assignments: user?.assignments }
+
+                updateUser.assignments.push(assignment._id);
+           }
+
+           updateUser( updateUser )
+            
+           dispatch({ type: ADD_ASSIGNMENT_SUCCESS, payload: assignment }) 
+           
+           dispatch({ type: LAST_LOGGEDIN_USER, payload: user });  
+
+         //dispatch( sendPushNotificationMessage( pushNotificationUser?.
+                // filter(pushuser => pushuser?.userId === student?._id), {title:'Attendance Taken!', body:`Attendance taken for course: ${ course?.name }`}) )
+         
+        })
+         .catch(error => { 
+             dispatch({ type: ADD_ASSIGNMENT_ERROR, error })
+         })
+    }
+}
+
+
+
+
+
+export const saveAssignment = ( assignment ) => {
+    return dispatch => {
+         dispatch({ type: SAVE_ASSIGNMENT_BEGIN })
+         return update( assignment, `/assignments/` )
+          .then( assignment => {  
+              dispatch({        
+               type: SAVE_ASSIGNMENT_SUCCESS, payload: assignment }) 
+           }).catch( error => {
+               dispatch({ type: SAVE_ASSIGNMENT_ERROR , error })
+           }); 
+    };
+ };
+
+
+
+
+export const loadAssignments = ( ) => {
+    return dispatch => {
+         dispatch({ type: LOAD_ASSIGNMENTS_BEGIN })
+         return get(`/assignments`)
+          .then( assignment  => { 
+
+                   dispatch({ type: LOAD_ASSIGNMENTS_SUCCESS, payload: assignment }) 
+    
+           }).catch( error => {
+               dispatch({ type: LOAD_ASSIGNMENTS_ERROR , error })
+           });       
+    };
+};
+
+
+
+
+export const loadAssignmentsByAssignmentId = ( lessonId ) => {
+    return dispatch => {
+         dispatch({ type: LOAD_ASSIGNMENTS_BEGIN })
+         return getById( lessonId, `/assignments?assignmentId=`)
+          .then( assignment  => { 
+
+                 dispatch({ type: LOAD_ASSIGNMENTS_SUCCESS, payload: assignment }) 
+
+           }).catch( error => {
+               dispatch({ type: LOAD_ASSIGNMENTS_ERROR , error })
+           });       
+    };
+};
 
 
 
@@ -1637,6 +2027,14 @@ export const updateCurrentTutor = ( currentTutor ) => {
 
 
 
+export const updateCurrentClassRoomLessonPlan = ( lessonPlan ) => {
+    return dispatch => {
+
+       dispatch({ type: UPDATE_CURRENT_CLASSROOM_LESSON_PLAN, payload: lessonPlan });
+    }
+}
+
+
 
 export const sendEmails = ( fromEmail, toEmail, subject, messageBody, userId ) => {
     return dispatch => {
@@ -1673,17 +2071,15 @@ export const uploadFiles = ( files ) => {
 
 
 
-export const uploadAvatarImages = ( selectedFiles, file, url, teachObjectName ) => {
+export const uploadAvatarImages = ( selectedFiles, file, url, teachObjectName, typeOfUpload ) => {
     return dispatch => {
 
-        uploadUserAvatar(selectedFiles, file, url, teachObjectName)
+        uploadUserAvatar(selectedFiles, file, url, teachObjectName,  typeOfUpload)
          .then( resp => { 
                
-            getUserByEmail(file)
-
-                //update
-                   dispatch({  type: USER_UPDATED, payload: resp }) } )
-                // dispatch({ type: UPLOAD_FILE_SUCCESS, payload: files})
+            dispatch( getUserByEmail(file) )
+     
+            dispatch({  type: USER_UPDATED, payload: resp }) } );
     }
 }
 
@@ -1801,13 +2197,15 @@ export const userNavigationHistory = ( timeTravel ) => {
     }
 }
 
-export const toggleClassRoomCourseGradeForm = () => ({
-    type: TOGGLE_ADD_NEW_GRADE_FORM
-});
 
 export const togglePreviewMode = () => ({
    type: TOGGLE_PREVIEW_MODE
 });
+
+
+export const toggleClassRoomSideBarDropDownDisplay = () => ({
+    type: TOGGLE_SIDEBAR_DROPDOWN_MENU
+})
 
 
 export const toggleTeachBoardOrEditor = () => ({

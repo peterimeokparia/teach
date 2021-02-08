@@ -8,7 +8,6 @@ export const CoursePackageRenewal = ( currentUser, sessions, autoRenewSessionPac
 
     if ( currentUser?.role === "Tutor" ) return;    
     
-    // for each student that logs in or goes through the link
     let expiredPackages = checkIfPackageIsSetToAutoRenew( currentUser, sessions );
 
     handleAutoRenewPackageSessions( currentUser,  expiredPackages, autoRenewSessionPackagesAction );

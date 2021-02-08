@@ -29,7 +29,9 @@ loadUsers,
 lastLoggedInUser, 
 loadSessions,
 loadClassRooms,
-loadAllCalendarEvents } from './services/course/actions';
+loadAllCalendarEvents,
+loadSubscribedPushNotificationUsers,
+loadQuestions } from './services/course/actions';
 
 import Modal from 'react-modal';
 
@@ -55,6 +57,7 @@ const store = createStore(
   );
 
 
+store.dispatch(loadQuestions());  
 store.dispatch(loadMeetings());     
 store.dispatch(loadAttendance());   
 store.dispatch(loadGrades());  
@@ -65,6 +68,7 @@ store.dispatch(loadCourses());
 store.dispatch(loadSessions()); 
 store.dispatch(loadClassRooms());
 store.dispatch(loadAllCalendarEvents());
+store.dispatch(loadSubscribedPushNotificationUsers);
 
 
 

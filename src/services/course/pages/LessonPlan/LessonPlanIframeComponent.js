@@ -4,14 +4,23 @@ import ReactIframe from '../Components/ReactIframe';
 
 
 
-const LessonPlanIframeComponent = ({ className, name, source, width, height, allow, scrolling, frameBorder}) => {
+const LessonPlanIframeComponent = ({
+className,
+id, 
+name, 
+source, 
+width, 
+height, 
+allow, 
+scrolling, 
+frameBorder }) => {
 
   return(
         
-          ( source ) ? <div>
+          ( source ) ? <div id={id}>
                     <ReactIframe
                          className={className}
-                         name={name }
+                         name={name}
                          source={source}
                          width={width}
                          height={height}

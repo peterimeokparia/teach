@@ -4,7 +4,7 @@ checkIfPackageIsSetToAutoRenew } from './coursePackageRenewalHelpers';
 import {
 autoRenewSessionPackages } from '../../actions.js';
 
-jest.mock('../services/course/api');
+jest.mock('../../api');
 
 describe('handleAutoRenewPackageSessions', () => {
   
@@ -20,8 +20,8 @@ describe('handleAutoRenewPackageSessions', () => {
    };
 
    it('should retun true if package has expired', () => {
-      const isSetToAutoRenew = checkIfPackageIsSetToAutoRenew( currentUser,  currentSession );
-      expect(isSetToAutoRenew).toBe(true);
+      const isSetToAutoRenew = checkIfPackageIsSetToAutoRenew( currentUser,  [currentSession] );
+      expect((isSetToAutoRenew?.length > 0)).toBe(true);
    });
 });
 
@@ -46,11 +46,6 @@ describe('autoRenewSessionPackages', () => {
 
    it('should call 2 actions', async () => {
       
-      // const autoRenewImplementation = ( currentUser, currentSession ) => {return new Promise( resolve =>  resolve({...currentUser, paymentStatus: "approved"} ))}
-      // const mockAutoRenewPackages = jest.fn(autoRenewImplementation)
-      // await autoRenewSessionPackages( currentUser,  currentSession, mockAutoRenewPackages )(mockDispatch);
-      // console.log(mockAutoRenewPackages.mock.calls[0])
-
       const mockDispatch = jest.fn();
 
       await autoRenewSessionPackages( currentUser,  currentSession )(mockDispatch);
@@ -59,7 +54,7 @@ describe('autoRenewSessionPackages', () => {
       expect(mockDispatch.mock.calls[0][0]).toEqual({
          type: 'AUTO RENEW PACKAGE SUCCESS',
          payload: {
-           userSession: {
+           Session: {
              numberOfSessions: 0,
              totalNumberOfSessions: 5,
              typeOfSession: 'Package',
@@ -67,7 +62,7 @@ describe('autoRenewSessionPackages', () => {
              autoRenewDates: ['one', 'two', 'three'],
              status: true
            },
-           user: { role: 'Student', paymentStatus: 'approved' }
+           User: { role: 'Student', paymentStatus: 'approved' }
          }
       });
       expect(mockDispatch.mock.calls[1][0].type).toEqual('LAST LOGGEDIN USER');

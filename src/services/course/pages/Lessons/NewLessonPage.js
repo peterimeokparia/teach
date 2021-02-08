@@ -14,6 +14,7 @@ import {
 Validations } from '../../../../helpers/validations';
 
 import './NewLessonPage.css';
+import { navigate } from '@reach/router';
 
 
 const NewLessonPage = ({
@@ -79,7 +80,11 @@ const performDelete = () => {
 }
 
 const recordLesson = () => {
-     recordLesson()
+    recordLesson()
+}
+
+const lessonQuestions = ( lessonId ) => {
+    navigate(`/formBuilder/${lessonId}`);  
 }
 
 useEffect (() => {
@@ -118,7 +123,7 @@ useEffect (() => {
                    {error && <div>{error.message}</div>}
            </>
             ) : ( 
-                   children(beginEditing, performDelete)
+                   children(beginEditing, performDelete, lessonQuestions)
                 );         
                 
 };

@@ -1,10 +1,4 @@
 import React from 'react';
-import StreamHeader from '../services/recorder/stream/StreamHeader'; 
-import StreamCreate from '../services/recorder/stream/StreamCreate';
-import StreamDelete from '../services/recorder/stream/StreamDelete';
-import StreamEdit from '../services/recorder/stream/StreamEdit';
-import StreamList from '../services/recorder/stream/StreamList';
-import StreamShow from '../services/recorder/stream/StreamShow';
 import MyCourses from '../services/course/pages/Courses/MyCourses';
 import ShowMeeting from '../services/course/pages/Meetings/ShowMeeting';
 import CourseListPage from '../services/course/pages/Courses/CourseListPage';
@@ -34,10 +28,12 @@ import ClassRoomGroupsPage from '../services/course/pages/ClassRoom/ClassRoomGro
 import OperatorSignUpPage from '../services/course/pages/SignUp/OperatorSignUpPage'; 
 import Boards from '../services/course/pages/Board/Boards';
 import StudentDetailPage from '../services/course/pages/Users/Student/StudentDetailPage'; 
-import StudentDisplayViewComponent from '../services/course/pages/Users/Student/StudentDisplayViewComponent';
 import SessionComponent from '../services/course/pages/Sessions/SessionComponent';
 import GradeComponent from '../services/course/pages/Grades/GradeComponent';
 import AttendanceComponent from '../services/course/pages/Attendance/AttendanceComponent';
+import EditorDemo from '../services/course/pages/Lessons/EditorDemo';
+import SendNotificationsPage from '../services/course/pages/Notifications/SendNotificationsPage';
+import QuestionPage from '../services/course/pages/Questions/QuestionPage';
 import { Router, Redirect } from '@reach/router';
 
 
@@ -46,20 +42,17 @@ const PodDetailPage = () => {
     return (
         <Router>
              <Redirect noThrow from="/" to="/users" />
-
              <ClassRoomGroupsPage path="/:operatorBusinessName/classroomgroups"/>
 
              <ClassRoomPage path="/:operatorBusinessName/classroomgroups/:groupId/:classRoomName" >
                  <CourseDropDownPage path="classroom/:userId" /> 
              </ClassRoomPage>
 
-
-             <ClassRoomPage path="/:operatorBusinessName/classroom/:selectedUserId" />
-
+             <ClassRoomPage path="/:operatorBusinessName/classroom/:selectedUserId" /> 
              <CourseListPage path="/:operatorBusinessName/courses"/>
              
              <CourseDetailPage path="/:operatorBusinessName/courses/:courseId">   
-                <LessonPage path="lessons/:lessonId" />
+                <LessonPage path="lessons/:lessonId" /> 
              </CourseDetailPage>
              
              <SalesPage  path="/:operatorBusinessName/courses/:courseId/buy">
@@ -91,10 +84,13 @@ const PodDetailPage = () => {
              <IndividualUsersCourseList path=":operatorBusinessName/coursestaught/:userId" />
              <IndividualUsersBio path=":operatorBusinessName/coursestaught/about/:userId" />
              <CourseDetailCheckBoxComponent path="/students/:courseId" />
-             <StudyHall path="/:operatorBusinessName/students/mystudyhall" />
+             <StudyHall path="/:operatorBusinessName/LessonPlan/StudyHall/:userId" />
              {/* <StudentDetailPage path="/:operatorBusinessName/student/:studentId/course/:courseId/lessons/:lessonId" /> */}
              <CalendarPage path="/:operatorBusinessName/schedule/calendar"/>
              <NotFoundPage default />
+             <EditorDemo path="/demo/editor/:lessonId"/>
+             <QuestionPage path="/formBuilder/:lessonId"/>
+             <SendNotificationsPage path="/:operatorBusinessName/demo/sendnotifications" />
         </Router>
     )
 }

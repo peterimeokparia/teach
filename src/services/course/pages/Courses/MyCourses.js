@@ -11,7 +11,8 @@ import Modal from 'react-modal';
 
 import { 
 Link, 
-Redirect } from '@reach/router';
+Redirect,
+navigate } from '@reach/router';
 
 import { 
 openNewCourseModal, 
@@ -25,6 +26,9 @@ getOperatorFromOperatorBusinessName,
 getUsersByOperatorId,
 getCoursesByOperatorId } from '../../Selectors';
 
+import { 
+useOnClickOutside } from '../../pages/hooks';
+
 import LoginLogout from '../Login/LoginLogout'
 import CoursesComponent from '../Courses/CoursesComponent';
 import NewCourse from '../Courses/NewCourse';
@@ -32,15 +36,6 @@ import MainMenu from '../Components/MainMenu';
 import Cart from '../Sales/Cart/Cart';
 
 import './MyCourses.css';
-
-
- 
-import { ThemeProvider } from 'styled-components';
-import { GlobalStyles } from '../../global';
-import { theme } from './../theme';
-import { Burger, Menu } from '../Components/components';
-import { useOnClickOutside } from '../../pages/hooks';
-
 
 
 const MyCourses = ({
@@ -53,83 +48,83 @@ closeNewCourseModal,
 isModalOpen }) => {
 
 
-    const node = useRef(); 
-    useOnClickOutside(node, () => setOpen(false));
-    const [open, setOpen] = useState(false);
+const node = useRef(); 
+useOnClickOutside(node, () => setOpen(false));
+const [open, setOpen] = useState(false);
 
 
 
-    if ( ! user || user?.email === undefined ){
+if ( ! user?.userIsValidated || ! operator ){
 
-        return <Redirect to={`/${operatorBusinessName}/login`} noThrow />
-    }
+    navigate(`/${operatorBusinessName}/login`);
+}
+
+
+if ( ! user || user?.email === undefined ){
+   return <Redirect to={`/${operatorBusinessName}/login`} noThrow />
+}
+
+
+let navigationContent = navContent( user, operatorBusinessName ).users;
+
+let myCourseList = courses?.filter(course => user?.courses?.includes(course?._id));
 
     
-    let navigationContent = navContent( user, operatorBusinessName ).users;
+return (
 
-    let myCourseList = courses?.filter(course => user?.courses?.includes(course?._id));
-
-       
-    return (
-
-       
-        <div className="MyCourses">
- 
-            <header> 
-                
-                <MainMenu navContent={navigationContent} />
-
-                <h2> You are viewing your list of courses. </h2>
-
-                
-                <div>  
-                <LoginLogout
-                     operatorBusinessName={operatorBusinessName}
-                     user={user}
-                />    
-
-                <Cart />
-                </div>
-            </header>
-
-             
-      {
-          ( user?.courses?.length === 0 ) && (<div> 
-               <div>
-                 <h3>You are not subscribed to any  <span><Link to={"/courses"}> courses. </Link></span></h3>
-               </div>
-
-              <div>   
-              { ( user?.role === "Tutor" ) && <button className="new-course-btn" onClick={openNewCourseModal}>New Course</button> }
     
-              </div>
-      
-              <Modal isOpen={isModalOpen} onRequestClose={closeNewCourseModal}> <NewCourse user={user}/> </Modal>
-           </div>
+    <div className="MyCourses">
 
-        )  
-      }
-        
+        <header> 
+            
+            <MainMenu navContent={navigationContent} />
 
+            <h2> You are viewing your list of courses. </h2>
 
-     
+            
+            <div>  
+            <LoginLogout
+                    operatorBusinessName={operatorBusinessName}
+                    user={user}
+            />    
 
-            <br></br>   
+            <Cart />
+            </div>
+        </header>
 
-              { ( user?.role === "Tutor" ) && <button className="new-course-btn" onClick={openNewCourseModal}>Add New Course</button> }
+            
+    {
+        ( user?.courses?.length === 0 ) && (<div> 
+            <div>
+                <h3>You are not subscribed to any  <span><Link to={"/courses"}> courses. </Link></span></h3>
+            </div>
 
-                    <CoursesComponent
-                               operatorBusinessName={operatorBusinessName}
-                               modal={isModalOpen} 
-                               courses={myCourseList}
-                   />     
- 
-                 <Modal isOpen={isModalOpen} onRequestClose={closeNewCourseModal}> <NewCourse user={user}/> </Modal>
+            <div>   
+            { ( user?.role === "Tutor" ) && <button className="new-course-btn" onClick={openNewCourseModal}>New Course</button> }
 
+            </div>
+    
+            <Modal isOpen={isModalOpen} onRequestClose={closeNewCourseModal}> <NewCourse user={user}/> </Modal>
         </div>
 
-    )     
-}
+    )  
+    }
+    
+    <br></br>   
+
+        { ( user?.role === "Tutor" ) && <button className="new-course-btn" onClick={openNewCourseModal}>Add New Course</button> }
+
+            <CoursesComponent
+                        operatorBusinessName={operatorBusinessName}
+                        modal={isModalOpen} 
+                        courses={myCourseList}
+            />     
+
+            <Modal isOpen={isModalOpen} onRequestClose={closeNewCourseModal}> <NewCourse user={user}/> </Modal>
+
+    </div>
+
+)}
 
 
 const mapDispatch = {

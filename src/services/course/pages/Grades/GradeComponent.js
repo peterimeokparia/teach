@@ -31,10 +31,8 @@ grades }) => {
     function onMatchListItem( match, listItem ) {
 
         if ( match ){
-    
-            // setCurrentTutor( listItem );
-           
-            // setLessonPlanUrl(`/${operatorBusinessName}/LessonPlan/${groupId}/${classRoomGroupName}/${listItem._id}/${listItem.firstname}`);
+        // setCurrentTutor( listItem );
+        // setLessonPlanUrl(`/${operatorBusinessName}/LessonPlan/${groupId}/${classRoomGroupName}/${listItem._id}/${listItem.firstname}`);
         }
     } 
 

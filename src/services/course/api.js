@@ -1,13 +1,24 @@
-import { postData, putData, deleteData,  uploadFiles, deleteFiles, uploadContent } from '../../helpers/serverHelper';
-import { tokenGenerator, verifyToken, ensureToken, privateKey} from './pages/Login/authentication';
+import { 
+postData, 
+putData, 
+deleteData, 
+uploadAvatarFiles,  
+uploadFiles, 
+deleteFiles, 
+uploadContent } from '../../helpers/serverHelper';
+
+import { 
+tokenGenerator, 
+verifyToken, 
+ensureToken, 
+privateKey} from './pages/Login/authentication';
+
 import axios from 'axios'
 
 
- //dotenv.config
+ //dotenv.config // to do
 const PREFIX = "/api/v1";
-export const NOTIFICATION_PREFIX = "http:localhost:9007/api/v1/notifications";
-
-
+export const NOTIFICATION_PREFIX = "http://localhost:9007/api/v1/notifications";
 let apiAuthToken = null;
 
 
@@ -231,8 +242,8 @@ export const updateInvitationUrl = ( userId,  user) => {
 
 
 
-export const uploadUserAvatar = ( selectedFiles,  file, prefix, teachObjectName ) => {
-  return uploadFiles( selectedFiles, file, prefix, teachObjectName );
+export const uploadUserAvatar = ( selectedFiles, file, prefix, teachObjectName, typeOfUpload ) => {
+  return uploadFiles( selectedFiles, file, prefix, teachObjectName,  typeOfUpload );
 };
 
 
@@ -464,9 +475,6 @@ export const get = ( route, prefix=PREFIX ) => {
    .then(handleErrors)
      .then(response => response?.json() );
 }
-
-
-
 
 
 

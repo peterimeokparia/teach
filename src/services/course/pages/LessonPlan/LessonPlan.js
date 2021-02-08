@@ -41,6 +41,10 @@ import {
 Redirect, 
 navigate } from '@reach/router';
 
+import { 
+navContent } from  '../Components/navigationHelper.js';
+  
+import MainMenu from '../Components/MainMenu';
 import NavLinks  from '../Components/NavLinks';
 import LessonPlanIframeComponent from '../LessonPlan/LessonPlanIframeComponent'
 import VideoPage from '../Video/VideoPage';
@@ -62,6 +66,7 @@ lessonId,
 lessonTitle,
 lessons,
 selectedCourseTutor,
+classRoomLessonPlan,
 users,
 currentUser,
 boardOrEditor,
@@ -88,7 +93,7 @@ const [ fullMeetingStage, setFullMeetingStage ] = useState(false);
 const [ videoModalModeOn,  setVideoModalMode ] = useState(false);
 const [ session, setSession] = useState( false );  
 const paidSession = paidSessions?.filter(session => session?.courseId === courseId)?.find( currentSession => currentSession?.userId === currentUser?._id );
-const lesson = lessons?.filter(thisLesson => thisLesson?._id === lessonId); 
+const lesson = classRoomLessonPlan[classRoomId]?.selectedLesson; 
 const currentCourse = courses?.find(course => course?._id === courseId)?.name;
 
 
@@ -97,10 +102,10 @@ const currentCourse = courses?.find(course => course?._id === courseId)?.name;
     loadUsers();
 
     loadMeetings();
-    
+
   }, [ fullMeetingStage, hideMeetingStage, loadUsers, loadMeetings  ]);
 
-
+  
   handleRedirectionsOnPageLoad();
 
 
@@ -109,32 +114,22 @@ const currentCourse = courses?.find(course => course?._id === courseId)?.name;
     if ( session ) {
         
         if ( videoModalModeOn ){
-            
-          Validations.warn('Recording In Progress. To end this teaching session, please stop the recording.');
-
+          Validations.warn( 'Recording In Progress. To end this teaching session, please stop the recording.' );
           return;
         }
 
         if ( fullMeetingStage ){
-
           setFullMeetingStage(false); 
         }
 
         setSession(false);
-
         setHideMeetingStage(false);
-
         let selectedTutor = users?.find(usr => usr?._id === classRoomId );
-
         handleMeetings(currentMeetings, selectedTutor, currentUser);
-           
     }
     else{
-
         setSession(true);
-
         setHideMeetingStage(false);
-
         loadMeetingsByUserId(currentUser?._id);
     }
   }
@@ -144,38 +139,30 @@ const currentCourse = courses?.find(course => course?._id === courseId)?.name;
 
   const showFullMeetingStage = () => {
 
-    if ( fullMeetingStage ){
-        
+    if ( fullMeetingStage ) {
        setFullMeetingStage(false);
-
        setHideMeetingStage(false);
-
     }
-    else{
-
+    else {
       setFullMeetingStage(true);
-
       setHideMeetingStage(true);
-
     } 
-    
   }
+
 
 
   const resetAllStartSettings = () => {
 
     if ( hideMeetingStage ){
-
        setHideMeetingStage(false);
     }
-
   }
+
 
 
   const resetAllStopSettings = () => {
 
     if ( videoModalModeOn ){
-
       setVideoModalMode(false);
     }
   }
@@ -185,13 +172,9 @@ const currentCourse = courses?.find(course => course?._id === courseId)?.name;
   const hidePopUpWindow = () => {
 
     if ( ! hideMeetingStage ) {
-
       setHideMeetingStage(true);
-
     } else {
-
       setHideMeetingStage(false);
-
     }
   }
 
@@ -199,16 +182,13 @@ const currentCourse = courses?.find(course => course?._id === courseId)?.name;
 
   function handleRedirectionsOnPageLoad(){
 
-    if ( ! currentUser?.userIsValidated ) {
-    
+    if ( ! currentUser?.userIsValidated ) {  
         navigate(`/${operatorBusinessName}/LessonPlan/invite/userverification/classRoom/${classRoomId}`); 
         // return <Redirect to={`/${operatorBusinessName}/courses/${courseId}/buy`} noThrow/>
-      //return <Redirect to={`/${operatorBusinessName}/LessonPlan/invite/userverification/classRoom/${classRoomId}`} noThrow />
+        //return <Redirect to={`/${operatorBusinessName}/LessonPlan/invite/userverification/classRoom/${classRoomId}`} noThrow />
     } 
   
-    
-    if ( paidSession?.numberOfSessions === session?.totalNumberOfSessions  && session?.typeOfSession === "Package" && currentUser?.role === "Student" ) {
-  
+    if ( paidSession?.numberOfSessions === session?.totalNumberOfSessions  && session?.typeOfSession === "Package" && currentUser?.role === "Student" ) { 
       return <Redirect to={`/${operatorBusinessName}/mycourses`} noThrow />
     }
   }
@@ -227,45 +207,41 @@ const currentCourse = courses?.find(course => course?._id === courseId)?.name;
 
       let meeting = getMeetings(meetings, tutor);
 
-       if ( meeting ) {
+      if ( meeting ) {
 
-             meeting.invitees.forEach( user => {
+          meeting.invitees.forEach( user => {
 
-                user[ 'timeMeetingEnded' ] =  Date.now();
-
-                incrementSessionCount( meeting?.sessions?.find(session => session?.userId === user?._id ) ); 
-
-                updateUserInvitationUrl(user, setInvitationUrl, nameOfLessonInProgress, lessonInProgress); 
-              
-              });
-       }
-
-
-       saveMeeting(tutor?.meetingId, { ...meeting, timeEnded: Date.now() });
-
-       lastLoggedInUser( {...currentUser, inviteeSessionUrl, nameOfLessonInProgress, lessonInProgress  } );
-
-      
+            user[ 'timeMeetingEnded' ] =  Date.now();
+            incrementSessionCount( meeting?.sessions?.find(session => session?.userId === user?._id ) ); 
+            updateUserInvitationUrl(user, setInvitationUrl, nameOfLessonInProgress, lessonInProgress); 
+            
+          });
+      }
+      saveMeeting(tutor?.meetingId, { ...meeting, timeEnded: Date.now() });
+      lastLoggedInUser( {...currentUser, inviteeSessionUrl, nameOfLessonInProgress, lessonInProgress  } );
+   
     } catch (error) {
-
-       console.log( error )
-      
+      console.log( error )   
     }
  }
-
- 
- 
 
  
    const meetingSettings = meetingConfigSettings(currentCourse, lessonTitle);
 
    const meetingStyleContainer = ( fullMeetingStage ) ? 'meeting-full' :  ( hideMeetingStage ) ? 'meeting-hide' : `meeting` 
 
+   let navigationContent = navContent( currentUser, operatorBusinessName, currentUser?.role,  "Student" ).users;   
+
+
     return (
 
         <div className="LessonPlan" onDoubleClick={hidePopUpWindow}> 
               
               <header> 
+
+              <MainMenu 
+                navContent={navigationContent}
+               />
 
                 <h1>
                   <NavLinks to={`/${operatorBusinessName}/classroomgroups/${classRoomGroupId}/${classRoomGroupName}/classroom/${classRoomId}`}> {classRoomName}   </NavLinks>
@@ -279,12 +255,21 @@ const currentCourse = courses?.find(course => course?._id === courseId)?.name;
                           {/* images / gif */}
 
                             <button className="plan-lesson-btn" onClick={toggleTeach}> { session ? 'End' : 'Start Video' } </button>
-
                             <button className={ `toggle-stage-btns${fullMeetingStage ? "-hide" : "-show"}` } onClick={toggleTeachBoardOrEditor}> { boardOrEditor ? 'Board' : 'Editor' } </button>         
-
                             <button className={`toggle-stage-btns${(session) ? (fullMeetingStage) ?  "-show" : "-show" : "-hide" }`}  onClick={showFullMeetingStage}> { ( session && fullMeetingStage) ? "Hide Room"  :  "Show Room"  } </button> 
                             
-                            <VideoPage buttonClassName={`toggle-stage-btns${( session ) ? "-show" : "-hide"}`} recordStream={session} resetAllStartSettings={resetAllStartSettings}  resetAllStopSettings={resetAllStopSettings}   setVideoModalMode={stage => setVideoModalMode(stage)} lesson={lesson}/>
+                            <VideoPage buttonClassName={`toggle-stage-btns${( session ) ? "-show" : "-hide"}`} 
+                                      recordStream={session}
+                                      enableScreenShare={true} 
+                                      enableCameraStream={false}
+                                      resetAllStartSettings={ resetAllStartSettings }  
+                                      resetAllStopSettings={ resetAllStopSettings }   
+                                      setVideoModalMode={stage => setVideoModalMode(stage) }
+                                      objectId={lesson?._id} 
+                                      videoMetaData={lesson}
+                                      videoMetaDataExternalId={"courseId"}
+                                      videoNamePrefix={"LessonVideo"}
+                            />
 
                         </span>
                 </div>
@@ -297,8 +282,7 @@ const currentCourse = courses?.find(course => course?._id === courseId)?.name;
     
               <div> 
 
-                <div className= {meetingStyleContainer}>   
-
+                <div className={ meetingStyleContainer }>   
                     <Rnd>                 
                         <div>
                         { ( session  ) ?  <Meeting
@@ -379,6 +363,7 @@ const mapDispatch = {
 const mapState = ( state, ownProps )   => {
   return {
          selectedCourseTutor: state.courses.courseTutor,
+         classRoomLessonPlan: state.classrooms.classRoomLessonPlan,
          operator: getOperatorFromOperatorBusinessName(state, ownProps),
          users: getUsersByOperatorId(state, ownProps),
          courses: getCoursesByOperatorId(state, ownProps),

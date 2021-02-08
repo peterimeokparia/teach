@@ -12,11 +12,13 @@ import MarkDown from 'react-markdown';
 
 import MDEditor from '@uiw/react-md-editor';
 
+import LessonEditorDemo from './LessonEditorDemo';
 
 
 
+const LessonPage = ({ lesson, previewMode, togglePreviewMode, currentUser  }) => {
 
-const LessonPage = ({ lesson, previewMode, togglePreviewMode  }) => {
+  return <LessonEditorDemo lesson={lesson} currentUser={currentUser}/>
 
     return  previewMode ? (    
          <div> 
@@ -39,7 +41,8 @@ const LessonPage = ({ lesson, previewMode, togglePreviewMode  }) => {
 const mapState = (state, ownProps)   => {
   return {
          previewMode: state.app.previewMode,
-         lesson: state.lessons.lessons[ownProps.lessonId]
+         lesson: state.lessons.lessons[ownProps.lessonId], 
+         currentUser: state.users.user
   };
 }
 

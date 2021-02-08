@@ -175,8 +175,6 @@ users }) => {
                  </span>
                  
                    
-
-             
                   </span>
 
                   <div>

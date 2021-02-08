@@ -6,6 +6,7 @@ const getParsedCourseId = ( state, props ) => props.courseId;
 const  getParsedUserId = ( state, props ) => props?.currentUser?._id;
 const getCourses = state => state.courses.courses;
 const getClassRoomGroups = state => state?.classrooms?.classrooms;
+const getPushNotificationUsers = state => state?.notifications?.pushNotificationSubscribers;
 const parseCourseId = (state, props) => props.courseId;
 const getCurrentUser = state => state.users.user;
 const getOperators = state => state.operators.operators;
@@ -139,5 +140,14 @@ export const getClassRoomGroupsByOperatorId = createSelector(
     getClassRoomGroups,
     (operators , operatorBusinessName, classRoomGroups) => 
          Object.values(classRoomGroups).filter(usr => usr?.operatorId === Object.values(operators).find(operator =>  operator.businessName === operatorBusinessName)?._id)
-           
+);
+
+
+
+export const getPushNotificationUsersByOperatorId = createSelector( 
+    getOperators,
+    getOperatorBusinessName,
+    getPushNotificationUsers,
+    (operators , operatorBusinessName, pushNotificationUsers) => 
+         Object.values(pushNotificationUsers).filter(usr => usr?.operatorId === Object.values(operators).find(operator =>  operator.businessName === operatorBusinessName)?._id)  
 );

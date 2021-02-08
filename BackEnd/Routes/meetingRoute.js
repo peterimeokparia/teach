@@ -1,6 +1,12 @@
 import express from 'express';
+
 import meetingModel from '../Model/meetingModel.js';
-import { saveUpdatedData } from './lessonRoute.js';
+
+import {
+getPostData,    
+saveUpdatedData   
+} from '../Helpers/storageHelper.js';
+
 
 
 const meetingRoute = express.Router();
@@ -35,14 +41,13 @@ meetingRoute.get('/:userId', (req, res) => {
 
 meetingRoute.post('/', (req, res) => {
 
-    let reqBodyKeys = Object.keys(req.body);
-    let meetingData = {};
+    // let reqBodyKeys = Object.keys(req.body);
+    // let meetingData = {};
+    // reqBodyKeys.forEach(element => {
+    //   meetingData[element] = req.body[element];
+    // });
 
-    reqBodyKeys.forEach(element => {
-        
-      meetingData[element] = req.body[element];
-
-    });
+   let meetingData = getPostData( req );
 
    let user = new meetingModel(meetingData);  
 

@@ -34,7 +34,7 @@ NAVIGATION_HISTORY  } from '../services/course/actions';
 
 const initialState = {
     users: {},
-    user:{},
+    user: {},
     invitees:new Map(),
     login:[],
     lastLoggedInUser:{},
@@ -145,8 +145,12 @@ const reducer = produce((draft, action) => {
              draft.navigationHistory = action.payload;
         return;     
         case SET_USER_BIO_MARKDOWN:
-             draft.user.markDown = action.payload.markDown; 
-             draft.users[action.payload.teachObject._id].markDown = action.payload.markDown; 
+
+             if ( typeof draft.user === 'object' && draft.user !== null ) {
+                draft.user.markDown = action.payload.markDown; 
+                draft.users[action.payload.teachObject._id].markDown = action.payload.markDown; 
+             };
+             
         return; 
         default:
         return;

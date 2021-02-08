@@ -56,7 +56,6 @@ export const updateInvitationUrl = (
 
  });
 
-
 };
 
 
@@ -146,7 +145,8 @@ export const addMeetings = (
     courseTitle,
     lessonTitle,
     meetingUrl,
-    currentUser ) => {
+    currentUser,
+    usersWhoJoinedTheMeeting ) => {
 
 
 console.log("Mock implementation addMeetings")
@@ -155,7 +155,7 @@ return new Promise(( resolve, reject ) => {
 
    process.nextTick(() => {
 
-    resolve( {_id: currentUser.meetingId, meetings: currentUser.meetings } )
+    resolve( {_id: currentUser.meetingId, invitees, currentUser, meetings: currentUser.meetings } )
 
    })
 
@@ -163,6 +163,33 @@ return new Promise(( resolve, reject ) => {
 };
 
 
+
+
+export const sendEmail = (
+fromEmail,
+toEmail,
+subject,
+messageBody,
+userId
+) => {
+
+  console.log("Mock Mock Mock Implementation");
+
+  return new Promise((resolve, reject) => {
+
+      process.nextTick(() => {
+    
+        resolve({
+          fromEmail,
+          toEmail,
+          subject,
+          messageBody,
+          userId});
+      });
+
+  }) 
+  
+}
 
 
 
@@ -179,11 +206,12 @@ return new Promise(( resolve, reject ) => {
     resolve( {...currentUser} );
 
 
-     })
+    });
 
   });     
-
 }
+
+
 
 
 export const autoRenew = (currentUser, session) => {
@@ -193,24 +221,26 @@ export const autoRenew = (currentUser, session) => {
     return new Promise( ( resolve, reject ) => {
 
         let resultObject = {
-            userSession: {
+            Session: {
                 ...session,
                 status: true,
                 autoRenewDates: [ ...session?.autoRenewDates ], 
-                numberOfSessions: 0
+                numberOfSessions: 0 
             },
-
-            user:{
+            User:{
                 ...currentUser,
                 paymentStatus: "approved"    
             }
-
         }
 
         process.nextTick(() => {
 
-          (currentUser || session ) ? resolve(resultObject)
-                                    : reject( { error: ' there was a problem'} )
+          if ( session ) {
+             resolve({User: { ...resultObject } })
+          }
+          //(currentUser || session ) ? resolve(resultObject)
+            //                           : reject( { error: ' there was a problem'} )
+         
         });
     });
   
@@ -228,11 +258,10 @@ export const autoRenew = (currentUser, session) => {
 
     try {
 
-           if ( handlePayment(curentUser) === "approved" ){
+        if ( handlePayment(curentUser) === "approved" ){
 
-                 return true;
-           }
-
+              return true;
+        }
 
     } catch(error) {
        
@@ -244,24 +273,66 @@ export const autoRenew = (currentUser, session) => {
 
 
 
-  export const updateSession = (sessionId, session) => {
-
-    console.log("Mock implementation updateSession");
-    return session;
-  }
-
+export const updateSession = (sessionId, session) => {
+  console.log("Mock implementation updateSession");
+  return session;
+}
 
 
-//   export const updateUser = ( user ) => {
 
-//     console.log("Mock implementation updateUser");
 
-//     return new Promise( resolve => resolve(user));
-//   };
+export const addGrade = ( grade ) => {
+
+  console.log("Mock implementation addGrade", { ...grade });
+
+   return new Promise(( resolve, reject ) => {
+ 
+      process.nextTick(() => {
+
+        resolve({ ...grade });
+
+      })
+
+   });
+}
+
+
+
+export const add = ( data ) => {
+
+  console.log("Mock implementation add", { ...data });
+  return new Promise(( resolve, reject ) => {
+
+     process.nextTick(() => {
+
+       resolve({ ...data });
+
+     })
+
+  });
+}
+
+
+
+export const update = ( data ) => {
+
+  console.log("Mock implementation update", { ...data });
+   return new Promise(( resolve, reject ) => {
+ 
+      process.nextTick(() => {
+
+        resolve({ ...data });
+
+      })
+
+   });
+}
+
+
 
 
   
-  let paymentGatewayProvider = {provider: "xyz", approvalStatus: "approved"}
+let paymentGatewayProvider = {provider: "xyz", approvalStatus: "approved"}
 
 // paymentgateway integration and logic - this is a stub
  const handlePayment = (curentUser, gatewayProvider = paymentGatewayProvider) => {

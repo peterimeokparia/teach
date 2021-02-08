@@ -10,7 +10,6 @@ import {
 navigate } from '@reach/router';
 
 import {
-toggleClassRoomCourseGradeForm,
 updateUserInvitationUrl,     
 loadLessons,
 addNewLesson, 
@@ -25,12 +24,19 @@ autoRenewSessionPackages,
 setAutoRenewPackageStatus, 
 loadSessions,
 updateCurrentTutor,
+updateCurrentClassRoomLessonPlan,
 loadUsers,
 loadGrades, 
 loadMeetings,
 loadMeetingsByUserId,
 lastLoggedInUser,
-updateCurrentUser } from './../../actions';
+sendPushNotificationMessage,
+getSelectedPushNotificationUsers,
+loadSubscribedPushNotificationUsers,
+updateCurrentUser,
+toggleClassRoomSideBarDropDownDisplay, 
+addNewGrade,
+markAttendance} from './../../actions';
 
 
 import {
@@ -39,22 +45,25 @@ getCoursesByOperatorId,
 getUsersByOperatorId,    
 getOperatorFromOperatorBusinessName,
 getCoursesByCourseIdSelector,
-getCoursesByCreatedByIdSelector } from './../../Selectors';
+getCoursesByCreatedByIdSelector,
+getPushNotificationUsersByOperatorId } from './../../Selectors';
 
 
 import { 
 emailInputOptions, 
 emailMessageOptions,
 classRoomPageComponentConfig,
+classRoomPageDisplayComponentConfig,
 joinMeetingPopupMessage, 
-newMeetingInvitePromoMessage } from  './classRoomPageHelpers';
+newMeetingInvitePromoMessage,
+inviteStudentsToLearningSession,
+validationBeforeEnablingTeachPlatform } from  './classRoomPageHelpers';
+
 
 import {
 role, 
 cleanUrl } from '../../../../helpers/pageHelpers';
 
-import { 
-toast } from 'react-toastify';
 
 import { 
 getMeetings } from '../LessonPlan/lessonPlanHelpers';
@@ -62,8 +71,6 @@ getMeetings } from '../LessonPlan/lessonPlanHelpers';
 import ClassRoomPageComponent from './ClassRoomPageComponent';
 
 import 'react-toastify/dist/ReactToastify.css';
-
-// import './CourseDetailPage.css';
 
 
 
@@ -73,6 +80,7 @@ operator,
 currentUser,
 selectedUserId, 
 updateCurrentTutor,
+updateCurrentClassRoomLessonPlan,
 users, 
 courseId,
 courses,
@@ -87,12 +95,17 @@ loadGrades,
 setLessonInProgressStatus,
 addNewMeeting,
 updateUserInvitationUrl,
-toggleClassRoomCourseGradeForm,
 allSessions,
-displayGradeForm,
+pushNotificationSubscribers,
 grades,
 lastLoggedInUser,
 updateCurrentUser,
+sendPushNotificationMessage,
+getSelectedPushNotificationUsers,
+loadSubscribedPushNotificationUsers,
+selectedPushSubscribers,
+toggleClassRoomSideBarDropDownDisplay,
+toggleSideBarDisplay,
 children }) => {
 
 
@@ -121,19 +134,15 @@ useEffect(() => {
     }
 
 
-    if ( listOfStudents[0] ) {
+    listOfStudents.forEach(student => {
 
-        loadGrades(listOfStudents[0])
-    }
+        loadGrades( student );
+    });    
 
+    
     if ( (! listOfStudents[0]?.courses.includes(currentCourse?._id )) || (! displayComponentConfig?.selectedUser?.courses.includes( currentCourse?._id )) ) {
 
         setListOfStudents([]);
-
-        if ( displayGradeForm ) {
-
-            toggleClassRoomCourseGradeForm();
-        }
     }
 
 
@@ -145,11 +154,19 @@ useEffect(() => {
 
     loadUsers();
 
-    loadMeetings()
+    loadMeetings();
+
+    loadSubscribedPushNotificationUsers();
 
     
 }, [ loadGrades, loadLessons, loadUsers, currentCourse, currentLesson, loadMeetings, currentUser ]);  
     
+
+
+if ( ! currentUser?.userIsValidated || ! operator ){
+
+    navigate(`/${operatorBusinessName}/login`);
+}
 
 
 
@@ -164,7 +181,6 @@ const setCourseFromDropDown = ( selectedCourseId ) => {
 
         setSessions( allSessions?.filter( usersession => usersession?.courseId === selectedCourseId ));
     }
-
 }
 
 
@@ -178,259 +194,235 @@ const setLessonFromDropDown = ( selectedLessonId ) => {
  
         setSelectedLessonFromLessonDropDownSelector( lesson );
 
-        setLessonUrl(`/courses/${lesson?.courseId}/lessons/${lesson?._id}`)
-     }
-    
+        setLessonUrl(`/courses/${lesson?.courseId}/lessons/${lesson?._id}`);
+    }
 }
+
 
 
 
 
 const enableTeachPlatform = () => {
 
-    if ( ! currentCourse ) {
-
-        toast.error("Please select a course before joining your lesson.");
-
-        return;
-    }
-
+    validationBeforeEnablingTeachPlatform( currentCourse, currentUser, role, listOfStudents );
     
-    if ( currentUser?.role === "Tutor" && listOfStudents?.length === 0 ) {
-
-        toast.error("Please invite a student.");
-
-        return;  
-    }
-
-
-    if ( currentUser?.role === "Tutor" && !( currentCourse ) ) {
-
-        toast.error("Please select a course.");
-
-        return;  
-    }
-    
-
     if ( currentUser?.role === role.Student ) {
 
         loadUsers();
         updateCurrentUser( currentUser );
     }
 
-
     try { 
         
         if ( currentUser?.role === role.Student ) { 
 
             if ( ( currentUser?.lessonInProgress ) && ( currentUser?.meetingId === displayComponentConfig?.selectedUser?.meetingId ) ) {
-                 
-                 joinInProgressMeeting( currentUser );    
+
+                joinInProgressMeeting( currentUser );    
 
             } else {
 
                 waititingForMeetingToStartBeforeJoining( currentUser, currentUser?.lessonInProgress, currentUser?.inviteeSessionUrl, operatorBusinessName );
 
                 return;
-            }
-             
+            }          
         }
         
-
         navigate( lessonPlanUrl ); 
-
-        updateCurrentTutor( displayComponentConfig?.selectedUser );  
+        updateCurrentTutor( displayComponentConfig?.selectedUser ); 
+        updateCurrentClassRoomLessonPlan( { selectedTutor: displayComponentConfig?.selectedUser, selectedCourse: currentCourse, selectedLesson: currentLesson } );
 
         if ( currentUser?.role === role.Tutor ) {
 
-           setTeachSessionSettings( currentUser, currentCourse, currentLesson, sessions, listOfStudents ); 
+           setTeachSessionSettings( currentUser, currentCourse, currentLesson, 
+                                      sessions, listOfStudents, lessonPageUrl ); 
+           getSelectedPushNotificationUsers( listOfStudents, pushNotificationSubscribers );
         }
                     
     } catch (error) {
 
-        console.log( error );
-        
+        console.log( error );      
     }
 }
 
 
 
 
- function setTeachSessionSettings(user, currentCourse, currentLesson, sessions, listOfStudents ){
+function setTeachSessionSettings(user, currentCourse, currentLesson, sessions, 
+                              listOfStudents, lessonPageUrl ){
 
     setLessonInProgressStatus();
 
-    let invitees = inviteStudentsToLearningSession( user, currentLesson, sessions, listOfStudents ); 
+    let invitees = inviteStudentsToLearningSession( user, currentLesson, sessions, listOfStudents, 
+                                 lessonPageUrl, updateUserInvitationUrl, sendPushNotificationMessage, pushNotificationSubscribers ); 
 
     let usersWhoJoinedTheMeeting = [];
- 
+
     addNewMeeting(
-        invitees, 
-        user?._id,
-        sessions, 
-        Date.now(), 
-        currentCourse?._id, 
-        currentLesson?._id,
-        currentCourse?.name,
-        currentLesson?.title,
-        lessonPageUrl,
-        user,
-        usersWhoJoinedTheMeeting
-    )
- }
+    invitees, 
+    user?._id,
+    sessions, 
+    Date.now(), 
+    currentCourse?._id, 
+    currentLesson?._id,
+    currentCourse?.name,
+    currentLesson?.title,
+    lessonPageUrl,
+    user,
+    usersWhoJoinedTheMeeting )
+}
+
 
 
  
 
- function inviteStudentsToLearningSession( 
-    user, 
-    courseLesson, 
-    currentSessions, 
-    studentsEnrolledInThisCourse ){
-        
-        let invitees = [];
-    
-        if ( user?.role === "Tutor"  ) {
-                
-            studentsEnrolledInThisCourse.map(invitee => {
-    
-            const usersSession = currentSessions?.find( currentSession => currentSession?.userId === invitee?._id );
-            
-            const userHasExhaustedPackageSessions = ( usersSession?.numberOfSessions === usersSession?.totalNumberOfSessions  && usersSession?.typeOfSession === "Package" );
-    
-            if ( userHasExhaustedPackageSessions ) {
-                    
-                return;
-            }
-          
-            let setInvitationUrl = lessonPageUrl, nameOfLessonInProgress = courseLesson?.title, lessonInProgress = true;    
 
-            let user = { ...invitee, inviteeSessionUrl: setInvitationUrl, lessonInProgress: nameOfLessonInProgress, lessonInProgress: lessonInProgress  }
-    
-            invitees.push( user );
-        
-              updateUserInvitationUrl(invitee, setInvitationUrl, nameOfLessonInProgress, lessonInProgress); 
-            });
-    
-        }
-    
-        return invitees;
+function joinInProgressMeeting( user, allMeetings ){
+
+  let currentMeeting = getMeetings( allMeetings, user, role.Student );
+
+  saveMeeting( user?.meetingId, { ...currentMeeting, usersWhoJoinedTheMeeting:[ currentMeeting?.usersWhoJoinedTheMeeting, user ] });
+} 
+
+   
+
+
+
+
+let newMeetingTimerHandle = null;
+
+function waititingForMeetingToStartBeforeJoining( user, lessonInProgress ){
+
+    let timeOutPeriod = 1000;
+
+    if ( ! lessonInProgress ) {
+
+        newMeetingInvitePromoMessage( setAnimationForEmailInvitationEffect );
     }
 
+    newMeetingTimerHandle = setInterval( updateCurrentUserAfterASetInterval, timeOutPeriod, user );
+
+    if ( ! setUpdateUserTimerHandle ) {
+
+        setNewMeetingTimerHandle( newMeetingTimerHandle );
+    }
+}
 
 
 
-    function joinInProgressMeeting( user, allMeetings ){
 
-        let currentMeeting = getMeetings( allMeetings, user, role.Student );
+function updateCurrentUserAfterASetInterval( meetingUser ) {
 
-        saveMeeting( user?.meetingId, { ...currentMeeting, usersWhoJoinedTheMeeting:[ currentMeeting?.usersWhoJoinedTheMeeting, user ] });
+    if ( ! meetingUser?.lessonInProgress ) {
+
+        updateCurrentUser( meetingUser );
     } 
+}
    
 
 
 
-   let newMeetingTimerHandle = null;
+   
+function showJoinMeetingPopupAfterTheTutorStartsTheMeeting( updateCurrentUserTimerHandle, selectedCourse, user, businessName ){
 
-   function waititingForMeetingToStartBeforeJoining( user, lessonInProgress ){
+    let meetingHasStartedMessage = `Your lesson has started. Please join the following course: ${ selectedCourse?.name }.`;    
     
-            let timeOutPeriod = 1000;
-        
-            if ( ! lessonInProgress ) {
+    let cancellationUrl =  `/${businessName}/users`;
 
-                newMeetingInvitePromoMessage( setAnimationForEmailInvitationEffect );
-            }
+    if ( user?.lessonInProgress && user?.inviteeSessionUrl ) { 
+
+        joinMeetingPopupMessage( meetingHasStartedMessage, user?.lessonInProgress, user?.inviteeSessionUrl, cancellationUrl );
+
+        joinInProgressMeeting( user, meetings );
     
-            newMeetingTimerHandle = setInterval( updateCurrentUserAfterASetInterval, timeOutPeriod, user );
-
-            if ( ! setUpdateUserTimerHandle ) {
-
-                setNewMeetingTimerHandle( newMeetingTimerHandle );
-            }
-    }
-
-
-
-
-    function updateCurrentUserAfterASetInterval( meetingUser ) {
-
-        if ( ! meetingUser?.lessonInProgress ) {
-
-            updateCurrentUser( meetingUser );
-        } 
-     }
-   
-
-
-
-   
-   function showJoinMeetingPopupAfterTheTutorStartsTheMeeting( updateCurrentUserTimerHandle, selectedCourse, user, businessName ){
-
-        let meetingHasStartedMessage = `Your lesson has started. Please join the following course: ${ selectedCourse?.name }.`;    
-      
-        let cancellationUrl =  `/${businessName}/users`;
-
-        if ( user?.lessonInProgress && user?.inviteeSessionUrl ) { 
-
-            joinMeetingPopupMessage( meetingHasStartedMessage, user?.lessonInProgress, user?.inviteeSessionUrl, cancellationUrl );
-
-            joinInProgressMeeting( user, meetings );
-        
-            if ( updateCurrentUserTimerHandle ) {
+        if ( updateCurrentUserTimerHandle ) {
 
             clearInterval( updateCurrentUserTimerHandle );
 
             setNewMeetingTimerHandle( null );
-            }
-        } 
-    }
+        }
+    } 
+}
 
 
 
 
 
-   let displayComponentConfig = classRoomPageComponentConfig( currentUser, users, courses, lessons, currentCourse, selectedUserId );
+function addNewGradesForSelectedStudents( pushNotificationUsers, selectedCourseFromCourseDropDrown, newGrade, grades ){
 
-   return (     
+    newGrade.selectedStudents.forEach(student => {
 
-        <ClassRoomPageComponent
-                operatorBusinessName={operatorBusinessName}
-                operator={operator}
-                currentUser={currentUser}
-                selectedUser={displayComponentConfig?.selectedUser}
-                enableTeachPlatform={enableTeachPlatform}
-                courseDetailChildren={children}
-                studentsSubscribedToThisCourse={displayComponentConfig?.studentsSubscribedToCoursesByThisTutor}
-                setListOfStudents={setListOfStudents}
-                selectedStudents={listOfStudents}
-                sessions={sessions}
-                emailInputOptions={emailInputOptions}
-                emailMessageOptions={emailMessageOptions(currentUser,invitationUrl)}
-                currentTutor={displayComponentConfig?.selectedUser}
-                listOfCoursesForTheSelectedStudent={displayComponentConfig?.listOfCoursesForTheSelectedStudent} 
-                listOfLessonsForTheSelectedStudent={displayComponentConfig?.listOfLessonsForTheSelectedStudent} 
-                setSelectedCourseFromCourseDropDownSelector={setCourseFromDropDown}
-                setSelectedLessonFromLessonDropDownSelector={setLessonFromDropDown}
-                selectedCourseFromCourseDropDrown={currentCourse}
-                selectedLessonFromLessonDropDrown={currentLesson} 
-                courseId={courseId}
-                grades={grades?.filter(grd => grd?.courseId === currentCourse?._id)} 
-                displayGradeForm={displayGradeForm}
-                toggleBetweenAttendanceGradeDisplay={displayComponentConfig?.toggleBetweenAttendanceGradeDisplay}
-                setDropDownDisplayOption={setDropDownDisplayOption}
-                dropDownDisplayOption={dropDownDisplayOption}
-                animateInvitationButton={animateInvitationButton}        
-              /> 
-                
-        );
+       let currentGrades = grades?.filter( grd => grd?.studentId === student?._id );
+
+       addNewGrade( student, selectedCourseFromCourseDropDrown, newGrade, currentGrades, pushNotificationUsers );
+    })  
+}
+
+
+
+
+function markAttendanceForSelectedStudents( pushNotificationUsers, selectedCourseFromCourseDropDrown, attendance ) {
+
+    attendance.selectedStudents.forEach(student => {
+
+       let attendanceData = { ...attendance, studentId: student?._id  }
+
+       markAttendance( student, selectedCourseFromCourseDropDrown, attendanceData, pushNotificationUsers );
+    });
+}
+
+
+let displayComponentConfig = classRoomPageDisplayComponentConfig( 
+currentUser, 
+users, 
+courses, 
+lessons, 
+currentCourse, 
+selectedUserId );
+
+
+let componentConfig = classRoomPageComponentConfig(
+operatorBusinessName,
+operator,
+currentUser,
+displayComponentConfig,
+enableTeachPlatform,
+children,
+setListOfStudents,
+listOfStudents,
+sessions,
+emailInputOptions,
+emailMessageOptions,
+setCourseFromDropDown,
+setLessonFromDropDown,
+currentCourse,
+currentLesson,
+courseId,
+grades,
+addNewGradesForSelectedStudents,
+markAttendanceForSelectedStudents,
+pushNotificationSubscribers,
+setDropDownDisplayOption,
+dropDownDisplayOption,
+toggleClassRoomSideBarDropDownDisplay,
+toggleSideBarDisplay,
+animateInvitationButton,
+lessonPageUrl );
+
+
+return (     
+
+    <ClassRoomPageComponent config={componentConfig}/>
+        
+   );
 }
 
 
 
 const mapDispatch = {
-    toggleClassRoomCourseGradeForm,
     updateUserInvitationUrl,
     updateCurrentTutor,
+    updateCurrentClassRoomLessonPlan,
     loadMeetings,
     loadMeetingsByUserId,
     loadSessions,
@@ -448,7 +440,11 @@ const mapDispatch = {
     setAutoRenewPackageStatus,
     lastLoggedInUser,
     loadUsers,
-    updateCurrentUser
+    updateCurrentUser,
+    sendPushNotificationMessage,
+    getSelectedPushNotificationUsers,
+    loadSubscribedPushNotificationUsers,
+    toggleClassRoomSideBarDropDownDisplay
 }
 
 
@@ -457,6 +453,8 @@ const mapState = (state, ownProps) => {
      return {
          operator: getOperatorFromOperatorBusinessName(state, ownProps),
          selectedCourseTutor: state.courses.courseTutor,
+         pushNotificationSubscribers: getPushNotificationUsersByOperatorId(state, ownProps),
+         selectedPushSubscribers: state.notifications.selectedPushNotificationMessageSubscribers,
          currentUser: state.users.user,
          isLessonsLoading:state.lessons.lessonsLoading,
          isCourseLoading: state.courses.coursesLoading,
@@ -469,9 +467,9 @@ const mapState = (state, ownProps) => {
          allSessions: Object.values(state?.sessions?.sessions),
          users: getUsersByOperatorId(state, ownProps),
          courses: getCoursesByOperatorId(state, ownProps),
-         displayGradeForm: state.classrooms.displayGradeForm,
          grades:  getSortedRecordsByDate(Object.values(state?.grades?.grades), 'testDate'),
          meetings: state.meetings.meetings,
+         toggleSideBarDisplay: state.classrooms.displaySideBarDropDown
     }
 }
 

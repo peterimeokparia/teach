@@ -15,7 +15,7 @@ loadMeetings,
 loadMeetingsByUserId,
 saveMeeting, 
 incrementSessionCount, 
-loadUsers} from '../../actions';
+loadUsers } from '../../actions';
 
 import { 
 toggleVideoCapture } from '../../../recorder/actions.js';
@@ -45,7 +45,6 @@ import LessonPlanIframeComponent from '../LessonPlan/LessonPlanIframeComponent'
 import VideoPage from '../Video/VideoPage';
 import Meeting from '../Meetings/Meeting';
 
-// import './LessonPlan.css';
 // import Portal from 'src/pages/Portal'
 
 
@@ -201,9 +200,8 @@ const currentCourse = courses?.find(course => course?._id === courseId)?.name;
     // change to verified / unverified
     if ( ! currentUser?.userIsValidated ) {
 
-    
         navigate(`/${operatorBusinessName}/LessonPlan/invite/userverification/classRoom/${classRoomId}`); 
-        // return <Redirect to={`/${operatorBusinessName}/courses/${courseId}/buy`} noThrow/>
+      // return <Redirect to={`/${operatorBusinessName}/courses/${courseId}/buy`} noThrow/>
       //return <Redirect to={`/${operatorBusinessName}/LessonPlan/invite/userverification/classRoom/${classRoomId}`} noThrow />
     } 
   
@@ -213,9 +211,6 @@ const currentCourse = courses?.find(course => course?._id === courseId)?.name;
       return <Redirect to={`/${operatorBusinessName}/mycourses`} noThrow />
     }
   }
-
-
-
 
 
   function handleMeetings( meetings, user ){
@@ -252,108 +247,103 @@ const currentCourse = courses?.find(course => course?._id === courseId)?.name;
  }
 
  
- 
+const meetingSettings = meetingConfigSettings(currentCourse, lessonTitle);
 
- 
-   const meetingSettings = meetingConfigSettings(currentCourse, lessonTitle);
+const meetingStyleContainer = ( fullMeetingStage ) ? 'meeting-full' :  ( hideMeetingStage ) ? 'meeting-hide' : `meeting` 
 
-   const meetingStyleContainer = ( fullMeetingStage ) ? 'meeting-full' :  ( hideMeetingStage ) ? 'meeting-hide' : `meeting` 
 
-    return (
+return (
 
-        <div className="LessonPlan" onDoubleClick={hidePopUpWindow}> 
-              
-              <header> 
+    <div className="LessonPlan" onDoubleClick={hidePopUpWindow}> 
+          
+          <header> 
 
-                <h1>
-                  <NavLinks to={`/${operatorBusinessName}/classroomgroups/${classRoomGroupId}/${classRoomGroupName}/classroom/${classRoomId}`}> {classRoomName}   </NavLinks>
-                </h1>
-                
-  
-                <div className="lesson-item"> 
+            <h1>
+              <NavLinks to={`/${operatorBusinessName}/classroomgroups/${classRoomGroupId}/${classRoomGroupName}/classroom/${classRoomId}`}> {classRoomName}   </NavLinks>
+            </h1>
+            
 
-                      <span className="span-btns">  
-        
-                          {/* images / gif */}
+            <div className="lesson-item"> 
 
-                            <button className="plan-lesson-btn" onClick={toggleTeach}> { session ? 'End' : 'Start Video' } </button>
-
-                            <button className={ `toggle-stage-btns${fullMeetingStage ? "-hide" : "-show"}` } onClick={toggleTeachBoardOrEditor}> { boardOrEditor ? 'Board' : 'Editor' } </button>         
-
-                            <button className={`toggle-stage-btns${(session) ? (fullMeetingStage) ?  "-show" : "-show" : "-hide" }`}  onClick={showFullMeetingStage}> { ( session && fullMeetingStage) ? "Hide Room"  :  "Show Room"  } </button> 
-                            
-                            <VideoPage buttonClassName={`toggle-stage-btns${( session ) ? "-show" : "-hide"}`} recordStream={session} resetAllStartSettings={resetAllStartSettings}  resetAllStopSettings={resetAllStopSettings}   setVideoModalMode={stage => setVideoModalMode(stage)} lesson={lesson}/>
-
-                        </span>
-                </div>
-
-              </header>
-
-             <div className="content">
-               
-               <div className="sidebar">  </div>
+                  <span className="span-btns">  
     
-              <div> 
+                      {/* images / gif */}
 
-                <div className= {meetingStyleContainer}>   
+                        <button className="plan-lesson-btn" onClick={toggleTeach}> { session ? 'End' : 'Start Video' } </button>
 
-                    <Rnd>                 
-                        <div>
-                        { ( session  ) ?  <Meeting
-                                                userName={currentUser?.firstname}   
-                                                roomName={meetingSettings.roomName}
-                                                containerWidth={( fullMeetingStage ) ? meetingSettings.fullScreen.meetingContainerStyle.containerWidth 
-                                                                                     : meetingSettings.popOutScreen.meetingContainerStyle.containerWidth}
-                                                containerHeight={( fullMeetingStage ) ? meetingSettings.fullScreen.meetingContainerStyle.containerHeight 
-                                                                                      : meetingSettings.popOutScreen.meetingContainerStyle.containerHeight}   
-                                          />
-                                        : <div> </div>
-                                      
-                        }
-                        </div>
-                    </Rnd> 
-               </div> 
-              <div className={ fullMeetingStage ? `tools-hide` : `tools`    }> 
+                        <button className={ `toggle-stage-btns${fullMeetingStage ? "-hide" : "-show"}` } onClick={toggleTeachBoardOrEditor}> { boardOrEditor ? 'Board' : 'Editor' } </button>         
 
-               {  boardOrEditor ? <div className={`editor${hideMeetingStage}-show`}> 
-                                        < LessonPlanIframeComponent 
-                                              name="embed_readwrite" 
-                                              source={editorUrl}
-                                              width={fullScreenSize}
-                                              height="900px"
-                                              allow="camera;microphone"
-                                              scrolling="yes"
-                                              frameBorder="0" 
-                                        /> 
-                                        </div>
-                                :   <div className={`canvas${hideMeetingStage}-show`}> 
-                                          < LessonPlanIframeComponent 
-                                                name="embed_readwrite" 
-                                                source={canvasUrl}
-                                                width={fullScreenSize}
-                                                height="900px"
-                                                allow="camera;microphone"
-                                                scrolling="yes"
-                                                frameBorder="0"
-                                                allowFullScreen
-                                          />
+                        <button className={`toggle-stage-btns${(session) ? (fullMeetingStage) ?  "-show" : "-show" : "-hide" }`}  onClick={showFullMeetingStage}> { ( session && fullMeetingStage) ? "Hide Room"  :  "Show Room"  } </button> 
+                        
+                        <VideoPage buttonClassName={`toggle-stage-btns${( session ) ? "-show" : "-hide"}`} recordStream={session} resetAllStartSettings={resetAllStartSettings}  resetAllStopSettings={resetAllStopSettings}   setVideoModalMode={stage => setVideoModalMode(stage)} lesson={lesson}/>
+
+                    </span>
+            </div>
+
+          </header>
+
+          <div className="content">
+            
+            <div className="sidebar">  </div>
+
+          <div> 
+
+            <div className= {meetingStyleContainer}>   
+
+                <Rnd>                 
+                    <div>
+                    { ( session  ) ?  <Meeting
+                                            userName={currentUser?.firstname}   
+                                            roomName={meetingSettings.roomName}
+                                            containerWidth={( fullMeetingStage ) ? meetingSettings.fullScreen.meetingContainerStyle.containerWidth 
+                                                                                  : meetingSettings.popOutScreen.meetingContainerStyle.containerWidth}
+                                            containerHeight={( fullMeetingStage ) ? meetingSettings.fullScreen.meetingContainerStyle.containerHeight 
+                                                                                  : meetingSettings.popOutScreen.meetingContainerStyle.containerHeight}   
+                                      />
+                                    : <div> </div>
+                                  
+                    }
+                    </div>
+                </Rnd> 
+            </div> 
+          <div className={ fullMeetingStage ? `tools-hide` : `tools`    }> 
+
+            {  boardOrEditor ? <div className={`editor${hideMeetingStage}-show`}> 
+                                    < LessonPlanIframeComponent 
+                                          name="embed_readwrite" 
+                                          source={editorUrl}
+                                          width={fullScreenSize}
+                                          height="900px"
+                                          allow="camera;microphone"
+                                          scrolling="yes"
+                                          frameBorder="0" 
+                                    /> 
                                     </div>
-                                                          
-                } 
+                            :   <div className={`canvas${hideMeetingStage}-show`}> 
+                                      < LessonPlanIframeComponent 
+                                            name="embed_readwrite" 
+                                            source={canvasUrl}
+                                            width={fullScreenSize}
+                                            height="900px"
+                                            allow="camera;microphone"
+                                            scrolling="yes"
+                                            frameBorder="0"
+                                            allowFullScreen
+                                      />
+                                </div>
+                                                      
+            } 
 
-                      </div>
                   </div>
-                              
-                                  <div>
-                                     
-                              </div>
-                      {Validations.setErrorMessageContainer()}
-                            </div>
-                      </div>
+              </div>
+                          
+                  <div></div>
 
-                  );
+                  {Validations.setErrorMessageContainer()}
+                        </div>
+                  </div>
 
-}
+);}
 
 
 

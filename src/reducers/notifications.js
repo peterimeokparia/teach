@@ -15,19 +15,20 @@ UPDATE_PUSH_NOTIFICATION_USER_SUCCESS,
 UPDATE_PUSH_NOTIFICATION_USER_ERROR,
 DELETE_PUSH_NOTIFICATION_USER_BEGIN,
 DELETE_PUSH_NOTIFICATION_USER_SUCCESS,
-DELETE_PUSH_NOTIFICATION_USER_ERROR
+DELETE_PUSH_NOTIFICATION_USER_ERROR,
+SELECTED_PUSH_NOTIFICATION_SUBSCRIBERS
 } from '../services/course/actions';
 
 
 
 const initialState = {
-    pushNotifications:{},
-    pushNotification:{},
+    pushNotificationSubscribers:{},
+    pushNotificationSubscriber:{},
+    selectedPushNotificationMessageSubscribers:{},
     isLoading: false,
     onError: null,
     savePushNotificationInProgress: false,
     onSavePushNotificationError: null
-
 };
 
 
@@ -38,7 +39,8 @@ const reducer =  produce( (draft, action) => {
              draft.onError = false;  
         return; 
         case ADD_PUSH_NOTIFICATION_USER_SUCCESS:    
-             draft.pushNotifications[action.payload._id] = action.payload;  
+             draft.pushNotificationSubscribers[action.payload._id] = action.payload;  
+             draft.pushNotificationSubscriber = action?.payload;
         return;
         case ADD_PUSH_NOTIFICATION_USER_ERROR:    
              draft.isLoading = false;
@@ -52,9 +54,8 @@ const reducer =  produce( (draft, action) => {
              draft.isLoading = false;
              draft.onError = null;
              action.payload.forEach(element => {
-                draft.pushNotifications[element._id] = element;  
+                draft.pushNotificationSubscribers[element._id] = element;  
              });    
-               
         return;
         case LOAD_PUSH_NOTIFICATION_USERS_ERROR:
              draft.isLoading = false;    
@@ -67,7 +68,8 @@ const reducer =  produce( (draft, action) => {
         case LOAD_PUSH_NOTIFICATION_USER_SUCCESS:
              draft.isLoading = false;
              draft.onError = null;
-             draft.pushNotifications[action.payload._id] = action.payload;  
+             draft.pushNotificationSubscribers[action.payload._id] = action.payload;
+             draft.pushNotificationSubscriber[action.payload._id] = action.payload;    
         return;
         case LOAD_PUSH_NOTIFICATION_USER_ERROR:
              draft.isLoading = false;    
@@ -79,12 +81,15 @@ const reducer =  produce( (draft, action) => {
         return; 
         case UPDATE_PUSH_NOTIFICATION_USER_SUCCESS:    
              console.log(action.payload)
-             draft.pushNotifications[action.payload._id] = action.payload;
-             draft.pushNotification =  action.payload;
+             draft.pushNotificationSubscribers[action.payload._id] = action.payload;
+             draft.pushNotificationSubscriber =  action.payload;
              draft.savePushNotificationInProgress = false;
          case UPDATE_PUSH_NOTIFICATION_USER_ERROR:
              draft.savePushNotificationInProgress = false;    
              draft.onSavePushNotificationError = action.error;
+        return;     
+        case SELECTED_PUSH_NOTIFICATION_SUBSCRIBERS:
+             draft.selectedPushNotificationMessageSubscribers = action.payload;    
         return;     
         default:
         return;  

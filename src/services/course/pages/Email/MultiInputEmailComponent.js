@@ -10,19 +10,18 @@ toast } from 'react-toastify';
 
 import Swal from 'sweetalert2'
 
-// import './CourseDetailPage.css';
 
 
-const MultiInputEmailComponent = ( { setLesson, inputFieldOptions, messageOptions, animateInvitationButton } ) => {
+const MultiInputEmailComponent = ( { setLesson, inputFieldOptions, messageOptions, animateInvitationButton, testName } ) => {
  
   
   const [ inputValue, setInputValue ] = useState( "" );
   const [ inputName, setInputName ] = useState( "" );
   const [ testObj,  setTestObj ] = useState({})
   const [ inputFields, setInputFields ] = useState(
-   [
-     { id:0,  name: inputFieldOptions?.name,  type: inputFieldOptions?.type,  placeHolderText: inputFieldOptions?.placeHolder, value: ""  }
-   ]);
+  [
+    { id:0,  name: inputFieldOptions?.name,  type: inputFieldOptions?.type,  placeHolderText: inputFieldOptions?.placeHolder, value: ""  }
+  ]);
 
 
 
@@ -87,7 +86,6 @@ const MultiInputEmailComponent = ( { setLesson, inputFieldOptions, messageOption
         setTestObj({...testObj})
 
     }
-   
   }
 
 
@@ -95,13 +93,6 @@ const MultiInputEmailComponent = ( { setLesson, inputFieldOptions, messageOption
 
 
   const  handleSubmit = () => {
-
-    if ( ! setLesson?.title ) {
-
-        toast.error('Click on the lesson title before sending the invite.')
-
-        return;  
-      }
 
     let options = {
         from: messageOptions?.from,
@@ -119,15 +110,10 @@ const MultiInputEmailComponent = ( { setLesson, inputFieldOptions, messageOption
 
 
 
-    Swal.fire(
-     {    title: 'Message sent',  
-          confirmButtonColor: '#673ab7'   
-     });
-
-    // Swal.fire(
-    //     { title: 'Message sent',  
-    //       confirmButtonColor: '#673ab7'   
-    //     }).then( this.setState({ inputValue: "" }));
+  Swal.fire(
+    {    title: 'Message sent',  
+        confirmButtonColor: '#673ab7'   
+    });
   };
 
 
@@ -140,7 +126,8 @@ const MultiInputEmailComponent = ( { setLesson, inputFieldOptions, messageOption
         >
           {
             inputFields?.map((element) => (
-                <label>
+           
+                <label> 
                     <input
                         key={element?.id}
                         name={element?.name}
@@ -150,7 +137,8 @@ const MultiInputEmailComponent = ( { setLesson, inputFieldOptions, messageOption
                         onChange={handleChange}
                         placeholder={element?.placeHolderText}
                     /> 
-                 </label>
+                 </label> 
+              
 
              ))  
           }

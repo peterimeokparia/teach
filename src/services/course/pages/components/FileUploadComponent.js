@@ -2,6 +2,7 @@ import React from 'react';
 
 import FileUpload from '../FileUpload/FileUpload';
 
+
 import { 
 Link } from '@reach/router';
 
@@ -10,6 +11,7 @@ export function FileUploadComponent({
 previewMode,
 currentLesson,
 fileUploadUrl,
+typeOfUpload,
 setFilesToRemove
 }){
 
@@ -21,6 +23,7 @@ setFilesToRemove
                                             <FileUpload 
                                                     teachObject={currentLesson}
                                                     fileUploadUrl={fileUploadUrl}
+                                                    typeOfUpload={typeOfUpload}
                                                     teachObjectName={"lessons"}
                                             />
 
@@ -31,7 +34,8 @@ setFilesToRemove
                                                 {
                                                     currentLesson?.files?.map( (file, index) =>  ( 
                                                         <li key={index}> 
-                                                            <Link to={file}> {file?.split('-')[1]} </Link>
+                                                            {/* <Link to={file}> {file?.split('-')[1]} </Link> */}
+                                                            <a  href={file} target="_blank"> {file}  </a> 
                                                             <button onClick={() => setFilesToRemove(file)}> x </button>  
                                                         </li> 
                                                     ) )
@@ -51,7 +55,8 @@ setFilesToRemove
                                                         currentLesson?.files?.map( (file, index)  =>  ( 
                                                           <li 
                                                              key={index}> 
-                                                               <Link to={file}> {file?.split('-')[1]} </Link> 
+                                                               <a  href={file} target="_blank"> {file}  </a> 
+                                                               {/* <Link to={file}> {file?.split('-')[1]} </Link>  */}
                                                           </li> )  )
                                                     
                                                     }

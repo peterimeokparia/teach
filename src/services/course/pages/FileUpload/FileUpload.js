@@ -15,7 +15,7 @@ import './FileUpload.css'
 
 
 
-const FileUpload = ({ teachObject, fileUploadUrl, teachObjectName }) => {
+const FileUpload = ({ teachObject, fileUploadUrl, teachObjectName, typeOfUpload }) => {
      
  const [ fileSelected,  selectFile ] = useState( null );
 
@@ -46,7 +46,7 @@ const FileUpload = ({ teachObject, fileUploadUrl, teachObjectName }) => {
 
         if ( fileSelected ){  
 
-             uploadFiles( fileSelected, teachObject, fileUploadUrl, teachObjectName );
+             uploadFiles( fileSelected, teachObject, fileUploadUrl, teachObjectName, typeOfUpload );
               
             //  Swal.fire(
             //     { title: 'File uploaded.',  

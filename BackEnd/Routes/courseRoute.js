@@ -1,6 +1,11 @@
 import express from 'express';
+
 import courseModel from '../Model/courseModel.js';
-import { saveUpdatedData } from './lessonRoute.js';
+
+import {
+getPostData,    
+saveUpdatedData   
+} from '../Helpers/storageHelper.js';
 
 
 const courseRoute = express.Router();
@@ -22,13 +27,7 @@ courseRoute.get('/', (req, res) => {
 
 courseRoute.post('/', (req, res) => {
 
-    let courseData = {
-        name: req.body.name, 
-        price:req.body.price,
-        description:req.body.description, 
-        createdBy:req.body.createdBy,
-        operatorId:req.body.operatorId
-    }
+    let courseData = getPostData( req );
  
     let courses = new courseModel(courseData);  
 

@@ -9,8 +9,6 @@ connect } from 'react-redux';
 import { 
 deleteGrade } from '../../actions';
 
-import './NewLessonPage.css';
-
 
 
 const EditGradeComponent = ({

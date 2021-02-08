@@ -17,13 +17,13 @@ const LessonEditor = ({ lesson, setMarkDown }) => {
 
     return (    
         <div> 
-            Enter lesson notes for: {lesson.title} 
+            Enter lesson notes for: {lesson?.title} 
             <div>
                 <textarea
                     className="Editor"
                     rows="10"
                     cols="65"
-                    value={lesson.markDown || ''}
+                    value={lesson?.markDown || ''}
                     onChange={ ( e ) => setMarkDown(lesson, e.target.value, "lessons", SET_LESSON_MARKDOWN, saveLesson )}>
                 </textarea>
             </div>    

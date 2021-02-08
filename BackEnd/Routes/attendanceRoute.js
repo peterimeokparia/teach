@@ -1,6 +1,11 @@
 import express from 'express';
+
 import attendanceModel from '../Model/attendanceModel.js';
-import { saveUpdatedData } from './lessonRoute.js';
+
+import {
+getPostData,    
+saveUpdatedData   
+} from '../Helpers/storageHelper.js';
 
 
 
@@ -21,7 +26,7 @@ attendanceRoute.get('/', (req, res) => {
 
  attendanceRoute.get('/:studentId', (req, res) => {
  
-   let studentId = { _id: req.query.studentId };
+   let studentId = { studentId: req.query.studentId };
   
    attendanceModel.findById( studentId )   
        .then(data => {
@@ -36,7 +41,7 @@ attendanceRoute.get('/', (req, res) => {
 
  attendanceRoute.get('/:attendanceId', (req, res) => {
  
-   let attendanceId = { _id: req.query.attendanceId };
+   let attendanceId = { attendanceId: req.query.attendanceId };
   
    attendanceModel.findById( attendanceId )   
        .then(data => {
@@ -50,16 +55,10 @@ attendanceRoute.get('/', (req, res) => {
  
 
  attendanceRoute.post('/', (req, res) => {
- 
-       let attendanceData = {
-            attendanceDate: req.body.attendanceDate, 
-            attendanceMark:req.body.attendanceMark, 
-            courseId:req.body.courseId,
-            lessonId:req.body.lessonId,
-            studentId:req.body.studentId
-       }
- 
-       let attendance = new attendanceModel(attendanceData);
+  
+      let attendanceData = getPostData( req );
+
+      let attendance = new attendanceModel(attendanceData);
 
        attendance.save()
        .then(data => {

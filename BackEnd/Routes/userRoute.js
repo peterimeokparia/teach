@@ -1,6 +1,11 @@
 import express from 'express';
+
 import userModel from '../Model/userModel.js';
-import { saveUpdatedData, updatedData } from './lessonRoute.js';
+
+import {
+getPostData,      
+saveUpdatedData   
+} from '../Helpers/storageHelper.js';
 
 
 
@@ -11,10 +16,15 @@ userRoute.get('/', (req, res) => {
  
     userModel.find({ })
         .then(data => {
-            console.log('Users Users', data)
+
+            console.log('Users Users', data);
             res.status(200).json(data);
         })
-         .catch(error => console.log(error));
+         .catch(error => { 
+
+           console.log(error);
+           res.status(400).json({ error }); 
+        });
 });
 
 
@@ -27,10 +37,15 @@ userRoute.get('/user', (req, res) => {
  
   userModel.findById( id )   
       .then(data => {
-          console.log('Users Users', data)
-          res.status(200).json(data);
+
+        console.log('Users Users', data)
+        res.status(200).json(data);
       })
-       .catch(error => console.log(error));
+       .catch(error =>{ 
+         
+        console.log(error);
+        res.status(400).json({ error }); 
+      });
 });
 
 
@@ -45,10 +60,15 @@ userRoute.get('/user/byEmail', (req, res) => {
  
   userModel.find(userEmail)   
       .then(data => {
+
           console.log('Users Users', data)
           res.status(200).json(data);
       })
-       .catch(error => console.log(error));
+       .catch(error => { 
+
+         console.log(error);
+         res.status(400).json({ error })
+      });
 })
 
 
@@ -58,10 +78,15 @@ userRoute.get('/files', (req, res) => {
 
   userModel.find({ _id: req.query._id })
       .then(data => {
-          console.log('users users', data)
+
+          console.log('users users files files', data)
           res.status(200).json(data);
       })
-       .catch(error => console.log(error));
+       .catch(error => { 
+
+         console.log(error);
+         res.status(400).json({ error });
+      });
 });
 
 
@@ -70,22 +95,18 @@ userRoute.get('/files', (req, res) => {
 
 userRoute.post('/', (req, res) => {
 
-    let reqBodyKeys = Object.keys(req.body);
-    let userData = {};
+   let userData = getPostData( req ); 
 
-    reqBodyKeys.forEach(element => {
-        
-      userData[element] = req.body[element];
-    });
-
-    let user = new userModel(userData);  
+   let user = new userModel(userData);  
 
     user.save()
       .then(data => {
+
           console.log('saved', data);
           res.status(200).json(data)
       })
         .catch( error => {
+
             console.log(error);
             res.status(400).json({ error })
       });
@@ -98,10 +119,12 @@ userRoute.put('/:userId', (req, res) => {
  
   saveUpdatedData(req, userModel, req.params.userId)
     .then( data => {
+
       console.log(data);
       res.status(200).json(data)
     })
      .catch( error => {
+
         console.log(error);
         res.status(400).json({ error })
      });
@@ -115,10 +138,12 @@ userRoute.delete('/:userId', (req, res) => {
 
     userModel.findByIdAndDelete(req.params.userId)
      .then(data => {
+
         console.log('data - doc', data);
         res.status(200).json(data)
      })
        .catch(error => {
+         
         res.status(400).json({error});
        })   
 });

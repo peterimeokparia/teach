@@ -1,10 +1,16 @@
 import express from 'express';
+
 import gradeModel from '../Model/gradeModel.js';
-import { saveUpdatedData } from './lessonRoute.js';
+
+import {
+getPostData,    
+saveUpdatedData   
+} from '../Helpers/storageHelper.js';
 
 
 
 const gradeRoute = express.Router();
+
 
 gradeRoute.get('/', (req, res) => {
  
@@ -51,16 +57,18 @@ gradeRoute.get('/', (req, res) => {
 
  gradeRoute.post('/', (req, res) => {
  
-       let gradeData = {
-              testDate: req.body.testDate, 
-              score:req.body.score, 
-              percentChange:req.body.percentChange,
-              symbol:req.body.symbol,
-              courseId:req.body.courseId,
-              lessonId:req.body.lessonId, 
-              studentId:req.body.studentId 
-       }
+      //  let gradeData = {
+      //         testDate: req.body.testDate, 
+      //         score:req.body.score, 
+      //         percentChange:req.body.percentChange,
+      //         symbol:req.body.symbol,
+      //         courseId:req.body.courseId,
+      //         lessonId:req.body.lessonId, 
+      //         studentId:req.body.studentId 
+      //  };
  
+       let gradeData = getPostData( req );
+
        let grades = new gradeModel(gradeData);
 
        grades.save()

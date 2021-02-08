@@ -20,6 +20,10 @@ import classRoomRoute from './Routes/classRoomRoute.js';
 import operatorRoute from './Routes/operatorRoute.js';
 import gradeRoute from './Routes/gradeRoute.js';
 import attendanceRoute from './Routes/attendanceRoute.js';
+import notificationRoute from './Routes/notificationRoute.js';
+import examRoute from './Routes/examRoute.js';
+import assignmentRoute from './Routes/assignmentRoute.js';
+import questionRoute from './Routes/questionRoute.js';
 
 
 const app = express();
@@ -33,11 +37,9 @@ app.use('/static', express.static('public/videos'))
 
 app.use(cors());
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '20mb', extended: true}))
 
-app.use(bodyParser.urlencoded({
-   extended: true
-}));
+app.use(bodyParser.urlencoded({limit: '20mb', extended: true}))
 
 app.use('/api/v1/courses', courseRoute);
 
@@ -62,6 +64,14 @@ app.use('/api/v1/operators', operatorRoute);
 app.use('/api/v1/grades', gradeRoute);
 
 app.use('/api/v1/attendance', attendanceRoute);
+
+app.use('/api/v1/notifications', notificationRoute);
+
+app.use('/api/v1/exams', examRoute);
+
+app.use('/api/v1/assignments', assignmentRoute);
+
+app.use('/api/v1/questions', questionRoute);
 
 
 

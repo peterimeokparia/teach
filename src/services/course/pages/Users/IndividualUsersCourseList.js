@@ -9,7 +9,8 @@ navigate } from '@reach/router';
 
 import {  
 getUsersByOperatorId,
-getCoursesByOperatorId } from '../../Selectors';
+getCoursesByOperatorId,
+getOperatorFromOperatorBusinessName } from '../../Selectors';
 
 import Loading from '../Components/Loading';
 import LoginLogout from '../Login/LoginLogout'
@@ -30,9 +31,9 @@ coursesLoading,
 onCoursesError }) => {
 
 
-    if ( ! user ){
+    if ( ! user?.userIsValidated || ! operator ){
 
-        navigate('/login');
+        navigate(`/${operatorBusinessName}/login`);
     }
 
 
@@ -49,11 +50,10 @@ onCoursesError }) => {
     }
     
 
-
-
     const viewAllCourses = () => {
         navigate(`/${operatorBusinessName}/courses`)
     }
+
 
     const viewTutorsBio = () => {
         navigate(`/${operatorBusinessName}/coursestaught/about/${userId}`)
@@ -111,7 +111,10 @@ onCoursesError }) => {
                 <h2> You are viewing {tutor?.firstname}'s course list. </h2>
 
                 <div className="lesson-item">  
-                <LoginLogout/>
+                 <LoginLogout
+                    operatorBusinessName={operatorBusinessName}
+                    user 
+                  />
 
                 <Cart />
                 </div>
@@ -135,6 +138,7 @@ onCoursesError }) => {
 
 const mapState = ( state, ownProps)  => ({
     user: state?.users?.user,
+    operator: getOperatorFromOperatorBusinessName(state, ownProps),
     users: getUsersByOperatorId(state, ownProps),
     yourCourses: getCoursesByOperatorId(state, ownProps)?.filter(course => state?.users.user?.courses?.includes(course?._id)),
     courses: getCoursesByOperatorId(state, ownProps),

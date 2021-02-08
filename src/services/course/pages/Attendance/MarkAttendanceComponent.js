@@ -15,7 +15,7 @@ import './MarkAttendanceComponent.css';
 
 
 const MarkAttendance = ({
-studentId,
+selectedStudents,
 selectedCourse,
 selectedLesson, 
 className,   
@@ -43,15 +43,17 @@ const reset = () => {
 const commitEdit = (e) => {
     e.preventDefault();
 
-    let attendaceData = { attendanceDate: attendanceDate, attendanceMark: attendanceMark, studentId: studentId, courseId: selectedCourse?._id, lessonId: selectedLesson?._id }
+    let attendaceData = { attendanceDate: attendanceDate, attendanceMark: attendanceMark, selectedStudents: selectedStudents, courseId: selectedCourse?._id, lessonId: selectedLesson?._id }
 
-    onSubmit(attendaceData)
-     .then(reset)
-      .catch( error => {
+    try {
+        onSubmit(attendaceData);
+        reset();
+        
+    } catch (error) {
         setEditing(false);
-        setEditing(true);
-      });
-
+        setEditing(true);    
+    }
+    
 };
 
 
@@ -81,7 +83,6 @@ useEffect (() => {
     if ( editing ) {
 
         inputRef.current.focus();
-
     }
 
 }, [ editing ]); 
@@ -113,7 +114,7 @@ return (
                         name="lessondate"
                         ref={ inputRef }
                         value={ attendanceDate }
-                        type="date"
+                        type="datetime-local"
                         onChange={ e => setAttendanceDate( e.target.value) }
                         disabled={saveInProgress}
                         placeholder="Attendance Date"
@@ -127,8 +128,9 @@ return (
                         <form>
                             <select value={ attendanceMark } onChange={ e => markAttendance( e.target.value) } >
                                  <option key={"Default"} value={"Default"}> {"Select"} </option>
-                                 <option key={"Attended"} value={"Attended"}> {"Attended"} </option>
-                                 <option key={"DidNotAttend"} value={"Did Not Attend"}> {"Did Not Attend"} </option>   
+                                 <option key={"Present"} value={"Present"}> {"Present"} </option>
+                                 <option key={"Absent"} value={"Absent"}> {"Absent"} </option> 
+                                 <option key={"Tardy"} value={"Tardy"}>  {"Tardy"} </option>    
                             </select>
                         </form>
                     </span>
@@ -173,12 +175,4 @@ return (
 };
 
 
-const mapState = ( state, ownProps ) => {
-    return {
-        // saveInProgress: state.attendance.saveLessonInProgress,
-        // error: state.attendance.onSaveError
-    }
-}
-
-
-export default connect(mapState, { resetError: resetClassRoomUserError, resetClassRoomUserError } )(MarkAttendance);
+export default connect( null, { resetError: resetClassRoomUserError, resetClassRoomUserError } )(MarkAttendance);

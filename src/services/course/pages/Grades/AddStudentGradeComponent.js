@@ -15,7 +15,7 @@ import './AddStudentGradeComponent.css';
 
 
 const AddStudentGradeComponent = ({
-studentId,
+selectedStudents,
 selectedCourse,
 selectedLesson, 
 className,   
@@ -24,17 +24,15 @@ error,
 onSubmit }) => {
 
         
-
-
 const [ editing, setEditing ] = useState(false); 
 const [ testDate, setTestDate ] = useState(Date.now());
-const [ testScore, setTestScore ] = useState(undefined);
+const [ testScore, setTestScore ] = useState(0);
 const inputRef = useRef();
 
 
 const reset = () => {
     setTestDate(Date.now());
-    setTestScore(undefined);
+    setTestScore(0);
     setEditing(false);
     resetClassRoomUserError();
     
@@ -43,14 +41,15 @@ const reset = () => {
 const commitEdit = (e) => {
     e.preventDefault();
 
-    let gradeData = { testDate: testDate, score: testScore, studentId: studentId, courseId: selectedCourse?._id, lessonId: selectedLesson?._id }
+    let gradeData = { testDate: testDate, score: testScore, selectedStudents: selectedStudents, courseId: selectedCourse?._id, lessonId: selectedLesson?._id }
 
-    onSubmit(gradeData)
-     .then(reset)
-      .catch( error => {
+    try {
+        onSubmit(gradeData);
+        reset();
+    } catch (error) {
         setEditing(false);
-        setEditing(true);
-      });
+        setEditing(true);    
+    }
 
 };
 
@@ -113,7 +112,7 @@ return (
                         name="lessondate"
                         ref={ inputRef }
                         value={ testDate }
-                        type="date"
+                        type="datetime-local"
                         onChange={ e => setTestDate( e.target.value) }
                         disabled={saveInProgress}
                         placeholder="Test Date"

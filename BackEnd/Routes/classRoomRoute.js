@@ -1,6 +1,11 @@
 import express from 'express';
+
 import classRoomModel from '../Model/classRoomModel.js';
-import { saveUpdatedData } from './lessonRoute.js';
+
+import {
+getPostData,    
+saveUpdatedData   
+} from '../Helpers/storageHelper.js';
 
 
 const classRoomRoute = express.Router();
@@ -22,13 +27,15 @@ classRoomRoute.get('/', (req, res) => {
 
 classRoomRoute.post('/', (req, res) => {
 
-    let classRoomData = {
-        name: req.body.name, 
-        description: req.body.description,
-        users: req.body.users, 
-        createdBy: req.body.createdBy,
-        operatorId: req.body.operatorId
-    }
+    // let classRoomData = {
+    //     name: req.body.name, 
+    //     description: req.body.description,
+    //     users: req.body.users, 
+    //     createdBy: req.body.createdBy,
+    //     operatorId: req.body.operatorId
+    // };
+
+    let classRoomData = getPostData( req );
  
     let classRooms = new classRoomModel(classRoomData);  
 

@@ -15,6 +15,9 @@ import operators from './operators';
 import grades from './grades';
 import attendance from './attendance';
 import notifications from './notifications';
+import exams from './exams';
+import questions from './questions';
+import assignments from './assignments';
 
 let reducers = { 
     courses, 
@@ -31,7 +34,10 @@ let reducers = {
     operators, 
     grades, 
     attendance, 
-    notifications
+    notifications,
+    exams,
+    questions,
+    assignments
 };
 
 export default combineReducers( reducers );

@@ -61,5 +61,91 @@ https://dev.to/asimdahall/client-side-image-upload-in-react-5ffc
 Forms
 https://reactjs.org/docs/forms.html
 
+
+Programmatically handling forms
+https://stackoverflow.com/questions/28802179/how-to-create-a-react-modalwhich-is-append-to-body-with-transitions
+https://www.joshwcomeau.com/react/persisting-react-state-in-localstorage/
+https://css-tricks.com/react-forms-using-refs/
+https://dev.to/joepurnell1/programmatically-positioning-elements-with-react-hooks-aef
+https://css-tricks.com/react-forms-using-refs/
+https://dev.to/joepurnell1/programmatically-positioning-elements-with-react-hooks-aef
+https://codesandbox.io/s/search-results-fj6l9?file=/src/staticSolution/index.js
+
+
 Markup
 https://css-tricks.com/textarea-tricks/ for mark up language instructions
+https://harrychen0506.github.io/react-markdown-editor-lite/
+
+
+Dante
+https://michelson.github.io/dante2/#/src-index
+https://github.com/michelson/dante2/issues/150 onchange handler issue
+https://github.com/zcmgyu/dante2-editor-demo
+https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_image_grid_responsive
+
+Saving uploaded files:
+https://github.com/michelson/dante2/issues/175
+https://www.gitmemory.com/issue/michelson/dante2/163/489383191
+
+Embed Videos
+https://github.com/michelson/dante2/issues/102
+https://michelson.github.io/dante2/#/src-widgets
+
+To do Dante widgets
+----------------------
+i. Url upload
+ii. Embed:  https://michelson.github.io/dante2/#/src-widgets 
+https://github.com/michelson/dante2/blob/master/src/widgets.mdx
+
+
+widgets
+-------------
+https://michelson.github.io/dante2/#/src-widgets
+https://github.com/michelson/dante2/blob/master/src/widgets.mdx
+https://github.com/michelson/dante2/blob/master/src/editor/components/blocks/image.js
+
+
+preview page on hover only css
+https://stackoverflow.com/questions/2117046/how-to-show-live-preview-in-a-small-popup-of-linked-page-on-mouse-over-on-link/16625709
+https://stackoverflow.com/questions/2117046/how-to-show-live-preview-in-a-small-popup-of-linked-page-on-mouse-over-on-link/16625709
+ 
+
+image cropper
+https://developer.aliyun.com/mirror/npm/package/react-image-crop-component
+
+
+Event driven modularized workflow components for nested actions, nested promises and nested functions
+https://medium.com/finnovate-io/using-event-emitter-to-create-complex-asynchronous-workflows-in-node-js-94a31327d428
+
+
+mongoose
+https://masteringjs.io/tutorials/mongoose/update
+https://masteringjs.io/tutorials/mongoose/save
+https://stackoverflow.com/questions/41567319/getting-error-in-mongodb-cast-issue-for-valid-object-id/53139672#53139672
+https://stackoverflow.com/questions/17223517/mongoose-casterror-cast-to-objectid-failed-for-value-object-object-at-path
+
+
+positioning elements && getting element positionin
+https://learn.co/lessons/react-create-element
+
+https://www.tutorialspoint.com/insert-a-specified-element-in-a-specified-position-in-javascript
+https://allwebco-templates.com/support/S_add_div.htm
+https://www.google.com/search?ei=i1H9X7PUDMWo5gK7kY7IBQ&q=insert+element+at+page+location&oq=insert+element+at+page+location&gs_lcp=CgZwc3ktYWIQA1C6dli6dmDGfmgAcAF4AIABVIgBVJIBATGYAQCgAQGqAQdnd3Mtd2l6wAEB&sclient=psy-ab&ved=0ahUKEwjzxYms8ZXuAhVFlFkKHbuIA1kQ4dUDCA0&uact=5
+https://developer.mozilla.org/en-US/docs/Web/API/Node/insertBefore
+https://css-tricks.com/using-react-portals-to-render-children-outside-the-dom-hierarchy/
+
+https://stackoverflow.com/questions/49124327/add-dynamic-elements-with-cursor-position
+https://stackoverflow.com/questions/38590598/react-js-add-remove-input-field-on-click-of-a-button
+https://codedaily.io/tutorials/60/Create-a-useMousePosition-Hook-with-useEffect-and-useState-in-React
+
+https://codedaily.io/tutorials/60/Create-a-useMousePosition-Hook-with-useEffect-and-useState-in-React
+https://stackoverflow.com/questions/49124327/add-dynamic-elements-with-cursor-position
+https://stackoverflow.com/questions/30788545/display-a-div-at-the-position-of-mouse-click/30789052
+https://stackoverflow.com/questions/42761378/react-create-a-new-html-element-on-click
+https://stackoverflow.com/questions/55937254/reactjs-dynamically-add-a-component-on-click
+https://www.tutorialspoint.com/insert-a-specified-html-text-into-a-specified-position-in-the-javascript-document
+https://stackoverflow.com/questions/52237531/reactjs-how-to-add-append-a-component-on-click-of-button
+https://stackoverflow.com/questions/30788545/display-a-div-at-the-position-of-mouse-click/30789052
+https://learn.co/lessons/react-create-element
+https://stackoverflow.com/questions/49215076/react-cannot-get-the-component-element-in-the-dom
+https://stackoverflow.com/questions/35905988/react-js-how-to-append-a-component-on-click

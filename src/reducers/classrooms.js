@@ -17,18 +17,20 @@ DELETE_CLASSROOM_SUCCESS,
 RESET_CLASSROOM_USER_ERROR,
 DELETE_CLASSROOMS_BEGIN, 
 DELETE_CLASSROOMS_ERROR,
-TOGGLE_ADD_NEW_GRADE_FORM } from '../services/course/actions';
+UPDATE_CURRENT_CLASSROOM_LESSON_PLAN,
+TOGGLE_SIDEBAR_DROPDOWN_MENU } from '../services/course/actions';
 
 
 
 const initialState = {
     classrooms: {},
+    classRoomLessonPlan: {},
+    displaySideBarDropDown: false,
     saveInProgress: false,
     onSaveError: null,
     classroomsLoading: false,
     onClassRoomError: null,
-    isModalOpen: false,
-    displayGradeForm: false
+    isModalOpen: false
 };
 
 
@@ -76,9 +78,12 @@ const reducer = produce((draft, action) => {
              draft.isModalOpen = false;
              draft.onSaveError = null;
         return;
-        case TOGGLE_ADD_NEW_GRADE_FORM:
-             draft.displayGradeForm = (! draft.displayGradeForm);
-        return;
+        case UPDATE_CURRENT_CLASSROOM_LESSON_PLAN:
+             draft.classRoomLessonPlan[ action?.payload?.selectedTutor?._id ] = action?.payload
+        return     
+        case TOGGLE_SIDEBAR_DROPDOWN_MENU:
+             draft.displaySideBarDropDown = (!draft.displaySideBarDropDown)
+        return 
         default:
         return;
 

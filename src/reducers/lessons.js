@@ -67,13 +67,17 @@ const reducer = produce((draft, action) => {
              draft.lessonsLoading = false;
         return; 
         case SET_LESSON_MARKDOWN:
-             draft.lessons[action.payload.teachObject._id].markDown = action.payload.markDown; 
+             if ( draft.lessons[action.payload.teachObject?._id] ) {
+
+                draft.lessons[action.payload.teachObject?._id].markDown = action.payload.markDown; 
+             }
+             
         return;
         case RESET_LESSON_ERROR:
             draft.onSaveLessonError = null;
        return; 
        case DELETE_LESSON_SUCCESS:
-            delete draft.lessons[action.payload._id];
+            delete draft.lessons[action.payload?._id];
        return; 
        case TOGGLE_BOARD_OR_EDITOR:
             draft.toggleTeachBoardOrEditor = !draft.toggleTeachBoardOrEditor;

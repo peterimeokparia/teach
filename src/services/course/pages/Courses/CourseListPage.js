@@ -42,7 +42,7 @@ closeNewCourseModal,
 isModalOpen }) => {
 
 
-    if ( ! user ){
+    if ( ! user?.userIsValidated || ! operator  ){
 
         return <Redirect to={`/${operatorBusinessName}/login`} noThrow />
     }
@@ -77,11 +77,13 @@ isModalOpen }) => {
             <h2> You are viewing all courses. </h2>
 
             <div>  
+                
             <LoginLogout
-                 user={user}
+                operatorBusinessName={operatorBusinessName}
+                user={user} 
             />
 
-              <Cart />
+            <Cart />
 
             </div>
         </header>

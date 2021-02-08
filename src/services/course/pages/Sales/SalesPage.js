@@ -170,7 +170,7 @@ const MyCourses = `/${operatorBusinessName}/mycourses`;
      
                         <div>by</div> 
 
-                        <img src={tutor?.files[0]} className={"avatar-img-preview"}/>
+                        <img src={tutor?.avatarUrl} className={"avatar-img-preview"}/>
                         <div> { course && tutorsName } </div>
                         <div> { course && course?.description } </div>
   

@@ -46,7 +46,7 @@ const commitEdit = (e) => {
       .catch( error => {
         setEditing(false);
         setEditing(true);
-      });
+    });
 
  };
 
@@ -78,11 +78,11 @@ const cancelEdit = (e) => {
 
 useEffect (() => {
 
-       if ( editing ) {
+if ( editing ) {
 
-           inputRef.current.focus();
+    inputRef.current.focus();
 
-       }
+}
 
 }, [ editing ]); 
 

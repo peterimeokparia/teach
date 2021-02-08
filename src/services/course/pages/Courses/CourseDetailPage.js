@@ -6,7 +6,8 @@ import {
 connect } from 'react-redux';
 
 import { 
-Redirect } from '@reach/router';
+Redirect,
+navigate } from '@reach/router';
 
 import { 
 loadLessons,
@@ -32,7 +33,8 @@ deleteLessonFileByFileName } from '../../api';
 
 import { 
 emailMessageOptions, 
-emailInputOptions } from  './courseDetailPageHelpers';
+emailInputOptions,
+courseDetailPageComponentConfig } from  './courseDetailPageHelpers';
 
 
 import { 
@@ -85,9 +87,14 @@ useEffect(() => {
     loadLessons( courseId );
     
 }, [ courseId,  currentLessonVideoUrl, lessonPlanUrl ]);  
-    
 
 
+if ( ! currentUser?.userIsValidated || ! operator ){
+
+    navigate(`/${operatorBusinessName}/login`);
+}
+
+ 
 const userOwnsCourse = (user, courseTutor,  courseId) => {
 
     if ( ! user ) {
@@ -162,6 +169,8 @@ return (
         course={course}
         courseId={courseId}
         currentUser={currentUser}
+        operatorBusinessName={operatorBusinessName}
+        operator={operator}
         setPreviewEditMode={setPreviewEditMode}
         previewMode={previewMode}
         lessons={lessons}
@@ -171,9 +180,6 @@ return (
         courseDetailChildren={children}
         fileUploadUrl={fileUploadUrl}
         setFileToRemove={setFileToRemove}
-        studentsSubscribedToThisCourse={studentsSubscribedToThisCourse}
-        setListOfStudents={setListOfStudents}
-        sessions={sessions}
         emailInputOptions={emailInputOptions}
         emailMessageOptions={emailMessageOptions(currentUser,invitationUrl)}
         setCurrentLesson={setCurrentLesson}

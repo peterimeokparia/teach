@@ -1,0 +1,25 @@
+{
+    "extends": [
+        "react-app"
+    ],
+    "rules": {
+        "prettier/prettier": "error",
+        "no-unused-vars": "error",
+        "func-names": "off",
+        "no-process-exit": "off",
+        "block-spacing": "error",
+        "indent": ["warn", 4],
+        "padding-line-between-statements": [
+            "error",
+            { "blankLine": "always", "prev": ["const", "var", "let"], "next": "*" },
+            { "blankLine": "any",    "prev": ["const", "let", "var"], "next": ["const", "let", "var"]},
+            { "blankLine": "always", "prev": ["case", "default"], "next": "*" }    
+        ],
+        "lines-between-class-members": ["error", "always"],
+        "padded-blocks": ["error", { "blocks": "always", "classes": "always", "switches": "always"} ],
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "error",
+        "semi": ["error", "always"],
+        "no-unexpected-multiline": "error"
+    }
+}

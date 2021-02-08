@@ -89,6 +89,9 @@
 .toggle-stage-btns-hide {
   visibility: hidden;
 }
+.bio-editor {
+  margin-top: 200px;
+}
 
 @media only screen and (min-width: 638px) {
   .MyCourses .content {

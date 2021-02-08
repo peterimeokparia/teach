@@ -27,104 +27,100 @@ currentUser,
 saveAttendance,
 attendances }) => {
 
-    function onMatchListItem( match, listItem ) {
+function onMatchListItem( match, listItem ) {
 
-        if ( match ){
-    
-            // setCurrentTutor( listItem );
-           
-            // setLessonPlanUrl(`/${operatorBusinessName}/LessonPlan/${groupId}/${classRoomGroupName}/${listItem._id}/${listItem.firstname}`);
-        }
-    } 
+    if ( match ){
+        // setCurrentTutor( listItem );
+        // setLessonPlanUrl(`/${operatorBusinessName}/LessonPlan/${groupId}/${classRoomGroupName}/${listItem._id}/${listItem.firstname}`);
+    }
+} 
 
-    // return (<div>Attendance coming soon!</div>)
-
-    return   (    
-         <div>    
-             {
-                ( attendances ) && <ListItemComponent
-                                        collection={getSortedRecordsByDate(attendances?.filter(record => record?.studentId === studentId), 'attendanceDate')}
-                                        onMatchListItem={onMatchListItem}
-                                        path={"student"}
-                                   >
-                        {
-                            ( selectedAttendance ) => (
-
-                                < EditAttendanceComponent
-                                        attendance={selectedAttendance}
-                                        className="lesson-item"
-                                        onSubmit={(attendance) => saveAttendance({...selectedAttendance, attendanceDate: attendance?.attendanceDate, attendanceMark: attendance?.attendanceMark  })}
+return   (    
+        <div>    
+            {
+            ( attendances ) && <ListItemComponent
+                                    collection={getSortedRecordsByDate(attendances?.filter(record => record?.studentId === studentId), 'attendanceDate')}
+                                    onMatchListItem={onMatchListItem}
+                                    path={"student"}
                                 >
+                    {
+                        ( selectedAttendance ) => (
 
-                            { (edit, remove ) => (
+                            < EditAttendanceComponent
+                                    attendance={selectedAttendance}
+                                    className="lesson-item"
+                                    onSubmit={(attendance) => saveAttendance({...selectedAttendance, attendanceDate: attendance?.attendanceDate, attendanceMark: attendance?.attendanceMark  })}
+                            >
 
-                            <div>      
-                                <div>
-                                
-                                
-                                    <div>
-                                        <div><h6>{selectedAttendance?.attendanceDate}</h6></div>
-                                        <span> Attendance </span>
-                                        <span className="attendanceHeader"> Date </span>
-                                        <span className="attendanceHeader"> Marked </span>
-                                    </div>
+                        { (edit, remove ) => (
 
-
-                                
-                                <Link to={`student/${ studentId  }/attendance/${selectedAttendance?._id}`}> <span title={ selectedAttendance?._id } >{ selectedAttendance?.attendanceDate }  { " : " + selectedAttendance?.attendanceMark } </span> </Link> 
-
-
-                                <span className="attendance"> { selectedAttendance?.attendanceDate } </span>
-
-                                <span className="attendance"> { selectedAttendance?.attendanceMark } </span>
-
-                                <br></br>
-
-                                <div> 
-
-                                <Roles
-                                    role={currentUser?.role === role.Tutor }
-                                >
-                                        <button 
-                                            className="edit-lesson-btn"
-                                            onClick={() => { edit( selectedAttendance ) } }                                          
-                                        > 
-                                            Edit
-                                                
-                                        </button>
-
-                                </Roles>
-
-                                <Roles
-                                    role={ currentUser?.role === role.Tutor }
-                                >
-                                    <span>
-                                        <button
-                                            className="delete-lesson-btn"
-                                            onClick={() => { remove( selectedAttendance ) }}> 
-
-                                            Delete 
-
-                                        </button> 
-                                    </span>
-
-                                </Roles>
-                                
-
-                                </div>  
-                                </div>
-                                
-                            </div>
-                            )}
-                            </EditAttendanceComponent> 
-                            ) 
+                        <div>      
+                            <div>
                             
-                        }
-                            </ListItemComponent>                  
+                            
+                                <div>
+                                    <div><h6>{selectedAttendance?.attendanceDate}</h6></div>
+                                    <span> Attendance </span>
+                                    <span className="attendanceHeader"> Date </span>
+                                    <span className="attendanceHeader"> Marked </span>
+                                </div>
+
+
+                            
+                            <Link to={`student/${ studentId  }/attendance/${selectedAttendance?._id}`}> <span title={ selectedAttendance?._id } >{ selectedAttendance?.attendanceDate }  { " : " + selectedAttendance?.attendanceMark } </span> </Link> 
+
+
+                            <span className="attendance"> { selectedAttendance?.attendanceDate } </span>
+
+                            <span className="attendance"> { selectedAttendance?.attendanceMark } </span>
+
+                            <br></br>
+
+                            <div> 
+
+                            <Roles
+                                role={currentUser?.role === role.Tutor }
+                            >
+                                    <button 
+                                        className="edit-lesson-btn"
+                                        onClick={() => { edit( selectedAttendance ) } }                                          
+                                    > 
+                                        Edit
+                                            
+                                    </button>
+
+                            </Roles>
+
+                            <Roles
+                                role={ currentUser?.role === role.Tutor }
+                            >
+                                <span>
+                                    <button
+                                        className="delete-lesson-btn"
+                                        onClick={() => { remove( selectedAttendance ) }}> 
+
+                                        Delete 
+
+                                    </button> 
+                                </span>
+
+                            </Roles>
+                            
+
+                            </div>  
+                            </div>
+                            
+                        </div>
+                        )}
+                        </EditAttendanceComponent> 
+                        ) 
+                        
                     }
- 
-            
-         </div> 
+                        </ListItemComponent>                  
+                }
+
+        
+        </div> 
     )  
 
 }

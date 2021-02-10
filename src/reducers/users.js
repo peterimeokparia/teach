@@ -29,7 +29,10 @@ SAVE_USER_BEGIN,
 SAVE_USER_SUCCESS,
 SAVE_USER_ERROR,
 UPDATE_USER,
-NAVIGATION_HISTORY  } from '../services/course/actions';
+NAVIGATION_HISTORY,
+RESET_PASSWORD_BEGIN,
+RESET_PASSWORD_SUCCESS,
+RESET_PASSWORD_ERROR,  } from '../services/course/actions';
 
 
 const initialState = {
@@ -51,17 +54,20 @@ const reducer = produce((draft, action) => {
     switch(action.type){
         case SIGN_UP_BEGINS:
         case LOGIN_BEGIN:
+        case RESET_PASSWORD_BEGIN:     
         case BUY_COURSE_BEGIN:     
             draft.loading = true;
             draft.error = null;
         return;
         case SIGN_UP_SUCCESSS:
-        case LOGIN_SUCCESS:      
+        case LOGIN_SUCCESS:
+        case RESET_PASSWORD_SUCCESS:           
              draft.loading = false;
              draft.user = action.payload;   
         return;
         case SIGN_UP_ERRORS:
         case LOGIN_ERROR:
+        case RESET_PASSWORD_ERROR:     
         case BUY_COURSE_ERROR:
         case LAST_LOGGEDIN_USER_ERROR:          
              draft.loading = false;

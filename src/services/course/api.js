@@ -14,6 +14,7 @@ ensureToken,
 privateKey} from './pages/Login/authentication';
 
 import axios from 'axios'
+import { json } from 'body-parser';
 
 
  //dotenv.config // to do
@@ -507,13 +508,17 @@ export const remove = (data, route, prefix=PREFIX) => {
 
 export const login = (user) => {
 
-  let token = tokenGenerator({usename: user.username, password: user.password}, privateKey, { expiresIn: '1h' })
+  // let token = tokenGenerator({usename: user.username, password: user.password}, privateKey, { expiresIn: '1h' })
+
+  let token = tokenGenerator({username: user?.email, password: user.password}, privateKey, { expiresIn: '1h' })
 
   let loginCount = user?.loginCount; 
 
   let userIsValidated = true;
 
   let operatorId = user?.operatorId;
+
+  let unHarshedPassword = user?.unHarshedPassword;
 
 
   if ( loginCount === undefined || loginCount === 0 ) {
@@ -526,8 +531,9 @@ export const login = (user) => {
         
   }
 
-  return putData(PREFIX + `/users/${ user._id }`, {
+  return putData(PREFIX + `/users/login/${user?._id}`, {
     //...user,
+    unHarshedPassword,
     token,
     userIsValidated,
     operatorId,
@@ -537,11 +543,32 @@ export const login = (user) => {
 
 
 
+
+
+
+export const resetPassword = (user) => {
+
+  // let token = tokenGenerator({usename: user.username, password: user.password}, privateKey, { expiresIn: '1h' })
+  let newUserPassword = user?.newUserPassword;
+
+  let token = tokenGenerator({username: user?.email, password: user.password}, privateKey, { expiresIn: '1h' })
+
+  return putData(PREFIX + `/users/reset/${user?._id}`, {
+    token,
+    newUserPassword
+ })
+}
+
+
+
+
+
+
 export const signUp = (user) => {
 
   let token = tokenGenerator({usename: user.username, password: user.password}, privateKey, { expiresIn: '1h' })
 
-  return postData(PREFIX + '/users', {
+  return postData(PREFIX + '/users/register', {  
     ...user,
     token
  });

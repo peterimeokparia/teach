@@ -51,8 +51,8 @@ import './LoginPage.css';
 
 // To do
 // Change from token to session storage - DONE :) :) :)
-// Security
-// SALT - password /
+// Security 
+// SALT - password / DONE PAIN
 // Jwt Token - validation on login - DONE :) :) :)
 // Prevent non users from navigating site - STARTED :)
 // Styling - STARTED :)
@@ -129,22 +129,23 @@ const LoginPage = ({
 
   }, []);
   
+  
 
    if ( ! operator  ) {
 
-     return <NotFoundPage />
+      return <NotFoundPage />
    }
 
                                           
    if ( loading ) {
 
-     return <Loading />
+      return <Loading />
    } 
 
 
    if ( error ) {
 
-     return <div> { error.message } </div> ;
+      return <div> { error.message } </div> ;
    }  
 
 
@@ -178,16 +179,25 @@ const LoginPage = ({
                Validations.checkFormInputString("Password", password) ) && 
                 Validations.checkFormInputString("Role", role) ) {
 
-                  newSiteUser.email = email;
-                  newSiteUser.password = password;
-                  newSiteUser.firstname = firstname;
-                  newSiteUser.role = role;
-                  newSiteUser.operatorId = operator?._id;
+                newSiteUser.email = email.toLowerCase();
+                newSiteUser.password = password;
+                newSiteUser.firstname = firstname;
+                newSiteUser.role = role;
+                newSiteUser.operatorId = operator?._id;
      }
 
-     createUser( newSiteUser );
+     createUser( newSiteUser )
+     .then( resp => {
 
-     handlePushNotificationSubscription(pushNotificationSubscribers, currentUser, subscribePushNotificationUser, savePushNotificationUser );     
+        if ( resp ) {
+
+          Swal.fire({title: 'Your account has been created.', icon: 'info', text: `Kindly check your email.` });
+        }
+     })
+       .catch( error => {
+
+          console.log( error );
+       })   
   }
 
 
@@ -200,7 +210,7 @@ const LoginPage = ({
 
       loadUsers();
 
-      let currentUser =  getCurrentUser(email, password);
+      let currentUser =  getCurrentUser( email.toLowerCase() );
 
       if ( currentUser ) {
 
@@ -218,17 +228,30 @@ const LoginPage = ({
         return ( <div>Please create a new account</div>);
       }
 
-   
-       if ( Validations.checkFormInputString("User Name", email ) && 
-                 Validations.checkFormInputString("Password", password) ) {
+            
+       Validations.checkFormInputString("User Name", email );
+
+  
+        if ( email && !password ) {
+
+             navigate(`/${operatorBusinessName}/passwordreset/${currentUser?._id}`); 
+        } 
 
 
-          loginUser( currentUser );
+        if ( ( email && password ) ){
+
+        loginUser( { ...currentUser, unHarshedPassword: password } )
+          .then( response => {
           
+              if ( response ) {
 
-          handlePushNotificationSubscription(pushNotificationSubscribers, currentUser, subscribePushNotificationUser, savePushNotificationUser ); 
+                 handlePushNotificationSubscription(pushNotificationSubscribers, currentUser, subscribePushNotificationUser, savePushNotificationUser ); 
+              }
 
-         
+          })
+          .catch( error => { console.log( error ) })
+        
+        
           if ( currentUser?.lessonInProgress ) {
 
                   Swal.fire({
@@ -285,9 +308,9 @@ const LoginPage = ({
   }
 
 
-  function getCurrentUser( email, password ){
+  function getCurrentUser( email  ){
 
-    return users?.find(user => user?.email === email && user?.password === password);
+    return users?.find(user => user?.email === email );
   }
 
 
@@ -339,7 +362,7 @@ const mapDispatch = {
   loginPageError, 
   loadSubscribedPushNotificationUsers,
   subscribePushNotificationUser,
-  savePushNotificationUser  
+  savePushNotificationUser
 }
 
 

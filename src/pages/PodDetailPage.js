@@ -34,6 +34,8 @@ import AttendanceComponent from '../services/course/pages/Attendance/AttendanceC
 import EditorDemo from '../services/course/pages/Lessons/EditorDemo';
 import SendNotificationsPage from '../services/course/pages/Notifications/SendNotificationsPage';
 import QuestionPage from '../services/course/pages/Questions/QuestionPage';
+import AccountVerification from '../services/course/pages/SignUp/AccountVerification';
+import PasswordReset from '../services/course/pages/Login/PasswordReset';
 import { Router, Redirect } from '@reach/router';
 
 
@@ -66,6 +68,8 @@ const PodDetailPage = () => {
                    <AttendanceComponent path="student/:studentId/attendance"/>
               </StudentDetailPage>
              
+             <PasswordReset path="/:operatorBusinessName/passwordreset/:userId"/>
+             <AccountVerification path="/:operatorBusinessName/accountverification/:userId" />
              <UpdateCart path="/:operatorBusinessName/updatecart/:courseId"/>
              <LessonPlan path="/:operatorBusinessName/LessonPlan/classRoom/:classRoomId"/> 
              <LessonPlan path="/:operatorBusinessName/LessonPlan/:classRoomGroupId/:classRoomGroupName/:classRoomId/:classRoomName"/>

@@ -1,10 +1,14 @@
 import express from 'express';
 
+import bcrypt from 'bcrypt';
+
 import userModel from '../Model/userModel.js';
 
 import {
 getPostData,      
-saveUpdatedData   
+saveUpdatedData,
+saveUpdateUserOnLogin,
+resetUserPassword   
 } from '../Helpers/storageHelper.js';
 
 
@@ -39,12 +43,12 @@ userRoute.get('/user', (req, res) => {
       .then(data => {
 
         console.log('Users Users', data)
-        res.status(200).json(data);
+        return res.status(200).json(data);
       })
        .catch(error =>{ 
          
         console.log(error);
-        res.status(400).json({ error }); 
+        return res.status(400).json({ error }); 
       });
 });
 
@@ -111,6 +115,100 @@ userRoute.post('/', (req, res) => {
             res.status(400).json({ error })
       });
 });
+
+
+
+
+
+userRoute.post('/register', async (req, res) => {
+
+
+let userData = getPostData( req ); 
+
+  const salt = await bcrypt.genSalt();
+
+    userData = {
+      ...userData,
+      email: userData.email.toLowerCase(),
+      password: await bcrypt.hash( userData?.password, salt )
+  }
+
+  userModel.find( { email: req.body.email } )
+   .then( resp => { resp 
+
+        if ( resp?.length > 0 ) {
+
+            return res.status(400).json({msg: "An account with this email address already exists."});
+        }
+      
+    })
+    .catch( err => { 
+    
+        if ( err ) {
+
+          return res.status(400).json({ msg: err.message });
+        }
+    })
+
+
+      try {
+        
+          let user = new userModel(userData);  
+
+          let savedUserData =  await user.save();
+
+          if ( savedUserData ) {
+
+              return res.status(200).json(savedUserData);
+          }
+
+      } catch (error) {
+
+          return res.status(400).json({ msg: error.message });
+      }
+  
+});
+
+
+
+
+
+userRoute.put('/reset/:userId', async (req, res) => {
+
+  console.log('in reset in reset', req.params.userId)
+ 
+   resetUserPassword(req, res, userModel, req.params.userId)
+    .then( data => {
+      console.log('SUCCESS SUCCESS resetUserPassword', data);
+      return res.status(200).json(data)
+    })
+     .catch( error => {
+
+        console.log(error);
+        return res.status(400).json({ error })
+     });
+});
+
+
+
+
+
+
+
+userRoute.put('/login/:userId', async (req, res) => {
+
+   saveUpdateUserOnLogin(req, res, userModel, req.params.userId)
+    .then( data => {
+      return res.status(200).json(data)
+    })
+     .catch( error => {
+        return res.status(400).json({ error })
+     });
+});
+
+
+
+
 
 
 

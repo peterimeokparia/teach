@@ -16,6 +16,7 @@
     "@wmik/use-media-recorder": "^1.0.0-alpha.3",
     "Dante2": "0.5.0-rc9",
     "axios": "^0.21.1",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",

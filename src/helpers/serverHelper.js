@@ -122,36 +122,51 @@ export const forceReload = () => {
 
 
 
-function fetchWithData( url =``, data = {}, method = 'POST') {
+async function fetchWithData( url =``, data = {}, method = 'POST') {
 
-    return fetch(url, {
-            method,
-            headers: {
-            'Content-Type': 'application/json',
-            Authorization: authToken ? `Bearer ${authToken}` : undefined
-            },
-            body: JSON.stringify(data),
-            // cache: "reload",
-    } 
-  ).then(response => { 
 
-      if ( response?.status >= 400 && response?.status < 600 ) {
-
-         throw new Error("Bad Server Response."  + response?.json() );   
+  let responseData = await  fetch(url, {
+        method,
+        headers: {
+        'Content-Type': 'application/json',
+        Authorization: authToken ? `Bearer ${authToken}` : undefined
+        },
+        body: JSON.stringify(data),
+        // cache: "reload",
       } 
+    );
 
-      if ( ! response?.ok ) {
+
+    if ( responseData?.status >= 400 && responseData?.status < 600 ) {
+
+        let response = await responseData?.json();
+
+        if ( response?.msg ) {
+
+            throw new Error("Bad Server Response."  + response?.msg ); 
+
+        } else {
+
+          throw new Error("Bad Server Response."  + response ); 
+        }
+                
+    }
+    
+    
+    if ( ! responseData?.ok ) {
         
-        throw new Error( "Something went wrong" + response?.json() ); 
-      }
+        let response = await responseData?.json();
 
-       return response.json() 
+        if ( response?.msg ) {
 
-    }).catch(error => {
+          throw new Error( "Something went wrong"   + response?.msg ); 
 
-        console.log( error );
+        } else {
 
-      return error?.message;
-    })
+          throw new Error( "Something went wrong" + response ); 
+        }
+    }
+
+    return responseData?.json();
 }
 

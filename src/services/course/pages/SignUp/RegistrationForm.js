@@ -17,11 +17,11 @@ loading,
 handleCreateUser, 
 users }) => {
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [userRole, setUserRole] = useState('');
-  const [ displayOtherFormFields, setToDisplayOtherFormFields ] = useState(false);
+const [email, setEmail] = useState('');
+const [password, setPassword] = useState('');
+const [firstName, setFirstName] = useState('');
+const [userRole, setUserRole] = useState('');
+const [ displayOtherFormFields, setToDisplayOtherFormFields ] = useState(false);
 
 
   const roles = {
@@ -182,6 +182,7 @@ users }) => {
                     </div>
   
                       { error  && (<div className="error"> { error.message }</div>)}
+                      { error  && (<div className="error"> { error }</div>)}
   
                         <div></div>
                         
@@ -194,6 +195,9 @@ users }) => {
                               Create User
       
                             </button>
+
+                            { error  && (<div className="error"> { error.message }</div>)}
+                            { error  && (<div className="error"> { error }</div>)}
 
                   </>
               }

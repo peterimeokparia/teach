@@ -9,6 +9,7 @@ updateCourse,
 removeCourse, 
 login, 
 signUp, 
+resetPassword,
 getUsers, 
 getLoggedInUsers, 
 purchase, 
@@ -285,6 +286,9 @@ export const DELETE_EXAM_ERROR = "DELETE EXAM ERROR";
 export const DELETE_ASSIGNMENT_SUCCESS = "DELETE ASSIGNMENT SUCCESS";
 export const DELETE_ASSIGNMENT_BEGIN = "DELETE ASSIGNMENT BEGIN";
 export const DELETE_ASSIGNMENT_ERROR = "DELETE ASSIGNMENT ERROR";
+export const RESET_PASSWORD_BEGIN = "RESET PASSWORD BEGIN";
+export const RESET_PASSWORD_SUCCESS = "RESET PASSWORD SUCCESS";
+export const RESET_PASSWORD_ERROR = "RESET PASSWORD ERROR";
 
 
 
@@ -613,7 +617,7 @@ export const resetUsersCartAfterPurchase = (currentUser) => {
 export const updateCurrentUser = ( currentUser ) => {
     return dispatch => {
 
-        getCurrentUserById( currentUser?._id )
+        return getCurrentUserById( currentUser?._id )
          .then( user => {
              dispatch({ type: LAST_LOGGEDIN_USER, payload: user} );
          })
@@ -1847,10 +1851,33 @@ export const loginUser = (newUser) => {
         dispatch({ type: LOGIN_BEGIN })
         return login(newUser)
          .then( user => {
+             console.log('in login users', user )
              dispatch({ type: LOGIN_SUCCESS, payload: user });
+             return user;
          })
            .catch( error => {
-               dispatch({ type: LOGIN_ERROR , error })
+               dispatch({ type: LOGIN_ERROR , error });
+               return error;
+           });
+    }
+}
+
+
+
+
+
+
+export const userPasswordReset = (newUser) => {
+    return dispatch => {
+        dispatch({ type: RESET_PASSWORD_BEGIN })
+        return resetPassword(newUser)
+         .then( user => {
+             dispatch({ type: RESET_PASSWORD_SUCCESS, payload: user });
+             return user;
+         })
+           .catch( error => {
+               dispatch({ type: RESET_PASSWORD_ERROR , error })
+               return error;
            });
     }
 }
@@ -1865,9 +1892,9 @@ export const createUser = (newUser) => {
      return signUp(newUser)
          .then( user => {
 
-            if ( user === "Bad Server Response.") {
+            if ( (typeof user === "string" ) && (user === "Bad Server Response." || user?.includes("Bad Server Response.")) ) {
 
-                Promise.reject( "Bad Server Response." );
+                Promise.reject( user );
 
                 dispatch({ type: SIGN_UP_ERRORS , payload: user })
 
@@ -1880,12 +1907,16 @@ export const createUser = (newUser) => {
                         "teachpadsconnect247@gmail.com",
                         user?.email, 
                         "Welcome to teach!",
-                        `Your credentials: ${user.firstname}, ${user.password}`,
+                         `Kindly verify your account http://localhost:3000/boomingllc/accountverification/${user?._id}`,  
+                        // `Your credentials: ${user.firstname}, ${user.password}`,
                          user?._id
                 )
+
+                return user;
          })
            .catch( error => {
                dispatch({ type: SIGN_UP_ERRORS , payload: error })
+               return error;
            });
     }
 }

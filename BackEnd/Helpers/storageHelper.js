@@ -6,6 +6,8 @@ import { Readable } from 'stream';
 
 import fs from 'fs';
 
+import bcrypt from 'bcrypt';
+
 
 
 export const sendMetaData = ( url, metaData ) => {
@@ -42,7 +44,97 @@ export function getPostData( req ) {
 
 
 
+
+
+
+export async function resetUserPassword( req,  resp,  model, id ) {
+
+  const salt = await bcrypt.genSalt();
+
+  let existingUser = await model.findById(mongoose.Types.ObjectId( id ));
+
+   if ( existingUser ) {   
+   
+       console.log('existing users password b4 reset', existingUser[ 'password' ] );
+
+      try {
+
+          existingUser[ 'password' ] = await bcrypt.hash( req.body.newUserPassword, salt );
+
+
+          console.log('existing users password after reset', existingUser[ 'password' ] );
+       
+        } catch (error) {
+        
+          console.log( error );
+          return resp.status(400).json({msg: error });
+
+        }
+
+        return await existingUser.save();
+    
+    }
+   
+}
+
+
+
+
+
+
+
+export async function saveUpdateUserOnLogin( req,  resp,  model, id ) {
+
+
+  let existingUser = await model.findById( mongoose.Types.ObjectId(id) );
+
+  let harshedPassword = existingUser[ 'password' ];
+  
+
+   if ( existingUser ) {
+
+    const isMatch = await bcrypt.compare(req.body?.unHarshedPassword, harshedPassword);
+
+    if ( !isMatch ) {
+
+      return resp.status(400).json({ msg: err?.message });
+
+    } else {
+         
+
+      try {
+
+        let bodyData = Object.keys(req.body);
+        bodyData.forEach(element => { 
+
+          let arrg = ['_id', '__v'];
+          // let arrg = [ '_id' ];
+
+          if ( !arrg.includes( element )  ) {
+             
+             existingUser[element] = req.body[ element ] 
+          }            
+        });
+
+        } catch (error) {
+        
+          return resp.status(400).json({msg: error });
+        }
+
+        return await existingUser.save();
+    
+    }
+   }
+}
+
+
+
+
  export async function saveUpdatedData( req, model, id ){
+
+  console.log('after update', req.body );
+
+  console.log('after update id', id );
 
   try {
         const documentObjectToUpdate = await model.findById(mongoose.Types.ObjectId(id));
@@ -62,9 +154,11 @@ export function getPostData( req ) {
         return await documentObjectToUpdate.save();
      
   } catch ( error ) {
+
       console.log( error );
+      return error;
   }
-   return;
+ 
 }
 
 

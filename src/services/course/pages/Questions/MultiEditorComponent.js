@@ -112,15 +112,15 @@ const addNewMarkDownEditor = () => {
         type: inputFieldOptions?.type,  
         placeHolderText: inputFieldOptions?.placeHolder,
         questionCreatedOnDateTime: Date.now(),
-        markDownContent: {},
+        markDownContent: null,
         value: "",
         multipleChoiceQuestionAnswerKey: "",
         multipleChoiceQuestionStudentAnswer: "",
         multipleChoiceQuestionStudentAnswerInputValue: "",
         multipleChoiceQuestionAnswerKeyInputValue: "",
-        multipleChoiceQuestionExplanationAnswer: {},
-        explanationQuestionAnswerKey: {},
-        explanationQuestionAnswer: {},
+        multipleChoiceQuestionExplanationAnswer: null,
+        explanationQuestionAnswerKey: null,
+        explanationQuestionAnswer: null,
         markDownEditorFormInputFields: [],
         pointsPerQuestion: pointsDistributionType,
         questionPoints: questionPoints,
@@ -437,8 +437,6 @@ return(
 
 
                             {
-
-                            // ( contentType( element.editorContentType ).isVideoContentType ) &&    
 
                               ( previewMode )    ?  <div>
                                   < LessonPlanIframeComponent

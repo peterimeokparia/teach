@@ -40,4 +40,4 @@
 echo "Starting whiteboard..."
 
 SCRIPTPATH=$(pwd -P)
-exec node "/home/teacher/teach/src/services/canvas/whiteboard/scripts/server.js" "$@"
+exec node "/home/teacher/src/services/canvas/whiteboard/scripts/server.js" "$@"

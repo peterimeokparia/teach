@@ -644,9 +644,9 @@ exports.textLinesMutator = function (lines) {
     return (curLine - curSplice[0] < (curSplice.length - 2));
   }
 
-  function debugPrint(typ) {
-    print(typ + ": " + curSplice.toSource() + " / " + curLine + "," + curCol + " / " + lines_toSource());
-  }
+  // function debugPrint(typ) {
+  //   print(typ + ": " + curSplice.toSource() + " / " + curLine + "," + curCol + " / " + lines_toSource());
+  // }
 
   function putCurLineInSplice() {
     if (!isCurLineInSplice()) {

@@ -54,6 +54,10 @@ const userSchema = new Schema ({
         type: Boolean, 
         required: false  
    },
+   userIsVerified: {
+    type: Boolean, 
+    required: false  
+   },
    userIsValidated: { 
     type: Boolean, 
     required: false  
@@ -107,6 +111,18 @@ const userSchema = new Schema ({
          type: Date, 
          required: false,
          default: Date.now  
+    },
+    calendarEvents: {
+        type: Array,
+        required: false
+    },
+    assignedTutors: {
+        type: Array,
+        required: false
+    },
+    assignedStudents: {
+        type: Array,
+        required: false
     }
 });
 

@@ -1,0 +1,28 @@
+https://www.scrumexpert.com/tools/free-online-scrum-tools/
+
+Backlog
+-----------------
+Security 
+Linting rules
+Daily automated tests 
+Get images / gifs for menu items, nav, links etc
+Material Design
+Calendar
+Schedular
+
+
+
+Completed
+-----------------------
+Change from token to session storage - DONE :) :) :)
+SALT - password / DONE PAIN
+Jwt Token - validation on login - DONE :) :) :)
+
+
+
+
+In Progress
+-------------------------
+Prevent non users from navigating site - STARTED :)
+Styling - STARTED :)
+Plan for unit tests - STARTED :)

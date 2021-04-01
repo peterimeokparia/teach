@@ -24,13 +24,13 @@ import notificationRoute from './Routes/notificationRoute.js';
 import examRoute from './Routes/examRoute.js';
 import assignmentRoute from './Routes/assignmentRoute.js';
 import questionRoute from './Routes/questionRoute.js';
-
+import calendarRoute from './Routes/calendarRoute.js';
+import timeLineRoute from './Routes/timeLineRoute.js';
 
 const app = express();
 const server = http.createServer(app);
 const db = mongoose.connection;
 const localPort = 9005;
-
 
 // app.use('/static', express.static('public/backEnd'))
 app.use('/static', express.static('public/videos'))
@@ -73,7 +73,9 @@ app.use('/api/v1/assignments', assignmentRoute);
 
 app.use('/api/v1/questions', questionRoute);
 
+app.use('/api/v1/calendar', calendarRoute);
 
+app.use('/api/v1/timelines', timeLineRoute); 
 
 mongoose.connect('mongodb+srv://dbuser:dbuser2020@cluster0.8heal.mongodb.net/teach?retryWrites=true&w=majority', {
    useNewUrlParser: true, 
@@ -82,20 +84,16 @@ mongoose.connect('mongodb+srv://dbuser:dbuser2020@cluster0.8heal.mongodb.net/tea
    useFindAndModify: false
 });
 
-
 db.on("error", console.error.bind(console, "connection error:"));
-
 
 db.once("open", function() {
   console.log("Connection Successful!");
 });
 
-
 app.get('/', (req, res) => {
    res.send('hello and welcome to teach !!!');
 });
 
- 
 server.listen(localPort, () => {
  console.log('listening on', localPort);
 });

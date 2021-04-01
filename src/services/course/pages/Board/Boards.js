@@ -28,7 +28,7 @@ getCoursesByOperatorId } from '../../Selectors';
 import { 
 meetingConfigSettings, 
 getMeetings,
-getUrls } from  '../LessonPlan/lessonPlanHelpers';
+getUrls } from  '../Lessons/LessonPlan/helpers';
 
 import { 
 Validations } from  '../../../../helpers/validations';
@@ -41,9 +41,9 @@ Redirect,
 navigate } from '@reach/router';
 
 import NavLinks  from '../Components/NavLinks';
-import LessonPlanIframeComponent from '../LessonPlan/LessonPlanIframeComponent'
+import LessonPlanIframeComponent from '../Lessons/LessonPlan/Components/LessonPlanIframeComponent/LessonPlanIframeComponent'
 import VideoPage from '../Video/VideoPage';
-import Meeting from '../Meetings/Meeting';
+import Meeting from '../Meeting';
 
 // import Portal from 'src/pages/Portal'
 

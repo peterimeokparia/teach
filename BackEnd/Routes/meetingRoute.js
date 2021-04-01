@@ -7,93 +7,62 @@ getPostData,
 saveUpdatedData   
 } from '../Helpers/storageHelper.js';
 
-
-
 const meetingRoute = express.Router();
 
 meetingRoute.get('/', (req, res) => {
- 
     meetingModel.find({ })
-        .then(data => {
-            console.log('Meetings', data)
-            res.status(200).json(data);
-        })
-         .catch(error => console.log(error));
+    .then(data => {
+        return res.status(200).json(data);
+    })
+    .catch(error => {
+        return res.status(400).json({ error })
+    });
 })
 
-
-
-
-meetingRoute.get('/:userId', (req, res) => {
-
-  let userId = { userId: req.query.userId };
- 
-  meetingModel.find(userId)   
+meetingRoute.get('/meeting', (req, res) => {
+  let id = { _id: req.query.meetingId };
+  console.log(`get by meetingid @@@@@ @@@@@ iD: ${id}`)
+  meetingModel.findById(id)   
       .then(data => {
-          console.log('Meetings', data)
-          res.status(200).json(data);
+        console.log('get by meetingid @@@@@ @@@@@')
+        console.log(data)
+        return res.status(200).json(data);
       })
-       .catch(error => console.log(error));
-})
-
-
-
-
-meetingRoute.post('/', (req, res) => {
-
-    // let reqBodyKeys = Object.keys(req.body);
-    // let meetingData = {};
-    // reqBodyKeys.forEach(element => {
-    //   meetingData[element] = req.body[element];
-    // });
-
-   let meetingData = getPostData( req );
-
-   let user = new meetingModel(meetingData);  
-
-    user.save()
-      .then(data => {
-          console.log('saved', data);
-          res.status(200).json(data)
-      })
-        .catch( error => {
-            console.log(error);
-            res.status(400).json({ error })
-        });
+       .catch(error => {
+        return res.status(400).json({ error })
+    });
 });
 
-
-
-
+meetingRoute.post('/', (req, res) => {
+   let meetingData = getPostData( req );
+   let user = new meetingModel(meetingData);  
+    user.save()
+      .then(data => {
+       return res.status(200).json(data)
+      })
+        .catch( error => {
+         return res.status(400).json({ error })
+    });
+});
 
 meetingRoute.put('/:meetingId', (req, res) => {
- 
     saveUpdatedData(req, meetingModel, req.params.meetingId)
     .then( data => {
-      console.log(data);
-      res.status(200).json(data)
+        return res.status(200).json(data)
     })
      .catch( error => {
-        console.log(error);
-        res.status(400).json({ error })
+        return res.status(400).json({ error })
      });
 });
 
-
-
-
 meetingRoute.delete('/:meetingId', (req, res) => {
-
     meetingModel.findByIdAndDelete(req.params.meetingId)
      .then(data => {
-        console.log('data - doc', data);
-        res.status(200).json(data)
+      return res.status(200).json(data)
      })
        .catch(error => {
-        res.status(400).json({error});
-       })
-   
+        return res.status(400).json({error})
+       });
 });
-
 
 export default meetingRoute;

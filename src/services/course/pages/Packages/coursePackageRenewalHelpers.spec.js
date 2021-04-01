@@ -1,5 +1,5 @@
 import { 
-checkIfPackageIsSetToAutoRenew } from './coursePackageRenewalHelpers';
+checkIfPackageIsSetToAutoRenew } from './helpers/coursePackageRenewalHelpers';
 
 import {
 autoRenewSessionPackages } from '../../actions.js';

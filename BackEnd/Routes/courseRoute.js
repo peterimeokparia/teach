@@ -12,7 +12,6 @@ const courseRoute = express.Router();
 
 
 courseRoute.get('/', (req, res) => {
- 
     courseModel.find({ })
         .then(data => {
             console.log('Courses Courses', data)
@@ -21,16 +20,9 @@ courseRoute.get('/', (req, res) => {
          .catch(error => console.log(error));
 })
 
-
-
-
-
 courseRoute.post('/', (req, res) => {
-
     let courseData = getPostData( req );
- 
     let courses = new courseModel(courseData);  
-
     courses.save()
         .then(data => {
         console.log('saved', data);
@@ -38,11 +30,7 @@ courseRoute.post('/', (req, res) => {
         .catch( error => console.log(error) )
 });
 
-
-
-
- courseRoute.put('/:courseId', (req, res) => {
- 
+courseRoute.put('/:courseId', (req, res) => { 
     saveUpdatedData(req, courseModel, req.params.courseId)
     .then( data => {
       console.log(data);
@@ -54,11 +42,7 @@ courseRoute.post('/', (req, res) => {
      });
 });
 
-
-
-
 courseRoute.delete('/:courseId', (req, res) => {
-
     courseModel.findByIdAndDelete(req.params.courseId)
      .then(data => {
         console.log('data - doc', data);
@@ -67,8 +51,6 @@ courseRoute.delete('/:courseId', (req, res) => {
        .catch(error => {
         res.status(400).json({error});
        })
-   
 });
-
 
 export default courseRoute;

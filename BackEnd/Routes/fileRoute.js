@@ -59,9 +59,12 @@ fileRoute.post('/avatar',  ( request, response ) => {
 
    uploadFile(request, response, ( err ) => {
 
-      handleFileUpload( request, response, err );
+      let updatedUser = handleFileUpload( request, response, err )
+
+       console.log('@@@@@@@@@ in avatar updatedUser', updatedUser)
     
-      return response.status( 200 ).send( request?.file );   
+      return response.status( 200 ).send( updatedUser );  
+      // return response.status( 200 ).send( request?.file );   
   });
 
 });
@@ -155,10 +158,14 @@ function handleFileUpload( request, response, err ){
       handleExistingFiles( user?.data[0]?.files );
 
       handleFrontEndUpdate( request, teachConfig, user, files )
-
          files = [];
+         console.log('@@@ in handleFileUpload user', user)
+         return user;
       })
-      .catch( err => { console.log(err) });
+      .catch( error => { console.log( error ) 
+         onsole.log('@@@ in handleFileUpload error', error)
+         return error;
+      });
    }
 }
 

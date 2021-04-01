@@ -11,6 +11,10 @@ const lessonSchema = new Schema ({
         type: String, 
         required: true  
     },
+    userId: {
+        type: String, 
+        required: true  
+    },
     markDown: { 
         type: String, 
         required: false  

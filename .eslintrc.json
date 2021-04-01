@@ -8,7 +8,7 @@
         "func-names": "off",
         "no-process-exit": "off",
         "block-spacing": "error",
-        "indent": ["warn", 4],
+        "indent": ["warn", 1],
         "padding-line-between-statements": [
             "error",
             { "blankLine": "always", "prev": ["const", "var", "let"], "next": "*" },

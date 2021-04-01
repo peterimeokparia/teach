@@ -1,4 +1,4 @@
-import { postData, putData, deleteData } from '../../helpers/serverHelper';
+import { postData, putData, deleteData } from '../course/helpers/serverHelper';
 
 
 const PREFIX = "/api";

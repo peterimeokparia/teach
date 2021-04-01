@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { ThemeProvider } from 'styled-components';
-import { GlobalStyles } from '../../global';
-import { theme } from '../../theme';
+import { GlobalStyles } from '../../../global';
+import { theme } from '../../../theme';
 import { Burger, Menu } from '.';
-import { useOnClickOutside } from '../../hooks';
+import { useOnClickOutside } from '../../../hooks';
 //https://css-tricks.com/hamburger-menu-with-a-side-of-react-hooks-and-styled-components/
 
 

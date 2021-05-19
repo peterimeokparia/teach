@@ -5,6 +5,7 @@ useEffect,
 useRef } from 'react';
 
 import {
+newCalendarEventData,
 frequencyCollection,
 days,
 transformDateTime,
@@ -17,11 +18,10 @@ Validations } from 'Services/course/helpers/Validations';
 
 import EventForm from 'Services/course/Pages/CalendarPage/Components/EventForm';
 import './style.css';
-import { stringAssembler } from 'Services/editor/etherpad-lite/src/static/js/Changeset';
 
 const Scheduling = ({  
 handleSubmit,
-formData, 
+schedulingData, 
 saveInProgress,
 onSaveError,
 slotInfo,
@@ -40,13 +40,12 @@ const [ recurringEvent, setRecurringEvent] = useState(false);
 const [ weekDays, setWeekDays ] = useState([]);
 const [ endDate, setEndDate ] = useState(undefined); 
 const [ frequency, setFrequency ] = useState(''); 
-const [ interval, setInterval ] = useState(1); 
+const [ interval, setInterval ] = useState(1);
 const [ startDateDateTime, setStartDateDateTime ] = useState( new Date()?.toLocaleDateString('en-US') );
 const [ endDateDateTime, setEndDateDateTime ] = useState( new Date()?.toLocaleDateString('en-US') );
 const [ startTimeDateTime, setStartTimeDateTime ] = useState( new Date()?.toLocaleTimeString('en-US') );
-const [ endTimeDateTime, setEndTimeDateTime ] = useState( new Date()?.toLocaleTimeString('en-US')); 
+const [ endTimeDateTime, setEndTimeDateTime ] = useState(  startTimeDateTime );
 const inputRef = useRef();
-
 
 
 useEffect (() => {
@@ -56,10 +55,11 @@ useEffect (() => {
     }
 
     if ( start === undefined ) {
+
         const [ start, end, startStr, endStr, allDay ] = Object.entries(slotInfo);
         const [ calendarViewType ] = Object.entries(slotInfo?.view);
 
-        let dateTimeString = transformDateTime( startStr, endStr, calendarViewType, allDay[1] );
+        let dateTimeString = transformDateTime( start[1], end[1], calendarViewType, allDay[1] );
         setStartDateDateTime( getDate( dateTimeString?.resStartStr ) );
         setEndDateDateTime( getDate( dateTimeString?.resEndStr ));
         setStartTimeDateTime( getTime( dateTimeString?.resStartStr ) );
@@ -78,7 +78,6 @@ if ( saveInProgress ) {
 if ( onSaveError ) {
     return <div> { onSaveError.message } </div> ;
 }
-
 
 const handleRecurringEvent = (event) => {
     let isChecked = event.target.checked;
@@ -123,52 +122,50 @@ if ( recurringEvent && ! handleFormValidation('Frequency', frequency, 'Select') 
     return;
 }
 
-const [ startStr, endStr, allDayEvent ] = Object.entries(slotInfo); 
+const [ start, end, startStr, endStr, allDay ] = Object.entries(slotInfo);
 const [ calendarViewType ] = Object.entries(slotInfo?.view);
 
-let event = {}, dateTimeString = transformDateTime( startStr, endStr, calendarViewType, allDayEvent[1] ); 
+let event = {}, dateTimeString = transformDateTime( start[1], end[1], calendarViewType, allDay[1] );
 
-if ( recurringEvent && ! allDayEvent[1] ) {
+if ( recurringEvent && ! allDay[1] ) {
     event =  { 
         title: title,
+        recurringEvent,
         rrule: {
             freq: frequency,
             interval: interval,
             dtstart: `${startDateDateTime}T${startTimeDateTime}`,
-            until: endDate
+            until: endDate 
         },
-        duration: ( new Date( dateTimeString?.resEndStr ) - new Date( dateTimeString?.resStartStr ) ),
+        duration: ( new Date( dateTimeString?.resEndStr ) - new Date( dateTimeString?.resStartStr ) )
     };  
-} else if ( (recurringEvent && allDayEvent[1]) || ( recurringEvent && allDay ) ) {
+} else if ( (recurringEvent && allDay[1]) || ( recurringEvent && allDay[1] ) ) {
     event =  { 
         title: title,
-        allDay,
+        recurringEvent,
+        allDay: allDay[1],
         rrule: {
             freq: frequency,
             interval: interval,
             dtstart: `${startDateDateTime}T${startTimeDateTime}`,
-            //dtstart: dateTimeString?.resStartStr,
             until: endDate
         },
-        duration: ( new Date( dateTimeString?.resEndStr ) - new Date( dateTimeString?.resStartStr ) ),
+        duration: ( new Date( dateTimeString?.resEndStr ) - new Date( dateTimeString?.resStartStr ) )
     };
 } else {
     event = {
         title: title,
         recurringEvent,
-        allDayEvent,
-        //start: dateTimeString?.resStartStr,
-        //end: dateTimeString?.resEndStr,
+        allDay: allDay[1],
         start: `${startDateDateTime}T${startTimeDateTime}`,
         end: `${endDateDateTime}T${endTimeDateTime}`, 
         duration: ( new Date( dateTimeString?.resEndStr ) - new Date( dateTimeString?.resStartStr ) )
-    };
+    }
 }
-    handleSubmit({ event, formData });
+    handleSubmit( newCalendarEventData(event, location, schedulingData, undefined ) );
 }
 
 function handleFormValidation(fieldname, value, option){
-
     if ( value === option ) {
         Validations.warn(`Please correct ${ fieldname }`);
         return false;

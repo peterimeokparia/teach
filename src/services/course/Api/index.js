@@ -11,6 +11,7 @@ privateKey} from 'Services/course/Pages/LoginPage/Components/Authentication';
 
 //dotenv.config // done: fix
 const PREFIX = "/api/v1";
+// const PREFIX = "http://localhost:9005/api/v1";
 let apiAuthToken = null;
 
 export const setAuthToken = token => {
@@ -225,8 +226,15 @@ export const getCurrentUserByEmail = ( credentials ) => {
     .catch(error => {console.log(error)});
 }
 
-export const getCalendarEventsByUserId = ( userId ) => {
-  return fetch(PREFIX + `/calendar/events/byUserId?userId=${userId}`) 
+export const getCalendarsByUserId = ( userId ) => {
+  return fetch(PREFIX + `/calendar/calendars/byUserId?userId=${userId}`) 
+    .then(handleErrors)
+    .then(response => response.json())
+    .catch(error => {console.log(error)});
+}
+
+export const getEventsByUserId = ( userId ) => {
+  return fetch(PREFIX + `/event/events/byUserId?userId=${userId}`) 
     .then(handleErrors)
     .then(response => response.json())
     .catch(error => {console.log(error)});

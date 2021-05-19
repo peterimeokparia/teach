@@ -10,13 +10,18 @@ import {
 Link } from '@reach/router';
 
 import {
-loadAllCalendarEvents,     
-saveCalendarEvent } from 'Services/course/Actions/Calendar';
+loadAllCalendars,     
+saveCalendar } from 'Services/course/Actions/Calendar';
+
+import {
+loadAllEvents } from 'Services/course/Actions/Event';
 
 import {
 loadSubscribedPushNotificationUsers } from 'Services/course/Actions/Notifications';
 
 import {
+getEventsByOperatorId,    
+getCalendarsByOperatorId,    
 getOperatorFromOperatorBusinessName,    
 getCalendarEventsByUserIdSelector,
 getPushNotificationUsersByOperatorId } from 'Services/course/Selectors';
@@ -24,9 +29,15 @@ getPushNotificationUsersByOperatorId } from 'Services/course/Selectors';
 import {
 role } from 'Services/course/helpers/PageHelpers';
 
+import {
+eventEnum } from 'Services/course/Pages/CalendarPage/helpers';
+
 import Roles from 'Services/course/Pages/Components/Roles';
 import ListItem from 'Services/course/Pages/Components/ListItem';
 import EditCalendarEvents from 'Services/course/Pages/CalendarPage/Components/EditCalendarEvents';
+import ToggleButton from 'Services/course/Pages/Components/ToggleButton';
+import Select from 'react-select';
+
 
 const EventDetailPage = ({ 
 operatorBusinessName,
@@ -35,58 +46,119 @@ currentUser,
 user,
 currentUsers,
 calendar,
-saveCalendarEvent,
+calendars,
+events,
+saveCalendar,
 pushNotificationSubscribers,
 calendarEventType,
 calendarId,
 eventId,
 userId,
-loadAllCalendarEvents,
+loadAllEvents,
+loadAllCalendars,
 loadSubscribedPushNotificationUsers }) => {
 
-    useEffect(( ) => {
-
-        loadAllCalendarEvents();
-        loadSubscribedPushNotificationUsers();
-    
-    },[ loadAllCalendarEvents,loadSubscribedPushNotificationUsers ]);
+useEffect(( ) => {
+    loadAllEvents();
+    loadAllCalendars();
+    loadSubscribedPushNotificationUsers();
+},[ loadAllCalendars,loadSubscribedPushNotificationUsers, loadAllEvents ]);
 
 function onMatchListItem( match, listItem ) {
-
     if ( match ){
         // fix
     }
 }
 
-function updatedCalendarEvent(calendarEvents, selectedEvent, updatedEvent) {
-    let localCalendarEvents = calendarEvents;
-    let eventToUpdate = localCalendarEvents?.find(event => event?.id === selectedEvent?.id);
-    eventToUpdate['title'] =  updatedEvent.title;
-    eventToUpdate['start'] = updatedEvent.start;
-    eventToUpdate['end'] = updatedEvent.end;
-    eventToUpdate['allDay'] = updatedEvent.allDay;
-    localCalendarEvents[selectedEvent?.id] = eventToUpdate;
+function updatedCalendarEvent(events, selectedEvent, updatedEvent) {
+    let localCalendarEvents = events;
+    let eventToUpdate = localCalendarEvents?.find(event => event?._id === selectedEvent?._id);
+    eventToUpdate['title'] =  updatedEvent?.event?.title;
+    eventToUpdate['start'] = updatedEvent?.event?.start;
+    eventToUpdate['end'] = updatedEvent?.event?.end;
+    eventToUpdate['allDay'] = updatedEvent?.event?.allDay;
+    localCalendarEvents[selectedEvent?._id] = eventToUpdate;
     return localCalendarEvents;
 }
 
 let testAdminUsers =  [ calendar?.userId, '603d37814967c605df1bb450', '6039cdc8560b6e1314d7bccc' ];
 let emailAddresses = Object.values(currentUsers).filter(user => testAdminUsers.includes(user?._id))?.map(user => user?.email);
 
-let event = calendar?.calendarEvents.find(event => event?.id === eventId);
+let event = events.find(event => event?._id === eventId);
+if ( event ) {
+    // alert('Found Event');
+    // alert(JSON.stringify( event ) )
+}
+
 return (
     <div>
         <div>
-            {event?.title}
+            {event?.event?.title}
         </div>
         <div>
-            {event?.start}
+            {event?.event?.start}
         </div>
         <div>
-            {event?.end}
+            {event?.event?.end}
         </div>
         <div>
-            {event?.allDay}
+            {event?.event?.allDay}
         </div>
+        {( calendarEventType === eventEnum?.ConsultationForm) && 
+            <div>
+                <div> { 'Consultee Information '} </div>
+                <div> {event?.consultation?.firstName} </div>
+                <div> {event?.consultation?.lastName} </div>
+                <div> {event?.consultation?.studentsName} </div>
+                <div> {event?.consultation?.email} </div>
+                <div> {event?.consultation?.phone} </div>
+                <div> <h4>{'Courses Interested In'}</h4> </div>
+                <div> {event?.consultation?.coursesInterestedIn?.map(course => (
+                    <div> { course?.label } </div>
+                ))} 
+                </div>
+
+                <div className='events'> 
+                    <form>
+                        <h4> { 'Client Management '}  </h4>
+                        <h5>{'Contacted Client?'}</h5>
+                        <ToggleButton
+                            isChecked={"config?.recurringEvent"}
+                            isDisabled={"config?.saveInProgress"}
+                            value={'isRecurring'}
+                            onChange={"config?.handleRecurringEvent"} 
+                        />
+                        <h5>{'Contact Date & Time'}</h5>
+                        <input
+                        type={'date'}
+                        />
+                        <input
+                            type={'time'}
+                        />
+
+<div> 
+                    <h5>{'Notes'}</h5>
+                    <input
+                       type={'textarea'}
+                    />
+                </div>
+                <div> 
+                    <h5>{'Contacted by'}</h5>
+                    <Select
+                        placeholder={`User`}
+                        isMulti
+                        value={'coursesInterestedIn'}
+                        onChange={'setCoursesInterestedIn'}
+                        options={'userOption( users )'} 
+                    />    
+                </div>
+                        
+                    </form>
+                    
+                </div>
+              
+            </div>
+        }
     </div>
 )
 
@@ -103,7 +175,7 @@ return   (
                             currentUser={currentUser}
                             pushNotificationUser={pushNotificationSubscribers}
                             className="lesson-item"
-                            onSubmit={(updatedevent) => saveCalendarEvent({
+                            onSubmit={(updatedevent) => saveCalendar({
                                 ...calendar, 
                                 calendarEvents: [...updatedCalendarEvent(calendar?.calendarEvents, selectedEvent,  updatedevent)]
                             }, 
@@ -186,11 +258,13 @@ const mapState = (state, ownProps)   => {
     currentUser: state.users.user,
     user: state.users.user,
     currentUsers: state.users.users,
-    operator: getOperatorFromOperatorBusinessName(state, ownProps),
     calendar: getCalendarEventsByUserIdSelector(state, ownProps),
+    calendars: getCalendarsByOperatorId(state, ownProps),
+    events: getEventsByOperatorId(state, ownProps),
+    operator: getOperatorFromOperatorBusinessName(state, ownProps),
     pushNotUsers: state?.notifications?.pushNotificationSubscribers,
     pushNotificationSubscribers: getPushNotificationUsersByOperatorId(state, ownProps)
   };
 }
 
-export default connect(mapState, { saveCalendarEvent, loadAllCalendarEvents, loadSubscribedPushNotificationUsers } )(EventDetailPage);
+export default connect(mapState, { saveCalendar, loadAllCalendars, loadSubscribedPushNotificationUsers, loadAllEvents } )(EventDetailPage);

@@ -4,14 +4,13 @@ import DropDown from 'Services/course/Pages/Components/DropDown';
 import ToggleButton from 'Services/course/Pages/Components/ToggleButton';
 
 const EventForm = ({ config })  => {
-
     return(
       <span>
         <form className={""}
               onSubmit={config?.Submit}> 
             <span className="row">    
                 <input
-                    ref={config.inputRef}
+                    ref={config?.inputRef}
                     type="text" 
                     disabled={config?.saveInProgress} 
                     value={config?.title} 
@@ -21,7 +20,7 @@ const EventForm = ({ config })  => {
             </span>
             <span className="row">    
                 <input
-                    ref={config.inputRef}
+                    ref={config?.inputRef}
                     type="text" 
                     disabled={config?.saveInProgress} 
                     value={config?.location} 
@@ -33,7 +32,7 @@ const EventForm = ({ config })  => {
             <span className='col'>
                 {"Start Date"}
                <input
-                    ref={config.inputRef}
+                    ref={config?.inputRef}
                     type="date" 
                     //disabled={config?.saveInProgress} 
                     value={config?.startDateDateTime} 
@@ -44,7 +43,7 @@ const EventForm = ({ config })  => {
             <span className="col">
             {"Start Time"}
                 <input
-                    ref={config.inputRef}
+                    ref={config?.inputRef}
                     type="time" 
                     disabled={config?.saveInProgress} 
                     value={config?.startTimeDateTime} 
@@ -57,7 +56,7 @@ const EventForm = ({ config })  => {
             <span className='col'>
             {"End Date"}
                <input
-                    ref={config.inputRef}
+                    ref={config?.inputRef}
                     type="date" 
                     disabled={config?.saveInProgress} 
                     value={config?.endDateDateTime} 
@@ -68,7 +67,7 @@ const EventForm = ({ config })  => {
             <span className="col">
             {"End Time"}
                 <input
-                    ref={config.inputRef}
+                    ref={config?.inputRef}
                     type="time" 
                     disabled={config?.saveInProgress} 
                     value={config?.endTimeDateTime} 
@@ -172,7 +171,7 @@ const EventForm = ({ config })  => {
                                             <span className='col'>
                                             {"End Date"}
                                             <input
-                                                    ref={config.inputRef}
+                                                    ref={config?.inputRef}
                                                     type="date" 
                                                     disabled={config?.saveInProgress} 
                                                     value={config?.endDate} 
@@ -183,7 +182,7 @@ const EventForm = ({ config })  => {
                                             <span className="col">
                                             {"End Time"}
                                                 <input
-                                                    ref={config.inputRef}
+                                                    ref={config?.inputRef}
                                                     type="time" 
                                                     disabled={config?.saveInProgress} 
                                                     value={config?.endTimeDateTime} 
@@ -192,13 +191,6 @@ const EventForm = ({ config })  => {
                                                 />
                                             </span>
                                             </span>
-
-                                            {/* <input
-                                                type="date" 
-                                                disabled={config?.saveInProgress} 
-                                                value={config?.endDate} 
-                                                onChange={(e) => config?.setEndDate(e.target.value)}
-                                            /> */}
                                             </label>
                                             </div>
             }  

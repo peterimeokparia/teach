@@ -6,7 +6,8 @@ const ToggleButton = ({
   isChecked, 
   isDisabled, 
   value, 
-  onChange }) => {
+  onChange,
+  placeHolder }) => {
   return (
   <div> 
         <label className="switch">
@@ -16,6 +17,7 @@ const ToggleButton = ({
                 disabled={isDisabled} 
                 value={value} 
                 onChange={onChange}
+                placeHolder={placeHolder}
             />
             <span class="slider round"></span>
         </label>

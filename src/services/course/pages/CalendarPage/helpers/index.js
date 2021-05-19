@@ -1,7 +1,51 @@
 import { 
 role } from 'Services/course/helpers/PageHelpers';
 
+import {
+getTimeZoneDateTime } from 'Services/course/helpers/ServerHelper';
+
 import moment from "moment";
+import randomColor from 'randomcolor';
+
+
+
+export const getCalendarColor = ( calendars ) => {
+    let color = null;
+    let existingColor = null;
+
+    do {
+        color = generateRandomColor();
+        existingColor = calendars?.find( calendar => calendar?.color === color );
+
+        if ( !existingColor ) {
+            break;
+        }
+        
+    } while ( existingColor );
+
+    return color;
+}
+
+export const generateRandomColor = () => {
+ //let randomSeed = Math.floor(Math.random() * 2000);
+  return randomColor({ luminosity: 'light',  hue: 'random' })
+}
+
+export const getCalendarPageHeading = ( calendarEventType ) => {
+    let calendarHeading = null;
+    switch ( calendarEventType ) {
+        case eventEnum.ConsultationForm:
+        calendarHeading = 'New Consultation'; 
+            break;
+        case eventEnum.SessionScheduling:
+        calendarHeading = 'Schedule Session'; 
+            break;
+        default:
+        calendarHeading = 'Calendar'   
+            break;
+    }
+    return calendarHeading;
+}
 
 export let frequencyCollection = [
     {_id:'Select', id:'Select',   name:'Select'},
@@ -14,6 +58,30 @@ export let frequencyCollection = [
     {_id:'secondly', id:'secondly', name:'secondly'}
 ]
 
+export const newCalendarEventData = ( event, location, schedulingData, consultation ) => {
+    return {
+        event: ( event ) ? event : {},
+        location: ( location ) ? location : '',
+        schedulingData: ( schedulingData?.length > 0 ) ? schedulingData : [],
+        consultation: ( consultation ) ? consultation : {} 
+    };
+}
+export function updateFrequencyCollection( freq, setFreqCollectionData ) {
+    let freqObject = frequencyCollection;
+
+    if ( freq && (freq !== 'Select') ) {
+        freqObject = frequencyCollection?.filter(item => item?.id !== freq );
+        let eventFreq = freqObject?.find(item => item?.id === 'Select');
+
+        if ( eventFreq ) {
+            [ 'name', '_id', 'id' ].forEach(element => {
+                eventFreq[ element ] = freq;
+            });
+        }   
+    } 
+    setFreqCollectionData( freqObject );
+}
+
 export const style = {
     eventListBody: "component-seconday-event-list-body",
     eventListBodyEdit: "component-seconday-event-list-body-edit",
@@ -21,10 +89,15 @@ export const style = {
     eventListBodyEditRecurring:"component-seconday-event-list-body-edit-recurring"
 }
 
+
 let weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']; 
 export const days = weekDays.map(item => ( { value: item,  label: item } )  );
 
 export const studentsOption = ( currentUsers ) => currentUsers?.filter(user => user?.role === role?.Student ).map(item => ( { value: item,  label: item?.firstname } )  );
+
+export const tutorsOption = ( currentUsers ) => currentUsers?.filter(user => user?.role === role?.Tutor ).map(item => ( { value: item,  label: item?.firstname } )  );
+
+export const courseOption = ( courses ) => courses?.map(item => ( { value: item,  label: item?.name } ));
 
 export const createNewCalendarEvent = (config) => {
 
@@ -76,16 +149,15 @@ export const eventEnum = {
     TimeGridDay: "timeGridDay"
 }
 
-export const transformDateTime = ( startStr,  endStr, calendarViewType, allDay ) => {
+let calendarTypes = [eventEnum?.ConsultationForm, eventEnum?.SessionScheduling ]; 
+export const calendarOptions = calendarTypes.map(item => ( { value: item,  label: item } )  );
 
+export const transformDateTime = ( startStr,  endStr, calendarViewType, allDay ) => {
     if ( ! startStr || ! endStr || ! calendarViewType || allDay === undefined ) return;
 
-    let getCurrentCalendarView = ( calendarViewType[1] === eventEnum.DayGridMonth ) || ( allDay && calendarViewType[1] === eventEnum.TimeGridDay );
-    let startStrTransformer = ( getCurrentCalendarView ) ? startStr[1] : getDateTime( startStr[1] );
-    let endStrTransformer = ( getCurrentCalendarView ) ? endStr[1] :  getDateTime( endStr[1] );
-    return {
-        resStartStr: ( getCurrentCalendarView ) ? startStr[1] : ( allDay ) ? ( startStrTransformer[0] ) : `${startStrTransformer[0]}T${startStrTransformer[1].split('-')[0]}`,
-        resEndStr:   ( getCurrentCalendarView ) ? endStr[1]   : ( allDay ) ? ( startStrTransformer[0] ) : `${endStrTransformer[0]}T${endStrTransformer[1].split('-')[0]}`
+     return {
+        resStartStr: getCurrentTimeInUsersLocale(startStr)?.format('YYYY-MM-DD[T]HH:mm:ss'),
+        resEndStr:  getCurrentTimeInUsersLocale(endStr)?.format('YYYY-MM-DD[T]HH:mm:ss')
     }
 }
 
@@ -120,17 +192,96 @@ export const durationEnum = {
     YEARS: 1
 }
 
+
+export function getTimeLineItems( calendarEvent ) {
+
+    if ( calendarEvent === undefined ) throw new Error( "Missing calendarEvent" );
+    
+    let eventCollection = ( calendarEvent?.timeLineItems?.length > 0 ) ?  calendarEvent?.timeLineItems : [];
+    let eventCollectionLength = eventCollection?.length;
+    let initialEventDateTime = calendarEvent?.event?.start;
+    let numberOfEventSlots = getTheNumberOfCalendarEventSlots( calendarEvent?.event );
+    
+    
+    try {
+        if ( calendarEvent?.event?.recurringEvent && calendarEvent?.event?.rrule?.freq ) {  
+            
+            eventCollection.push({ 
+                id: `${calendarEvent?._id}_${( eventCollectionLength + 1)}`,
+                group: calendarEvent?.calendarId,
+                title: calendarEvent?.event?.title,
+                start_time: moment( initialEventDateTime )?.local().format('YYYY-MM-DD[T]HH:mm:ss'),
+                end_time: moment( initialEventDateTime ).add(durationEnum.HOURS, momentEnum.HOUR )?.local().format('YYYY-MM-DD[T]HH:mm:ss'), 
+                isRecurringEvent: calendarEvent?.event?.recurringEvent,
+                color: calendarEvent?.event?.color, 
+            });
+    
+            for( let i = 0;  i < (numberOfEventSlots-1); i++ ) {
+
+                switch ( calendarEvent?.event?.rrule?.freq ) {
+                    case "minutely":
+                        initialEventDateTime = setInitialEventTime( initialEventDateTime, durationEnum.MINUTES, momentEnum.MINUTES);
+                        break;
+                    case "hourly":
+                        initialEventDateTime = setInitialEventTime( initialEventDateTime, durationEnum.HOURS, momentEnum.HOURS);
+                        break;
+                    case "daily":
+                        initialEventDateTime = setInitialEventTime( initialEventDateTime, durationEnum.DAYS, momentEnum.DAYS);
+                        break;
+                    case "weekly":
+                        initialEventDateTime = setInitialEventTime( initialEventDateTime, durationEnum.WEEKS, momentEnum.DAYS);
+                        break;
+                    case 'monthly':
+                        initialEventDateTime = setInitialEventTime( initialEventDateTime, durationEnum.MONTHS, momentEnum.MONTHS);
+                        break;
+                    case 'yearly':
+                        initialEventDateTime = setInitialEventTime( initialEventDateTime, durationEnum.YEARS, momentEnum.YEARS);
+                        break;    
+                    default:
+                        break;
+                }
+                eventCollectionLength = eventCollection?.length;
+                eventCollection.push({ 
+                    id: `${calendarEvent?._id}_${( eventCollectionLength + 1)}`,
+                    group: calendarEvent?.calendarId,
+                    title: calendarEvent?.event?.title,
+                    start_time: moment( initialEventDateTime )?.local().format('YYYY-MM-DD[T]HH:mm:ss'),
+                    end_time: moment( initialEventDateTime ).add(durationEnum.HOURS, momentEnum.HOUR )?.local().format('YYYY-MM-DD[T]HH:mm:ss'), 
+                    isRecurringEvent: calendarEvent?.event?.recurringEvent,
+                    color: calendarEvent?.event?.color 
+                });
+            }
+            
+        } else {
+
+                let eventCollectionLength = eventCollection?.length;
+                eventCollection.push({ 
+                    id: `${calendarEvent?._id}_${( eventCollectionLength + 1)}`,
+                    group: calendarEvent?.calendarId,
+                    title: calendarEvent?.event?.title,
+                    start_time: moment( initialEventDateTime )?.local().format('YYYY-MM-DD[T]HH:mm:ss'),
+                    end_time: moment( initialEventDateTime ).add(durationEnum.HOURS, momentEnum.HOUR )?.local().format('YYYY-MM-DD[T]HH:mm:ss'), 
+                    isRecurringEvent: calendarEvent?.event?.recurringEvent,
+                    color: calendarEvent?.event?.color 
+                });
+        }
+        
+    } catch ( error ) {
+        console.log( error );
+    }
+    return eventCollection;
+}
+
 export function getTimeLineItemDetailsFromCalendarEvents( config ) {
 
     if ( config === undefined ) throw new Error( "Missing config" );
-
+    
     let timeLineExists = config?.timeLines?.find(timeline => timeline?.timeLineName === config?.calendarEventType );
     let eventCollection = ( timeLineExists ) ? timeLineExists?.items : [];
     let initialEventDateTime = config?.initialDateStartTime;
     let numberOfEventSlots = getTheNumberOfCalendarEventSlots( config );
-
+    
     try {
-
         if ( config?.isRecurringEvent ) {  
 
             eventCollection.push({ 
@@ -189,17 +340,11 @@ export function getTimeLineItemDetailsFromCalendarEvents( config ) {
         }
         
     } catch ( error ) {
-        
         console.log( error );
     }
-
     let timeLineName = config?.calendarEventType;
-
     let items = eventCollection;
-
     let groups = getTimeLineGroups( config?.timeLines, config?.calendars, config?.users );
-
-
     return  ( timeLineExists ) ? { ...timeLineExists, items: eventCollection, groups } : { timeLineName, items, groups };
 }
 
@@ -208,13 +353,10 @@ function setInitialEventTime( initialEventDateTime, duration, frequencyType ) {
 }
 
 function getTheNumberOfCalendarEventSlots(config) {
-
     if ( config === undefined ) throw new Error("Missing config");
-
-        let numberOfCalendarEventSlots = ( config?.isRecurringEvent ) ? null : 1;
-
+        let numberOfCalendarEventSlots = ( config?.recurringEvent ) ? null : 1;
     try {
-        switch ( config?.frequency ) {
+        switch ( config?.rrule?.freq ) {
             case "minutely":
                 numberOfCalendarEventSlots = getElapsedTime(config, 'minutes');
                 break;
@@ -239,37 +381,28 @@ function getTheNumberOfCalendarEventSlots(config) {
     } catch ( error ) {
         console.log( error );    
     } 
-
     return numberOfCalendarEventSlots;
 }
 
 function getElapsedTime(config, frequencyType ){    
-
     let NumberOfDays = 7;
-
-    if ( config?.frequency === "weekly") {
-        return  (Math.round((moment(config?.endTime).diff(moment(config?.startTime), frequencyType)/ NumberOfDays )));
+    if ( config?.rrule?.frequency === "weekly") {
+        return  (Math.round((moment(config?.end).diff(moment(config?.start), frequencyType)/ NumberOfDays )));
     }
-    return  (Math.round((moment(config?.endTime).diff(moment(config?.startTime), frequencyType))));
+    return  (Math.round((moment(config?.end).diff(moment(config?.start), frequencyType))));
 }
 
 
 function getTimeLineGroups( timeLines, calendars, users ) {
-
     let timeLineGroup = ( timeLines?.groups ) ? timeLines?.groups : [];
-
     calendars.forEach(calendar => {
-
         let existingTimeLineGroup = ( timeLines?.groups?.find(timeline => timeline?.id === calendar?._id ) );
-        
         if ( ! existingTimeLineGroup ) {
-
             let firstName = users?.find( user => user?._id === calendar?.userId && user?.role === role.Tutor )?.firstname;
-
             timeLineGroup.push({
                 id: calendar?._id,
-                title: `${ firstName }_${ calendar?.userId }`,
-                rightTitle: `${ firstName }_${calendar?.userId}`,
+                title: `${ firstName }_${ calendar?._id }_${ calendar?.userId }`,
+                rightTitle: `${ firstName }_${ calendar?._id }_${ calendar?.userId }`,
                 bgColor: "#FFFF00"
             });
         }
@@ -282,9 +415,13 @@ export function datePatternIncludesTimeSequence( start, end ) {
 }
 
 export function getDate(currentDateTimeSequence) {
-    return currentDateTimeSequence?.toString()?.split('T')[0];
+    return moment( currentDateTimeSequence )?.format('YYYY-MM-DD');
 }
 
 export function getTime(currentDateTimeSequence) {
-    return currentDateTimeSequence?.toString()?.split('T')[1];
+    return moment( currentDateTimeSequence )?.format('HH:mm:ss');
+}
+
+export function getCurrentTimeInUsersLocale( timeformat ){
+    return getTimeZoneDateTime( timeformat );
 }

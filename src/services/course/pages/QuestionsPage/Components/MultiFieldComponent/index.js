@@ -65,7 +65,7 @@ useEffect(() => {
   if ( previewMode ) {
      setVideoUploaded( false );
   }
-  // inputFields, inputTypeValue, setInputFields
+
 }, [ inputFields, inputTypeValue, setInputFields ] )  
 
 let config = { questionNumber, markDownEditorNumber, inputFields, inputTypeValue, inputFieldOptions, labelDropDownSelectedValue, placeHolder };
@@ -74,10 +74,13 @@ const addNewInputField = () => {
   if ( inputFields ) {
      handleUpdatingMarkDownEditor( { data: inputFields, fieldName: elementMeta.markDownEditorFormInputFields } ); 
   }
+  
   let fieldCollection =  [...inputFields.filter(obj =>  obj?.questionNumber === questionNumber && obj?.markDownEditorNumber === markDownEditorNumber ),
     setFieldCollection(config, setMultipleChoiceValue, setMultipleChoiceLabelValue)  
   ]
+
   setInputFields( fieldCollection );
+
   if ( fieldCollection ) {
      handleUpdatingMarkDownEditor( { data: fieldCollection, fieldName: elementMeta.markDownEditorFormInputFields } ); 
   }
@@ -182,16 +185,20 @@ return(
                     />
                 </span>
         }
-        {( contentType( element.editorContentType ).isExplanationContentType )  && 
-                <EditorComponent
-                    key={element?.id}
-                    id={`input${element?.id}`}
-                    name={`editor${element?.id}`}
-                    content={ JSON.parse( element?.explanationAnswerValue )}
-                    onChange={ ( editor ) => handleMarkDownContentChange( inputFields, editor, element?.id, 
-                                currentUser?.role, editorContentType.Explanation, handleUpdatingMarkDownEditor, 
-                                        questionNumber, markDownEditorNumber )}
-                />
+        {
+        
+        // ( contentType( element.editorContentType ).isExplanationContentType )  && 
+        //         <EditorComponent
+        //             key={element?.id}
+        //             id={`input${element?.id}`}
+        //             name={`editor${element?.id}`}
+        //             content={ JSON.parse( element?.explanationAnswerValue )}
+        //             onChange={ ( editor ) => handleMarkDownContentChange( inputFields, editor, element?.id, 
+        //                         currentUser?.role, editorContentType.Explanation, handleUpdatingMarkDownEditor, 
+        //                                 questionNumber, markDownEditorNumber )}
+        //         />
+
+
         }
         {( contentType( element.editorContentType ).isMultipleChoiceContentType  )  ?
               ( previewMode )   ?   <span>{element?.value}</span>    

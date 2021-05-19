@@ -31,13 +31,18 @@ import AttendancePage from 'Services/course/Pages/AttendancePage';
 import EditorDemo from 'Services/course/Pages/Lessons/EditorDemo';
 import SendNotificationsPage from 'Services/course/Pages/SendNotificationsPage';
 import QuestionPage from 'Services/course/Pages/QuestionsPage';
+import OnlineQuestionPage from 'Services/course/Pages/OnlineQuestionsPage';
 import AccountVerificationForm from 'Services/course/Pages/SignUp/AccountVerificationForm';
 import PasswordReset from 'Services/course/Pages/LoginPage/Components/PasswordReset';
 import CalendarPage from 'Services/course/Pages/CalendarPage'; 
 import CalendarEventsDetailPage from 'Services/course/Pages/CalendarPage/Components/CalendarEventsDetailPage'; 
 import EventDetailPage  from 'Services/course/Pages/CalendarPage/Components/EventDetailPage'; 
 import OnlineTutoringRequestForm from 'Services/course/Pages/CalendarPage/Components/OnlineTutoringRequestForm';
+import AddNewCalendar from 'Services/course/Pages/CalendarPage/Components/AddNewCalendar'; 
 import TimeLine from 'Services/course/Pages/CalendarPage/Components/TimeLine'; 
+import OnlineQuestionsSavedAnswersPage from 'Services/course/Pages/OnlineQuestionsPage/Components/OnlineQuestionsSavedAnswersPage'
+import TestPocPage from 'Services/course/Pages/TestPOCPage';
+//import // const lessonPlanUrl = `/${operatorBusinessName}/LessonPlan/classRoom/${selectedUserId}`;  TestPOCPage
 //import ClassRoomGroupsPage from 'Services/course/Pages/ClassRoomGroupsPage';
 //import Boards from 'Services/course/Pages/Boards';
 import { Router, Redirect } from '@reach/router';
@@ -63,6 +68,14 @@ const MainRoute = () => {
               </SalesPage>
 
               <StudentDetailPage path="/:operatorBusinessName/student/:studentId/course/:courseId/lessons/:lessonId" >
+                   <OnlineQuestionsSavedAnswersPage path="student/:studentId/savedanswers"/>
+                   <SessionPage path="student/:studentId/sessions/courseId/:courseId"/>
+                   <GradesPage path="student/:studentId/grades"/>
+                   <AttendancePage path="student/:studentId/attendance"/>
+              </StudentDetailPage>
+
+              <StudentDetailPage path="/:operatorBusinessName/student/:studentId" >
+                   <OnlineQuestionsSavedAnswersPage path="student/:studentId/savedanswers"/>
                    <SessionPage path="student/:studentId/sessions/courseId/:courseId"/>
                    <GradesPage path="student/:studentId/grades"/>
                    <AttendancePage path="student/:studentId/attendance"/>
@@ -92,11 +105,15 @@ const MainRoute = () => {
              <EditorDemo path="/demo/editor/:lessonId"/>
              <QuestionPage path="/formBuilder/:lessonId"/>
              <SendNotificationsPage path="/:operatorBusinessName/demo/sendnotifications" />
-             <CalendarPage path="/:operatorBusinessName/schedule/:calendarEventType/calendar/:userId"/>
+             <CalendarPage path="/:operatorBusinessName/schedule/:calendarEventType/calendar/:calendarId/user/:userId"/>
              <CalendarEventsDetailPage path="/:operatorBusinessName/:calendarEventType/calendar/:calendarId/:userId/:selectedCalendarEventId"/>
              <CalendarEventsDetailPage path="/:operatorBusinessName/:calendarEventType/calendar/:calendarId/:userId"/>
-             <EventDetailPage path="/:operatorBusinessName/:calendarEventType/calendar/:calendarId/:userId/event/:eventId" />
+             <EventDetailPage path="/:operatorBusinessName/:calendarEventType/calendar/:calendarId/user/:userId/event/:eventId" />
              <TimeLine path="/:operatorBusinessName/schedule/:calendarEventType/timeline/:userId"/>
+             <AddNewCalendar path="/:operatorBusinessName/add/calendar" />
+             <OnlineQuestionPage path="/:operatorBusinessName/homework/askquestion/:courseId" />
+             <TestPocPage path="/:operatorBusinessName/test/:courseId/:lessonId/:questionId/:answerId"/>
+
              {/* http://localhost:3000/boomingllc/sessionscheduling/calendar/6052319c75d30d0155dfbe3e/6039cdc8560b6e1314d7bccc/event/6039cdc8560b6e1314d7bccc_1 */}
              {/* http://localhost:3000/boomingllc/sessionscheduling/calendar/6052319c75d30d0155dfbe3e/6039cdc8560b6e1314d7bccc/event/calendar/6052319c75d30d0155dfbe3e/event/undefined */}
              {/* http://localhost:3000/boomingllc/sessionscheduling/calendar/6052319c75d30d0155dfbe3e/event */}

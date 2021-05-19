@@ -1,3 +1,14 @@
+// import moment from 'moment';
+import moment from 'moment-timezone';
+
+import {
+serviceWorkerSupported,
+send } from '../PushNotifications';
+
+import e from 'cors';
+
+
+
 let authToken = null;
 
 export const setToken = token => {
@@ -65,7 +76,7 @@ export async function uploadContent(url, formData, method = `POST`) {
   let headers = new Headers();
   // headers.append('Content-Type', 'video/webm'); 
   // headers.append('Accept', 'video/webm');
-  //headers.append('Content-Type', 'image/png'); 
+  // headers.append('Content-Type', 'image/png'); 
   headers.append('Authorization',  authToken ? `Bearer ${authToken}` : undefined);
   return fetch(url, {
     method,
@@ -91,20 +102,21 @@ export function routeUrl(){
 }
 
 async function fetchWithData( url =``, data = {}, method = 'POST') {
-  let responseData = await  fetch(url, {
-        method,
-        headers: {
-        'Content-Type': 'application/json',
-        Authorization: authToken ? `Bearer ${authToken}` : undefined
+    let responseData = null;
+      try {
+        responseData = await fetch(url, {
+          method,
+          headers: {
+          'Content-Type': 'application/json',
+          Authorization: authToken ? `Bearer ${authToken}` : undefined
         },
-        body: JSON.stringify(data),
-        // cache: "reload",
+          body: JSON?.stringify(data)
+          // cache: "reload",
       } 
     );
 
     if ( responseData?.status >= 400 && responseData?.status < 600 ) {
         let response = await responseData?.json();
-
         if ( response?.msg ) {
           throw new Error("Bad Server Response."  + response?.msg ); 
         } else {
@@ -114,19 +126,29 @@ async function fetchWithData( url =``, data = {}, method = 'POST') {
 
     if ( ! responseData?.ok ) {   
         let response = await responseData?.json();
-
         if ( response?.msg ) {
           throw new Error( "Something went wrong"   + response?.msg ); 
         } else {
           throw new Error( "Something went wrong" + response ); 
         }
+    } 
+        
+    
+    } catch ( error ) {
+      console.log( error );    
+      throw Error(`${ error?.message }` )
     }
     return responseData?.json();
 }
 
-export const paymentStatus = { Approved: "approved", Denied: "denied"  };
 
+export const paymentStatus = { Approved: "approved", Denied: "denied"  };
 
 export const randomIdGenerator = (min, max) => {
   return `${Math.random() * ( max - min ) + min}${Date.now()}`
+}
+
+export const getTimeZoneDateTime = ( dateTime ) => {
+ let currentTimeZone = sessionStorage?.getItem('timeZone');
+ return moment( dateTime )?.tz( currentTimeZone )
 }

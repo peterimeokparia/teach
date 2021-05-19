@@ -32,7 +32,7 @@ calendarRoute.get('/', (req, res) => {
     });
 });
   
-calendarRoute.get('/events/byUserId', (req, res) => {
+calendarRoute.get('/calendars/byUserId', (req, res) => {
     let userId = { userId: req?.query?.userId };
     calendarModel.find(userId)   
     .then(data => {
@@ -44,11 +44,13 @@ calendarRoute.get('/events/byUserId', (req, res) => {
 })
 
 calendarRoute.post('/', (req, res) => {
+    console.log( req );
+    console.log('in calendar calendar saved saved');
     let eventData = getPostData( req );
     let calendar = new calendarModel(eventData);
     calendar.save()
     .then(data => {
-        console.log('saved', data);
+        console.log('calendar calendar saved saved', data);
         return res.status(200).json(data);
     })
     .catch( error => {
@@ -78,7 +80,6 @@ calendarRoute.delete('/:calendarId', (req, res) => {
         if ( error ) {
             console.log(error)
             return res.status(400).send(error);
-         
         }
         else {
             console.log(result)

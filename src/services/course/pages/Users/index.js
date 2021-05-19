@@ -6,22 +6,34 @@ connect } from 'react-redux';
 import { 
 navigate } from '@reach/router';
 
-import Loading from '../Components/Loading';
-
-import LoginLogout from '../LoginPage/Components/LoginLogout';
-
-import MainMenu from 'Services/course/Pages/Components/MainMenu';
-
 import {
 navContent } from  'Services/course/Pages/Components/NavigationHelper';
 
 import { 
+addCalendar,
+saveCalendar,
+loadAllCalendars } from 'Services/course/Actions/Calendar';
+
+import { 
+getCalendarsByOperatorId,
+getCalendarEventsByUserIdSelector,
+getEventsByOperatorId,    
 getOperatorFromOperatorBusinessName, 
 getUsersByOperatorId,
 getCoursesByOperatorId } from 'Services/course/Selectors';
 
+import Loading from '../Components/Loading';
+import LoginLogout from '../LoginPage/Components/LoginLogout';
+import MainMenu from 'Services/course/Pages/Components/MainMenu';
 import NavLinks from 'Services/course/Pages/Components/NavLinks';
+import SchoolIcon from '@material-ui/icons/School';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import ScheduleIcon from '@material-ui/icons/Schedule';
+import TimelineIcon from '@material-ui/icons/Timeline';
+import BookIcon from '@material-ui/icons/Book';
+import ForumIcon from '@material-ui/icons/Forum';
 import './style.css'; // rename css styling attributes
+import { green } from '@material-ui/core/colors';
 //shadow-panel
 
 const Users = ({
@@ -30,6 +42,9 @@ operator,
 coursesLoading,
 onCoursesError,
 calendarEvents,
+calendar,
+calendars,
+events,
 user,
 users }) => {
 
@@ -46,7 +61,13 @@ if ( onCoursesError ) {
 }
 
 const viewCurrentUsersCourseList = ( userId ) => {
-    navigate(`/${operatorBusinessName}/coursestaught/${userId}`); 
+    // Today
+    //navigate(`/${operatorBusinessName}/coursestaught/${userId}`); 
+    //localhost:3000/boomingllc/homework/askquestion/0001
+    //navigate(`/${operatorBusinessName}/homework/askquestion/000111`);
+
+    //test 
+    navigate(`/${operatorBusinessName}/test/605d63b2d0c161039cce22ae/60707c401c5ffb2409411ab8/001/002`)
 }
 
 const gotToLessonPlan = ( user ) => { 
@@ -54,11 +75,13 @@ const gotToLessonPlan = ( user ) => {
 }
 
 const gotToCalendar = ( user ) => {
-    navigate(`/${operatorBusinessName}/schedule/sessionscheduling/calendar/${user._id}`);
+    let schedulingCalendar = calendars?.find( cal => cal?.calendarEventType === 'sessionscheduling' && cal?.userId === user?._id);
+    if ( schedulingCalendar ) navigate(`/${operatorBusinessName}/schedule/sessionscheduling/calendar/${schedulingCalendar._id}/user/${user._id}`);
 }
 
 const gotToConsultationCalendarTest = ( user ) => {
-    navigate(`/${operatorBusinessName}/schedule/consultationform/calendar/${user._id}`);
+    let consultingCalendar = calendars?.find( cal => cal?.calendarEventType === 'consultationform' && cal?.userId === user?._id);
+    if ( consultingCalendar ) navigate(`/${operatorBusinessName}/schedule/consultationform/calendar/${consultingCalendar?._id}/user/${user._id}`);   
 }
 
 const goToTestPage = ( user ) => {
@@ -68,21 +91,17 @@ const goToTestPage = ( user ) => {
 }
 
 const goToOnlineTutoringRequest = ( user ) => {
-    // let calendar = Object.values( calendarEvents )?.find(calEvent => calEvent?.userId === user?._id && calEvent?.calendarEventType === 'onlinetutoringrequest' );
-    // alert( calendar );
     navigate(`/${operatorBusinessName}/schedule/onlinetutoringrequest/calendar/${user._id}`)
 }
 
 const goToTimeLine = ( user ) => {
-    // let calendar = Object.values( calendarEvents )?.find(calEvent => calEvent?.userId === user?._id && calEvent?.calendarEventType === 'onlinetutoringrequest' );
-    // alert( calendar );
     navigate(`/${operatorBusinessName}/schedule/sessionscheduling/timeline/${user._id}`);
 }
 
 let navigationContent = navContent( user, operatorBusinessName, user?.role,  "Student" ).users;
 
 return (
-        <div className="MyCourses">
+        <div className="Users">
             <header> 
                 <MainMenu 
                     navContent={navigationContent}
@@ -107,59 +126,102 @@ return (
                                             <span className="multicolortext"> {singleUser?.firstname} </span>
                                         </NavLinks>
                                             <span className="price"> <h6>{singleUser?.courses?.length} {singleUser?.courses?.length === 1  ? "Course.": "Courses."}  </h6></span>  
-                                            <button
-                                                className="user-course-btn"
+                                            {/* <SchoolIcon style={{ color: green[500] }}/> */}
+                                            {/* <button
+                                                // className="user-course-btn"
+                                                className="round-button-1"
                                                 onClick={() => viewCurrentUsersCourseList(singleUser?._id)}
                                                 disabled={singleUser?.courses?.length === 0} 
                                             >                                
-                                            <span> {singleUser?.courses?.length === 1  ? "View Course." : (singleUser?.courses?.length === 0) ? "" : "View Courses."}  </span>                                        
-                                            </button>
-                                            <button
-                                                className="user-course-btn"
+                                            {/* <span> {singleUser?.courses?.length === 1  ? "View Course." : (singleUser?.courses?.length === 0) ? "" : "View Courses."}  </span>*/}
+                                            {/* </button> */} 
+                                            <SchoolIcon 
+                                                className="round-button-1"
+                                                onClick={() => viewCurrentUsersCourseList(singleUser?._id)}
+                                                disabled={singleUser?.courses?.length === 0} 
+                                            />
+                                            
+                                            {/* <button
+                                                // className="user-course-btn"
+                                                className="round-button-2"
                                                 onClick={() => gotToLessonPlan(singleUser)}
                                                 disabled={singleUser?.courses?.length === 0} 
                                             >                                
-                                            <span> {"Go to Class Room."}  </span>                                        
-                                            </button>
+                                            {/* <span> {"Go to Class Room."}  </span>*/}
+                                            {/* </button>  */}
+                                            <BookIcon 
+                                                 className="round-button-2"
+                                                 onClick={() => gotToLessonPlan(singleUser)}
+                                                 disabled={singleUser?.courses?.length === 0} 
+                                            />
+                                            {/* 
                                             <button
-                                                className="user-course-btn"
+                                                // className="user-course-btn"
+                                                className="round-button-3"
                                                 onClick={() => gotToCalendar(singleUser)}
                                                 disabled={singleUser?.courses?.length === 0} 
                                             >                                
-                                            <span> {"Calendar"}  </span>                                        
-                                            </button>
+                                            {/* <span> {"Calendar"}  </span> */}
+                                            {/* </button> */} 
+                                            <ScheduleIcon
+                                                className="round-button-3"
+                                                onClick={() => gotToCalendar(singleUser)}
+                                                disabled={singleUser?.courses?.length === 0}  
+                                            />
+                                           
 
-                                            <button
-                                                className="user-course-btn"
+                                            {/* <button
+                                                className="round-button-4"
+                                                // className="user-course-btn"
                                                 onClick={() => gotToConsultationCalendarTest(singleUser)}
                                                 disabled={singleUser?.courses?.length === 0} 
                                             >                                
-                                            <span> {"Test Consultation Calendar"}  </span>                                        
-                                            </button>
+                                            {/* <span> {"Test Consultation Calendar"}  </span> */}
+                                            {/* </button>  */}
+                                            <CalendarTodayIcon 
+                                                className="round-button-5"
+                                                onClick={() => gotToConsultationCalendarTest(singleUser)}
+                                                disabled={singleUser?.courses?.length === 0} 
+                                            />
 
-                                            <button
-                                                className="user-course-btn"
+                                            {/* <button
+                                                className="round-button-5"
+                                                // className="user-course-btn"
                                                 onClick={() => goToTestPage(singleUser)}
                                                 disabled={singleUser?.courses?.length === 0} 
                                             >                                
-                                            <span> {"Test Page"}  </span>                                        
-                                            </button>
+                                            {/* <span> {"Test Page"}  </span> */}
+                                            {/* </button> */}
 
-                                            <button
-                                                className="user-course-btn"
+                                            {/* <button
+                                                className="round-button-6"
+                                                // className="user-course-btn"
                                                 onClick={() => goToOnlineTutoringRequest(singleUser)}
                                                 disabled={singleUser?.courses?.length === 0} 
                                             >                                
-                                            <span> {"Test Page2"}  </span>                                        
-                                            </button>
+                                            {/* <span> {"Test Page2"}  </span> */}
+                                            {/* </button>  */}
+                                            <ForumIcon 
+                                                className="round-button-6"
+                                                // className="user-course-btn"
+                                                onClick={() => goToOnlineTutoringRequest(singleUser)}
+                                                disabled={singleUser?.courses?.length === 0} 
+                                            />
 
-                                            <button
-                                                className="user-course-btn"
+                                            {/* <button
+                                                className="round-button-7"
+                                                // className="user-course-btn"
                                                 onClick={() => goToTimeLine(singleUser)}
                                                 disabled={singleUser?.courses?.length === 0} 
                                             >                                
-                                            <span> {"Test Page2 - TimeLines"}  </span>                                        
-                                            </button>
+                                            {/* <span> {"Test Page2 - TimeLines"}  </span> */}
+                                            {/* </button> */}
+                                            <TimelineIcon 
+                                                className="round-button-7"
+                                                // className="user-course-btn"
+                                                onClick={() => goToTimeLine(singleUser)}
+                                                disabled={singleUser?.courses?.length === 0} 
+                                            />
                                      </div>
                                 </div>
                             </div> 
@@ -175,7 +237,9 @@ return (
 const mapState = ( state, ownProps ) => ({
     user: state?.users?.user,
     operator: getOperatorFromOperatorBusinessName(state, ownProps),
-    calendarEvents: state?.calendar?.calendarEvents,
+    calendar: getCalendarEventsByUserIdSelector(state, ownProps),
+    calendars: getCalendarsByOperatorId(state, ownProps),
+    events: getEventsByOperatorId(state, ownProps),
     users: getUsersByOperatorId(state, ownProps)?.filter(user => user?.role === "Tutor"),
     courses: getCoursesByOperatorId(state, ownProps),
     coursesLoading: state?.courses?.coursesLoading,

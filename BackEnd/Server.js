@@ -24,8 +24,14 @@ import notificationRoute from './Routes/notificationRoute.js';
 import examRoute from './Routes/examRoute.js';
 import assignmentRoute from './Routes/assignmentRoute.js';
 import questionRoute from './Routes/questionRoute.js';
+import onlineQuestionRoute from './Routes/onlineQuestionRoute.js';
+import onlineQuestionAnswersRoute from './Routes/onlineQuestionAnswersRoute.js';
+import onlineQuestionAnswersCommentsRoute from './Routes/onlineQuestionAnswersCommentsRoute.js';
 import calendarRoute from './Routes/calendarRoute.js';
+import eventRoute from './Routes/eventRoute.js';
 import timeLineRoute from './Routes/timeLineRoute.js';
+import retryFailedOnlineQuestionsEmailNotificationsRoute from './Routes/retryFailedOnlineQuestionsEmailNotificationsRoute.js';
+import retryFailedOnlineQuestionsPushNotificationsRoute from './Routes/retryFailedOnlineQuestionsPushNotificationsRoute.js';
 
 const app = express();
 const server = http.createServer(app);
@@ -73,9 +79,21 @@ app.use('/api/v1/assignments', assignmentRoute);
 
 app.use('/api/v1/questions', questionRoute);
 
+app.use('/api/v1/onlinequestions', onlineQuestionRoute);
+
+app.use('/api/v1/onlineanswers', onlineQuestionAnswersRoute);
+
+app.use('/api/v1/onlinecomments', onlineQuestionAnswersCommentsRoute);
+
 app.use('/api/v1/calendar', calendarRoute);
 
+app.use('/api/v1/event', eventRoute);
+
 app.use('/api/v1/timelines', timeLineRoute); 
+
+app.use('/api/v1/retryfailedonlinequestionsemailnotificationsqueue', retryFailedOnlineQuestionsEmailNotificationsRoute); 
+
+app.use('/api/v1/retryfailedonlinequestionspushnotificationsqueue', retryFailedOnlineQuestionsPushNotificationsRoute); 
 
 mongoose.connect('mongodb+srv://dbuser:dbuser2020@cluster0.8heal.mongodb.net/teach?retryWrites=true&w=majority', {
    useNewUrlParser: true, 

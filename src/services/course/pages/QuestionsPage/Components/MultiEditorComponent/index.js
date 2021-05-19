@@ -66,7 +66,7 @@ useEffect( () => {
   if ( currentLessonQuestions ) {   
       setMarkDownEditors( currentLessonQuestions?.questions );
   }
-  // previewMode, loadQuestions, setMarkDownEditors, loadQuestions
+  
 }, [ previewMode, loadQuestions, setMarkDownEditors ] );  
 
 let config = { markDownEditors, inputFieldOptions, placeHolder, pointsDistributionType, questionPoints}
@@ -89,18 +89,23 @@ const removeMarkDownEditor = () => {
 }
 
 const handleChange = ( editor, id, type ) => {
+
+  if ( markDownEditors.find( obj => obj?.id === id )[ elementMeta.markDownContent ] === JSON.stringify( editor.emitSerializedOutput() )) return
+
   if (  type === editorContentType.Question  ) {  
       if ( markDownEditors ) {
-          markDownEditors.find( obj => obj?.id === id )[ elementMeta.markDownContent ]  = 
-          JSON.stringify(editor.emitSerializedOutput());  
+          markDownEditors.find( obj => obj?.id === id )[ elementMeta.markDownContent ]  = JSON.stringify( editor.emitSerializedOutput() );
+          //JSON.stringify(editor.emitSerializedOutput());  
       }   
   }
 }
 
 const handleExplanationContentMarkDownChange = ( editor, id, type ) => {
+
+  if ( markDownEditors.find( obj => obj?.id === id )[ elementMeta.multipleChoiceQuestionExplanationAnswer ] === JSON.stringify( editor.emitSerializedOutput() )) return
+
   if ( type === editorContentType.Explanation ) {
-     markDownEditors.find( obj => obj?.id === id )[ elementMeta.multipleChoiceQuestionExplanationAnswer ]  = 
-       JSON.stringify(editor.emitSerializedOutput());
+     markDownEditors.find( obj => obj?.id === id )[ elementMeta.multipleChoiceQuestionExplanationAnswer ]  = JSON.stringify( editor.emitSerializedOutput() );
   }   
 }
 

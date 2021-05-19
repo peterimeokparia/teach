@@ -74,7 +74,8 @@ export function navigateToStudentDetailPage( futureLink, userNavigationHistoryAc
 
 export const classRoomPageDisplayComponentConfig = ( currentUser, users, courses, lessons, currentCourse, selectedUserId  ) => {
     let coursesCreatedByTheSelectedTutor = courses?.filter(course =>  course?.createdBy === selectedUserId);
-    let listOfCourses = coursesCreatedByTheSelectedTutor?.filter(course => course);
+    let coursesStudentIsEnrolledIn = courses?.filter(course =>  currentUser?.courses.includes( course?._id));
+    let listOfCourses = ( currentUser?.role === role.Tutor ) ? coursesCreatedByTheSelectedTutor?.filter(course => course) : coursesStudentIsEnrolledIn?.filter( course => course);
     let listOfLessons = lessons?.filter(lesson => lesson?.courseId === currentCourse?._id);
     return {
         selectedUser: users?.find(user => user?._id === selectedUserId),

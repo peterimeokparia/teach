@@ -92,3 +92,7 @@ showCancelButton: true,
 confirmButtonText: 'Join',
 confirmButtonColor: '#673ab7',
 cancelButtonText: 'Next time'
+
+MomentJs
+-----------
+moment( initialEventDateTime )?.local().format('YYYY-MM-DD[T]HH:mm:ss'),

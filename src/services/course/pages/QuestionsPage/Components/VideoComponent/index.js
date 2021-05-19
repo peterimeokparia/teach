@@ -10,12 +10,15 @@ const VideoComponent = ({
 id, 
 name,
 className,
+recordButtonText,
 videoMetaData,
 videoMetaDataExternalId,
 videoNamePrefix,
 videoName,
 objectId,
 setRecordingCompletionStatus,
+displayMaterialButton,
+videoSectionClassName,
 handleSubmit
 }) => {
 
@@ -30,7 +33,7 @@ const resetAllStopSettings = () => {
   setRecordingCompletionStatus( true )
 }
 return (
-    <div 
+    <span 
       id={id}
       name={name}
       className={className}
@@ -47,8 +50,12 @@ return (
             videoNamePrefix={videoNamePrefix}
             videoName={videoName}
             videoModalMode={videoModalMode}
+            recordButtonText={recordButtonText}
+            displayMaterialButton={displayMaterialButton}
+            videoSectionClassName={videoSectionClassName}
+            setRecordingCompletionStatus={setRecordingCompletionStatus}
         />  
-    </div>      
+    </span>      
    );
 }
 

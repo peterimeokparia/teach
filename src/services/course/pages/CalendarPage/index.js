@@ -7,7 +7,7 @@ import {
 connect } from 'react-redux';
 
 import {
-eventEnum } from 'Services/course/Pages/CalendarPage/helpers';
+eventEnum, getCalendarColor } from 'Services/course/Pages/CalendarPage/helpers';
 
 import { 
 navigate } from '@reach/router';
@@ -20,11 +20,21 @@ addNewTimeLine,
 saveTimeLine } from 'Services/course/Actions/TimeLines'; 
 
 import { 
-addCalendarEvent,
-saveCalendarEvent,
-loadAllCalendarEvents } from 'Services/course/Actions/Calendar';
+addCalendar,
+saveCalendar,
+loadAllCalendars } from 'Services/course/Actions/Calendar';
+
+import { 
+addEvent,
+saveEvent,    
+loadAllEvents } from 'Services/course/Actions/Event';
+
+import { 
+loadCourses } from "Services/course/Actions/Courses";
 
 import {
+getCoursesByOperatorId,    
+getEventsByOperatorId,
 getPushNotificationUsersByOperatorId,
 getCalendarEventsByUserIdSelector,     
 getOperatorFromOperatorBusinessName, 
@@ -34,7 +44,11 @@ getTimeLinesByOperatorId } from 'Services/course/Selectors';
 
 import {
 studentsOption,
+getCalendarPageHeading,
 getTimeLineItemDetailsFromCalendarEvents } from 'Services/course/Pages/CalendarPage/helpers';
+
+import { 
+momentLocalizer } from "react-big-calendar";
 
 import FullCalendar from '@fullcalendar/react';
 import rrulePlugin from "@fullcalendar/rrule";
@@ -53,10 +67,6 @@ import "react-big-calendar-like-google/lib/css/react-big-calendar.css";
 import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/list/main.css";
 import './style.css';
-
-import { 
-momentLocalizer } from "react-big-calendar";
-
 moment.locale("en-GB");
 const localizer = momentLocalizer(moment);
 
@@ -64,13 +74,19 @@ const CalendarPage = ({
 operatorBusinessName,
 pushNotificationSubscribers,
 operator,
+addEvent,
+saveEvent,
+loadCourses,
+loadAllEvents,
 calendarEventType,
 calendar,
+calendarId,
 calendars,
+events,
 pushNotUsers,
-addCalendarEvent,
-saveCalendarEvent,
-loadAllCalendarEvents,
+addCalendar,
+saveCalendar,
+loadAllCalendars,
 loadSubscribedPushNotificationUsers,
 timeLines,
 users,
@@ -78,6 +94,7 @@ user,
 userId,
 addNewTimeLine,
 saveTimeLine,
+courses,
 }) => {
 
 const [isModalOpen, setModalOpen] = useState(false);
@@ -87,17 +104,60 @@ const [calendarSlotInfo, setCalendarSlotInfo ] = useState(undefined)
 const [ scheduledStudents, setScheduledStudents ] = useState([]);
 
 useEffect(( ) => {
-    loadAllCalendarEvents();
+    loadCourses();
+    loadAllCalendars();
+    loadAllEvents();
     loadSubscribedPushNotificationUsers();
-},[ loadAllCalendarEvents,loadSubscribedPushNotificationUsers ]);
+},[ loadAllCalendars, loadSubscribedPushNotificationUsers, loadAllEvents,loadCourses ]);
 
 if ( ! user?.userIsValidated || ! operator ){
     navigate(`/${operatorBusinessName}/login`);
 }
 
-const handleSelect = (slotInfo) => {
+let testEventData = null;
+if ( events?.length > 0  ) {
+    testEventData = events?.filter(evnt => evnt?.calendarEventType === calendarEventType && evnt?.calendarId === calendarId )?.map(eventData => (  testEventDataFunc( eventData )  ));
+}
 
-    let [start, end, startStr, endStr] = Object.entries(slotInfo)
+function testEventDataFunc( eventData ) {
+    let newObjectTest = null;
+
+    if ( ( eventData?.event?.recurringEvent === true ) ) {
+        newObjectTest = {
+            id: eventData?._id, 
+            title: eventData?.event?.title, 
+            allDay:  eventData?.event?.allDay,
+            start: eventData?.event?.start, 
+            end: eventData?.event?.end,
+                rrule: {
+                    freq: eventData?.event?.rrule?.freq,
+                    interval: eventData?.event?.rrule?.interval,
+                    dtstart: eventData?.event?.rrule?.dtstart,
+                    until: eventData?.event?.rrule?.until
+                },
+            userId: eventData?.event?.userId,
+            calendarId: eventData?.event?.calendarId,   
+            duration: 1,    
+        }
+    }
+    else {
+        newObjectTest = {
+            id: eventData?._id, 
+            title: eventData?.event?.title,
+            allDay:  eventData?.event?.allDay,
+            start: eventData?.event?.start, 
+            end: eventData?.event?.end,
+            duration:  1,
+            userId: eventData?.event?.userId,
+            calendarId: eventData?.event?.calendarId,  
+        }
+    }
+    return newObjectTest;
+}
+
+const handleSelect = ( slotInfo ) => {
+
+    const [ start, end, startStr, endStr ] =  Object.entries( slotInfo );
 
     switch ( calendarEventType ) {
         case eventEnum.NewEvent:
@@ -131,12 +191,11 @@ const handleEventClick = (info) => {
     navigate( `/${operatorBusinessName}/${calendarEventType}/calendar/${calendar?._id}/${user._id}/${info?.event?.id}`)
 }
 
-function addNewCalendarEvent(formData) {
+function addNewCalendarEvent( calendarEventData ) {
     setModalOpen(false);
     let testAdminUsers =  [ userId, '603d37814967c605df1bb450', '6039cdc8560b6e1314d7bccc' ]; // refactor
     let emailAddresses = Object.values(users).filter(user => testAdminUsers.includes(user?._id))?.map(user => user?.email);
-    let eventCount = (calendar?.calendarEvents?.length === undefined) ? 1 : (calendar?.calendarEvents?.length + 1);
-    saveEventData(calendar, formData?.event, eventCount, formData, emailAddresses, testAdminUsers, calendarEventType);
+    saveEventData(calendar, calendarEventData, emailAddresses, testAdminUsers, calendarEventType, operator?._id);
 };
 
 const closeModal = () => {
@@ -147,68 +206,57 @@ const openModal = () => {
     setModalOpen(true);
 };
 
-function saveEventData(calendar, event, eventCount, formData, emailAddresses, testAdminUsers, calendarEventType){
+function saveEventData(calendar, calendarEventData, emailAddresses, testAdminUsers, calendarEventType, operatorId){
   
+    let event = calendarEventData?.event, location = calendarEventData?.location, schedulingData = calendarEventData?.schedulingData;
+    let consultation = calendarEventData?.consultation;
+
     try {
-        let timeLineExists = timeLines?.find(timeline => timeline?.timeLineName === calendarEventType );
+    
+        if ( calendar  ) { 
+            
+            let addEventConfig = {
+                event: {
+                    calendarId: calendar?._id, 
+                    userId: user?._id,
+                    event: { ...event, color: calendar?.color },
+                    location,
+                    schedulingData,
+                    consultation,
+                    calendarEventType,
+                    operatorId,
+                    color: calendar?.color 
+                },
+                currentUser: user, 
+                pushNotificationUser: pushNotificationSubscribers?.filter(subscriber => testAdminUsers.includes( subscriber?.userId ) ),  
+                emailAddresses
+            }
 
-        alert(JSON.stringify(users))
-
-        let config = {
-            title: event?.title, 
-            frequency: ( event?.rrule ) ? event?.rrule?.freq : undefined,
-            duration: event?.duration, 
-            calendarEventType,
-            calendars,
-            eventId: `${userId}_${eventCount}`,  
-            calendarId: calendar?._id, 
-            isRecurringEvent: ( event?.rrule ) ? true : event?.recurringEvent,
-            users: users,
-            timeLines,
-            startTime: ( event?.rrule ) ? event?.rrule?.dtstart : event?.start,
-            endTime: ( event?.rrule ) ? event?.rrule?.until : event?.end,
-            initialDateStartTime: ( event?.rrule ) ? event?.rrule?.dtstart : event?.start,
-            initialDateEndTime: ( event?.rrule ) ? event?.rrule?.until : event?.end
-        }
-
-        let timeLine = getTimeLineItemDetailsFromCalendarEvents( config );
-
-        if ( calendar?.calendarEvents ) {            
-                saveCalendarEvent(
-                { ...calendar, calendarEvents: [...calendar?.calendarEvents, {...event, id:`${userId}_${eventCount}`, formData: { location: formData?.location, formData: formData?.formData } }] },
-                    event,
-                    user,
-                    pushNotificationSubscribers?.filter(subscriber => testAdminUsers.includes( subscriber?.userId ) ),
-                    emailAddresses
-                );
-                    if ( !timeLineExists ) {        
-                        addNewTimeLine( timeLine?.timeLineName, timeLine?.groups, timeLine?.items, operator?._id );
-                    } else {
-                        saveTimeLine( timeLine );
-                    }
+            addEvent( addEventConfig );
 
         } else {
-                addCalendarEvent(
-                {   userId,
-                    calendarEventType, 
-                    operatorId: operator?._id,
-                    calendarEvents: [ {
-                    id:`${userId}_${eventCount}`,
+
+            let color = getCalendarColor( calendars );
+            let calendarConfig = {
+                calendar: {
                     userId,
-                    calendarId: calendar?._id,
                     calendarEventType,
-                    formData: { location: formData?.location, formData: formData?.formData },
-                    ...event 
-                }] },
-                    user,
-                    pushNotificationSubscribers?.filter(subscriber => testAdminUsers?.includes( subscriber?.userId ) ),
-                    emailAddresses
-                );
-                if ( !timeLineExists ) {
-                    addNewTimeLine( timeLine?.timeLineName, timeLine?.groups, timeLine?.items, operator?._id );
-                } else {
-                    saveTimeLine( timeLine );
-                }
+                    operatorId,
+                    firstName: users?.find(usr => usr?._id === userId)?.firstname,
+                    color,
+                }, 
+                event: { ...event, color }, 
+                location, 
+                schedulingData, 
+                consultation, 
+                calendarEventType, 
+                operatorId, 
+                currentUser: user, 
+                pushNotificationUser: pushNotificationSubscribers?.filter(subscriber => testAdminUsers?.includes( subscriber?.userId ) ), 
+                emailAddresses
+            }
+
+            addCalendar( calendarConfig );
         }
     } catch (error) {
         console.log( error );    
@@ -220,7 +268,7 @@ function renderSwitch( param ) {
         case eventEnum.NewEvent:
             return <Scheduling
                         slotInfo={calendarSlotInfo}
-                        formData
+                        schedulingData
                         submitEventButtonText={"Add New Event"}
                         handleSubmit={addNewCalendarEvent} 
                     /> 
@@ -229,6 +277,7 @@ function renderSwitch( param ) {
                             <ConsultationForm 
                                 user={user}
                                 slotInfo={calendarSlotInfo}
+                                courses={courses}
                                 handleSubmit={addNewCalendarEvent}
                             /> 
                         </Modal>
@@ -241,7 +290,7 @@ function renderSwitch( param ) {
                             > 
                                 <Scheduling
                                     slotInfo={calendarSlotInfo}
-                                    formData={scheduledStudents}
+                                    schedulingData={scheduledStudents}
                                     submitEventButtonText={"Schedule Session"}
                                     handleSubmit={addNewCalendarEvent} 
                                 />  
@@ -256,7 +305,7 @@ function renderSwitch( param ) {
                             > 
                                 <Scheduling
                                     slotInfo={calendarSlotInfo}
-                                    formData={scheduledStudents}
+                                    schedulingData={scheduledStudents}
                                     submitEventButtonText={"Schedule Session"}
                                     handleSubmit={addNewCalendarEvent} 
                                 />  
@@ -279,16 +328,17 @@ function renderSwitch( param ) {
                             dayMaxEvents={true}
                             weekends={true}
                             select={handleSelect}
-                            events={calendar?.calendarEvents}
+                            events={ testEventData }
                             eventClick={handleEventClick}
                         />
-                        <FullCalendar defaultView="listWeek" plugins={[listWeek, dayGridPlugin, timeGridPlugin, interactionPlugin, rrulePlugin]} events={calendar?.calendarEvents} initialView='listWeek' />
+                        <FullCalendar defaultView="listWeek" plugins={[listWeek, dayGridPlugin, timeGridPlugin, interactionPlugin, rrulePlugin]} events={ testEventData } initialView='listWeek' />
                         </div>
     }
 }
 return (    
 <div>
-<h2>{`Hello ${user?.firstname}`}</h2>
+<h2>{ `Hello ${user?.firstname}` }</h2>
+<h2>{ getCalendarPageHeading( calendarEventType ) }</h2>
     {
         renderSwitch( component )
     }
@@ -297,12 +347,16 @@ return (
 )};
 
 const mapDispatch = {
-    addCalendarEvent,
-    saveCalendarEvent,
-    loadAllCalendarEvents,
+    addCalendar,
+    saveCalendar,
+    addEvent,
+    saveEvent,
+    loadAllCalendars,
+    loadAllEvents,
     loadSubscribedPushNotificationUsers,
     addNewTimeLine,
-    saveTimeLine
+    saveTimeLine,
+    loadCourses
 };
 
 const mapState = ( state, ownProps )  => ({
@@ -311,9 +365,11 @@ const mapState = ( state, ownProps )  => ({
     user: state?.users?.user,
     calendar: getCalendarEventsByUserIdSelector(state, ownProps),
     calendars: getCalendarsByOperatorId(state, ownProps),
+    events: getEventsByOperatorId(state, ownProps),
     pushNotUsers: state?.notifications?.pushNotificationSubscribers,
     pushNotificationSubscribers: getPushNotificationUsersByOperatorId(state, ownProps),
-    timeLines: getTimeLinesByOperatorId(state, ownProps)
+    timeLines: getTimeLinesByOperatorId(state, ownProps),
+    courses: getCoursesByOperatorId(state, ownProps),
 })
 
 export default connect(mapState, mapDispatch)(CalendarPage);

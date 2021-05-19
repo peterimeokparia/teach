@@ -30,7 +30,8 @@ export const editorContentType = {
   Explanation: "Explanation", 
   MultipleChoice: "MultipleChoice",
   Question: "Question",
-  VideoPlayer: "VideoPlayer"  
+  VideoPlayer: "VideoPlayer",
+  Comments: "Comments"  
 }
 
 export const points = {
@@ -76,6 +77,8 @@ export const elementMeta = {
   pointsPerQuestion: "pointsPerQuestion",
   pointsReceived: "pointsReceived",
   totalPointsReceived: "totalPointsReceived",
+  explanationAnswerCollection: "explanationAnswerCollection",
+  commentsCollection: 'commentsCollection'
 };
 
 export const inputType = {
@@ -160,24 +163,26 @@ export function contentType ( elementType ){
       isQuestionContentType: (elementType === editorContentType.Question),
   }
 }
-
+// askHomeWorkQuestionPlaceHolder, homeWorkAnswerPlaceHolder
 export function markDownEditorFieldCollection(config){
   return  { 
     questionNumber: config?.markDownEditors?.length + 1,     
     id: config?.markDownEditors?.length + 1,  
     name:`markDownEditor${(config?.markDownEditors?.length + 1).toString()}`,  
     type: config?.inputFieldOptions?.type,  
-    placeHolderText: config?.inputFieldOptions?.placeHolder,
+    placeHolderText: config?.inputFieldOptions?.askHomeWorkQuestionPlaceHolder,
     questionCreatedOnDateTime: Date.now(),
-    markDownContent: JSON.stringify(config?.placeHolder),
+    markDownContent: null, //JSON.stringify(config?.placeHolder),
     value: "",
     multipleChoiceQuestionAnswerKey: "",
     multipleChoiceQuestionStudentAnswer: "",
     multipleChoiceQuestionStudentAnswerInputValue: "",
     multipleChoiceQuestionAnswerKeyInputValue: "",
-    multipleChoiceQuestionExplanationAnswer: JSON.stringify(config?.placeHolder),
-    explanationQuestionAnswerKey: JSON.stringify(config?.placeHolder),
-    explanationQuestionAnswer: JSON.stringify(config?.placeHolder),
+    multipleChoiceQuestionExplanationAnswer: null,//JSON.stringify(config?.placeHolder),
+    explanationQuestionAnswerKey: JSON.stringify(config?.homeWorkAnswerPlaceHolder),
+    explanationQuestionAnswer: JSON.stringify(config?.homeWorkAnswerPlaceHolder),
+    explanationAnswerCollection: [],//config.answerMarkDownEditors,
+    commentsCollection: config?.commentsMarkDownEditors,
     markDownEditorFormInputFields: [],
     pointsPerQuestion: config?.pointsDistributionType,
     questionPoints: config?.questionPoints,
@@ -185,6 +190,106 @@ export function markDownEditorFieldCollection(config){
     totalPointsReceived: { userId: "", totalPointsReceived: 0 },
     videoUrl: ""
   }   
+}
+
+export function onlineMarkDownEditorFieldCollection(config){
+  return  {   
+    type: config?.inputFieldOptions?.type,  
+    placeHolderText: config?.inputFieldOptions?.askHomeWorkQuestionPlaceHolder,
+    questionCreatedOnDateTime: Date.now(),
+    markDownContent: JSON.stringify(config?.placeHolder),
+    courseId: config?.courseId,
+    onlineQuestionId: config?.onlineQuestionId,
+    userId: config?.userId,
+    files: [],
+    questionPushNotificationSubscribers: [ config?.userId ],
+    questionEmailNotificationSubscribers: [ config?.userId ],
+    savedQuestion: [ config?.userId ],
+    questionDifficultyLevel: config?.questionDifficultyLevel,
+    questionCreatedBy: config?.questionCreatedBy,
+    operatorId: config?.operatorId,
+    videoUrl: config?.videoUrl
+  }   
+}
+
+export function manageEditorsFieldCollection( config ){
+  return {
+    onlineQuestionId: config?.onlineQuestionId,
+    type: config?.type,
+    answerDateTime: Date.now(),
+    //markDownContent: null,
+    markDownContent: JSON.stringify(config?.placeHolder),
+    courseId: config?.courseId,    
+    userId: config?.userId,
+    files: [],
+    answerBy: config?.currentUser?.firstname,
+    operatorId: config?.operatorId,
+    videoUrl: ""
+  }
+}
+
+// onlineQuestionId: { 
+//   type: String, 
+//   required: false,
+// },
+// type: { 
+//   type: String, 
+//   required: false,
+// },
+// placeHolderText: { 
+//   type: String, 
+//   required: false,
+// },
+// answerDateTime: { 
+//   type: Date, 
+//   required: false,
+//   default: Date.now  
+// },
+// markDownContent: { 
+//   type: String, 
+//   required: false,
+// },
+// courseId: { 
+//   type: String, 
+//   required: false,
+// },
+// userId: { 
+//   type: String, 
+//   required: false,
+// },
+// files: {
+//   type: Array,
+//   required: false
+// },
+// answerBy: {
+//   type: String, 
+//   required: false  
+// },
+// operatorId: { 
+//   type: String, 
+//   required: false  
+// },
+// videoUrl: { 
+//   type: String, 
+//   required: false  
+// }
+
+export function manageCommentsFieldCollection( config ){
+  return {
+    onlineQuestionId: config?.onlineQuestionId,
+    onlineQuestionAnswerId: config?.onlineQuestionAnswerId,
+    commentParentId: config?.commentParentId,
+    childComments: [],
+    commentDateTime: Date.now(),
+    commentBy: config?.currentUser?.firstname,
+    markDownContent: JSON.stringify(config?.placeHolder),
+    courseId: config?.courseId,
+    userId: config?.userId,   
+    files: [],
+    operatorId: config?.operatorId,
+    videoUrl: "",
+    color: config?.color
+  }
 }
 
 export function setFieldCollection(config, setMultipleChoiceValue, setMultipleChoiceLabelValue){
@@ -209,6 +314,19 @@ export function setFieldCollection(config, setMultipleChoiceValue, setMultipleCh
     explanationAnswerKey: config?.placeHolder,
     explanationAnswerValue: JSON.stringify( config?.placeHolder )
   }   
+}
+
+export function explanationAnswerMarkDownEditorCollection( config ){
+  return {
+    questionNumber: config?.questionNumber,     
+    id: config?.answerMarkDownEditors?.length + 1,  
+    name:`answerMarkDownEditor${(config?.answerMarkDownEditors?.length + 1).toString()}`,  
+    placeHolderText: config?.homeWorkAnswerPlaceHolder,
+    questionAnsweredOnDateTime: Date.now(),
+    questionAnsweredBy: config?.currentUser?.firstname,
+    markDownContent: JSON.stringify(config?.homeWorkAnswerPlaceHolder),
+    videoUrl: ""
+  }
 }
 
 function updateMarkDownEditorOnEventNotification( fields, markDownEditorFieldName,  updateMarkDownEditor) {

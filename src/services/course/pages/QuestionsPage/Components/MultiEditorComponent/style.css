@@ -123,3 +123,40 @@
     -webkit-transition-duration: 0.5s;
     transition-duration: 0.5s;
 }
+.answer-round-button-1 { 
+    background: orange;
+    /* box-shadow: 10px 10px black; */
+  }
+  .answer-round-button-2 { 
+    background: yellowgreen
+  }
+  .answer-round-button-3 { 
+    background: red
+ }
+ .answer-round-button-1, .answer-round-button-2, .answer-round-button-3 {
+   align-self: flex-end; 
+   width:70px;
+   height:60px;
+   line-height: 60px;
+   border: 2px solid #f5f5f5;
+   border-radius: 50%; 
+   margin-top: 30px;
+   margin-right: 60px;
+   transition: transform .7s ease-in-out;
+   box-shadow: 10px 10px black;
+}
+.answer-round-button-1:hover
+ {
+  background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+}
+.answer-round-button-2:hover
+ {
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+}
+.answer-round-button-3:hover
+ {
+  background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+}

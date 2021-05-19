@@ -4,16 +4,11 @@ import questionModel from '../Model/questionModel.js';
 
 import {
 getPostData,    
-saveUpdatedData   
-} from '../Helpers/storageHelper.js';
+saveUpdatedData } from '../Helpers/storageHelper.js';
 
- 
-const questionRoute = express.Router();
-
-
+ const questionRoute = express.Router();
 
  questionRoute.get('/', (req, res) => {
- 
     questionModel.find({ })
         .then(data => {
             console.log('QuestionsNoID QuestionsNoID Comprende?', data)
@@ -25,7 +20,6 @@ const questionRoute = express.Router();
 
 
  questionRoute.get('/test', (req, res) => {
- 
     questionModel.find({ _id: req.query.questionId })
         .then(data => {
             console.log('testQuestions Questions', data)
@@ -37,7 +31,6 @@ const questionRoute = express.Router();
 
  
  questionRoute.get('/videos', (req, res) => {
-
    questionModel.find({ _id: req.query._id })
        .then(data => {
            console.log('Questions Questions', data)
@@ -49,7 +42,6 @@ const questionRoute = express.Router();
 
  
  questionRoute.get('/files', (req, res) => {
- 
    questionModel.find({ _id: req.query._id })
        .then(data => {
            console.log('Questions Questions', data)
@@ -61,7 +53,7 @@ const questionRoute = express.Router();
 
 
  questionRoute.post('/', (req, res) => {
- 
+
        let questionData = getPostData( req );
  
        let questions = new questionModel(questionData);
@@ -78,7 +70,6 @@ const questionRoute = express.Router();
 
 
  questionRoute.put('/:questionId', (req, res) => {
- 
        saveUpdatedData(req, questionModel, req.params.questionId)
        .then( data => {
          console.log(data);
@@ -95,7 +86,6 @@ const questionRoute = express.Router();
 
 
  questionRoute.delete('/:questionId', (req, res) => {
-  
     questionModel.remove({ _id: req.params.questionId }, ( error, result ) => {
          
          if ( error ) {
@@ -107,7 +97,5 @@ const questionRoute = express.Router();
     });
 
 });
-
-
 
 export default questionRoute;

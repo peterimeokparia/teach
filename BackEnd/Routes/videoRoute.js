@@ -30,30 +30,28 @@ const videoRoute = express.Router();
 });
 
 
-
-
 const uploadVideo = multer({ storage });
 
  videoRoute.post('/', uploadVideo.single('video'), ( request, response, next ) => {
+   
+   let responseWithDataToSend, videoConfigData;
 
    if ( ! request?.file ) { 
 
       return next( new Error( 'pls upload a file' ) );
-
+      
    } else {
 
-     console.log('uploading');
-
      let videoConfig = videoObject( backeEndServerRoute, videoMeta, videoFileName );
- 
       getContent( videoConfig.url )
        .then( resp  =>  {
-              sendResponseToStorage( resp, videoMeta, videoConfig );      
-        })
-          .catch( err => { console.log(err)}) 
+            sendResponseToStorage( resp, videoMeta, videoConfig ); 
+            responseWithDataToSend =  resp, videoConfigData = videoConfig;    
+       })
+       .catch( err => { console.log(err)}) 
    }  
-   return response.end().send({data: resp.data[0], videoUrl: videoConfig.videoUrl })
+   return response.send({data: responseWithDataToSend?.data[0], videoUrl: videoConfigData?.videoUrl })
+   // return response.end().send({data: responseWithDataToSend?.data[0], videoUrl: videoConfigData?.videoUrl })
 });
-
 
 export default videoRoute;

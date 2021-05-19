@@ -11,15 +11,36 @@ const calendarSchema = new Schema ({
         type: String, 
         required: true  
     },
-    calendarEvents: {
-        type: Array,
-        required: true
-    },
     operatorId: { 
         type: String, 
         required: true  
+    },
+    firstName: {
+        type: String, 
+        required: false  
+    },
+    color: {
+        type: String,
+        required: false
+    },
+    timeLineGroup: {
+        id: {
+            type: String, 
+            required: false  
+        },
+        title: {
+            type: String, 
+            required: false  
+        },
+        rightTitle: {
+            type: String, 
+            required: false  
+        },
+        color: {
+            type: String, 
+            required: false  
+        },
     }
 });
-
 
 export default calendarSchema;

@@ -22,13 +22,12 @@ return (
               { collection.map(item => 
                 (
                  <Match 
-                    key={item.id}
+                    key={item?._id}
                     path={ getPath( item )}
                   > 
                   {({ match } ) => {             
                     onMatchListItem( match, item ); 
-                    return <li className={getClassName(item)} >
-                    {/* return <li className={( isEditMode & selectedItemId !== item?.id ) ? ( isRecurringEvent & selectedItemId === item?.id ) ? liClassName : liClassNameEditView : liClassName } > */}
+                    return <li className={getClassName( item )} >
                     { children( item ) }
                     </li>
                     }}

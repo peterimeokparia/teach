@@ -9,6 +9,7 @@ import meetings from './Meetings';
 import emails from './Emails';
 import sessions from './Sessions';
 import calendar from './Calendar';
+import events from './Event';
 import classrooms from './ClassRooms';
 import operators from './Operators';
 import grades from './Grades';
@@ -18,6 +19,13 @@ import exams from './Exams';
 import questions from './Questions';
 import assignments from './Assignments';
 import timeLines from './TimeLines';
+import onlineQuestions from './OnlineQuestions';
+import onlineAnswers from './OnlineAnswers';
+import onlineComments from './OnlineComments';
+import hasRecordingStarted from './Video';
+import onlineQuestionsEmailSubscriptions from './OnlineQuestionsEmailSubscription';
+import onlineQuestionsPushSubscriptions from './OnlineQuestionsPushSubscription';
+import failedNotifications from './FailedNotifications'; 
 
 let reducers = { 
 courses, 
@@ -29,7 +37,8 @@ purchases,
 meetings, 
 emails, 
 sessions, 
-calendar, 
+calendar,
+events, 
 classrooms, 
 operators, 
 grades, 
@@ -38,7 +47,14 @@ notifications,
 exams,
 questions,
 assignments,
-timeLines
+timeLines,
+onlineQuestions,
+onlineAnswers,
+onlineComments,
+hasRecordingStarted,
+onlineQuestionsEmailSubscriptions,
+onlineQuestionsPushSubscriptions,
+failedNotifications
 };
 
 export default combineReducers( reducers );

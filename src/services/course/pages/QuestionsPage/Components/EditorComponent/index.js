@@ -35,6 +35,7 @@ className,
 onChange,
 readOnly,
 upload_url,
+body_placeholder,
 upload_handler }) => {
 return (
        <div 
@@ -45,6 +46,7 @@ return (
         <Dante
             content= {content} 
             onChange={onChange} 
+            body_placeholder={'Party party party'}
             widgets={[
               ImageBlockConfig({
                 options: {
@@ -53,7 +55,8 @@ return (
                 },
               }),
            ]}
-           //read_only={readOnly} 
+           read_only={false} 
+          //  read_only={readOnly} 
          />  
        </div>      
    );

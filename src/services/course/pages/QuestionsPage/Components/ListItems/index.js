@@ -44,17 +44,17 @@ const ListItems = ({config}) =>
         </div>    
       </div>
       <div>
-          <EditorComponent
+          {/* <EditorComponent
               className={"answerDisplay"}
               key={element?.id}
               id={element?.id}
               name={element?.name}
               onChange={(editor) => config?.handleChange(editor, element?.id, editorContentType.Question, element )}
-              content={JSON.parse( element?.markDownContent ) }
+              content={JSON.parse( element?.markDownContent )}//{JSON.parse( element?.markDownContent ) }
               upload_url={config.upload_url}
               upload_handler={( file, imageBlock ) => config?.uploadImageUrl( file, imageBlock, element?.id )}
               readOnly={config.previewMode? true : false }
-          /> 
+          />  */}
       </div>
       {( config.previewMode )    ?  <div>
             < LessonPlanIframeComponent
@@ -89,14 +89,14 @@ const ListItems = ({config}) =>
         {(  !config.previewMode   ) &&  
           <div>
               { "Explanation"}
-              <EditorComponent
+              {/* <EditorComponent
                   key={element?.id}
                   id={element?.id}
                   name={element?.name}
                   onChange={(editor) => config?.handleExplanationContentMarkDownChange(editor, element?.id, editorContentType?.Explanation)}
                   content= { JSON.parse( element?.multipleChoiceQuestionExplanationAnswer ) }
                   readOnly={config?.previewMode? true : false }
-              /> 
+              />  */}
           </div>
         }
        </div>
@@ -134,21 +134,21 @@ const ListItems = ({config}) =>
           ( element.explanationQuestionAnswerKey ) &&
               <div>
                 { "Explanation Question Your Answer" }
-                  <EditorComponent
+                  {/* <EditorComponent
                       key={element?.id}
                       id={element?.id}
                       name={element?.name}
                       content= {JSON.parse( element?.explanationQuestionAnswer )}
                       read_only={ true } 
-                    /> 
+                    />  */}
                   { "Explanation Question Correct Answer" }
-                    <EditorComponent
+                    {/* <EditorComponent
                         key={element?.id}
                         id={element?.id}
                         name={element?.name}
                         content= { JSON.parse( element?.explanationQuestionAnswerKey ) }
                         read_only={ true  } 
-                    /> 
+                    />  */}
               </div>
         }
              </div>

@@ -5,14 +5,18 @@ useEffect,
 useRef } from 'react';
 
 import {
+courseOption,     
+newCalendarEventData,
 transformDateTime } from 'Services/course/Pages/CalendarPage/helpers';
 
+import Select from 'react-select';
 import './style.css';
 
 const ConsultationForm = ({
 handleSubmit,    
 saveInProgress,
 onSaveError,
+courses,
 slotInfo }) => {
     
 const [ firstName, setFirstName ] = useState('');
@@ -20,6 +24,7 @@ const [ lastName, setLastName ] = useState('');
 const [ studentsName, setStudentsName ] = useState('');
 const [ email, setEmail ] = useState('');
 const [ phone, setPhone ] = useState(''); 
+const [ coursesInterestedIn, setCoursesInterestedIn ] = useState([]);
 const inputRef = useRef();
 
 useEffect (() => {
@@ -45,9 +50,9 @@ const onSubmit = (e) => {
 const submitForm = () => {
 
 const [ start, end, startStr, endStr, allDay ] = Object.entries(slotInfo);
+const [ calendarViewType ] = Object.entries(slotInfo?.view);
 
-let event = {}, dateTimeString = transformDateTime( startStr, endStr );    
-
+let event = {}, dateTimeString = transformDateTime( start[1], end[1], calendarViewType, allDay[1] );
 event = {
     title: `Consultation with ${firstName} ${lastName}`,
     recurringEvent:false,
@@ -57,7 +62,7 @@ event = {
     duration: ( new Date( dateTimeString?.resEndStr ) - new Date( dateTimeString?.resStartStr ) )
 };
 
-handleSubmit({event, consultation:{ firstName, lastName, studentsName, email, phone }});  
+handleSubmit( newCalendarEventData(event, undefined, undefined, { firstName, lastName, studentsName, email, phone, coursesInterestedIn } ) );  
 }
 
 return (
@@ -114,7 +119,17 @@ return (
                     value={studentsName} 
                     onChange={(e) => setStudentsName(e.target.value)}
                 />
-            </label>               
+            </label>  
+            <label>
+              Select Courses you are interested in:
+              <Select
+                    placeholder={`Add Courses`}
+                    isMulti
+                    value={coursesInterestedIn}
+                    onChange={setCoursesInterestedIn}
+                    options={courseOption( courses )} 
+                />    
+            </label>             
                 
             { onSaveError && (
                 <div className="saveError-message">

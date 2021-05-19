@@ -1,6 +1,13 @@
 import React from 'react';
 
-const ReactIframe = ({  className, name, source, width, height, allow, scrolling, frameBorder }) => {
+const ReactIframe = ({  
+    className, 
+    name, 
+    source, 
+    width, 
+    height, 
+    scrolling, 
+    frameBorder }) => {
     return (
         <iframe
             title={name}

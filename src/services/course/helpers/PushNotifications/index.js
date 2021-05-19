@@ -1,3 +1,4 @@
+
 const vapidKeys = {
     publicVapidKey: process.env.REACT_APP_PUBLIC_VAPID_KEY,
     privateVapidKey: process.env.PRIVATE_VAPID_KEY
@@ -10,7 +11,9 @@ export function serviceWorkerSupported(){
 // Register SW, Register Push, Send Notification
 export async function send( ) {
   console.log('Registering service worker...');
-  const register = await navigator.serviceWorker.register('../worker.js', { scope: '/' } );
+//   const register = await navigator.serviceWorker.register('../worker.js', { scope: '/' } );
+// const register = await navigator.serviceWorker.register('/../../worker.js', { scope: '/' } );
+const register = await navigator.serviceWorker.register('/../../worker.js', { scope: '/' } );
   console.log('Service worker registered...');
     // Register Push
   console.log('Registering Push...');

@@ -89,8 +89,7 @@ return (
                </div> 
                  <div className="lesson"> 
                         <div>
-                            {
-                            ( config.dropDownDisplayOption === "Courses" || 
+                            {( config.dropDownDisplayOption === "Courses" || 
                                     config.dropDownDisplayOption === "" ) &&  
                                     <CourseLessonDropDownComponent
                                         className="add-lesson-button"

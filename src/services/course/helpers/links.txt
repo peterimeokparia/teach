@@ -82,6 +82,7 @@ https://michelson.github.io/dante2/#/src-index
 https://github.com/michelson/dante2/issues/150 onchange handler issue
 https://github.com/zcmgyu/dante2-editor-demo
 https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_image_grid_responsive
+https://michelson.github.io/dante2/#/src-tooltips
 
 Saving uploaded files:
 https://github.com/michelson/dante2/issues/175
@@ -223,3 +224,51 @@ https://getbootstrap.com/docs/4.0/layout/grid/#grid-options
 MomentJs
 ----------
 https://momentjscom.readthedocs.io/en/latest/moment/03-manipulating/01-add/
+https://css-tricks.com/localizing-times-in-javascript/
+https://momentjs.com/docs/#/displaying/
+    
+Js
+----
+https://stackoverflow.com/questions/43011742/how-to-omit-specific-properties-from-an-object-in-javascript/43011802
+https://stackoverflow.com/questions/43011742/how-to-omit-specific-properties-from-an-object-in-javascript/43011802
+https://www.javascripttutorial.net/javascript-array-splice/
+
+DateTime
+---------
+https://stackoverflow.com/questions/85116/display-date-time-in-users-locale-format-and-time-offset
+
+Buttons
+--------
+https://stackoverflow.com/questions/38320878/circle-button-css
+
+Webrtc
+---------
+https://ourcodeworld.com/articles/read/671/how-to-record-a-video-with-audio-in-the-browser-with-javascript-webrtc
+https://stackoverflow.com/questions/41303012/updating-source-url-on-html5-video-with-react
+https://stackoverflow.com/questions/57320960/correct-handling-of-react-hooks-for-streaming-video-camera-to-html-video-element
+https://stackoverflow.com/questions/41739837/all-mime-types-supported-by-mediarecorder-in-firefox-and-chrome
+https://github.com/w3c/mediacapture-record/issues/194
+https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder/isTypeSupported
+
+Styled-components
+-------------------
+https://css-tricks.com/hamburger-menu-with-a-side-of-react-hooks-and-styled-components/
+https://www.w3schools.com/howto/howto_js_collapsible.asp
+https://stackoverflow.com/questions/14446511/most-efficient-method-to-groupby-on-an-array-of-objects
+
+School Listings - Us data
+---------------------------
+https://code.org/learn/find-school/json
+https://api.data.gov/docs/ed/
+https://opendata.stackexchange.com/questions/786/is-there-an-open-database-of-elementary-middle-and-high-schools-in-the-united
+https://usedgov.github.io/
+https://nces.ed.gov/surveys/pss/
+https://nces.ed.gov/surveys/pss/tables1718.asp
+https://nces.ed.gov/ccd/pubschuniv.asp
+http://eddataexpress.ed.gov/state-tables-main.cfm
+https://opendata.stackexchange.com/questions/786/is-there-an-open-database-of-elementary-middle-and-high-schools-in-the-united
+
+Redux Middleware
+-------------------
+https://stackoverflow.com/questions/51186205/how-to-dispatch-actions-from-redux-middleware-in-correct-order
+

@@ -20,6 +20,9 @@ export const UPDATE_PUSH_NOTIFICATION_USER_ERROR = "UPDATE PUSH NOTIFICATION USE
 export const SEND_PUSH_NOTIFICATION_MESSAGE_BEGIN = "SEND PUSH NOTIFICATION MESSAGE BEGIN";
 export const SEND_PUSH_NOTIFICATION_MESSAGE_SUCCESS = "SEND PUSH NOTIFICATION MESSAGE SUCCESS";
 export const SEND_PUSH_NOTIFICATION_MESSAGE_ERROR = "SEND PUSH NOTIFICATION MESSAGE ERROR";
+export const RETRY_PUSH_NOTIFICATION_MESSAGE_BEGIN = "RETRY PUSH NOTIFICATION MESSAGE BEGIN";
+export const RETRY_PUSH_NOTIFICATION_MESSAGE_SUCCESS = "RETRY PUSH NOTIFICATION MESSAGE SUCCESS";  
+export const RETRY_PUSH_NOTIFICATION_MESSAGE_ERROR = "RETRY PUSH NOTIFICATION MESSAGE ERROR";
 export const SELECTED_PUSH_NOTIFICATION_SUBSCRIBERS = "SELECTED PUSH NOTIFICATION SUBSCRIBERS";
 export const DELETE_PUSH_NOTIFICATION_USER_BEGIN = "DELETE PUSH NOTIFICATION USER BEGIN";
 export const DELETE_PUSH_NOTIFICATION_USER_SUCCESS = "DELETE PUSH NOTIFICATION USER SUCCESS";
@@ -81,13 +84,35 @@ export const deletePushNotificationUser = pushNotificationUser => {
 }
 
 export const sendPushNotificationMessage = ( users, message ) => {
+    alert( 'sendPushNotificationMessage' )
     return dispatch => {
         dispatch({ type: SEND_PUSH_NOTIFICATION_MESSAGE_BEGIN })
-        users.forEach(user => {
+        return users.forEach(user => {
             return update( { _id: user?._id,  user: user, message: message,  messages: user?.messages }, `/notifications/sendPushNotifications/user/` )
              .then( status => {
                 dispatch({ type: SEND_PUSH_NOTIFICATION_MESSAGE_SUCCESS, payload: status });
+                return status;
             }).catch( error => {dispatch({ type: SEND_PUSH_NOTIFICATION_MESSAGE_ERROR , error })})  
+        })
+    }
+}
+
+export const retryPushNotificationMessage = ( users, message, failedNotification ) => {
+    alert( 'retryPushNotificationMessage' )
+    return dispatch => {
+        dispatch({ type: RETRY_PUSH_NOTIFICATION_MESSAGE_BEGIN })
+        return users.forEach(user => {
+            return update( { _id: user?._id,  user: user, message: message,  messages: user?.messages, failedNotification }, `/notifications/retryPushNotifications/user/` )
+             .then( status => {
+
+                alert( 'retryPushNotificationMessage success' )
+                dispatch({ type: RETRY_PUSH_NOTIFICATION_MESSAGE_SUCCESS, payload: status });
+                return status;
+            }).catch( error => { 
+                alert( 'retryPushNotificationMessage error' )
+
+                dispatch({ type: RETRY_PUSH_NOTIFICATION_MESSAGE_ERROR , error })}
+            )  
         })
     }
 }

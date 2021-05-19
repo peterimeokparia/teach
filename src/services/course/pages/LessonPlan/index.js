@@ -239,6 +239,7 @@ currentMeetings }) => {
                                   resetAllStartSettings={ resetAllStartSettings }  
                                   resetAllStopSettings={ resetAllStopSettings }   
                                   setVideoModalMode={stage => setVideoModalMode(stage) }
+                                  videoModalModeOn={videoModalModeOn}
                                   objectId={lesson?._id} 
                                   videoMetaData={lesson}
                                   videoMetaDataExternalId={"courseId"}

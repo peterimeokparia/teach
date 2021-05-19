@@ -11,8 +11,11 @@ import {
 Link } from '@reach/router';
 
 import {
-loadAllCalendarEvents,     
-saveCalendarEvent } from 'Services/course/Actions/Calendar';
+loadAllCalendars } from 'Services/course/Actions/Calendar';
+
+import {
+loadAllEvents,
+saveEvent } from 'Services/course/Actions/Event';
 
 import {
 style } from 'Services/course/Pages/CalendarPage/helpers';
@@ -22,7 +25,8 @@ loadSubscribedPushNotificationUsers } from 'Services/course/Actions/Notification
 
 import {
 getUsersByOperatorId,
-getOperatorFromOperatorBusinessName,    
+getOperatorFromOperatorBusinessName,
+getEventsByOperatorId,    
 getCalendarEventsByUserIdSelector,
 getPushNotificationUsersByOperatorId } from 'Services/course/Selectors';
 
@@ -42,14 +46,16 @@ currentUser,
 user,
 currentUsers,
 calendar,
-saveCalendarEvent,
+events,
 pushNotificationSubscribers,
 selectedCalendarEventId,
 calendarEventType,
 calendarId,
 eventId,
 userId,
-loadAllCalendarEvents,
+loadAllCalendars,
+loadAllEvents,
+saveEvent,
 loadSubscribedPushNotificationUsers }) => {
 
 const [isRecurringEvent, setIsRecurringEvent] = useState(false);
@@ -59,10 +65,10 @@ const [ShowAllCalendarEvents, setShowAllCalendarEvents] = useState(false);
 let liClassName = style.eventListBody ,  liClassNameEditView = "";
 
 useEffect(( ) => {
-    loadAllCalendarEvents();
+    loadAllEvents();
+    loadAllCalendars();
     loadSubscribedPushNotificationUsers();   
-
-}, [ loadAllCalendarEvents,loadSubscribedPushNotificationUsers ]);
+}, [ loadAllCalendars,loadSubscribedPushNotificationUsers ]);
 
 if ( isEditMode ) {
     liClassName =  style.eventListBodyEdit;
@@ -77,26 +83,58 @@ if ( isRecurringEvent ) {
 function onMatchListItem( match, listItem ) {
 }
 
-function updatedCalendarEvent(calendarEvents, selectedEvent, updatedEvent) {
-    let localCalendarEvents = calendarEvents;
-    let eventToUpdate = localCalendarEvents?.find(event => event?.id === selectedEvent?.id);
-    eventToUpdate['title'] =  updatedEvent?.title;
-    eventToUpdate['start'] = updatedEvent?.start;
-    eventToUpdate['end'] = updatedEvent?.end;
-    eventToUpdate['duration'] = updatedEvent?.duration;
-    eventToUpdate['formData']['location'] = updatedEvent?.location;
-    eventToUpdate['formData']['formData'] = updatedEvent?.scheduledStudents;
+function updatedCalendarEvent( updatedEvent, selectedEvent, events, selectedCalendarEventId ) {
+    
+    let currentEvent = events?.find(evnt => evnt?._id === selectedCalendarEventId),  updatedCalendarEvent = {};
+ 
+    if ( updatedEvent?.recurringEvent ) {
 
-    if ( eventToUpdate?.rrule ) {
-        eventToUpdate['rrule']['dtstart'] = updatedEvent?.start;
-        eventToUpdate['rrule']['until'] = updatedEvent?.endDate;
-        eventToUpdate['rrule']['weekDays'] = updatedEvent?.weekDays;
-        eventToUpdate['rrule']['freq'] = updatedEvent?.frequency;
-        eventToUpdate['rrule']['interval'] = updatedEvent?.interval;
+        const { allDay, ...updatedExistingEvent } = currentEvent;
+        
+        updatedCalendarEvent = {
+            ...updatedExistingEvent,
+            event: {
+                title: updatedEvent?.title,
+                duration: updatedEvent?.duration,
+                recurringEvent: updatedEvent?.recurringEvent,
+                start: updatedEvent?.start, 
+                end: updatedEvent?.end,
+                rrule: {
+                    dtstart: updatedEvent?.start,
+                    until: updatedEvent?.endDate,
+                    byweekday: updatedEvent?.weekDays,
+                    freq: updatedEvent?.frequency,
+                    interval: updatedEvent?.interval,
+                }
+            },
+            location: updatedEvent?.location,
+            schedulingData: updatedEvent?.schedulingData
+        };
+
+    } else {
+
+        updatedCalendarEvent = { 
+            ...currentEvent,
+            event: {
+                title: updatedEvent?.title,
+                duration: updatedEvent?.duration,
+                allDay: updatedEvent?.allDay,
+                recurringEvent: updatedEvent?.recurringEvent,
+                start: updatedEvent?.start, 
+                end: updatedEvent?.end,
+                rrule: {
+                    dtstart: currentEvent?.event?.rrule?.dtstart,
+                    until: currentEvent?.event?.rrule?.until,
+                    byweekday: currentEvent?.event?.rrule?.byweekday,
+                    freq: currentEvent?.event?.rrule?.freq,
+                    interval: currentEvent?.event?.rrule?.interval,
+                }
+            },
+            location: updatedEvent?.location,
+            schedulingData: updatedEvent?.schedulingData
+        };
     }
-
-    localCalendarEvents[selectedEvent?.id] = eventToUpdate;
-    return localCalendarEvents;
+    return updatedCalendarEvent;
 }
 
 let testAdminUsers =  [ calendar?.userId, '603d37814967c605df1bb450', '6039cdc8560b6e1314d7bccc' ];
@@ -107,8 +145,14 @@ function showAllCalendarEvents () {
 }
 
 function getClassName(item) {
-    return ( isEditMode & selectedItemId !== item?.id ) ? ( isRecurringEvent & selectedItemId === item?.id ) ? liClassName : liClassNameEditView : liClassName 
+    return ( isEditMode & selectedItemId !== item?._id ) ? ( isRecurringEvent & selectedItemId === item?._id ) ? liClassName : liClassNameEditView : liClassName 
 }
+
+function getEventsForSelectedUser() {
+    return events?.filter(evnt => evnt?.userId === userId )
+}
+
+let currentEvents = getEventsForSelectedUser();
 
 return   ( 
     <>   
@@ -117,13 +161,13 @@ return   (
        <div className="component-list-body">   
         {(calendar) && <EventListItems
                             getClassName={getClassName}
-                            collection={ShowAllCalendarEvents ? calendar?.calendarEvents : ( selectedCalendarEventId ) ? calendar?.calendarEvents?.filter(item => item?.id === selectedCalendarEventId) : calendar?.calendarEvents }
+                            collection={ ShowAllCalendarEvents ? currentEvents : ( selectedCalendarEventId ) ? events?.filter(evnt => evnt?._id === selectedCalendarEventId) : currentEvents }
                             selectedCalendarEventId={selectedCalendarEventId}
                             onMatchListItem={onMatchListItem}
                             path={"event"}
                             ulClassName={"ComponentCourseListItem"}
                         >
-                        {( selectedEvent ) => (        
+                        {( selectedEvent ) => (            
                         < EditCalendarEvents
                             currentUsers={currentUsers}
                             calendarEventType={calendarEventType}
@@ -137,28 +181,35 @@ return   (
                             currentUser={currentUser}
                             pushNotificationSubscribers={pushNotificationSubscribers}
                             className="lesson-item"
-                            onSubmit={(updatedEvent) => saveCalendarEvent({
-                                ...calendar, 
-                                calendarEvents: [...updatedCalendarEvent(calendar?.calendarEvents, selectedEvent,  updatedEvent)]
-                            }, 
-                            selectedEvent,
-                            currentUser,
-                            pushNotificationSubscribers,
-                            emailAddresses )}
+                            onSubmit={( updatedEvent ) => saveEvent({
+                                ...updatedCalendarEvent( updatedEvent, selectedEvent, events, selectedCalendarEventId )
+                            },
+                                currentUser,
+                                pushNotificationSubscribers,
+                                emailAddresses
+                            )}
                         >
                         { (edit, remove, removeAll ) => (
                         <div className=""> 
                         <div className="event-list-items">
                             <div className="">
                             <div className="row justify-content-sm-center">  
-                            <Link to={`/${operatorBusinessName}/${calendarEventType}/calendar/${calendarId}/${userId}/event/${selectedEvent?.id}`}> <span title={ selectedEvent?._id } ><h2> { selectedEvent?.title } </h2> </span> </Link> 
-                            </div>     
+                            <Link to={`/${operatorBusinessName}/${calendarEventType}/calendar/${calendarId}/user/${userId}/event/${selectedEvent?._id}`}> <span title={ selectedEvent?._id } ><h2> { selectedEvent?.event?.title } </h2> </span> </Link> 
+                            </div> 
+                            <div className="row justify-content-sm-center">         
+                                <div className="col-xs-1 col-sm-1 col-md-1 col-lg-2">
+                                <div className={'mainBodyText'}> {'Location'}  </div>
+                                </div>
+                                <div className="col-xs-1 col-sm-1 col-md-1 col-lg-2">
+                                <div className="subBodyText">{ ( selectedEvent?.location )  } </div>  
+                                </div>
+                            </div> 
                             <div className="row justify-content-sm-center">         
                                 <div className="col-xs-1 col-sm-1 col-md-1 col-lg-2">
                                 <div className={'mainBodyText'}> {'Recurring Event'}  </div>
                                 </div>
                                 <div className="col-xs-1 col-sm-1 col-md-1 col-lg-2">
-                                <div className="subBodyText">{ ( selectedEvent?.rrule === undefined ) ? false?.toString() : true?.toString() } </div>  
+                                <div className="subBodyText">{ ( selectedEvent?.event?.recurringEvent?.toString() )  } </div>  
                                 </div>
                             </div>
                             <div className="row justify-content-sm-center">         
@@ -166,15 +217,15 @@ return   (
                                 <div className={'mainBodyText'}>  {'All Day Event'}  </div>
                                 </div>
                                 <div className="col-xs-1 col-sm-1 col-md-1 col-lg-2">
-                                <div className="subBodyText">{ ( selectedEvent?.allDay === undefined ) ? 'false' : selectedEvent?.allDay?.toString()  } </div>  
+                                <div className="subBodyText">{ ( selectedEvent?.event?.allDay === undefined ) ? 'false' : selectedEvent?.event?.allDay?.toString()  } </div>  
                                 </div>
                             </div>
                             <div className="row justify-content-sm-center">         
                                 <div className="col-xs-1 col-sm-1 col-md-1 col-lg-2">
                                 <div className={'mainBodyText'}>  {'Event Start'} </div>
                                 </div>
-                                <div className="col-xs-1 col-sm-1 col-md-1 col-lg-2">
-                                <div className="subBodyText"> {(selectedEvent?.rrule) ? new Date(selectedEvent?.rrule?.dtstart)?.toLocaleString() : new Date(selectedEvent?.start)?.toLocaleString() }  </div>  
+                                <div className="col-xs-1 col-sm-1 col-md-1 col-lg-2">   
+                                <div className="subBodyText"> {(selectedEvent?.event?.recurringEvent) ? new Date(selectedEvent?.event?.rrule?.dtstart)?.toLocaleString() : new Date(selectedEvent?.event?.start)?.toLocaleString() }  </div>  
                                 </div>
                             </div>
                             <div className="row justify-content-sm-center">         
@@ -182,7 +233,7 @@ return   (
                                 <div className={'mainBodyText'}> {'Event End'}  </div>
                                 </div>
                                 <div className="col-xs-1 col-sm-1 col-md-1 col-lg-2">
-                                <div className="subBodyText">{(selectedEvent?.rrule) ? new Date(selectedEvent?.rrule?.until)?.toLocaleDateString() : new Date(selectedEvent?.end)?.toLocaleString() } </div>  
+                                <div className="subBodyText">{(selectedEvent?.event?.recurringEvent) ? new Date(selectedEvent?.event?.rrule?.until)?.toLocaleDateString() : new Date(selectedEvent?.event?.end)?.toLocaleString() } </div>  
                                 </div>
                             </div>
                             <div className="row justify-content-sm-center">         
@@ -190,7 +241,7 @@ return   (
                                 <div className={'mainBodyText'}>  {'Frequency'}  </div>
                                 </div>
                                 <div className="col-xs-1 col-sm-1 col-md-1 col-lg-2">
-                                <div className="subBodyText">{(selectedEvent?.rrule) ? selectedEvent?.rrule?.freq : '' } </div>  
+                                <div className="subBodyText">{(selectedEvent?.event?.recurringEvent) ? selectedEvent?.event?.rrule?.freq : '' } </div>  
                                 </div>
                             </div>
                             <div className="row justify-content-sm-center">         
@@ -198,10 +249,10 @@ return   (
                                 <div className={'mainBodyText'}>  {'Duration'}  </div>
                                 </div>
                                 <div className="col-xs-1 col-sm-1 col-md-1 col-lg-2">
-                                <div className="subBodyText"><h5> { ((parseInt(selectedEvent?.duration)/1000)/3600)  } </h5> </div>  
+                                <div className="subBodyText"><h5> { ((parseInt(selectedEvent?.event?.duration)/1000)/3600)  } </h5> </div>  
                                 </div>
                             </div>
-                            {selectedEvent?.formData?.formData?.map(student => ( 
+                            {selectedEvent?.schedulingData?.map(student => ( 
                                 <> 
                                 <div className="row justify-content-sm-center">
                                      <div className="col-xs-1 col-sm-1 col-md-1 col-lg-2">
@@ -287,9 +338,10 @@ const mapState = (state, ownProps)   => {
     currentUsers: getUsersByOperatorId(state, ownProps),
     operator: getOperatorFromOperatorBusinessName(state, ownProps),
     calendar: getCalendarEventsByUserIdSelector(state, ownProps),
+    events: getEventsByOperatorId(state, ownProps),
     pushNotUsers: state?.notifications?.pushNotificationSubscribers,
     pushNotificationSubscribers: getPushNotificationUsersByOperatorId(state, ownProps),
   };
 }
 
-export default connect(mapState, { saveCalendarEvent, loadAllCalendarEvents, loadSubscribedPushNotificationUsers } )(CalendarEventsDetailPage);
+export default connect(mapState, { loadAllEvents, saveEvent, loadAllCalendars, loadSubscribedPushNotificationUsers } )(CalendarEventsDetailPage);

@@ -56,7 +56,7 @@ export const cleanUrl = ( urlValue ) => {
     return urlValue?.replace(/\s+/g, "%20");
 }; 
 
-export const handlePushNotificationSubscription = ( subscribedUsers, user,  newSubscriptionAction, addDeviceToExistintSubscriptionAction ) => {
+export const handlePushNotificationSubscription = ( subscribedUsers, user,  newSubscriptionAction, addDeviceToExistingSubscriptionAction ) => {
 
     let subscribedUser = undefined;
     subscribedUsers.every(element => {
@@ -73,6 +73,7 @@ export const handlePushNotificationSubscription = ( subscribedUsers, user,  newS
         // change messge text: todo
         subscription = send();
     }
+
     subscription
     .then(
         response => {
@@ -80,13 +81,14 @@ export const handlePushNotificationSubscription = ( subscribedUsers, user,  newS
             let endpointExists = subscribedUser?.subscriptions?.find( subscription => subscription?.endpoint === response?.endpoint );
             
             if  ( subscribedUser && (! endpointExists ) ) {
-                addDeviceToExistintSubscriptionAction( { ...subscribedUser, subscriptions: [ ...subscribedUser?.subscriptions,  response ] } );
+                addDeviceToExistingSubscriptionAction( { ...subscribedUser, subscriptions: [ ...subscribedUser?.subscriptions,  response ] } );
             } 
             
             if ( !subscribedUser ) {
                 newSubscriptionAction( { userId: user?._id,  subscriptions: [ response ],  operatorId: user?.operatorId } );
             }
         }
+
     ).catch( error => console.error( error ));   
 }
 

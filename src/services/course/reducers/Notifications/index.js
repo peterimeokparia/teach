@@ -13,13 +13,22 @@ ADD_PUSH_NOTIFICATION_USER_ERROR,
 UPDATE_PUSH_NOTIFICATION_USER_BEGIN,
 UPDATE_PUSH_NOTIFICATION_USER_SUCCESS,
 UPDATE_PUSH_NOTIFICATION_USER_ERROR,
+SEND_PUSH_NOTIFICATION_MESSAGE_BEGIN,
+SEND_PUSH_NOTIFICATION_MESSAGE_SUCCESS,  
+SEND_PUSH_NOTIFICATION_MESSAGE_ERROR,
+RETRY_PUSH_NOTIFICATION_MESSAGE_BEGIN,
+RETRY_PUSH_NOTIFICATION_MESSAGE_SUCCESS,  
+RETRY_PUSH_NOTIFICATION_MESSAGE_ERROR,
 SELECTED_PUSH_NOTIFICATION_SUBSCRIBERS} from '../../Actions/Notifications';
 
 const initialState = {
     pushNotificationSubscribers:{},
     pushNotificationSubscriber:{},
+    retriedFailedPushMessages:{},
     selectedPushNotificationMessageSubscribers:{},
     isLoading: false,
+    isSending: false,
+    sendSuccessful: false,
     onError: null,
     savePushNotificationInProgress: false,
     onSavePushNotificationError: null
@@ -27,6 +36,35 @@ const initialState = {
 
 const reducer =  produce( (draft, action) => {
     switch(action.type){
+       case SEND_PUSH_NOTIFICATION_MESSAGE_BEGIN:    
+            draft.isSending = true;
+            draft.onError = false;  
+       return;
+       case SEND_PUSH_NOTIFICATION_MESSAGE_SUCCESS:    
+            draft.isSending = false;
+            draft.onError = false;
+            draft.sendSuccessful = true;  
+       return;
+       case SEND_PUSH_NOTIFICATION_MESSAGE_ERROR:    
+            draft.isSending = false;
+            draft.onError = false;
+            draft.sendSuccessful = action.error;  
+       return; 
+       case RETRY_PUSH_NOTIFICATION_MESSAGE_BEGIN:    
+            draft.isSending = true;
+            draft.onError = false;  
+       return;
+       case RETRY_PUSH_NOTIFICATION_MESSAGE_SUCCESS:    
+            draft.isSending = false;
+            draft.onError = false;
+            draft.sendSuccessful = true;  
+            draft.retriedFailedPushMessages[ action.payload._id ] = action.payload;        
+       return;
+       case RETRY_PUSH_NOTIFICATION_MESSAGE_ERROR:    
+            draft.isSending = false;
+            draft.onError = false;
+            draft.sendSuccessful = action.error;  
+       return;       
        case ADD_PUSH_NOTIFICATION_USER_BEGIN:    
              draft.isLoading = true;
              draft.onError = false;  

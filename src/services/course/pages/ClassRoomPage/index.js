@@ -218,7 +218,7 @@ async function enableTeachPlatform() {
     }
 }
 
-function setTeachSessionSettings(user, currentCourse, currentLesson, sessions, listOfStudents, lessonPageUrl ){
+function setTeachSessionSettings( user, currentCourse, currentLesson, sessions, listOfStudents, lessonPageUrl ){
     setLessonInProgressStatus();
     let invitees = inviteStudentsToLearningSession( 
     user, 

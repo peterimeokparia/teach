@@ -48,9 +48,6 @@ timeLineRoute.post('/', (req, res) => {
 
  timeLineRoute.put('/:timeLineId', (req, res) => {
 
-   alert('timeLineId');
-   alert( req?.params?.timeLineId );
-
    if ( ! req?.params?.timeLineId ) return;
 
    saveUpdatedData(req, timeLineModel, req.params.timeLineId )

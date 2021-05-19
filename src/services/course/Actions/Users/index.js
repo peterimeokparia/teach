@@ -51,7 +51,7 @@ export const RESET_PASSWORD_ERROR = "RESET PASSWORD ERROR";
 export const USER_UPDATED = "USER UPDATED";
 
 export const loginUser = (newUser) => {
-    return dispatch => {
+   return dispatch => {
         dispatch({ type: LOGIN_BEGIN })
         return login(newUser)
         .then( user => {

@@ -190,7 +190,8 @@ const LoginPage = ({
 
                 if ( currentMeeting ) {
                    joinInProgressMeeting( currentUser, currentMeeting, role, saveMeeting );    
-                } 
+                }
+
                 navigate(currentUser?.inviteeSessionUrl);
             } else { 
                 directUserNavigation( currentUser ); 
@@ -215,7 +216,6 @@ const LoginPage = ({
     setSignUpOrLoginInPreference( !signUpOrLoginPreference );
   }
 
-  
   async function getCurrentUser( email, password  ){
     return loadUserByEmail( { email, password } )
      .then(user => {

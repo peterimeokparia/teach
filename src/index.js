@@ -10,9 +10,6 @@ compose } from 'redux';
 import { 
 Provider } from 'react-redux';
 
-import { 
-saveAuthToken } from './saveAuthToken';
-
 import {
 loadUsers, 
 lastLoggedInUser } from 'Services/course/Actions/Users';
@@ -45,10 +42,34 @@ import {
 loadQuestions } from 'Services/course/Actions/Questions';
 
 import {
-loadAllCalendarEvents } from 'Services/course/Actions/Calendar';
+loadAllCalendars } from 'Services/course/Actions/Calendar';
+
+import {
+loadAllEvents } from 'Services/course/Actions/Event';
 
 import {
 loadTimeLines } from 'Services/course/Actions/TimeLines';
+
+import {
+loadOnlineQuestions } from 'Services/course/Actions/OnlineQuestions'; 
+
+import {
+loadOnlineAnswers } from 'Services/course/Actions/OnlineAnswers'; 
+
+import {
+loadOnlineComments } from 'Services/course/Actions/OnlineComments'; 
+
+import { 
+notifications } from 'Services/course/MiddleWare/notifications';
+
+import { 
+saveAuthToken } from 'Services/course/MiddleWare/users';
+
+import {
+loadFailedPushNotifications } from 'Services/course/Actions/FailedPushNotifications'; 
+
+import {
+loadFailedEmailNotifications } from 'Services/course/Actions/FailedEmailNotifications'; 
 
 import App from './App';
 import reducer from 'Services/course/reducers';
@@ -67,7 +88,10 @@ const composeEnhancers =
 }) : compose;
 
 const enhancer = composeEnhancers(
-  applyMiddleware(thunk, saveAuthToken),
+  applyMiddleware(
+    thunk, 
+    saveAuthToken, 
+    notifications),
   // other store enhancers if any
 );
 
@@ -76,6 +100,12 @@ const store = createStore(
   enhancer
 );
 
+store.dispatch(loadFailedPushNotifications());
+store.dispatch(loadFailedEmailNotifications());
+store.dispatch(loadOnlineComments());
+store.dispatch(loadOnlineAnswers());
+store.dispatch(loadOnlineQuestions());
+store.dispatch(loadAllEvents());
 store.dispatch(loadTimeLines());
 store.dispatch(loadSubscribedPushNotificationUsers());
 store.dispatch(loadQuestions());  
@@ -88,8 +118,7 @@ store.dispatch(lastLoggedInUser());
 store.dispatch(loadCourses());
 store.dispatch(loadSessions()); 
 store.dispatch(loadClassRooms());
-store.dispatch(loadAllCalendarEvents());
-
+store.dispatch(loadAllCalendars());
 
 Modal.setAppElement('#root');
 

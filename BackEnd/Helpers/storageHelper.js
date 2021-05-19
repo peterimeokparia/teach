@@ -13,11 +13,17 @@ export const sendMetaData = ( url, metaData ) => {
    return updateContent( url, metaData );
  }
  
- export function getContent( url ){
+ export async function getContent( url ){
    return axios.get( url );
  }
  
- export function updateContent( url, data = {}  ){
+ export async function addContent( url, data = {}  ){
+  return axios.post(url, data)
+   .then(resp => {console.log(resp)})
+    .catch(err => { console.log(err) })
+}
+
+ export async function updateContent( url, data = {}  ){
    return axios.put(url, data)
     .then(resp => {console.log(resp)})
      .catch(err => { console.log(err) })
@@ -80,17 +86,26 @@ export async function verifyUser( existingUser, unHarshedPassword ) {
 export async function saveUpdatedData( req, model, id ){
   try {
         const documentObjectToUpdate = await model.findById(mongoose.Types.ObjectId(id));
+
+        if ( documentObjectToUpdate === null || documentObjectToUpdate === undefined ) {
+           return;
+        }
+
         let bodyData = Object.keys(req.body);
         bodyData.forEach(element => {
-        let arrg = ['_id', '__v'];
-        if ( !arrg.includes(element)  ) {
-          console.log('PUT - saveUpdatedData',element);   
-          documentObjectToUpdate[element] = req.body[element] 
-        }            
+          let arrg = ['_id', '__v'];
+          // if ( !arrg.includes(element)  ) {
+            // if ( !arrg.includes(element)  ) {
+            console.log(`PUT - saveUpdatedData: modelName=${ model.collection.collectionName }`, element);   
+            documentObjectToUpdate[element] = req.body[element] 
+          // }             
       });
         return await documentObjectToUpdate.save();
      
   } catch ( error ) {
+
+      console.log('saveUpdatedData error')
+      console.log( error )
       return error;
   }
 }
@@ -110,7 +125,7 @@ export const getVideoFileMeta = ( request ) => {
          id, 
          prefix, 
          externalId, 
-         backendServerRoute: "http://localhost:9005/api/v1/lessons", 
+         backendServerRoute: `${url.BackeEndServerLessonPrefix}/lessons`, 
          videoFileName: `${prefix}_${Date.now()}_${externalId}_${id}_${Math.floor(Math.random() * Math.floor(9000))}.webm` 
        };  
        break;
@@ -120,7 +135,7 @@ export const getVideoFileMeta = ( request ) => {
          id, 
          prefix, 
          externalId, 
-         backendServerRoute: "http://localhost:9005/api/v1/questions", 
+         backendServerRoute: `${url.BackeEndServerLessonPrefix}/questions`, 
          questionInputMeta: data.metaData,
          videoFileName: `${prefix}_${Date.now()}_${externalId}_${id}_${Math.floor(Math.random() * Math.floor(9000))}.webm`, 
        };    
@@ -131,11 +146,22 @@ export const getVideoFileMeta = ( request ) => {
          id, 
          prefix, 
          externalId, 
-         backendServerRoute: "http://localhost:9005/api/v1/questions", 
+         backendServerRoute: `${url.BackeEndServerLessonPrefix}/questions`, 
          questionInputMeta: data.metaData,
          videoFileName: `${prefix}_${Date.now()}_${externalId}_${id}_${Math.floor(Math.random() * Math.floor(9000))}.webm`, 
        };    
        break;
+
+       case "OnlineQuestionVideoMarkDownEditors":
+        requestData = { 
+          id, 
+          prefix, 
+          externalId, 
+          backendServerRoute: `${url.BackeEndServerLessonPrefix}/onlinequestions`, 
+          questionInputMeta: data.metaData,
+          videoFileName: `${prefix}_${Date.now()}_${externalId}_${id}_${Math.floor(Math.random() * Math.floor(9000))}.webm`, 
+        };    
+        break;
      
        default:
          break;
@@ -145,9 +171,7 @@ export const getVideoFileMeta = ( request ) => {
  
  export function sendResponseToStorage( response, meta, config ){ 
   let videoUrl, markDownEditors, currentEditorId, currentFieldId;
-
   switch (meta.prefix) {
-
      case "LessonVideo": 
      videoUrl = config.videoUrl   
      sendMetaData(
@@ -156,7 +180,7 @@ export const getVideoFileMeta = ( request ) => {
         videoUrl 
      }); 
      break;
-
+     
      case "QuestionVideoMultipleChoiceInputFields": 
      videoUrl = config.videoUrl   
      markDownEditors = response.data[0];
@@ -173,15 +197,26 @@ export const getVideoFileMeta = ( request ) => {
      break;
 
      case "QuestionVideoMarkDownEditors": 
+     console.log('QuestionVideoMarkDownEditors')
      videoUrl = config.videoUrl     
      markDownEditors = response.data[0];
-     currentEditorId = meta?.questionInputMeta?.inputFieldId;  
+     currentEditorId = meta?.questionInputMeta?.inputFieldId;                
      markDownEditors.questions.
       find(question => question.questionNumber === meta?.questionInputMeta.currentQuestion?.questionNumber &&
         question.id ===  currentEditorId).videoUrl = videoUrl;
      sendMetaData(
        config.videoAndMetaData, { 
         ...markDownEditors,
+        videoUrl 
+     }); 
+     break;
+
+     case "OnlineQuestionVideoMarkDownEditors": 
+     console.log('OnlineQuestionVideoMarkDownEditors')
+     videoUrl = config.videoUrl;     
+     sendMetaData(
+       config.videoAndMetaData, { 
+        ...response.data[0],
         videoUrl 
      }); 
      break;
@@ -247,30 +282,112 @@ async function getDocumentObjectToUpdate( requestBody, model, id ){
   return documentObjectToUpdate;
 }
 
-export async function sendSubscriptions(user, request, payload, response ){
+export async function sendSubscriptions( user, request, payload, response ){
   let responseDataCollection = [];
-     await user?.subscriptions?.forEach( subscription => { 
-       responseDataCollection.push( webPushSendNotification( subscription, request, payload, response ) );
+     await user?.subscriptions?.forEach(  subscription => { 
+      let result = webPushSendNotification( subscription, request, payload, response );
+         try {
+
+          if ( result ) {
+            responseDataCollection.push( result );
+          }
+           
+         } catch (error) {
+           
+          responseDataCollection.push( error );
+
+         }
+       
      });
+
      return responseDataCollection;
 }
 
+// export async function sendSubscriptions(user, request, payload, response ){
+//   let responseDataCollection = [];
+//      await user?.subscriptions?.forEach( subscription => { 
+//       webPushSendNotification( subscription, request, payload, response )
+//        .then( response => {
+//         console.log('webPushSendNotification response');
+//         console.log(response);
+//         responseDataCollection.push( response );
+//         console.log('responseDataCollection.push')
+//         console.log(JSON.stringify( responseDataCollection ) )
+
+//        }).catch( error => { 
+//           console.log('webPushSendNotification');
+//           console.log( error );
+//           responseDataCollection.push( error );
+//        })
+//      });
+
+//      if ( test ) {
+//       console.log('responseDataCollection.push test')
+//       console.log(JSON.stringify( responseDataCollection ) )
+//      }
+//      console.log('responseDataCollection')
+//      console.log(JSON.stringify( responseDataCollection ) )
+//      return responseDataCollection;
+// }
+
 export async function webPushSendNotification( subscription, request, payload, response ){
  let resultAsObject = {};
+
  try {
-     let getSendNotification = await webpush.sendNotification(subscription, payload);
-     if ( getSendNotification ) {
+     let sentNotification = await webpush.sendNotification(subscription, payload);
+     if ( sentNotification ) {
          request.body.messages = [ ...request?.body?.messages, request?.body?.message ];
          let saveUpdate = await saveUpdatedData(request, notificationModel, request?.params?.Id);
          if ( saveUpdate ) {
-            resultAsObject = {pushedData: getSendNotification, savedData: saveUpdate }
+            resultAsObject = { pushedData: sentNotification, savedData: saveUpdate }
          }
      }
- } catch (error) {
-     throw Error(error);
+ } catch ( error ) {
+      getContent( `${url.BackeEndServerLessonPrefix}/notifications/subscribedUser/byId?userId=${request.params?.Id}` )
+       .then( resp => { 
+
+          let subscriberInfo = resp?.data;
+          let subscriptions =  subscriberInfo?.subscriptions.filter(sub => sub.endpoint !== error?.endpoint )
+
+          addContent(
+            `${url.BackeEndServerLessonPrefix}/retryfailedonlinequestionspushnotificationsqueue/push`, 
+              { 
+                notificationType: 'Push',
+                sendFailureTime: Date.now(),
+                retryTime: Date.now(),
+                retryCount: 0,
+                errorStatusCode: error?.statusCode,
+                error: JSON.stringify( error ),
+                failedNotificationObject: JSON.stringify({ subscription,  payload }),
+                userId: subscriberInfo?.userId,
+                operatorId: subscriberInfo?.operatorId
+             }
+            ).then(resp => { 
+              console.log('payloadsentNotificationupdateContent')
+              console.log( resp ) 
+            }).catch(error => { 
+              console.log('payloadsentNotificationupdateContent')
+              console.log( error ) 
+            });
+
+            let failedPushErrorStatusCode = [400, 404, 502 ]
+            if ( failedPushErrorStatusCode.includes( error?.statusCode )  ) {
+              console.log('payloadsentNotificationupdateContent')
+              updateContent(
+                `${url.BackeEndServerLessonPrefix}/notifications/subscribe/user/${request.params?.Id}`, 
+                { ...subscriberInfo, subscriptions }
+              );
+            };
+           
+       })
+       .catch( error => { 
+        console.log('payloadsentNotificationupdateContent')
+        console.log( error ) 
+      });
  }
  return resultAsObject;
 }
+
 
 export const url = {
   BackeEndServerLessonPrefix : "http://localhost:9005/api/v1",

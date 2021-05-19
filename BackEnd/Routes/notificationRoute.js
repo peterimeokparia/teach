@@ -20,7 +20,7 @@ notificationRoute.get('/', ( request, response ) => {
     })
      .catch(error => {
          console.log(error);
-         return res.status(400).json({ error });
+         return response.status(400).json({ error });
     });
 });
 
@@ -62,13 +62,11 @@ notificationRoute.put('/subscribe/user/:Id', ( request, response ) => {
     saveUpdatedData(request, notificationModel, request.params?.Id)
     .then( data => {
         if ( data ) {
-            console.log(data);
             response.status(200).json(data);
         }
     })
     .catch( error => {     
         if ( error ) {
-            console.log(error);
             response.status(400).json({ error })
         }
     });
@@ -81,11 +79,69 @@ notificationRoute.put('/sendPushNotifications/user/:Id', ( request, response ) =
     const payload = JSON.stringify({ title: message?.title,  body: message?.body });
     //Pass users subscription send to info including device info etc 
     //plus the notification we wish to send as the payload into sendNotification 
+    let result = [];
       try {
-         return response.status(200)?.json( sendSubscriptions( user, request, payload, response ) );
-      } catch (error) {
-         return response.status(400)?.json({error});
+        sendSubscriptions( user, request, payload, response )
+         .then( promiseResponse => {
+             promiseResponse.forEach( responseAsPromise => {
+                responseAsPromise
+                 .then( notificationResponse => {
+                     result.push( notificationResponse )
+                     if ( result?.length === promiseResponse?.length ) {
+                         return response.status(200).json( JSON.stringify( result ) );
+                     }
+                 })
+                 .catch(error => {
+                      console.log( error )
+                 })
+             })
+         }).catch( error => { console.log( error )})
+      } catch ( error ) {
+         return response.status(400)?.json( { error } );
       }
+});
+
+//Route:  http:localhost:9007/api/v1/notifications/sendPushNotifications/user
+notificationRoute.put('/retryPushNotifications/user/:Id', ( request, response ) => {
+    console.log('retryPushNotifications')
+    const user = request?.body?.user;
+    const message = request?.body?.message;
+    const failedNotification = JSON.stringify( request?.body?.failedNotification );
+    const payload = JSON.stringify({ title: message?.title,  body: message?.body, failedNotification  });
+    //Pass users subscription send to info including device info etc 
+    //plus the notification we wish to send as the payload into sendNotification 
+    let result = [];
+      try {
+        sendSubscriptions( user, request, payload, response )
+         .then( promiseResponse => {
+             promiseResponse.forEach( responseAsPromise => {
+                responseAsPromise
+                 .then( notificationResponse => {
+                     result.push(  notificationResponse  )
+                     if ( result?.length === promiseResponse?.length ) {
+                         let responseData = { failedNotification: JSON.parse( failedNotification ), result: JSON.stringify( result ) }
+                         return response.status(200).json( responseData );
+                     }
+                 })
+                 .catch(error => {
+                      console.log( error )
+                 })
+             })
+         }).catch( error => { console.log( error )})
+      } catch ( error ) {
+         return response.status(400)?.json( { error } );
+      }
+    //   try {
+    //     console.log('sendSubscriptions'); 
+    //     sendSubscriptions( user, request, payload, response )
+    //      .then( response => {
+    //         console.log('sendSubscriptions - promise'); 
+    //          console.log( response );
+    //      }).catch( error => { console.log( error )})
+    //     //  return response.status(200)?.json( sendSubscriptions( user, request, payload, response ) );
+    //   } catch (error) {
+    //      return response.status(400)?.json({error});
+    //   }
 });
 
 //Route:  http:localhost:9007/api/v1/notifications/subscribe
@@ -111,7 +167,7 @@ notificationRoute.post('/subscribe',  ( request, response ) => {
 notificationRoute.post('/sendPushNotifications/users', ( request, response ) => {
     const user = request.body?.user;
     const message = request.body?.message;
-    const payload = JSON.stringify({ title: message?.title,  body: message?.body });
+    const payload = JSON.stringify({ title: message?.title,  body: message?.body  });
   // Pass users subscription send to info including device info etc 
   // plus the notification we wish to send as the payload into sendNotification 
     user?.subscriptions?.forEach( subscription => {

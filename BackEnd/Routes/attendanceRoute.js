@@ -8,7 +8,6 @@ saveUpdatedData
 } from '../Helpers/storageHelper.js';
 
 
-
 const attendanceRoute = express.Router();
 
 attendanceRoute.get('/', (req, res) => {

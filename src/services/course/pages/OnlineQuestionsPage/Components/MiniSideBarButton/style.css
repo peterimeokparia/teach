@@ -1,0 +1,64 @@
+
+#sideRoundButton {
+    background-color: #96D9FF;
+    margin-bottom: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 10px solid #0065A6;
+    outline: none;
+    transition: all .2s cubic-bezier(0, 1.26, .8, 1.28);
+  }
+   
+  #sideRoundButton:hover {
+    background-color: #96D9FF;
+    cursor: pointer;
+    border-color: #003557;
+    transform: scale(1.2, 1.2);
+  }
+   
+  #sideRoundButton:active {
+    border-color: #003557;
+    background-color: #FFF;
+  }
+
+
+
+  .sideburgerMenuDiv, .sideDivOne, .sideDivTwo, .sideDivThree,
+  .sideDivOneClose, .sideDivTwoClose, .sideDivThreeClose {
+    width: 2rem;
+    height: 0.29rem;
+    padding-bottom: 0.2rem;
+    background-color: white;
+    border-radius: 10px;
+    transition: all 0.3s linear;
+    position: relative;
+    transition: all .2s cubic-bezier(0, 1.26, .8, 1.28);
+    transform-origin: 1px; 
+}
+.sideDivOne {
+    transform: 'rotate(45deg)';
+    background-color: red;
+}
+.sideDivTwo {
+    opacity: '0';
+    transform: 'translateX(20px)';
+    background-color: orange;
+}
+.sideDivThree {
+    transform: 'rotate(-45deg)';
+    background-color: green;
+}
+.sideDivOneClose {
+    transform: 'rotate(0)';
+    background-color: green;
+}
+.sideDivTwoClose {
+    opacity: '1';
+    transform: 'translateX(0)';
+    background-color: red;
+}
+.sideDivThreeClose {
+    transform: 'rotate(0)';
+    background-color: orange;
+}

@@ -4,7 +4,8 @@ import NodeMailer from 'nodemailer';
 function emailClient( mailOptions ) {
 
     const fromEmail = "teachpadsconnect247@gmail.com";
-    const  passWord = "padsconnect247";
+    const  passWord = "Teach777!!!";
+    // const  passWord = "padsconnect247";
   
     try {
         const transporter = NodeMailer?.createTransport({

@@ -22,6 +22,7 @@ const initialState = {
 
 const reducer = produce((draft, action) => {
     switch(action.type){
+
         case ADD_NEW_ONLINE_QUESTION_EMAIL_SUBSCRIPTION_BEGIN:
         case SAVE_ONLINE_QUESTION_EMAIL_SUBSCRIPTION_BEGIN:
             draft.saveOnlineQuestionsEmailSubscriptionInProgress = true;
@@ -58,6 +59,7 @@ const reducer = produce((draft, action) => {
             delete draft.onlineQuestionsEmailSubscriptions[action.payload?._id];
        return;  
       default:
+          
     }
 }, initialState);
 

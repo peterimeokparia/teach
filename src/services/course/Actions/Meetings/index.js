@@ -35,7 +35,7 @@ lessonPlanUrl,
 currentUser, 
 usersWhoJoinedTheMeeting ) => {
 return dispatch => {
-    dispatch({ type: ADD_NEW_MEETING_BEGIN })
+    dispatch({ type: ADD_NEW_MEETING_BEGIN });
         return add({ 
             invitees, 
             userId,
@@ -71,9 +71,9 @@ return dispatch => {
                     });   
                 });
             }
-            dispatch({type: ADD_NEW_MEETING_SUCCESS, payload: meeting }) 
+            dispatch({type: ADD_NEW_MEETING_SUCCESS, payload: meeting }); 
         }).catch( error => {
-            dispatch({ type: ADD_NEW_MEETING_ERROR , error })
+            dispatch({ type: ADD_NEW_MEETING_ERROR , error });
         });
     };
 };
@@ -83,28 +83,27 @@ export const saveMeeting = ( meetingId, meeting ) => {
         return update( { ...meeting, _id: meetingId }, `/meetings/` )
         .then( meeting => {  
             dispatch({        
-            type: SAVE_MEETING_SUCCESS, payload: meeting }) 
+            type: SAVE_MEETING_SUCCESS, payload: meeting }); 
         }).catch( error => {
-            dispatch({ type: SAVE_MEETING_ERROR , error })
+            dispatch({ type: SAVE_MEETING_ERROR , error });
         });
     };
 };
 
 export const loadMeetings = () => {
     return dispatch => {
-        dispatch({ type: LOAD_MEETINGS_BEGIN })
+        dispatch({ type: LOAD_MEETINGS_BEGIN });
         get(`/meetings`)
         .then( meeting => {
             dispatch({ type: LOAD_MEETINGS_SUCCESS, payload: meeting });
         }).catch( error => {
-            dispatch({ type: LOAD_MEETINGS_ERROR , error })
+            dispatch({ type: LOAD_MEETINGS_ERROR , error });
         });
-    }
-}
+    };
+};
 
 export const loadMeetingsByMeetingId = ( meetingId ) => { 
     return dispatch => {
-        dispatch({ type: LOAD_MEETINGS_BEGIN })
         return getById( meetingId, `/meetings/meeting?meetingId=`)
         .then( meeting => {
             dispatch({ type: LOAD_SINGLE_MEETING_SUCCESS, payload: meeting });
@@ -113,19 +112,19 @@ export const loadMeetingsByMeetingId = ( meetingId ) => {
             dispatch({ type: LOAD_MEETINGS_ERROR , error });
             return error;
         });
-    }
-}
+    };
+};
 
 export const deleteMeeting = meeting => {
     return dispatch => {
-        dispatch({ type: DELETE_MEETING_BEGIN })
+        dispatch({ type: DELETE_MEETING_BEGIN });
         return remove( meeting, `/meetings/`)
         .then( () => {
             dispatch({ type: DELETE_MEETING_SUCCESS, payload: meeting });
         }).catch( error => {
-            dispatch({ type: DELETE_MEETING_ERROR , error })
+            dispatch({ type: DELETE_MEETING_ERROR , error });
         });
-    }
-}
+    };
+};
 
 

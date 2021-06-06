@@ -1,5 +1,5 @@
 import React from 'react';
-import MainRoute from './MainRoute'
+import MainRoute from './MainRoute';
 import './style.css';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -9,7 +9,8 @@ const App = () => {
     <div> 
        <MainRoute/>
     </div>
-  )
-}
+
+  );
+};
 
 export default App;

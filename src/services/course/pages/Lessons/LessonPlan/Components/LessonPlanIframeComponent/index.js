@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import ReactIframe from 'Services/course/Pages/Components/ReactIframe';
 
 const LessonPlanIframeComponent = ({
@@ -27,6 +27,6 @@ return(( source )
      : <div></div>
 
      );
-}
+};
 
 export default LessonPlanIframeComponent;

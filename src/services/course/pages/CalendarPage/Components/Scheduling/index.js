@@ -27,7 +27,6 @@ onSaveError,
 slotInfo,
 submitEventButtonText,
 children }) => {
-
 const [ title, setEventTitle ] = useState('');
 const [ location, setEventLocation ] = useState('');
 const [ start, setEventStartTime ] = useState(undefined);
@@ -47,19 +46,16 @@ const [ startTimeDateTime, setStartTimeDateTime ] = useState( new Date()?.toLoca
 const [ endTimeDateTime, setEndTimeDateTime ] = useState(  startTimeDateTime );
 const inputRef = useRef();
 
-
 useEffect (() => {
-
     if ( inputRef ) {
         inputRef.current.focus();
     }
-
     if ( start === undefined ) {
-
-        const [ start, end, startStr, endStr, allDay ] = Object.entries(slotInfo);
+        // const [ start, end, startStr, endStr, allDay ] = Object.entries(slotInfo);
+        const [ start, end, allDay ] = Object.entries(slotInfo);
         const [ calendarViewType ] = Object.entries(slotInfo?.view);
-
         let dateTimeString = transformDateTime( start[1], end[1], calendarViewType, allDay[1] );
+
         setStartDateDateTime( getDate( dateTimeString?.resStartStr ) );
         setEndDateDateTime( getDate( dateTimeString?.resEndStr ));
         setStartTimeDateTime( getTime( dateTimeString?.resStartStr ) );
@@ -68,36 +64,36 @@ useEffect (() => {
         setEventEndTime( dateTimeString?.resEndStr );
         setAllDay( allDay[1] );
     }
-
-}, [ ]); 
+// }, [ ]);
+}, [ slotInfo, start ]);  
 
 if ( saveInProgress ) {
-    return <div>...loading</div>
-} 
+    return <div>...loading</div>;
+}; 
 
 if ( onSaveError ) {
     return <div> { onSaveError.message } </div> ;
-}
+};
 
 const handleRecurringEvent = (event) => {
     let isChecked = event.target.checked;
     let value = event.target.value;
 
     if ( isChecked && (value === 'isRecurring') ) {
-        setRecurringEvent(true)
-    }
+        setRecurringEvent(true);
+    };
 
     if ( !isChecked && (value === 'isRecurring') ) {
-        setRecurringEvent(false)
-    }  
-}
+        setRecurringEvent(false);
+    };  
+};
 
 const handleAllDayEvent = (event) => {
    let isChecked = event.target.checked;
    let value = event.target.value;
 
    if ( isChecked && (value === 'isAllDay') ) {
-        setAllDay(true)
+        setAllDay(true);
         setStartEndTimesOnAllDaySelection(true);
    }
 
@@ -105,7 +101,7 @@ const handleAllDayEvent = (event) => {
        setAllDay(false);
        setStartEndTimesOnAllDaySelection(false);
    }  
-}
+};
 
 const submit = (e) => {
 e.preventDefault();
@@ -122,7 +118,8 @@ if ( recurringEvent && ! handleFormValidation('Frequency', frequency, 'Select') 
     return;
 }
 
-const [ start, end, startStr, endStr, allDay ] = Object.entries(slotInfo);
+// const [ start, end, startStr, endStr, allDay ] = Object.entries(slotInfo);
+const [ start, end, allDay ] = Object.entries(slotInfo);
 const [ calendarViewType ] = Object.entries(slotInfo?.view);
 
 let event = {}, dateTimeString = transformDateTime( start[1], end[1], calendarViewType, allDay[1] );
@@ -160,10 +157,10 @@ if ( recurringEvent && ! allDay[1] ) {
         start: `${startDateDateTime}T${startTimeDateTime}`,
         end: `${endDateDateTime}T${endTimeDateTime}`, 
         duration: ( new Date( dateTimeString?.resEndStr ) - new Date( dateTimeString?.resStartStr ) )
-    }
+    };
 }
     handleSubmit( newCalendarEventData(event, location, schedulingData, undefined ) );
-}
+};
 
 function handleFormValidation(fieldname, value, option){
     if ( value === option ) {
@@ -174,7 +171,6 @@ function handleFormValidation(fieldname, value, option){
 }
 
 function setStartEndTimesOnAllDaySelection( allDayChanged ) {
-
     if ( allDayChanged && datePatternIncludesTimeSequence( start, end ) ) {
         setEventStartTimePrev( start );
         setEventEndTimePrev( end );
@@ -191,7 +187,7 @@ function setStartEndTimesOnAllDaySelection( allDayChanged ) {
 let eventFormConfig = { 
     submit,
     submitEventButtonText: submitEventButtonText,
-    eventTitlePlaceHolder: ''.
+    eventTitlePlaceHolder: '',
     saveInProgress,
     onSaveError,
     setEndDate,
@@ -227,7 +223,7 @@ let eventFormConfig = {
     setStartTimeDateTime,
     endTimeDateTime, 
     setEndTimeDateTime 
-}
+};
 
 return (
     <div className="events">
@@ -235,6 +231,6 @@ return (
         <br></br>
         <EventForm config={eventFormConfig}/>  
     </div>
-)};
+); };
 
 export default Scheduling;

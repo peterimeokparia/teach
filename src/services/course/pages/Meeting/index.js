@@ -5,7 +5,6 @@ useEffect } from 'react';
 // import ProgressComponent from '@material-ui/core/CircularProgress';
 
 function Meeting({ roomName, width, height, containerWidth, containerHeight, userName }) {
-  
   const [loading, setLoading] = useState(true);
   
   const containerStyle = {
@@ -17,7 +16,7 @@ function Meeting({ roomName, width, height, containerWidth, containerHeight, use
     display: (loading ? 'none' : 'block'),
     width: ( containerWidth === "100%" ) ? 365 : 720,// clean - create object
     height: ( containerHeight === "100%" ) ? 200 : 720, 
-  }
+  };
 
  const smallScreenWidth = 200;
 
@@ -77,6 +76,7 @@ function Meeting({ roomName, width, height, containerWidth, containerHeight, use
    };
 
    const api = new window.JitsiMeetExternalAPI(domain, options);
+
    api.addEventListener('videoConferenceJoined', () => {
     console.log('Local User Joined');
     setLoading(false);
@@ -93,7 +93,6 @@ function Meeting({ roomName, width, height, containerWidth, containerHeight, use
    {
     api.executeCommand('password', 'testpasswordset');
    });
-
   } catch (error) {
      console.error('Failed to load API', error);
   }
@@ -105,7 +104,8 @@ function Meeting({ roomName, width, height, containerWidth, containerHeight, use
        startConference();
   else 
        alert('script not loaded');
- }, []);
+  });
+//  }, []);
  return (
   <div style={containerStyle}
   >

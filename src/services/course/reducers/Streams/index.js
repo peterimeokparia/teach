@@ -15,11 +15,13 @@ const initialState = {
 
 const reducer = produce((draft, action) => {
     switch(action.type){
+      
       case LESSON_VIDEO_METADATA:   
         draft.metaData = action.payload;
       return;
       default:
       return;
+
     }   
 }, initialState);
 

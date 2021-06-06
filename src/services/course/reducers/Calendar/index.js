@@ -29,6 +29,7 @@ const initialState = {
 
 const reducer =  produce( (draft, action) => {
      switch(action.type){
+
           case ADD_NEW_CALENDAR_BEGIN:
           case SAVE_CALENDAR_BEGIN:     
                draft.isAdding = true;
@@ -81,6 +82,7 @@ const reducer =  produce( (draft, action) => {
                draft.toggleCalendarNewEventView = (! draft.toggleCalendarNewEventView);
           return;    
           default:
+               
      }
 }, initialState);
 

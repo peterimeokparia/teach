@@ -6,6 +6,6 @@ export const navContent = ( user, operatorBusinessName, currentRole, role ) => {
                { id: 2, hrefValue: `/${operatorBusinessName}/courses` , item: 'All Courses' },
                { id: 3, hrefValue:  (currentRole === role ) ? `/${operatorBusinessName}/users` : "" , item: (currentRole === role ) ? `My Tutors` : ""}
             ]
-   }
+   };
 };
        

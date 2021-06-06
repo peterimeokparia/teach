@@ -30,6 +30,7 @@ const initialState = {
 
 const reducer = produce((draft, action) => {
     switch(action.type){
+
         case ADD_NEW_LESSON_BEGIN:
         case SAVE_LESSON_BEGIN:
             draft.saveLessonInProgress = true;
@@ -83,6 +84,7 @@ const reducer = produce((draft, action) => {
             draft.lessonStarted = !draft.lessonStarted;
       return; 
       default:
+          
     }
 }, initialState);
 

@@ -24,7 +24,6 @@ studentId,
 currentUser,
 saveAttendance,
 attendances }) => {
-
 function onMatchListItem( match, listItem ) {
     if ( match ){
        // fix
@@ -63,7 +62,7 @@ return   (
                         >
                             <button 
                                 className="edit-lesson-btn"
-                                onClick={() => { edit( selectedAttendance ) } }                                          
+                                onClick={() => { edit( selectedAttendance ); } }                                          
                             > 
                                 Edit
                             </button>
@@ -74,7 +73,7 @@ return   (
                             <span>
                                 <button
                                     className="delete-lesson-btn"
-                                    onClick={() => { remove( selectedAttendance ) }}> 
+                                    onClick={() => { remove( selectedAttendance ); }}> 
                                     Delete 
                                 </button> 
                             </span>
@@ -89,8 +88,8 @@ return   (
                     </ListItem>                  
             }
     </div> 
-    )  
-}
+    ) ;
+};
 
 const mapState = (state, ownProps)   => {
   return {
@@ -98,6 +97,6 @@ const mapState = (state, ownProps)   => {
     attendances: Object.values(state?.attendance?.attendanceCollection),
     lesson: state.lessons.lessons[ownProps.lessonId]
   };
-}
+};
 
 export default connect(mapState, { saveAttendance  } )(AttendancePage);

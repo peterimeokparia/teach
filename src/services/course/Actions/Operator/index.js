@@ -18,19 +18,19 @@ export const SAVE_OPERATOR_ERROR = "SAVE_OPERATOR_ERROR";
 
 export const loadOperators = () => {
     return dispatch => {
-        dispatch({ type: LOAD_OPERATORS_BEGIN })
+        dispatch({ type: LOAD_OPERATORS_BEGIN });
         get('/operators')
          .then( users => {
              dispatch({ type: LOAD_OPERATORS_SUCCESS, payload: users });
          }).catch( error => {
-               dispatch({ type: LOAD_OPERATORS_ERROR , error })
+               dispatch({ type: LOAD_OPERATORS_ERROR , error });
         });
-    }
-}
+    };
+};
 
 export const createOperator = (newUser) => {
     return dispatch => {
-    dispatch({ type: OPERATOR_SIGN_UP_BEGINS })   
+    dispatch({ type: OPERATOR_SIGN_UP_BEGINS });  
      return operatorSignUp(newUser)
          .then( operator => {
              dispatch({ type: OPERATOR_SIGN_UP_SUCCESSS, payload: operator });
@@ -40,9 +40,9 @@ export const createOperator = (newUser) => {
                     "Welcome to teach!",
                     `Your credentials: ${operator.email}, ${operator.password}. Your website url:http://localhost:3000/${operator?.businessName}/login`,
                     operator?._id
-                )
+                );
          }).catch( error => {
-               dispatch({ type: OPERATOR_SIGN_UP_ERRORS , error })
+               dispatch({ type: OPERATOR_SIGN_UP_ERRORS , error });
         });
-    }
-}
+    };
+};

@@ -11,23 +11,12 @@ recordingStatusRecordingStarted,
 recordingStatusRecordingStopped } from 'Services/course/Actions/Video';
 
 import { 
-StoreDataToFireBase } from  '../../../../FireBase/StoreDataToFireBase';
-
-import { 
 saveAs } from 'file-saver';
-
-import { 
-videoCallIconMain,
-exitVideoCallIcon, 
-videoCallIcon,
-shareScreenIcon } from './inlineStyles';
-
-import VideoCallIcon from '@material-ui/icons/VideoCall';
-import ScreenShareIcon from '@material-ui/icons/ScreenShare';
-import CancelIcon from '@material-ui/icons/Cancel';
 import './style.css';
+// class VideoPage extends React.PureComponent {
 
-class VideoPage extends React.PureComponent {
+  class VideoPage extends React.Component {
+
   constructor(props){
     super(props);
     this.state = {
@@ -35,7 +24,7 @@ class VideoPage extends React.PureComponent {
       screenSharing:false,
       cameraOn:false,
       mediaStream: null
-    }
+    };
     this.videoRef = React.createRef();
     this.enableScreenSharing = this.enableScreenSharing.bind(this);
     this.enableCamera = this.enableCamera.bind(this);
@@ -46,17 +35,60 @@ class VideoPage extends React.PureComponent {
   };
   
   theStream;
+
   theRecorder;
+
   recorder;
+
   url;
+
   blob;
+
   recordedChunks = [];
 
   componentDidMount = () => {
-    if ( this.props.displayMaterialButton && this.props.hasRecordingStarted ) {
-        this.toggleRecordOnOff();
-    }
+    if ( this.props.toggleRecordOnOff && !this.state.capture  ) {
+      this.setCapture();
+      this.startCapture();
+      return;   
+    } 
   };
+
+  componentDidUpdate = () => {
+    if ( this.props.toggleRecordOnOff && !this.state.capture  ) {
+      this.setCapture();
+      this.startCapture(); 
+      return;  
+    } 
+
+    if ( !this.props.toggleRecordOnOff && this.state.capture  ) {
+      this.setCapture();
+      this.resetAfterCapture();
+    } 
+
+    if ( this.props.toggleRecordOnOff && this.state.capture ) {
+      if ( this.props.turnCamerOn && !this.state.cameraOn ) {
+        this.enableCamera();
+        return;
+      }
+
+      if ( !this.props.turnCamerOn && this.state.cameraOn ) {
+        this.enableCamera();
+        return;
+      }
+     
+      if ( this.props.enableScreenSharing && !this.state.screenSharing ) {
+        this.enableScreenSharing();
+        return;
+      }
+
+      if ( !this.props.enableScreenSharing && this.state.screenSharing ) {
+        this.enableScreenSharing();
+        return;
+      }
+    } 
+  };
+
 
   componentWillUnmount = () => {
   };
@@ -136,7 +168,7 @@ class VideoPage extends React.PureComponent {
 
   startCapture = () => {
     if ( this.props?.videoModalModeOn ) {
-      this.props.resetAllStartSettings()
+      this.props.resetAllStartSettings();
     }
     //this.props.resetAllStartSettings() // might break lessonPlan video recording feature
     this.props.setVideoModalMode(true);
@@ -158,14 +190,14 @@ class VideoPage extends React.PureComponent {
         videoName: this.props.videoName };
 
       uploadVideos( videoData, this.props.videoMetaDataExternalId, this.props.videoNamePrefix ); 
-      StoreDataToFireBase(this.blob);
       saveAs(this.url, "test.webm");
       this.theStream = null;
-    }
       this.props.resetAllStopSettings(); 
+    }
+      this.props.setVideoModalMode(false);
       this.props.recordingStatusRecordingStopped();
-      this.setState({ capture: false })
-      this.setState( {cameraOn: false })
+      this.setState({ capture: false });
+      this.setState( {cameraOn: false });
   };
 
   enableScreenSharing = () => {
@@ -181,7 +213,7 @@ class VideoPage extends React.PureComponent {
       this.addMicToTrack( screen, this.state.screenSharing );
     }).catch(e => { 
       console.error('getUserMedia() failed: ' + e); 
-      this.props.resetAllStopSettings(true);
+      //this.props.resetAllStopSettings();
     }); 
     if ( this.state.cameraOn ) {
       this.setState( { cameraOn: false } );
@@ -201,7 +233,7 @@ class VideoPage extends React.PureComponent {
       this.addMicToTrack( screen, false );
   }).catch(e => { 
       console.error('getUserMedia() failed: ' + e); 
-      this.props.resetAllStopSettings(true);
+      //this.props.resetAllStopSettings();
   }); 
 
   if ( this.state.screenSharing ) {
@@ -217,6 +249,7 @@ class VideoPage extends React.PureComponent {
     navigator.mediaDevices.getUserMedia(this.requestedAudioOptions).then(function(mic) {
       let tracks = mic.getTracks();
       let track = tracks[0];
+
       if ( screen && track ) {
         if ( screenSharingEnabled ) {
            screen.addTrack( track );
@@ -236,6 +269,7 @@ class VideoPage extends React.PureComponent {
       }
       
       let options = {mimeType: 'video/webm;codecs=vp9,opus'};
+
       if (! MediaRecorder.isTypeSupported(options.mimeType)) {
           console.error(`${options.mimeType} is not supported`);
           options = {mimeType: 'video/webm;codecs=vp8,opus'};
@@ -252,7 +286,7 @@ class VideoPage extends React.PureComponent {
       }
   
       try {
-        console.log('MediaRecorder', stream)
+        console.log('MediaRecorder', stream);
         this.recorder = new MediaRecorder(stream, options);
       } catch (e) {
         console.error('Exception while creating MediaRecorder: ' + e);
@@ -266,44 +300,21 @@ class VideoPage extends React.PureComponent {
       }
       this.recorder.ondataavailable = (event) => { this.recordedChunks.push(event?.data); };
       this.recorder.start(100);
-    }
-  }
+    };
+  };
 
   handleCanPlay = () => {       
     this.videoRef.current.play();
-  }
+  };
 
   render(){
         return (
             <>
-             <span>
-               {( this.props.displayMaterialButton )  && 
-                       <VideoCallIcon 
-                          style={videoCallIconMain( this.state.capture )}
-                          className={ ( this.state.capture ) ? "comment-round-button-3" : "comment-round-button-4" }
-                          onClick={ this.toggleRecordOnOff }
-                       />
-               }     
-             </span> 
             <span className="videoComponents">  
                
                <span>  
-               { ( this.props.displayMaterialButton ) 
-                  ? 
-                  <> 
-                    {/* <VideoCallIcon 
-                      style={videoCallIconMain( this.state.capture )}
-                      className={ ( this.state.capture ) ? "comment-round-button-3" : "comment-round-button-4" }
-                      onClick={ this.toggleRecordOnOff }
-                    /> */}
-                     <CancelIcon 
-                      style={exitVideoCallIcon( this.state.capture )}
-                      className={ ( this.state.capture ) ? "comment-round-button-3" : "comment-round-button-4" }
-                      onClick={ () => this.closeVideo() }
-                      onBlur={ () => this.closeVideo() }
-                    />
-                  </>
-                  : <button
+               { ( !this.props.displayMaterialButton ) && 
+                   <button
                       className={ this.props.buttonClassName }
                       onClick={ this.toggleRecordOnOff }
                     >
@@ -314,16 +325,10 @@ class VideoPage extends React.PureComponent {
                     }
                     </button>  
                 }      
-              {( this.state.capture ) &&  (
+              {( this.state.capture  && !this.props.displayMaterialButton ) &&  (
                 <span className={""}>      
-                  { ( this.props.displayMaterialButton ) 
-                  ? 
-                    <VideoCallIcon 
-                      style={videoCallIcon( this.state.capture )}
-                      className={ ( this.state.capture ) ? ( this.state.cameraOn ) ? "comment-round-button-3" : "comment-round-button-2" : "comment-round-button-4" }
-                      onClick={ this.enableCamera }
-                    />
-                  :   <button
+                  { 
+                    <button
                         className={this.props.buttonClassName} 
                         onClick={ this.enableCamera }>
                         {      
@@ -331,14 +336,8 @@ class VideoPage extends React.PureComponent {
                         }
                       </button>    
                   } 
-                  { ( this.props.displayMaterialButton ) 
-                  ? 
-                    <ScreenShareIcon 
-                      style={shareScreenIcon( this.state.capture )}
-                      className={ ( this.state.capture ) ? ( this.state.screenSharing ) ? "comment-round-button-3" :  "comment-round-button-2" : "comment-round-button-4" }
-                      onClick={ this.enableScreenSharing }
-                    />
-                  :  <button
+                  {  
+                     <button
                         className={this.props.buttonClassName} 
                         onClick={ this.enableScreenSharing }>
                         {  
@@ -349,9 +348,12 @@ class VideoPage extends React.PureComponent {
                 </span>
               )}
               </span> 
-              <div 
+              {/* <div 
                 className={ this.props.displayMaterialButton ? this.props.videoSectionClassName : ""}
                 onBlur={ () => this.closeVideo() }
+              > */}
+              <div 
+                className={ this.props.videoSectionClassName }
               >
                 {( this.state.capture ) && 
                       <video
@@ -366,16 +368,16 @@ class VideoPage extends React.PureComponent {
               </div>        
         </span>
         </>
-        )
-      
-      }
-}
+        );
+      };
+
+};
 
 const mapState = ( state, ownProps ) => {
   return {
     hasRecordingStarted: state.hasRecordingStarted.hasRecordingStarted
-  }
-}
+  };
+};
 
 export default connect( mapState, { recordingStatusRecordingStarted, recordingStatusRecordingStopped } )( VideoPage );
 

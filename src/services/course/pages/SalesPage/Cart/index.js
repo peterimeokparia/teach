@@ -16,14 +16,14 @@ import './style.css';
 
 const Cart = ({ currentUser, buyCourse }) => {
   const buyOrLogin = () => {
-       
     if ( currentUser ) {
         buyCourse(currentUser);
         return;
     } else {
         navigate('/login');
     }
-}
+};
+
 return (<span> 
               <ReactModal initWidth={400} initHeight={300}top left className="cart" isOpen={currentUser?.cart?.length > 0} onRequestClose={currentUser?.cart?.length === 0}>  
                   <h3>New Sessions</h3>
@@ -55,11 +55,11 @@ return (<span>
             </ReactModal>
           </span> 
               );
-}
+};
 
 const mapState = (state)  => ({
   currentUser : state.users.user,
-})
+});
 
 export default connect(mapState, {buyCourse})( Cart );
 

@@ -1,10 +1,9 @@
 import React from 'react';
 
 import {
-editorContentType,
 points } from 'Services/course/Pages/QuestionsPage/helpers';
 
-import EditorComponent  from '../EditorComponent';
+//import EditorComponent  from '../EditorComponent';
 import PointsDistribution from '../PointsDistribution';
 import MultiFieldComponent from '../MultiFieldComponent';
 import VideoComponent from '../VideoComponent';
@@ -14,7 +13,7 @@ import './style.css';
 const ListItems = ({config}) =>
 {
   if ( ! config?.form ) {
-  return <div>{"Test."}</div>
+  return <div>{"Test."}</div>;
   }
 
   return config?.form?.map((element) => (
@@ -153,7 +152,7 @@ const ListItems = ({config}) =>
         }
              </div>
       </>
-  ))
-}
+  ));
+};
 
 export default ListItems;

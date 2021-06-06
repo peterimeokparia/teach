@@ -35,6 +35,7 @@ const initialState = {
 
 const reducer = produce((draft, action) => {
     switch(action.type){
+
         case ADD_FAILEDPUSHNOTIFICATION_BEGIN:
         case SAVE_FAILEDPUSHNOTIFICATION_BEGIN:
         case ADD_FAILEDEMAILNOTIFICATION_BEGIN:
@@ -44,13 +45,13 @@ const reducer = produce((draft, action) => {
         return;
         case ADD_FAILEDPUSHNOTIFICATION_SUCCESS:
         case SAVE_FAILEDPUSHNOTIFICATION_SUCCESS:    
-             console.log(action.payload)
+             console.log(action.payload);
              draft.failedPushNotifications[action.payload._id] = action.payload; 
              draft.saveInProgress = false;
         return;
         case ADD_FAILEDEMAILNOTIFICATION_SUCCESS:
         case SAVE_FAILEDEMAILNOTIFICATION_SUCCESS:        
-             console.log(action.payload)
+             console.log(action.payload);
              draft.failedEmailNotifications[action.payload._id] = action.payload; 
              draft.saveInProgress = false;
         return;
@@ -90,6 +91,7 @@ const reducer = produce((draft, action) => {
         return;  
        default:
     return;
+    
     }
 }, initialState);
 

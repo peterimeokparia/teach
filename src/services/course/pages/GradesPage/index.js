@@ -24,11 +24,9 @@ studentId,
 currentUser,
 saveGrade,
 grades }) => {
-
 function onMatchListItem( match, listItem ) {
-    
     if ( match ){
-        // fix
+        console.log('...remove');
     }
 }
 
@@ -64,7 +62,7 @@ return   (
                             >
                                 <button 
                                     className="edit-lesson-btn"
-                                    onClick={() => { edit( selectedGrade ) } }                                          
+                                    onClick={() => { edit( selectedGrade ); } }                                          
                                 > 
                                     Edit
                                 </button>
@@ -75,7 +73,7 @@ return   (
                                 <span>
                                     <button
                                         className="delete-lesson-btn"
-                                        onClick={() => { remove( selectedGrade ) }}> 
+                                        onClick={() => { remove( selectedGrade ); }}> 
                                         Delete 
                                     </button> 
                                 </span>
@@ -90,7 +88,7 @@ return   (
                 </ListItem>                    
             }     
         </div> 
-) }
+); };
 
 const mapState = (state, ownProps)   => {
   return {
@@ -98,6 +96,6 @@ const mapState = (state, ownProps)   => {
     grades: Object.values(state?.grades?.grades),
     lesson: state.lessons.lessons[ownProps.lessonId]
   };
-}
+};
 
 export default connect(mapState, { saveGrade  } )(GradesPage);

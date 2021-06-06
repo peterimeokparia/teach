@@ -37,7 +37,6 @@ const uploadVideo = multer({ storage });
    let responseWithDataToSend, videoConfigData;
 
    if ( ! request?.file ) { 
-
       return next( new Error( 'pls upload a file' ) );
       
    } else {

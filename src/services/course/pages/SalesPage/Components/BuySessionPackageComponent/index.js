@@ -6,9 +6,9 @@ const BuySessionPackageComponent = async ( setOptionToSelect ) => {
       resolve({
         'Session': 'Per Session',
         'Package': 'Package'
-      })
-    }, 1000)
-  })
+      });
+    }, 1000);
+  });
   
   const { value: sessionType } = await Swal.fire({
     title: 'Select a session type',
@@ -20,15 +20,15 @@ const BuySessionPackageComponent = async ( setOptionToSelect ) => {
     inputOptions: inputOptions,
     inputValidator: (value) => {
       if (!value) {
-        return 'You need to choose session type!'
-      }
+        return 'You need to choose session type!';
+      };
     }
-  })
+  });
   
   if ( sessionType ) {
      setOptionToSelect( sessionType ); 
     //  return;
   } 
-}
+};
 
 export default BuySessionPackageComponent;

@@ -272,3 +272,24 @@ Redux Middleware
 -------------------
 https://stackoverflow.com/questions/51186205/how-to-dispatch-actions-from-redux-middleware-in-correct-order
 
+Child to Parent
+------------------
+https://javascript.plainenglish.io/how-to-send-data-from-child-to-parent-component-with-react-hooks-cb8050a5ea58
+
+React UseEffect hooks
+-------------
+https://reactjs.org/docs/hooks-effect.html
+
+https://dev.to/eaich/how-to-detect-when-the-user-stops-typing-3cm1
+
+ "Dante2": "0.5.0-rc9",
+nphttps://github.com/michelson/dante
+https://www.dante-editor.dev/
+https://github.com/michelson/dante
+
+Resizable Draggable div
+---------------------------
+https://codepen.io/jkasun/pen/QrLjXP
+
+github
+https://adamtheautomator.com/visual-studio-code-github-setup/#Staging_Committing_and_Pushing_Changes_to_GitHub

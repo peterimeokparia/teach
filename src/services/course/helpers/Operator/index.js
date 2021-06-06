@@ -1,6 +1,7 @@
 
 
 class Operator {
+
   constructor(){
     this.firstname = ""; 
     this.lastname = "";
@@ -10,7 +11,8 @@ class Operator {
     this.token = null;
     this.phone = "";
     this.timeJoined = Date.now();
-  }
-}
+  };
+  
+};
 
 export default Operator;

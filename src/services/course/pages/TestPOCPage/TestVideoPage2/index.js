@@ -13,18 +13,19 @@ recordingStatusRecordingStopped } from 'Services/course/Actions/Video';
 import { 
 saveAs } from 'file-saver';
 
-import { 
-videoCallIconMain,
-exitVideoCallIcon, 
-videoCallIcon,
-shareScreenIcon } from './inlineStyles';
+// import { 
+// videoCallIconMain,
+// exitVideoCallIcon, 
+// videoCallIcon,
+// shareScreenIcon } from './inlineStyles';
 
-import VideoCallIcon from '@material-ui/icons/VideoCall';
-import ScreenShareIcon from '@material-ui/icons/ScreenShare';
-import CancelIcon from '@material-ui/icons/Cancel';
+// import VideoCallIcon from '@material-ui/icons/VideoCall';
+// import ScreenShareIcon from '@material-ui/icons/ScreenShare';
+// import CancelIcon from '@material-ui/icons/Cancel';
 import './style.css';
 
 class TestVideoPage2 extends React.PureComponent {
+
   constructor(props){
     super(props);
     this.state = {
@@ -32,7 +33,7 @@ class TestVideoPage2 extends React.PureComponent {
       screenSharing:false,
       cameraOn:false,
       mediaStream: null
-    }
+    };
     this.videoRef = React.createRef();
     this.enableScreenSharing = this.enableScreenSharing.bind(this);
     this.setCapture = this.setCapture.bind(this);
@@ -42,10 +43,15 @@ class TestVideoPage2 extends React.PureComponent {
   };
   
   theStream;
+
   theRecorder;
+  
   recorder;
+
   url;
+
   blob;
+
   recordedChunks = [];
 
   componentDidMount = () => {
@@ -133,7 +139,7 @@ class TestVideoPage2 extends React.PureComponent {
 
   startCapture = () => {
     if ( this.props?.videoModalModeOn ) {
-      this.props.resetAllStartSettings()
+      this.props.resetAllStartSettings();
     }
     this.props.setVideoModalMode(true);
     this.props.recordingStatusRecordingStarted();
@@ -142,7 +148,6 @@ class TestVideoPage2 extends React.PureComponent {
   };
 
   stopCapture = () => {
-
     this.props.setVideoModalMode(false);
 
     if (this.state.capture && this.theRecorder && this.theStream){
@@ -164,9 +169,8 @@ class TestVideoPage2 extends React.PureComponent {
     }
       this.props.resetAllStopSettings(); 
       this.props.recordingStatusRecordingStopped();
-      this.setState({ capture: false })
-      this.setState( {cameraOn: false })
-     
+      this.setState({ capture: false });
+      this.setState( {cameraOn: false }); 
   };
 
   enableScreenSharing = () => {
@@ -181,7 +185,6 @@ class TestVideoPage2 extends React.PureComponent {
    navigator.mediaDevices.getDisplayMedia(this.requestedMediaOptions)
     .then(screen  => {
       this.addMicToTrack( screen, this.state.screenSharing );
-
     }).catch(e => { 
       console.error('getUserMedia() failed: ' + e); 
       this.props.resetAllStopSettings(true);
@@ -197,6 +200,7 @@ class TestVideoPage2 extends React.PureComponent {
     navigator.mediaDevices.getUserMedia(this.requestedAudioOptions).then(function(mic) {
       let tracks = mic.getTracks();
       let track = tracks[0];
+
       if ( screen && track ) {
         if ( screenSharingEnabled ) {
            screen.addTrack( track );
@@ -207,15 +211,8 @@ class TestVideoPage2 extends React.PureComponent {
 
     let getStream = stream => {
       this.theStream = stream;
-
-      // let video = this.videoRef?.current;
-
-      // if ( video ) {
-      //   video.srcObject = stream;
-      //   video.play();
-      // }
-      
       let options = {mimeType: 'video/webm;codecs=vp9,opus'};
+
       if (! MediaRecorder.isTypeSupported(options.mimeType)) {
           console.error(`${options.mimeType} is not supported`);
           options = {mimeType: 'video/webm;codecs=vp8,opus'};
@@ -232,7 +229,7 @@ class TestVideoPage2 extends React.PureComponent {
       }
   
       try {
-        console.log('MediaRecorder', stream)
+        console.log('MediaRecorder', stream);
         this.recorder = new MediaRecorder(stream, options);
       } catch (e) {
         console.error('Exception while creating MediaRecorder: ' + e);
@@ -246,8 +243,8 @@ class TestVideoPage2 extends React.PureComponent {
       }
       this.recorder.ondataavailable = (event) => { this.recordedChunks.push(event?.data); };
       this.recorder.start(100);
-    }
-  }
+    };
+  };
 
 
   render(){
@@ -271,16 +268,16 @@ class TestVideoPage2 extends React.PureComponent {
               </span> 
         </span>
         </>
-        )
-      
-      }
+        );
+      };
+
 }
 
 const mapState = ( state, ownProps ) => {
   return {
     hasRecordingStarted: state.hasRecordingStarted.hasRecordingStarted
-  }
-}
+  };
+};
 
 export default connect( mapState, { recordingStatusRecordingStarted, recordingStatusRecordingStopped } )( TestVideoPage2 );
 

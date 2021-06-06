@@ -57,10 +57,9 @@ export const cleanUrl = ( urlValue ) => {
 }; 
 
 export const handlePushNotificationSubscription = ( subscribedUsers, user,  newSubscriptionAction, addDeviceToExistingSubscriptionAction ) => {
-
     let subscribedUser = undefined;
-    subscribedUsers.every(element => {
 
+    subscribedUsers.every(element => {
         if ( element?.userId === user?._id ) {
             subscribedUser = element;
             return false;
@@ -69,6 +68,7 @@ export const handlePushNotificationSubscription = ( subscribedUsers, user,  newS
     });
 
     let subscription = undefined;
+
     if ( serviceWorkerSupported() ) {
         // change messge text: todo
         subscription = send();
@@ -77,7 +77,6 @@ export const handlePushNotificationSubscription = ( subscribedUsers, user,  newS
     subscription
     .then(
         response => {
-
             let endpointExists = subscribedUser?.subscriptions?.find( subscription => subscription?.endpoint === response?.endpoint );
             
             if  ( subscribedUser && (! endpointExists ) ) {
@@ -90,9 +89,9 @@ export const handlePushNotificationSubscription = ( subscribedUsers, user,  newS
         }
 
     ).catch( error => console.error( error ));   
-}
+};
 
-export const validateOperatorBusinessName = () => <div>{"Please verify the url"}</div> 
+export const validateOperatorBusinessName = () => <div>{"Please verify the url"}</div> ;
 
 
        

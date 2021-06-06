@@ -22,6 +22,6 @@ const ReactIframe = ({
         >
         </iframe>
     );
-}
+};
 
 export default ReactIframe;

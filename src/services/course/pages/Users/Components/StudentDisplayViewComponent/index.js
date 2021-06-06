@@ -4,7 +4,6 @@ import {
 connect } from 'react-redux';
 
 import {
-addNewGrade,
 saveGrade } from 'Services/course/Actions/Grades';
 
 import {
@@ -41,13 +40,11 @@ lessons,
 navigationHistory,
 parentChild,
 children  }) => {
-
 function onMatchListItem( match, listItem ) {
-
   if ( match ){
       setCurrentPage( listItem );
   }
-} 
+}; 
 
 let links = [ 
   { id: "SavedAnswers", title: "Saved Answers", path:`student/${ selectedStudents?._id }/savedanswers`, _id: selectedStudents?._id }, 
@@ -71,6 +68,8 @@ return (
               <div className="sidebar"> 
                 <ListItemComponent
                     id={selectedStudents?._id}
+                    ulClassName={"lessons"}
+                    liClassName={"lesson-item"}
                     altLinkPath={"student"}
                     collection={links}
                     onMatchListItem={onMatchListItem}
@@ -79,7 +78,7 @@ return (
                      {( selectedPage ) => (
                           <div>      
                             <div>
-                              <Link to={selectedPage?.path}> <span title={selectedPage?.title} >{ selectedPage?.title } </span> </Link> 
+                              <Link to={selectedPage?.path}> <span title={selectedPage?.title} > { selectedPage?.title } </span> </Link> 
                               <br></br>
                               <div> 
                               </div>  
@@ -107,6 +106,6 @@ return (
           </div>
         </div>
       );
-}
+};
 
-export default connect( null, { addNewGrade, saveGrade,  markAttendance, saveAttendance } )(StudentDisplayViewComponent);
+export default connect( null, { saveGrade,  markAttendance, saveAttendance } )(StudentDisplayViewComponent);

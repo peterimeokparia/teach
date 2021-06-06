@@ -22,6 +22,7 @@ onSaveGradeError: null
 
 const reducer =  produce( (draft, action) => {
     switch(action.type){
+
        case ADD_NEW_GRADE_BEGIN:    
              draft.isLoading = true;
              draft.onError = false;  
@@ -53,7 +54,7 @@ const reducer =  produce( (draft, action) => {
              draft.onSaveGradeError = null;
         return; 
         case SAVE_GRADE_SUCCESS:    
-             console.log(action.payload)
+             console.log(action.payload);
              draft.grades[action.payload._id] = action.payload;
              draft.grade =  action.payload;
              draft.saveGradeInProgress = false;
@@ -64,6 +65,7 @@ const reducer =  produce( (draft, action) => {
         return;     
         default:
         return;  
+        
     }
 }, initialState);
 

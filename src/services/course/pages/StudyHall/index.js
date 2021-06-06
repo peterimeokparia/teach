@@ -23,13 +23,12 @@ onCoursesError,
 openNewCourseModal,
 closeNewCourseModal,
 isModalOpen}) => {
-
 if ( ! user ){
-    return <Redirect to="/login" noThrow />
+    return <Redirect to="/login" noThrow />;
 }
 
 if ( coursesLoading) {
-    return <Loading />
+    return <Loading />;
 }         
 
 if ( onCoursesError ) {
@@ -43,7 +42,7 @@ return (
             operatorBusinessName={operatorBusinessName}
         />
 </div>
-)}
+); };
 
 const mapDispatch = {
    openNewCourseModal,
@@ -56,6 +55,6 @@ const mapState = state => ({
     coursesLoading: state?.courses?.coursesLoading,
     onCoursesError: state?.courses?.onCoursesError,
     isModalOpen: state?.courses?.isModalOpen
-})
+});
 
 export default connect(mapState, mapDispatch)(StudyHall);

@@ -20,7 +20,6 @@ className,
 saveInProgress,
 error,
 onSubmit }) => {
-
 const [ editing, setEditing ] = useState(false); 
 const [ attendanceDate, setAttendanceDate ] = useState(Date.now());
 const [ attendanceMark, markAttendance ] = useState(undefined);
@@ -31,7 +30,7 @@ const reset = () => {
     markAttendance("Select");
     setEditing(false);
     resetClassRoomUserError();
-}
+};
 
 const commitEdit = (e) => {
     e.preventDefault();
@@ -42,30 +41,31 @@ const commitEdit = (e) => {
             selectedStudents: selectedStudents, 
             courseId: selectedCourse?._id, 
             lessonId: selectedLesson?._id 
-        }
+        };
+
         onSubmit(attendaceData);
         reset();
     } catch (error) {
         setEditing(false);
         setEditing(true);    
-    } 
+    }; 
 };
 
 const cancelEdit = (e) => {
     e.preventDefault();
     reset();
-}
+};
 
-const setInitialValuesForInputFields = () => {
-    setAttendanceDate(Date.now());
-    markAttendance(undefined);
-    setEditing(false);
-}
+// const setInitialValuesForInputFields = () => {
+//     setAttendanceDate(Date.now());
+//     markAttendance(undefined);
+//     setEditing(false);
+// };
 
-const beginEditing = () => {
-    setInitialValuesForInputFields();
-    setEditing(true);
-}
+// const beginEditing = () => {
+//     setInitialValuesForInputFields();
+//     setEditing(true);
+// }
 
 useEffect (() => {
     if ( editing ) {
@@ -74,7 +74,7 @@ useEffect (() => {
 }, [ editing ]); 
 
 if ( saveInProgress ){
-    return <div> Save in progress, please wait. </div>
+    return <div> Save in progress, please wait. </div>;
 }
 return (
            <>
@@ -138,7 +138,7 @@ return (
    }  
     { error && <div>{error.message}</div> }
     </>
-    )               
+    );               
 };
 
 export default connect( null, { resetError: resetClassRoomUserError, resetClassRoomUserError } )(MarkAttendanceComponent);

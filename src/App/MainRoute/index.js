@@ -7,8 +7,8 @@ import LessonPage from 'Services/course/Pages/Lessons/LessonPage';
 import LoginPage from 'Services/course/Pages/LoginPage';
 import VideoPlayer  from 'Services/course/Pages/VideoPage/Component/VideoPlayer';
 import LessonPlan from 'Services/course/Pages/LessonPlan';
-import LessonPlanInviteUserVerification from 'Services/course/Pages/Lessons/LessonPlan/Components/LessonPlanInviteUserVerification'
-import LessonPlanInviteUserVerifiedPage from 'Services/course/Pages/Lessons/LessonPlan/Components/LessonPlanInviteUserVerifiedPage'
+import LessonPlanInviteUserVerification from 'Services/course/Pages/Lessons/LessonPlan/Components/LessonPlanInviteUserVerification';
+import LessonPlanInviteUserVerifiedPage from 'Services/course/Pages/Lessons/LessonPlan/Components/LessonPlanInviteUserVerifiedPage';
 import VideoPage from 'Services/course/Pages/VideoPage';
 import NotFoundPage from 'Services/course/Pages/Components/NotFoundPage';
 import SalesPage from 'Services/course/Pages/SalesPage';
@@ -37,10 +37,11 @@ import PasswordReset from 'Services/course/Pages/LoginPage/Components/PasswordRe
 import CalendarPage from 'Services/course/Pages/CalendarPage'; 
 import CalendarEventsDetailPage from 'Services/course/Pages/CalendarPage/Components/CalendarEventsDetailPage'; 
 import EventDetailPage  from 'Services/course/Pages/CalendarPage/Components/EventDetailPage'; 
-import OnlineTutoringRequestForm from 'Services/course/Pages/CalendarPage/Components/OnlineTutoringRequestForm';
 import AddNewCalendar from 'Services/course/Pages/CalendarPage/Components/AddNewCalendar'; 
 import TimeLine from 'Services/course/Pages/CalendarPage/Components/TimeLine'; 
-import OnlineQuestionsSavedAnswersPage from 'Services/course/Pages/OnlineQuestionsPage/Components/OnlineQuestionsSavedAnswersPage'
+import OnlineQuestionsSavedAnswersPage from 'Services/course/Pages/OnlineQuestionsPage/Components/OnlineQuestionsSavedAnswersPage';
+import OnlineQuestionsSavedAnswersDetailPage from 'Services/course/Pages/OnlineQuestionsPage/Components/OnlineQuestionsSavedAnswersDetailPage';
+import OnlineQuestionsCourseListPage from 'Services/course/Pages/OnlineQuestionsPage/Components/OnlineQuestionsCourseListPage';
 import TestPocPage from 'Services/course/Pages/TestPOCPage';
 //import // const lessonPlanUrl = `/${operatorBusinessName}/LessonPlan/classRoom/${selectedUserId}`;  TestPOCPage
 //import ClassRoomGroupsPage from 'Services/course/Pages/ClassRoomGroupsPage';
@@ -68,18 +69,23 @@ const MainRoute = () => {
               </SalesPage>
 
               <StudentDetailPage path="/:operatorBusinessName/student/:studentId/course/:courseId/lessons/:lessonId" >
-                   <OnlineQuestionsSavedAnswersPage path="student/:studentId/savedanswers"/>
+                  <OnlineQuestionsSavedAnswersPage path="student/:studentId/savedanswers">
+                    < OnlineQuestionsSavedAnswersDetailPage path="student/:studentId/course/:courseId"/> 
+                   </ OnlineQuestionsSavedAnswersPage>
                    <SessionPage path="student/:studentId/sessions/courseId/:courseId"/>
                    <GradesPage path="student/:studentId/grades"/>
                    <AttendancePage path="student/:studentId/attendance"/>
               </StudentDetailPage>
 
               <StudentDetailPage path="/:operatorBusinessName/student/:studentId" >
-                   <OnlineQuestionsSavedAnswersPage path="student/:studentId/savedanswers"/>
+                   <OnlineQuestionsSavedAnswersPage path="student/:studentId/savedanswers">
+                    < OnlineQuestionsSavedAnswersDetailPage path="student/:studentId/course/:courseId"/> 
+                   </ OnlineQuestionsSavedAnswersPage>
                    <SessionPage path="student/:studentId/sessions/courseId/:courseId"/>
                    <GradesPage path="student/:studentId/grades"/>
                    <AttendancePage path="student/:studentId/attendance"/>
               </StudentDetailPage>
+
              
              <PasswordReset path="/:operatorBusinessName/passwordreset/:userId"/>
              <AccountVerificationForm path="/:operatorBusinessName/accountverification/:userId" />
@@ -111,18 +117,13 @@ const MainRoute = () => {
              <EventDetailPage path="/:operatorBusinessName/:calendarEventType/calendar/:calendarId/user/:userId/event/:eventId" />
              <TimeLine path="/:operatorBusinessName/schedule/:calendarEventType/timeline/:userId"/>
              <AddNewCalendar path="/:operatorBusinessName/add/calendar" />
-             <OnlineQuestionPage path="/:operatorBusinessName/homework/askquestion/:courseId" />
-             <TestPocPage path="/:operatorBusinessName/test/:courseId/:lessonId/:questionId/:answerId"/>
-
-             {/* http://localhost:3000/boomingllc/sessionscheduling/calendar/6052319c75d30d0155dfbe3e/6039cdc8560b6e1314d7bccc/event/6039cdc8560b6e1314d7bccc_1 */}
-             {/* http://localhost:3000/boomingllc/sessionscheduling/calendar/6052319c75d30d0155dfbe3e/6039cdc8560b6e1314d7bccc/event/calendar/6052319c75d30d0155dfbe3e/event/undefined */}
-             {/* http://localhost:3000/boomingllc/sessionscheduling/calendar/6052319c75d30d0155dfbe3e/event */}
-             {/* /:eventId */}
-             {/* operatorBusinessName, calendarEventType, eventId  */}
-             {/* <ClassRoomGroupsPage path="/:operatorBusinessName/classroomgroups"/> */}
-             {/* <Boards path="/boards" /> */}
+             <OnlineQuestionPage path="/:operatorBusinessName/homework/askquestion/course/:courseId" />
+             <OnlineQuestionPage path="/:operatorBusinessName/homework/askquestion/course/:courseId/question/:onlineQuestionId" />
+             <TestPocPage path="/:operatorBusinessName/homework/askquestion/board/course/:courseId/answer/:answerId"/>
+             <OnlineQuestionsCourseListPage path="/:operatorBusinessName/homework/askquestion/course"/>
         </Router>
-    )
-}
+
+    );
+};
 
 export default MainRoute;

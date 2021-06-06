@@ -1,4 +1,7 @@
 import {
+ADD_COURSE_SUCCESS } from 'Services/course/Actions/Courses';
+
+import {
 ADD_ONLINEQUESTION_SUCCESS,
 DELETE_ONLINEQUESTION_SUCCESS } from 'Services/course/Actions/OnlineQuestions';
 
@@ -15,38 +18,49 @@ import {
 deleteFailedPushNotification } from 'Services/course/Actions/FailedPushNotifications';
 
 import {
-subscribeQuestionOwnerToQuestionPushNotification,
-sendPushNotificationOnQuestionUpdate,
-subscribeQuestionOwnerToQuestionEmailNotification,
-sendEmailNotificationOnQuestionUpdate,
-getOnlineQuestion } from './helpers';
+sendOnlineQuestionOwnerPushSubscriptionMessage,
+sendOnlineQuestionUpdatePushSubscriptionMessage } from 'Services/course/MiddleWare/notifications/helpers/pushSubscriptions/onlineQuestions';
 
-//https://stackoverflow.com/questions/51186205/how-to-dispatch-actions-from-redux-middleware-in-correct-order
-//https://redux.js.org/api/store#getState
+import {
+sendOnlineQuestionsEmailSubscriptionMessage } from 'Services/course/MiddleWare/notifications/helpers/emailSubscriptions/onlineQuestions';
+
+import {
+sendCourseOwnerPushSubscriptionMessage } from 'Services/course/MiddleWare/notifications/helpers/pushSubscriptions/courses';
+
+import {
+sendCourseEmailSubscriptionMessage } from 'Services/course/MiddleWare/notifications/helpers/emailSubscriptions/courses';
+
+import {   
+NotificationEntityEnum } from './helpers';
 
 export const notifications = store => next =>  action => {
-     
-     let question = getOnlineQuestion( action, store.getState() );
+     let config = { state: store.getState(), action, store };
 
      switch( action.type ){
-          case ADD_ONLINEQUESTION_SUCCESS:   
-               subscribeQuestionOwnerToQuestionPushNotification( store, store.getState(), action ); 
-               subscribeQuestionOwnerToQuestionEmailNotification( store, store.getState(), action );
+
+          case ADD_COURSE_SUCCESS:
+               sendCourseOwnerPushSubscriptionMessage( config, NotificationEntityEnum.PushMessage.NEW_COURSE_ADDED_PUSH );
+               sendCourseEmailSubscriptionMessage( config, NotificationEntityEnum.EmailMessage.NEW_COURSE_ADDED_EMAIL  );   
+               next(action);
+          return;
+          case ADD_ONLINEQUESTION_SUCCESS:
+               sendOnlineQuestionOwnerPushSubscriptionMessage( config, NotificationEntityEnum.PushMessage.NEW_QUESTION_ADDED_PUSH );
+               sendOnlineQuestionsEmailSubscriptionMessage( config, NotificationEntityEnum.EmailMessage.NEW_QUESTION_ADDED_EMAIL  );   
                next(action);
           return;
           case ADD_ONLINEANSWERS_SUCCESS:
-               sendPushNotificationOnQuestionUpdate( store, store.getState(), action, question, "Answer" );  
-               sendEmailNotificationOnQuestionUpdate( store, store.getState(), action, question, "Answer" );
+               sendOnlineQuestionUpdatePushSubscriptionMessage( config, NotificationEntityEnum.PushMessage.NEW_ANSWER_ADDED_PUSH );
+               sendOnlineQuestionsEmailSubscriptionMessage( config, NotificationEntityEnum.EmailMessage.NEW_ANSWER_ADDED_EMAIL );   
                next(action);
           return;
           case ADD_ONLINECOMMENTS_SUCCESS:
-               sendPushNotificationOnQuestionUpdate( store, store.getState(), action, question, "Comment" );
-               sendEmailNotificationOnQuestionUpdate( store, store.getState(), action, question, "Comment" );  
+               sendOnlineQuestionUpdatePushSubscriptionMessage( config, NotificationEntityEnum.PushMessage.NEW_COMMENT_ADDED_PUSH );
+               sendOnlineQuestionsEmailSubscriptionMessage( config, NotificationEntityEnum.EmailMessage.NEW_COMMENT_ADDED_EMAIL ); 
                next(action);
           return;
           case DELETE_ONLINEQUESTION_SUCCESS:
-               sendPushNotificationOnQuestionUpdate( store, store.getState(), action, question, "Update: Deleted" );
-               sendEmailNotificationOnQuestionUpdate( store, store.getState(), action, question, "Update: Deleted" );    
+               sendOnlineQuestionUpdatePushSubscriptionMessage( config, NotificationEntityEnum.PushMessage.QUESTION_REMOVED_PUSH );
+               sendOnlineQuestionsEmailSubscriptionMessage( config, NotificationEntityEnum.EmailMessage.QUESTION_REMOVED_EMAIL ); 
                next(action);
           return;
           case RETRY_PUSH_NOTIFICATION_MESSAGE_SUCCESS: 
@@ -56,5 +70,6 @@ export const notifications = store => next =>  action => {
           default:
                next(action);
           return;
-      }
-}
+          
+      };
+};

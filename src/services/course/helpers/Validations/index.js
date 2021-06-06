@@ -6,14 +6,15 @@ toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 export const Validations = {
     checkFormInputString: function ( fieldName, inputValue ) {
         if(!inputValue || inputValue === null || inputValue === '' || inputValue === undefined) {
             const msg = `Please enter a valid ${fieldName}`; // change
+
             console.log(msg);
-            Swal.fire(msg)
+            Swal.fire(msg);
             return false;
         }
         return true;
@@ -21,17 +22,20 @@ export const Validations = {
     checkFormInputNumber: function ( fieldName, inputValue ) {
         if(!inputValue || inputValue === null || inputValue === undefined || inputValue === '') {
             const msg = `Please enter a valid ${fieldName}`;
-            Swal.fire(msg)
+
+            Swal.fire(msg);
             console.log(msg);
             return false;
         }
         return true;
     },
     maxSelectFile: function ( event ) {
-        let files = event.target.files;       
+        let files = event.target.files;
+
         if (files?.length > 3){
             const msg = "Only 3 images can be uploaded at one time";
-            Swal.fire(msg)
+
+            Swal.fire(msg);
             event.target.value = null;
             console.log(msg);
             return false;
@@ -40,11 +44,13 @@ export const Validations = {
     }, 
     checkMimeType: function ( event ) {
         let files = event.target.files;
+
         let err = [];
         const types = ['image/png', 'image/jpeg', 'image/gif', 'application/pdf', 'video/webm', 'video/mp4', 'audio/mp4'];
+
         for(let index = 0; index < files.length; index++){
             if(types.every( type => files[index]?.type !== type)){
-                err[index] = files[index]?.type + ' is not supported.  format\n'
+                err[index] = files[index]?.type + ' is not supported.  format\n';
             }
         };
         return ( err?.length > 0 ) ? displayErrorMessage(event, err, toast) :  true;
@@ -53,9 +59,10 @@ export const Validations = {
         let files = event.target.files;
         let size = 15000;
         let err = [];
+
         for(let index = 0; index < files.length; index++){
             if( files[index]?.size > size ){
-                err[index] = files[index]?.type + ' is too large. please pick a smaller file.  format\n'
+                err[index] = files[index]?.type + ' is too large. please pick a smaller file.  format\n';
             }
         };
         return ( err?.length > 0 ) ? displayErrorMessage(event, err, toast) :  true;
@@ -75,11 +82,12 @@ export const Validations = {
     duplicateCheck: function ( item, collection, description, propertyName ) {
         if( collection?.find( record => record[propertyName] === item) ) {
             const msg = `${item} exists. Please use a unique ${description}`;
+
             Swal.fire({
                 title: msg,
                 confirmButtonText: 'OK',
                 confirmButtonColor: '#673ab7'
-            })
+            });
             console.log(msg);
             return true;
         }
@@ -88,11 +96,12 @@ export const Validations = {
     itemNotSelected: function ( item, message ) {
         if( item === undefined )  {
             const msg = message;
+
             Swal.fire({
                 title: msg,
                 confirmButtonText: 'OK',
                 confirmButtonColor: '#673ab7'
-            })
+            });
             console.log(msg);
             return true;
         }
@@ -105,18 +114,18 @@ export const Validations = {
                     <ToastContainer />
                 </div>
             </div>
-        )
+        );
     } 
- }
+ };
 
  const displayErrorMessage = (event, err, toast) => {
     for(let index = 0; index < err?.length; index++){
         event.target.value = null;
         console.log(err[index]);
-        Swal.fire(err[index])
+        Swal.fire(err[index]);
         return false;
     }
-}
+};
 
 
 

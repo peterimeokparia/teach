@@ -23,62 +23,62 @@ export const DELETE_ATTENDANCE_ERROR = "DELETE ATTENDANCE ERROR";
 
 export const loadAttendance = ( ) => {
     return dispatch => {
-         dispatch({ type: LOAD_ATTENDANCE_BEGIN })
+         dispatch({ type: LOAD_ATTENDANCE_BEGIN });
          return get(`/attendance`)
           .then( attendance => { 
-                dispatch({ type: LOAD_ATTENDANCE_SUCCESS, payload: attendance }) 
+                dispatch({ type: LOAD_ATTENDANCE_SUCCESS, payload: attendance }); 
            }).catch( error => {
-               dispatch({ type: LOAD_ATTENDANCE_ERROR , error })
+               dispatch({ type: LOAD_ATTENDANCE_ERROR , error });
         });
     };
 };
 
 export const loadAttendanceByStudentId = ( studentId ) => {
     return dispatch => {
-         dispatch({ type: LOAD_ATTENDANCE_BEGIN })
+         dispatch({ type: LOAD_ATTENDANCE_BEGIN });
          return getById( studentId, `/attendance?studentId=` )
           .then( attendance => { 
-               dispatch({ type: LOAD_ATTENDANCE_SUCCESS, payload: attendance }) 
+               dispatch({ type: LOAD_ATTENDANCE_SUCCESS, payload: attendance }); 
            }).catch( error => {
-               dispatch({ type: LOAD_ATTENDANCE_ERROR , error })
+               dispatch({ type: LOAD_ATTENDANCE_ERROR , error });
            });
     };
 };
 
 export const markAttendance = ( student, course, attendanceData, pushNotificationUser ) => {
     return dispatch  => {
-         dispatch({ type: MARK_ATTENDANCE_BEGIN })
+         dispatch({ type: MARK_ATTENDANCE_BEGIN });
             return add( attendanceData, `/attendance` )
                 .then( attendance => { 
                     dispatch({ type: MARK_ATTENDANCE_SUCCESS, payload: attendance });
-                    dispatch( sendPushNotificationMessage( pushNotificationUser?.filter(pushuser => pushuser?.userId === student?._id), {title:'Attendance Taken!', body:`Attendance taken for course: ${ course?.name }`}) )
+                    dispatch( sendPushNotificationMessage( pushNotificationUser?.filter(pushuser => pushuser?.userId === student?._id), {title:'Attendance Taken!', body:`Attendance taken for course: ${ course?.name }`}) );
                 }).catch( error => {
-                    dispatch({ type: MARK_ATTENDANCE_ERROR , error })
+                    dispatch({ type: MARK_ATTENDANCE_ERROR , error });
             });
     };
 };
 
 export const saveAttendance = ( attendance ) => {
    return dispatch => {
-        dispatch({ type: SAVE_ATTENDANCE_BEGIN })
+        dispatch({ type: SAVE_ATTENDANCE_BEGIN });
         return update( attendance, `/attendance/` )
          .then( attendance => {  
              dispatch({        
-              type: SAVE_ATTENDANCE_SUCCESS, payload: attendance }) 
+              type: SAVE_ATTENDANCE_SUCCESS, payload: attendance }); 
           }).catch( error => {
-              dispatch({ type: SAVE_ATTENDANCE_ERROR , error })
+              dispatch({ type: SAVE_ATTENDANCE_ERROR , error });
           });   
    };
 };
 
 export const deleteAttendance = attendance => {
    return dispatch => {
-       dispatch({ type: DELETE_ATTENDANCE_BEGIN })
+       dispatch({ type: DELETE_ATTENDANCE_BEGIN });
         return remove( attendance, `/attendance/` )
         .then( () => {
             dispatch({ type: DELETE_ATTENDANCE_SUCCESS, payload: attendance });
         }).catch( error => {
-            dispatch({ type: DELETE_ATTENDANCE_ERROR , error })
+            dispatch({ type: DELETE_ATTENDANCE_ERROR , error });
         });
-   }
-}
+   };
+};

@@ -35,16 +35,14 @@ studyHallOwner,
 studyHallName,
 loadUsers,
 createUser,
-loginUser  }) => {
-   
-  const [userCredentials, setUserCredentials] = useState(null);
+loginUser  }) => {  
+const [userCredentials, setUserCredentials] = useState(null);
 
   if ( currentUser?.userIsValidated && currentUser?.userIsVerified ) {
-    
     if ( studyHallName ) {
-      return <Redirect to={`/${operatorBusinessName}/LessonPlan/invite/userverified/${studyHallOwner}/${currentUser?.firstname}/${studyHallName}`} noThrow />   
+      return <Redirect to={`/${operatorBusinessName}/LessonPlan/invite/userverified/${studyHallOwner}/${currentUser?.firstname}/${studyHallName}`} noThrow />;   
     } 
-    return <Redirect to={`/${operatorBusinessName}/LessonPlan/invite/userverified/classRoom/${classRoomId}`} noThrow />       
+    return <Redirect to={`/${operatorBusinessName}/LessonPlan/invite/userverified/classRoom/${classRoomId}`} noThrow />;       
   }
 
   if ( ( ! currentUser?.isVerified ) && (! currentUser?.userIsValidated ) && (! userCredentials )) {
@@ -52,8 +50,8 @@ loginUser  }) => {
   }
   
   if ( userCredentials?.existingUser === "No" ) {
-      userCredentials['existingUser'] = "Yes" 
-      setUserCredentials(userCredentials)
+      userCredentials['existingUser'] = "Yes"; 
+      setUserCredentials(userCredentials);
       createUser({
         ...new SiteUser(), 
         firstname: userCredentials?.firstName, 
@@ -74,14 +72,14 @@ loginUser  }) => {
         navigate(`/${operatorBusinessName}/LessonPlan/invite/userverified/classRoom/${classRoomId}`);
      }
   }
-  return ( <div> Please wait. We are verifying your account. Thank you.</div> )
-}
+  return ( <div> Please wait. We are verifying your account. Thank you.</div> );
+};
 
 const mapDispatch = {
   createUser,
   loginUser,
   loadUsers
-}
+};
 
 const mapState = ( state, ownProps )   => {
   return {
@@ -97,6 +95,6 @@ const mapState = ( state, ownProps )   => {
     studentsSubscribedToThisCourse : getUsersByOperatorId(state, ownProps)?.filter(user => user?.role === "Student" && user?.courses?.includes(ownProps?.courseId)),
     currentMeeting: state.meetings.meetings
   };
-}
+};
 
 export default connect( mapState, mapDispatch )(LessonPlanInviteUserVerification);

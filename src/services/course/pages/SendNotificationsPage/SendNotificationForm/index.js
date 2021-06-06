@@ -6,25 +6,25 @@ const SendNotificationForm = ({
 error,    
 handleSendingPushMessage,
 setHandleFormReset }) => {
-
 const [ notificationMessage, setNotificationMessage ] = useState('');
 const [ notificationTitle, setNotificationTitle ] = useState('');
 
 const handleSubmit = (e) => {
   e.preventDefault();
   resetForm();
-}
+};
 
 const sendPushNotificationMessage = ( title, message ) => {
   handleSendingPushMessage( title, message );
   resetForm();
-}
+};
 
 const resetForm = () => {
   setNotificationTitle('');
   setNotificationMessage('');
   setHandleFormReset(true);
-}
+};
+
 return (
         <div>
             <form onSubmit={e => handleSubmit(e)}>
@@ -61,6 +61,6 @@ return (
             </form>
         </div>
 );
-}
+};
 
 export default SendNotificationForm;

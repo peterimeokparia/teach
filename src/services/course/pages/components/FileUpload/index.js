@@ -11,38 +11,33 @@ uploadFiles } from  'Services/course/helpers/ServerHelper';
 import { 
 Validations } from  'Services/course/helpers/Validations';
 
-import './style.css'
+import './style.css';
 
 const FileUpload = ({ 
 teachObject, 
 fileUploadUrl, 
 teachObjectName, 
 typeOfUpload }) => {
-
 const [ fileSelected,  selectFile ] = useState( null );
-
 const onChangeHandler = event => {
-    
     if ( Validations.maxSelectFile(event) && Validations.checkMimeType(event) &&    Validations.checkMimeType(event) ) { 
         selectFile(event.target.files);
     }
-}
+};
 
 const onClickHandler = () => {
     try {
-
         if ( Validations.itemNotSelected( teachObject, "Please click on the lesson link before uploading a file.") ) {
             return;
         }
-
         if ( fileSelected ){  
             uploadFiles( fileSelected, teachObject, fileUploadUrl, teachObjectName, typeOfUpload );
         }
-
     } catch (error) {
         console.log(error);
     }          
-}   
+};
+
 return (
     <div class="container"> 
         <div className="files-file-Container">
@@ -60,6 +55,6 @@ return (
         </div>
         </div>
     </div>
-)}
+); };
 
 export default connect( null, uploadFiles )( FileUpload );

@@ -10,7 +10,7 @@ const PointsDistribution = ({ element, name, value, handlePointsPerQuestion, han
         value={ element?.questionPoints }
         onChange={ ( event ) => handlePointsPerQuestion(event, handlePointsPerQuestionParam) }
     />
- </>
-}
+ </>;
+};
 
 export default PointsDistribution;

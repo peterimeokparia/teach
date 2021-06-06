@@ -7,6 +7,6 @@ const ShowMeeting = () => {
             <Meeting />
           </div> 
     );
-}
+};
 
 export default ShowMeeting;

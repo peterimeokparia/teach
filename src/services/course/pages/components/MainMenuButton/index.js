@@ -10,7 +10,7 @@ const MainMenuButton = ({ mouseDown, navMenuVisible }) => {
                 <div className={navMenuVisible ? 'divTwoClose' : 'divTwo'}></div>
                 <div className={navMenuVisible ? 'divThreeClose' : 'divThree'}> </div>
            </div>
-    )
-}
+    );
+};
 
 export default MainMenuButton;

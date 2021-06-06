@@ -22,56 +22,56 @@ export const LAST_LOGGEDIN_USER = "LAST LOGGEDIN USER";
 
 export const loadExams = ( ) => {
     return dispatch => {
-         dispatch({ type: LOAD_EXAMS_BEGIN })
+         dispatch({ type: LOAD_EXAMS_BEGIN });
          return get(`/exams`)
-          .then( exam  => { dispatch({ type: LOAD_EXAMS_SUCCESS, payload: exam }) 
-        }).catch( error => {dispatch({ type: LOAD_EXAMS_ERROR , error }) });       
+          .then( exam  => { dispatch({ type: LOAD_EXAMS_SUCCESS, payload: exam }); 
+        }).catch( error => { dispatch({ type: LOAD_EXAMS_ERROR , error }); });       
     };
 };
 
 export const loadExamsByExamId = ( examId ) => {
     return dispatch => {
-         dispatch({ type: LOAD_EXAMS_BEGIN })
+         dispatch({ type: LOAD_EXAMS_BEGIN });
          return getById( examId, `/exams?examId=`)
-          .then( examId  => { dispatch({ type: LOAD_EXAMS_SUCCESS, payload: examId }) 
-        }).catch( error => {dispatch({ type: LOAD_EXAMS_ERROR , error }) });       
+          .then( examId  => { dispatch({ type: LOAD_EXAMS_SUCCESS, payload: examId }); 
+        }).catch( error => { dispatch({ type: LOAD_EXAMS_ERROR , error }); });       
     };
 };
 
 export const addNewExam = ( user, operator, exam ) => {
     let userToUpdate;
+
     return dispatch => {
-       dispatch({ type: ADD_EXAM_BEGIN })
+       dispatch({ type: ADD_EXAM_BEGIN });
        return add( { ...exam, operatorId: operator?._id }, '/exams')
         .then(exam => {
-
            if ( exam?.createdBy === user._id ) {
-            userToUpdate = {...user, exams: user?.exams }
+            userToUpdate = {...user, exams: user?.exams };
             userToUpdate.exams.push( exam._id );
            }
            updateUser( userToUpdate );
-           dispatch({ type: ADD_EXAM_SUCCESS, payload: exam })    
+           dispatch({ type: ADD_EXAM_SUCCESS, payload: exam });    
            dispatch({ type: LAST_LOGGEDIN_USER, payload: user });  
         //dispatch( sendPushNotificationMessage( pushNotificationUser?.
         //filter(pushuser => pushuser?.userId === student?._id), {title:'Attendance Taken!', body:`Attendance taken for course: ${ course?.name }`}) )  
-        }).catch(error => { dispatch({ type: ADD_EXAM_ERROR, error }) })
-    }
-}
+        }).catch(error => { dispatch({ type: ADD_EXAM_ERROR, error }); });
+    };
+};
 
 export const saveExam = ( exam ) => {
    return dispatch => {
-        dispatch({ type: SAVE_EXAM_BEGIN })
+        dispatch({ type: SAVE_EXAM_BEGIN });
         return update( exam, '/exams/' )
-         .then( exam => {dispatch({type: SAVE_EXAM_SUCCESS, payload: exam }) 
-          }).catch( error => {dispatch({ type: SAVE_EXAM_ERROR , error }) });
+         .then( exam => { dispatch({type: SAVE_EXAM_SUCCESS, payload: exam }); 
+          }).catch( error => { dispatch({ type: SAVE_EXAM_ERROR , error }); });
    };
 };
 
 export const deleteExam = exam => {
    return dispatch => {
-       dispatch({ type: DELETE_EXAM_BEGIN })
+       dispatch({ type: DELETE_EXAM_BEGIN });
         return remove( exam, `/exams/` )
-        .then( () => {dispatch({ type: DELETE_EXAM_SUCCESS, payload: exam });
-        }).catch( error => {dispatch({ type: DELETE_EXAM_ERROR , error }) });
-   }
-}
+        .then( () => { dispatch({ type: DELETE_EXAM_SUCCESS, payload: exam });
+        }).catch( error => { dispatch({ type: DELETE_EXAM_ERROR , error }); });
+   };
+};

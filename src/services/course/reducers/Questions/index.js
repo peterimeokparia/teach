@@ -31,6 +31,7 @@ const initialState = {
 
 const reducer = produce((draft, action) => {
     switch(action.type){
+
         case ADD_QUESTION_BEGIN:
         case SAVE_QUESTION_BEGIN:
              draft.saveInProgress = true;
@@ -38,7 +39,6 @@ const reducer = produce((draft, action) => {
         return;
         case ADD_QUESTION_SUCCESS:
         case SAVE_QUESTION_SUCCESS:    
-             console.log(action.payload)
              draft.questions[action.payload._id] = action.payload; 
              draft.saveInProgress = false;
         return;
@@ -82,6 +82,7 @@ const reducer = produce((draft, action) => {
        return; 
        default:
     return;
+
     }
 }, initialState);
 

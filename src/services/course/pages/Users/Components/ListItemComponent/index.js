@@ -9,14 +9,16 @@ altLinkPath,
 collection, 
 onMatchListItem, 
 path,
+ulClassName,
+liClassName,
 children 
 }) => {
+const getPath = ( item ) => { return ( path ) ? `${ path }/${ item?._id }`  : `${ altLinkPath }/${ id }`; };
 
-const getPath = ( item ) => { return ( path ) ? `${ path }/${ item?._id }`  : `${ altLinkPath }/${ id }`} 
 return (
       <div>
         { collection?.length > 0 && ( 
-            <ul className="lessons">
+            <ul className={ulClassName}>
               { collection.map(item => 
                 (
                  <Match 
@@ -26,15 +28,15 @@ return (
                   > 
                   {({ match } ) => {                                 
                     onMatchListItem( match, item );
-            return <li className="lesson-item" >
+            return <li className={liClassName}>
                     { children( item ) }
-                    </li>
-                    }}
+                    </li>;
+                    } }
                  </Match>
                 ))}                  
              </ul>
         )}   
   </div>
-)}
+); };
 
 export default ListItemComponent;

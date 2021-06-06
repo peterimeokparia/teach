@@ -4,21 +4,17 @@ sendEmail } from 'Services/course/Api';
 import Swal from 'sweetalert2';
 
 export function handleAutoRenewPackageSessions( currentUser,  expiredPackages, autoRenewAction ) {
-
     if ( expiredPackages?.length === 0 )  return;
-
     try {      
         expiredPackages.forEach(expiredPackage => {
             handleExpiredPackages( currentUser, expiredPackage, autoRenewAction ); 
         });
     } catch (error) {
-        // retry renewal here based on error code
         console.log( error );
     }
 }
 
 function handleExpiredPackages( currentUser, currentPackage, autoRenewAction ){
-
     if ( currentPackage?.autoRenew ) {
           Swal.fire( "Renewing your package." );
           autoRenewProcess( currentUser, currentPackage, autoRenewAction ); 
@@ -26,13 +22,11 @@ function handleExpiredPackages( currentUser, currentPackage, autoRenewAction ){
             Swal.fire({
             title: `Package has expired. Do you want to renew this package?  ${currentUser?.nameOfLessonInProgress}`,
             icon: 'question',
-            // html: currentUser?.cart?.map((item, index) => '<ul><li key=' + `${index}` + '>' + `${item?.name}` + '</li></ul') + "Do you still want to log out?",
             showCancelButton: true,
             confirmButtonText: 'Yes',
             confirmButtonColor: '#673ab7',
             cancelButtonText: 'No'
         }).then( (response) => {
-
             if ( response?.value ) {
                     autoRenewProcess( currentUser, currentPackage,  autoRenewAction); //
                 } else {         
@@ -47,7 +41,6 @@ export function checkIfPackageIsSetToAutoRenew( currentUser,  sessions ){
 
     if (  currentUser?.role === "Student" ) {
         sessions.forEach(session => {
-
             if ( session?.typeOfSession === "Package" &&  session?.numberOfSessions === session?.totalNumberOfSessions ) {    
                  expiredSessions.push( session );
             };
@@ -61,7 +54,6 @@ export function autoRenewProcess( currentUser, currentSession, renewalPackageAct
 }
 
 export function sendRenewalNotification( currentUser, currentSession,  onrenewal ) {
-
     if ( onrenewal ) {
         sendEmailConfirmation( currentSession, currentUser );
     } else {
@@ -74,7 +66,7 @@ export function sendEmailConfirmation( currentSession, currentUser ){
     const msg = `<h3> AutoRenewal Receipt</h3> <div>Package Renewed Successfully </div>` +
     `<div> Type of session: ${currentSession?.typeOfSession} </div>` +
     `<div> Number of sessions: ${currentSession?.numberOfSessions} </div>` +
-    `<div> Total Number of sessions: ${currentSession?.totalNumberOfSessions} </div>`
+    `<div> Total Number of sessions: ${currentSession?.totalNumberOfSessions} </div>`;
 
     let messageOptions = {
         from: "teachpadsconnect247@gmail.com",
@@ -82,7 +74,7 @@ export function sendEmailConfirmation( currentSession, currentUser ){
         subject: "AutoRenewal Receipt",
         messageBody: msg,
         userId: currentUser?._id
-    }
+    };
 
     sendEmail(
         messageOptions.from,
@@ -98,7 +90,7 @@ export function sendEmailConfirmation( currentSession, currentUser ){
 export function sendEmailToAdministrator( currentUser ){
     const msg = `<h3> AutoRenewal Failed</h3>`  + 
                 `<div>We were not able to renew your package. </div>` + 
-                `<div>An email has been sent to the administrator. </div>`
+                `<div>An email has been sent to the administrator. </div>`;
 
     let messageOptions = {
         from: "teachpadsconnect247@gmail.com",
@@ -106,7 +98,7 @@ export function sendEmailToAdministrator( currentUser ){
         subject: "AutoRenewal Failed",
         messageBody: msg,
         userId: currentUser?._id
-    }
+    };
 
     sendEmail(
         messageOptions.from,

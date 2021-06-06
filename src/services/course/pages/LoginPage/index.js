@@ -54,7 +54,7 @@ import LoginForm from 'Services/course/Pages/LoginPage/Components/LoginForm';
 import RegistrationForm from 'Services/course/Pages/SignUp/RegistrationForm';
 import CoursePackageRenewal from 'Services/course/Pages/Packages/CoursePackageRenewal';
 import SiteUser from 'Services/course/helpers/SiteUser';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import './style.css';
 
 const LoginPage = ({
@@ -82,9 +82,7 @@ const LoginPage = ({
   pushNotificationSubscribers,
   subscribePushNotificationUser,
   savePushNotificationUser }) => {
-
   const [ signUpOrLoginPreference, setSignUpOrLoginInPreference ] = useState(false);
-
   let newSiteUser = new SiteUser(), currentUser = null;
 
     useEffect(() => {
@@ -95,11 +93,11 @@ const LoginPage = ({
     }, [loadUsers, loadSessions, loadMeetings, loadSubscribedPushNotificationUsers]);
 
     if ( ! operator  ) {
-      return <NotFoundPage />
+      return <NotFoundPage />;
     }
 
     if ( loading ) {
-      return <Loading />
+      return <Loading />;
     } 
 
     if ( error ) {
@@ -107,22 +105,20 @@ const LoginPage = ({
     }
   
     if ( user?.userIsValidated ) {
-
       loadUsers();
 
       if ( user?.role === role.Tutor ) {
-        return <Redirect to={`/${operatorBusinessName}/users`} noThrow />
+        return <Redirect to={`/${operatorBusinessName}/users`} noThrow />;
       }
 
       if ( user?.role === role.Student ) {
         CoursePackageRenewal( user, sessions, autoRenewSessionPackages, loadSessions, loadUsers );
-        return <Redirect to={`/${operatorBusinessName}/users`} noThrow />
+        return <Redirect to={`/${operatorBusinessName}/users`} noThrow />;
       }
-      return <Redirect to={`/${operatorBusinessName}/login`} noThrow />
+      return <Redirect to={`/${operatorBusinessName}/login`} noThrow />;
     } 
 
     const handleCreateUser = (error, loading, email, password, firstname, role) => {
-
       if (( Validations.checkFormInputString("User Name", email  ) && 
             Validations.checkFormInputString("Password", password) ) && 
             Validations.checkFormInputString("Role", role) ) {
@@ -134,11 +130,10 @@ const LoginPage = ({
       }
       createUser( newSiteUser )
       .then( resp => {
-
       if ( resp ) {
           Swal.fire({title: 'Your account has been created.', icon: 'info', text: `Kindly check your email.` });
-      }}).catch( error => {console.log( error ) })   
-    }
+      } }).catch( error => { console.log( error ); });   
+    };
 
     async function handleLoginUser( email, password ) {
       sessionStorage.clear();
@@ -169,12 +164,10 @@ const LoginPage = ({
       if ( ( email && password ) ) {
         loginUser( { ...currentUser, unHarshedPassword: password } )
           .then( response => {
-          
             if ( response?.userIsValidated ) {
               handlePushNotificationSubscription(pushNotificationSubscribers, currentUser, subscribePushNotificationUser, savePushNotificationUser ); 
             }
-            
-        }).catch( error => { console.log( error ) });
+        }).catch( error => { console.log( error ); });
 
         if ( currentUser?.lessonInProgress ) {
             Swal.fire({
@@ -185,18 +178,15 @@ const LoginPage = ({
               confirmButtonColor: '#673ab7',
               cancelButtonText: 'Next time'
           }).then( (response) => {
-
             if ( response?.value ) {
-
                 if ( currentMeeting ) {
                    joinInProgressMeeting( currentUser, currentMeeting, role, saveMeeting );    
                 }
-
                 navigate(currentUser?.inviteeSessionUrl);
             } else { 
                 directUserNavigation( currentUser ); 
             }
-          })       
+          });       
         }
           CoursePackageRenewal( currentUser, sessions, autoRenewSessionPackages, loadSessions, loadUsers );
           directUserNavigation( currentUser );           
@@ -204,7 +194,6 @@ const LoginPage = ({
   }
   
   function directUserNavigation ( loggedInUser ) {
-
     if ( loggedInUser?.role === role.Tutor ) {
         navigate(`/${operatorBusinessName}/users`);                              
     } else {
@@ -250,7 +239,7 @@ const LoginPage = ({
     }
       </div>
     );
-  }
+  };
 
   const mapDispatch = { 
     loginUser, 
@@ -267,7 +256,7 @@ const LoginPage = ({
     loadSubscribedPushNotificationUsers,
     subscribePushNotificationUser,
     savePushNotificationUser
-  }
+  };
 
   const mapState = ( state, ownProps )   => {
   return {
@@ -281,6 +270,6 @@ const LoginPage = ({
     meetings: state.meetings.meetings,
     pushNotificationSubscribers: getPushNotificationUsersByOperatorId(state, ownProps),  
   };
-}
+};
 
 export default connect(mapState, mapDispatch )(LoginPage);

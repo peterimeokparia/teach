@@ -73,7 +73,7 @@ loadFailedEmailNotifications } from 'Services/course/Actions/FailedEmailNotifica
 
 import App from './App';
 import reducer from 'Services/course/reducers';
-import thunk from 'redux-thunk'
+import thunk from 'redux-thunk';
 import Modal from 'react-modal';
 import dotenv from 'dotenv';
 import './index.css';

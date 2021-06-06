@@ -39,6 +39,10 @@ const onlineQuestionAnswerSchema = new Schema ({
     videoUrl: { 
         type: String, 
         required: false  
+    },
+    boardVideoUrl: { 
+        type: String, 
+        required: false  
     }
 });
 

@@ -26,6 +26,11 @@ meetingRoute.get('/meeting', (req, res) => {
       .then(data => {
         console.log('get by meetingid @@@@@ @@@@@')
         console.log(data)
+
+        if ( data === null || data === undefined ) {
+            Error('Object is null or undefined');
+        }
+
         return res.status(200).json(data);
       })
        .catch(error => {

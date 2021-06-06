@@ -14,6 +14,7 @@ const initialState = {
 
 const reducer = produce((draft, action) => {
     switch(action.type){
+
         case PURCHASE_HISTORY_BEGIN:
             draft.loading = true;  
             draft.error = null;
@@ -28,6 +29,7 @@ const reducer = produce((draft, action) => {
         return; 
         default:
         return;
+        
     } 
 }, initialState);
 

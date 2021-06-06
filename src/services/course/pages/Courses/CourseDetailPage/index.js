@@ -65,15 +65,14 @@ studentsSubscribedToThisCourse,
 sessions,
 onLessonError,
 children}) => {
-
 const [ currentLessonVideoUrl, setVideoUrl ] = useState( undefined );
 const [ fileToRemove, setFileToRemove ] = useState( undefined );
 const [ lessonPlanUrl, setLessonPlanUrl ] = useState( "" );
 let   [ currentLesson, setCurrentLesson ] = useState( undefined );
-let   lessonTitle = currentLesson?.title?.replace(/\s+/g, "%20");
+// let   lessonTitle = currentLesson?.title?.replace(/\s+/g, "%20");
 let   invitationUrl = `http://localhost:3000/${operatorBusinessName}/LessonPlan/invite/userverification/classRoom/${course?.createdBy}`;
 const fileUploadUrl = 'http://localhost:9005/api/v1/fileUploads';
-const session = sessions?.find( currentSession => currentSession?.userId === currentUser?._id );
+// const session = sessions?.find( currentSession => currentSession?.userId === currentUser?._id );
 
 useEffect(() => {
     loadLessons( courseId );
@@ -84,33 +83,31 @@ if ( ! currentUser?.userIsValidated || ! operator ){
 }
 
 const userOwnsCourse = (user, courseTutor,  courseId) => {
-
     if ( ! user ) {
         return false;
     }
-
     if ( user.userRole === 'admin' ) {
         return true;
     }
     return ( user?.courses?.includes(courseId) || courseTutor?.courses?.includes(courseId) );
-    }
+    };
 
 if ( fileToRemove ) {
-    currentLesson.files = currentLesson?.files?.filter( files => files !== fileToRemove )
+    currentLesson.files = currentLesson?.files?.filter( files => files !== fileToRemove );
     saveLesson( currentLesson );
     deleteLessonFileByFileName( fileToRemove?.split('/files/')[1]);       
 }
 
 if ((! userOwnsCourse( currentUser, courseTutor, courseId )) && (! getLastUsersState()?.courses?.includes(courseId))) {
-    return <Redirect to={`/${operatorBusinessName}/courses/${courseId}/buy`} noThrow/>
+    return <Redirect to={`/${operatorBusinessName}/courses/${courseId}/buy`} noThrow/>;
 }     
 
 if ( isLessonsLoading ){
-    return <Loading />  
+    return <Loading />;  
 }
 
 if ( ! course ){    
-    return <NotFoundPage />  
+    return <NotFoundPage />;  
 }
 
 if ( onLessonError ) {
@@ -118,13 +115,12 @@ if ( onLessonError ) {
 }
 
 const setPreviewEditMode = () => {
-
     if ( ! currentLesson ) {
-        toast.error("Please click on the lesson link.")
+        toast.error("Please click on the lesson link.");
         return;  
     }
     togglePreviewMode();
-}
+};
 
 return (     
     <CourseDisplayViewComponent
@@ -152,7 +148,7 @@ return (
         currentLessonVideoUrl={currentLessonVideoUrl} 
     />
 );
-}
+};
 
 const mapDispatch = {
     loadSessions,
@@ -161,10 +157,9 @@ const mapDispatch = {
     saveLesson, 
     togglePreviewMode, 
     getLessonVideoUrl
-}
+};
 
 const mapState = (state, ownProps) => {
-
     return {
         operator: getOperatorFromOperatorBusinessName(state, ownProps),
         courseTutor: state.courses.courseTutor,
@@ -182,7 +177,7 @@ const mapState = (state, ownProps) => {
         onSessionRenewal: state.sessions.autoRenewedPackageSuccess,
         //userOwnsCourse: userOwnsCourse(state, ownProps)
         //session: Object.values(state?.sessions?.sessions)?.find(session => session?.courseId === ownProps?.courseId && (ownProps?.currentUser?.role === "Tutor" ? (ownProps?.currentUser?._id === session?.tutorId) : (ownProps?.currentUser?._id === session?.userId) )),  
-    }
-}
+    };
+};
 
 export default connect(mapState, mapDispatch)(CourseDetailPage);

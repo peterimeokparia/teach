@@ -25,44 +25,43 @@ export const addFailedPushNotification = ( failednotification ) => {
             dispatch({        
                 type: ADD_FAILEDPUSHNOTIFICATION_SUCCESS, payload: response });        
     }).catch( error => {
-        dispatch({ type: ADD_FAILEDPUSHNOTIFICATION_ERROR , error })
+        dispatch({ type: ADD_FAILEDPUSHNOTIFICATION_ERROR , error });
     });
-  }
+  };
 };
 
 export const saveFailedPushNotification = ( failednotification ) => {
     return dispatch => {
-         dispatch({ type: SAVE_FAILEDPUSHNOTIFICATION_BEGIN })
+         dispatch({ type: SAVE_FAILEDPUSHNOTIFICATION_BEGIN });
          return update( failednotification, `/retryfailedonlinequestionspushnotificationsqueue/push/` )
           .then( response => {
               dispatch({ type: SAVE_FAILEDPUSHNOTIFICATION_SUCCESS, payload: response }); 
            }).catch( error => {
-                dispatch({ type: SAVE_FAILEDPUSHNOTIFICATION_ERROR , error })
+                dispatch({ type: SAVE_FAILEDPUSHNOTIFICATION_ERROR , error });
         }); 
     };
 };
 
 export const loadFailedPushNotifications = ( ) => {
-    //alert('loadFailedPushNotifications')
     return dispatch => {
-         dispatch({ type: LOAD_FAILEDPUSHNOTIFICATIONS_BEGIN })
+         dispatch({ type: LOAD_FAILEDPUSHNOTIFICATIONS_BEGIN });
          return get(`/retryfailedonlinequestionspushnotificationsqueue/push`)
           .then( failednotifications  => { 
-             dispatch({ type: LOAD_FAILEDPUSHNOTIFICATIONS_SUCCESS, payload: failednotifications }) 
+             dispatch({ type: LOAD_FAILEDPUSHNOTIFICATIONS_SUCCESS, payload: failednotifications }); 
            }).catch( error => {
-             dispatch({ type: LOAD_FAILEDPUSHNOTIFICATIONS_ERROR , error })
+             dispatch({ type: LOAD_FAILEDPUSHNOTIFICATIONS_ERROR , error });
         });       
     };
 };
 
 export const loadFailedPushNotificationsByUserId = ( userId ) => {
     return dispatch => {
-         dispatch({ type: LOAD_FAILEDPUSHNOTIFICATIONS_BEGIN })
+         dispatch({ type: LOAD_FAILEDPUSHNOTIFICATIONS_BEGIN });
          return getById( userId, `/retryfailedonlinequestionspushnotificationsqueue/push/user?userId=`)
           .then( failednotifications  => { 
                 dispatch({ type: LOAD_FAILEDPUSHNOTIFICATIONS_SUCCESS, payload: failednotifications });
            }).catch( error => {
-                dispatch({ type: LOAD_FAILEDPUSHNOTIFICATIONS_ERROR , error })
+                dispatch({ type: LOAD_FAILEDPUSHNOTIFICATIONS_ERROR , error });
         });       
     };
 };
@@ -73,9 +72,9 @@ export const deleteFailedPushNotification = failednotification => {
          .then( () => {
              dispatch({ type: DELETE_FAILEDPUSHNOTIFICATION_SUCCESS, payload: failednotification });
          }).catch( error => {
-            dispatch({ type: DELETE_FAILEDPUSHNOTIFICATION_ERROR , error })
+            dispatch({ type: DELETE_FAILEDPUSHNOTIFICATION_ERROR , error });
         });
-    }
-}
+    };
+};
 
 

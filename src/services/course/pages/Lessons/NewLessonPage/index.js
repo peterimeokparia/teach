@@ -31,9 +31,7 @@ onSubmit,
 deleteLesson,
 courseId,
 children}) => {
-
 let initialValue = lesson ? lesson?.title : '';
-let dateInitialValue = lesson ? lesson?.lessonDate : Date.now(); 
 const [ editing, setEditing ] = useState(false);
 const [ title, setTitle ] = useState(initialValue);
 const inputRef = useRef();
@@ -43,7 +41,7 @@ const reset = () => {
     setEditing(false);
     resetLessonError();
     //resetError();
-}
+};
 
 const commitEdit = (e) => {
     e.preventDefault();
@@ -61,36 +59,34 @@ const commitEdit = (e) => {
 
 const setInnerTitle = () => {
     setTitle(initialValue);
-}
+};
 
 const beginEditing = () => {
     setInnerTitle();
     setEditing(true);
-}
+};
 
 const performDelete = () => {
      deleteLesson(lesson);
-}
+};
 
-const recordLesson = () => {
-    recordLesson()
-}
+// const recordLesson = () => {
+//     recordLesson()
+// }
 
 const lessonQuestions = ( lessonId ) => {
     navigate(`/formBuilder/${lessonId}`);  
-}
+};
 
 useEffect (() => {
-
     if ( editing ) {
         inputRef.current.focus();
     }
-
 }, [ editing ]); 
 
 if ( saveLessonInProgress ){
-    return <div>Save in progress, please wait.</div>
-}
+    return <div>Save in progress, please wait.</div>;
+};
 
 return editing ? (
            <>
@@ -118,7 +114,7 @@ const mapState = ( state, ownProps ) => {
     return {
         saveLessonInProgress: state.lessons.saveLessonInProgress,
         error: state.lessons.onSaveLessonError
-    }
-}
+    };
+};
 
 export default connect(mapState, { resetError: resetLessonError, resetLessonError, deleteLesson} )(NewLessonPage);

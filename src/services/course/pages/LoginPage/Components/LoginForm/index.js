@@ -8,13 +8,12 @@ const LoginForm = ({
 error, 
 loading, 
 handleLoginUser }) => {
-
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
 
 const handleSubmit = (e) => {
   e.preventDefault();
-}
+};
 
 return   (    
   <div className="LoginPage"> 
@@ -55,6 +54,6 @@ return   (
         </form>    
   </div> 
   );
-}
+};
 
 export default LoginForm;

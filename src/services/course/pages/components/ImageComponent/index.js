@@ -20,7 +20,7 @@ getUserByEmail } from 'Services/course/Actions/Users';
 
 import ImageCrop from 'react-image-crop-component';
 import 'react-image-crop-component/style.css';
-import './style.css'
+import './style.css';
 
 const ImageComponent = ({ 
 user, 
@@ -32,7 +32,6 @@ editMode,
 uploadAvatarImages,
 getUserByEmail,
 }) => {
-
 const [ fileSelected,  selectFile ] = useState( null );
     
 const onChangeHandler = event => {
@@ -40,10 +39,9 @@ const onChangeHandler = event => {
        selectFile(event.target.files);
        uploadAvatarImages( event.target.files, {...user, avatarUrl: `http://localhost:3000/files/${fileSelected[0].name}`}, url, teachObjectName, typeOfUpload );
    }
-}
+};
 
 async function onCrop( croppedImage ) {
-
 let updatedUser, getUser =  null;
 
 try {
@@ -85,8 +83,8 @@ return  (editMode) ? <div className={""}>
     </div>
     : ( <div>
         <img  className={"avatar-img-preview"} src={ imageSrc } alt="Preview" />
-    </div> )
-}
+    </div> );
+};
 
 async function getCurrentUser( email, password  ){
     return await getUserByEmail( { email, password } )

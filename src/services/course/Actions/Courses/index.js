@@ -27,90 +27,91 @@ export const USER_UPDATED = "USER UPDATED";
 export const LAST_LOGGEDIN_USER = "LAST LOGGEDIN USER";
 
 export const addNewCourse = ( name, price, description, user, operator ) => {
+    let courses;
+
     return dispatch => {   
-       dispatch({ type: ADD_COURSE_BEGIN })
+       dispatch({ type: ADD_COURSE_BEGIN });
        return add({name, price, description, createdBy: user?._id, operatorId: operator?._id}, '/courses')
         .then(course => {
-
            if ( course?.createdBy === user?._id ) {   
-                user.courses.push(course._id);
+                courses = [ ...user?.courses, course?._id ];
+                course[ 'coursePushNotificationSubscribers' ] = [ ...course[ 'coursePushNotificationSubscribers' ], user?._id ];
+                course[ 'courseEmailNotificationSubscribers' ] = [ ...course[ 'courseEmailNotificationSubscribers' ], user?._id ];
+
+                // user.courses.push( course._id );
+                // course.coursePushNotificationSubscribers.push( user?._id );
+                // course.courseEmailNotificationSubscribers.push( user?._id );
            }
-           updateUser(user)
-           dispatch({ type: ADD_COURSE_SUCCESS, payload: course }) 
+           updateUser( { ...user, courses } );
+           dispatch({ type: ADD_COURSE_SUCCESS, payload: course });
            dispatch({ type: LAST_LOGGEDIN_USER, payload: user });  
         })
          .catch(error => { 
-            dispatch({ type: ADD_COURSE_ERROR, error })
-        })
-    }
-}
+            dispatch({ type: ADD_COURSE_ERROR, error });
+        });
+    };
+};
 
 export const saveCourse = ( course ) => {
     return dispatch => {
-        dispatch({ type: SAVE_COURSE_BEGIN })
+        dispatch({ type: SAVE_COURSE_BEGIN });
         return update( course, `/courses/`)
             .then( course => {  
                 dispatch({        
-                type: SAVE_COURSE_SUCCESS, payload: course }) 
+                type: SAVE_COURSE_SUCCESS, payload: course }); 
             }).catch( error => {
-                dispatch({ type: SAVE_COURSE_ERROR , error })
+                dispatch({ type: SAVE_COURSE_ERROR , error });
         });
     };
 };
 
 export const deleteCourse = course => {
    return dispatch => {
-       dispatch({ type: DELETE_COURSE_BEGIN })
+       dispatch({ type: DELETE_COURSE_BEGIN });
         return remove( course, `/courses/`)
         .then( () => {
             dispatch({ type: DELETE_COURSE_SUCCESS, payload: course });
         })
           .catch( error => {
-              dispatch({ type: DELETE_COURSE_ERROR , error })
+              dispatch({ type: DELETE_COURSE_ERROR , error });
         });
-   }
-}
+   };
+};
 
 export const loadCourses = () => {
     return dispatch => {
-        dispatch({ type: LOAD_COURSES_BEGIN })
+        dispatch({ type: LOAD_COURSES_BEGIN });
         get(`/courses`)
         .then( course => {
             dispatch({ type: LOAD_COURSES_SUCCESS, payload: course });
         })
         .catch( error => {
-            dispatch({ type: LOAD_COURSES_ERROR , error })
+            dispatch({ type: LOAD_COURSES_ERROR , error });
         });
-    }
-}
+    };
+};
 
 export const uploadAvatarImages = ( selectedFiles, file, url, teachObjectName, typeOfUpload ) => {
     return dispatch => {
         uploadUserAvatar(selectedFiles, file, url, teachObjectName,  typeOfUpload)
          .then( resp => { 
-            dispatch( loadUserByEmail(file?.email, file?.password ) )
-            dispatch({  type: USER_UPDATED, payload: resp }) } );
-    }
-}
+            dispatch( loadUserByEmail(file?.email, file?.password ) );
+            dispatch({  type: USER_UPDATED, payload: resp }); } );
+    };
+};
 
-// if a session is in progress can we unsubscribe?
-// if yes: we offer a refund. 
-// partial refund? or full refund?
-// student isn't happy with tutor,
-// student isn't happy with course content.
-// if full video sessions with no tutor then prob not
-// if regular session with a tutor...unsubscribe will send an email to the admin, tutor, parent and student
 export const unSubscribeFromCourse = ( currentUser, courseId, sessionId ) => {
     return dispatch => {
         let courseList = currentUser?.courses?.filter(id => id !== courseId);
          let sessions = currentUser?.sessions?.filter(id => id !== sessionId);
+
         updateUser({ ...currentUser, courses: courseList, sessions: sessions })
          .then( user => {
             dispatch({ type: LAST_LOGGEDIN_USER, payload: user });   
          })
           .catch( error => console.log( error )); 
-    }
-}
+    };
+};
 
 export const openNewCourseModal = () => ({
     type: OPEN_NEW_COURSE_MODAL

@@ -57,7 +57,6 @@ loadAllCalendars,
 loadAllEvents,
 saveEvent,
 loadSubscribedPushNotificationUsers }) => {
-
 const [isRecurringEvent, setIsRecurringEvent] = useState(false);
 const [isEditMode, setIsEditMode]  = useState(false);
 const [selectedItemId, setSelectedItemId]  = useState('');
@@ -68,7 +67,8 @@ useEffect(( ) => {
     loadAllEvents();
     loadAllCalendars();
     loadSubscribedPushNotificationUsers();   
-}, [ loadAllCalendars,loadSubscribedPushNotificationUsers ]);
+}, [ loadAllCalendars,loadSubscribedPushNotificationUsers, loadAllEvents ]);
+// }, [ loadAllCalendars,loadSubscribedPushNotificationUsers ]);
 
 if ( isEditMode ) {
     liClassName =  style.eventListBodyEdit;
@@ -84,13 +84,11 @@ function onMatchListItem( match, listItem ) {
 }
 
 function updatedCalendarEvent( updatedEvent, selectedEvent, events, selectedCalendarEventId ) {
-    
     let currentEvent = events?.find(evnt => evnt?._id === selectedCalendarEventId),  updatedCalendarEvent = {};
  
     if ( updatedEvent?.recurringEvent ) {
-
         const { allDay, ...updatedExistingEvent } = currentEvent;
-        
+    
         updatedCalendarEvent = {
             ...updatedExistingEvent,
             event: {
@@ -110,9 +108,7 @@ function updatedCalendarEvent( updatedEvent, selectedEvent, events, selectedCale
             location: updatedEvent?.location,
             schedulingData: updatedEvent?.schedulingData
         };
-
     } else {
-
         updatedCalendarEvent = { 
             ...currentEvent,
             event: {
@@ -145,12 +141,12 @@ function showAllCalendarEvents () {
 }
 
 function getClassName(item) {
-    return ( isEditMode & selectedItemId !== item?._id ) ? ( isRecurringEvent & selectedItemId === item?._id ) ? liClassName : liClassNameEditView : liClassName 
-}
+    return ( isEditMode & selectedItemId !== item?._id ) ? ( isRecurringEvent & selectedItemId === item?._id ) ? liClassName : liClassNameEditView : liClassName; 
+};
 
 function getEventsForSelectedUser() {
-    return events?.filter(evnt => evnt?.userId === userId )
-}
+    return events?.filter(evnt => evnt?.userId === userId );
+};
 
 let currentEvents = getEventsForSelectedUser();
 
@@ -284,7 +280,7 @@ return   (
                                 <span>
                                     <button 
                                         className="edit-event-btn"
-                                        onClick={() => { edit( selectedEvent ) } }                                          
+                                        onClick={() => { edit( selectedEvent ); } }                                          
                                     > 
                                         Edit
                                     </button>
@@ -296,14 +292,14 @@ return   (
                                 <span>
                                     <button
                                         className="delete-event-btn"
-                                        onClick={() => { remove( selectedEvent ) }}> 
+                                        onClick={() => { remove( selectedEvent ); }}> 
                                         Delete 
                                     </button> 
                                 </span>
                                 <span>
                                     <button
                                         className="delete-event-btn"
-                                        onClick={() => { removeAll( calendar ) }}> 
+                                        onClick={() => { removeAll( calendar ); }}> 
                                         Delete All Events 
                                     </button> 
                                 </span>
@@ -329,7 +325,7 @@ return   (
             </div>    
         </div> 
         </>
-) }
+); };
 
 const mapState = (state, ownProps)   => {
   return {
@@ -342,6 +338,6 @@ const mapState = (state, ownProps)   => {
     pushNotUsers: state?.notifications?.pushNotificationSubscribers,
     pushNotificationSubscribers: getPushNotificationUsersByOperatorId(state, ownProps),
   };
-}
+};
 
 export default connect(mapState, { loadAllEvents, saveEvent, loadAllCalendars, loadSubscribedPushNotificationUsers } )(CalendarEventsDetailPage);

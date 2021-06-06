@@ -6,7 +6,6 @@ import MultiEditorComponent from './Components/MultiEditorComponent';
 
 const QuestionPage = ({ 
 lessonId }) => {
-
 useEffect(() => {}, []);
  
 return (
@@ -20,6 +19,6 @@ return (
     </div>      
   </div>  
  );
-}
+};
 
 export default QuestionPage;

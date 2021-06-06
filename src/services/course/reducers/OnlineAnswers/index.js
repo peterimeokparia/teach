@@ -13,7 +13,6 @@ SAVE_ONLINEANSWERS_BEGIN,
 SAVE_ONLINEANSWERS_ERROR, 
 RESET_ONLINEANSWERS_ERROR, 
 DELETE_ONLINEANSWERS_SUCCESS, 
-DELETE_ONLINEANSWERS_BEGIN,
 DELETE_ONLINEANSWERS_ERROR, 
 SET_ONLINEANSWERS_MARKDOWN,
 SET_EXPLANATION_ANSWER_MARKDOWN } from '../../Actions/OnlineAnswers';
@@ -31,6 +30,7 @@ const initialState = {
 
 const reducer = produce((draft, action) => {
     switch(action.type){
+
         case ADD_ONLINEANSWERS_BEGIN:
         case SAVE_ONLINEANSWERS_BEGIN:
              draft.saveInProgress = true;
@@ -38,7 +38,7 @@ const reducer = produce((draft, action) => {
         return;
         case ADD_ONLINEANSWERS_SUCCESS:
         case SAVE_ONLINEANSWERS_SUCCESS:    
-             console.log(action.payload)
+             console.log(action.payload);
              draft.onlineAnswers[action.payload._id] = action.payload; 
              draft.saveInProgress = false;
         return;
@@ -85,7 +85,9 @@ const reducer = produce((draft, action) => {
              draft.onlineAnswersLoading = false;
         return; 
        default:
+
     return;
+    
     }
 }, initialState);
 

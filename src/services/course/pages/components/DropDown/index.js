@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import './style.css';
 
 class DropDown extends React.Component {
+
   constructor( props ) {
     super( props );
-    this.state = { value: 0}
+    this.state = { value: 0};
     this.handleSubmit = this.handleSubmit.bind( this );
     this.handleChange = this.handleChange.bind( this );
   }
@@ -39,8 +40,9 @@ class DropDown extends React.Component {
                 </form>
               </span>
           </span>
-    )
+    );
   }
-}
+  
+};
 
-export default connect(null, {} )(DropDown)
+export default connect(null, {} )(DropDown);

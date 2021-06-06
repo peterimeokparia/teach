@@ -6,6 +6,7 @@ navigateToStudentDetailPage } from  'Services/course/Pages/ClassRoomPage/helpers
 import './style.css';
 
 class CourseDetailCheckBoxComponent extends React.Component {
+
     constructor(props){
         super(props);
         this.handleChange = this.handleChange.bind(this);
@@ -19,12 +20,12 @@ class CourseDetailCheckBoxComponent extends React.Component {
     } 
 
     componentDidUpdate(){     
-        console.log("TEST")
     };
 
     handleChange(event){
         let isChecked = event.target.checked;
         let hasValue = event.target.value;
+
         if ( isChecked && hasValue ){ 
             this.checkedCollection.push(this.props.collection?.find(item => item?._id === event?.target?.value));
             this.props.setCollection( this.checkedCollection );
@@ -36,6 +37,7 @@ class CourseDetailCheckBoxComponent extends React.Component {
             this.props.toggleClassRoomSideBarDropDownDisplay();
         }
     }   
+
     render() {  
     return (
         <div className="ComponentCourseList">
@@ -55,7 +57,7 @@ class CourseDetailCheckBoxComponent extends React.Component {
                                 disabled={(this.props.sessions?.find(session => session.userId ===  item?._id)?.typeOfSession === "Package") &&  
                                          (this.props.sessions?.find(session => session.userId ===  item?._id)?.numberOfSessions === this.props.sessions?.find(session => session.userId ===  item?._id)?.totalNumberOfSessions) }
                             /> 
-                            <a onClick={() => navigateToStudentDetailPage(`/${this.props.operatorBusinessName}/student/${item?._id}/course/${this.props.courseId}/lessons/${this.props.lessonId}`, this.props.userNavigationHistory)}> 
+                            <a href onClick={() => navigateToStudentDetailPage(`/${this.props.operatorBusinessName}/student/${item?._id}/course/${this.props.courseId}/lessons/${this.props.lessonId}`, this.props.userNavigationHistory)}> 
                             <span className="checkBoxViewGradesLink"> 
                                 {item[this.props.description]} 
                             </span> 
@@ -77,7 +79,8 @@ class CourseDetailCheckBoxComponent extends React.Component {
                 </form>
                 </ul>
         </div>
-    )}   
+    ); }; 
+
 }
 
 export default CourseDetailCheckBoxComponent;

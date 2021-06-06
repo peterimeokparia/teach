@@ -18,8 +18,8 @@ isEditMode,
 isRecurringEvent,
 liClassNameRecurringTest
 }) => {
+const getPath = ( item ) => { return ( path ) ? `${ path }/${ item?._id }`  : `${ altLinkPath }/${ id }`; };
 
-const getPath = ( item ) => { return ( path ) ? `${ path }/${ item?._id }`  : `${ altLinkPath }/${ id }`} 
 return (
         <div className="listItem">
         { collection?.length > 0 && (  
@@ -39,13 +39,13 @@ return (
                     onMatchListItem( match, item ); 
                     return <li className={"lesson-item"} >
                     { children( item ) }
-                    </li>
+                    </li>;
                     }}
                  </Match>
                 ))}
              </ul>
         )}   
 </div>
-)}
+); };
 
 export default ListItem;

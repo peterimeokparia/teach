@@ -7,16 +7,14 @@ import NavLinks from '../NavLinks';
 import './style.css';
 
 const MainMenu = ({ navContent }) => {
-
 const [ menuVisible, setMenuVisibility ] = useState(false);
 
 const handleMouseDown = ( event ) => {
     setMenuVisibility( !menuVisible );
     event.stopPropagation();
-}
+};
 
 let sortedNavContent = navContent?.sort((a, b) => {
-
     if( a.id < b.id ){
         return  -1;
     }
@@ -26,7 +24,8 @@ let sortedNavContent = navContent?.sort((a, b) => {
     else{
         return 0;
     } 
-});
+} );
+
 return (
     <div>
         <MainMenuButton
@@ -47,7 +46,7 @@ return (
             } 
         </div>
     </div>
-    )
-}
+    );
+};
 
 export default MainMenu;

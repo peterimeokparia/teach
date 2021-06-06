@@ -4,10 +4,11 @@ navigate } from '@reach/router';
 import { 
 lastLoggedInUser } from 'Services/course/Actions/Users';
 
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 export function joinInProgressMeeting( user, currentMeeting, role, saveMeetingAction ){
-    let inviteeToUpdate = currentMeeting?.invitees?.find(usr => usr._id === user?._id)
+    let inviteeToUpdate = currentMeeting?.invitees?.find(usr => usr._id === user?._id);
+
     if ( inviteeToUpdate && inviteeToUpdate?.timeMeetingEnded !== null ) {
          lastLoggedInUser(user);
          return;
@@ -21,6 +22,7 @@ export function joinInProgressMeeting( user, currentMeeting, role, saveMeetingAc
 
 export async function getMeetings( user, getMeetingByIdAction ) {
     let meeting;
+
     try {
         meeting = await getMeetingByIdAction(user?.meetingId);
     } catch (error) {
@@ -30,10 +32,12 @@ export async function getMeetings( user, getMeetingByIdAction ) {
 }
 
 let newMeetingTimerHandle = null;
-export function waititingForMeetingToStartBeforeJoining( user, lessonInProgress, setAnimationForEmailInvitationEffect, setUpdateUserTimerHandle, setNewMeetingTimerHandle, updateCurrentUser){
+
+export function waititingForMeetingToStartBeforeJoining( user, lessonPlan, lessonInProgress, setAnimationForEmailInvitationEffect, setUpdateUserTimerHandle, setNewMeetingTimerHandle, updateCurrentUser){
     let timeOutPeriod = 15000;
+    
     if ( ! lessonInProgress ) {
-        newMeetingInvitePromoMessage( setAnimationForEmailInvitationEffect );
+        newMeetingInvitePromoMessage( setAnimationForEmailInvitationEffect, lessonPlan );
     }
     newMeetingTimerHandle = setInterval( updateCurrentUserAfterASetInterval, timeOutPeriod, user, updateCurrentUser);
     if ( ! setUpdateUserTimerHandle ) {
@@ -41,12 +45,12 @@ export function waititingForMeetingToStartBeforeJoining( user, lessonInProgress,
     }
 }
 
-export const newMeetingInvitePromoMessage = ( setInviteButtonAnimationEffect ) => {
+export const newMeetingInvitePromoMessage = ( setInviteButtonAnimationEffect, lessonPlan ) => {
     Swal.fire({
         title: "Please wait. Your meeting has not started.",
         icon: 'info',
-        html: '<div><p> While you wait,<br></br> earn points, gift cards and rewards. <br></br> Invite a friend to use the platform. </p></div>',
-        showCancelButton: false,
+        html: '<div><p> While you wait,<br></br> earn points, gift cards and rewards. <br></br> Invite your friends to use the platform. </p></div>',
+        showCancelButton: true,
         showConfirmButton: ( true ),
         confirmButtonText: 'Invite Your Friends',
         confirmButtonColor: '#20c997',
@@ -54,9 +58,11 @@ export const newMeetingInvitePromoMessage = ( setInviteButtonAnimationEffect ) =
         }).then( (response) => {
         if ( response?.value ) {
             setInviteButtonAnimationEffect( true );
-        } 
+        } else {
+            navigate(lessonPlan);
+        }
     });  
-}
+};
 
 export function updateCurrentUserAfterASetInterval( meetingUser, updateCurrentUser ) {
     if ( ! meetingUser?.lessonInProgress ) {
@@ -67,6 +73,7 @@ export function updateCurrentUserAfterASetInterval( meetingUser, updateCurrentUs
 export function showJoinMeetingPopupAfterTheTutorStartsTheMeeting( updateCurrentUserTimerHandle, selectedCourse, user, businessName, setNewMeetingTimerHandle, meetings, role, saveMeetingAction ){
     let meetingHasStartedMessage = `Your lesson has started. Please join the following course: ${ selectedCourse?.name }.`;        
     let cancellationUrl =  `/${businessName}/users`;
+
     if ( user?.lessonInProgress && user?.inviteeSessionUrl ) { 
         joinMeetingPopupMessage( meetingHasStartedMessage, user?.lessonInProgress, user?.inviteeSessionUrl, cancellationUrl );
         joinInProgressMeeting( user, meetings, role, saveMeetingAction );
@@ -92,6 +99,6 @@ export const joinMeetingPopupMessage = ( swalTitle, showConfirmationButton, onCo
         navigate( onConfirmationNavigateToUrl );
     } else {
         navigate( onCancelationNavigateToUrl );
-    }})
+    } })
     .catch(error => console.log( error ));              
-}
+};

@@ -25,6 +25,7 @@ const initialState = {
 
 const reducer = produce((draft, action) => {
     switch(action.type){
+        
         case OPERATOR_SIGN_UP_BEGINS:
         case OPERATOR_LOGIN_BEGIN:
             draft.loading = true;
@@ -60,16 +61,17 @@ const reducer = produce((draft, action) => {
              draft.onSaveOperatorError = null;
         return; 
         case SAVE_OPERATOR_SUCCESS:    
-             console.log(action.payload)
              draft.operators[action.payload._id] = action.payload;
              draft.operator =  action.payload;
              draft.saveOperatorInProgress = false;
+         return;    
          case SAVE_OPERATOR_ERROR:
              draft.saveOperatorInProgress = false;    
              draft.onSaveOperatorError = action.error;
         return;     
         default:
         return;
+        
     }  
 }, initialState);
 

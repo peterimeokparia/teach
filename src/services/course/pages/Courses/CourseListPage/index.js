@@ -18,7 +18,7 @@ getCoursesByOperatorId,
 getOperatorFromOperatorBusinessName } from 'Services/course/Selectors';
 
 import Loading from 'Services/course/Pages/Components/Loading';
-import LoginLogout from 'Services/course/Pages/LoginPage/Components/LoginLogout'
+import LoginLogout from 'Services/course/Pages/LoginPage/Components/LoginLogout';
 import CoursesComponent from 'Services/course/Pages/Courses/Components/CoursesComponent';
 import NewCoursePage from 'Services/course/Pages/Courses/NewCoursePage';
 import Cart from 'Services/course/Pages/SalesPage/Cart';
@@ -36,13 +36,12 @@ onCoursesError,
 openNewCourseModal,
 closeNewCourseModal,
 isModalOpen }) => {
-
 if ( ! user?.userIsValidated || ! operator  ){
-    return <Redirect to={`/${operatorBusinessName}/login`} noThrow />
+    return <Redirect to={`/${operatorBusinessName}/login`} noThrow />;
 }
 
 if ( coursesLoading) {
-    return <Loading />
+    return <Loading />;
 }         
 
 if ( onCoursesError ) {
@@ -73,7 +72,7 @@ return (
         />     
         <Modal isOpen={isModalOpen} onRequestClose={closeNewCourseModal}> <NewCoursePage user={user} operator={operator}/> </Modal>
     </div>
-)}
+); };
 
 const mapDispatch = {
     openNewCourseModal,
@@ -87,6 +86,6 @@ const mapState = (state, ownProps) => ({
     coursesLoading: state?.courses?.coursesLoading,
     onCoursesError: state?.courses?.onCoursesError,
     isModalOpen: state?.courses?.isModalOpen
-})
+});
 
 export default connect(mapState, mapDispatch)(CourseListPage);

@@ -30,96 +30,91 @@ export const DELETE_PUSH_NOTIFICATION_USER_ERROR = "DELETE PUSH NOTIFICATION USE
 
 export const loadSubscribedPushNotificationUsers = ( ) => {
     return dispatch => {
-        dispatch({ type: LOAD_PUSH_NOTIFICATION_USERS_BEGIN })
+        dispatch({ type: LOAD_PUSH_NOTIFICATION_USERS_BEGIN });
         return get(`/notifications`)
           .then( pushnotification => { 
-                dispatch({ type: LOAD_PUSH_NOTIFICATION_USERS_SUCCESS, payload: pushnotification }) 
-           }).catch( error => {dispatch({ type: LOAD_PUSH_NOTIFICATION_USERS_ERROR , error })
+                dispatch({ type: LOAD_PUSH_NOTIFICATION_USERS_SUCCESS, payload: pushnotification }); 
+           }).catch( error => { dispatch({ type: LOAD_PUSH_NOTIFICATION_USERS_ERROR , error });
         }); 
     };
 };
 
 export const loadSubscribedPushNotificationUserByUserId = ( userId ) => {
     return dispatch => {
-         dispatch({ type: LOAD_PUSH_NOTIFICATION_USER_BEGIN })
+         dispatch({ type: LOAD_PUSH_NOTIFICATION_USER_BEGIN });
          return getById( userId, `/notifications/subscribedUser/byId?userId=` )
           .then( pushnotification => { 
-                dispatch({ type: LOAD_PUSH_NOTIFICATION_USER_SUCCESS, payload: pushnotification }) 
-           }).catch( error => {dispatch({ type: LOAD_PUSH_NOTIFICATION_USER_ERROR , error })
+                dispatch({ type: LOAD_PUSH_NOTIFICATION_USER_SUCCESS, payload: pushnotification }); 
+           }).catch( error => { dispatch({ type: LOAD_PUSH_NOTIFICATION_USER_ERROR , error });
         });
     };
 };
 
 export const subscribePushNotificationUser = ( pushNotificationUser ) => {
     return dispatch  => {
-         dispatch({ type: ADD_PUSH_NOTIFICATION_USER_BEGIN })
+         dispatch({ type: ADD_PUSH_NOTIFICATION_USER_BEGIN });
          return add( pushNotificationUser, `/notifications/subscribe/user` )
           .then( pushnotificationuser => { 
-                dispatch({ type: ADD_PUSH_NOTIFICATION_USER_SUCCESS, payload: pushnotificationuser }) 
-           }).catch( error => {dispatch({ type: ADD_PUSH_NOTIFICATION_USER_ERROR , error })
+                dispatch({ type: ADD_PUSH_NOTIFICATION_USER_SUCCESS, payload: pushnotificationuser }); 
+           }).catch( error => { dispatch({ type: ADD_PUSH_NOTIFICATION_USER_ERROR , error });
         }); 
     };
 };
 
 export const savePushNotificationUser = ( pushNotificationUser ) => {
    return dispatch => {
-        dispatch({ type: UPDATE_PUSH_NOTIFICATION_USER_BEGIN })
+        dispatch({ type: UPDATE_PUSH_NOTIFICATION_USER_BEGIN });
         return update( pushNotificationUser, `/notifications/subscribe/user/` )
          .then( pushnotificationuser => {  
              dispatch({        
-              type: UPDATE_PUSH_NOTIFICATION_USER_SUCCESS, payload: pushnotificationuser }) 
-          }).catch( error => {dispatch({ type: UPDATE_PUSH_NOTIFICATION_USER_ERROR , error }) 
+              type: UPDATE_PUSH_NOTIFICATION_USER_SUCCESS, payload: pushnotificationuser }); 
+          }).catch( error => { dispatch({ type: UPDATE_PUSH_NOTIFICATION_USER_ERROR , error }); 
         });
    };
 };
 
 export const deletePushNotificationUser = pushNotificationUser => {
    return dispatch => {
-       dispatch({ type: DELETE_PUSH_NOTIFICATION_USER_BEGIN })
+       dispatch({ type: DELETE_PUSH_NOTIFICATION_USER_BEGIN });
         return remove( pushNotificationUser, `/notifications/subscribe/user/` )
         .then( pushnotificationuser => {
             dispatch({ type: DELETE_PUSH_NOTIFICATION_USER_SUCCESS, payload: pushnotificationuser });
-        }).catch( error => {dispatch({ type: DELETE_PUSH_NOTIFICATION_USER_ERROR , error })});
-   }
-}
+        }).catch( error => { dispatch( { type: DELETE_PUSH_NOTIFICATION_USER_ERROR , error } ); } );
+   };
+};
 
 export const sendPushNotificationMessage = ( users, message ) => {
-    alert( 'sendPushNotificationMessage' )
     return dispatch => {
-        dispatch({ type: SEND_PUSH_NOTIFICATION_MESSAGE_BEGIN })
+        dispatch({ type: SEND_PUSH_NOTIFICATION_MESSAGE_BEGIN });
         return users.forEach(user => {
             return update( { _id: user?._id,  user: user, message: message,  messages: user?.messages }, `/notifications/sendPushNotifications/user/` )
              .then( status => {
                 dispatch({ type: SEND_PUSH_NOTIFICATION_MESSAGE_SUCCESS, payload: status });
                 return status;
-            }).catch( error => {dispatch({ type: SEND_PUSH_NOTIFICATION_MESSAGE_ERROR , error })})  
-        })
-    }
-}
+            }).catch( error => { dispatch({ type: SEND_PUSH_NOTIFICATION_MESSAGE_ERROR , error }); });  
+        });
+    };
+};
 
 export const retryPushNotificationMessage = ( users, message, failedNotification ) => {
-    alert( 'retryPushNotificationMessage' )
     return dispatch => {
-        dispatch({ type: RETRY_PUSH_NOTIFICATION_MESSAGE_BEGIN })
+        dispatch({ type: RETRY_PUSH_NOTIFICATION_MESSAGE_BEGIN });
         return users.forEach(user => {
             return update( { _id: user?._id,  user: user, message: message,  messages: user?.messages, failedNotification }, `/notifications/retryPushNotifications/user/` )
              .then( status => {
-
-                alert( 'retryPushNotificationMessage success' )
                 dispatch({ type: RETRY_PUSH_NOTIFICATION_MESSAGE_SUCCESS, payload: status });
                 return status;
             }).catch( error => { 
-                alert( 'retryPushNotificationMessage error' )
-
-                dispatch({ type: RETRY_PUSH_NOTIFICATION_MESSAGE_ERROR , error })}
-            )  
-        })
-    }
-}
+                dispatch( { type: RETRY_PUSH_NOTIFICATION_MESSAGE_ERROR , error }); }
+            );  
+        });
+    };
+};
 
 export const getSelectedPushNotificationUsers = ( selectedUsers, pushNotificationSubscribers ) => {
     return dispatch => {
-        let selectedPushNotificationSubscribers  = pushNotificationSubscribers?.filter(pushuser => { return selectedUsers.find(selecteduser => selecteduser?._id === pushuser?.userId)  })
+        let selectedPushNotificationSubscribers  = pushNotificationSubscribers?.filter( pushuser => { return selectedUsers.find(selecteduser => selecteduser?._id === pushuser?.userId);  });
+
         dispatch({ type: SELECTED_PUSH_NOTIFICATION_SUBSCRIBERS, payload: selectedPushNotificationSubscribers });
-     }
-}
+     };
+};

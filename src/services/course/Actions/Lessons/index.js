@@ -24,55 +24,56 @@ export const TOGGLE_BOARD_OR_EDITOR = "TOGGLE BOARD OR EDITOR";
 
 export const addNewLesson = ( title, courseId, lessonDate, userId ) => {
     return dispatch => {
-        dispatch({ type: ADD_NEW_LESSON_BEGIN })
+        dispatch({ type: ADD_NEW_LESSON_BEGIN });
         return add({ title, courseId, lessonDate, userId }, '/lessons')  
         .then( lesson => { 
-            dispatch({ type: ADD_NEW_LESSON_SUCCESS, payload: lesson }) 
+            dispatch({ type: ADD_NEW_LESSON_SUCCESS, payload: lesson }); 
         }).catch( error => {
-            dispatch({ type: ADD_NEW_LESSON_ERROR , error })
+            dispatch({ type: ADD_NEW_LESSON_ERROR , error });
         });
     };
 };
 
 export const saveLesson = ( lesson ) => {
    return dispatch => {
-        dispatch({ type: SAVE_LESSON_BEGIN })
+        dispatch({ type: SAVE_LESSON_BEGIN });
         return update( lesson, `/lessons/` )
             .then( lesson => {  
                 dispatch({        
-                type: SAVE_LESSON_SUCCESS, payload: lesson }) 
+                type: SAVE_LESSON_SUCCESS, payload: lesson }); 
             }).catch( error => {
-                dispatch({ type: SAVE_LESSON_ERROR , error })
+                dispatch({ type: SAVE_LESSON_ERROR , error });
         });  
    };
 };
 
 export const loadLessons = ( courseId ) => {
     return dispatch => {
-        dispatch({ type: LOAD_LESSONS_BEGIN })
+        dispatch({ type: LOAD_LESSONS_BEGIN });
         return getById( courseId, `/lessons?courseId=`)
             .then( lesson => {
                 dispatch({ type: LOAD_LESSONS_SUCCESS, payload: lesson });
             })
             .catch( error => {
-                dispatch({ type: LOAD_LESSONS_ERROR , error })
+                dispatch({ type: LOAD_LESSONS_ERROR , error });
         });
-    }
-}
+    };
+};
 
 export const deleteLesson = lesson => {
     return dispatch => {
-        dispatch({ type: DELETE_LESSON_BEGIN })
+        dispatch({ type: DELETE_LESSON_BEGIN });
          return remove( lesson, `/lessons/` )
          .then( () => {
              dispatch({ type: DELETE_LESSON_SUCCESS, payload: lesson });
          }).catch( error => {
-            dispatch({ type: DELETE_LESSON_ERROR , error })
+            dispatch({ type: DELETE_LESSON_ERROR , error });
         });
-    }
-}
+    };
+};
 
 let timerHandle = null;
+
 export const setMarkDown = ( teachObject, markDown, teachObjectType="", actionType, saveAction  ) => {
     return ( dispatch, getState )  => {
         dispatch({ type: actionType, payload: {   
@@ -82,24 +83,24 @@ export const setMarkDown = ( teachObject, markDown, teachObjectType="", actionTy
 
         if ( timerHandle ){
             clearTimeout( timerHandle );
-        }
+        };
         timerHandle = setTimeout(() => {
-            console.log("...saving markdown text"); 
             const latestTeachObjectData = getState()[teachObjectType][teachObjectType][ teachObject?._id ]; 
+            
             dispatch(saveAction( latestTeachObjectData ));
         }, 2000);  
     };
-}
+};
 
 export const setLessonInProgressStatus = () => ({
     type: LESSON_IN_PROGRESS
-})
+});
 
 export const getLessonVideoUrl = (videoUrl) => {
     return dispatch => {
-        dispatch({ type: SELECTED_LESSON_URL, payload: videoUrl})
-    }
-}
+        dispatch({ type: SELECTED_LESSON_URL, payload: videoUrl});
+    };
+};
 
 export const toggleTeachBoardOrEditor = () => ({
     type: TOGGLE_BOARD_OR_EDITOR

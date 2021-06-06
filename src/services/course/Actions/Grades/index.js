@@ -25,24 +25,24 @@ export const TOGGLE_ADD_NEW_GRADE_FORM = "TOGGLE ADD NEW GRADE FORM";
 
 export const loadGrades = ( ) => {
     return dispatch => {
-         dispatch({ type: LOAD_GRADES_BEGIN })
+         dispatch({ type: LOAD_GRADES_BEGIN });
          return get(`/grades`)
           .then( grades => { 
-                dispatch({ type: LOAD_GRADES_SUCCESS, payload: grades }) 
+                dispatch({ type: LOAD_GRADES_SUCCESS, payload: grades }); 
            }).catch( error => {
-               dispatch({ type: LOAD_GRADES_ERROR , error })
+               dispatch({ type: LOAD_GRADES_ERROR , error });
            }); 
     };
 };
 
 export const loadGradesByStudentId = ( studentId ) => {
     return dispatch => {
-         dispatch({ type: LOAD_GRADES_BEGIN })
+         dispatch({ type: LOAD_GRADES_BEGIN });
          return getById( studentId, `/grades?studentId=` )
           .then( grades => {           
-            dispatch({ type: LOAD_GRADES_SUCCESS, payload: grades }) 
+            dispatch({ type: LOAD_GRADES_SUCCESS, payload: grades }); 
            }).catch( error => {
-               dispatch({ type: LOAD_GRADES_ERROR , error })
+               dispatch({ type: LOAD_GRADES_ERROR , error });
            });         
     };
 };
@@ -55,8 +55,8 @@ export const addNewGrade = ( student, course, grade, currentGrades, pushNotifica
          if ( currentGrades ) {
             let previousTestScore = currentGrades[currentGrades?.length -1]?.score;
             let currentTestScore = parseInt(grade?.score, 10);
+
                if ( previousTestScore ) {
-   
                     if ( previousTestScore > currentTestScore ) {
                         result =  ( ( ( previousTestScore - currentTestScore ) / previousTestScore ) * 100 );
                         symbol = "<";
@@ -72,12 +72,11 @@ export const addNewGrade = ( student, course, grade, currentGrades, pushNotifica
                         symbol = "-";
                     }
                 }      
-
          } else {
             result = 0;
             symbol = "-";
         } 
-        grade = { ...grade, studentId: student?._id, percentChange: result, symbol: symbol } 
+        grade = { ...grade, studentId: student?._id, percentChange: result, symbol: symbol }; 
         return add({ ...grade }, '/grades' )
                 .then( grade => { 
                         dispatch({        
@@ -96,26 +95,25 @@ export const addNewGrade = ( student, course, grade, currentGrades, pushNotifica
 
 export const saveGrade = ( grade ) => {
    return dispatch => {
-        dispatch({ type: SAVE_GRADE_BEGIN })
+        dispatch({ type: SAVE_GRADE_BEGIN });
         return update( grade, `/grades/` )
          .then( grade => {  
              dispatch({        
-              type: SAVE_GRADE_SUCCESS, payload: grade }) 
+              type: SAVE_GRADE_SUCCESS, payload: grade }); 
           }).catch( error => {
-              dispatch({ type: SAVE_GRADE_ERROR , error })
+              dispatch({ type: SAVE_GRADE_ERROR , error });
           });
-        
    };
 };
 
 export const deleteGrade = grade => {
    return dispatch => {
-       dispatch({ type: DELETE_GRADE_BEGIN })
+       dispatch({ type: DELETE_GRADE_BEGIN });
         return remove( grade, `/grades/` )
         .then( () => {
             dispatch({ type: DELETE_GRADE_SUCCESS, payload: grade });
         }).catch( error => {
-            dispatch({ type: DELETE_GRADE_ERROR , error })
+            dispatch({ type: DELETE_GRADE_ERROR , error });
         });
-   }
-}
+   };
+};

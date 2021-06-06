@@ -20,24 +20,24 @@ export const DELETE_TIMELINE_ERROR = "DELETE TIMELINE ERROR";
 
 export const loadTimeLines = ( ) => {
     return dispatch => {
-         dispatch({ type: LOAD_TIMELINES_BEGIN })
+         dispatch({ type: LOAD_TIMELINES_BEGIN });
          return get(`/timelines`)
           .then( timelines => { 
-                dispatch({ type: LOAD_TIMELINES_SUCCESS, payload: timelines }) 
+                dispatch({ type: LOAD_TIMELINES_SUCCESS, payload: timelines }); 
            }).catch( error => {
-               dispatch({ type: LOAD_TIMELINES_ERROR , error })
+               dispatch({ type: LOAD_TIMELINES_ERROR , error });
            }); 
     };
 };
 
 export const loadTimeLinesByTimeLineId = ( timeLineId ) => {
     return dispatch => {
-         dispatch({ type: LOAD_TIMELINES_BEGIN })
+         dispatch({ type: LOAD_TIMELINES_BEGIN });
          return getById( timeLineId, `/timeLines/timelines?timeLineId=` )
           .then( timelines => {           
-            dispatch({ type: LOAD_TIMELINES_SUCCESS, payload: timelines }) 
+            dispatch({ type: LOAD_TIMELINES_SUCCESS, payload: timelines }); 
            }).catch( error => {
-               dispatch({ type: LOAD_TIMELINES_ERROR , error })
+               dispatch({ type: LOAD_TIMELINES_ERROR , error });
            });         
     };
 };
@@ -55,29 +55,27 @@ export const addNewTimeLine = ( timeLineName, groups, items, operatorId  ) => {
     };
 };
 
-
 export const saveTimeLine = ( timeline ) => {
    return dispatch => {
-        dispatch({ type: SAVE_TIMELINE_BEGIN })
+        dispatch({ type: SAVE_TIMELINE_BEGIN });
         return update( timeline, `/timelines/` )
          .then( timeline => {  
              dispatch({        
-              type: SAVE_TIMELINE_SUCCESS, payload: timeline }) 
+              type: SAVE_TIMELINE_SUCCESS, payload: timeline }); 
           }).catch( error => {
-              dispatch({ type: SAVE_TIMELINE_ERROR , error })
-          });
-        
+              dispatch({ type: SAVE_TIMELINE_ERROR , error });
+          });  
    };
 };
 
 export const deleteTimeLine = timeLine => {
    return dispatch => {
-       dispatch({ type: DELETE_TIMELINE_BEGIN })
+       dispatch({ type: DELETE_TIMELINE_BEGIN });
         return remove( timeLine, `/timelines/` )
         .then( () => {
             dispatch({ type: DELETE_TIMELINE_SUCCESS, payload: timeLine });
         }).catch( error => {
-            dispatch({ type: DELETE_TIMELINE_ERROR , error })
+            dispatch({ type: DELETE_TIMELINE_ERROR , error });
         });
-   }
-}
+   };
+};

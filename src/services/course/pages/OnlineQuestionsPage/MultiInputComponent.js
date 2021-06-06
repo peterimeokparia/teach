@@ -81,8 +81,6 @@ const MultiInputComponent = ( { inputFieldOptions, animateInvitationButton } ) =
 
 
 
-
-
   const  handleSubmit = () => {
 
 

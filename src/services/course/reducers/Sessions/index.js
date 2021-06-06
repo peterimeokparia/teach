@@ -31,6 +31,7 @@ const initialState = {
 
 const reducer =  produce( (draft, action) => {
     switch(action.type){
+
         case ADD_SESSION_BEGIN:
         case SAVE_SESSION_BEGIN:     
             draft.saveInProgress = true;
@@ -51,7 +52,7 @@ const reducer =  produce( (draft, action) => {
         return;
         case LOAD_SESSIONS_SUCCESS:
             action.payload.forEach(session => {
-                draft.sessions[session?._id] = session
+                draft.sessions[session?._id] = session;
             });
         return;    
         case LOAD_SESSIONS_ERROR:
@@ -63,10 +64,10 @@ const reducer =  produce( (draft, action) => {
              draft.sessions[action.payload._id] = action.payload;
         return;    
         case ERROR_DECREMENT_SESSION_COUNT_FOR_PACKAGE_OPTIONS:
-             draft.sessionDecrementError = action.error
+             draft.sessionDecrementError = action.error;
         return;
         case ERROR_INCREMENTING_SESSION_COUNT:
-             draft.sessionIncrementError = action.error                            
+             draft.sessionIncrementError = action.error;                            
         return;
         case DELETE_SESSION_SUCCESS:
              delete draft.sessions[action.payload._id];
@@ -80,6 +81,7 @@ const reducer =  produce( (draft, action) => {
         case AUTO_RENEW_PACKAGE_ERROR:      
         default:
         return;
+
     } 
 }, initialState);
 

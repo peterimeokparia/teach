@@ -16,7 +16,7 @@ loginUser } from 'Services/course/Actions/Users';
 import { 
 getOperatorFromOperatorBusinessName } from 'Services/course//Selectors';
 
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 import './style.css';
 
@@ -28,31 +28,26 @@ operator,
 operatorBusinessName,
 userId,
 classRoomId }) => {
-
 useEffect(() =>{ 
-
   if ( ! users ) { 
-    updateCurrentUser( {_id: userId } )
+    updateCurrentUser( { _id: userId } );
   }
-},  [])   
+},  [ updateCurrentUser, userId, users ]);   
+// },  [])   
 
 const [ passWordValue, setPasswordValue ] = useState("");
 
 const handleLoginUser = (event) => {   
-
   if ( users.length > 0 ) {
       let currentUser = users.find(user => user?._id === userId );
 
-      if ( currentUser ) {
-          
+      if ( currentUser ) {    
           if ( currentUser?.userIsVerified ) {
             navigate(`http://localhost:3000/${operatorBusinessName}/users`);   
-          }
-      
+          }   
           if ( currentUser ) {
-
               if (passWordValue) {
-                loginUser( { ...currentUser, password: passWordValue, userIsVerified: true, unHarshedPassword: passWordValue } )
+                loginUser( { ...currentUser, password: passWordValue, userIsVerified: true, unHarshedPassword: passWordValue } );
                 if ( classRoomId ) {
                   navigate(`/${operatorBusinessName}/LessonPlan/invite/userverified/classRoom/${classRoomId}`);
                 } else {
@@ -65,11 +60,11 @@ const handleLoginUser = (event) => {
           }
         }
     }    
-}
+};
 
 const handleSubmit = e => {
     e.preventDefault();
-}
+};
 
 return (
   <div className="LoginPage"> 
@@ -97,7 +92,7 @@ return (
      </form>              
   </div> 
   );
-}
+};
 
 const mapState = ( state, ownProps )   => {  
 return {
@@ -109,6 +104,6 @@ return {
     loading: state?.users?.loading,
     sessions: Object.values(state?.sessions?.sessions)?.filter(session => session?.UserId === ownProps?.currentUser?._id)        
   };
-}
+};
 
 export default connect(mapState, { loginUser, updateCurrentUser })(AccountVerificationForm);

@@ -14,7 +14,6 @@ error,
 loading,
 handleCreateUser, 
 users }) => {
-
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
 const [firstName, setFirstName] = useState('');
@@ -24,16 +23,14 @@ const [ displayOtherFormFields, setToDisplayOtherFormFields ] = useState(false);
 const roles = {
   Tutor: "Tutor",
   Student: "Student" 
-}
+};
 
 const handleSubmit = (e) => {
   e.preventDefault();
-}
+};
 
 const getOtherFormFields = () => {
-
     if ( email ) {
-
         if ( users?.find(user => user?.email === email ) === undefined ) {
             setToDisplayOtherFormFields( true );
         } else {
@@ -41,7 +38,8 @@ const getOtherFormFields = () => {
           return;
         }
     } 
-}
+};
+
 return (    
           <div className="LoginPage"> 
               <form onSubmit={ e => handleSubmit(e)}>
@@ -141,6 +139,6 @@ return (
               {Validations.setErrorMessageContainer()}                  
             </div> 
     );
-}
+};
 
 export default RegistrationForm;

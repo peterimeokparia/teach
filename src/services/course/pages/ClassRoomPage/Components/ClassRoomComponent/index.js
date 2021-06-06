@@ -36,7 +36,6 @@ config,
 markAttendance,
 addNewGrade,
 userNavigationHistory }) => {
-
 if ( ! config.currentUser?.userIsValidated || ! config.operator ){
     navigate(`/${config.operatorBusinessName}/login`);
 }
@@ -158,6 +157,6 @@ return (
                 </div>
         </div>
     );
-}
+};
 
 export default connect( null, { userNavigationHistory, markAttendance, addNewGrade } )(ClassRoomComponent);

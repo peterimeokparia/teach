@@ -3,23 +3,25 @@
         "react-app"
     ],
     "rules": {
-        "prettier/prettier": "error",
-        "no-unused-vars": "error",
+        // "prettier/prettier": "warn",
+        "no-unused-vars": "warn",
         "func-names": "off",
         "no-process-exit": "off",
-        "block-spacing": "error",
-        "indent": ["warn", 1],
+        "block-spacing": "warn",
+        "template-curly-spacing" : "off",
+        "indent": "off",
+        // "indent": ["warn", 1],
         "padding-line-between-statements": [
-            "error",
+            "warn",
             { "blankLine": "always", "prev": ["const", "var", "let"], "next": "*" },
             { "blankLine": "any",    "prev": ["const", "let", "var"], "next": ["const", "let", "var"]},
-            { "blankLine": "always", "prev": ["case", "default"], "next": "*" }    
+            { "blankLine": "always", "prev": ["default"], "next": "*" }   
         ],
-        "lines-between-class-members": ["error", "always"],
-        "padded-blocks": ["error", { "blocks": "always", "classes": "always", "switches": "always"} ],
-        "react-hooks/rules-of-hooks": "error",
-        "react-hooks/exhaustive-deps": "error",
-        "semi": ["error", "always"],
-        "no-unexpected-multiline": "error"
+        "lines-between-class-members": ["warn", "always"],
+        "padded-blocks": ["warn", { "blocks": "never", "classes": "always", "switches": "always"} ],
+        "react-hooks/rules-of-hooks": "warn",
+        "react-hooks/exhaustive-deps": "warn",
+        "semi": ["warn", "always"],
+        "no-unexpected-multiline": "warn"
     }
 }

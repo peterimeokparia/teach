@@ -9,10 +9,10 @@ navigate } from '@reach/router';
 import {
 navContent } from  'Services/course/Pages/Components/NavigationHelper';
 
-import { 
-addCalendar,
-saveCalendar,
-loadAllCalendars } from 'Services/course/Actions/Calendar';
+// import { 
+// addCalendar,
+// saveCalendar,
+// loadAllCalendars } from 'Services/course/Actions/Calendar';
 
 import { 
 getCalendarsByOperatorId,
@@ -33,7 +33,7 @@ import TimelineIcon from '@material-ui/icons/Timeline';
 import BookIcon from '@material-ui/icons/Book';
 import ForumIcon from '@material-ui/icons/Forum';
 import './style.css'; // rename css styling attributes
-import { green } from '@material-ui/core/colors';
+// import { green } from '@material-ui/core/colors';
 //shadow-panel
 
 const Users = ({
@@ -47,13 +47,12 @@ calendars,
 events,
 user,
 users }) => {
-
 if ( ! user?.userIsValidated || ! operator ){
     navigate(`/${operatorBusinessName}/login`);
 }
 
 if ( coursesLoading) {
-    return <Loading />
+    return <Loading />;
 }
 
 if ( onCoursesError ) {
@@ -67,36 +66,39 @@ const viewCurrentUsersCourseList = ( userId ) => {
     //navigate(`/${operatorBusinessName}/homework/askquestion/000111`);
 
     //test 
-    navigate(`/${operatorBusinessName}/test/605d63b2d0c161039cce22ae/60707c401c5ffb2409411ab8/001/002`)
-}
+    navigate(`/${operatorBusinessName}/test/605d63b2d0c161039cce22ae/60707c401c5ffb2409411ab8/001/002`);
+};
 
 const gotToLessonPlan = ( user ) => { 
     navigate(`/${operatorBusinessName}/classroom/${user._id}`);
-}
+};
 
 const gotToCalendar = ( user ) => {
     let schedulingCalendar = calendars?.find( cal => cal?.calendarEventType === 'sessionscheduling' && cal?.userId === user?._id);
+
     if ( schedulingCalendar ) navigate(`/${operatorBusinessName}/schedule/sessionscheduling/calendar/${schedulingCalendar._id}/user/${user._id}`);
-}
+};
 
 const gotToConsultationCalendarTest = ( user ) => {
     let consultingCalendar = calendars?.find( cal => cal?.calendarEventType === 'consultationform' && cal?.userId === user?._id);
-    if ( consultingCalendar ) navigate(`/${operatorBusinessName}/schedule/consultationform/calendar/${consultingCalendar?._id}/user/${user._id}`);   
-}
 
-const goToTestPage = ( user ) => {
-    let calendar = Object.values( calendarEvents )?.find(calEvent => calEvent?.userId === user?._id && calEvent?.calendarEventType === 'sessionscheduling' );
-    alert( calendar );
-    navigate(`/${operatorBusinessName}/sessionscheduling/calendar/${ calendar?._id }/${user._id}`)
-}
+    if ( consultingCalendar ) navigate(`/${operatorBusinessName}/schedule/consultationform/calendar/${consultingCalendar?._id}/user/${user._id}`);   
+};
+
+// const goToTestPage = ( user ) => {
+//     let calendar = Object.values( calendarEvents )?.find(calEvent => calEvent?.userId === user?._id && calEvent?.calendarEventType === 'sessionscheduling' );
+
+//     alert( calendar );
+//     navigate(`/${operatorBusinessName}/sessionscheduling/calendar/${ calendar?._id }/${user._id}`)
+// };
 
 const goToOnlineTutoringRequest = ( user ) => {
-    navigate(`/${operatorBusinessName}/schedule/onlinetutoringrequest/calendar/${user._id}`)
-}
+    navigate(`/${operatorBusinessName}/schedule/onlinetutoringrequest/calendar/${user._id}`);
+};
 
 const goToTimeLine = ( user ) => {
     navigate(`/${operatorBusinessName}/schedule/sessionscheduling/timeline/${user._id}`);
-}
+};
 
 let navigationContent = navContent( user, operatorBusinessName, user?.role,  "Student" ).users;
 
@@ -119,7 +121,7 @@ return (
                             <div className={ "user-list-items-users"}>
                                 <div className="row">
                                     <div className="col-1"> 
-                                        <img src={singleUser?.avatarUrl} width="80" height="80" alt="profile picture"/>
+                                        <img src={singleUser?.avatarUrl} width="80" height="80" alt=''/>
                                     </div>
                                      <div className="col-10">
                                         <NavLinks to={`/${operatorBusinessName}/coursestaught/about/${singleUser?._id}`}>
@@ -231,8 +233,8 @@ return (
             </ul>
         </div>
         </div>
-    )       
-}
+    );       
+};
 
 const mapState = ( state, ownProps ) => ({
     user: state?.users?.user,
@@ -244,6 +246,6 @@ const mapState = ( state, ownProps ) => ({
     courses: getCoursesByOperatorId(state, ownProps),
     coursesLoading: state?.courses?.coursesLoading,
     onCoursesError: state?.courses?.onCoursesError  
-})
+});
 
 export default connect(mapState)(Users);

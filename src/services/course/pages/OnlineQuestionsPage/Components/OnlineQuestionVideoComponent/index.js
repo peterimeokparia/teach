@@ -1,44 +1,44 @@
-import 
-React, {
-useState } from 'react';
+import React from 'react';
+
+import { 
+connect } from 'react-redux';
+
+import {
+recordingStatusRecordingStarted,
+recordingStatusRecordingStopped,
+recordingDialogOpen,
+recordingDialogClosed } from 'Services/course/Actions/Video';
 
 import VideoComponent from 'Services/course/Pages/QuestionsPage/Components/VideoComponent';
-import DeleteIcon from '@material-ui/icons/Delete';
-import SaveIcon from '@material-ui/icons/Save';
+// import SaveIcon from '@material-ui/icons/Save';
 import './style.css';
 
 const OnlineQuestionVideoComponent = ({
 element,
-config } ) => { 
-
-let [ selectedQuestion, setSelectedQuestion ] = useState(undefined);
-
-const handleSelectedQuestion = ( selected ) => {
-    setSelectedQuestion( selected );
-}
-
+config,
+} ) => { 
 return (
-      <div className=""> 
-        <div 
-          onClick={() => handleSelectedQuestion(  element )} 
-        >
-          <div className={ config?.videoClassName }>
-            <video
-              className={ config?.videoClassName }
-              src={element?.videoUrl}
-              autoPlay={false}
-              controls
-            >
-            </video>
-          </div>
-          <div> 
+      <span className=""> 
+        <span>
+          {
+            <div className={ config?.videoClassName }>
+               <video
+                 className={ config?.videoClassName }
+                 src={element?.videoUrl}
+                 autoPlay={false}
+                 controls
+               >
+               </video>
+            </div>
+          }   
+          <span> 
           <span>
             <VideoComponent
+                element={element}
+                config={config}
                 key={ element?._id }
                 id={ element?._id }
                 name={element?._id}
-                displayMaterialButton={true}
-                videoSectionClassName={ config?.videoSectionClassName }
                 recordButtonText={ config?.recordButtonText }
                 objectId={ element?._id }
                 videoMetaData={{inputFieldId: element?._id, currentQuestion: element} }
@@ -49,38 +49,29 @@ return (
                 handleSubmit={config.handleSubmit}
             />
           </span>
-          <span>
-          { ( element?.videoUrl !== "" || element?.videoUrl !== undefined) &&     
-            <span 
-                key={element?._id}
-                id={ element?._id }
-                name={element?._id}
-            >
-              <DeleteIcon 
-                style={config.deleteIconStyle(  config?.hasRecordingStarted, element?._id, selectedQuestion?._id  )}
-                className="comment-round-button-3"
-                onClick={() => config.deleteVideo( { ...element, videoUrl: "" } )}
-              />
-            </span>
+          { 
+            // <span
+            //   key={element?._id}
+            //   id={ element?._id }
+            //   name={element?._id}
+            // >
+            //   <SaveIcon
+            //     style={config.saveIconStyle( )} 
+            //     onClick={ config.saveRecording }
+            //   />
+            // </span>
           }
           </span>
-          { config.videoUploaded  && 
-            <span
-              key={element?._id}
-              id={ element?._id }
-              name={element?._id}
-            >
-              <SaveIcon
-                style={config.saveIconStyle( element?._id, selectedQuestion?._id )} 
-                onClick={ config.saveRecording }
-              />
-            </span>
-          }
-          </div>
-        </div>
-         
-    </div>  
+        </span>        
+    </span>  
   );
-}
+};
 
-export default OnlineQuestionVideoComponent;
+const mapState = ( state, ownProps ) => {
+  return {
+    hasRecordingStarted: state.hasRecordingStarted.hasRecordingStarted,
+    isRecordingDialogOpen: state.hasRecordingStarted.recordingDialogOpen
+  };
+};
+
+export default connect( mapState, { recordingStatusRecordingStarted, recordingStatusRecordingStopped, recordingDialogClosed, recordingDialogOpen } )( OnlineQuestionVideoComponent );

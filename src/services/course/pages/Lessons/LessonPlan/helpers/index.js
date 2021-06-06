@@ -1,12 +1,13 @@
 export const getUrls = (currentUser, courseId, lessonId, lessonTitle) => {
   const page = `${courseId}_${lessonId}_${lessonTitle}`; 
+
   return {
       meeting:{ prod: `https://joinmeet.today/${page}`, dev:`https://joinmeet.today/${page}`},
       editor:{ prod:`https://padsconnect247.com/editor/p/${lessonTitle}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false`, dev:`http://localhost:9002/p/${lessonTitle}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false` },
       canvas:{ prod:`https://padsconnect247.com/whiteboard/?whiteboardid=${page}&username=${currentUser?.firstname}`, dev:`http://localhost:8080/?whiteboardid=${page}&username=${currentUser?.firstname}`},
       recorder:{ prod:`https://padsconnect247.com/LessonPlan/VideoModal/${courseId}/${lessonId}/${lessonTitle}`, dev:`http://localhost:3000/LessonPlan/VideoModal/${courseId}/${lessonId}/${lessonTitle}`}
-  }
-}
+  };
+};
 
 export const meetingConfigSettings = (course, lessonTitle) => { 
     return { 
@@ -41,8 +42,8 @@ export const meetingConfigSettings = (course, lessonTitle) => {
           minHeight: 190
         } 
      }
-    } 
-}
+    };
+};
 
 export function getStudentsSubscribedToCurrentCourse(students, meeting){
   return students?.filter(student => meeting?.invitees?.includes(student?._id));
@@ -55,9 +56,9 @@ export function getCurrentStudentsPaidSessions(usersPaidSessions, student, tutor
 }
 
 export function urls() {
-  return {
-    
-  }
+  return { 
+    // fix
+  };
 }
 
 // export function handleRedirectionsOnPageLoad(){

@@ -1,7 +1,8 @@
 import 
 React, { 
 useState, 
-useEffect } from 'react';
+useEffect,
+useRef } from 'react';
 
 import { 
 connect } from 'react-redux';
@@ -26,9 +27,11 @@ updateUserInvitationUrl,
 inviteStudentsToLearningSession } from 'Services/course/Actions/Users';
 
 import { 
+getSelectedOnlineAnswersByCourseId,  
 getOperatorFromOperatorBusinessName, 
 getUsersByOperatorId,
-getCoursesByOperatorId } from 'Services/course/Selectors';
+//getCoursesByOperatorId 
+} from 'Services/course/Selectors';
 
 import { 
 meetingConfigSettings, 
@@ -41,14 +44,7 @@ import {
 Rnd } from 'react-rnd';
 
 import { 
-Redirect, 
-navigate } from '@reach/router';
-
-import { 
 navContent } from 'Services/course/Pages/Components/NavigationHelper';
-
-import {
-role } from 'Services/course/helpers/PageHelpers';
   
 import MainMenu from 'Services/course/Pages/Components/MainMenu';
 import NavLinks  from 'Services/course/Pages/Components/NavLinks';
@@ -61,15 +57,17 @@ const TestPocPage = ({  //set config value for props
 operatorBusinessName,
 operator,  
 courseId, 
+answerId,
 lessonId,
 questionId,
-answerId,
 classRoomGroupId,
 classRoomGroupName,
 classRoomId,
 classRoomName,  
 lessonTitle,
 lessons,
+onlineAnswers,
+onlineAnswerId,
 selectedCourseTutor,
 classRoomLessonPlan,
 users,
@@ -80,57 +78,51 @@ loadUsers,
 loadMeetings,
 loadLessons,
 courses  }) => {
+const urls = getUrls(currentUser, courseId, lessonId, lessonTitle);
+const editorUrl = urls.editor.dev;
+const canvasUrl = urls.canvas.dev;   
+const fullScreenSize = "1536px";
 
-  const urls = getUrls(currentUser, courseId, lessonId, lessonTitle)
-  const editorUrl = urls.editor.dev;
-  const canvasUrl = urls.canvas.dev;   
-  const fullScreenSize = "1536px";
-
-  const [ hideMeetingStage, setHideMeetingStage ] = useState(false);
-  const [ fullMeetingStage, setFullMeetingStage ] = useState(false);
-  const [ videoModalModeOn,  setVideoModalMode ] = useState(false);
-  const [ videoModalModeOn2,  setVideoModalMode2 ] = useState(false);
-  const [ session, setSession] = useState( false );  
-  const currentCourse = courses?.find( course => course?._id === courseId );
-  let lesson = lessons?.find( lesson => lesson?._id === lessonId ); 
+const [ hideMeetingStage, setHideMeetingStage ] = useState(false);
+const [ fullMeetingStage, setFullMeetingStage ] = useState(false);
+const [ videoModalModeOn,  setVideoModalMode ] = useState(false);
+const [ videoModalModeOn2,  setVideoModalMode2 ] = useState(false);
+const [ session, setSession ] = useState( false );  
+let onlineAnswer = useRef( onlineAnswers?.find( answer => answer?._id === answerId ) ); 
+// let onlineAnswer = onlineAnswers?.find( answer => answer?._id === answerId ); 
 
   useEffect(()=>{
     loadLessons(courseId);
     loadUsers();
     loadMeetings();
 
-    if ( lessons.length > 0 ) {
-      lesson = lessons?.find(lesson => lesson?._id === lessonId); 
+    if ( onlineAnswers.length > 0 ) {
+      onlineAnswer['current'] = onlineAnswers?.find( answer => answer?._id === answerId ); 
     }
-  }, [ fullMeetingStage, hideMeetingStage, loadMeetings, loadUsers  ]);
+  // }, [ fullMeetingStage, hideMeetingStage, loadMeetings, loadUsers ]);
+  }, [ fullMeetingStage, hideMeetingStage, loadMeetings, loadUsers,   loadLessons, answerId, courseId, onlineAnswers  ]);
 
   const toggleTeach = () => {
-
     if ( session ) {
-    
         if ( videoModalModeOn ){
           Validations.warn( 'Recording In Progress. To end this teaching session, please stop the recording.' );
           return;
         }
-
         if ( fullMeetingStage ){
           setFullMeetingStage(false); 
         }
-
         setSession(false);
         setHideMeetingStage(false);
         loadUsers();
-        let selectedTutor = users?.find(usr => usr?._id === classRoomId );
     }
     else{
         setSession(true);
         setHideMeetingStage(false);
         loadUsers();
     }
-  }
+  };
 
   const showFullMeetingStage = () => {
-
     if ( fullMeetingStage ) {
        setFullMeetingStage(false);
        setHideMeetingStage(false);
@@ -139,35 +131,30 @@ courses  }) => {
       setFullMeetingStage(true);
       setHideMeetingStage(true);
     } 
-  }
+  };
 
   const resetAllStartSettings = () => {
-
     if ( hideMeetingStage ){
        setHideMeetingStage(false);
     }
-  }
+  };
 
   const resetAllStopSettings = () => {
-
     if ( videoModalModeOn ){
       setVideoModalMode(false);
     }
-  }
+  };
 
   const hidePopUpWindow = () => {
-
     if ( ! hideMeetingStage ) {
       setHideMeetingStage(true);
     } else {
       setHideMeetingStage(false);
     }
-  }
+  };
 
- // http://localhost:3000/boomingllc/test/605d63b2d0c161039cce22ae/60707c401c5ffb2409411ab8/001/002
-  // http://localhost:3000/boomingllc/courses/605d63b2d0c161039cce22ae/lessons/60707c401c5ffb2409411ab8
-  const meetingSettings = meetingConfigSettings(currentCourse, lessonTitle);
-  const meetingStyleContainer = ( fullMeetingStage ) ? 'meeting-full' :  ( hideMeetingStage ) ? 'meeting-hide' : `meeting` 
+  const meetingSettings = meetingConfigSettings("currentCourse", lessonTitle);
+  const meetingStyleContainer = ( fullMeetingStage ) ? 'meeting-full' :  ( hideMeetingStage ) ? 'meeting-hide' : `meeting`; 
   let navigationContent = navContent( currentUser, operatorBusinessName, currentUser?.role,  "Student" ).users;   
     
   return (
@@ -204,10 +191,10 @@ courses  }) => {
                                 resetAllStopSettings={ resetAllStopSettings }   
                                 setVideoModalMode={stage => setVideoModalMode2(stage) }
                                 videoModalModeOn={videoModalModeOn}
-                                objectId={lesson?._id} 
-                                videoMetaData={lesson}
-                                videoMetaDataExternalId={"courseId"}
-                                videoNamePrefix={"LessonVideo"}
+                                objectId={onlineAnswer?._id} 
+                                videoMetaData={onlineAnswer}
+                                videoMetaDataExternalId={"name"}
+                                videoNamePrefix={"OnlineAnswerVideoMarkDownEditorsRecordedBoard"}
                                 height={( fullMeetingStage ) 
                                         ? meetingSettings.fullScreen.meetingContainerStyle.containerHeight 
                                         : meetingSettings.popOutScreen.meetingContainerStyle.containerHeight}  
@@ -228,10 +215,10 @@ courses  }) => {
                                  resetAllStopSettings={ resetAllStopSettings }   
                                  setVideoModalMode={stage => setVideoModalMode(stage) }
                                  videoModalModeOn={videoModalModeOn2}
-                                 objectId={lesson?._id} 
-                                 videoMetaData={lesson}
-                                 videoMetaDataExternalId={"courseId"}
-                                 videoNamePrefix={"LessonVideo"}
+                                 objectId={onlineAnswer?._id} 
+                                 videoMetaData={onlineAnswer}
+                                 videoMetaDataExternalId={"name"}
+                                 videoNamePrefix={"OnlineAnswerVideoMarkDownEditorsRecordedBoard"}
                                  height={( fullMeetingStage ) 
                                          ? meetingSettings.fullScreen.meetingContainerStyle.containerHeight 
                                          : meetingSettings.popOutScreen.meetingContainerStyle.containerHeight}  
@@ -275,7 +262,7 @@ courses  }) => {
                 </div>
           </div>
         );
-}
+};
 
 const mapDispatch = {
   loadLessons,
@@ -289,7 +276,7 @@ const mapDispatch = {
   saveMeeting, 
   incrementSessionCount,
   lastLoggedInUser
-}
+};
 
 const mapState = ( state, ownProps )   => {
   return {
@@ -297,8 +284,9 @@ const mapState = ( state, ownProps )   => {
     classRoomLessonPlan: state.classrooms.classRoomLessonPlan,
     operator: getOperatorFromOperatorBusinessName(state, ownProps),
     users: getUsersByOperatorId(state, ownProps),
-    courses: getCoursesByOperatorId(state, ownProps),
+    // courses: getCoursesByOperatorId(state, ownProps),
     currentUser: state.users.user,
+    onlineAnswers: getSelectedOnlineAnswersByCourseId(state, ownProps),
     lessons: Object.values(state.lessons.lessons),
     lessonStarted: state.lessons.lessonStarted,
     boardOrEditor: state.lessons.toggleTeachBoardOrEditor,
@@ -309,6 +297,6 @@ const mapState = ( state, ownProps )   => {
     paidSessions: Object.values(state?.sessions?.sessions),
     onSessionRenewal: state.sessions.autoRenewedPackageSuccess
 };
-}
+};
 
 export default connect(mapState, mapDispatch )(TestPocPage);

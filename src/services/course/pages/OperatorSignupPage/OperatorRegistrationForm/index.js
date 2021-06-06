@@ -8,7 +8,6 @@ const OperatorRegistrationForm = ({
 error, 
 loading,
 handleCreateUser }) => {
-
 const [ email, setEmail ] = useState('');
 const [ password, setPassword ] = useState('');
 const [ firstName, setFirstName ] = useState('');
@@ -18,7 +17,7 @@ const [ phone, setPhone ] = useState('');
 
 const handleSubmit = (e) => {
   e.preventDefault();
-}
+};
 
 return (    
       <div className="LoginPage"> 
@@ -103,6 +102,6 @@ return (
             </form>                     
         </div> 
     );
-}
+};
 
 export default OperatorRegistrationForm;

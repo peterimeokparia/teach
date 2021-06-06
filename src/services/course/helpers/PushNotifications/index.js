@@ -11,9 +11,9 @@ export function serviceWorkerSupported(){
 // Register SW, Register Push, Send Notification
 export async function send( ) {
   console.log('Registering service worker...');
-//   const register = await navigator.serviceWorker.register('../worker.js', { scope: '/' } );
-// const register = await navigator.serviceWorker.register('/../../worker.js', { scope: '/' } );
+// const register = await navigator.serviceWorker.register('../worker.js', { scope: '/' } );
 const register = await navigator.serviceWorker.register('/../../worker.js', { scope: '/' } );
+
   console.log('Service worker registered...');
     // Register Push
   console.log('Registering Push...');
@@ -21,6 +21,7 @@ const register = await navigator.serviceWorker.register('/../../worker.js', { sc
       userVisibleOnly: true, 
       applicationServerKey: urlBase64ToUint8Array( vapidKeys.publicVapidKey )
   });
+  
   console.log('Push Registered!!!');
   console.log(`Subscription details: ${ JSON.stringify(subscription) }`);
     // Send Push Notification

@@ -29,6 +29,7 @@ const initialState = {
 
 const reducer = produce((draft, action) => {
     switch(action.type){
+
         case ADD_COURSE_BEGIN:
         case SAVE_COURSE_BEGIN:     
             draft.saveInProgress = true;
@@ -73,8 +74,8 @@ const reducer = produce((draft, action) => {
         return; 
         default:
         return;
-    }
-    
+        
+    }  
 }, initialState);
 
 export default reducer;

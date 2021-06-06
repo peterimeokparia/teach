@@ -27,7 +27,6 @@ loadSubscribedPushNotificationUsers,
 pushMessageSubscribers,        
 sendPushNotificationMessage, 
 selectedPushMessageUsers }) => {
-
 const [ pushNotificationMessageSubscribers, setPushNotificationMessageSubscribers ] = useState([]); 
 const [ handleFormReset, setHandleFormReset ] = useState(false);   
 
@@ -36,17 +35,16 @@ const handleSendingPushMessage = ( title, message ) => {
 };
 
 useEffect(() => {
-  
   loadSubscribedPushNotificationUsers();
 
   if ( handleFormReset ){
-      setPushNotificationMessageSubscribers([])
+      setPushNotificationMessageSubscribers([]);
       setHandleFormReset(false);
   }
-    
 }, [ loadSubscribedPushNotificationUsers, handleFormReset, pushNotificationMessageSubscribers ]);  
 
 const selectDropDownOptions = pushMessageSubscribers?.filter(subscribeduser => users?.find(usr => subscribeduser?.userId === usr?._id ) ).map(item => ( { value: item,  label: item?.userId }));
+
 return (
         <div>
           <SendNotificationForm 
@@ -64,7 +62,7 @@ return (
             </label>
         </div>
  );
-}
+};
 
 const mapDispatch = (state, ownProps) => {
   return {
@@ -73,6 +71,6 @@ const mapDispatch = (state, ownProps) => {
     pushMessageSubscribers: getPushNotificationUsersByOperatorId(state, ownProps),
     users: getUsersByOperatorId(state, ownProps),
   };
-}
+};
 
 export default connect(mapDispatch, { sendPushNotificationMessage, loadSubscribedPushNotificationUsers })(SendNotificationsPage);

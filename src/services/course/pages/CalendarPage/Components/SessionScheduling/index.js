@@ -25,6 +25,6 @@ return (
             {children}
         </div>
     </>    
-)};
+); };
 
 export default SessionScheduling;

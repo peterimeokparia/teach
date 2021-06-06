@@ -1,6 +1,4 @@
-import 
-React, {
-useState } from 'react';
+import React from 'react';
 
 import { 
 connect } from 'react-redux';
@@ -16,28 +14,36 @@ import {
 homeWorkAnswerPlaceHolder } from 'Services/course/helpers/EditorHelpers';
 
 import { 
+videoCallIconMain,
+videoCallIcon,
+shareScreenIcon,
+exitVideoCallIcon,  
 deleteQuestionIconStyle,  
 onlineQuestionVideoDeleteIconStyle, 
+saveQuestionIconStyle,
 saveIconStyle } from './inlineStyles';
 
-import EditorComponent from 'Services/course/Pages/QuestionsPage/Components/EditorComponent';
-import VideoComponent from 'Services/course/Pages/QuestionsPage/Components/VideoComponent';
+import {
+handleAddPushNotificationSubscriptionToEntity,
+handleEmailNotificationSubscriptionToEntity,
+handleSavingEntityAction } from 'Services/course/Pages/Components/SubscriptionComponent/MiniSideBarMenu/helper';
+
+import EditorComponent from 'Services/course/Pages/Components/EditorComponent';
 import AnswerComponent from 'Services/course/Pages/QuestionsPage/Components/AnswerComponent';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
-import MiniSideBarMenu from 'Services/course/Pages/OnlineQuestionsPage/Components/MiniSideBarMenu';
+import MiniSideBarMenu from 'Services/course/Pages/Components/SubscriptionComponent/MiniSideBarMenu';
 import OnlineQuestionVideoComponent from 'Services/course/Pages/OnlineQuestionsPage/Components/OnlineQuestionVideoComponent';
+import MiniSideBarButton from '../../../Components/SubscriptionComponent/MiniSideBarButton';
 import './style.css';
 
 const OnlineListItems = ({ 
   config, 
   courseId,
   saveOnlineQuestion,
-  hasRecordingStarted, 
   currentUser }) => {
-
   if ( config?.form === undefined ) {
-    return  ( <> <div> </div> </>)
+    return  ( <> <div> </div> </>);
   } 
 
   let manageEditorConfig = ( element ) => { 
@@ -48,42 +54,46 @@ const OnlineListItems = ({
       onlineQuestionId: config?.onlineQuestionId,
       editorContentType: editorContentType.Explanation, 
       fieldName: elementMeta.explanationAnswerCollection, 
-      placeHolder: homeWorkAnswerPlaceHolder,
+      placeHolder: null,
+      // placeHolder: homeWorkAnswerPlaceHolder,
       currentQuestion: element
-  }}
+  }; };
 
   let deleteVideo = ( selectedQuestion ) => {
-    saveOnlineQuestion( selectedQuestion )
-  }
-  
-  let onlineVideoConfig = ( element, hasRecordingStarted ) => {
+    saveOnlineQuestion( selectedQuestion );
+  };
+ 
+  let onlineVideoConfig = ( element ) => {
     return {
       videoUploaded: config?.videoUploaded,
       saveRecording: config?.saveRecording,
       handleSubmit: config?.handleSubmit,
       setRecordingCompletionStatus: config?.setRecordingCompletionStatus,
       deleteVideo: deleteVideo,
+      videoCallIconMain,
+      videoCallIcon,
+      shareScreenIcon,
+      exitVideoCallIcon,
       deleteIconStyle: onlineQuestionVideoDeleteIconStyle,
       saveIconStyle: saveIconStyle,
-      hasRecordingStarted: hasRecordingStarted,
-      videoNamePrefix: 'OnlineQuestionVideoMarkDownEditors',
+      videoNamePrefix: 'OnlineQuestionVideoMarkDownEditors', 
       recordButtonText: 'Record Question',
       displayMaterialButton: true,
-      videoSectionClassName: ( hasRecordingStarted ) ? "videoSection-recording" : "videoSection-recordingStopped",
+      videoSectionClassNameRecording: "mainVideoSection-recording",
+      videoSectionClassNameRecordingStopped: "mainVideoSection-recordingStopped",
+      videoSectionClassNameNoRecording: "mainVideoSection-recordingStopped", 
       videoClassName: ( element?.videoUrl === ""  ) ? "videoPlayer" : "",
-      deleteVideo: () => deleteVideo( element )
-    }
-  }
+      exitVideoCallIconPageName: "OnlineListItems",
+      videoSectionCallOut: "videoSectionCallOut"
+    };
+  };
+
   return config?.form?.map((element) => (
-    <> 
-    {/* https://www.google.com/search?client=firefox-b-1-d&q=receive+push+notification+material+ui+icon */}
-        <div className={"onlineListItemMultipleChoiceQuestion"}
-          id={ element?._id }
-          key={ element?._id }
-        >
-          <label className={"labelQuestion"}>
-            <br></br>               
-          </label>
+    <>
+      <div className={"OnlineListItems"}
+        id={ element?._id }
+        key={ element?._id }
+      >
         <div> 
         <span>
           <MiniSideBarMenu 
@@ -91,88 +101,48 @@ const OnlineListItems = ({
             key={ element?._id }
             currentUser={ currentUser }
             question={ element }
-          />
+            pushNotificationsEnabled={ element?.questionPushNotificationSubscribers?.includes( currentUser?._id ) || element?.userId === currentUser?._id }
+            emailNotificationsEnabled={ element?.questionEmailNotificationSubscribers?.includes( currentUser?._id )  }  
+            entitySavedEnabled={ element?.savedQuestions?.includes( currentUser?._id ) }
+            handleAddPushNotificationSubscription={() => handleAddPushNotificationSubscriptionToEntity( element, element?.questionPushNotificationSubscribers, currentUser,  saveOnlineQuestion, 'questionPushNotificationSubscribers'  )}
+            handleEmailNotificationSubscription={() => handleEmailNotificationSubscriptionToEntity( element, element?.questionEmailNotificationSubscribers, currentUser,  saveOnlineQuestion, 'questionEmailNotificationSubscribers' )}
+            handleSaving={() => handleSavingEntityAction( element, element?.savedQuestions, currentUser,  saveOnlineQuestion, 'savedQuestions' ) }
+          >
+            {( key, handleMouseDown, menuVisible ) => (
+              <MiniSideBarButton
+                key={ key }
+                mouseDown={ handleMouseDown }
+                navMenuVisible={ menuVisible } 
+              />
+            )}
+            </MiniSideBarMenu>
         </span>   
-        <span >
-        <DeleteIcon
-          style={deleteQuestionIconStyle()}
-          className="comment-round-button-3"
+        <span>
+        <SaveIcon
+          style={saveQuestionIconStyle()} saveQuestionIconStyle
+          className="comment-round-button-4"
           onClick={() => config.deleteQuestion( element )}
         />
-        </span>
+         <DeleteIcon
+            style={ deleteQuestionIconStyle() }
+            className="comment-round-button-3"
+            onClick={() => config.deleteQuestion( element )}
+          />
+        </span> 
           <EditorComponent
             className={"answerDisplay"}
             key={element?._id}
             id={element?._id}
             name={element?.name}
-            onChange={(editor) => config?.handleChange( editor, element )}
-            content= { JSON.parse( element?.markDownContent ) }
+            //onChange={(editor) => config?.handleChange( editor, element )}
+            //content={ JSON.parse( element?.markDownContent ) }
             upload_url={config.upload_url}
             upload_handler={( file, imageBlock ) => config?.uploadImageUrl( file, imageBlock, element?.id )}
             readOnly={config.previewMode? true : false }
           /> 
-        {/* <div 
-          onClick={() => setSelectedQuestion(  element )} 
-        >
-          <div className={ ( element?.videoUrl === ""  ) ? "videoPlayer" : ""}>
-            <video
-              className={ ( element?.videoUrl === "" ) ? "videoPlayer" : ""}
-              src={element?.videoUrl}
-              autoPlay={false}
-              controls
-            >
-            </video>
-          </div>
-          <div> 
-          <span>
-            <VideoComponent
-                key={ element?._id }
-                id={ element?._id }
-                name={element?._id}
-                displayMaterialButton={true}
-                videoSectionClassName={ ( hasRecordingStarted ) ? "videoSection-recording" : "videoSection-recordingStopped" }
-                recordButtonText={'Record Question'}
-                objectId={ element?._id }
-                videoMetaData={{inputFieldId: element?._id, currentQuestion: element} }
-                videoMetaDataExternalId={'name'}
-                videoNamePrefix={"OnlineQuestionVideoMarkDownEditors"}
-                videoName={`${element?._id}_${element?._id}_${element?._id}_${element?.type}`}
-                setRecordingCompletionStatus={status => config?.setRecordingCompletionStatus( status, element?._id )}
-                handleSubmit={config?.handleSubmit}
-            />
-          </span>
-          <span>
-          { ( element?.videoUrl !== "") &&     
-            <span 
-                key={element?._id}
-                id={ element?._id }
-                name={element?._id}
-            >
-              <DeleteIcon 
-                style={deleteIconStyle(  hasRecordingStarted, element?._id, markDownContent?._id  )}
-                className="comment-round-button-3"
-                onClick={() => deleteVideo( { ...element, videoUrl: "" } )}
-              />
-            </span>
-          }
-          </span>
-          { config?.videoUploaded  && 
-            <span
-              key={element?._id}
-              id={ element?._id }
-              name={element?._id}
-            >
-              <SaveIcon
-                style={saveIconStyle( element?._id, markDownContent?._id )} 
-                onClick={ config?.saveRecording }
-              />
-            </span>
-          }
-          </div>
-        </div> */}
           < OnlineQuestionVideoComponent
               element={ element }
-              config={ onlineVideoConfig( element, hasRecordingStarted ) } 
+              config={ onlineVideoConfig( element ) } 
           />
           < AnswerComponent 
               config={ manageEditorConfig( element ) } 
@@ -181,16 +151,31 @@ const OnlineListItems = ({
               courseId={ courseId }
               currentUser={ currentUser }
           />
+        <div className="question-card-top-right">
+        {/* <div>
+          <DeleteIcon
+              style={ deleteQuestionIconStyle() }
+              className="comment-round-button-3"
+              onClick={() => config.deleteQuestion( element )}
+          />
+          <DeleteIcon
+            style={ saveQuestionIconStyle() }
+            className="comment-round-button-3"
+            onClick={() => config.deleteQuestion( element )}
+          />
+        </div>           */}
+        </div>
         </div>
       </div>
       </>
-  ))
-}
+  ));
+};
 
 const mapState = ( state, ownProps ) => {
   return {
+    courses: Object.values( state?.courses?.courses ),
     hasRecordingStarted: state.hasRecordingStarted.hasRecordingStarted
-  }
-}
+  };
+};
 
 export default connect( mapState, { saveOnlineQuestion } )( OnlineListItems );

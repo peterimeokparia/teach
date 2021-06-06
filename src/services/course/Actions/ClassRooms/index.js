@@ -27,20 +27,20 @@ export const LAST_LOGGEDIN_USER = "LAST LOGGEDIN USER";
 
 export const loadClassRooms = () => {
     return dispatch => {
-        dispatch({ type: LOAD_CLASSROOMS_BEGIN })
+        dispatch({ type: LOAD_CLASSROOMS_BEGIN });
         get('/classrooms')
          .then( classroom => {
              dispatch({ type: LOAD_CLASSROOMS_SUCCESS, payload: classroom });
          }).catch( error => {
-            dispatch({ type: LOAD_CLASSROOMS_ERROR , error })
+            dispatch({ type: LOAD_CLASSROOMS_ERROR , error });
         });
-    }
-}
+    };
+};
 
 export const addNewClassRoom = ( name, description, classRoomUsers,  user, operator ) => {
     return dispatch => {
        user = { ...user,  classRooms: user?.classRooms, operatorId: operator?._id };
-        dispatch({ type: ADD_CLASSROOM_BEGIN })
+        dispatch({ type: ADD_CLASSROOM_BEGIN });
         return add({ name, description, classRoomUsers, userId: user?._id, operatorId: operator?._id} , '/classrooms')
         .then(classroom => {
             classRoomUsers.forEach(classroomuser => {
@@ -49,61 +49,62 @@ export const addNewClassRoom = ( name, description, classRoomUsers,  user, opera
             });
            user.classRooms.push( classroom?._id ); 
            updateUser(user);
-           dispatch({ type: ADD_CLASSROOM_SUCCESS, payload: classroom }) 
+           dispatch({ type: ADD_CLASSROOM_SUCCESS, payload: classroom });
            dispatch({ type: LAST_LOGGEDIN_USER, payload: user });  
         }).catch(error => { 
-             dispatch({ type: ADD_CLASSROOM_ERROR, error })
-     })
-    }
-}
+             dispatch({ type: ADD_CLASSROOM_ERROR, error });
+     });
+    };
+};
 
 export const saveClassRoom = ( classroom ) => {
    return dispatch => {
-        dispatch({ type: SAVE_CLASSROOM_BEGIN })
+        dispatch({ type: SAVE_CLASSROOM_BEGIN });
         return update( classroom, `/classrooms/` )
          .then( classroom => {  
              dispatch({        
-              type: SAVE_CLASSROOM_SUCCESS, payload: classroom }) 
+              type: SAVE_CLASSROOM_SUCCESS, payload: classroom }); 
           }).catch( error => {
-              dispatch({ type: SAVE_CLASSROOM_ERROR , error })
+              dispatch({ type: SAVE_CLASSROOM_ERROR , error });
         });        
    };
 };
 
 export const deleteClassRoom = classroom => {
    return dispatch => {
-       dispatch({ type: DELETE_CLASSROOM_BEGIN })
+       dispatch({ type: DELETE_CLASSROOM_BEGIN });
         return remove( classroom, `/classrooms/` )
         .then( () => {
             dispatch({ type: DELETE_CLASSROOM_SUCCESS, payload: classroom });
         }).catch( error => {
-            dispatch({ type: DELETE_CLASSROOM_ERROR , error })
+            dispatch({ type: DELETE_CLASSROOM_ERROR , error });
         });
-   }
-}
+   };
+};
 // change name
 export const unSubscribe = ( currentUser, itemId ) => {
     return dispatch => {
        let classRooms = currentUser.classRooms.filter( classroom => ! classroom.includes(itemId) );
+       
         return updateUser({ ...currentUser, classRooms });
-    }
-}
+    };
+};
 
 export const updateCurrentTutor = ( currentTutor ) => {
     return dispatch => {
        dispatch({ type: UPDATE_CURRENT_CLASSROOM_TUTOR, payload: currentTutor });
-    }
-}
+    };
+};
 
 export const updateCurrentClassRoomLessonPlan = ( lessonPlan ) => {
     return dispatch => {
        dispatch({ type: UPDATE_CURRENT_CLASSROOM_LESSON_PLAN, payload: lessonPlan });
-    }
-}
+    };
+};
 
 export const toggleClassRoomSideBarDropDownDisplay = () => ({
     type: TOGGLE_SIDEBAR_DROPDOWN_MENU
-})
+});
 
 export const resetClassRoomUserError = () => ({
     type: RESET_CLASSROOM_USER_ERROR

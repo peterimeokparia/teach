@@ -43,6 +43,17 @@ onlineQuestionAnswersRoute.get('/answer/user', (req, res) => {
     });
 })
 
+
+onlineQuestionAnswersRoute.get('/videos', (req, res) => {
+    onlineAnswerModel.find({ _id: req.query._id })
+        .then(data => {
+            console.log('onlineAnswer onlineAnswer videos', data)
+            res.status(200).json(data);
+        })
+         .catch(error => console.log(error));
+ });
+
+
 onlineQuestionAnswersRoute.post('/', (req, res) => {
     console.log('in onlineAnswer onlineAnswer saved saved');
     let answerData = getPostData( req );

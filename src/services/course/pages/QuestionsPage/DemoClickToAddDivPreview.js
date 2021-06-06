@@ -20,7 +20,7 @@ SET_LESSON_MARKDOWN } from '../../actions';
 import {
 role } from '../../../../helpers/pageHelpers';
 
-import EditorComponent from './Components/EditorComponent';
+import EditorComponent from '../Components/EditorComponent';
 
 import Dante from 'Dante2';
 

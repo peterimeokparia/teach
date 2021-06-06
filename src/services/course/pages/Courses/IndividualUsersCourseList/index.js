@@ -16,7 +16,7 @@ getCoursesByOperatorId,
 getOperatorFromOperatorBusinessName } from 'Services/course/Selectors';
 
 import Loading from 'Services/course/Pages/Components/Loading';
-import LoginLogout from 'Services/course/Pages/LoginPage/Components/LoginLogout'
+import LoginLogout from 'Services/course/Pages/LoginPage/Components/LoginLogout';
 import CoursesComponent from 'Services/course/Pages/Courses/Components/CoursesComponent';
 import Cart from 'Services/course/Pages/SalesPage/Cart';
 import MainMenu from 'Services/course/Pages/Components/MainMenu';
@@ -31,13 +31,12 @@ user,
 courses,
 coursesLoading,
 onCoursesError }) => {
-
 if ( ! user?.userIsValidated || ! operator ){
     navigate(`/${operatorBusinessName}/login`);
 }
 
 if ( coursesLoading) {
-    return <Loading />
+    return <Loading />;
 }         
 
 if ( onCoursesError ) {
@@ -87,7 +86,7 @@ return ( <div className="MyCourses">
                   )
          } 
     </div>
-)}
+); };
 
 const mapState = ( state, ownProps)  => ({
     user: state?.users?.user,
@@ -97,7 +96,7 @@ const mapState = ( state, ownProps)  => ({
     courses: getCoursesByOperatorId(state, ownProps),
     coursesLoading: state?.courses?.coursesLoading,
     onCoursesError: state?.courses?.onCoursesError
-})
+});
 
 export default connect(mapState)(IndividualUsersCourseList);
 

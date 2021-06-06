@@ -30,6 +30,7 @@ const initialState = {
 
 const reducer = produce((draft, action) => {
     switch(action.type){
+
         case ADD_CLASSROOM_BEGIN:
         case SAVE_CLASSROOM_BEGIN:     
              draft.saveInProgress = true;
@@ -73,13 +74,14 @@ const reducer = produce((draft, action) => {
              draft.onSaveError = null;
         return;
         case UPDATE_CURRENT_CLASSROOM_LESSON_PLAN:
-             draft.classRoomLessonPlan[ action?.payload?.selectedTutor?._id ] = action?.payload
-        return     
+             draft.classRoomLessonPlan[ action?.payload?.selectedTutor?._id ] = action?.payload;
+        return;     
         case TOGGLE_SIDEBAR_DROPDOWN_MENU:
-             draft.displaySideBarDropDown = (!draft.displaySideBarDropDown)
-        return 
+             draft.displaySideBarDropDown = (!draft.displaySideBarDropDown);
+        return; 
         default:
         return;
+
     }
 }, initialState);
 

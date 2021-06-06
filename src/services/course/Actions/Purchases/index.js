@@ -7,12 +7,12 @@ export const PURCHASE_HISTORY_ERROR = "PURCHASE HISTORY ERROR";
 
 export const addToPurchaseHistory = (currentUser) => {
     return dispatch => {
-         dispatch({ type: PURCHASE_HISTORY_BEGIN })
+         dispatch({ type: PURCHASE_HISTORY_BEGIN });
         return purchaseHistory(currentUser)
          .then( history => {
-            dispatch({ type: PURCHASE_HISTORY_SUCCESS, history})
+            dispatch({ type: PURCHASE_HISTORY_SUCCESS, history });
          }).catch( error => {
                dispatch({type: PURCHASE_HISTORY_ERROR, error });
-        })
-    }
-}
+        });
+    };
+};

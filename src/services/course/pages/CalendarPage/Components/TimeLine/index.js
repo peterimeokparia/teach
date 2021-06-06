@@ -6,8 +6,7 @@ Component
 import { 
 connect } from 'react-redux';
 
-import {
-addNewTimeLine,    
+import {  
 saveTimeLine,
 loadTimeLines } from 'Services/course/Actions/TimeLines'; 
 
@@ -26,7 +25,6 @@ loadAllCalendars } from "Services/course/Actions/Calendar";
 import { 
 loadAllEvents } from "Services/course/Actions/Event";
 
-import Select from 'react-select';
 import Timeline from 'react-calendar-timeline';
 import moment from 'moment';
 import 'react-calendar-timeline/lib/Timeline.css';
@@ -47,14 +45,16 @@ let keys = {
 
   // https://codesandbox.io/s/w6xvqzno4w?file=/generate-fake-data.js:416-474
  class TimeLine extends Component {
+
     constructor(props){
-        super(props)
+        super(props);
     
         let timeLineItems = [];
+
         this.props.events.map( event => event.timeLineItems ).forEach(element => {
             if ( element.length > 0 ) {
-                timeLineItems = [ ...timeLineItems, ...element ]
-            }
+                timeLineItems = [ ...timeLineItems, ...element ];
+            };
         });
 
         let items = timeLineItems?.map( tevent => ( { 
@@ -104,7 +104,8 @@ let keys = {
     itemRenderer = ({ item, timelineContext, itemContext, getItemProps, getResizeProps }) => {
         const { left: leftResizeProps, right: rightResizeProps } = getResizeProps();
         const backgroundColor = itemContext.selected ? (itemContext.dragging ? "red" : item?.color) : item?.color;
-        const borderColor = itemContext.resizing ? "red" : item?.color //item.color;
+        const borderColor = itemContext.resizing ? "red" : item?.color;
+
         return (
           <div
             {...getItemProps({
@@ -143,6 +144,7 @@ let keys = {
       handleItemMove = (itemId, dragTime, newGroupOrder) => {
         const { items, groups } = this.state;
         const group = groups[newGroupOrder];
+
         this.setState({
           items: items.map(item =>
             item.id === itemId
@@ -160,6 +162,7 @@ let keys = {
     
       handleItemResize = (itemId, time, edge) => {
         const { items } = this.state;
+
         this.setState({
           items: items.map(item =>
             item.id === itemId
@@ -172,8 +175,8 @@ let keys = {
         });
         console.log("Resized", itemId, time, edge);
       };
-      render() {
 
+      render() {
         const { groups, items, defaultTimeStart, defaultTimeEnd } = this.state;
 
         return (
@@ -194,8 +197,9 @@ let keys = {
             onItemResize={this.handleItemResize}
         />
         );
-    }
-}
+    };
+    
+};
 
 const mapDispatch = {
     loadAllCalendars,
@@ -214,6 +218,6 @@ const mapState = ( state, ownProps )  => ({
     pushNotUsers: state?.notifications?.pushNotificationSubscribers,
     pushNotificationSubscribers: getPushNotificationUsersByOperatorId(state, ownProps),
     timeLines: getTimeLinesByOperatorId(state, ownProps)
-})
+});
 
 export default connect(mapState, mapDispatch)(TimeLine);

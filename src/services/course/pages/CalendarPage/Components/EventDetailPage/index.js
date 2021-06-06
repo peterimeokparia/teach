@@ -38,7 +38,6 @@ import EditCalendarEvents from 'Services/course/Pages/CalendarPage/Components/Ed
 import ToggleButton from 'Services/course/Pages/Components/ToggleButton';
 import Select from 'react-select';
 
-
 const EventDetailPage = ({ 
 operatorBusinessName,
 operator, 
@@ -57,7 +56,6 @@ userId,
 loadAllEvents,
 loadAllCalendars,
 loadSubscribedPushNotificationUsers }) => {
-
 useEffect(( ) => {
     loadAllEvents();
     loadAllCalendars();
@@ -73,6 +71,7 @@ function onMatchListItem( match, listItem ) {
 function updatedCalendarEvent(events, selectedEvent, updatedEvent) {
     let localCalendarEvents = events;
     let eventToUpdate = localCalendarEvents?.find(event => event?._id === selectedEvent?._id);
+
     eventToUpdate['title'] =  updatedEvent?.event?.title;
     eventToUpdate['start'] = updatedEvent?.event?.start;
     eventToUpdate['end'] = updatedEvent?.event?.end;
@@ -81,14 +80,103 @@ function updatedCalendarEvent(events, selectedEvent, updatedEvent) {
     return localCalendarEvents;
 }
 
+function getEventDetails(){
+    return   (    
+        <div>    
+            {(calendar) && <ListItem
+                                collection={calendar?.calendarEvents}
+                                onMatchListItem={onMatchListItem}
+                                path={"event"}
+                            >
+                            {( selectedEvent ) => (
+                            < EditCalendarEvents
+                                event={selectedEvent}
+                                currentUser={currentUser}
+                                pushNotificationUser={pushNotificationSubscribers}
+                                className="lesson-item"
+                                onSubmit={(updatedevent) => saveCalendar({
+                                    ...calendar, 
+                                    calendarEvents: [...updatedCalendarEvent(calendar?.calendarEvents, selectedEvent,  updatedevent)]
+                                }, 
+                                selectedEvent,
+                                currentUser,
+                                pushNotificationSubscribers,
+                                emailAddresses )}
+                            >
+                            { (edit, remove ) => (
+                            <div>      
+                            <div>
+                                    {/* <div><h6>{selectedEvent?.title}</h6></div> */}
+                                    {/* <span> Score </span> */}
+                                    <Link to={`event/${selectedEvent?.id}`}> <span title={selectedEvent?._id} >{ selectedEvent?.title } </span> </Link> 
+                                   <div className="row">
+                                    <div className="col-2">
+                                        <div className="gradesHeader"> Event Id</div>
+                                        <div className="gradesHeader"> All Day?</div>
+                                        <div className="gradesHeader"> Event Start</div>
+                                        <div className="gradesHeader"> Event End</div>
+                                        <div className="gradesHeader"> Duration </div>
+                                        <div className="gradesHeader"> Student  </div>
+                                        <div className="gradesHeader"> Email  </div>
+                                    </div>
+                                    {/* /:operatorBusinessName/:calendarEventType/calendar/:calendarId/event */}
+                                    {/* <Link to={`calendar/${ calendarId }/event/${selectedEvent?._id}`}> <span title={selectedEvent?._id} >{ selectedEvent?.title } </span> </Link>  */}
+                                    <div className="col-10">
+                                        <div className="grades"> { selectedEvent?.id } </div>
+                                        <div className="grades"> { selectedEvent?.allDay?.toString() } </div>
+                                        <div className="grades"> { selectedEvent?.start } </div>
+                                        <div className="grades"> { selectedEvent?.end } </div>
+                                        <div className="grades"> { ((parseInt(selectedEvent?.duration)/1000)/3600)  } </div>
+                                        <div className="grades"> { selectedEvent?.formData?.scheduledStudents.map((student, idx) => (
+                                            <span>
+                                                { student?.value?.firstname } 
+                                                <div> 
+                                                    {student?.value?.email} 
+                                                </div>
+                                            </span>  
+                                         ))} </div>
+                                    </div>   
+                                </div>
+                                <br></br>
+                                <div> 
+                                <Roles
+                                    role={currentUser?.role === role.Tutor }
+                                >
+                                    <button 
+                                        className="edit-lesson-btn"
+                                        onClick={() => { edit( selectedEvent ); } }                                          
+                                    > 
+                                        Edit
+                                    </button>
+                                </Roles>
+                                <Roles
+                                    role={ currentUser?.role === role.Tutor }
+                                >
+                                    <span>
+                                        <button
+                                            className="delete-lesson-btn"
+                                            onClick={() => { remove( selectedEvent ); }}> 
+                                            Delete 
+                                        </button> 
+                                    </span>
+                                </Roles>
+                                </div>  
+                                </div>       
+                            </div>
+                            )}
+                            </EditCalendarEvents> 
+                            )
+                        }
+                    </ListItem>                    
+                }     
+            </div> 
+    ); 
+}
+
 let testAdminUsers =  [ calendar?.userId, '603d37814967c605df1bb450', '6039cdc8560b6e1314d7bccc' ];
 let emailAddresses = Object.values(currentUsers).filter(user => testAdminUsers.includes(user?._id))?.map(user => user?.email);
 
 let event = events.find(event => event?._id === eventId);
-if ( event ) {
-    // alert('Found Event');
-    // alert(JSON.stringify( event ) )
-}
 
 return (
     <div>
@@ -159,99 +247,11 @@ return (
               
             </div>
         }
+        {
+            getEventDetails()
+        }
     </div>
-)
-
-return   (    
-    <div>    
-        {(calendar) && <ListItem
-                            collection={calendar?.calendarEvents}
-                            onMatchListItem={onMatchListItem}
-                            path={"event"}
-                        >
-                        {( selectedEvent ) => (
-                        < EditCalendarEvents
-                            event={selectedEvent}
-                            currentUser={currentUser}
-                            pushNotificationUser={pushNotificationSubscribers}
-                            className="lesson-item"
-                            onSubmit={(updatedevent) => saveCalendar({
-                                ...calendar, 
-                                calendarEvents: [...updatedCalendarEvent(calendar?.calendarEvents, selectedEvent,  updatedevent)]
-                            }, 
-                            selectedEvent,
-                            currentUser,
-                            pushNotificationSubscribers,
-                            emailAddresses )}
-                        >
-                        { (edit, remove ) => (
-                        <div>      
-                        <div>
-                                {/* <div><h6>{selectedEvent?.title}</h6></div> */}
-                                {/* <span> Score </span> */}
-                                <Link to={`event/${selectedEvent?.id}`}> <span title={selectedEvent?._id} >{ selectedEvent?.title } </span> </Link> 
-                               <div className="row">
-                                <div className="col-2">
-                                    <div className="gradesHeader"> Event Id</div>
-                                    <div className="gradesHeader"> All Day?</div>
-                                    <div className="gradesHeader"> Event Start</div>
-                                    <div className="gradesHeader"> Event End</div>
-                                    <div className="gradesHeader"> Duration </div>
-                                    <div className="gradesHeader"> Student  </div>
-                                    <div className="gradesHeader"> Email  </div>
-                                </div>
-                                {/* /:operatorBusinessName/:calendarEventType/calendar/:calendarId/event */}
-                                {/* <Link to={`calendar/${ calendarId }/event/${selectedEvent?._id}`}> <span title={selectedEvent?._id} >{ selectedEvent?.title } </span> </Link>  */}
-                                <div className="col-10">
-                                    <div className="grades"> { selectedEvent?.id } </div>
-                                    <div className="grades"> { selectedEvent?.allDay?.toString() } </div>
-                                    <div className="grades"> { selectedEvent?.start } </div>
-                                    <div className="grades"> { selectedEvent?.end } </div>
-                                    <div className="grades"> { ((parseInt(selectedEvent?.duration)/1000)/3600)  } </div>
-                                    <div className="grades"> { selectedEvent?.formData?.scheduledStudents.map((student, idx) => (
-                                        <span>
-                                            { student?.value?.firstname } 
-                                            <div> 
-                                                {student?.value?.email} 
-                                            </div>
-                                        </span>  
-                                     ))} </div>
-                                </div>   
-                            </div>
-                            <br></br>
-                            <div> 
-                            <Roles
-                                role={currentUser?.role === role.Tutor }
-                            >
-                                <button 
-                                    className="edit-lesson-btn"
-                                    onClick={() => { edit( selectedEvent ) } }                                          
-                                > 
-                                    Edit
-                                </button>
-                            </Roles>
-                            <Roles
-                                role={ currentUser?.role === role.Tutor }
-                            >
-                                <span>
-                                    <button
-                                        className="delete-lesson-btn"
-                                        onClick={() => { remove( selectedEvent ) }}> 
-                                        Delete 
-                                    </button> 
-                                </span>
-                            </Roles>
-                            </div>  
-                            </div>       
-                        </div>
-                        )}
-                        </EditCalendarEvents> 
-                        )
-                    }
-                </ListItem>                    
-            }     
-        </div> 
-) }
+); };
 
 const mapState = (state, ownProps)   => {
   return {
@@ -265,6 +265,6 @@ const mapState = (state, ownProps)   => {
     pushNotUsers: state?.notifications?.pushNotificationSubscribers,
     pushNotificationSubscribers: getPushNotificationUsersByOperatorId(state, ownProps)
   };
-}
+};
 
 export default connect(mapState, { saveCalendar, loadAllCalendars, loadSubscribedPushNotificationUsers, loadAllEvents } )(EventDetailPage);

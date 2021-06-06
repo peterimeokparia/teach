@@ -7,7 +7,6 @@ const AnswerComponent = ({
   config, 
   questionId, 
   courseId }) => {
-
   return (
       <>
         <ManageEditors 
@@ -27,6 +26,6 @@ const AnswerComponent = ({
         </ManageEditors>
       </>
   );
-}
+};
 
 export default AnswerComponent;

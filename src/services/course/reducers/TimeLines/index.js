@@ -10,9 +10,10 @@ ADD_NEW_TIMELINE_ERROR,
 SAVE_TIMELINE_BEGIN,  
 SAVE_TIMELINE_SUCCESS,   
 SAVE_TIMELINE_ERROR,   
-DELETE_TIMELINE_BEGIN,  
-DELETE_TIMELINE_SUCCESS,   
-DELETE_TIMELINE_ERROR, } from '../../Actions/TimeLines';
+// DELETE_TIMELINE_BEGIN,  
+// DELETE_TIMELINE_SUCCESS,   
+// DELETE_TIMELINE_ERROR, 
+} from '../../Actions/TimeLines';
 
 const initialState = {
 timeLines:{},
@@ -25,6 +26,7 @@ onSaveTimeLineError: null
 
 const reducer =  produce( (draft, action) => {
     switch(action.type){
+
        case ADD_NEW_TIMELINE_BEGIN:    
              draft.isLoading = true;
              draft.onError = false;  
@@ -56,7 +58,6 @@ const reducer =  produce( (draft, action) => {
              draft.onSaveTimeLineError = null;
         return; 
         case SAVE_TIMELINE_SUCCESS:    
-             console.log(action.payload)
              draft.timelines[action.payload._id] = action.payload;
              draft.timeline =  action.payload;
              draft.saveTimeLineInProgress = false;
@@ -67,6 +68,7 @@ const reducer =  produce( (draft, action) => {
         return;     
         default:
         return;  
+        
     }
 }, initialState);
 

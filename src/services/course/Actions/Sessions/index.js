@@ -33,38 +33,38 @@ export const LAST_LOGGEDIN_USER = "LAST_LOGGEDIN_USER";
 
 export const addNewSession = (session) => {
     return dispatch => {
-        dispatch({ type: ADD_SESSION_BEGIN })
+        dispatch({ type: ADD_SESSION_BEGIN });
         add({ ...session }, '/sessions')
             .then(response => {
                 dispatch({ type: ADD_SESSION_SUCCESS, payload: response });
             }).catch( error => {
-                dispatch({ type: ADD_SESSION_ERROR , error })
-        })
-    }
-}
+                dispatch({ type: ADD_SESSION_ERROR , error });
+        });
+    };
+};
 
 export const loadSessions = () => {
     return dispatch => {
-        dispatch({ type: LOAD_SESSIONS_BEGIN })
+        dispatch({ type: LOAD_SESSIONS_BEGIN });
         get('/sessions')
             .then( users => {
                 dispatch({ type: LOAD_SESSIONS_SUCCESS, payload: users });
             })
             .catch( error => {
-                dispatch({ type: LOAD_SESSIONS_ERROR , error })
+                dispatch({ type: LOAD_SESSIONS_ERROR , error });
         });
-    }
-}
+    };
+};
 
 export const saveSession = ( sessionId, session ) => {
     return dispatch => {
-        dispatch({ type: SAVE_SESSION_BEGIN })
+        dispatch({ type: SAVE_SESSION_BEGIN });
           return update({...session, _id: sessionId}, `/sessions/`)
           .then( session => {  
               dispatch({        
-               type: SAVE_SESSION_SUCCESS, payload: session }) 
+               type: SAVE_SESSION_SUCCESS, payload: session }); 
            }).catch( error => {
-               dispatch({ type: SAVE_SESSION_ERROR , error })
+               dispatch({ type: SAVE_SESSION_ERROR , error });
         });
     };
  };
@@ -76,16 +76,16 @@ export const deleteSession = session => {
             dispatch({ type: DELETE_SESSION_SUCCESS, payload: session });
         })
         .catch( error => {
-            dispatch({ type: DELETE_SESSION_ERROR , error })
+            dispatch({ type: DELETE_SESSION_ERROR , error });
         });
-    }
-}
+    };
+};
 
 export const setAutoRenewPackageStatus = ( currentUser ) => {
     return dispatch => {
        dispatch({ type: AUTO_RENEW_PACKAGE_SUCCESS, payload: currentUser });
-    }
-}
+    };
+};
 
 export const incrementSessionCount = ( session ) => { 
     return dispatch => {
@@ -94,10 +94,10 @@ export const incrementSessionCount = ( session ) => {
                  dispatch({ type: INCREMENT_SESSION_COUNT ,  payload: resp });
                })
                  .catch(error => {
-                   dispatch({ type: ERROR_INCREMENTING_SESSION_COUNT, error })
-        })             
-    }
-} 
+                   dispatch({ type: ERROR_INCREMENTING_SESSION_COUNT, error });
+        } );             
+    };
+};
 
 export const decrementSessionCountForPackageOptions = ( session ) => { 
     return dispatch => {        
@@ -106,8 +106,8 @@ export const decrementSessionCountForPackageOptions = ( session ) => {
                 dispatch({ type: DECREMENT_SESSION_COUNT_FOR_PACKAGE_OPTIONS,  payload: resp });
              }).catch(error => {
                  dispatch({ type: ERROR_DECREMENT_SESSION_COUNT_FOR_PACKAGE_OPTIONS,  error });
-        })
-    }
+        });
+    };
 };
 
 export const autoRenewSessionPackages = ( currentUser, session ) => {
@@ -125,10 +125,10 @@ export const autoRenewSessionPackages = ( currentUser, session ) => {
                     }
                 });
              }).catch( error => {
-                sendEmailToAdministrator( currentUser )
+                sendEmailToAdministrator( currentUser );
                 dispatch({ type: AUTO_RENEW_PACKAGE_ERROR, error });
             });
-    } 
-}
+    };
+};
 
 

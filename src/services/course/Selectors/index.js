@@ -12,8 +12,8 @@ const getParsedUserId = ( state, props ) => props?.currentUser?._id;
 const getUserId = ( state, props ) => props?.userId;
 const getQuestionId = ( state, props ) => props?.questionId;
 const getCourseId = ( state, props ) => props?.courseId;
-const getCurrentOperatorId = ( state, props ) => props?.operatorId;
-const getCalendarEventType = ( state, props ) => props?.calendarEventType
+// const getCurrentOperatorId = ( state, props ) => props?.operatorId;
+const getCalendarEventType = ( state, props ) => props?.calendarEventType;
 const getCourses = state => state.courses.courses;
 const getClassRoomGroups = state => state?.classrooms?.classrooms;
 const getPushNotificationUsers = state => state?.notifications?.pushNotificationSubscribers;
@@ -58,17 +58,12 @@ export const failedOnlineQuestionNotificationQueueHasMessages = createSelector(
     getFailedPushNotifications,
 
     (user, failedPushNotifications) => {
-
         if ( ! user ) {
-
             return false;
         }
- 
         console.log('user', user);
-
         return Object.values( failedPushNotifications )?.filter(notifications => notifications?.userId === user?._id )?.length > 0;
     }
-
 );
 
 export const getSortedRecordsByDate = (collection, date) => {
@@ -82,13 +77,12 @@ export const getSortedRecordsByDate = (collection, date) => {
         else{
             return 0;
         } 
-    })
-}
+    });
+};
 
 export const getSortedLessonsSelector = createSelector( 
     getLessons,
     lessons  => Object.values(lessons)?.sort((a, b) => {
-
         if( a.id < b.id ){
             return  -1;
         }

@@ -16,7 +16,6 @@ className,
 onSubmit,
 deleteGrade, 
 children }) => {
-
 let scoreInitialValue = grade ? grade?.score : '';
 let dateInitialValue = grade ? grade?.testDate : Date.now(); 
 const [ editing, setEditing ] = useState(false);
@@ -28,7 +27,7 @@ const reset = () => {
     setTestDate(dateInitialValue);
     setTestScore(scoreInitialValue);
     setEditing(false);
-}
+};
 
 const commitEdit = (e) => {
     e.preventDefault();
@@ -43,29 +42,26 @@ const commitEdit = (e) => {
 const setValues = () => {
     setTestDate(dateInitialValue);
     setTestScore(scoreInitialValue);
-}
+};
 
 const beginEditing = () => {
     setValues();
     setEditing(true);
-}
+};
 
 const performDelete = () => {
      deleteGrade(grade);
-}
+};
 
 const cancelEdit = (e) => {
     e.preventDefault();
     reset();
-}
+};
  
 useEffect (() => {
-
     if ( editing ) {
-
         inputRef.current.focus();
     }
-
 }, [ editing ]); 
 
 return editing ? (

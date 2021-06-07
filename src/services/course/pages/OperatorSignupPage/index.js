@@ -14,7 +14,7 @@ createOperator } from 'Services/course/Actions/Operator';
 
 import Operator from 'Services/course/helpers/Operator';
 
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 import OperatorRegistrationForm from './OperatorRegistrationForm';
 
@@ -24,10 +24,9 @@ const OperatorSignUpPage = ({
   error, 
   loading, 
   createOperator }) => {
-
   const handleCreateUser = (email, password, firstname, lastname, businessname, phone ) => {
-
     let operatorUser = new Operator();
+
     operatorUser.email = email;
     operatorUser.password = password;
     operatorUser.firstName = firstname;
@@ -46,14 +45,14 @@ const OperatorSignUpPage = ({
         confirmButtonColor: '#673ab7',
         cancelButtonText: 'Cancel'
       }).then( (response) => {
-
         if ( response?.value ) {
             navigate(`http://localhost:3000/${businessname}/login`);
         }
-    })       
+    });       
     }).catch(error => 
-      { Swal.fire({title: 'Problem with registration', icon: 'warning', text: `Please contact the administrator.${error?.message}` })})
-}
+      { Swal.fire( {title: 'Problem with registration', icon: 'warning', text: `Please contact the administrator.${error?.message}` }); });
+};
+
 return ( 
 <div className="LoginPage"> 
   {
@@ -68,7 +67,7 @@ return (
   }
   </div>
   );
-}
+};
 
 const mapState = ( state, ownProps )   => {  
   return {
@@ -79,6 +78,6 @@ const mapState = ( state, ownProps )   => {
     loading: state?.users?.loading,
     sessions: Object.values(state?.sessions?.sessions)?.filter(session => session?.UserId === ownProps?.currentUser?._id)    
     };
-}
+};
 
 export default connect(mapState, {  createOperator, createUser })(OperatorSignUpPage);

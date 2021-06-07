@@ -44,11 +44,10 @@ getTimeLinesByOperatorId } from 'Services/course/Selectors';
 
 import {
 studentsOption,
-getCalendarPageHeading,
-getTimeLineItemDetailsFromCalendarEvents } from 'Services/course/Pages/CalendarPage/helpers';
+getCalendarPageHeading } from 'Services/course/Pages/CalendarPage/helpers';
 
-import { 
-momentLocalizer } from "react-big-calendar";
+// import { 
+// momentLocalizer } from "react-big-calendar";
 
 import FullCalendar from '@fullcalendar/react';
 import rrulePlugin from "@fullcalendar/rrule";
@@ -68,7 +67,7 @@ import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/list/main.css";
 import './style.css';
 moment.locale("en-GB");
-const localizer = momentLocalizer(moment);
+// const localizer = momentLocalizer(moment);
 
 const CalendarPage = ({
 operatorBusinessName,
@@ -96,11 +95,10 @@ addNewTimeLine,
 saveTimeLine,
 courses,
 }) => {
-
-const [isModalOpen, setModalOpen] = useState(false);
-const [eventData, setEventData] = useState(undefined);
-const [component, setComponent] = useState(eventEnum);
-const [calendarSlotInfo, setCalendarSlotInfo ] = useState(undefined)
+const [ isModalOpen, setModalOpen] = useState(false);
+const [ component, setComponent] = useState(eventEnum);
+const [ calendarSlotInfo, setCalendarSlotInfo ] = useState(undefined);
+// const [ eventData, setEventData ] = useState(undefined);
 const [ scheduledStudents, setScheduledStudents ] = useState([]);
 
 useEffect(( ) => {
@@ -112,14 +110,15 @@ useEffect(( ) => {
 
 if ( ! user?.userIsValidated || ! operator ){
     navigate(`/${operatorBusinessName}/login`);
-}
+};
 
-let testEventData = null;
+let eventDataObj = null;
+
 if ( events?.length > 0  ) {
-    testEventData = events?.filter(evnt => evnt?.calendarEventType === calendarEventType && evnt?.calendarId === calendarId )?.map(eventData => (  testEventDataFunc( eventData )  ));
-}
+    eventDataObj = events?.filter(evnt => evnt?.calendarEventType === calendarEventType && evnt?.calendarId === calendarId )?.map(eventData => (  eventDataFunc( eventData )  ));
+};
 
-function testEventDataFunc( eventData ) {
+function eventDataFunc( eventData ) {
     let newObjectTest = null;
 
     if ( ( eventData?.event?.recurringEvent === true ) ) {
@@ -138,7 +137,7 @@ function testEventDataFunc( eventData ) {
             userId: eventData?.event?.userId,
             calendarId: eventData?.event?.calendarId,   
             duration: 1,    
-        }
+        };
     }
     else {
         newObjectTest = {
@@ -150,51 +149,57 @@ function testEventDataFunc( eventData ) {
             duration:  1,
             userId: eventData?.event?.userId,
             calendarId: eventData?.event?.calendarId,  
-        }
-    }
+        };
+    };
     return newObjectTest;
-}
+};
 
 const handleSelect = ( slotInfo ) => {
-
-    const [ start, end, startStr, endStr ] =  Object.entries( slotInfo );
+    //const [ start, end, startStr, endStr ] =  Object.entries( slotInfo );
 
     switch ( calendarEventType ) {
+
         case eventEnum.NewEvent:
             setCalendarSlotInfo( slotInfo );  
-            setEventData( slotInfo );   
+            // setEventData( slotInfo );   
             return;
+
         case eventEnum.ConsultationForm:
             setComponent( eventEnum.ConsultationForm );
             setCalendarSlotInfo( slotInfo );
             setModalOpen( true );
-            setEventData( slotInfo );
+            // setEventData( slotInfo );
             return;
+
         case eventEnum.SessionScheduling:
             setComponent( eventEnum.SessionScheduling );
             setCalendarSlotInfo( slotInfo );
             setModalOpen( true );
-            setEventData( slotInfo );
+            // setEventData( slotInfo );
             return;    
+
         case eventEnum.OnlineTutoringRequest:
             setComponent( eventEnum.OnlineTutoringRequest );
             setCalendarSlotInfo( slotInfo );
             setModalOpen( true );
-            setEventData( slotInfo );
-            return;        
+            // setEventData( slotInfo );
+            return;       
+
         default:
             return;
-    }
-}
+
+    };
+};
 
 const handleEventClick = (info) => {
-    navigate( `/${operatorBusinessName}/${calendarEventType}/calendar/${calendar?._id}/${user._id}/${info?.event?.id}`)
-}
+    navigate( `/${operatorBusinessName}/${calendarEventType}/calendar/${calendar?._id}/${user._id}/${info?.event?.id}`);
+};
 
 function addNewCalendarEvent( calendarEventData ) {
     setModalOpen(false);
     let testAdminUsers =  [ userId, '603d37814967c605df1bb450', '6039cdc8560b6e1314d7bccc' ]; // refactor
     let emailAddresses = Object.values(users).filter(user => testAdminUsers.includes(user?._id))?.map(user => user?.email);
+
     saveEventData(calendar, calendarEventData, emailAddresses, testAdminUsers, calendarEventType, operator?._id);
 };
 
@@ -207,14 +212,11 @@ const openModal = () => {
 };
 
 function saveEventData(calendar, calendarEventData, emailAddresses, testAdminUsers, calendarEventType, operatorId){
-  
     let event = calendarEventData?.event, location = calendarEventData?.location, schedulingData = calendarEventData?.schedulingData;
     let consultation = calendarEventData?.consultation;
 
     try {
-    
-        if ( calendar  ) { 
-            
+        if ( calendar  ) {       
             let addEventConfig = {
                 event: {
                     calendarId: calendar?._id, 
@@ -230,13 +232,12 @@ function saveEventData(calendar, calendarEventData, emailAddresses, testAdminUse
                 currentUser: user, 
                 pushNotificationUser: pushNotificationSubscribers?.filter(subscriber => testAdminUsers.includes( subscriber?.userId ) ),  
                 emailAddresses
-            }
+            };
 
             addEvent( addEventConfig );
-
         } else {
-
             let color = getCalendarColor( calendars );
+
             let calendarConfig = {
                 calendar: {
                     userId,
@@ -254,7 +255,7 @@ function saveEventData(calendar, calendarEventData, emailAddresses, testAdminUse
                 currentUser: user, 
                 pushNotificationUser: pushNotificationSubscribers?.filter(subscriber => testAdminUsers?.includes( subscriber?.userId ) ), 
                 emailAddresses
-            }
+            };
 
             addCalendar( calendarConfig );
         }
@@ -265,13 +266,15 @@ function saveEventData(calendar, calendarEventData, emailAddresses, testAdminUse
 
 function renderSwitch( param ) {
     switch ( param ) {
+
         case eventEnum.NewEvent:
             return <Scheduling
                         slotInfo={calendarSlotInfo}
                         schedulingData
                         submitEventButtonText={"Add New Event"}
                         handleSubmit={addNewCalendarEvent} 
-                    /> 
+                    />; 
+
             case eventEnum.ConsultationForm:
                 return <Modal isOpen={isModalOpen} onRequestClose={closeModal}> 
                             <ConsultationForm 
@@ -280,7 +283,8 @@ function renderSwitch( param ) {
                                 courses={courses}
                                 handleSubmit={addNewCalendarEvent}
                             /> 
-                        </Modal>
+                        </Modal>;
+
             case eventEnum.SessionScheduling:
                 return <Modal isOpen={isModalOpen} onRequestClose={closeModal}> 
                             <SessionScheduling 
@@ -295,7 +299,8 @@ function renderSwitch( param ) {
                                     handleSubmit={addNewCalendarEvent} 
                                 />  
                             </ SessionScheduling>
-                        </Modal>
+                        </Modal>;
+
              case eventEnum.OnlineTutoringRequest:
                 return <Modal isOpen={isModalOpen} onRequestClose={closeModal}> 
                             <OnlineTutoringRequestForm 
@@ -310,7 +315,8 @@ function renderSwitch( param ) {
                                     handleSubmit={addNewCalendarEvent} 
                                 />  
                             </ OnlineTutoringRequestForm>
-                        </Modal>
+                        </Modal>;
+
             default:
                return <div>
                         <FullCalendar
@@ -328,11 +334,12 @@ function renderSwitch( param ) {
                             dayMaxEvents={true}
                             weekends={true}
                             select={handleSelect}
-                            events={ testEventData }
+                            events={ eventDataObj }
                             eventClick={handleEventClick}
                         />
-                        <FullCalendar defaultView="listWeek" plugins={[listWeek, dayGridPlugin, timeGridPlugin, interactionPlugin, rrulePlugin]} events={ testEventData } initialView='listWeek' />
-                        </div>
+                        <FullCalendar defaultView="listWeek" plugins={[listWeek, dayGridPlugin, timeGridPlugin, interactionPlugin, rrulePlugin]} events={ eventDataObj } initialView='listWeek' />
+                        </div>;
+
     }
 }
 return (    
@@ -344,7 +351,7 @@ return (
     }
 <button onClick={openModal}>Back</button> 
 </div>
-)};
+); };
 
 const mapDispatch = {
     addCalendar,
@@ -370,6 +377,6 @@ const mapState = ( state, ownProps )  => ({
     pushNotificationSubscribers: getPushNotificationUsersByOperatorId(state, ownProps),
     timeLines: getTimeLinesByOperatorId(state, ownProps),
     courses: getCoursesByOperatorId(state, ownProps),
-})
+});
 
 export default connect(mapState, mapDispatch)(CalendarPage);

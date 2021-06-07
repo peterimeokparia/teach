@@ -65,20 +65,20 @@ export const addCalendar = ( newCalendar ) => {
                     rightTitle: `${calendarData?.firstName}_${calendarData?._id}`, 
                     color: calendarData?.color 
                 }
-            }))
+            }));
             return calendarData; 
         })
         .catch( error => {
             dispatch({ type: ADD_NEW_CALENDAR_ERROR, payload: error });
             console.log( error );
             return error;
-        })
-    }
+        });
+    };
 };
 
 export const saveCalendar = ( calendar )  => {
     return dispatch => {
-         dispatch({ type: SAVE_CALENDAR_BEGIN })
+         dispatch({ type: SAVE_CALENDAR_BEGIN });
          return update( calendar, `/calendar/` )
              .then( calendaData => {  
                  dispatch({ type: SAVE_CALENDAR_SUCCESS, payload: calendaData });
@@ -92,9 +92,8 @@ export const saveCalendar = ( calendar )  => {
  };
 
  export const deleteCalendar = ( calendar, currentUser, pushNotificationUser ) => {
-    alert('in deleteCalendarEvent')
     return dispatch => {
-        dispatch({ type: DELETE_CALENDAR_BEGIN })
+        dispatch({ type: DELETE_CALENDAR_BEGIN });
          return remove( calendar, `/calendar/` )
          .then( resp => {
              dispatch({ type: DELETE_CALENDAR_SUCCESS, payload: resp });
@@ -108,8 +107,8 @@ export const saveCalendar = ( calendar )  => {
             dispatch({ type: DELETE_CALENDAR_ERROR , error });
             return error;
         });
-    }
-}
+    };
+};
 
 export const loadAllCalendars = () => {
     return dispatch => {
@@ -122,8 +121,8 @@ export const loadAllCalendars = () => {
             dispatch({ type: LOAD_CALENDARS_ERROR , error });
             return error;
         });
-    }
-}
+    };
+};
 
 export const loadCalendarsByCalendarId = ( calendarId ) => {
     return dispatch => {
@@ -137,8 +136,8 @@ export const loadCalendarsByCalendarId = ( calendarId ) => {
             dispatch({ type: LOAD_CALENDARS_ERROR , error });
             return error;
         });
-    }
-}
+    };
+};
 
 export const loadCalendarsByUserId = ( remoteUser ) => {
     return dispatch => {
@@ -151,8 +150,8 @@ export const loadCalendarsByUserId = ( remoteUser ) => {
             dispatch({ type: LOAD_CALENDARS_ERROR , error });
             return error;
         });
-    }
-}
+    };
+};
 
 export const toggleCalendarNewEventForm = () => ({
     type: TOGGLE_CALENDAR_NEW_INPUT

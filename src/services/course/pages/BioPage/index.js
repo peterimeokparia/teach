@@ -14,7 +14,7 @@ getOperatorFromOperatorBusinessName } from 'Services/course/Selectors';
 import { 
 forceReload } from 'Services/course/helpers/ServerHelper';
 
-import LoginLogout from '../LoginPage/Components/LoginLogout'
+import LoginLogout from '../LoginPage/Components/LoginLogout';
 import Cart from '../SalesPage/Cart';
 import UserBioEditor from './Component/UserBioEditor';
 import ImageComponent from '../Components/ImageComponent';
@@ -26,7 +26,6 @@ const BioPage = ({
   userId, 
   operatorBusinessName, 
   operator }) => {
-
   const [ editing, setEditing ] = useState( false );
 
   // if ( ! user?.userIsValidated || ! operator ){
@@ -35,20 +34,20 @@ const BioPage = ({
 
   if ( user === null  || user === undefined ){
     navigate(`/${operatorBusinessName}/login`);
-}
+  }
 
   const toggleEditing = () => {
-
     if ( editing ) {
         setEditing( false );
         forceReload();
       } else {
         setEditing( true );
-    }
-  }
+    };
+  };
 
   let tutor = Object.values(users)?.find(user => user?._id === userId);
   const fileUploadUrl = 'http://localhost:9005/api/v1/fileUploads/avatar';
+
   return  (
           <div> 
               <div className="MyCourses">
@@ -92,7 +91,7 @@ const BioPage = ({
               </div>  
             </div>
       );
-}
+};
 
 const mapState = (state, ownProps)   => {
   return {
@@ -101,6 +100,6 @@ const mapState = (state, ownProps)   => {
     users: state.users.users,
     user:state.users.user
   };
-}
+};
 
 export default connect( mapState )(BioPage);

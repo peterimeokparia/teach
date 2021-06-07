@@ -52,7 +52,7 @@ export const USER_UPDATED = "USER UPDATED";
 
 export const loginUser = (newUser) => {
    return dispatch => {
-        dispatch({ type: LOGIN_BEGIN })
+        dispatch({ type: LOGIN_BEGIN });
         return login(newUser)
         .then( user => {
             dispatch({ type: LOGIN_SUCCESS, payload: user });
@@ -62,32 +62,32 @@ export const loginUser = (newUser) => {
             dispatch({ type: LOGIN_ERROR , error });
             return error;
          });
-    }
-}
+    };
+};
 
 export const userPasswordReset = (newUser) => {
     return dispatch => {
-        dispatch({ type: RESET_PASSWORD_BEGIN })
+        dispatch({ type: RESET_PASSWORD_BEGIN });
         return resetPassword(newUser)
          .then( user => {
             dispatch({ type: RESET_PASSWORD_SUCCESS, payload: user });
             return user;
          })
          .catch( error => {
-            dispatch({ type: RESET_PASSWORD_ERROR , error })
+            dispatch({ type: RESET_PASSWORD_ERROR , error });
             return error;
         });
-    }
-}
+    };
+};
 
 export function createUser(newUser) {
     return dispatch => {
-    dispatch({ type: SIGN_UP_BEGINS })   
+    dispatch({ type: SIGN_UP_BEGINS });   
      return signUp(newUser)
         .then( user => {
             if ( (typeof user === "string" ) && (user === "Bad Server Response." || user?.includes("Bad Server Response.")) ) {
                 Promise.reject( user );
-                dispatch({ type: SIGN_UP_ERRORS , payload: user })
+                dispatch({ type: SIGN_UP_ERRORS , payload: user });
                 return;
             }
             dispatch({ type: SIGN_UP_SUCCESSS, payload: user });
@@ -97,18 +97,19 @@ export function createUser(newUser) {
                 "Welcome to teach!",
                 `Kindly verify your account http://localhost:3000/boomingllc/accountverification/${user?._id}`,  /// change
                 user?._id
-            )
+            );
             return user;
          })
          .catch( error => {
-            dispatch({ type: SIGN_UP_ERRORS , payload: error })
+            dispatch({ type: SIGN_UP_ERRORS , payload: error });
             return error;
         });
-    }
-}
+    };
+};
 
 export const createUserGeneratePassword = (newUser) => {
     let stubPassword = 'password';
+
     newUser.password = stubPassword;
     return dispatch => {
         dispatch({ type: SIGN_UP_BEGINS });
@@ -121,13 +122,13 @@ export const createUserGeneratePassword = (newUser) => {
                     "Welcome to teach!",
                     `Your credentials: ${user.firstname}, ${user.password}`,
                     user?._id
-                )
+                );
             })
             .catch( error => {
-                dispatch({ type: SIGN_UP_ERRORS , payload: error })
+                dispatch({ type: SIGN_UP_ERRORS , payload: error });
         });
-    }
-}
+    };
+};
 
 export const logOut = ( user ) => {
     return dispatch => {
@@ -135,8 +136,8 @@ export const logOut = ( user ) => {
             ...user, 
             userIsValidated: false
         });
-        dispatch({ type: LOGOUT_SUCCESS })
-    }
+        dispatch({ type: LOGOUT_SUCCESS });
+    };
 };
 
 export const loadUserByEmail = ( remoteUser ) => {
@@ -147,11 +148,11 @@ export const loadUserByEmail = ( remoteUser ) => {
             return user;
         })
         .catch( error => {
-            dispatch({ type: LOGIN_ERROR, error })
+            dispatch({ type: LOGIN_ERROR, error });
             return error;
         });
-    }
-}
+    };
+};
 
 export const getUserByEmail = ( user ) => {
     return dispatch => { 
@@ -163,25 +164,26 @@ export const getUserByEmail = ( user ) => {
          .catch( error => {
              console.log( error );
              return error;
-         })
-    }
-}
+         });
+    };
+};
 
 export const loadLoggedInUsers = () => {
     return dispatch => {
-        dispatch({ type: LOAD_LOGGEDIN_USERS_BEGIN })
+        dispatch({ type: LOAD_LOGGEDIN_USERS_BEGIN });
         return getLoggedInUsers()
          .then( users => {
              dispatch({ type: LOAD_LOGGEDIN_USERS_SUCCESS, payload: users });
          })
          .catch( error => {
-            dispatch({ type: LOAD_LOGGEDIN_USERS_ERROR , error })
+            dispatch({ type: LOAD_LOGGEDIN_USERS_ERROR , error });
         });
-    }
-}
+    };
+};
 
 export const lastLoggedInUser = ( currentUser ) => {
     let user = JSON.parse(sessionStorage.getItem('currentuser'));
+
     return dispatch  => {
         try{
             if ( currentUser ) {
@@ -195,10 +197,10 @@ export const lastLoggedInUser = ( currentUser ) => {
                 }
             }
         } catch(e){
-            dispatch({ type: LOGOUT_SUCCESS })
-        } 
-    }
-}
+            dispatch({ type: LOGOUT_SUCCESS });
+        };
+    };
+};
 
 export const addToSalesCart = ( 
 course, 
@@ -226,18 +228,19 @@ return dispatch => {
         status, 
         autoRenew,
         autoRenewDates } });
-    }
-}
+    };
+};
 
 export const removeItemFromCart = ( course ) => {
     return dispatch => { 
         dispatch({ type: REMOVE_FROM_SALES_CART, payload: course });
-    }
-}
+    };
+};
 
 export const buyCourse = ( currentUser ) => {
     return ( dispatch ) => {
         let resetUsersCartOnError; 
+
         dispatch({ type: BUY_COURSE_BEGIN });
         return purchase( currentUser )
            .then(user => {
@@ -247,7 +250,7 @@ export const buyCourse = ( currentUser ) => {
                 .then(session => {
                     user.sessions.push( session?._id );
                     dispatch({ type: BUY_COURSE_SUCCESS, payload: user });
-                    updateUser({ ...user, sessions: user?.sessions, cart: [],  cartTotal: 0, paymentStatus: ""})
+                    updateUser({ ...user, sessions: user?.sessions, cart: [],  cartTotal: 0, paymentStatus: "" })
                     .then( user => {
                         resetUsersCartOnError = user;
                         dispatch({ type: RESET_USERS_CART, payload: user }); 
@@ -255,11 +258,12 @@ export const buyCourse = ( currentUser ) => {
                     })
                     .catch( error => console.log( error ) );
                         let tutorSessions = [ ...course?.tutor?.sessions, session?._id ];
+
                         updateUser({ ...course?.tutor, sessions: tutorSessions })
                         .then(tutor => {
                             dispatch({ type: UPDATE_USER, payload: tutor });
                         })
-                        .catch(error => console.log(error))  
+                        .catch(error => console.log(error));  
                })
                .catch(error => {  
                    console.log( error );
@@ -270,10 +274,9 @@ export const buyCourse = ( currentUser ) => {
             console.log( error );
             dispatch({ type: RESET_USERS_CART, payload: { ...resetUsersCartOnError, paymentStatus: "" }}); 
             dispatch({ type: LAST_LOGGEDIN_USER, payload: { ...resetUsersCartOnError, paymentStatus: "" }});    
-
          });
-    }
-}
+    };
+};
 
 export const updateCurrentUser = ( currentUser ) => {
     return dispatch => {
@@ -282,22 +285,22 @@ export const updateCurrentUser = ( currentUser ) => {
              dispatch({ type: LAST_LOGGEDIN_USER, payload: user} );
          })
           .catch( error => {
-              dispatch({ type: LAST_LOGGEDIN_USER_ERROR, payload: error } )
+              dispatch({ type: LAST_LOGGEDIN_USER_ERROR, payload: error } );
           });
-    }
-}
+    };
+};
 
 export const loadUsers = () => {
     return dispatch => {
-        dispatch({ type: LOAD_USERS_BEGIN })
+        dispatch({ type: LOAD_USERS_BEGIN });
         get(`/users`)
         .then( users => {
             dispatch({ type: LOAD_USERS_SUCCESS, payload: users });
         }).catch( error => {
-            dispatch({ type: LOAD_USERS_ERROR , error })
+            dispatch({ type: LOAD_USERS_ERROR , error });
         });
-    }
-}
+    };
+};
 
 export const resetUsersCartAfterPurchase = (currentUser) => {
     return dispatch => {
@@ -309,18 +312,18 @@ export const resetUsersCartAfterPurchase = (currentUser) => {
          }
         });
         sessionStorage.removeItem('currentuser');
-    }
-}
+    };
+};
 
 export const updateInviteeList = () => {
     return dispatch => {
-        dispatch({ type: UPDATE_INVITEE_LIST})
-    }
-}
+        dispatch({ type: UPDATE_INVITEE_LIST });
+    };
+};
 
 export const saveUser = ( user ) => {
     return dispatch => {
-        dispatch({ type: SAVE_USER_BEGIN })
+        dispatch({ type: SAVE_USER_BEGIN });
             return update( user, `/users/` )
             .then( user => {  
                 //dispatch({        
@@ -328,7 +331,7 @@ export const saveUser = ( user ) => {
                 //dispatch(lastLoggedInUser(user))
             })
             .catch( error => {
-                dispatch({ type: SAVE_USER_ERROR , error })
+                dispatch({ type: SAVE_USER_ERROR , error });
         });  
     };
 };
@@ -339,47 +342,47 @@ export const inviteStudentsToLearningSession = ( invitees ) => {
             dispatch({ type: INVITEES_TO_LEARNING_SESSION, payload: invitees });
         } catch (error) {
             dispatch({ type: FAILED_INVITATION, error });
-        }   
-    }
-}
+        };   
+    };
+};
 
 export const updateUserInvitationUrl = (user, inviteeSessionUrl, nameOfLessonInProgress, lessonInProgress, meetingId) => {
     return dispatch  => {
       try{
-        updateInvitationUrl( user?._id, {...user, inviteeSessionUrl, nameOfLessonInProgress,  lessonInProgress, meetingId} )
-        dispatch({ type: UPDATE_INVITEE_SESSION_URL, payload: {...user, inviteeSessionUrl, nameOfLessonInProgress, lessonInProgress, meetingId} }) 
+        updateInvitationUrl( user?._id, {...user, inviteeSessionUrl, nameOfLessonInProgress,  lessonInProgress, meetingId} );
+        dispatch({ type: UPDATE_INVITEE_SESSION_URL, payload: {...user, inviteeSessionUrl, nameOfLessonInProgress, lessonInProgress, meetingId} });
       } catch(error){
         dispatch({ type: FAILED_INVITATION, error });
-      } 
-    }
-}
+      };
+    };
+};
 
 export const uploadAvatarImages = ( selectedFiles, file, url, teachObjectName, typeOfUpload ) => {
     return dispatch => {
         uploadUserAvatar(selectedFiles, file, url, teachObjectName,  typeOfUpload);
         getCurrentUserByEmail(JSON.stringify({ email: file?.email, password: file?.password }))
         .then(user => {
-            dispatch({  type: UPDATE_USER, payload: user })
-            dispatch({  type: USER_UPDATED, payload: user }) 
-            return user
+            dispatch({  type: UPDATE_USER, payload: user });
+            dispatch({  type: USER_UPDATED, payload: user }); 
+            return user;
         })
         .catch(error => {
             return error;
-        })
-    }
-}
+        });
+    };
+};
 
 export const loginPageError = ( error ) => {
     return dispatch => {
-        dispatch({ type: SIGN_UP_ERRORS, payload: error })
-    }
-}
+        dispatch({ type: SIGN_UP_ERRORS, payload: error });
+    };
+};
 
 export const userNavigationHistory = ( timeTravel ) => {
     return dispatch => {
-        dispatch({ type: NAVIGATION_HISTORY, payload: timeTravel })
-    }
-}
+        dispatch({ type: NAVIGATION_HISTORY, payload: timeTravel });
+    };
+};
 
 const courseConfig = (course) => {
     return { 
@@ -392,5 +395,5 @@ const courseConfig = (course) => {
         startDate: Date.now(),
         status: true,
         autoRenew: course.autoRenew
-  }
-}  
+  };
+};  

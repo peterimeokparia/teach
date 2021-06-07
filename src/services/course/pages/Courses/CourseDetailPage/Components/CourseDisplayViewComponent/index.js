@@ -52,13 +52,11 @@ setVideoUrl,
 setLessonPlanUrl,
 currentLesson,
 currentLessonVideoUrl }) => {
-
 if ( ! currentUser?.userIsValidated || ! operator ){
     navigate(`/${operatorBusinessName}/login`);
 }
 
 function onMatchListItem( match, listItem ) {
-
     if( match ){
         setVideoUrl( listItem?.videoUrl );
         setCurrentLesson( listItem );
@@ -119,7 +117,7 @@ return (
                             >
                                 <button 
                                     className="edit-lesson-btn"
-                                    onClick={() => { edit(lesson.title) } }                                          
+                                    onClick={() => { edit(lesson.title); } }                                          
                                 > 
                                     Edit
                                 </button>
@@ -139,7 +137,7 @@ return (
                             >
                                 <button
                                         className="delete-lesson-btn"
-                                        onClick={() => { questions(lesson?._id) }} 
+                                        onClick={() => { questions(lesson?._id); }} 
                                 >
                                     Questions
                                 </button>
@@ -204,6 +202,6 @@ return (
         </div>
     </div>
     );
-}
+};
 
 export default connect(null, { addNewLesson, saveLesson })(CourseDisplayViewComponent);

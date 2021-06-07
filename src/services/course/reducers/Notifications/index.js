@@ -36,6 +36,7 @@ const initialState = {
 
 const reducer =  produce( (draft, action) => {
     switch(action.type){
+         
        case SEND_PUSH_NOTIFICATION_MESSAGE_BEGIN:    
             draft.isSending = true;
             draft.onError = false;  
@@ -123,7 +124,8 @@ const reducer =  produce( (draft, action) => {
              draft.selectedPushNotificationMessageSubscribers = action.payload;    
         return;     
         default:
-        return;  
+        return; 
+         
     }
 }, initialState);
 

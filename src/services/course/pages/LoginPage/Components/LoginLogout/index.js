@@ -18,7 +18,7 @@ forceReload } from 'Services/course/helpers/ServerHelper';
 import { 
 getOperatorFromOperatorBusinessName } from 'Services/course/Selectors';
 
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import './style.css';
 
 const LoginLogout = ({ 
@@ -26,9 +26,7 @@ operatorBusinessName,
 operator, 
 user,  
 logOut }) => {
-
 const logInPage = `/${operatorBusinessName}/login`;
-
 const performLoginLogOut = (e) => {
   e.preventDefault();
     
@@ -43,26 +41,26 @@ const performLoginLogOut = (e) => {
           confirmButtonText: 'Get course(s)',
           cancelButtonText: 'Next time'
         }).then( (response) => {
-          
           if ( response?.value ) {      
             return;
           } else {
             userLogOut( user );
           }
-        })
+        });
       } else {
           userLogOut( user );
       }
     } else {
-        navigate(logInPage)
+        navigate(logInPage);
     } 
-}
+};
 
 const userLogOut = ( usr ) => {
   logOut( usr );
   navigate(logInPage);
   forceReload();
-}
+};
+
 return (
   <span>
     <button
@@ -73,14 +71,14 @@ return (
    </button>
    {Validations.setErrorMessageContainer()}
   </span>  
-  )          
-}
+  );          
+};
 
 const mapState = ( state, ownProps )   => {
   return {
     user: state.users.user,
     operator: getOperatorFromOperatorBusinessName(state, ownProps),
   };
-}
+};
 
 export default connect(mapState, { logOut } )(LoginLogout);

@@ -4,14 +4,14 @@ export const emailMessageOptions = ( currentUser, invitationUrl ) => {
         subject: "Hey! Join my lesson!",
         messageBody: invitationUrl,
         userId: currentUser?._id
-    }
-}
+    };
+};
 
 export const emailInputOptions = {
     name:"inputO",
     type:"email",
     placeHolder:"Invite your friends!"
-}
+};
 
 export function courseDetailPageComponentConfig(
     course,
@@ -35,7 +35,6 @@ export function courseDetailPageComponentConfig(
     currentLesson,
     currentLessonVideoUrl
     ) {
-    
     return {
     course,
     courseId,
@@ -58,5 +57,5 @@ export function courseDetailPageComponentConfig(
     setLessonPlanUrl,
     currentLesson,
     currentLessonVideoUrl
-}}
+}; };
 

@@ -2,7 +2,7 @@ import {
 add,
 get,
 update,
-updateUser,
+//updateUser,
 remove, 
 getById,
 sendEmail, 
@@ -35,7 +35,7 @@ export const TOGGLE_EVENT_EDIT_FORM = "TOGGLE_EVENT_EDIT_FORM";
 /// We know whose available at what date & time to take students or schedule for ad hoc online sessions
 export const addEvent = ( eventConfig ) => {
     // let userData = { ...eventConfig?.currentUser };
-    let userData = eventConfig?.currentUser;
+    //let userData = eventConfig?.currentUser;
     return dispatch => {
             dispatch({ type: ADD_EVENT_BEGIN });
        return add({ ...eventConfig?.event }, '/event')
@@ -54,7 +54,7 @@ export const addEvent = ( eventConfig ) => {
                     "New Calendar Event!",
                     `View Event: http://localhost:3000/boomingllc/accountverification/${calendarEventData?._id}`,  /// change
                     eventConfig?.currentUser?._id
-                )
+                );
             });
             // eventConfig.currentUser['calendarEvents'] = [ ...eventConfig?.currentUser?.calendarEvents, calendarEventData?._id ];
             // updateUser(  eventConfig?.currentUser )
@@ -63,20 +63,21 @@ export const addEvent = ( eventConfig ) => {
             //     dispatch({ type: SAVE_USER_SUCCESS, payload: user })             
             // });
             let timeLineItems = getTimeLineItems( calendarEventData );
-            dispatch(saveEvent({...calendarEventData, timeLineItems }, eventConfig?.currentUser, eventConfig?.pushNotificationUser, eventConfig?.emailAddresses))
+
+            dispatch(saveEvent({...calendarEventData, timeLineItems }, eventConfig?.currentUser, eventConfig?.pushNotificationUser, eventConfig?.emailAddresses));
             return calendarEventData; 
         })
         .catch( error => {
             dispatch({ type: ADD_EVENT_ERROR, payload: error });
             console.log( error );
             return error;
-        })
-    }
+        });
+    };
 };
 
 export const saveEvent = ( calendarEvent, currentUser, pushNotificationUser, emailAddresses )  => {
     return dispatch => {
-         dispatch({ type: SAVE_EVENT_BEGIN })
+         dispatch({ type: SAVE_EVENT_BEGIN });
          return update( calendarEvent, `/event/` )
              .then( event => {  
                  dispatch({ type: SAVE_EVENT_SUCCESS, payload: event });
@@ -92,7 +93,7 @@ export const saveEvent = ( calendarEvent, currentUser, pushNotificationUser, ema
                         "Modifiied Calendar Event(s)!",
                         `View Event: http://localhost:3000/boomingllc/accountverification/${event?._id}`,  /// change
                         currentUser?._id
-                    )
+                    );
                 });
                  return event; 
              })
@@ -104,9 +105,8 @@ export const saveEvent = ( calendarEvent, currentUser, pushNotificationUser, ema
  };
 
  export const deleteEvent = ( event, currentUser, pushNotificationUser ) => {
-    alert('in deleteCalendarEvent')
     return dispatch => {
-        dispatch({ type: DELETE_EVENT_BEGIN })
+        dispatch({ type: DELETE_EVENT_BEGIN });
          return remove( event, `/event/` )
          .then( resp => {
              dispatch({ type: DELETE_EVENT_SUCCESS, payload: resp });
@@ -120,8 +120,8 @@ export const saveEvent = ( calendarEvent, currentUser, pushNotificationUser, ema
             dispatch({ type: DELETE_EVENT_ERROR , error });
             return error;
         });
-    }
-}
+    };
+};
 
 export const loadAllEvents = () => {
     return dispatch => {
@@ -134,8 +134,8 @@ export const loadAllEvents = () => {
             dispatch({ type: LOAD_EVENTS_ERROR , error });
             return error;
         });
-    }
-}
+    };
+};
 
 export const loadEventsByCalendarId = ( calendarId ) => {
     return dispatch => {
@@ -149,8 +149,8 @@ export const loadEventsByCalendarId = ( calendarId ) => {
             dispatch({ type: LOAD_EVENTS_ERROR , error });
             return error;
         });
-    }
-}
+    };
+};
 
 export const loadEventsByUserId = ( remoteUser ) => {
     return dispatch => {
@@ -163,7 +163,7 @@ export const loadEventsByUserId = ( remoteUser ) => {
             dispatch({ type: LOAD_EVENTS_ERROR , error });
             return error;
         });
-    }
-}
+    };
+};
 
 

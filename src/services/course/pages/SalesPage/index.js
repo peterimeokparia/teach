@@ -38,19 +38,16 @@ addToSalesCart,
 currentUser, 
 users,
 children }) => {
-
 const [ totalNumberOfSessions, setTotalNumberOfSessions ] = useState(1);
 const [ sessionType, setSessionType ] = useState(undefined);
 const [ autoRenew, setAutoRenewal ] = useState(false);
 const MyCourses = `/${operatorBusinessName}/mycourses`;
 
 useEffect(() => {
-    
     if ( ! userOwnsCourse(currentUser, courseId) ) {       
         BuySessionPackageComponent(setSessionType);              
     } 
-
-}, [currentUser, courseId]);
+}, [ currentUser, courseId]);
 
 if ( currentUser?.paymentStatus === "approved" ) {
     navigate(MyCourses);
@@ -65,10 +62,10 @@ const userOwnsCourse = (user, courseId) => {
         return true;
     }
     return user?.courses?.includes(courseId);
-}
+};
 
 if ( userOwnsCourse(currentUser, courseId) ) { 
-    return <Redirect to={`/${operatorBusinessName}/courses/${courseId}`} noThrow/>
+    return <Redirect to={`/${operatorBusinessName}/courses/${courseId}`} noThrow/>;
 } 
 
 let tutor = users.find(user => user._id === course?.createdBy), numberOfSessions = 0;
@@ -86,7 +83,7 @@ Date.now(),
 true,
 autoRenew,
 Date.now() );
-}
+};
 
 const addCourseToCart = ( 
 course, 
@@ -100,7 +97,6 @@ endDate,
 status,
 autoRenew,
 autoRenewDates  ) => {
-
 let duplicateItemsExist = ( (currentUser?.cart?.filter(item => item?.course?._id === courseId ))?.length > 0 );
 
 if ( duplicateItemsExist ) {  
@@ -123,9 +119,10 @@ else {
         autoRenewDates );
         navigate(MyCourses);
     }
-}
+};
 
 let tutorsName = `${tutor?.firstname}`;
+
 return (
         <div className={"Sales"}>
             <header></header>
@@ -156,7 +153,7 @@ return (
                 </div>
             </div>
         </div>
-)}
+); };
 
 const mapState = (state, ownProps) => ({
     currentUser: state.users.user,

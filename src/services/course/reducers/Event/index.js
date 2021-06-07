@@ -27,6 +27,7 @@ const initialState = {
 
 const reducer =  produce( (draft, action) => {
      switch(action.type){
+
           case ADD_EVENT_BEGIN:
           case SAVE_EVENT_BEGIN:     
                draft.isAdding = true;
@@ -76,6 +77,7 @@ const reducer =  produce( (draft, action) => {
                draft.onError = action.error;
           return;  
           default:
+               
      }
 }, initialState);
 

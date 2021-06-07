@@ -51,6 +51,7 @@ const initialState = {
 
 const reducer = produce((draft, action) => {
     switch(action.type){
+         
         case SIGN_UP_BEGINS:
         case LOGIN_BEGIN:
         case RESET_PASSWORD_BEGIN:     
@@ -100,7 +101,7 @@ const reducer = produce((draft, action) => {
             draft.loading = false;
             draft.error = null;
             draft.user = null;
-            draft.users = {}   
+            draft.users = {};   
         return;
         case LAST_LOGGEDIN_USER:    
              draft.lastLoggedInUser = action.payload;
@@ -115,7 +116,7 @@ const reducer = produce((draft, action) => {
                   draft.user.cartTotal += action.payload.course.price; 
         return;
         case REMOVE_FROM_SALES_CART:
-             draft.user.cart = draft.user.cart.filter(course => course?.course?._id !== action.payload._id)
+             draft.user.cart = draft.user.cart.filter(course => course?.course?._id !== action.payload._id);
              draft.user.cartTotal -= action.payload.price;   
         return;
         case BUY_COURSE_SUCCESS:
@@ -125,7 +126,7 @@ const reducer = produce((draft, action) => {
         return;     
         case RESET_USERS_CART:
              draft.user = action.payload;
-        return 
+        return; 
         case INVITEES_TO_LEARNING_SESSION:
              draft.invitees = action.payload;
         return;
@@ -137,7 +138,6 @@ const reducer = produce((draft, action) => {
              draft.onSaveUserError = null;
         return; 
         case SAVE_USER_SUCCESS:    
-             console.log(action.payload)
              draft.users[action.payload._id] = action.payload;
              draft.user =  action.payload;
              draft.saveUserInProgress = false;
@@ -158,6 +158,7 @@ const reducer = produce((draft, action) => {
         return; 
         default:
         return;
+        
     }    
 }, initialState);
 

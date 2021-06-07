@@ -5,7 +5,7 @@ useState } from 'react';
 import {
 manageCommentsFieldCollection } from 'Services/course/Pages/QuestionsPage/helpers';
 
-import EditorComponent  from '../EditorComponent';
+import EditorComponent  from '../../../Components/EditorComponent';
 import './style.css';
 
 const Comments = ({ config, commentsConfig, onlineQuestionId }) => {

@@ -13,7 +13,7 @@ addNewCourse } from 'Services/course/Actions/Courses';
 import { 
 Validations } from  'Services/course/helpers/Validations';
 
-import './style.css'
+import './style.css';
 
 const NewCoursePage = ({
 saveInProgress,
@@ -22,7 +22,6 @@ user,
 courses,
 operator,
 dispatch }) => {
-
 const [ courseName, setCourseName ] = useState('');
 const [ coursePrice, setCoursePrice ] = useState('');
 const [ courseDescription, setCourseDescription ] = useState('');
@@ -37,8 +36,7 @@ const handleSubmit = e => {
     e.preventDefault(); 
 
     if ( (Validations.checkFormInputString("Course Title", courseName)) && 
-        (Validations.checkFormInputNumber("Course Price", coursePrice))) {
-            
+        (Validations.checkFormInputNumber("Course Price", coursePrice))) {        
         if ( Validations.duplicateCheck( courseName,  courses, "course title", "name" ) ) {
             return;
         }
@@ -47,11 +45,11 @@ const handleSubmit = e => {
 };
 
     if ( saveInProgress ) {
-        return <div>...loading</div>
+        return <div>...loading</div>;
 } 
 
 if ( onSaveError ) {
-    return <div> { onSaveError.message } </div> ;
+    return <div> { onSaveError.message } </div>;
 }      
 
 return (
@@ -75,8 +73,8 @@ return (
                     value={coursePrice} 
                     onChange={(e) => setCoursePrice(e.target.value)}
                 />        
-            </label>
-            <label>
+                </label>
+                <label>
                     Enter course description:  
                 <input
                     disabled={saveInProgress} 
@@ -93,7 +91,7 @@ return (
             <button type="submit" disabled={saveInProgress} >Create Course</button>
         </form>
     </div>
-)};
+); };
 
 const mapState = (state, ownProps ) => ({
     courses: Object.values(state?.courses?.courses)?.filter(crs => crs?.operatorId === ownProps.operator?._id),

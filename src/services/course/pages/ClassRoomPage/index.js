@@ -35,7 +35,7 @@ addNewMeeting,
 saveMeeting } from 'Services/course/Actions/Meetings'; 
 
 import {
-getMeetings } from 'Services/course/Pages/Meeting/helpers'
+getMeetings } from 'Services/course/Pages/Meeting/helpers';
 
 import{  
 loadLessons,
@@ -85,7 +85,8 @@ markAttendanceForSelectedStudents } from 'Services/course/Pages/AttendancePage/C
 
 import { 
 role,
-cleanUrl } from 'Services/course/helpers/PageHelpers';
+// cleanUrl 
+} from 'Services/course/helpers/PageHelpers';
 
 import ClassRoomComponent from './Components/ClassRoomComponent';
 import 'react-toastify/dist/ReactToastify.css';
@@ -123,8 +124,7 @@ selectedPushSubscribers,
 toggleClassRoomSideBarDropDownDisplay,
 toggleSideBarDisplay,
 children }) => {
-
-const [ lessonUrl, setLessonUrl ] = useState("");
+// const [ lessonUrl, setLessonUrl ] = useState("");
 const [ currentCourse, setSelectedCourseFromCourseDropDownSelector ] = useState( undefined );
 let   [ currentLesson, setSelectedLessonFromLessonDropDownSelector ] = useState( undefined );
 const [ listOfStudents, setListOfStudents ] = useState([]);
@@ -134,7 +134,7 @@ const [ setUpdateUserTimerHandle, setNewMeetingTimerHandle ] = useState(null);
 const [ animateInvitationButton, setAnimationForEmailInvitationEffect ] = useState( false );
 const lessonPlanUrl = `/${operatorBusinessName}/LessonPlan/classRoom/${selectedUserId}`;
 const lessonPageUrl = 'http://localhost:3000' + lessonPlanUrl;
-const lessonTitle = cleanUrl( currentLesson?.title )
+// const lessonTitle = cleanUrl( currentLesson?.title );
 
 let displayComponentConfig = classRoomPageDisplayComponentConfig( 
     currentUser, 
@@ -162,8 +162,11 @@ useEffect(() => {
     loadUsers();
     loadMeetings();
     loadSubscribedPushNotificationUsers();
-
-}, [ loadGrades, loadLessons, loadUsers, currentCourse, currentLesson, loadMeetings, loadSubscribedPushNotificationUsers, saveMeeting]);
+ });
+// }, [ currentCourse, listOfStudents, displayComponentConfig.selectedUser.courses, currentUser, loadUsers, 
+//     loadMeetings, loadSubscribedPushNotificationUsers, loadLessons, loadGrades, setUpdateUserTimerHandle, operatorBusinessName, 
+//        meetings, saveMeeting ] );
+// }, [ loadGrades, loadLessons, loadUsers, currentCourse, currentLesson, loadMeetings, loadSubscribedPushNotificationUsers, saveMeeting]);
 
 if ( ! currentUser?.userIsValidated || ! operator ){
     navigate(`/${operatorBusinessName}/login`);
@@ -172,25 +175,28 @@ if ( ! currentUser?.userIsValidated || ! operator ){
 const setCourseFromDropDown = ( selectedCourseId ) => {
     if ( selectedCourseId ) {
         let course = courses?.find( crs => crs._id === selectedCourseId );
+
         setSelectedCourseFromCourseDropDownSelector( course );
         setSessions( allSessions?.filter( usersession => usersession?.courseId === selectedCourseId ));
     }
-}
+};
 
 const setLessonFromDropDown = ( selectedLessonId ) => {
     if ( selectedLessonId ) {
         let lesson = lessons?.find( lsn => lsn._id === selectedLessonId );
+
         setSelectedLessonFromLessonDropDownSelector( lesson );
-        setLessonUrl(`/courses/${lesson?.courseId}/lessons/${lesson?._id}`);
+        // setLessonUrl(`/courses/${lesson?.courseId}/lessons/${lesson?._id}`);
     }
-}
+};
 
 async function enableTeachPlatform() {
     validationBeforeEnablingTeachPlatform( currentCourse, currentUser, role, listOfStudents );
     let currentMeeting;
+
     try {      
         currentMeeting = await getMeetings(currentUser, loadMeetingsByMeetingId);  
-        if ( currentUser?.role === role.Student ) { 
+        if ( currentMeeting?._id && currentUser?.role === role.Student ) { 
             loadUserByEmail(currentUser)
             .then(user => {
                 if ( ( user?.lessonInProgress ) && ( user?.meetingId === displayComponentConfig?.selectedUser?.meetingId ) ) {
@@ -205,7 +211,10 @@ async function enableTeachPlatform() {
             .catch(error => {
                 console.log( error );
         }); 
-    }       
+    } else {
+        waititingForMeetingToStartBeforeJoining( currentUser, lessonPlanUrl, currentUser?.lessonInProgress, setAnimationForEmailInvitationEffect, setUpdateUserTimerHandle, setNewMeetingTimerHandle, updateCurrentUser );
+        return;
+    }      
     navigate( lessonPlanUrl ); 
     updateCurrentTutor( displayComponentConfig?.selectedUser ); 
     updateCurrentClassRoomLessonPlan( { selectedTutor: displayComponentConfig?.selectedUser, selectedCourse: currentCourse, selectedLesson: currentLesson } );
@@ -232,6 +241,7 @@ function setTeachSessionSettings( user, currentCourse, currentLesson, sessions, 
     ); 
 
     let usersWhoJoinedTheMeeting = [];
+
     addNewMeeting(
     invitees, 
     user?._id,
@@ -275,8 +285,9 @@ toggleClassRoomSideBarDropDownDisplay,
 toggleSideBarDisplay,
 animateInvitationButton,
 lessonPageUrl );
+
 return ( <ClassRoomComponent config={componentConfig}/> );
-}
+};
 
 const mapDispatch = {
     updateUserInvitationUrl,
@@ -304,7 +315,7 @@ const mapDispatch = {
     getSelectedPushNotificationUsers,
     loadSubscribedPushNotificationUsers,
     toggleClassRoomSideBarDropDownDisplay
-}
+};
 
 const mapState = (state, ownProps) => {
     return {
@@ -327,7 +338,7 @@ const mapState = (state, ownProps) => {
         grades:  getSortedRecordsByDate(Object.values(state?.grades?.grades), 'testDate'),
         meetings: state.meetings.meetings,
         toggleSideBarDisplay: state.classrooms.displaySideBarDropDown
-    }
-}
+    };
+};
 
 export default connect(mapState, mapDispatch)(ClassRoomPage);

@@ -20,13 +20,13 @@ const CourseDropDownPage = ({ lesson, previewMode, togglePreviewMode  }) => {
       <MarkDown source={lesson?.markDown} /> 
     </div> 
   );
-}
+};
 
 const mapState = (state, ownProps)   => {
   return {
     previewMode: state.app.previewMode,
     lesson: state.lessons.lessons[ownProps.lessonId]
   };
-}
+};
 
 export default connect(mapState, { togglePreviewMode } )(CourseDropDownPage);

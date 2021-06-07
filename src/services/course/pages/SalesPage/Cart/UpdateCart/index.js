@@ -13,15 +13,14 @@ import {
 getCoursesByCourseIdSelector  } from 'Services/course/Selectors';
 
 const UpdateCart = ({ courseId, course, removeItemFromCart }) => {  
-
 const removeFromCart = () => {
     removeItemFromCart( course );
     navigate('/mycourses');
-}
+};
 
 const returnToCourseListPage = () => { 
     navigate('/mycourses');
-}
+};
 
 return ( <div> 
             <div> {`are you sure you want to remove ${course.name} from your cart?`} </div> 
@@ -31,11 +30,11 @@ return ( <div>
                 </div>
             </div> 
         );
-}
+};
 
 const mapState = (state, props)  => ({
     currentUser : state.users.user,
     course: getCoursesByCourseIdSelector(state, props),
-})
+});
 
 export default connect(mapState, { removeItemFromCart })( UpdateCart );

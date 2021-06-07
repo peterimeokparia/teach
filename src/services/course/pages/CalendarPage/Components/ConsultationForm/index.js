@@ -18,7 +18,6 @@ saveInProgress,
 onSaveError,
 courses,
 slotInfo }) => {
-    
 const [ firstName, setFirstName ] = useState('');
 const [ lastName, setLastName ] = useState('');
 const [ studentsName, setStudentsName ] = useState('');
@@ -28,31 +27,28 @@ const [ coursesInterestedIn, setCoursesInterestedIn ] = useState([]);
 const inputRef = useRef();
 
 useEffect (() => {
-
     if ( inputRef ) {
         inputRef.current.focus();
     }
-    
 }, []); 
 
 if ( saveInProgress ) {
-    return <div>...loading</div>
-} 
-
+    return <div>...loading</div>;
+};
 if ( onSaveError ) {
     return <div> { onSaveError.message } </div> ;
-}
+};
 
 const onSubmit = (e) => {
     e.preventDefault();
-}
+};
 
 const submitForm = () => {
-
-const [ start, end, startStr, endStr, allDay ] = Object.entries(slotInfo);
+const [ start, end, allDay ] = Object.entries(slotInfo);
 const [ calendarViewType ] = Object.entries(slotInfo?.view);
 
 let event = {}, dateTimeString = transformDateTime( start[1], end[1], calendarViewType, allDay[1] );
+
 event = {
     title: `Consultation with ${firstName} ${lastName}`,
     recurringEvent:false,
@@ -63,7 +59,7 @@ event = {
 };
 
 handleSubmit( newCalendarEventData(event, undefined, undefined, { firstName, lastName, studentsName, email, phone, coursesInterestedIn } ) );  
-}
+};
 
 return (
     <div className="NewCourse">
@@ -139,6 +135,6 @@ return (
              <button onClick={submitForm} disabled={saveInProgress} > Schedule Consultation </button>
         </form>
     </div>
-)};
+); };
 
 export default ConsultationForm;

@@ -17,7 +17,7 @@ loginUser } from 'Services/course/Actions/Users';
 import { 
 getOperatorFromOperatorBusinessName } from 'Services/course/Selectors';
 
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import './style.css';
 
 const PasswordReset = ({  
@@ -28,17 +28,14 @@ users,
 operator,
 operatorBusinessName,
 userId }) => {
-
 useEffect(() =>{ 
-
   if ( ! users ) {
     updateCurrentUser( {_id: userId } );
-  }
-},  [])   
-
+  };
+});   
+// },  []);   
  const [ passWordValue, setPasswordValue ] = useState("");
  const handlePasswordReset = (event) => {
-        
     if ( users.length > 0 ) {
         let currentUser = users.find(user => user?._id === userId );
     
@@ -47,13 +44,12 @@ useEffect(() =>{
                  if (passWordValue) {
                   userPasswordReset( { ...currentUser, newUserPassword: passWordValue } )
                     .then( resp => { 
- 
                       if ( resp ) {
-                          currentUser = { ...currentUser, userIsValidated: true }
-                          loginUser( { ...currentUser, unHarshedPassword: passWordValue } ) 
+                          currentUser = { ...currentUser, userIsValidated: true };
+                          loginUser( { ...currentUser, unHarshedPassword: passWordValue } ); 
                           navigate(`http://localhost:3000/${operatorBusinessName}/users`);
                       }
-                    }).catch( error => {console.log( error )})
+                    }).catch( error => { console.log( error ); });
                  }  
             } else {
                 Swal.fire({
@@ -63,13 +59,13 @@ useEffect(() =>{
                 });
                 navigate(`http://localhost:3000/${operatorBusinessName}/login`);
             }
-          }
-      }
-}
+          };
+      };
+};
 
 const handleSubmit = e => {
     e.preventDefault();
-}
+};
                                 
 return (
     <div className="LoginPage"> 
@@ -97,7 +93,7 @@ return (
      </form> 
   </div> 
   );
-}
+};
 
 const mapState = ( state, ownProps )   => {  
   return {
@@ -109,6 +105,6 @@ const mapState = ( state, ownProps )   => {
     loading: state?.users?.loading,
     sessions: Object.values(state?.sessions?.sessions)?.filter(session => session?.UserId === ownProps?.currentUser?._id)     
   };
-}
+};
 
 export default connect(mapState, { loginUser, updateCurrentUser, userPasswordReset  })(PasswordReset);

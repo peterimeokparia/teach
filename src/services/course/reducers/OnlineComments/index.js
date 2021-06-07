@@ -29,6 +29,7 @@ const initialState = {
 
 const reducer = produce((draft, action) => {
     switch(action.type){
+
         case ADD_ONLINECOMMENTS_BEGIN:
         case SAVE_ONLINECOMMENTS_BEGIN:
              draft.saveInProgress = true;
@@ -36,7 +37,7 @@ const reducer = produce((draft, action) => {
         return;
         case ADD_ONLINECOMMENTS_SUCCESS:
         case SAVE_ONLINECOMMENTS_SUCCESS:    
-             console.log(action.payload)
+             console.log(action.payload);
              draft.onlineComments[action.payload._id] = action.payload; 
              draft.saveInProgress = false;
         return;
@@ -80,6 +81,7 @@ const reducer = produce((draft, action) => {
        return; 
        default:
     return;
+    
     }
 }, initialState);
 

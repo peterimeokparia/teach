@@ -7,11 +7,11 @@ useRef } from 'react';
 import { 
 connect } from 'react-redux';
 
-import { 
-addNewCourse } from 'Services/course/Actions/Courses';
+// import { 
+// addNewCourse } from 'Services/course/Actions/Courses';
 
-import { 
-Validations } from  'Services/course/helpers/Validations';
+// import { 
+// Validations } from  'Services/course/helpers/Validations';
 
 import { 
 getOperatorFromOperatorBusinessName, 
@@ -19,7 +19,7 @@ getUsersByOperatorId,
 getCoursesByOperatorId } from 'Services/course/Selectors';
 
 import DropDown from 'Services/course/Pages/Components/DropDown';
-import './style.css'
+import './style.css';
 
 const OnlineTutoringRequestForm = ({
 saveInProgress,
@@ -30,21 +30,18 @@ courses,
 operatorBusinessName,
 operator,
 dispatch }) => {
-
 const [ courseName, setCourseName ] = useState('');
-const [ coursePrice, setCoursePrice ] = useState('');
-const [ courseDescription, setCourseDescription ] = useState('');
 const [ immediateHelp, setImmediateHelp ] = useState( false );
 const [ getTutor, setGetATutor ] = useState( false );
 const inputRef = useRef();
-let currentUser = user;
+//let currentUser = user;
 
 useEffect (() => {
     // inputRef.current.focus();
 }, []); 
 
 if ( saveInProgress ) {
-        return <div>...loading</div>
+        return <div>...loading</div>;
 } 
 
 if ( onSaveError ) {
@@ -66,7 +63,7 @@ const getScheduledHelp = e => {
 
 const getATutor = e => {
     setGetATutor( true );
-}
+};
 
 return (
     <div className="OnlineHelp">
@@ -128,7 +125,7 @@ return (
            </div>
         </form>
     </div>
-)};
+); };
 
 const mapState = ( state, ownProps ) => ({
     user: state?.users?.user, // get user by operator id

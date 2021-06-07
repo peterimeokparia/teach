@@ -22,9 +22,7 @@ currentUser,
 courseId, 
 saveSession,
 sessions }) => {
-
 function onMatchListItem( match, listItem ) {
-
     if ( match ){
         // fix
     }
@@ -69,7 +67,7 @@ return   (
                                 >
                                     <button 
                                         className="edit-lesson-btn"
-                                        onClick={() => { edit( selectedSession ) } }                                          
+                                        onClick={() => { edit( selectedSession ); } }                                          
                                     > 
                                         Edit
                                     </button>
@@ -80,7 +78,7 @@ return   (
                                     <span>
                                         <button
                                             className="delete-lesson-btn"
-                                            onClick={() => { remove( selectedSession ) }}> 
+                                            onClick={() => { remove( selectedSession ); }}> 
 
                                             Delete 
 
@@ -97,8 +95,8 @@ return   (
                     </ListItem>                    
              }
          </div>     
-    )  
-}
+    );
+};
 
 const mapState = (state, ownProps)   => {
   return {
@@ -106,6 +104,6 @@ const mapState = (state, ownProps)   => {
     sessions: Object.values(state?.sessions?.sessions),
     lesson: state.lessons.lessons[ownProps.lessonId]
   };
-}
+};
 
 export default connect(mapState, { saveSession  } )(SessionPage);

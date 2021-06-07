@@ -17,7 +17,6 @@ className,
 onSubmit,
 deleteAttendance, 
 children }) => {
-
 let attendanceInitialValue = attendance ? attendance?.attendanceMark : '';
 let dateInitialValue = attendance ? attendance?.attendanceDate : Date.now(); 
 const [ editing, setEditing ] = useState(false); 
@@ -29,7 +28,7 @@ const reset = () => {
     setAttendanceDate(dateInitialValue);
     markAttendance(attendanceInitialValue);
     setEditing(false);
-}
+};
 
 const commitEdit = (e) => {
     e.preventDefault();
@@ -44,28 +43,26 @@ const commitEdit = (e) => {
 const setValues = () => {
     setAttendanceDate(dateInitialValue);
     markAttendance(attendanceInitialValue);
-}
+};
 
 const beginEditing = () => {
     setValues();
     setEditing(true);
-}
+};
 
 const performDelete = () => {
     deleteAttendance(attendance);
-}
+};
 
 const cancelEdit = (e) => {
     e.preventDefault();
     reset();
-}
+};
  
 useEffect (() => {
-
 if ( editing ) {
     inputRef.current.focus();
 }
-
 }, [ editing ]); 
 
 return editing ? (

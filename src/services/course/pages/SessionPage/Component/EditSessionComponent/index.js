@@ -19,7 +19,6 @@ className,
 onSubmit,
 deleteSession, 
 children }) => {
-
 let numberOfSessionsInitialValue = session ? session?.numberOfSessions : '';
 let totalNumberOfSessionsInitialValue = session ? session?.totalNumberOfSessions : '';
 const [ editing, setEditing ] = useState(false);
@@ -31,7 +30,7 @@ const reset = () => {
     setTotalNumberOfSessions(totalNumberOfSessionsInitialValue);
     setNumberOfSessions(numberOfSessionsInitialValue);
     setEditing(false);
-}
+};
 
 const commitEdit = (e) => {
     e.preventDefault();
@@ -46,24 +45,23 @@ const commitEdit = (e) => {
 const setValues = () => {
     setNumberOfSessions(numberOfSessionsInitialValue);
     setTotalNumberOfSessions(totalNumberOfSessionsInitialValue);
-}
+};
 
 const beginEditing = () => {
     setValues();
     setEditing(true);
-}
+};
 
 const performDelete = () => {
     deleteSession(session);
-}
+};
 
 const cancelEdit = (e) => {
     e.preventDefault();
     reset();
-}
+};
  
 useEffect (() => {
-
     if ( editing ) {
         inputRef.current.focus();
     }

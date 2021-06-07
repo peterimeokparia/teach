@@ -1,5 +1,5 @@
 .builder {
-    height: 300vh;
+    /* height: 500vh;  */
     display: flex;
     flex-direction: column;
     text-align: left;
@@ -11,8 +11,19 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px 10px 10px;
+    /* justify-content: space-between; */
+    /* padding: 10px 20px 10px 10px;  */
+}
+.builder .content {
+    background-image: url(../../../../images/geometry2.png);
+    background-size: 400px 400px;
+    /* display: flex; */
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between; 
+    overflow-y: hidden; /* Hide vertical scrollbar */
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+    padding: 19px 50px 50px 0px;
 }
 .builder iframe{
    height: 400px;
@@ -95,7 +106,7 @@
     -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
     transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
 }
-.input-field-builder-selector {
+.OnlineQuestionsMultiEditorComponent .input-field-builder-selector {
     opacity: 1; 
     border: 2px; 
     right: 5px;

@@ -2,6 +2,7 @@ import React  from 'react';
 import './style.css';
 
 class CameraComponent extends React.PureComponent {
+
   constructor(props){
     super(props);
     this.state = {
@@ -9,7 +10,7 @@ class CameraComponent extends React.PureComponent {
       cameraOn:false,
       autoPlay:"false",
       mediaStream: null
-    }
+    };
     this.videoRef = React.createRef();
     this.enableCamera = this.enableCamera.bind(this);
     this.setCapture = this.setCapture.bind(this);
@@ -18,18 +19,29 @@ class CameraComponent extends React.PureComponent {
   };
   
   theStream;
+
   theRecorder;
+  
   recorder;
+  
   url;
+  
   blob;
+  
   recordedChunks = [];
 
   componentDidMount = () => {
     this.handleTogglingCamera();
+    if ( !this.props.startCameraCapture  && this.theStream  ) {
+      this.theStream.getTracks().forEach(track => track.stop());
+    }
   };
 
   componentDidUpdate = () => {
     this.handleTogglingCamera();
+    if ( !this.props.startCameraCapture && this.theStream ) {
+      this.theStream.getTracks().forEach(track => track.stop());
+    }
   }
 
   componentWillUnmount = () => {
@@ -92,7 +104,7 @@ class CameraComponent extends React.PureComponent {
 
   startCapture = () => {
     if ( this.props?.videoModalModeOn ) {
-      this.props.resetAllStartSettings()
+      this.props.resetAllStartSettings();
     }
     this.props.setVideoModalMode(true);
     this.setState({ cameraOn: true });
@@ -104,11 +116,11 @@ class CameraComponent extends React.PureComponent {
   stopCapture = () => {
     if ( this.theRecorder && this.theStream ){
         this.theRecorder.stop();
-        this.theStream.getTracks().forEach(track => track.stop())
+        this.theStream.getTracks().forEach(track => track.stop());
     }
       this.props.resetAllStopSettings(); 
-      this.setState({ capture: false })
-      this.setState( { cameraOn: false })
+      this.setState({ capture: false });
+      this.setState( { cameraOn: false });
   };
   
   enableCamera = () => {   
@@ -139,6 +151,7 @@ class CameraComponent extends React.PureComponent {
     navigator.mediaDevices.getUserMedia(this.requestedAudioOptions).then(function(mic) {
       let tracks = mic.getTracks();
       let track = tracks[0];
+
       if ( screen && track ) {
         if ( screenSharingEnabled ) {
            screen.addTrack( track );
@@ -157,6 +170,7 @@ class CameraComponent extends React.PureComponent {
       }
       
       let options = {mimeType: 'video/webm;codecs=vp9,opus'};
+
       if (! MediaRecorder.isTypeSupported(options.mimeType)) {
           console.error(`${options.mimeType} is not supported`);
           options = {mimeType: 'video/webm;codecs=vp8,opus'};
@@ -173,7 +187,7 @@ class CameraComponent extends React.PureComponent {
       }
   
       try {
-        console.log('MediaRecorder', stream)
+        console.log('MediaRecorder', stream);
         this.recorder = new MediaRecorder(stream, options);
       } catch (e) {
         console.error('Exception while creating MediaRecorder: ' + e);
@@ -187,8 +201,8 @@ class CameraComponent extends React.PureComponent {
       }
       this.recorder.ondataavailable = (event) => { this.recordedChunks.push(event?.data); };
       this.recorder.start(100);
-    }
-  }
+    };
+  };
 
   handleTogglingCamera = () => {
     if ( ( this.state.capture ) && ( this.state.cameraOn ) ) {  
@@ -203,10 +217,10 @@ class CameraComponent extends React.PureComponent {
 
   handleCanPlay = () => {       
     this.videoRef.current.play();
-    this.setState({ autoPlay: "true" })
+    this.setState({ autoPlay: "true" });
     
     if ( !this.props.startCameraCapture ) {
-      this.setState({ autoPlay: "false" })
+      this.setState({ autoPlay: "false" });
       this.videRef = null;
     }
   }
@@ -229,8 +243,9 @@ class CameraComponent extends React.PureComponent {
               </div>        
         </span>
         </>
-        )
-      }
+        );
+      };
+      
 }
 
 export default CameraComponent;

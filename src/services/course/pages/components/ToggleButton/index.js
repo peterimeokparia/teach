@@ -23,6 +23,6 @@ const ToggleButton = ({
         </label>
   </div> 
   );
-}
+};
 
 export default ToggleButton;

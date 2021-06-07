@@ -8,7 +8,8 @@ getOperatorFromOperatorBusinessName,
 getSortedRecordsByDate } from 'Services/course/Selectors';
 
 import {
-addNewOnlineComment } from 'Services/course/Actions/OnlineComments'; 
+addNewOnlineComment,
+saveOnlineComment } from 'Services/course/Actions/OnlineComments'; 
 
 import {
 manageCommentsFieldCollection } from 'Services/course/Pages/QuestionsPage/helpers';
@@ -20,21 +21,25 @@ saveMarkDownContent } from 'Services/course/helpers/EditorHelpers';
 import {
 getCalendarColor } from 'Services/course/Pages/CalendarPage/helpers';
 
-import { Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
+import { 
+Accordion, 
+AccordionSummary, 
+// AccordionDetails 
+} from '@material-ui/core';
 
 import moment from "moment";
-import EditorComponent  from '../EditorComponent';
+import EditorComponent  from '../../../Components/EditorComponent';
 import ReplyIcon from '@material-ui/icons/Reply';
 import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import AddCommentIcon from '@material-ui/icons/AddComment';
+// import EditIcon from '@material-ui/icons/Edit';
+// import AddCommentIcon from '@material-ui/icons/AddComment';
 import AddCommentOutlinedIcon from '@material-ui/icons/AddCommentOutlined';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 
-import MuiAccordion from '@material-ui/core/Accordion';
-import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
-import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
+// import MuiAccordion from '@material-ui/core/Accordion';
+// import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
+// import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import { styleObj, replyIconStyle, deleteIconStyle, iconStyle} from './inlineStyles';
 import './style.css';
@@ -52,17 +57,15 @@ const ReplyComments = ({
     questionId, 
     onlineQuestionAnswerId, 
     addNewOnlineComment,
+    saveOnlineComment,
     commentParentId }) => {
-
     const [expanded, setExpanded] = React.useState('panel1');
-
     let inputFieldOptions;
-    let onlineComments = getSortedRecordsByDate( comments?.filter(comment => comment?.onlineQuestionId === questionId && comment?.onlineQuestionAnswerId === answer?._id), 'commentDateTime');
 
-    if ( ! onlineComments ) { return <div>{''}</div>}
+    let onlineComments = getSortedRecordsByDate( comments?.filter( comment => comment?.onlineQuestionId === questionId && comment?.onlineQuestionAnswerId === answer?._id ), 'commentDateTime');
 
+    if ( ! onlineComments ) { return <div>{''}</div>; }
     const addNewComment = ( parentComment ) => {
-
         let config = { 
             onlineQuestionId: questionId,
             onlineQuestionAnswerId: answer?._id,
@@ -75,26 +78,35 @@ const ReplyComments = ({
             operator: operator?._id,
             color: ( parentComment?._id === undefined ) ? getCalendarColor( parentComment ) :  parentComment?.color, 
             inputFieldOptions, 
-        }
+        };
 
-        addNewOnlineComment( manageCommentsFieldCollection(config) )
+        addNewOnlineComment( manageCommentsFieldCollection(config) );
     };
 
-    const removeComments = () => {
-          // let lastCommentField = comments[ ( comments?.length - 1 ) ];
-          // let decrementedCommentSet = comments?.filter( input => input?.name !== lastCommentField?.name );
-    }
+    // const removeComments = () => {
+    //       // let lastCommentField = comments[ ( comments?.length - 1 ) ];
+    //       // let decrementedCommentSet = comments?.filter( input => input?.name !== lastCommentField?.name );
+    // }
 
-    const handleChange = ( editor, name, type, comment ) => {
-    }  
+    let commentsHandleChangeTimerHandle = null, timeOutDuration = 5000;
+     const handleChange = ( editor, comments ) => {
+       saveMarkDownContent( 
+        commentsHandleChangeTimerHandle, 
+        saveOnlineComment,
+         comments,
+         JSON.stringify( editor.emitSerializedOutput() ),
+         `${comments?._id}`,
+         timeOutDuration
+       );     
+     };
 
     const getCommentIdCollection = () => {
         let commentObjects = {};
         let children = getSortedRecordsByDate( onlineComments?.filter(_comments => _comments?.commentParentId === null ), 'commentDateTime');
-        commentObjects[ comment?._id ] = { children }
-      
+
+        commentObjects[ comment?._id ] = { children };
       return commentObjects;
-    }
+    };
 
     const handleAccordionChange = (panel) => (event, newExpanded) => {
         setExpanded(newExpanded ? panel : false);
@@ -114,6 +126,7 @@ const ReplyComments = ({
                         key={ comment?._id }
                         id={ comment?._id }
                         name={ comment?.name } 
+                        onChange={(editor) => handleChange( editor, element )}
                         content={JSON.parse( comment?.markDownContent ) }
                     /> 
                </div>
@@ -154,18 +167,19 @@ const ReplyComments = ({
                 </div> 
           </Accordion> 
           }
-        </div>
-        })
+        </div>;
+        });
     })
    }
-    </>
-}
+    </>;
+};
 
 const callOnLineComments = ( ) => { 
     return Object.values( getCommentIdCollection() )?.map( answerComments => {
             return getChildComments ( answerComments?.children );
-     });   
-}
+    });   
+};
+
 return (
         <>
             {
@@ -181,7 +195,7 @@ return (
                 callOnLineComments() 
             }                         
         </>
-)}
+); };
 
 const mapState = ( state, ownProps ) => {
     return {
@@ -189,7 +203,7 @@ const mapState = ( state, ownProps ) => {
       currentUser: state.users.user,
       currentUsers: Object.values( state.users.users ),
       comments: Object.values( state?.onlineComments?.onlineComments )
-    }
-  }
+    };
+  };
   
-export default connect(mapState, { addNewOnlineComment  })(ReplyComments);
+export default connect(mapState, { addNewOnlineComment, saveOnlineComment  })(ReplyComments);

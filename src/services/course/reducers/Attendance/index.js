@@ -22,6 +22,7 @@ const initialState = {
 
 const reducer =  produce( (draft, action) => {
     switch(action.type){
+
        case MARK_ATTENDANCE_BEGIN:    
              draft.isLoading = true;
              draft.onError = false;  
@@ -53,7 +54,7 @@ const reducer =  produce( (draft, action) => {
              draft.onSaveAttendanceError = null;
         return; 
         case SAVE_ATTENDANCE_SUCCESS:    
-             console.log(action.payload)
+             console.log(action.payload);
              draft.attendanceCollection[action.payload._id] = action.payload;
              draft.attendance =  action.payload;
              draft.saveAttendanceInProgress = false;
@@ -64,8 +65,8 @@ const reducer =  produce( (draft, action) => {
         return;     
         default:
         return;  
-    }
-    
+
+    };
 }, initialState);
 
 export default reducer;

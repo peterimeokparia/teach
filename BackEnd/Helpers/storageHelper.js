@@ -11,25 +11,25 @@ import notificationModel from '../Model/notificationModel.js';
 
 export const sendMetaData = ( url, metaData ) => {
    return updateContent( url, metaData );
- }
+}
  
- export async function getContent( url ){
-   return axios.get( url );
- }
+export async function getContent( url ){
+  return axios.get( url );
+}
  
- export async function addContent( url, data = {}  ){
+export async function addContent( url, data = {}  ){
   return axios.post(url, data)
    .then(resp => {console.log(resp)})
     .catch(err => { console.log(err) })
 }
 
- export async function updateContent( url, data = {}  ){
+export async function updateContent( url, data = {}  ){
    return axios.put(url, data)
     .then(resp => {console.log(resp)})
      .catch(err => { console.log(err) })
- }
+}
 
- export function getPostData( req ) {
+export function getPostData( req ) {
   let requestBodyParameters, requestBodyToPost = {};
   requestBodyParameters = Object.keys( req.body );
   requestBodyParameters.forEach(element => {
@@ -162,6 +162,28 @@ export const getVideoFileMeta = ( request ) => {
           videoFileName: `${prefix}_${Date.now()}_${externalId}_${id}_${Math.floor(Math.random() * Math.floor(9000))}.webm`, 
         };    
         break;
+       
+        case "OnlineAnswerVideoMarkDownEditors":
+        requestData = { 
+          id, 
+          prefix, 
+          externalId, 
+          backendServerRoute: `${url.BackeEndServerLessonPrefix}/onlineanswers`, 
+          questionInputMeta: data.metaData,
+          videoFileName: `${prefix}_${Date.now()}_${externalId}_${id}_${Math.floor(Math.random() * Math.floor(9000))}.webm`, 
+        };    
+        break;
+
+        case "OnlineAnswerVideoMarkDownEditorsRecordedBoard":
+          requestData = { 
+            id, 
+            prefix, 
+            externalId, 
+            backendServerRoute: `${url.BackeEndServerLessonPrefix}/onlineanswers`, 
+            questionInputMeta: data.metaData,
+            videoFileName: `${prefix}_${Date.now()}_${externalId}_${id}_${Math.floor(Math.random() * Math.floor(9000))}.webm`, 
+          };    
+          break;
      
        default:
          break;
@@ -170,7 +192,7 @@ export const getVideoFileMeta = ( request ) => {
  }
  
  export function sendResponseToStorage( response, meta, config ){ 
-  let videoUrl, markDownEditors, currentEditorId, currentFieldId;
+  let videoUrl, boardVideoUrl, markDownEditors, currentEditorId, currentFieldId;
   switch (meta.prefix) {
      case "LessonVideo": 
      videoUrl = config.videoUrl   
@@ -218,6 +240,26 @@ export const getVideoFileMeta = ( request ) => {
        config.videoAndMetaData, { 
         ...response.data[0],
         videoUrl 
+     }); 
+     break;
+
+     case "OnlineAnswerVideoMarkDownEditors": 
+     console.log('OnlineAnswerVideoMarkDownEditors')
+     videoUrl = config.videoUrl;     
+     sendMetaData(
+       config.videoAndMetaData, { 
+        ...response.data[0],
+        videoUrl 
+     }); 
+     break;
+     
+     case "OnlineAnswerVideoMarkDownEditorsRecordedBoard": 
+     console.log('OnlineAnswerVideoMarkDownEditorsRecordedBoard')
+     boardVideoUrl = config.videoUrl;     
+     sendMetaData(
+       config.videoAndMetaData, { 
+        ...response.data[0],
+        boardVideoUrl 
      }); 
      break;
 
@@ -291,44 +333,14 @@ export async function sendSubscriptions( user, request, payload, response ){
           if ( result ) {
             responseDataCollection.push( result );
           }
-           
-         } catch (error) {
-           
-          responseDataCollection.push( error );
 
+         } catch (error) {
+          responseDataCollection.push( error );
          }
-       
      });
 
      return responseDataCollection;
 }
-
-// export async function sendSubscriptions(user, request, payload, response ){
-//   let responseDataCollection = [];
-//      await user?.subscriptions?.forEach( subscription => { 
-//       webPushSendNotification( subscription, request, payload, response )
-//        .then( response => {
-//         console.log('webPushSendNotification response');
-//         console.log(response);
-//         responseDataCollection.push( response );
-//         console.log('responseDataCollection.push')
-//         console.log(JSON.stringify( responseDataCollection ) )
-
-//        }).catch( error => { 
-//           console.log('webPushSendNotification');
-//           console.log( error );
-//           responseDataCollection.push( error );
-//        })
-//      });
-
-//      if ( test ) {
-//       console.log('responseDataCollection.push test')
-//       console.log(JSON.stringify( responseDataCollection ) )
-//      }
-//      console.log('responseDataCollection')
-//      console.log(JSON.stringify( responseDataCollection ) )
-//      return responseDataCollection;
-// }
 
 export async function webPushSendNotification( subscription, request, payload, response ){
  let resultAsObject = {};
@@ -377,8 +389,7 @@ export async function webPushSendNotification( subscription, request, payload, r
                 `${url.BackeEndServerLessonPrefix}/notifications/subscribe/user/${request.params?.Id}`, 
                 { ...subscriberInfo, subscriptions }
               );
-            };
-           
+            };  
        })
        .catch( error => { 
         console.log('payloadsentNotificationupdateContent')

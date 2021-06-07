@@ -29,6 +29,7 @@ const initialState = {
 
 const reducer = produce((draft, action) => {
     switch(action.type){
+
         case ADD_ONLINEQUESTION_BEGIN:
         case SAVE_ONLINEQUESTION_BEGIN:
              draft.saveInProgress = true;
@@ -36,7 +37,6 @@ const reducer = produce((draft, action) => {
         return;
         case ADD_ONLINEQUESTION_SUCCESS:
         case SAVE_ONLINEQUESTION_SUCCESS:    
-             console.log(action.payload)
              draft.onlineQuestions[action.payload._id] = action.payload; 
              draft.saveInProgress = false;
         return;
@@ -80,6 +80,7 @@ const reducer = produce((draft, action) => {
        return; 
        default:
     return;
+    
     }
 }, initialState);
 

@@ -25,43 +25,43 @@ export const addFailedEmailNotification = ( failednotification ) => {
             dispatch({        
                 type: ADD_FAILEDEMAILNOTIFICATION_SUCCESS, payload: response });        
     }).catch( error => {
-        dispatch({ type: ADD_FAILEDEMAILNOTIFICATION_ERROR , error })
+        dispatch({ type: ADD_FAILEDEMAILNOTIFICATION_ERROR , error });
     });
-    }
+    };
 };
 
 export const saveFailedEmailNotification = ( failednotification ) => {
     return dispatch => {
-            dispatch({ type: SAVE_FAILEDEMAILNOTIFICATION_BEGIN })
+            dispatch({ type: SAVE_FAILEDEMAILNOTIFICATION_BEGIN });
             return update( failednotification, `/retryfailedonlinequestionsemailnotificationsqueue/email/` )
             .then( response => {
                 dispatch({ type: SAVE_FAILEDEMAILNOTIFICATION_SUCCESS, payload: response }); 
             }).catch( error => {
-                dispatch({ type: SAVE_FAILEDEMAILNOTIFICATION_ERROR , error })
+                dispatch({ type: SAVE_FAILEDEMAILNOTIFICATION_ERROR , error });
         }); 
     };
 };
 
 export const loadFailedEmailNotifications = ( ) => {
     return dispatch => {
-            dispatch({ type: LOAD_FAILEDEMAILNOTIFICATIONS_BEGIN })
+            dispatch({ type: LOAD_FAILEDEMAILNOTIFICATIONS_BEGIN });
             return get(`/retryfailedonlinequestionsemailnotificationsqueue/email`)
             .then( failednotifications  => { 
-                dispatch({ type: LOAD_FAILEDEMAILNOTIFICATIONS_SUCCESS, payload: failednotifications }) 
+                dispatch({ type: LOAD_FAILEDEMAILNOTIFICATIONS_SUCCESS, payload: failednotifications }); 
             }).catch( error => {
-                dispatch({ type: LOAD_FAILEDEMAILNOTIFICATIONS_ERROR , error })
+                dispatch({ type: LOAD_FAILEDEMAILNOTIFICATIONS_ERROR , error });
         });       
     };
 };
 
 export const loadFailedEmailNotificationsByUserId = ( userId ) => {
     return dispatch => {
-            dispatch({ type: LOAD_FAILEDEMAILNOTIFICATIONS_BEGIN })
+            dispatch({ type: LOAD_FAILEDEMAILNOTIFICATIONS_BEGIN });
             return getById( userId, `/retryfailedonlinequestionsemailnotificationsqueue/email/user?userId=`)
             .then( failednotifications  => { 
                 dispatch({ type: LOAD_FAILEDEMAILNOTIFICATIONS_SUCCESS, payload: failednotifications });
             }).catch( error => {
-                dispatch({ type: LOAD_FAILEDEMAILNOTIFICATIONS_ERROR , error })
+                dispatch({ type: LOAD_FAILEDEMAILNOTIFICATIONS_ERROR , error });
         });       
     };
 };
@@ -72,10 +72,10 @@ export const deleteFailedEmailNotification = failednotification => {
             .then( () => {
                 dispatch({ type: DELETE_FAILEDEMAILNOTIFICATION_SUCCESS, payload: failednotification });
             }).catch( error => {
-            dispatch({ type: DELETE_FAILEDEMAILNOTIFICATION_ERROR , error })
+            dispatch({ type: DELETE_FAILEDEMAILNOTIFICATION_ERROR , error });
         });
-    }
-}
+    };
+};
 
     
     

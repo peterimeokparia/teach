@@ -203,6 +203,6 @@ const EventForm = ({ config })  => {
         </form>
         </span>
     );
-}
+};
 
 export default EventForm;

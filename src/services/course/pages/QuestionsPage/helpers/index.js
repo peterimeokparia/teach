@@ -2,7 +2,6 @@ import {
 role } from 'Services/course/helpers/PageHelpers';
 
 export const labelValue = ( labelType, index ) => {
-
   let alphabet = [ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" ];  
   let roman = [ "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix", "x" ];
   let number = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" ];
@@ -10,6 +9,7 @@ export const labelValue = ( labelType, index ) => {
 
   try {      
       switch ( labelType ) {
+
         case "roman":
           selectedValue = roman[ index-1 ];    
         break;
@@ -19,12 +19,13 @@ export const labelValue = ( labelType, index ) => {
         default:
           selectedValue = alphabet[ index-1 ];
         break;
+
       }
       return selectedValue;    
   } catch (error) {
     console.log( error );
-  }
-}
+  };
+};
 
 export const editorContentType = {
   Explanation: "Explanation", 
@@ -32,14 +33,14 @@ export const editorContentType = {
   Question: "Question",
   VideoPlayer: "VideoPlayer",
   Comments: "Comments"  
-}
+};
 
 export const points = {
   PerQuestion: "PerQuestion",
   Equally: "Equally",
   equalPointsDistribution: "equalPointsDistribution",
   pointsPerQuestion: "pointsPerQuestion"
-}
+};
 
 export const elementMeta = {
   name: "name",
@@ -92,31 +93,31 @@ export const inputType = {
   Phone: "phone", 
   Date: "date",
   DateTime: "datetime"
-}
+};
 
 export const labelType = {
   Alphabet: "alphabet",
   RomanNumerals: "roman",
   Numbers: "numbers"
-}
+};
 
 export const dropDownOptions = {
   labelOptions:  [{_id: "Label Type",  name:  "Label Type" }, {_id: labelType.Alphabet,  name: labelType.Alphabet}, {_id: labelType.Numbers,  name: labelType.Numbers}, {_id: labelType.RomanNumerals,  name: labelType.RomanNumerals } ],
   inputOptions: [ {_id: "Input Type",  name:  "Input Type" }, { _id: inputType.Text,  name: inputType.Text }, { _id: inputType.TextArea,  name: inputType.TextArea }, { _id: inputType.Video,  name: inputType.Video } ],
-}
+};
 
 export function handleSettingMultipleChoiceValue( field, event, fieldNameOne, fieldNameTwo, updateMarkDownEditor ){
   updateMarkDownEditor( { data: event.target.value, fieldName: fieldNameOne } ); 
   updateMarkDownEditor( { data: field[ elementMeta.value ], fieldName: fieldNameTwo } ); 
-}
+};
 
 export function setMultipleChoiceLabelValue ( fields,  label, elementId, currentQuestionNumber, currentMarkDownEditornumber ) {
   return handleUpdatingMultipleChoiceSelection( fields, elementMeta.multipleChoiceLabelValue, label, elementId, currentQuestionNumber, currentMarkDownEditornumber ); 
-}
+};
 
 export function setMultipleChoiceValue ( fields, label, elementId, currentQuestionNumber, currentMarkDownEditornumber ) {
   return handleUpdatingMultipleChoiceSelection( fields, elementMeta.multipleChoiceValue, label, elementId, currentQuestionNumber, currentMarkDownEditornumber );      
-}
+};
 
 export function handleUpdatingMultipleChoiceSelection( fields, fieldDescription,  labeltype, elementId, currentQuestionNumber, currentMarkDownEditornumber ){
   let existingFieldUpdate = fields.find(obj => obj?.questionNumber === currentQuestionNumber && 
@@ -126,15 +127,16 @@ export function handleUpdatingMultipleChoiceSelection( fields, fieldDescription,
         existingFieldUpdate[ fieldDescription ] = labelValue( labeltype, elementId );
   } 
   return labelValue( labeltype, elementId ) ;
-} 
+}; 
 
 export function calculatePointsReceived( answerKey, studentsAnswer, questionPoints ) {
   let points = 0;
+  
   if ( answerKey ) {
       points = ( answerKey === studentsAnswer ) ? parseInt( questionPoints, 10 ) : 0;  
   }
   return points;
-}
+};
 
 export function handleMarkDownContentChange ( fields, editor, id, userrole, updateMarkDownEditor, currentQuestionNumber, currentMarkDownEditornumber ) {
     let inputField = fields.find(obj => obj?.name === (`editor${id}`) && obj.id === id  && 
@@ -146,14 +148,14 @@ export function handleMarkDownContentChange ( fields, editor, id, userrole, upda
         updateMarkDownEditor( { data: JSON.stringify(editor.emitSerializedOutput() ), fieldName: elementMeta.explanationQuestionAnswer } );
         fields.find(obj => obj?.questionNumber === currentQuestionNumber && obj?.markDownEditorNumber === currentMarkDownEditornumber )[ elementMeta.questionAnsweredOnDateTime ] = Date.now();  
       }
-    }
-}
+    };
+};
 
 export function handleMultiFieldFormEvents( documentId, eventType, fields, updateMarkDownEditor, markDownEditorFieldName ) {
     documentId.addEventListener(eventType, e => {
        updateMarkDownEditorOnEventNotification( fields, markDownEditorFieldName, updateMarkDownEditor );
     });
-}
+};
 
 export function contentType ( elementType ){
   return {
@@ -161,8 +163,8 @@ export function contentType ( elementType ){
       isExplanationContentType: (elementType === editorContentType.Explanation),
       isVideoContentType: (elementType === editorContentType.VideoPlayer),
       isQuestionContentType: (elementType === editorContentType.Question),
-  }
-}
+  };
+};
 // askHomeWorkQuestionPlaceHolder, homeWorkAnswerPlaceHolder
 export function markDownEditorFieldCollection(config){
   return  { 
@@ -189,8 +191,8 @@ export function markDownEditorFieldCollection(config){
     pointsReceived: { userId: "", pointsReceived: 0 },
     totalPointsReceived: { userId: "", totalPointsReceived: 0 },
     videoUrl: ""
-  }   
-}
+  } ;  
+};
 
 export function onlineMarkDownEditorFieldCollection(config){
   return  {   
@@ -209,8 +211,8 @@ export function onlineMarkDownEditorFieldCollection(config){
     questionCreatedBy: config?.questionCreatedBy,
     operatorId: config?.operatorId,
     videoUrl: config?.videoUrl
-  }   
-}
+  };   
+};
 
 export function manageEditorsFieldCollection( config ){
   return {
@@ -225,54 +227,8 @@ export function manageEditorsFieldCollection( config ){
     answerBy: config?.currentUser?.firstname,
     operatorId: config?.operatorId,
     videoUrl: ""
-  }
-}
-
-// onlineQuestionId: { 
-//   type: String, 
-//   required: false,
-// },
-// type: { 
-//   type: String, 
-//   required: false,
-// },
-// placeHolderText: { 
-//   type: String, 
-//   required: false,
-// },
-// answerDateTime: { 
-//   type: Date, 
-//   required: false,
-//   default: Date.now  
-// },
-// markDownContent: { 
-//   type: String, 
-//   required: false,
-// },
-// courseId: { 
-//   type: String, 
-//   required: false,
-// },
-// userId: { 
-//   type: String, 
-//   required: false,
-// },
-// files: {
-//   type: Array,
-//   required: false
-// },
-// answerBy: {
-//   type: String, 
-//   required: false  
-// },
-// operatorId: { 
-//   type: String, 
-//   required: false  
-// },
-// videoUrl: { 
-//   type: String, 
-//   required: false  
-// }
+  };
+};
 
 export function manageCommentsFieldCollection( config ){
   return {
@@ -289,7 +245,7 @@ export function manageCommentsFieldCollection( config ){
     operatorId: config?.operatorId,
     videoUrl: "",
     color: config?.color
-  }
+  };
 }
 
 export function setFieldCollection(config, setMultipleChoiceValue, setMultipleChoiceLabelValue){
@@ -313,7 +269,7 @@ export function setFieldCollection(config, setMultipleChoiceValue, setMultipleCh
     multipleChoiceAnswerExplanationKeyValue: config?.placeHolder,
     explanationAnswerKey: config?.placeHolder,
     explanationAnswerValue: JSON.stringify( config?.placeHolder )
-  }   
+  }; 
 }
 
 export function explanationAnswerMarkDownEditorCollection( config ){
@@ -326,12 +282,12 @@ export function explanationAnswerMarkDownEditorCollection( config ){
     questionAnsweredBy: config?.currentUser?.firstname,
     markDownContent: JSON.stringify(config?.homeWorkAnswerPlaceHolder),
     videoUrl: ""
-  }
-}
+  };
+};
 
 function updateMarkDownEditorOnEventNotification( fields, markDownEditorFieldName,  updateMarkDownEditor) {
   if ( fields.length > 0 && fields ){
     updateMarkDownEditor( { data: fields, fieldName: markDownEditorFieldName } ); 
-  }
-}
+  };
+};
 

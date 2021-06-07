@@ -8,9 +8,6 @@ connect,
 useDispatch } from 'react-redux';
 
 import { 
-navigate } from '@reach/router';
-
-import { 
 loginUser } from 'Services/course/Actions/Users';
 
 import {
@@ -35,13 +32,13 @@ saveMarkDownContent } from 'Services/course/helpers/EditorHelpers';
 
 import {
 elementMeta,
-editorContentType,
 onlineMarkDownEditorFieldCollection } from 'Services/course/Pages/QuestionsPage/helpers';
 
 import {
 getOperatorFromOperatorBusinessName,
 getPushNotificationUsersByOperatorId,
-getFailedPushNotificationQueue } from 'Services/course/Selectors';
+//getFailedPushNotificationQueue 
+} from 'Services/course/Selectors';
 
 import { 
 uploadFiles } from 'Services/course/helpers/ServerHelper';
@@ -86,13 +83,12 @@ pushNotificationUsers,
 loadSubscribedPushNotificationUsers,
 subscribePushNotificationUser,
 savePushNotificationUser } ) => {
-
 let currentCourseQuestionCollection = onlineQuestions?.filter( question => question?.courseId === courseId );
-let currentCourseQuestions = ( onlineQuestionId === undefined ) 
+let currentCourseQuestions = ( onlineQuestionId === undefined || !onlineQuestionId ) 
         ? currentCourseQuestionCollection
-        : currentCourseQuestionCollection?.find(question => question?._id === onlineQuestionId)
+        : currentCourseQuestionCollection?.filter(question => question?._id === onlineQuestionId);
            
-let upload_url = "http://localhost:9005/api/v1/fileUploads"
+let upload_url = "http://localhost:9005/api/v1/fileUploads";
 let [ question, setQuestion ] = useState(undefined);
 let [ markDownContent, setMarkDownContent ] = useState(undefined);
 const [ previewMode, setPreviewMode ] = useState(false);
@@ -100,54 +96,48 @@ const [ videoUploaded, setVideoUploaded ] = useState( false );
 const dispatch = useDispatch();
 
 useEffect(() => {
-
-  dispatch(loadFailedPushNotifications());
-
+  dispatch( loadFailedPushNotifications() );
+  setQuestion('');  // change
+  setMarkDownContent(); // change
    let failedOnlineQuestionPushNotifications = failedOnlineQuestionNotifications.filter( push => push.userId === currentUser?._id );
-   
-   //alert( failedOnlineQuestionPushNotifications?.length )
 
     //handlePushNotificationSubscription( pushNotificationUsers, currentUser, subscribePushNotificationUser, savePushNotificationUser );
     
     // if ( currentSubscription?.subscriptions?.length === 0  && failedOnlineQuestionPushNotifications?.length === 0) {
     //   handlePushNotificationSubscription( pushNotificationUsers, currentUser, subscribePushNotificationUser, savePushNotificationUser );
     // }
-
     // if ( failedOnlineQuestionPushNotifications?.length === 0 ) {
     //   navigate(`/${operatorBusinessName}/login`);
     // }
-    
     if ( failedOnlineQuestionPushNotifications?.length > 0 ) { 
       let currentSubscription = pushNotificationUsers?.filter( user => user?.userId === currentUser?._id );
-      //alert( failedOnlineQuestionPushNotifications?.length )
       let callToHandlePushNotificationSubscription = 0;
+
       failedOnlineQuestionPushNotifications.forEach( failedNotification => {
-          let failedPushErrorStatusCode = [400, 404, 502 ];
+          let failedPushErrorStatusCode = [ 400, 404, 502 ];
+
           if ( failedPushErrorStatusCode.includes( failedNotification?.errorStatusCode ) ) {
             if ( callToHandlePushNotificationSubscription < 1 ) {
               callToHandlePushNotificationSubscription += 1;
-              alert('handlePushNotificationSubscription')
               handlePushNotificationSubscription( pushNotificationUsers, currentUser, subscribePushNotificationUser, savePushNotificationUser );
               loadSubscribedPushNotificationUserByUserId( currentUser?._id );
             }
           } 
           
           let subscriptionObject = JSON.parse( failedNotification?.failedNotificationObject );
-          let subpayload = JSON.parse(subscriptionObject?.payload)
+          let subpayload = JSON.parse(subscriptionObject?.payload);
 
           retryPushNotificationMessage( 
             currentSubscription, { 
             title: subpayload?.title, 
             body: subpayload?.body,
           }, failedNotification );
-
-        }) 
+        });
     };
-
-}, [ loadFailedPushNotifications ])
+  }, [ dispatch, failedOnlineQuestionNotifications, currentUser, pushNotificationUsers, retryPushNotificationMessage, subscribePushNotificationUser, savePushNotificationUser, loadSubscribedPushNotificationUserByUserId]);
+// }, [ loadFailedPushNotifications ]);
 
 let config = { 
-  question, 
   courseId: '000111', 
   onlineQuestionId,
   userId: currentUser?._id, 
@@ -157,18 +147,31 @@ let config = {
   placeHolder: askHomeWorkQuestionPlaceHolder, 
   homeWorkAnswerPlaceHolder,
   videoUrl: null
-}
+};
 
 const addNewQuestion = () => {
   addNewOnlineQuestion( onlineMarkDownEditorFieldCollection(config) );  
-} 
+}; 
 
 const deleteQuestion = ( selectedQuestion ) => {
   deleteOnlineQuestion( selectedQuestion );
   loadOnlineQuestions();
-}
+};
+
+// let questionHandleChangeTimerHandle = null, timeOutDuration = 5000;
+// const handleChange = ( editor, question ) => {
+//   saveMarkDownContent( 
+//     questionHandleChangeTimerHandle, 
+//     saveOnlineQuestion,
+//     question,
+//     JSON.stringify( editor.emitSerializedOutput() ),
+//     `${question?._id}`,
+//     timeOutDuration
+//   );     
+// }
 
 let questionHandleChangeTimerHandle = null, timeOutDuration = 5000;
+
 const handleChange = ( editor, question ) => {
   saveMarkDownContent( 
     questionHandleChangeTimerHandle, 
@@ -178,40 +181,40 @@ const handleChange = ( editor, question ) => {
     `${question?._id}`,
     timeOutDuration
   );     
-}
+};
 
 const togglePreviewMode = () => {
   setPreviewMode( ! previewMode );
   loadOnlineQuestions();
-}
+};
 
 function savedQuestionsExist( currentCourseQuestions ) {
  return currentCourseQuestions?.length > 0; 
-}
+};
 
 const saveQuestion = ( selectedQuestion ) => {
-  saveOnlineQuestion({...selectedQuestion, markDownContent })
-} 
+  saveOnlineQuestion({...selectedQuestion, markDownContent });
+};
 
 const saveRecording = () => {
   loadOnlineQuestions();
   setVideoUploaded( false );
   if ( savedQuestionsExist( question ) ) {
       saveOnlineQuestion( question );
-  }  
-}
+  };  
+};
 
 async function uploadImageUrl(file, imageBlock, question) {
   await fetch( imageBlock?.img?.currentSrc )
         .then( result => result.blob())
         // .then( response => { uploadFiles([ response ], currentCourseQuestions, upload_url, "questions", file?.name,  null )
         .then( response => { uploadFiles([ response ], question, upload_url, "questions", file?.name,  null )
-        .then( resp => {console.log( resp ) })})
-        .catch( error => { console.log( error ) });
+        .then( resp => { console.log( resp ); } ); })
+        .catch( error => { console.log( error ); });
 
   let inputFieldObject = JSON.parse( question )[ elementMeta.markDownContent ];
+  
   Object.values(inputFieldObject).forEach( block => {
-
     if ( Object.keys( block ).length > 0 ) {
        block.find( obj => obj?.type === "image" && obj?.data?.url === imageBlock?.img?.currentSrc ).data.url = `http://localhost:3000/files/${ file?.name }`;
     } });
@@ -234,7 +237,7 @@ const handleSubmit = () => {
       saveOnlineQuestion( { ...currentCourseQuestions } ); // change
   } 
   }   
-}
+};
 
 let form = currentCourseQuestions?.length > 0 ? currentCourseQuestions : undefined;
 let listItemConfig = { 
@@ -269,11 +272,14 @@ let listItemConfig = {
                 }
                 <div> 
                 {
-                  <OnlineListItems 
-                    config={ listItemConfig } 
-                    courseId={ courseId }
-                    currentUser={ currentUser }
-                  />
+                  <div className="onlinequestion-list-items"> 
+                     <OnlineListItems 
+                        config={ listItemConfig } 
+                        courseId={ courseId }
+                        currentUser={ currentUser }
+                    />
+                  </div>
+                 
                 }
                 <div> <br></br> </div>
                 {
@@ -291,8 +297,8 @@ let listItemConfig = {
           </div>
         </div>
       </div> 
-  )
-}
+  );
+};
 
 const mapDispatch = { 
   loginUser,
@@ -318,7 +324,7 @@ const mapState = ( state, ownProps ) => {
     pushNotificationUsers: getPushNotificationUsersByOperatorId(state, ownProps),
     failedOnlineQuestionNotifications: Object.values( state?.failedNotifications.failedPushNotifications )
     // failedOnlineQuestionNotifications: getFailedPushNotificationQueue(state, ownProps)
-  }
-}
+  };
+};
 
 export default connect( mapState, mapDispatch )(OnlineQuestionsMultiEditorComponent);

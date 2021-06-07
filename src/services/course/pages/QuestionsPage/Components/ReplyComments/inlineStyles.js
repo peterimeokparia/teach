@@ -5,8 +5,8 @@ export const replyIconStyle = (   ) => {
       "margin-left": "17%",
       "margin-right": "12%",
       top: "-3%",
-    }
-  }
+    };
+  };
   
   export const deleteIconStyle = (   ) => {
     return {
@@ -15,15 +15,15 @@ export const replyIconStyle = (   ) => {
       "margin-right": "10%",
       "margin-left": "15%",
       top: "-3%",
-    }
-  }
+    };
+  };
 
   export const iconStyle = (   ) => {
     return {
       fontSize: 70,
       "margin-left": "30px"
-    }
-}
+    };
+};
 
 export const styleObj = ( commentColor ) => {
     return {
@@ -34,5 +34,5 @@ export const styleObj = ( commentColor ) => {
       paddingBottom: "20px",
       "background-color": commentColor,
       "border-radius": "25px"
-    }
-}
+    };
+};

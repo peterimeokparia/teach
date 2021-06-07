@@ -1,4 +1,5 @@
 class SiteUser {
+
   constructor(){
     this.firstname = ""; 
     this.email = "";
@@ -34,6 +35,7 @@ class SiteUser {
     this.assignedStudents = [];
     this.assignedTutors = [];
   }
+  
 }
 
 export default SiteUser;

@@ -9,8 +9,8 @@ togglePreviewMode } from 'Services/course/Actions/App';
 import LessonEditorDemo from 'Services/course/Pages/Lessons/LessonEditorDemo';
 
 const LessonPage = ({ lesson, previewMode, togglePreviewMode, currentUser  }) => {
-  return <LessonEditorDemo lesson={lesson} currentUser={currentUser}/>
-}
+  return <LessonEditorDemo lesson={lesson} currentUser={currentUser}/>;
+};
 
 const mapState = (state, ownProps)   => {
   return {
@@ -18,7 +18,7 @@ const mapState = (state, ownProps)   => {
     lesson: state.lessons.lessons[ownProps.lessonId], 
     currentUser: state.users.user
   };
-}
+};
 
 export default connect(mapState, { togglePreviewMode } )(LessonPage);
 

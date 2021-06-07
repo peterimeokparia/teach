@@ -59,7 +59,6 @@ const AddNewCalendar = ({
     timeLines,
     users,
     userId }) => {
-
     const [ selectedTutors,  setSelctedTutors ] = useState([]);
     const [ calendarType,  setCalendarType ] = useState([]);
 
@@ -68,24 +67,24 @@ const AddNewCalendar = ({
         loadAllEvents();
         loadSubscribedPushNotificationUsers();
         loadUsers();
-    },[ loadAllCalendars, loadSubscribedPushNotificationUsers, loadAllEvents, loadUsers  ]);
+    },[ loadAllCalendars, loadSubscribedPushNotificationUsers, loadAllEvents  ]);
+    // },[ loadAllCalendars, loadSubscribedPushNotificationUsers, loadAllEvents, loadUsers  ]);
 
     const onChange = ( data ) => {
-        setSelctedTutors( data )
-    }
+        setSelctedTutors( data );
+    };
 
     const onFormSubmit = ( evnt ) => {
         evnt.preventDefault();
-    }
+    };
 
     const submitForm = () => {
-
         if ( calendarType ) {
             let testAdminUsers =  [ userId, '603d37814967c605df1bb450', '6039cdc8560b6e1314d7bccc' ]; // refactor
             let emailAddresses = Object.values(users).filter(user => testAdminUsers.includes(user?._id))?.map(user => user?.email);
-            let operatorId = operator?._id; calendarEventType = calendarType?.label;
-            
-            // import from helper
+            let operatorId = operator?._id; 
+            // let calendarEventType = calendarType?.label;
+    
             let calendarConfig = ( tutor ) =>{
                 return {
                     calendar: {
@@ -104,17 +103,19 @@ const AddNewCalendar = ({
                     currentUser: tutor, 
                     pushNotificationUser: pushNotificationSubscribers?.filter(subscriber => testAdminUsers?.includes( subscriber?.userId ) ), 
                     emailAddresses
-                }
-            }
+                };
+            };
 
             selectedTutors.forEach(element => {
                 let user = users?.find( usr => usr?._id === element?.value?._id);
+
                 addCalendar( calendarConfig(user) );
             });
-        }
-    }
+        };
+    };
 
 return (
+
     <> 
      <h2>{`Add New Calendar`}</h2> 
         <br></br>
@@ -138,7 +139,7 @@ return (
             <br></br>
         </div>
     </>    
-)};
+); };
 
 const mapDispatch = {
     addCalendar,
@@ -159,6 +160,6 @@ const mapState = ( state, ownProps )  => ({
     pushNotUsers: state?.notifications?.pushNotificationSubscribers,
     pushNotificationSubscribers: getPushNotificationUsersByOperatorId(state, ownProps),
     timeLines: getTimeLinesByOperatorId(state, ownProps)
-})
+});
 
 export default connect(mapState, mapDispatch)(AddNewCalendar);

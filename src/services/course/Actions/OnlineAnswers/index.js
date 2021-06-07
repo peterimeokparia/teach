@@ -31,58 +31,58 @@ export const addNewOnlineAnswer = ( answer ) => {
                 type: ADD_ONLINEANSWERS_SUCCESS, payload: response });        
                 // send notifications & email
     }).catch( error => {
-        dispatch({ type: ADD_ONLINEANSWERS_ERROR , error })
+        dispatch({ type: ADD_ONLINEANSWERS_ERROR , error });
     });
-  }
+  };
 };
 
 export const saveOnlineAnswer = ( answer ) => {
     return dispatch => {
-         dispatch({ type: SAVE_ONLINEANSWERS_BEGIN })
-         return update( answer, `/onlineanswers/` )
+         dispatch({ type: SAVE_ONLINEANSWERS_BEGIN });
+        update( answer, `/onlineanswers/` )
           .then( response => {
               dispatch({ type: SAVE_ONLINEANSWERS_SUCCESS, payload: response }); 
               dispatch({ type: LOAD_LATEST_ONLINEANSWERS_SUCCESS, payload: response }); 
            }).catch( error => {
-                dispatch({ type: SAVE_ONLINEANSWERS_ERROR , error })
+                dispatch({ type: SAVE_ONLINEANSWERS_ERROR , error });
         }); 
     };
 };
 
 export const loadOnlineAnswers = ( ) => {
     return dispatch => {
-         dispatch({ type: LOAD_ONLINEANSWERS_BEGIN })
+         dispatch({ type: LOAD_ONLINEANSWERS_BEGIN });
          return get(`/onlineanswers`)
           .then( answer  => { 
-             dispatch({ type: LOAD_ONLINEANSWERS_SUCCESS, payload: answer }) 
+             dispatch({ type: LOAD_ONLINEANSWERS_SUCCESS, payload: answer });
            }).catch( error => {
-             dispatch({ type: LOAD_ONLINEANSWERS_ERROR , error })
+             dispatch({ type: LOAD_ONLINEANSWERS_ERROR , error });
         });       
     };
 };
 
 export const loadOnlineAnswersByQuestionId = ( answerId ) => {
     return dispatch => {
-         dispatch({ type: LOAD_ONLINEANSWERS_BEGIN })
+         dispatch({ type: LOAD_ONLINEANSWERS_BEGIN });
          return getById( answerId, `/onlineanswers/question/question?questionId=`)
           .then( answer  => { 
                 dispatch({ type: LOAD_ONLINEANSWERS_SUCCESS, payload: answer });
                 dispatch({ type: LOAD_LATEST_ONLINEANSWERS_SUCCESS, payload: answer });
            }).catch( error => {
-                dispatch({ type: LOAD_ONLINEANSWERS_ERROR , error })
+                dispatch({ type: LOAD_ONLINEANSWERS_ERROR , error });
            });       
     };
 };
 
 export const loadOnlineAnswersByUserId = ( userId ) => {
     return dispatch => {
-         dispatch({ type: LOAD_ONLINEANSWERS_BEGIN })
+         dispatch({ type: LOAD_ONLINEANSWERS_BEGIN });
          return getById( userId, `/onlineanswers/question/user?userId=`)
           .then( answer  => { 
                 dispatch({ type: LOAD_ONLINEANSWERS_SUCCESS, payload: answer });
                 dispatch({ type: LOAD_LATEST_ONLINEANSWERS_SUCCESS, payload: answer });
            }).catch( error => {
-                dispatch({ type: LOAD_ONLINEANSWERS_ERROR , error })
+                dispatch({ type: LOAD_ONLINEANSWERS_ERROR , error });
         });       
     };
 };
@@ -93,14 +93,14 @@ export const deleteOnlineAnswer = question => {
          .then( () => {
              dispatch({ type: DELETE_ONLINEANSWERS_SUCCESS, payload: question });
          }).catch( error => {
-            dispatch({ type: DELETE_ONLINEANSWERS_ERROR , error })
+            dispatch({ type: DELETE_ONLINEANSWERS_ERROR , error });
         });
-    }
-}
+    };
+};
 
 let timerHandle = null;
+
 export const setMarkDown = ( teachObject, markDownContent, teachObjectType="", actionType, saveAction  ) => {
-   
     return ( dispatch, getState )  => {
         dispatch({ type: actionType, payload: {   
             teachObject,
@@ -116,4 +116,4 @@ export const setMarkDown = ( teachObject, markDownContent, teachObjectType="", a
            dispatch(saveAction( getState()[teachObjectType][teachObjectType][ teachObject?._id ] ));
         }, 2000);  
     };
-}
+};

@@ -3,18 +3,17 @@ React, {
 Component } from 'react';
 
 class SessionSignUpComponent extends Component {
+
     constructor(props){
     super(props);
-
     this.state = {
         autoRenew : false,
         numberOfSessions: 1
-    }
+    };
     this.handleChange = this.handleChange.bind(this);
 }
 
 handleChange(event){
-
     if ( event.target.name === "AutoRenew" ) {
         this.props.setAutoRenewValue( event.target.checked );
         this.setState({ autoRenew: event.target.checked });
@@ -23,6 +22,7 @@ handleChange(event){
         this.setState({ numberOfSessions: event.target.value });
     }
 }
+
 render(){
     return (<div>
               <div>
@@ -51,7 +51,8 @@ render(){
                   </form>
               </div>
             </div>
-    )}
-}
+    ); };
 
-export default SessionSignUpComponent
+};
+
+export default SessionSignUpComponent;

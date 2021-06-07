@@ -34,21 +34,20 @@ lessonId,
 lessonTitle,
 currentUser,
 paidSessions })  =>  {
-
-  const paidSession = paidSessions?.find( currentSession => currentSession?.userId === currentUser?._id );  
+const paidSession = paidSessions?.find( currentSession => currentSession?.userId === currentUser?._id );  
 
   if ( currentUser?.email === undefined ) {
-    return <Redirect to={`/${operatorBusinessName}/LessonPlan/invite/userverification/classRoom/${classRoomId}`} noThrow />
+    return <Redirect to={`/${operatorBusinessName}/LessonPlan/invite/userverification/classRoom/${classRoomId}`} noThrow />;
   } 
 
   if ( paidSession?.numberOfSessions === paidSession?.totalNumberOfSessions  && paidSession?.typeOfSession === "Package" && currentUser?.role === "Student" ) {
-    return <Redirect to={`/${operatorBusinessName}/mycourses`} noThrow />
+    return <Redirect to={`/${operatorBusinessName}/mycourses`} noThrow />;
   }
 
   if ( currentUser?.userIsValidated && currentUser?.userIsVerified ) {
-    return <Redirect to={`/${operatorBusinessName}/LessonPlan/classRoom/${classRoomId}`} noThrow />
+    return <Redirect to={`/${operatorBusinessName}/LessonPlan/classRoom/${classRoomId}`} noThrow />;
   }
-}
+};
 
 const mapState = ( state, ownProps )   => {
   return {
@@ -64,6 +63,6 @@ const mapState = ( state, ownProps )   => {
     currentMeeting: state.meetings.meetings,
     paidSessions: Object.values(state?.sessions?.sessions)?.filter(session => session?.courseId === ownProps?.courseId)
   };
-}
+};
 
 export default connect(mapState, { toggleTeachBoardOrEditor, updateUserInvitationUrl, setLessonInProgressStatus,  inviteStudentsToLearningSession, loadMeetings, saveMeeting } )(LessonPlanInviteUserVerifiedPage);

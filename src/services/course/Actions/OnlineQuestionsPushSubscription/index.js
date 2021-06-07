@@ -17,53 +17,52 @@ export const DELETE_ONLINE_QUESTION_PUSH_SUBSCRIPTION_SUCCESS = "DELETE ONLINE Q
 export const DELETE_ONLINE_QUESTION_PUSH_SUBSCRIPTION_BEGIN = "DELETE ONLINE QUESTION PUSH SUBSCRIPTION BEGIN";
 export const DELETE_ONLINE_QUESTION_PUSH_SUBSCRIPTION_ERROR = "DELETE ONLINE QUESTION PUSH SUBSCRIPTION ERROR";
 
-
 export const addNewOnlineQuestionPushSubscription = ( onlineQuestionPushSubscription ) => {
     return dispatch => {
-        dispatch({ type: ADD_NEW_ONLINE_QUESTION_PUSH_SUBSCRIPTION_BEGIN })
+        dispatch({ type: ADD_NEW_ONLINE_QUESTION_PUSH_SUBSCRIPTION_BEGIN });
         return add(onlineQuestionPushSubscription, '/onlinequestionpushsubscribers')  
         .then( onlineQuestionPushSubscription => { 
-            dispatch({ type: ADD_NEW_ONLINE_QUESTION_PUSH_SUBSCRIPTION_SUCCESS, payload: onlineQuestionPushSubscription }) 
+            dispatch({ type: ADD_NEW_ONLINE_QUESTION_PUSH_SUBSCRIPTION_SUCCESS, payload: onlineQuestionPushSubscription }); 
         }).catch( error => {
-            dispatch({ type: ADD_NEW_ONLINE_QUESTION_PUSH_SUBSCRIPTION_ERROR , error })
+            dispatch({ type: ADD_NEW_ONLINE_QUESTION_PUSH_SUBSCRIPTION_ERROR , error });
         });
     };
 };
 
 export const saveOnlineQuestionPushSubscription = ( onlineQuestionPushSubscription ) => {
    return dispatch => {
-        dispatch({ type: SAVE_ONLINE_QUESTION_PUSH_SUBSCRIPTION_BEGIN })
+        dispatch({ type: SAVE_ONLINE_QUESTION_PUSH_SUBSCRIPTION_BEGIN });
         return update( onlineQuestionPushSubscription, `/onlinequestionpushsubscribers/` )
             .then( onlineQuestionPushSubscription => {  
                 dispatch({        
-                type: SAVE_ONLINE_QUESTION_PUSH_SUBSCRIPTION_SUCCESS, payload: onlineQuestionPushSubscription }) 
+                type: SAVE_ONLINE_QUESTION_PUSH_SUBSCRIPTION_SUCCESS, payload: onlineQuestionPushSubscription }); 
             }).catch( error => {
-                dispatch({ type: SAVE_ONLINE_QUESTION_PUSH_SUBSCRIPTION_ERROR , error })
+                dispatch({ type: SAVE_ONLINE_QUESTION_PUSH_SUBSCRIPTION_ERROR , error });
         });  
    };
 };
 
 export const loadOnlineQuestionPushSubscriptions = ( questionId ) => {
     return dispatch => {
-        dispatch({ type: LOAD_ONLINE_QUESTION_PUSH_SUBSCRIPTIONS_BEGIN })
+        dispatch({ type: LOAD_ONLINE_QUESTION_PUSH_SUBSCRIPTIONS_BEGIN });
         return getById( questionId, `/onlinequestionpushsubscribers/questions?questionId=`)
             .then( onlineQuestionPushSubscription => {
                 dispatch({ type: LOAD_ONLINE_QUESTION_PUSH_SUBSCRIPTIONS_SUCCESS, payload: onlineQuestionPushSubscription });
             })
             .catch( error => {
-                dispatch({ type: LOAD_ONLINE_QUESTION_PUSH_SUBSCRIPTIONS_ERROR , error })
+                dispatch({ type: LOAD_ONLINE_QUESTION_PUSH_SUBSCRIPTIONS_ERROR , error });
         });
-    }
-}
+    };
+}; 
 
 export const deleteOnlineQuestionPushSubscription = onlineQuestionPushSubscription => {
     return dispatch => {
-        dispatch({ type: DELETE_ONLINE_QUESTION_PUSH_SUBSCRIPTION_BEGIN })
+        dispatch({ type: DELETE_ONLINE_QUESTION_PUSH_SUBSCRIPTION_BEGIN });
          return remove( onlineQuestionPushSubscription, `/onlinequestionpushsubscribers/` )
          .then( () => {
              dispatch({ type: DELETE_ONLINE_QUESTION_PUSH_SUBSCRIPTION_SUCCESS, payload: onlineQuestionPushSubscription });
          }).catch( error => {
-            dispatch({ type: DELETE_ONLINE_QUESTION_PUSH_SUBSCRIPTION_ERROR , error })
+            dispatch({ type: DELETE_ONLINE_QUESTION_PUSH_SUBSCRIPTION_ERROR , error });
         });
-    }
-}
+    };
+};

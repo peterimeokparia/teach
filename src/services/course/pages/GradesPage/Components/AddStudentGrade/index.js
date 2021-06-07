@@ -19,7 +19,6 @@ className,
 saveInProgress,
 error,
 onSubmit }) => {
-
 const [ editing, setEditing ] = useState(false); 
 const [ testDate, setTestDate ] = useState(Date.now());
 const [ testScore, setTestScore ] = useState(0);
@@ -30,11 +29,12 @@ const reset = () => {
     setTestScore(0);
     setEditing(false);
     resetClassRoomUserError();
-}
+};
 
 const commitEdit = (e) => {
     e.preventDefault();
-    let gradeData = { testDate: testDate, score: testScore, selectedStudents: selectedStudents, courseId: selectedCourse?._id, lessonId: selectedLesson?._id }
+    let gradeData = { testDate: testDate, score: testScore, selectedStudents: selectedStudents, courseId: selectedCourse?._id, lessonId: selectedLesson?._id };
+
     try {
         onSubmit(gradeData);
         reset();
@@ -47,18 +47,18 @@ const commitEdit = (e) => {
 const cancelEdit = (e) => {
     e.preventDefault();
     reset();
-}
+};
 
-const setInitialValuesForInputFields = () => {
-    setTestDate(Date.now());
-    setTestScore(undefined);
-    setEditing(false);
-}
+// const setInitialValuesForInputFields = () => {
+//     setTestDate(Date.now());
+//     setTestScore(undefined);
+//     setEditing(false);
+// };
 
-const beginEditing = () => {
-    setInitialValuesForInputFields();
-    setEditing(true);
-}
+// const beginEditing = () => {
+//     setInitialValuesForInputFields();
+//     setEditing(true);
+// };
 
 useEffect (() => {
     if ( editing ) {
@@ -67,7 +67,7 @@ useEffect (() => {
 }, [ editing ]); 
 
 if ( saveInProgress ){
-    return <div> Save in progress, please wait. </div>
+    return <div> Save in progress, please wait. </div>;
 }
 
 return (
@@ -127,15 +127,14 @@ return (
     }       
     { error && <div>{error.message}</div> }
     </>
-    )       
-                
+    );                    
 };
 
 const mapState = ( state, ownProps ) => {
     return {
         saveInProgress: state.classrooms.saveLessonInProgress,
         error: state.classrooms.onSaveError
-    }
-}
+    };
+};
 
 export default connect(mapState, { resetError: resetClassRoomUserError, resetClassRoomUserError } )(AddStudentGrade);

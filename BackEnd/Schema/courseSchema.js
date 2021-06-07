@@ -19,11 +19,18 @@ const courseSchema = new Schema ({
           type: String, 
           required: true,
     },
+    coursePushNotificationSubscribers: { 
+        type: Array, 
+        required: false,
+    },
+    courseEmailNotificationSubscribers: { 
+        type: Array, 
+        required: false,
+    },
     operatorId: { 
         type: String, 
         required: true  
     }
 });
-
 
 export default courseSchema;

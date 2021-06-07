@@ -17,7 +17,7 @@ import {
 frequencyCollection,
 days,
 eventEnum,
-getTimeLineItemDetailsFromCalendarEvents,
+// getTimeLineItemDetailsFromCalendarEvents,
 getCurrentTimeInUsersLocale,
 updateFrequencyCollection } from 'Services/course/Pages/CalendarPage/helpers';
 
@@ -50,7 +50,6 @@ setSelectedItemId,
 timeLines,
 saveTimeLine,
 children }) => {
-
 let titleInitialValue = currentEvent ? currentEvent?.event?.title : '';
 let locationInitialValue = currentEvent ? currentEvent?.location : '';
 let startTimeInitialValue = currentEvent ?  ( currentEvent?.event?.recurringEvent ) ? currentEvent?.event?.rrule?.dtstart : currentEvent?.event?.start : new Date();
@@ -91,9 +90,8 @@ if ( editing ) {
 }, [ editing ]); 
 
 if ( saveInProgress ) {
-    return <div>...loading</div>
+    return <div>...loading</div>;
 } 
-
 if ( onSaveError ) {
     return <div> { onSaveError.message } </div> ;
 }
@@ -101,7 +99,7 @@ if ( onSaveError ) {
 const reset = () => {
     setValues();
     setEditing(false);
-}
+};
 
 const submit = (e) => {
     e.preventDefault();
@@ -200,22 +198,21 @@ const submit = (e) => {
             setIsRecurringEvent(false);
             setFrequency('Select');
             updateFrequencyCollection(frequency, setFreqCollectionData);
-        }
-    }  
-}
+        };
+    };  
+};
 
 const handleAllDayEvent = (e) => {  
    let isChecked = e.target.checked;
    let value = e.target.value;
 
    if ( isChecked && ( value === 'isAllDay' ) ) {
-        setAllDay(true)
+        setAllDay(true);
    }
-
    if ( !isChecked && ( value === 'isAllDay' ) ) {
-       setAllDay(false)
+       setAllDay(false);
    }  
-}
+};
 
 const beginEditing = ( selectedItem ) => {
     setValues();
@@ -227,10 +224,11 @@ const beginEditing = ( selectedItem ) => {
         setIsRecurringEvent(true);
         updateFrequencyCollection(frequency, setFreqCollectionData);
     }  
-}
+};
 
 const performDelete = () => { // change to saveEvent
     let calendarEvents = calendar?.calendarEvents?.filter(eventToRemove => eventToRemove?.id !== currentEvent?.event?.id );
+
     saveCalendar( 
     { 
         ...calendar, 
@@ -249,17 +247,16 @@ const performDelete = () => { // change to saveEvent
 //     if ( timeLine ) {
 //         saveTimeLine( testUpdatedTimeLineItem );
 //     }
-
-}
+};
     
 const performDeleteAll = ( calendar ) => { // change??
     deleteCalendar(calendar, currentUser, pushNotificationSubscribers);
-}
+};
 
 const cancelEdit = (e) => {
     e.preventDefault();
     reset();
-}
+};
  
 function setValues () {
     setEventTitle(titleInitialValue);
@@ -321,7 +318,7 @@ let eventFormConfig =  {
     editing,
     location, 
     setEventLocation
-}
+};
 
 return editing ? (
            <> 

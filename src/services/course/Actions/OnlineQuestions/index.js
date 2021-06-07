@@ -29,58 +29,58 @@ export const addNewOnlineQuestion = ( question ) => {
             dispatch({        
                 type: ADD_ONLINEQUESTION_SUCCESS, payload: response });        
     }).catch( error => {
-        dispatch({ type: ADD_ONLINEQUESTION_ERROR , error })
+        dispatch({ type: ADD_ONLINEQUESTION_ERROR , error });
     });
-  }
+  };
 };
 
 export const saveOnlineQuestion = ( question ) => {
     return dispatch => {
-         dispatch({ type: SAVE_ONLINEQUESTION_BEGIN })
+         dispatch({ type: SAVE_ONLINEQUESTION_BEGIN });
          return update( question, `/onlinequestions/` )
           .then( response => {
               dispatch({ type: SAVE_ONLINEQUESTION_SUCCESS, payload: response }); 
               dispatch({ type: LOAD_LATEST_ONLINEQUESTION_SUCCESS, payload: response }); 
            }).catch( error => {
-                dispatch({ type: SAVE_ONLINEQUESTION_ERROR , error })
+                dispatch({ type: SAVE_ONLINEQUESTION_ERROR , error });
         }); 
     };
 };
 
 export const loadOnlineQuestions = ( ) => {
     return dispatch => {
-         dispatch({ type: LOAD_ONLINEQUESTIONS_BEGIN })
+         dispatch({ type: LOAD_ONLINEQUESTIONS_BEGIN });
          return get(`/onlinequestions`)
           .then( questions  => { 
-             dispatch({ type: LOAD_ONLINEQUESTIONS_SUCCESS, payload: questions }) 
+             dispatch({ type: LOAD_ONLINEQUESTIONS_SUCCESS, payload: questions });
            }).catch( error => {
-             dispatch({ type: LOAD_ONLINEQUESTIONS_ERROR , error })
+             dispatch({ type: LOAD_ONLINEQUESTIONS_ERROR , error });
         });       
     };
 };
 
 export const loadOnlineQuestionsByQuestionId = ( questionId ) => {
     return dispatch => {
-         dispatch({ type: LOAD_ONLINEQUESTIONS_BEGIN })
+         dispatch({ type: LOAD_ONLINEQUESTIONS_BEGIN });
          return getById( questionId, `/onlinequestions/question/question?questionId=`)
           .then( questions  => { 
                 dispatch({ type: LOAD_ONLINEQUESTIONS_SUCCESS, payload: questions });
                 dispatch({ type: LOAD_LATEST_ONLINEQUESTION_SUCCESS, payload: questions });
            }).catch( error => {
-                dispatch({ type: LOAD_ONLINEQUESTIONS_ERROR , error })
+                dispatch({ type: LOAD_ONLINEQUESTIONS_ERROR , error });
            });       
     };
 };
 
 export const loadOnlineQuestionsByUserId = ( userId ) => {
     return dispatch => {
-         dispatch({ type: LOAD_ONLINEQUESTIONS_BEGIN })
+         dispatch({ type: LOAD_ONLINEQUESTIONS_BEGIN });
          return getById( userId, `/onlinequestions/question/user?userId=`)
           .then( questions  => { 
                 dispatch({ type: LOAD_ONLINEQUESTIONS_SUCCESS, payload: questions });
                 dispatch({ type: LOAD_LATEST_ONLINEQUESTION_SUCCESS, payload: questions });
            }).catch( error => {
-                dispatch({ type: LOAD_ONLINEQUESTIONS_ERROR , error })
+                dispatch({ type: LOAD_ONLINEQUESTIONS_ERROR , error });
         });       
     };
 };
@@ -91,12 +91,13 @@ export const deleteOnlineQuestion = question => {
          .then( () => {
              dispatch({ type: DELETE_ONLINEQUESTION_SUCCESS, payload: question });
          }).catch( error => {
-            dispatch({ type: DELETE_ONLINEQUESTION_ERROR , error })
+            dispatch({ type: DELETE_ONLINEQUESTION_ERROR , error });
         });
-    }
-}
+    };
+};
 
 let timerHandle = null;
+
 export const setMarkDown = ( teachObject, markDown, teachObjectType="", actionType, saveAction  ) => {
     return ( dispatch, getState )  => {
         dispatch({ type: actionType, payload: {   
@@ -110,7 +111,8 @@ export const setMarkDown = ( teachObject, markDown, teachObjectType="", actionTy
         timerHandle = setTimeout(() => {
             console.log("...saving markdown text"); 
             const latestTeachObjectData = getState()[teachObjectType][teachObjectType][ teachObject?._id ]; 
+            
             dispatch(saveAction( latestTeachObjectData ));
         }, 2000);  
     };
-}
+};

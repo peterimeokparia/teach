@@ -11,6 +11,7 @@ const initialState = {
 
 const reducer =  produce( (draft, action) => {
     switch(action.type){
+
     case SEND_EMAIL_SUCCESS:
         console.log(action.payload);
         draft.emails = action.payload;  
@@ -20,6 +21,7 @@ const reducer =  produce( (draft, action) => {
     return;
     default:
     return;
+    
     }
 }, initialState);
 

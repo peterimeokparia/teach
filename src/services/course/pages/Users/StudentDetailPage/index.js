@@ -32,6 +32,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const StudentDetailPage = ({
 operatorBusinessName,
+savedAnswers,
 operatorId,
 operator,    
 studentId,
@@ -44,7 +45,6 @@ users,
 sessions,
 navigationHistory,
 children }) => {
-
 useEffect(() => {
 loadGrades( studentId );
 loadSessions();
@@ -53,8 +53,8 @@ loadAttendance();
 if ( courseId ) {
     loadLessons( courseId );
 }
-    
-}, [ loadGrades, loadSessions, loadAttendance, loadLessons ]);  
+}, [  courseId, studentId ]);  
+// }, [ loadGrades, loadSessions, loadAttendance, loadLessons ]);  
 
 const [ currentPage, setCurrentPage ] = useState('');
 const [ lessonPlanUrl, setLessonPlanUrl ] = useState('');
@@ -79,14 +79,14 @@ return (
             parentChild={children}
         />             
     );
-}
+};
 
 const mapDispatch = {
     loadGrades,
     loadAttendance,
     loadSessions,
     loadLessons 
-}
+};
 
 const mapState = (state, ownProps) => {
     return {
@@ -98,7 +98,7 @@ const mapState = (state, ownProps) => {
         lessons: getLessonsByCourseIdSelector( state, ownProps ),
         sessions: Object.values(state?.sessions?.sessions)?.filter(session => session?.courseId === ownProps?.courseId),
         navigationHistory: state.users.navigationHistory
-    }
-}
+    };
+};
 
 export default connect(mapState, mapDispatch)(StudentDetailPage);

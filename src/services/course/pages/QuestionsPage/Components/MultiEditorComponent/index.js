@@ -45,10 +45,9 @@ saveQuestion,
 loadQuestions,
 addNewGrade, 
 dispatch } ) => {
-
 let lesson = lessons.find(lesson => lesson?._id === "5fcf8f4c3746f3032f4e2a11" );  
 let currentLessonQuestions = questions.find( question => question?.lessonId === lessonId );  
-let upload_url = "http://localhost:9005/api/v1/fileUploads"
+let upload_url = "http://localhost:9005/api/v1/fileUploads";
 let totalPointsReceived = 0;
 let [ markDownEditors, setMarkDownEditors ] = useState( [] );
 let lessonTitle = lessons.find(lesson => lesson?._id === lessonId )?.title;
@@ -60,16 +59,14 @@ const [ questionPoints, setQuestionPoints ] = useState( 0 );
 const [ videoUploaded, setVideoUploaded ] = useState( false );
 
 useEffect( () => {
-  
   loadQuestions();
-
   if ( currentLessonQuestions ) {   
       setMarkDownEditors( currentLessonQuestions?.questions );
   }
-  
-}, [ previewMode, loadQuestions, setMarkDownEditors ] );  
+}, [ previewMode, loadQuestions, setMarkDownEditors, currentLessonQuestions ] );  
+// }, [ previewMode, loadQuestions, setMarkDownEditors ] );  
 
-let config = { markDownEditors, inputFieldOptions, placeHolder, pointsDistributionType, questionPoints}
+let config = { markDownEditors, inputFieldOptions, placeHolder, pointsDistributionType, questionPoints };
 
 const addNewMarkDownEditor = () => {
   setMarkDownEditors(
@@ -77,40 +74,38 @@ const addNewMarkDownEditor = () => {
     ...markDownEditors,
     markDownEditorFieldCollection(config)   
   ]);
-} 
+};
 
 const removeMarkDownEditor = () => {
   let lastInputField = markDownEditors[(markDownEditors?.length - 1)];
   let decrementedFieldSet = markDownEditors?.filter( input => input?.name !== lastInputField?.name );
+
   setMarkDownEditors(
   [
     ...decrementedFieldSet
   ]);
-}
+};
 
 const handleChange = ( editor, id, type ) => {
-
-  if ( markDownEditors.find( obj => obj?.id === id )[ elementMeta.markDownContent ] === JSON.stringify( editor.emitSerializedOutput() )) return
-
+  if ( markDownEditors.find( obj => obj?.id === id )[ elementMeta.markDownContent ] === JSON.stringify( editor.emitSerializedOutput() )) return;
   if (  type === editorContentType.Question  ) {  
       if ( markDownEditors ) {
           markDownEditors.find( obj => obj?.id === id )[ elementMeta.markDownContent ]  = JSON.stringify( editor.emitSerializedOutput() );
           //JSON.stringify(editor.emitSerializedOutput());  
       }   
   }
-}
+};
 
 const handleExplanationContentMarkDownChange = ( editor, id, type ) => {
-
-  if ( markDownEditors.find( obj => obj?.id === id )[ elementMeta.multipleChoiceQuestionExplanationAnswer ] === JSON.stringify( editor.emitSerializedOutput() )) return
-
+  if ( markDownEditors.find( obj => obj?.id === id )[ elementMeta.multipleChoiceQuestionExplanationAnswer ] === JSON.stringify( editor.emitSerializedOutput() )) return;
   if ( type === editorContentType.Explanation ) {
      markDownEditors.find( obj => obj?.id === id )[ elementMeta.multipleChoiceQuestionExplanationAnswer ]  = JSON.stringify( editor.emitSerializedOutput() );
   }   
-}
+};
 
 const handlePointsPerQuestion = ( event, id ) => {
   let inputFieldObject = markDownEditors?.find( obj => obj?.id === id );
+  
   setQuestionPoints( event.target.value );
   if ( event.target.name === elementMeta.equalPointsDistribution ) {    
       if ( inputFieldObject ) {
@@ -122,36 +117,38 @@ const handlePointsPerQuestion = ( event, id ) => {
       if ( inputFieldObject ) {
         inputFieldObject[ elementMeta.questionPoints ] =   event.target.value;
       }
-  }
-}
+  };
+};
 
 const handleUpdatingMarkDownEditor = ( inputfieldData, id ) => {
   setInputFieldObject( inputfieldData?.data );
   let currentEditor = markDownEditors.find( editor => editor.questionNumber === id  );
+
   currentEditor[ inputfieldData?.fieldName ] = inputfieldData?.data;
-}
+};
 
 const handleUpdatingMarkDownEditorPointsReceived = ( inputfieldData, id ) => {
   setInputFieldObject( inputfieldData?.data );
   let currentEditor = markDownEditors.find( editor => editor.questionNumber === id  );
+
   currentEditor[ inputfieldData?.fieldName ][currentUser?._id] = inputfieldData?.data;
   if ( inputfieldData?.fieldName === elementMeta.pointsReceived ) {
         calculateTotalPointsReceived(currentUser); 
   }
-}
+};
 
 const handlePointDistributionType = ( options ) => {
-  setPointsDistributionType(options)
-}
+  setPointsDistributionType(options);
+};
 
 const togglePreviewMode = () => {
   setPreviewMode( ! previewMode );
   loadQuestions();
-}
+};
 
 function savedQuestionsExist( currentLessonQuestions ) {
   return currentLessonQuestions?.length > 0;
-}
+};
 
 const saveRecording = () => {
   togglePreviewMode();
@@ -161,15 +158,17 @@ const saveRecording = () => {
   } else {
       addNewQuestion(lessonId,null, null, null, null, null, null, markDownEditors);  
   }
-}
+};
 
 function calculateTotalPointsReceived(user){
   markDownEditors.forEach( element => {
     let value =  isNaN(parseInt( element[ elementMeta.pointsReceived ][user?._id], 10 ))  ? 0 : parseInt( element[ elementMeta.pointsReceived ][user?._id], 10 );
+
     totalPointsReceived += value;
-    let total = {}
-    total[user._id] = totalPointsReceived
-    setPointsReceived(total)
+    let total = {};
+
+    total[user._id] = totalPointsReceived;
+    setPointsReceived(total);
     element[elementMeta.totalPointsReceived][user?._id] = totalPointsReceived;
   });
   markDownEditors[0].totalPointsReceived[user?._id] = totalPointsReceived;
@@ -179,10 +178,11 @@ async function uploadImageUrl(file, imageBlock, id) {
   await fetch( imageBlock?.img?.currentSrc )
         .then( result => result.blob())
         .then( response => { uploadFiles([ response ], currentLessonQuestions, upload_url, "questions", file?.name,  null )
-        .then( resp => {console.log( resp ) })})
-        .catch( error => { console.log( error ) });
+        .then( resp => { console.log( resp ); }); })
+        .catch( error => { console.log( error ); });
 
   let inputFieldObject = JSON.parse(  markDownEditors.find(obj => obj?.id === id  )[ elementMeta.markDownContent ] );
+
   Object.values(inputFieldObject).forEach( block => {
     if ( Object.keys( block ).length > 0 ) {
        block.find( obj => obj?.type === "image" && obj?.data?.url === imageBlock?.img?.currentSrc ).data.url = `http://localhost:3000/files/${ file?.name }`;
@@ -209,7 +209,7 @@ const handleSubmit = () => {
         addNewQuestion(lessonId,null, null, null, null, null, null, markDownEditors);  
     }
   }   
-}
+};
 
 let form = (  previewMode   )  ?  currentLessonQuestions?.questions  :   markDownEditors;
 
@@ -285,8 +285,8 @@ let listItemConfig = {
            </div>
           </div>
         </div> 
-    )
-}
+    );
+};
 
 const mapState = ( state, ownProps ) => {
   return {
@@ -294,7 +294,7 @@ const mapState = ( state, ownProps ) => {
     questions: Object.values(state.questions.questions),
     latestQuestion: state.questions.latestQuestion,
     lessons: Object.values(state.lessons.lessons),
-  }
-}
+  };
+};
 
 export default connect(mapState, { addNewQuestion, saveQuestion, loadQuestions, addNewGrade })(MultiEditorComponent);

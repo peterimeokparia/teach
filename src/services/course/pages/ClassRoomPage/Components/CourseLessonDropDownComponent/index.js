@@ -84,13 +84,13 @@ return (
                         <div className="StudentDetailPageLink">
                         {   
                             (selectedCourseFromCourseDropDrown) && 
-                            <a onClick={() => navigateToStudentDetailPage(`/${operatorBusinessName}/student/${currentUser?._id}/course/${selectedCourseFromCourseDropDrown?._id}/lessons/${selectedLessonFromLessonDropDrown?._id}`, userNavigationHistory)}> <span className="viewGradesLink"> View grades, attendance and package information. </span> </a> 
+                            <a  href onClick={() => navigateToStudentDetailPage(`/${operatorBusinessName}/student/${currentUser?._id}/course/${selectedCourseFromCourseDropDrown?._id}/lessons/${selectedLessonFromLessonDropDrown?._id}`, userNavigationHistory)}> <span className="viewGradesLink"> View grades, attendance and package information. </span> </a> 
                         } 
                         </div> 
                     </Roles>        
             </div> 
       </div>
     );  
-}
+};
 
 export default connect( null, { addNewLesson, userNavigationHistory } )(CourseLessonDropDownComponent);

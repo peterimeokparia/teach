@@ -20,7 +20,7 @@ export const SAVE_ONLINECOMMENTS_SUCCESS = "SAVE ONLINECOMMENTS SUCCESS";
 export const SET_EXPLANATION_ANSWER_MARKDOWN = "SET EXPLANATION ANSWER MARKDOWN";
 
 export const addNewOnlineComment = ( comment ) => {
-    let childComments = [];
+    // let childComments = [];
     return ( dispatch, getState ) => {
         dispatch({ type: ADD_ONLINECOMMENTS_BEGIN });
         return add( comment, `/onlinecomments` )
@@ -28,84 +28,81 @@ export const addNewOnlineComment = ( comment ) => {
             dispatch({        
                 type: ADD_ONLINECOMMENTS_SUCCESS, payload: response });        
     }).catch( error => {
-        dispatch({ type: ADD_ONLINECOMMENTS_ERROR , error })
+        dispatch({ type: ADD_ONLINECOMMENTS_ERROR , error });
     });
-  }
+  };
 };
 
 export const saveOnlineComment = ( comment ) => {
     //alert( 'saveOnlineComment ')
     //alert(JSON.stringify( comment ))
     return dispatch => {
-         dispatch({ type: SAVE_ONLINECOMMENTS_BEGIN })
+         dispatch({ type: SAVE_ONLINECOMMENTS_BEGIN });
          return update( comment, `/onlinecomments/` )
           .then( response => {
               dispatch({ type: SAVE_ONLINECOMMENTS_SUCCESS, payload: response }); 
               dispatch({ type: LOAD_LATEST_ONLINECOMMENTS_SUCCESS, payload: response }); 
            }).catch( error => {
-                dispatch({ type: SAVE_ONLINECOMMENTS_ERROR , error })
+                dispatch({ type: SAVE_ONLINECOMMENTS_ERROR , error });
         }); 
     };
 };
 
 export const loadOnlineComments = ( ) => {
     return dispatch => {
-         dispatch({ type: LOAD_ONLINECOMMENTS_BEGIN })
+         dispatch({ type: LOAD_ONLINECOMMENTS_BEGIN });
          return get(`/onlinecomments`)
           .then( comment  => { 
-             dispatch({ type: LOAD_ONLINECOMMENTS_SUCCESS, payload: comment }) 
+             dispatch({ type: LOAD_ONLINECOMMENTS_SUCCESS, payload: comment }); 
            }).catch( error => {
-             dispatch({ type: LOAD_ONLINECOMMENTS_ERROR , error })
+             dispatch({ type: LOAD_ONLINECOMMENTS_ERROR , error });
         });       
     };
 };
 
 export const loadOnlineCommentsByQuestionId = ( commentId ) => {
     return dispatch => {
-         dispatch({ type: LOAD_ONLINECOMMENTS_BEGIN })
+         dispatch({ type: LOAD_ONLINECOMMENTS_BEGIN });
          return getById( commentId, `/onlinecomments/comments/question?questionId=`) // fix in router
           .then( comment  => { 
                 dispatch({ type: LOAD_ONLINECOMMENTS_SUCCESS, payload: comment });
                 dispatch({ type: LOAD_LATEST_ONLINECOMMENTS_SUCCESS, payload: comment });
            }).catch( error => {
-                dispatch({ type: LOAD_ONLINECOMMENTS_ERROR , error })
+                dispatch({ type: LOAD_ONLINECOMMENTS_ERROR , error });
            });       
     };
 };
 
 export const loadOnlineCommentsByUserId = ( userId ) => {
     return dispatch => {
-         dispatch({ type: LOAD_ONLINECOMMENTS_BEGIN })
+         dispatch({ type: LOAD_ONLINECOMMENTS_BEGIN });
          return getById( userId, `/onlinecomments/comments/user?userId=`)
           .then( comment  => { 
                 dispatch({ type: LOAD_ONLINECOMMENTS_SUCCESS, payload: comment });
                 dispatch({ type: LOAD_LATEST_ONLINECOMMENTS_SUCCESS, payload: comment });
            }).catch( error => {
-                dispatch({ type: LOAD_ONLINECOMMENTS_ERROR , error })
+                dispatch({ type: LOAD_ONLINECOMMENTS_ERROR , error });
         });       
     };
 };
 
-export const deleteOnlineComment = ( question ) => {}
-
-
+export const deleteOnlineComment = ( question ) => {};
 
 let timerHandle = null;
+ 
 export const setMarkDown = ( teachObject, markDownContent, teachObjectType="", actionType, saveAction  ) => {
-   
     return ( dispatch, getState )  => {
         dispatch({ type: actionType, payload: {   
             teachObject,
             markDownContent
           }});
-
         if ( timerHandle ){
             clearTimeout( timerHandle );
-        }
+        };
         timerHandle = setTimeout(() => {
             console.log("...saving markdown text"); 
             //const latestTeachObjectData = getState()[teachObjectType][teachObjectType][ teachObject?._id ]; 
            dispatch(saveAction( getState()[teachObjectType][teachObjectType][ teachObject?._id ] ));
         }, 2000);  
     };
-}
+};

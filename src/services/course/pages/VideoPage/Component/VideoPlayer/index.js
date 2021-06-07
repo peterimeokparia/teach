@@ -1,7 +1,6 @@
 import React from 'react';
 
 const VideoPlayer = ({ className, videoRef, handleCanPlay  }) => {
-
     return   (    
          <span> 
             <video controls autoPlay
@@ -12,7 +11,7 @@ const VideoPlayer = ({ className, videoRef, handleCanPlay  }) => {
                  height={"300px"}
             />
          </span> 
-    )
-}
+    );
+};
 
 export default VideoPlayer;

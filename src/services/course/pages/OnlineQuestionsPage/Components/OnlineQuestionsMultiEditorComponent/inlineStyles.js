@@ -5,5 +5,5 @@ export const helpIconStyle = () => {
     "z-index": 1, 
     left: "50%",
     top: "-3%",
-  }
-}
+  };
+};

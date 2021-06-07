@@ -27,6 +27,6 @@ const LessonEditor = ({ lesson, setMarkDown }) => {
             </div>    
         </div>  
     );
-}
+};
 
 export default connect(null, { setMarkDown, saveLesson } )(LessonEditor);

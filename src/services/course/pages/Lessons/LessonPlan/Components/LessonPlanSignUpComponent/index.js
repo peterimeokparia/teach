@@ -45,11 +45,11 @@ const LessonPlanSignUpComponent = async ( setUserCredentials ) => {
       const { value: password } = await Swal.fire({
         title: 'Enter your password',
         input: 'text',
-        inputPlaceholder: 'Enter your first name.'
+        inputPlaceholder: 'Enter your password.'
       });
       
       if ( email && password && existingUser ) {
-        setUserCredentials({ email, password, existingUser });      
+         setUserCredentials({ email, password, existingUser });   
       }
     };
  };

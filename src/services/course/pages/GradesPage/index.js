@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { 
 connect } from 'react-redux';
 
@@ -29,10 +27,9 @@ function onMatchListItem( match, listItem ) {
         console.log('...remove');
     }
 }
-
 return   (    
     <div>    
-        {(grades ) && <ListItem
+        {( grades ) && <ListItem
                             collection={getSortedRecordsByDate(grades?.filter(grade => grade?.studentId === studentId), 'testDate')}
                             onMatchListItem={onMatchListItem}
                             path={"student"}

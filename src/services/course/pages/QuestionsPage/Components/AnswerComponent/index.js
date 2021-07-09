@@ -1,27 +1,25 @@
-import React from 'react';
 import ManageEditors  from '../ManageEditors';
 import ReplyComments from 'Services/course/Pages/QuestionsPage/Components/ReplyComments';
+
 import './style.css';
 
 const AnswerComponent = ({ 
-  config, 
-  questionId, 
+  question, 
   courseId }) => {
   return (
       <>
         <ManageEditors 
-            config={ config }
-            questionId={ questionId }
+            question={ question }
             courseId={ courseId }
           >
             {
-                ( answer ) => (
-                  <ReplyComments 
-                      questionId={ questionId}
-                      courseId={ courseId }
-                      answer={ answer }
-                  />
-                )
+              ( answer ) => (
+                <ReplyComments 
+                    question={ question }
+                    courseId={ courseId }
+                    answer={ answer }
+                />
+              )
             }          
         </ManageEditors>
       </>

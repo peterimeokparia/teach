@@ -26,6 +26,8 @@ import hasRecordingStarted from './Video';
 import onlineQuestionsEmailSubscriptions from './OnlineQuestionsEmailSubscription';
 import onlineQuestionsPushSubscriptions from './OnlineQuestionsPushSubscription';
 import failedNotifications from './FailedNotifications'; 
+import logs from './LogForTeach';
+import formFields from './FormFields';
 
 let reducers = { 
 courses, 
@@ -54,7 +56,9 @@ onlineComments,
 hasRecordingStarted,
 onlineQuestionsEmailSubscriptions,
 onlineQuestionsPushSubscriptions,
-failedNotifications
+failedNotifications,
+logs,
+formFields,
 };
 
 export default combineReducers( reducers );

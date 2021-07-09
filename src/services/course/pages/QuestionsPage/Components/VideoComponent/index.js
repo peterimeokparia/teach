@@ -1,74 +1,84 @@
-import 
-React, { 
-useState } from 'react';
-// import VideoPage from 'Services/course/Pages/VideoPage';
-import MaterialVideoPage from 'Services/course/Pages/MaterialVideoPage';
+import { 
+useEffect } from 'react';
 
+import { 
+connect } from 'react-redux';
+
+import {
+videoComponentMeta } from 'Services/course/Actions/Video';
+   
+import MaterialVideoPage from 'Services/course/Pages/MaterialVideoPage';
 import './style.css';
 
 const VideoComponent = ({
-config,
 element,
-selectedElement,
-toggleRecording,
-toggleCamera,
-toggleScreenSharing,
-id, 
-name,
-className,
-recordButtonText,
-videoMetaData,
-videoMetaDataExternalId,
-videoNamePrefix,
-videoName,
+videoComponentMeta,
 objectId,
-setRecordingCompletionStatus,
-displayMaterialButton,
-videoSectionClassName,
-handleSubmit
+video,
+//config,
+// onlineQuestionId,
+// toggleRecording,
+// toggleCamera,
+// toggleScreenSharing,
+// id, 
+// name,
+// className,
+// recordButtonText,
+// videoMetaData,
+// videoMetaDataExternalId,
+// videoNamePrefix,
+// videoName,
+// objectId,
+// displayMaterialButton,
+// videoSectionClassName,
+// handleSubmit
 }) => {
-const [ videoModalMode, setVideoModalMode ] = useState( false ); 
 
-const resetAllStartSettings = () => {
-  handleSubmit();
-  setRecordingCompletionStatus( false );
-};
+let videoMeta = {
+   // videoCallIcon,
+   // exitVideoCallIcon,
+   // shareScreenIcon,
+   // deleteIconStyle: onlineAnswerVideoDeleteIconStyle,
+   // videoCallIconMain,
+   // saveIconStyle: saveIconStyle,
+   recordingOn: false,
+   recordButtonText: 'Record Answer',
+   videoSectionClassNameRecording: "answerVideoSection-recording",
+   videoSectionClassNameRecordingStopped: "answerVideoSection-recordingStopped",
+   videoSectionClassNameNoRecording: "mainVideoSection-recordingStopped", 
+   videoClassName: ( element?.videoUrl === "" || element?.videoUrl === undefined ) ? "" : "",
+   exitVideoCallIconPageName: "ManageEditors",
+   videoSectionCallOut: "answerVideoSectionCallOut",
+   objectId,
+   videoMetaData:({inputFieldId: element?.id, currentQuestion: element} ),
+   videoMetaDataExternalId:'name',
+   videoName:`${element?.id}_${element?.questionNumber}_${element?.id}_${element?.type}`,
+   //videoNamePrefix,
+   //videoNamePrefix:"QuestionVideoMarkDownEditors",
+}; 
 
-const resetAllStopSettings = () => {
-  setRecordingCompletionStatus( true );
-};
+// useEffect(() => {
 
+//    videoComponentMeta({ ...video, videoMeta  });
+   
+//    }, [ video, videoComponentMeta ]);
+   
 return (
-    <span 
-      id={id}
-      name={name}
-      className={className}
-    > 
-      <MaterialVideoPage
-          config={config} 
-          element={element}
-          selectedElement={selectedElement}
-          toggleRecordOnOff={ toggleRecording }
-          turnCamerOn={ toggleCamera }
-          enableScreenSharing={ toggleScreenSharing }
-          buttonClassName={`toggle-stage-btns${( true ) ? "-show" : "-hide"}`} 
-          recordStream={true}
-          resetAllStartSettings={ resetAllStartSettings }  
-          resetAllStopSettings={ resetAllStopSettings }   
-          setVideoModalMode={stage => setVideoModalMode(stage) } 
-          objectId={objectId}
-          videoMetaData={videoMetaData}
-          videoMetaDataExternalId={videoMetaDataExternalId}
-          videoNamePrefix={videoNamePrefix}
-          videoName={videoName}
-          videoModalMode={videoModalMode}
-          recordButtonText={recordButtonText}
-          displayMaterialButton={displayMaterialButton}
-          videoSectionClassName={videoSectionClassName}
-          setRecordingCompletionStatus={setRecordingCompletionStatus}
-      />  
-    </span>      
+   <div>
+      <MaterialVideoPage element={element} />
+   </div>
    );
 };
 
-export default VideoComponent;
+const mapDispatch = {
+   videoComponentMeta,
+ };
+ 
+const mapState = ( state, ownProps ) => {
+return {
+   hasRecordingStarted: state?.hasRecordingStarted?.hasRecordingStarted,
+   isRecordingDialogOpen: state.hasRecordingStarted.recordingDialogOpen
+};
+};
+
+export default connect( mapState, mapDispatch )( VideoComponent );

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {
 serviceWorkerSupported,
 send } from '../PushNotifications';
@@ -49,12 +47,16 @@ export const operatorUser = {
 
 export const role = {
     Tutor: "Tutor",
-    Student: "Student"
+    Student: "Student",
+    School: "School",
+    Organization: "Organization",
+    Individual: "Individual",
+    Admin: "Admin",
 };
 
 export const cleanUrl = ( urlValue ) => {
     return urlValue?.replace(/\s+/g, "%20");
-}; 
+};
 
 export const handlePushNotificationSubscription = ( subscribedUsers, user,  newSubscriptionAction, addDeviceToExistingSubscriptionAction ) => {
     let subscribedUser = undefined;

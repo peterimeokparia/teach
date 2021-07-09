@@ -15,19 +15,6 @@
  padding-left: 0px;
 }
 /* Grow */
-.OnlineListItems .test {
-  border: solid gold;
-  border-bottom: solid gold;
-  color: #fff;
-  display: flex;
-  flex-direction: row;
-  height: 100px;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 35px;
-  margin-bottom: 5px;
-  /* padding: 10px 20px 10px 10px; */
-}
 .OnlineListItems .question-card-top-right {
   margin-left: 90%; 
 }
@@ -45,7 +32,6 @@
   transform: scale(1);
   margin-bottom: -50%;
 }
-
 .OnlineListItems .mainVideoSection-recording {
   display: inline-block;
   vertical-align: middle;
@@ -63,7 +49,6 @@
   margin-left: 20%; 
 }
 .mainVideoSection-recordingNotVisible {
-  /* visibility: hidden; */
   display: inline-block;
   vertical-align: middle;
   -webkit-transform: perspective(1px) translateZ(0);
@@ -100,17 +85,13 @@
     transition-duration: 0.3s;
     -webkit-transition-property: transform;
     transition-property: transform;
-
     -webkit-transform: scale(1.9);
     transform: scale(1.9);
-
     top: 30%;
     margin-top: 5%;
     margin-left: 45%; 
-    /* margin-right: 30%; */
   }
   .OnlineListItems .mainVideoSection-recordingNotVisible {
-    /* visibility: hidden; */
     display: inline-block;
     vertical-align: middle;
     -webkit-transform: perspective(1px) translateZ(0);
@@ -120,14 +101,12 @@
     transition-duration: 0.3s;
     -webkit-transition-property: transform;
     transition-property: transform;
-
     -webkit-transform: scale(1);
     transform: scale(1);
   }
   .OnlineListItems .videoSection--- {
     display: inline-block;
     vertical-align: middle;
-
     -webkit-transform: perspective(1px) translateZ(0);
     transform: perspective(1px) translateZ(0);
     box-shadow: 0 0 1px rgba(0, 0, 0, 0);
@@ -138,7 +117,6 @@
     height: 10px;
     width: 10px
   }
-
   .videoPlayer {
     visibility: hidden;
     border: 0px solid #999;
@@ -248,10 +226,6 @@
   }
   .moreInfo .popup .popuptext {
     visibility: visible;
-    /* -webkit-animation: fadeIn 1s; */
-    /* animation: fadeIn 1s ease-in-out 3s; */
-    /* animation-delay: 5s; */
-    /* animation-fill-mode: forwards;  */
   }
   .moreInfo .popup .popuptext-hidden {
     visibility: hidden;
@@ -273,7 +247,6 @@
   .hide {
     visibility: hidden;
   }
-
   .videoComponents .video {
     margin-left: 0px;
     border-radius: 2em;
@@ -328,27 +301,33 @@
     ##Screen = B/w 481px to 767px
   */
   
-  @media (min-width: 481px) and (max-width: 767px) {
-    
+  @media (min-width: 481px) and (max-width: 767px) {    
     /* CSS */
     .videoComponents {
       margin-left: -25%;
     }
+   .OnlineListItems{
+      width: 100vw;
+      border-style: dotted solid dashed double;
+      background-color: white;
+      padding-left: 25px;
+      padding-right: 35px;
+      padding-bottom: 10px;
+      border: solid 0.3em whitesmoke;
+   }
+   .OnlineListItems .question-card-top-right {
+      margin-left: 90%; 
+    }
   }
-  
   /* 
     ##Device = Most of the Smartphones Mobiles (Portrait)
     ##Screen = B/w 320px to 479px
   */
-  
   @media (min-width: 320px) and (max-width: 480px) {
-    
     /* CSS */
-
     .videoComponents {
       margin-left: -43%;
     }
-
     .OnlineListItems video {
       border-width: 1px;
       margin-right: 100%;
@@ -357,7 +336,6 @@
       padding-left: 0px;
      }
   }
-
 
   /* Add animation (fade in the popup) */
   /* @-webkit-keyframes fadeIn {

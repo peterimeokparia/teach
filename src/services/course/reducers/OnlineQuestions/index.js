@@ -14,12 +14,15 @@ SAVE_ONLINEQUESTION_ERROR,
 RESET_ONLINEQUESTION_ERROR, 
 DELETE_ONLINEQUESTION_SUCCESS, 
 SET_ONLINEQUESTION_MARKDOWN,
-SET_EXPLANATION_ANSWER_MARKDOWN } from '../../Actions/OnlineQuestions';
+QUESTION_META, 
+ONLINE_QUESTION_COURSEID} from '../../Actions/OnlineQuestions';
 
 const initialState = {
     onlineQuestions: {},
     latestOnlineQuestions: {},
+    onlineQuestionCourseId: {},
     questionMarkDown: {},
+    questionMeta: {},
     saveInProgress: false,
     onSaveError: null,
     onlineQuestionsLoading: false,
@@ -64,12 +67,7 @@ const reducer = produce((draft, action) => {
         return; 
         case SET_ONLINEQUESTION_MARKDOWN:
              if ( draft.onlineQuestions[action.payload.teachObject?._id] ) {
-                draft.onlineQuestions[action.payload.teachObject?._id].markDown = action.payload.markDown; 
-             }    
-        return;
-        case SET_EXPLANATION_ANSWER_MARKDOWN:
-             if ( draft.onlineQuestions[action.payload.teachObject?._id] ) {
-                draft.onlineQuestions[action.payload.teachObject?._id].markDown = action.payload.markDown; 
+                draft.onlineQuestions[action.payload.teachObject?._id].markDownContent = action.payload.markDown; 
              }    
         return;
         case RESET_ONLINEQUESTION_ERROR:
@@ -78,6 +76,11 @@ const reducer = produce((draft, action) => {
        case DELETE_ONLINEQUESTION_SUCCESS:
             delete draft.onlineQuestions[action.payload?._id];
        return; 
+       case QUESTION_META:
+            draft.questionMeta = action.payload;    // onlineQuestionId, seletedCourseId
+       return; 
+       case ONLINE_QUESTION_COURSEID:
+            draft.onlineQuestionCourseId = action.payload;
        default:
     return;
     

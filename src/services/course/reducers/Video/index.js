@@ -8,12 +8,11 @@ RECORDING_DIALOG_CLOSED } from '../../Actions/Video';
 
 const initialState = {
     hasRecordingStarted: false,
-    recordingDialogOpen: false
+    recordingDialogOpen: false,
 };
 
 const reducer = produce((draft, action) => {
     switch(action.type){
-
         case RECORDING_STATUS_RECORDING_STARTED:
              draft.hasRecordingStarted = true;
         return;

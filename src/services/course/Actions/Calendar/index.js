@@ -4,13 +4,7 @@ get,
 update,
 remove, 
 getById,
-getCalendarsByUserId 
-} from 'Services/course/Api';
-
-import {
-sendPushNotificationMessage
-} from 'Services/course/Actions/Notifications';
-import { addEvent } from '../Event';
+getCalendarsByUserId } from 'Services/course/Api';
 
 export const ADD_NEW_CALENDAR_BEGIN = "ADD NEW CALENDAR BEGIN";
 export const ADD_NEW_CALENDAR_SUCCESS = "ADD NEW CALENDAR SUCCESS";
@@ -29,43 +23,14 @@ export const DELETE_CALENDAR_BEGIN = "DELETE CALENDAR BEGIN";
 export const DELETE_CALENDAR_SUCCESS = "DELETE CALENDAR SUCCESS";
 export const DELETE_CALENDAR_ERROR = "DELETE CALENDAR ERROR";
 export const TOGGLE_EVENT_EDIT_FORM = "TOGGLE_EVENT_EDIT_FORM";
+export const CALENDAR_EVENT_TYPE = "CALENDAR EVENT TYPE";
 
 export const addCalendar = ( newCalendar ) => {
     return dispatch => {
             dispatch({ type: ADD_NEW_CALENDAR_BEGIN });
        return add({ ...newCalendar?.calendar }, '/calendar')
         .then(calendarData => {
-            dispatch({ type: ADD_NEW_CALENDAR_SUCCESS, payload: calendarData});
-            if ( newCalendar?.event ) {
-                let eventConfig = {
-                    event: {
-                        calendarId: calendarData?._id, 
-                        userId: newCalendar?.currentUser?._id,
-                        event: newCalendar?.event,
-                        location: newCalendar?.location,
-                        schedulingData: newCalendar?.schedulingData,
-                        consultation: newCalendar?.consultation,
-                        calendarEventType: newCalendar?.calendarEventType,
-                        operatorId: newCalendar?.operatorId,
-                        color: newCalendar?.color
-                    },
-                    currentUser: newCalendar?.currentUser, 
-                    pushNotificationUser: newCalendar?.pushNotificationUser, 
-                    emailAddresses: newCalendar?.emailAddresses 
-                };
-
-                dispatch( addEvent( eventConfig ) );
-            }
-            
-            dispatch(saveCalendar({
-                ...calendarData, 
-                timeLineGroup: { 
-                    id: calendarData?._id, 
-                    title: `${calendarData?.firstName}_${calendarData?._id}`, 
-                    rightTitle: `${calendarData?.firstName}_${calendarData?._id}`, 
-                    color: calendarData?.color 
-                }
-            }));
+            dispatch({ type: ADD_NEW_CALENDAR_SUCCESS, payload: calendarData });
             return calendarData; 
         })
         .catch( error => {
@@ -96,12 +61,7 @@ export const saveCalendar = ( calendar )  => {
         dispatch({ type: DELETE_CALENDAR_BEGIN });
          return remove( calendar, `/calendar/` )
          .then( resp => {
-             dispatch({ type: DELETE_CALENDAR_SUCCESS, payload: resp });
-             dispatch(sendPushNotificationMessage( 
-                pushNotificationUser, { 
-                title:`${ currentUser?.firstname } Deleted A Calendar!`, 
-                body:`Deleted Calendar: ${ calendar?._id }` 
-            })); 
+             dispatch({ type: DELETE_CALENDAR_SUCCESS, payload: { resp, calendar, currentUser, pushNotificationUser }  });
              return calendar;
          }).catch( error => {
             dispatch({ type: DELETE_CALENDAR_ERROR , error });
@@ -155,4 +115,9 @@ export const loadCalendarsByUserId = ( remoteUser ) => {
 
 export const toggleCalendarNewEventForm = () => ({
     type: TOGGLE_CALENDAR_NEW_INPUT
+});
+
+export const setCalendarEventType = calendarEventType => ({
+    type: CALENDAR_EVENT_TYPE,
+    payload: calendarEventType
 });

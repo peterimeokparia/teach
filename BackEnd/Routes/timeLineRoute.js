@@ -7,17 +7,23 @@ getPostData,
 saveUpdatedData   
 } from '../Helpers/storageHelper.js';
 
+import { 
+TIMELINEROUTE,
+handleBackEndLogs } from '../Helpers/logHelper.js';
+
 const timeLineRoute = express.Router();
 
 timeLineRoute.get('/', (req, res) => {
    timeLineModel.find({ })
    .then(data => {
-         console.log('timeline', data)
+      console.log('timeline', data)
       return res.status(200).json(data);
    })
-   .catch(error =>{    
-      return res.status(400).json({ error }); 
-   });
+   .catch( error => {
+      console.log( error );
+      handleBackEndLogs(TIMELINEROUTE, error );
+      return res.status(400).json({ error })
+    });
 });
  
 timeLineRoute.get('/timeLines/:timeLineId', (req, res) => {
@@ -27,9 +33,11 @@ timeLineRoute.get('/timeLines/:timeLineId', (req, res) => {
       console.log('timeline', data)
       return res.status(200).json(data);
    })
-   .catch(error =>{    
-      return res.status(400).json({ error }); 
-   });
+   .catch( error => {
+      console.log( error );
+      handleBackEndLogs(TIMELINEROUTE, error );
+      return res.status(400).json({ error })
+    });
 });
 
 timeLineRoute.post('/', (req, res) => {
@@ -41,13 +49,14 @@ timeLineRoute.post('/', (req, res) => {
          console.log('saved timeLineRoute timeLineRoute', data);
       return res.status(200).json(data)
    })
-   .catch(error =>{    
-      return res.status(400).json({ error }); 
-   }); 
+   .catch( error => {
+      console.log( error );
+      handleBackEndLogs(TIMELINEROUTE, error );
+      return res.status(400).json({ error })
+    });
 });
 
  timeLineRoute.put('/:timeLineId', (req, res) => {
-
    if ( ! req?.params?.timeLineId ) return;
 
    saveUpdatedData(req, timeLineModel, req.params.timeLineId )
@@ -56,15 +65,16 @@ timeLineRoute.post('/', (req, res) => {
       return res.status(200).json(data)
    })
    .catch( error => {
-      console.log(error);
+      console.log( error );
+      handleBackEndLogs(TIMELINEROUTE, error );
       return res.status(400).json({ error })
-   });
+    });
  });
 
  timeLineRoute.delete('/:timeLineId', (req, res) => {
-    timeLineModel.remove({ _id: req.params.timeLineId }, ( error, result ) => {
-       
+    timeLineModel.remove({ _id: req.params.timeLineId }, ( error, result ) => {    
       if ( error ) {
+         handleBackEndLogs(TIMELINEROUTE, error );
          return res.status(400).send(error);
       }
       else {

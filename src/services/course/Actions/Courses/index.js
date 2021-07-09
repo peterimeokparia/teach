@@ -25,26 +25,14 @@ export const DELETE_COURSE_BEGIN = "DELETE LESSON BEGIN";
 export const DELETE_COURSE_ERROR = "DELETE LESSON ERROR";
 export const USER_UPDATED = "USER UPDATED";
 export const LAST_LOGGEDIN_USER = "LAST LOGGEDIN USER";
+export const LESSONPLAN_DROPDOWN_COURSE = "LESSONPLAN DROPDOWN COURSE";
 
-export const addNewCourse = ( name, price, description, user, operator ) => {
-    let courses;
-
+export const addNewCourse = ( newCourse ) => {
     return dispatch => {   
        dispatch({ type: ADD_COURSE_BEGIN });
-       return add({name, price, description, createdBy: user?._id, operatorId: operator?._id}, '/courses')
+       return add(newCourse, '/courses')
         .then(course => {
-           if ( course?.createdBy === user?._id ) {   
-                courses = [ ...user?.courses, course?._id ];
-                course[ 'coursePushNotificationSubscribers' ] = [ ...course[ 'coursePushNotificationSubscribers' ], user?._id ];
-                course[ 'courseEmailNotificationSubscribers' ] = [ ...course[ 'courseEmailNotificationSubscribers' ], user?._id ];
-
-                // user.courses.push( course._id );
-                // course.coursePushNotificationSubscribers.push( user?._id );
-                // course.courseEmailNotificationSubscribers.push( user?._id );
-           }
-           updateUser( { ...user, courses } );
-           dispatch({ type: ADD_COURSE_SUCCESS, payload: course });
-           dispatch({ type: LAST_LOGGEDIN_USER, payload: user });  
+           dispatch({ type: ADD_COURSE_SUCCESS, payload: { course, user: newCourse?.user } }); 
         })
          .catch(error => { 
             dispatch({ type: ADD_COURSE_ERROR, error });
@@ -96,14 +84,16 @@ export const uploadAvatarImages = ( selectedFiles, file, url, teachObjectName, t
         uploadUserAvatar(selectedFiles, file, url, teachObjectName,  typeOfUpload)
          .then( resp => { 
             dispatch( loadUserByEmail(file?.email, file?.password ) );
-            dispatch({  type: USER_UPDATED, payload: resp }); } );
+            dispatch({  type: USER_UPDATED, payload: resp }); 
+         })
+         .catch( error => console.log( error ));
     };
 };
 
 export const unSubscribeFromCourse = ( currentUser, courseId, sessionId ) => {
     return dispatch => {
         let courseList = currentUser?.courses?.filter(id => id !== courseId);
-         let sessions = currentUser?.sessions?.filter(id => id !== sessionId);
+        let sessions = currentUser?.sessions?.filter(id => id !== sessionId);
 
         updateUser({ ...currentUser, courses: courseList, sessions: sessions })
          .then( user => {
@@ -113,6 +103,12 @@ export const unSubscribeFromCourse = ( currentUser, courseId, sessionId ) => {
     };
 };
 
+export const selectCourseFromLessonPlanCourseDropDown = course => ({
+    type: LESSONPLAN_DROPDOWN_COURSE,
+    payload: course
+});
+
+ 
 export const openNewCourseModal = () => ({
     type: OPEN_NEW_COURSE_MODAL
 });

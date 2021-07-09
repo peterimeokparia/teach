@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/preset-react": "^7.13.13",
     "@emotion/styled": "10.0.14",
     "@fullcalendar/core": "^5.5.1",
     "@fullcalendar/daygrid": "^5.5.0",
@@ -26,7 +28,7 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "create-react-context": "^0.3.0",
-    "dante3": "^1.0.4",
+    "dante3": "^1.0.5",
     "dotenv": "^8.2.0",
     "emotion-theming": "10.0.14",
     "enzyme": "^3.11.0",
@@ -53,8 +55,6 @@
     "react-addons-test-utils": "^15.6.2",
     "react-avatar-edit": "^0.8.3",
     "react-avatar-editor": "^11.1.0",
-    "react-big-calendar": "^0.33.2",
-    "react-big-calendar-like-google": "^0.0.3",
     "react-bootstrap": "^1.4.3",
     "react-calendar-timeline": "^0.27.0",
     "react-dom": "^17.0.2",
@@ -62,10 +62,9 @@
     "react-image-crop-component": "^1.1.2",
     "react-markdown": "^6.0.2",
     "react-modal": "^3.11.2",
-    "react-modal-resizable-draggable": "^0.1.4",
     "react-redux": "^7.2.4",
     "react-rnd": "^10.2.2",
-    "react-scripts": "^4.0.3",
+    "react-scripts": "^4.0.0",
     "react-select": "^3.1.1",
     "react-test-renderer": "^17.0.2",
     "react-toastify": "^6.0.8",
@@ -86,6 +85,16 @@
     "dev-server": "json-server db.json --routes routes.json -w -p 8082",
     "lint": "EXTEND_ESLINT=true eslint --ext=js,jsx --ignore-path=.gitignore --max-warnings=0 --color . || true"
   },
+  
+  "jest" : {
+    "transform": {
+      "^.+\\.js?$": "babel-jest"
+    },
+    "transformIgnorePatterns": [
+      "!node_modules/react-runtime"
+    ]
+  },
+
   "proxy": "http://localhost:9005",
   "secure": false,
   "eslintConfig": {
@@ -103,6 +112,8 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "redux-mock-store": "^1.5.4"
+  },
   "type": "module"
 }

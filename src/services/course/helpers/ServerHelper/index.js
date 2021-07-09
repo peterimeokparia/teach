@@ -50,17 +50,18 @@ export const uploadVideos = ( videoData, externalId, videoNamePrefix ) => {
   let data = {  
     id: videoData?.objectId, 
     videoNamePrefix: videoData?.videoMetaData?.videoNamePrefix,
-    externlId: videoData?.videoMetaData[ externalId ],
+    // externlId: videoData?.videoMetaData[ externalId ],
     videoName: videoData?.videoName,
     inputFieldId: videoData?.inputFieldId,
-    metaData:  videoData?.videoMetaData
+    metaData:  videoData?.videoMetaData,
+    videoFileName: `${videoData?.videoMetaData?.videoNamePrefix}_${Date.now()}_${videoData?.videoMetaData[ externalId ]}_${videoData?.objectId}_${Math.floor(Math.random() * Math.floor(9000))}.webm`
   };
 
   let formData = new FormData();
 
   formData.append('id', JSON.stringify(id));
   formData.append(videoNamePrefix, videoData?.videoMetaData?.videoNamePrefix);
-  formData.append(externalId, videoData?.videoMetaData[ externalId ]);
+  // formData.append(externalId, videoData?.videoMetaData[ externalId ]);
   formData.append('data', JSON.stringify(data));
   formData.append('videoName', videoData?.videoName);
   formData.append('metaData', JSON.stringify( videoData?.videoMetaData ));
@@ -70,7 +71,6 @@ export const uploadVideos = ( videoData, externalId, videoNamePrefix ) => {
 
 export async function uploadContent(url, formData, method = `POST`) {
   let headers = new Headers();
-
   // headers.append('Content-Type', 'video/webm'); 
   // headers.append('Accept', 'video/webm');
   // headers.append('Content-Type', 'image/png'); 

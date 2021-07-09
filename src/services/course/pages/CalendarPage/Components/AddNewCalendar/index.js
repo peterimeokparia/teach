@@ -1,5 +1,4 @@
-import 
-React, { 
+import { 
 useState, 
 useEffect } from "react";
 
@@ -70,49 +69,48 @@ const AddNewCalendar = ({
     },[ loadAllCalendars, loadSubscribedPushNotificationUsers, loadAllEvents  ]);
     // },[ loadAllCalendars, loadSubscribedPushNotificationUsers, loadAllEvents, loadUsers  ]);
 
-    const onChange = ( data ) => {
-        setSelctedTutors( data );
-    };
+const onChange = ( data ) => {
+    setSelctedTutors( data );
+};
 
-    const onFormSubmit = ( evnt ) => {
-        evnt.preventDefault();
-    };
+const onFormSubmit = ( evnt ) => {
+    evnt.preventDefault();
+};
 
-    const submitForm = () => {
-        if ( calendarType ) {
-            let testAdminUsers =  [ userId, '603d37814967c605df1bb450', '6039cdc8560b6e1314d7bccc' ]; // refactor
-            let emailAddresses = Object.values(users).filter(user => testAdminUsers.includes(user?._id))?.map(user => user?.email);
-            let operatorId = operator?._id; 
-            // let calendarEventType = calendarType?.label;
-    
-            let calendarConfig = ( tutor ) =>{
-                return {
-                    calendar: {
-                        userId: tutor?._id,
-                        calendarEventType: calendarType?.label,
-                        operatorId,
-                        firstName: users?.find(usr => usr?._id === tutor?._id)?.firstname,
-                        color: getCalendarColor( calendars )
-                    }, 
-                    event: undefined, 
-                    location: undefined, 
-                    schedulingData: undefined, 
-                    consultation: undefined, 
-                    calendarEventType: calendarType?.label, 
-                    operatorId, 
-                    currentUser: tutor, 
-                    pushNotificationUser: pushNotificationSubscribers?.filter(subscriber => testAdminUsers?.includes( subscriber?.userId ) ), 
-                    emailAddresses
-                };
+const submitForm = () => {
+    if ( calendarType ) {
+        let testAdminUsers =  [ userId, '603d37814967c605df1bb450', '6039cdc8560b6e1314d7bccc' ]; // refactor
+        let emailAddresses = Object.values(users).filter(user => testAdminUsers.includes(user?._id))?.map(user => user?.email);
+        let operatorId = operator?._id; 
+   
+        let calendarConfig = ( tutor ) => {
+            return {
+                calendar: {
+                userId: tutor?._id,
+                calendarEventType: calendarType?.label,
+                operatorId,
+                firstName: users?.find(usr => usr?._id === tutor?._id)?.firstname,
+                color: getCalendarColor( calendars )
+                }, 
+                event: undefined, 
+                location: undefined, 
+                schedulingData: undefined, 
+                consultation: undefined, 
+                calendarEventType: calendarType?.label, 
+                operatorId, 
+                currentUser: tutor, 
+                pushNotificationUser: pushNotificationSubscribers?.filter(subscriber => testAdminUsers?.includes( subscriber?.userId ) ), 
+                emailAddresses
             };
-
-            selectedTutors.forEach(element => {
-                let user = users?.find( usr => usr?._id === element?.value?._id);
-
-                addCalendar( calendarConfig(user) );
-            });
         };
+
+        selectedTutors.forEach(element => {
+            let user = users?.find( usr => usr?._id === element?.value?._id);
+
+            addCalendar( calendarConfig(user) );
+        });
     };
+};
 
 return (
 

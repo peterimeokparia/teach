@@ -4,104 +4,97 @@ import attendanceModel from '../Model/attendanceModel.js';
 
 import {
 getPostData,    
-saveUpdatedData   
-} from '../Helpers/storageHelper.js';
+saveUpdatedData } from '../Helpers/storageHelper.js';
 
+import { 
+ATTENDANCEROUTE,
+handleBackEndLogs } from '../Helpers/logHelper.js';
 
 const attendanceRoute = express.Router();
 
 attendanceRoute.get('/', (req, res) => {
- 
    attendanceModel.find({ })
-         .then(data => {
-             console.log('Attendance', data)
-             res.status(200).json(data);
-         })
-          .catch(error => console.log(error));
+    .then(data => {
+        console.log('Attendance', data)
+        return res.status(200).json(data);
+    })
+    .catch( error => {
+        console.log( error );
+        handleBackEndLogs( ATTENDANCEROUTE, error );
+        return res.status(400).json({ error })
+    });
  });
  
-
-
-
  attendanceRoute.get('/:studentId', (req, res) => {
- 
    let studentId = { studentId: req.query.studentId };
   
    attendanceModel.findById( studentId )   
        .then(data => {
            console.log('Attendance', data)
-           res.status(200).json(data);
+           return res.status(200).json(data);
        })
-        .catch(error => console.log(error));
+       .catch( error => {
+         console.log( error );
+         handleBackEndLogs( ATTENDANCEROUTE, error );
+         return res.status(400).json({ error })
+       });
  });
 
 
-
-
  attendanceRoute.get('/:attendanceId', (req, res) => {
- 
    let attendanceId = { attendanceId: req.query.attendanceId };
   
    attendanceModel.findById( attendanceId )   
        .then(data => {
            console.log('Attendance', data)
-           res.status(200).json(data);
+           return res.status(200).json(data);
        })
-        .catch(error => console.log(error));
+       .catch( error => {
+         console.log( error );
+         handleBackEndLogs( ATTENDANCEROUTE, error );
+         return res.status(400).json({ error })
+      });
  });
 
-
- 
-
- attendanceRoute.post('/', (req, res) => {
+attendanceRoute.post('/', (req, res) => {
   
-      let attendanceData = getPostData( req );
+    let attendanceData = getPostData( req );
 
-      let attendance = new attendanceModel(attendanceData);
+    let attendance = new attendanceModel(attendanceData);
 
-       attendance.save()
-       .then(data => {
-          console.log('saved', data);
-          res.status(200).json(data)})
-       .catch( error => console.log(error) ); 
-      
+    attendance.save()
+    .then(data => {
+        console.log('saved', data);
+        return res.status(200).json(data)})
+    .catch( error => {
+        console.log( error );
+        handleBackEndLogs( ATTENDANCEROUTE, error );
+        return res.status(400).json({ error })
+    });
  });
-
-
-
 
  attendanceRoute.put('/:attendanceId', (req, res) => {
- 
-       saveUpdatedData(req, attendanceModel, req.params.attendanceId)
+    saveUpdatedData(req, attendanceModel, req.params.attendanceId)
        .then( data => {
          console.log(data);
-         res.status(200).json(data)
+         return res.status(200).json(data)
        })
-        .catch( error => {
-           console.log(error);
-           res.status(400).json({ error })
-        });
+       .catch( error => {
+         console.log( error );
+         handleBackEndLogs( ATTENDANCEROUTE, error );
+         return res.status(400).json({ error });
+       });
  });
 
-
-
-
-
  attendanceRoute.delete('/:attendanceId', (req, res) => {
-  
     attendanceModel.remove({ _id: req.params.attendanceId }, ( error, result ) => {
-         
-            if ( error ) {
-               res.status(400).send(error);
-            }
-            else {
-               res.status(200).json(result);
-            }
-
+        if ( error ) {
+            return res.status(400).send(error);
+        }
+        else {
+            return res.status(200).json(result);
+        }
     });
-
 });
-
-
 
 export default attendanceRoute;

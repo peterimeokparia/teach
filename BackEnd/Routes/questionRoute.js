@@ -6,88 +6,96 @@ import {
 getPostData,    
 saveUpdatedData } from '../Helpers/storageHelper.js';
 
- const questionRoute = express.Router();
+import { 
+QUESTIONROUTE,
+handleBackEndLogs } from '../Helpers/logHelper.js';
 
- questionRoute.get('/', (req, res) => {
-    questionModel.find({ })
-        .then(data => {
-            console.log('QuestionsNoID QuestionsNoID Comprende?', data)
-            res.status(200).json(data);
-        })
-         .catch(error => console.log(error));
+const questionRoute = express.Router();
+
+questionRoute.get('/', (req, res) => {
+questionModel.find({ })
+.then(data => {
+    console.log('QuestionsNoID QuestionsNoID Comprende?', data)
+    return res.status(200).json(data);
+})
+.catch( error => {
+    console.log( error );
+    handleBackEndLogs(QUESTIONROUTE, error );
+    return res.status(400).json({ error })
+    });
  });
-
-
 
  questionRoute.get('/test', (req, res) => {
     questionModel.find({ _id: req.query.questionId })
-        .then(data => {
-            console.log('testQuestions Questions', data)
-            res.status(200).json(data);
-        })
-         .catch(error => console.log(error));
+    .then(data => {
+        console.log('testQuestions Questions', data)
+        return res.status(200).json(data);
+    })
+    .catch( error => {
+        console.log( error );
+        handleBackEndLogs(QUESTIONROUTE, error );
+        return res.status(400).json({ error })
+    });
  });
-
-
  
  questionRoute.get('/videos', (req, res) => {
    questionModel.find({ _id: req.query._id })
-       .then(data => {
-           console.log('Questions Questions', data)
-           res.status(200).json(data);
+    .then(data => {
+        console.log('Questions Questions', data)
+        return res.status(200).json(data);
        })
-        .catch(error => console.log(error));
+    .catch( error => {
+        console.log( error );
+        handleBackEndLogs(QUESTIONROUTE, error );
+        return res.status(400).json({ error })
+    });
 });
-
-
  
  questionRoute.get('/files', (req, res) => {
    questionModel.find({ _id: req.query._id })
        .then(data => {
-           console.log('Questions Questions', data)
-           res.status(200).json(data);
+           console.log('Questions Questions', data);
+           return res.status(200).json(data);
        })
-        .catch(error => console.log(error));
+       .catch( error => {
+        console.log( error );
+        handleBackEndLogs(QUESTIONROUTE, error )
+        return res.status(400).json({ error })
+    });
 });
 
-
-
  questionRoute.post('/', (req, res) => {
+    let questionData = getPostData( req );
 
-       let questionData = getPostData( req );
- 
-       let questions = new questionModel(questionData);
+    let questions = new questionModel(questionData);
 
-       questions.save()
-       .then(data => {
-          console.log('saved', data);
-          res.status(200).json(data)})
-       .catch( error => console.log(error) ); 
-      
+    questions.save()
+    .then(data => {
+     console.log('saved', data);
+        return res.status(200).json(data)})
+        .catch( error => {
+        console.log( error );
+        handleBackEndLogs(QUESTIONROUTE, error )
+        return res.status(400).json({ error })
+    });
+    
  });
-
-
-
 
  questionRoute.put('/:questionId', (req, res) => {
-       saveUpdatedData(req, questionModel, req.params.questionId)
+    saveUpdatedData(req, questionModel, req.params.questionId)
        .then( data => {
          console.log(data);
-         res.status(200).json(data)
+        return res.status(200).json(data)
        })
-        .catch( error => {
-           console.log(error);
-           res.status(400).json({ error })
-        });
+       .catch( error => {
+        console.log( error );
+        handleBackEndLogs(QUESTIONROUTE, error )
+        return res.status(400).json({ error })
+    });
  });
-
-
-
-
 
  questionRoute.delete('/:questionId', (req, res) => {
     questionModel.remove({ _id: req.params.questionId }, ( error, result ) => {
-         
          if ( error ) {
             res.status(400).send(error);
          }
@@ -95,7 +103,6 @@ saveUpdatedData } from '../Helpers/storageHelper.js';
             res.status(200).json(result);
          }
     });
-
 });
 
 export default questionRoute;

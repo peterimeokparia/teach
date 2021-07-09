@@ -61,10 +61,10 @@ export const loadOnlineAnswers = ( ) => {
     };
 };
 
-export const loadOnlineAnswersByQuestionId = ( answerId ) => {
+export const loadOnlineAnswersByQuestionId = ( questionId ) => {
     return dispatch => {
          dispatch({ type: LOAD_ONLINEANSWERS_BEGIN });
-         return getById( answerId, `/onlineanswers/question/question?questionId=`)
+         return getById( questionId, `/onlineanswers/question?questionId=`)
           .then( answer  => { 
                 dispatch({ type: LOAD_ONLINEANSWERS_SUCCESS, payload: answer });
                 dispatch({ type: LOAD_LATEST_ONLINEANSWERS_SUCCESS, payload: answer });
@@ -77,7 +77,7 @@ export const loadOnlineAnswersByQuestionId = ( answerId ) => {
 export const loadOnlineAnswersByUserId = ( userId ) => {
     return dispatch => {
          dispatch({ type: LOAD_ONLINEANSWERS_BEGIN });
-         return getById( userId, `/onlineanswers/question/user?userId=`)
+         return getById( userId, `/onlineanswers/answer/user?userId=`)
           .then( answer  => { 
                 dispatch({ type: LOAD_ONLINEANSWERS_SUCCESS, payload: answer });
                 dispatch({ type: LOAD_LATEST_ONLINEANSWERS_SUCCESS, payload: answer });
@@ -112,7 +112,6 @@ export const setMarkDown = ( teachObject, markDownContent, teachObjectType="", a
         }
         timerHandle = setTimeout(() => {
             console.log("...saving markdown text"); 
-            //const latestTeachObjectData = getState()[teachObjectType][teachObjectType][ teachObject?._id ]; 
            dispatch(saveAction( getState()[teachObjectType][teachObjectType][ teachObject?._id ] ));
         }, 2000);  
     };

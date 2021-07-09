@@ -1,7 +1,4 @@
-import 
-React, { 
-useState, 
-useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 // import './CourseDetailPage.css';
 
@@ -17,13 +14,8 @@ const MultiInputComponent = ( { inputFieldOptions, animateInvitationButton } ) =
      { id:0,  name: inputFieldOptions?.name,  type: inputFieldOptions?.type,  placeHolderText: inputFieldOptions?.placeHolder, value: ""  }
    ]);
 
-
-
  useEffect(() => {}, [] )  
-
-
  const addNewInputField = () => {
-
     setInputFields(
      [
         ...inputFields,

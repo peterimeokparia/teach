@@ -10,15 +10,18 @@ videoObject,
 sendResponseToStorage,
 url } from '../Helpers/storageHelper.js';
 
-
+import { 
+getLogObject,
+handleBackEndLogs } from '../Helpers/logHelper.js';
 
 const videoRoute = express.Router();
+const logs = getLogObject();
 
   let backeEndServerRoute, videoFileName, videoMeta;
 
   const storage = multer.diskStorage({ 
    destination: function(req, file, cb){ 
-      cb (null, '../public/videos/');     
+      cb (null, '../../public/videos/');     
    }, 
     
    filename: function(req, file, cb){

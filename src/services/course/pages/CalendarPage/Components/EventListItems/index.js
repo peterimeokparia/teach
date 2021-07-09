@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { 
 Match } from '@reach/router';
 

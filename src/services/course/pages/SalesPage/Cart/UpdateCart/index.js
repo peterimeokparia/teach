@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { 
 connect } from 'react-redux';
 
@@ -23,7 +21,7 @@ const returnToCourseListPage = () => {
 };
 
 return ( <div> 
-            <div> {`are you sure you want to remove ${course.name} from your cart?`} </div> 
+            <div> {`are you sure you want to remove ${course?.name} from your cart?`} </div> 
                 <div> 
                     <button onClick={removeFromCart}>Yes</button>
                     <button onClick={returnToCourseListPage}>No</button>

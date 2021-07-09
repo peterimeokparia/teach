@@ -1,6 +1,5 @@
-import 
-React, {
-useState,
+import { 
+useState, 
 useEffect } from 'react';
 
 import { 
@@ -16,35 +15,35 @@ getUsersByOperatorId,
 getPushNotificationUsersByOperatorId } from 'Services/course/Selectors';
 
 import Select from 'react-select';
-
 import SendNotificationForm from './SendNotificationForm';
 
 const SendNotificationsPage = ({  
-operatorBusinessName,
-operator,  
-users,
-loadSubscribedPushNotificationUsers,
-pushMessageSubscribers,        
-sendPushNotificationMessage, 
-selectedPushMessageUsers }) => {
-const [ pushNotificationMessageSubscribers, setPushNotificationMessageSubscribers ] = useState([]); 
-const [ handleFormReset, setHandleFormReset ] = useState(false);   
+  operatorBusinessName,
+  operator,  
+  users,
+  loadSubscribedPushNotificationUsers,
+  pushMessageSubscribers,        
+  sendPushNotificationMessage, 
+  selectedPushMessageUsers }) => {
+  const [ pushNotificationMessageSubscribers, setPushNotificationMessageSubscribers ] = useState([]); 
+  const [ handleFormReset, setHandleFormReset ] = useState(false);   
+
+  useEffect(() => {
+    loadSubscribedPushNotificationUsers();
+  
+    if ( handleFormReset ){
+        setPushNotificationMessageSubscribers([]);
+        setHandleFormReset(false);
+    }
+  }, [ loadSubscribedPushNotificationUsers, handleFormReset, pushNotificationMessageSubscribers ]);  
 
 const handleSendingPushMessage = ( title, message ) => {
   sendPushNotificationMessage( pushNotificationMessageSubscribers.map(user => user?.value), { title, body: message } );
 };
 
-useEffect(() => {
-  loadSubscribedPushNotificationUsers();
-
-  if ( handleFormReset ){
-      setPushNotificationMessageSubscribers([]);
-      setHandleFormReset(false);
-  }
-}, [ loadSubscribedPushNotificationUsers, handleFormReset, pushNotificationMessageSubscribers ]);  
-
-const selectDropDownOptions = pushMessageSubscribers?.filter(subscribeduser => users?.find(usr => subscribeduser?.userId === usr?._id ) ).map(item => ( { value: item,  label: item?.userId }));
-
+const selectDropDownOptions = pushMessageSubscribers?.
+    filter(subscribeduser => users?.find(usr => subscribeduser?.userId === usr?._id ) ).
+      map(item => ( { value: item,  label: item?.userId }));
 return (
         <div>
           <SendNotificationForm 

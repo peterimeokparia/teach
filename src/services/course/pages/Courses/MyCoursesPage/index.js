@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { 
 connect } from 'react-redux';
 
@@ -44,7 +42,7 @@ if ( ! user || user?.email === undefined ){
    return <Redirect to={`/${operatorBusinessName}/login`} noThrow />;
 }
 
-let navigationContent = navContent( user, operatorBusinessName ).users;
+let navigationContent = navContent( user, operatorBusinessName )?.users;
 let myCourseList = courses?.filter(course => user?.courses?.includes(course?._id));
 
 return (    

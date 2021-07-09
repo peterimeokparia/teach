@@ -1,5 +1,4 @@
-import 
-React, { 
+import { 
 useState, 
 useRef, 
 useEffect } from 'react';
@@ -10,12 +9,21 @@ connect } from 'react-redux';
 import {
 resetClassRoomUserError } from 'Services/course/Actions/ClassRooms';
 
+import {
+selectCourseFromLessonPlanCourseDropDown } from 'Services/course/Actions/Courses';
+            
+import{
+selectLessonFromLessonPlanDropDown } from 'Services/course/Actions/Lessons';
+            
+import Select from '@material-ui/core/Select';
 import './style.css';
 
 const MarkAttendanceComponent = ({
 selectedStudents,
-selectedCourse,
-selectedLesson, 
+selectCourseFromLessonPlanCourseDropDown,
+selectLessonFromLessonPlanDropDown,
+selectedCourseFromLessonPlanCourseDropDown,
+selectedLessonFromLessonPlanDropDown, 
 className,   
 saveInProgress,
 error,
@@ -39,8 +47,8 @@ const commitEdit = (e) => {
             attendanceDate: attendanceDate, 
             attendanceMark: attendanceMark, 
             selectedStudents: selectedStudents, 
-            courseId: selectedCourse?._id, 
-            lessonId: selectedLesson?._id 
+            courseId: selectedCourseFromLessonPlanCourseDropDown?._id, 
+            lessonId: selectedLessonFromLessonPlanDropDown?._id 
         };
 
         onSubmit(attendaceData);
@@ -100,15 +108,20 @@ return (
             />
             </label>  
             <label>  
-                <span>
+                <span className="dropDownSelector">
                 <span>
                     <form>
-                        <select value={ attendanceMark } onChange={ e => markAttendance( e.target.value) } >
-                            <option key={"Default"} value={"Default"}> {"Select"} </option>
-                            <option key={"Present"} value={"Present"}> {"Present"} </option>
-                            <option key={"Absent"} value={"Absent"}> {"Absent"} </option> 
-                            <option key={"Tardy"} value={"Tardy"}>  {"Tardy"} </option>    
-                        </select>
+                        <Select 
+                            inputProps={{ 'aria-label': 'Without label' }}
+                            className={'space-between-select'}
+                            value={ attendanceMark } onChange={ e => markAttendance( e.target.value) } 
+                        >
+                            <option key={"Default"} value={"Default"} className="space-between-select"> {"Select"} </option>
+                            <option key={"Present"} value={"Present"} className="space-between-select"> {"Present"} </option>
+                            <option key={"Absent"} value={"Absent"} className="space-between-select"> {"Absent"} </option> 
+                            <option key={"Tardy"} value={"Tardy"} className="space-between-select">  {"Tardy"} </option>    
+                           
+                        </Select>
                     </form>
                 </span>
                 </span>
@@ -141,4 +154,20 @@ return (
     );               
 };
 
-export default connect( null, { resetError: resetClassRoomUserError, resetClassRoomUserError } )(MarkAttendanceComponent);
+const mapDispatch = {
+    selectCourseFromLessonPlanCourseDropDown,
+    selectLessonFromLessonPlanDropDown,
+    resetError: resetClassRoomUserError, 
+    resetClassRoomUserError
+};
+
+const mapState = (state, ownProps) => {
+    return {
+        selectedCourseFromLessonPlanCourseDropDown: state.courses.selectedCourseFromLessonPlanCourseDropDown,
+        selectedLessonFromLessonPlanDropDown: state.lessons.selectedLessonFromLessonPlanDropDown,
+        saveInProgress: state.classrooms.saveLessonInProgress,
+        error: state.classrooms.onSaveError
+    };
+};
+
+export default connect( mapState, mapDispatch )(MarkAttendanceComponent);

@@ -1,4 +1,3 @@
-import React from 'react';
 import Meeting from '../..';
 
 const ShowMeeting = () => {
@@ -8,5 +7,4 @@ const ShowMeeting = () => {
           </div> 
     );
 };
-
 export default ShowMeeting;

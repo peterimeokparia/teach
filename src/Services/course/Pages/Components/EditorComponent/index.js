@@ -1,4 +1,8 @@
-import React from 'react';
+import { 
+connect } from 'react-redux';
+
+import { 
+setMarkDown } from 'Services/course/helpers/EditorHelpers'; 
 
 import Dante from 'dante3';
 
@@ -13,7 +17,7 @@ import Dante from 'dante3';
 
 // Stylesheets for  background layout plugin
 //import '@react-page/plugins-background/lib/index.css';
- //import { ImageBlockConfig } from 'dante3/package/es/components/blocks/image.js'; 
+//import { ImageBlockConfig } from 'dante3/package/es/components/blocks/image.js'; 
 // import { 
 // ImageBlockConfig } from 'dante3/package/umd/Dante'; 
 
@@ -34,11 +38,28 @@ id,
 name,
 content,
 className,
+handleChange,
 onChange,
 readOnly,
+setMarkDown,
 upload_url,
 body_placeholder,
-upload_handler }) => {
+upload_handler,
+editorConfiguration }) => {
+  
+// function handleChange( editor ){
+//   let duration = 2000;  
+
+//   setMarkDown(
+//     editorConfiguration?.entity, 
+//     editor.getHTML(), 
+//     editorConfiguration?.stateObjectType, 
+//     editorConfiguration?.actionDescription, 
+//     editorConfiguration?.actionObject, 
+//     duration
+//   );
+// }
+
 return (
        <div 
          id={id}
@@ -46,23 +67,26 @@ return (
          className={className}
         > 
         <Dante
-              onUpdate={ onChange }  
-              content= { content } 
-              //onChange={onChange} 
-            // body_placeholder={"Write text here."}
-          //   widgets={[
-          //     ImageBlockConfig({
-          //       options: {
-          //         upload_url,
-          //         upload_handler,
-          //       },
-          //     }),
-          //  ]}
+              onUpdate={handleChange}  
+              content= { content }
+              //body_placeholder={"Write text here."}
+            // onUpdate={ onChange }           
+            //  onChange={onChange} 
+            //  body_placeholder={"Write text here."}
+            //  widgets={[
+            //    ImageBlockConfig({
+            //      options: {
+            //      upload_url,
+            //      upload_handler,
+            //      },
+            //    }),
+            //]}
            read_only={false} 
-          //  read_only={readOnly} 
-         />  
+           //read_only={readOnly} 
+         />   
        </div>      
    );
 };
 
-export default EditorComponent;
+export default connect(null, { setMarkDown })(EditorComponent);
+

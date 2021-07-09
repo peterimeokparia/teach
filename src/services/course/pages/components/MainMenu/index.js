@@ -1,6 +1,4 @@
-import 
-React, { 
-useState } from 'react';
+import { useState } from 'react';
 
 import MainMenuButton from '../MainMenuButton';
 import NavLinks from '../NavLinks';
@@ -37,11 +35,13 @@ return (
             className={menuVisible ? "show" : "hide"}
             onMouseUp={handleMouseDown}
         >
-            {
-                sortedNavContent.map(element => (
-                <li className="navlinkItem">
+            {sortedNavContent.map(element => (
+                <li key={element?.id}
+                    className="navlinkItem"
+                >
                     <NavLinks to={element?.hrefValue}> { element?.item} </NavLinks>
                 </li>
+                
                 ))
             } 
         </div>

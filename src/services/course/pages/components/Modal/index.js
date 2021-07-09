@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Modal = ({}) => {
 const openModalDialog = () => {
   let modal = document.getElementById("myModal");

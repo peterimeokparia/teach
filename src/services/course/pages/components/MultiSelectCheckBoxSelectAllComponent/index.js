@@ -1,6 +1,6 @@
-import React from 'react';
+import { PureComponent } from 'react';
 
-class MultiSelectCheckBoxSelectAllComponent extends React.PureComponent {
+class MultiSelectCheckBoxSelectAllComponent extends PureComponent {
     constructor(props){
         super(props);
         this.handleChange = this.handleChange.bind(this);
@@ -13,16 +13,7 @@ class MultiSelectCheckBoxSelectAllComponent extends React.PureComponent {
         e.preventDefault();
     } 
 
-    handleChange2(event){
-
-        if ( event.target.name === "all" && event.target.checked) {
-            this.checkedCollection = this.props.collection;
-            this.props.setCollection( this.checkedCollection );
-        }
-    }
-
     handleChange(event){
-
         let isChecked = event.target.checked;
         let hasValue = event.target.value;
         let inputName = event.target.name;

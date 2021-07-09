@@ -1,10 +1,8 @@
 import {
-add,
 update,
 get,
 getById,
 updateUser,
-sendEmail,
 login,
 resetPassword,
 signUp,
@@ -91,13 +89,6 @@ export function createUser(newUser) {
                 return;
             }
             dispatch({ type: SIGN_UP_SUCCESSS, payload: user });
-            sendEmail(
-                "teachpadsconnect247@gmail.com",
-                user?.email, 
-                "Welcome to teach!",
-                `Kindly verify your account http://localhost:3000/boomingllc/accountverification/${user?._id}`,  /// change
-                user?._id
-            );
             return user;
          })
          .catch( error => {
@@ -116,13 +107,6 @@ export const createUserGeneratePassword = (newUser) => {
         return signUp(newUser)
             .then( user => {
                 dispatch({ type: SIGN_UP_SUCCESSS, payload: user });
-                sendEmail(
-                    "teachpadsconnect247@gmail.com",
-                    user?.email, 
-                    "Welcome to teach!",
-                    `Your credentials: ${user.firstname}, ${user.password}`,
-                    user?._id
-                );
             })
             .catch( error => {
                 dispatch({ type: SIGN_UP_ERRORS , payload: error });
@@ -202,32 +186,10 @@ export const lastLoggedInUser = ( currentUser ) => {
     };
 };
 
-export const addToSalesCart = ( 
-course, 
-sessionType, 
-numberOfSessions, 
-totalNumberOfSessions, 
-userId, 
-tutor,
-startDate,
-endDate,
-status, 
-autoRenew,
-autoRenewDates ) => {
+export const addToSalesCart = ( salesConfig ) => {
 return dispatch => { 
     dispatch({ type: ADD_TO_SALES_CART, 
-        payload: { 
-        course, 
-        sessionType, 
-        numberOfSessions, 
-        totalNumberOfSessions, 
-        userId, 
-        tutor,
-        startDate,
-        endDate,
-        status, 
-        autoRenew,
-        autoRenewDates } });
+        payload: salesConfig });
     };
 };
 
@@ -244,37 +206,25 @@ export const buyCourse = ( currentUser ) => {
         dispatch({ type: BUY_COURSE_BEGIN });
         return purchase( currentUser )
            .then(user => {
-             dispatch({ type: BUY_COURSE_SUCCESS, payload: user });
-              user.cart.forEach(( course ) => {
-                add(courseConfig(course), `/sessions`)
-                .then(session => {
-                    user.sessions.push( session?._id );
-                    dispatch({ type: BUY_COURSE_SUCCESS, payload: user });
-                    updateUser({ ...user, sessions: user?.sessions, cart: [],  cartTotal: 0, paymentStatus: "" })
-                    .then( user => {
-                        resetUsersCartOnError = user;
-                        dispatch({ type: RESET_USERS_CART, payload: user }); 
-                        dispatch({ type: LAST_LOGGEDIN_USER, payload : user }); 
-                    })
-                    .catch( error => console.log( error ) );
-                        let tutorSessions = [ ...course?.tutor?.sessions, session?._id ];
-
-                        updateUser({ ...course?.tutor, sessions: tutorSessions })
-                        .then(tutor => {
-                            dispatch({ type: UPDATE_USER, payload: tutor });
-                        })
-                        .catch(error => console.log(error));  
-               })
-               .catch(error => {  
-                   console.log( error );
-               });
-             });
+            dispatch({ type: BUY_COURSE_SUCCESS, payload: user });
         })
         .catch(error => { 
             console.log( error );
             dispatch({ type: RESET_USERS_CART, payload: { ...resetUsersCartOnError, paymentStatus: "" }}); 
             dispatch({ type: LAST_LOGGEDIN_USER, payload: { ...resetUsersCartOnError, paymentStatus: "" }});    
          });
+    };
+};
+
+export const getCurrentUserById = ( currentUser ) => {
+    return dispatch => {
+        return getById( currentUser?._id, '/users/user?id=' )
+         .then( user => {
+             dispatch({ type: LOAD_USERS_SUCCESS, payload: user} );
+         })
+          .catch( error => {
+              dispatch({ type: LOAD_USERS_ERROR, payload: error } );
+          });
     };
 };
 
@@ -297,7 +247,7 @@ export const loadUsers = () => {
         .then( users => {
             dispatch({ type: LOAD_USERS_SUCCESS, payload: users });
         }).catch( error => {
-            dispatch({ type: LOAD_USERS_ERROR , error });
+            dispatch({ type: LOAD_USERS_ERROR, error });
         });
     };
 };
@@ -326,9 +276,8 @@ export const saveUser = ( user ) => {
         dispatch({ type: SAVE_USER_BEGIN });
             return update( user, `/users/` )
             .then( user => {  
-                //dispatch({        
-                //type: SAVE_USER_SUCCESS, payload: user })
-                //dispatch(lastLoggedInUser(user))
+                dispatch({ type: SAVE_USER_SUCCESS, payload: user });
+                dispatch(lastLoggedInUser(user));
             })
             .catch( error => {
                 dispatch({ type: SAVE_USER_ERROR , error });
@@ -350,8 +299,8 @@ export const updateUserInvitationUrl = (user, inviteeSessionUrl, nameOfLessonInP
     return dispatch  => {
       try{
         updateInvitationUrl( user?._id, {...user, inviteeSessionUrl, nameOfLessonInProgress,  lessonInProgress, meetingId} );
-        dispatch({ type: UPDATE_INVITEE_SESSION_URL, payload: {...user, inviteeSessionUrl, nameOfLessonInProgress, lessonInProgress, meetingId} });
-      } catch(error){
+        dispatch({ type: UPDATE_INVITEE_SESSION_URL, payload: { ...user, inviteeSessionUrl, nameOfLessonInProgress, lessonInProgress, meetingId} });
+        } catch (error) {
         dispatch({ type: FAILED_INVITATION, error });
       };
     };
@@ -383,17 +332,3 @@ export const userNavigationHistory = ( timeTravel ) => {
         dispatch({ type: NAVIGATION_HISTORY, payload: timeTravel });
     };
 };
-
-const courseConfig = (course) => {
-    return { 
-        courseId: course?.course?._id, 
-        typeOfSession: course?.sessionType,  
-        numberOfSessions: parseInt(course?.numberOfSessions,10), 
-        totalNumberOfSessions: parseInt(course?.totalNumberOfSessions,10), 
-        userId: course?.userId,
-        tutorId: course?.tutor?._id,
-        startDate: Date.now(),
-        status: true,
-        autoRenew: course.autoRenew
-  };
-};  

@@ -1,5 +1,4 @@
-import 
-React, { 
+import { 
 useState, 
 useRef, 
 useEffect } from 'react';
@@ -7,14 +6,22 @@ useEffect } from 'react';
 import { 
 connect } from 'react-redux';
 
+import {
+selectCourseFromLessonPlanCourseDropDown } from 'Services/course/Actions/Courses';
+            
+import{
+selectLessonFromLessonPlanDropDown } from 'Services/course/Actions/Lessons';
+        
 import { 
 resetClassRoomUserError } from 'Services/course/Actions/ClassRooms';
 import './style.css';
 
 const AddStudentGrade = ({
 selectedStudents,
-selectedCourse,
-selectedLesson, 
+selectCourseFromLessonPlanCourseDropDown,
+selectLessonFromLessonPlanDropDown,
+selectedCourseFromLessonPlanCourseDropDown,
+selectedLessonFromLessonPlanDropDown,
 className,   
 saveInProgress,
 error,
@@ -33,7 +40,7 @@ const reset = () => {
 
 const commitEdit = (e) => {
     e.preventDefault();
-    let gradeData = { testDate: testDate, score: testScore, selectedStudents: selectedStudents, courseId: selectedCourse?._id, lessonId: selectedLesson?._id };
+    let gradeData = { testDate: testDate, score: testScore, selectedStudents: selectedStudents, courseId: selectedCourseFromLessonPlanCourseDropDown?._id, lessonId: selectedLessonFromLessonPlanDropDown?._id };
 
     try {
         onSubmit(gradeData);
@@ -130,11 +137,20 @@ return (
     );                    
 };
 
-const mapState = ( state, ownProps ) => {
+const mapDispatch = {
+    selectCourseFromLessonPlanCourseDropDown,
+    selectLessonFromLessonPlanDropDown,
+    resetError: resetClassRoomUserError, 
+    resetClassRoomUserError
+};
+
+const mapState = (state, ownProps) => {
     return {
+        selectedCourseFromLessonPlanCourseDropDown: state.courses.selectedCourseFromLessonPlanCourseDropDown,
+        selectedLessonFromLessonPlanDropDown: state.lessons.selectedLessonFromLessonPlanDropDown,
         saveInProgress: state.classrooms.saveLessonInProgress,
         error: state.classrooms.onSaveError
     };
 };
 
-export default connect(mapState, { resetError: resetClassRoomUserError, resetClassRoomUserError } )(AddStudentGrade);
+export default connect(mapState, mapDispatch )(AddStudentGrade);

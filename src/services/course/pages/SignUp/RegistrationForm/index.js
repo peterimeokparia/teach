@@ -1,4 +1,4 @@
-import React, { 
+import { 
 useState } from 'react';
 
 import { 
@@ -10,15 +10,15 @@ toast } from 'react-toastify';
 import './style.css';
 
 const RegistrationForm = ({ 
-error, 
-loading,
-handleCreateUser, 
-users }) => {
-const [email, setEmail] = useState('');
-const [password, setPassword] = useState('');
-const [firstName, setFirstName] = useState('');
-const [userRole, setUserRole] = useState('');
-const [ displayOtherFormFields, setToDisplayOtherFormFields ] = useState(false);
+  error, 
+  loading,
+  handleCreateUser, 
+  users }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [userRole, setUserRole] = useState('');
+  const [ displayOtherFormFields, setToDisplayOtherFormFields ] = useState(false);
 
 const roles = {
   Tutor: "Tutor",

@@ -1,5 +1,3 @@
-import React from 'react';
-
 const FileBrowser = ({width, height, path, type, classname}) => {
   return (
      <div> 

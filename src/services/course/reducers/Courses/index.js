@@ -12,7 +12,8 @@ LOAD_COURSES_ERROR,
 SAVE_COURSE_BEGIN,
 SAVE_COURSE_SUCCESS, 
 SAVE_COURSE_ERROR, 
-DELETE_COURSE_SUCCESS } from '../../Actions/Courses';
+DELETE_COURSE_SUCCESS,
+LESSONPLAN_DROPDOWN_COURSE } from '../../Actions/Courses';
 
 import {
 UPDATE_CURRENT_CLASSROOM_TUTOR } from '../../Actions/ClassRooms';
@@ -20,6 +21,7 @@ UPDATE_CURRENT_CLASSROOM_TUTOR } from '../../Actions/ClassRooms';
 const initialState = {
     courses: {},
     courseTutor: {},
+    selectedCourseFromLessonPlanCourseDropDown: {}, 
     saveInProgress: false,
     onSaveError: null,
     coursesLoading: false,
@@ -38,7 +40,7 @@ const reducer = produce((draft, action) => {
         case ADD_COURSE_SUCCESS:
         case SAVE_COURSE_SUCCESS:     
              draft.saveInProgress = false;
-             draft.courses[action.payload._id] = action.payload;
+             draft.courses[action.payload?.course?._id] = action.payload?.course;
              draft.isModalOpen = false;
         return;
         case ADD_COURSE_ERROR:
@@ -71,6 +73,9 @@ const reducer = produce((draft, action) => {
         return;
         case UPDATE_CURRENT_CLASSROOM_TUTOR:
              draft.courseTutor = action.payload;   
+        return; 
+        case LESSONPLAN_DROPDOWN_COURSE:
+             draft.selectedCourseFromLessonPlanCourseDropDown = action.payload;   
         return; 
         default:
         return;

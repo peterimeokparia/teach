@@ -1,0 +1,107 @@
+import {
+updateUser,
+sendEmail } from 'Services/course/Api';
+
+import {
+saveEvent } from 'Services/course/Actions/Event';
+
+import {
+sendPushNotificationMessage } from 'Services/course/Actions/Notifications';
+    
+import {
+getTimeLineItems} from 'Services/course/Pages/CalendarPage/helpers';
+
+import {
+SAVE_USER_SUCCESS,
+LAST_LOGGEDIN_USER } from 'Services/course/Actions/Users';
+
+const emailMessageConfig = {
+    sendersEmailAddress: "teachpadsconnect247@gmail.com",
+    emailHeaderNewEvent: "New Calendar Event!",
+    emailHeaderModifiedEvent: "Modifiied Calendar Event(s)!",
+    emailHeaderDeletedEvent: "Deleted Calendar Event(s)!"
+};
+
+export const sendUpdatesAfterAddingNewCalendarEvents = ( calendarEvent, store ) => {
+    try {
+        store?.dispatch(sendPushNotificationMessage( 
+            calendarEvent?.eventConfig?.pushNotificationUser, 
+            { 
+                title:`${ calendarEvent?.eventConfig?.currentUser?.firstname } Added New Calendar Event!`, 
+                body:`New Calendar Event: ${ calendarEvent?.calendarEventData?.event?.title } ${ calendarEvent?.calendarEventData?.event?.start }` 
+            })
+        ); 
+        calendarEvent?.eventConfig?.emailAddresses.forEach(email => {
+            sendEmail(
+                emailMessageConfig?.sendersEmailAddress, 
+                email, 
+                emailMessageConfig?.emailHeaderNewEvent,
+                `View Event: http://localhost:3000/boomingllc/accountverification/${calendarEvent?.calendarEventData?._id}`,  /// change
+                calendarEvent?.eventConfig?.currentUser?._id
+            );
+        });
+        let currentUser = { 
+            ...calendarEvent?.eventConfig.currentUser, 
+            calendarEvents:[ ...calendarEvent?.eventConfig?.currentUser?.calendarEvents, 
+            calendarEvent?.eventConfig?.calendarEventData?._id ]  
+        };
+
+            updateUser( currentUser  )
+            .then(user => { 
+                store?.dispatch({ type: LAST_LOGGEDIN_USER, payload: user });
+                store?.dispatch({ type: SAVE_USER_SUCCESS, payload: user });             
+            })
+            .catch(error => { console.error( error ); });
+        let timeLineItems = getTimeLineItems( calendarEvent?.calendarEventData );
+
+        store?.dispatch(saveEvent({
+            ...calendarEvent?.calendarEventData, 
+            timeLineItems }, 
+            calendarEvent?.eventConfig?.currentUser, 
+            calendarEvent?.eventConfig?.pushNotificationUser, 
+            calendarEvent?.eventConfig?.emailAddresses
+        ));
+    } catch (error) {
+        console.error(`Problem with adding a calendar event: ${ error }`);
+    }
+};
+
+export const sendUpdatesAfterModifyingCalendarEvents = ( event, store ) => {
+    try {
+        store?.dispatch(sendPushNotificationMessage( 
+            event?.pushNotificationUser, { 
+            title:`${  event?.currentUser?.firstname } Modified Calendar Event!`, 
+            body:`Modified Calendar Event: ${   event?.calendarEvent?.title } Event StartTime: ${ (  event?.calendarEvent?.rrule) ?   event?.calendarEvent?.rrule?.dtstart :   event?.calendarEvent?.start }` 
+        })); 
+        event?.emailAddresses.forEach(email => {
+            sendEmail(
+                emailMessageConfig?.sendersEmailAddress, 
+                email, 
+                emailMessageConfig?.emailHeaderDeletedEvent,
+                `View Event: http://localhost:3000/boomingllc/accountverification/${ event?.calendarEventData?._id}`,  /// change
+                event?.currentUser?._id
+            );
+        });
+    } catch (error) {
+        console.error(`Problem with modifying a calendar event: ${ error }`);
+    }
+};
+
+export const sendUpdatesAfterDeletingCalendarEvents = ( event, store ) => {
+    try { 
+        store?.dispatch(sendPushNotificationMessage( 
+            event?.pushNotificationUser, { 
+            title:`${ event?.currentUser?.firstname } Deleted A Calendar Event!`, 
+            body:`Deleted Calendar Event: ${ event?.event?._id }` 
+        }));
+        sendEmail(
+            emailMessageConfig?.sendersEmailAddress, 
+            event?.currentUser?.email, 
+            emailMessageConfig?.emailHeaderDeletedEvent,
+            `View Event: http://localhost:3000/boomingllc/accountverification/${ event?.event?._id}`,  /// change
+            event?.currentUser?._id
+        );
+    } catch (error) {
+        console.error(`Problem with deleting a calendar event: ${ error }`);
+    }
+};

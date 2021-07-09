@@ -7,10 +7,6 @@ incrementSession,
 decrementSessionCount,
 autoRenew } from 'Services/course/Api';
 
-import { 
-sendEmailConfirmation,
-sendEmailToAdministrator } from 'Services/course/Pages/Packages/helpers';
-
 export const DECREMENT_SESSION_COUNT_FOR_PACKAGE_OPTIONS = "DECREMENT SESSION COUNT FOR PACKAGE OPTIONS"; 
 export const INCREMENT_SESSION_COUNT = "INCREMENT SESSION COUNT";
 export const ERROR_DECREMENT_SESSION_COUNT_FOR_PACKAGE_OPTIONS = "ERROR DECREMENT SESSION COUNT FOR PACKAGE OPTIONS"; 
@@ -92,9 +88,11 @@ export const incrementSessionCount = ( session ) => {
         return incrementSession( session )
            .then(resp => {
                  dispatch({ type: INCREMENT_SESSION_COUNT ,  payload: resp });
-               })
-                 .catch(error => {
-                   dispatch({ type: ERROR_INCREMENTING_SESSION_COUNT, error });
+                 return resp;
+            })
+            .catch(error => {
+                dispatch({ type: ERROR_INCREMENTING_SESSION_COUNT, error });
+                return error;
         } );             
     };
 };
@@ -105,29 +103,20 @@ export const decrementSessionCountForPackageOptions = ( session ) => {
              .then(resp => {
                 dispatch({ type: DECREMENT_SESSION_COUNT_FOR_PACKAGE_OPTIONS,  payload: resp });
              }).catch(error => {
-                 dispatch({ type: ERROR_DECREMENT_SESSION_COUNT_FOR_PACKAGE_OPTIONS,  error });
+                dispatch({ type: ERROR_DECREMENT_SESSION_COUNT_FOR_PACKAGE_OPTIONS,  error });
         });
     };
 };
 
 export const autoRenewSessionPackages = ( currentUser, session ) => {
     return dispatch => { 
-             return autoRenew( currentUser, session )
-                .then( response => {
-                    dispatch({ type: AUTO_RENEW_PACKAGE_SUCCESS, payload: response.User });
-                    sendEmailConfirmation( response.Session, response.User );
-                    setAutoRenewPackageStatus( { ...currentUser, paymentStatus:"" } );
-                    dispatch({
-                        type: LAST_LOGGEDIN_USER, 
-                        payload: {
-                            ...response.User,
-                            paymentStatus: ""
-                    }
-                });
-             }).catch( error => {
-                sendEmailToAdministrator( currentUser );
-                dispatch({ type: AUTO_RENEW_PACKAGE_ERROR, error });
+        return autoRenew( currentUser, session )
+            .then( response => {
+                dispatch({ type: AUTO_RENEW_PACKAGE_SUCCESS, payload: response });
+            }).catch( error => {
+                dispatch({ type: AUTO_RENEW_PACKAGE_ERROR, payload: { error, currentUser }         
             });
+    });
     };
 };
 

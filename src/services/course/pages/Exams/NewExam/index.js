@@ -1,8 +1,4 @@
-import 
-React, { 
-useState, 
-useEffect, 
-useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import { 
 connect } from 'react-redux';
@@ -14,7 +10,6 @@ import Select from 'react-select';
 
 import { 
 Validations } from  'Services/course/helpers/Validations';
-import './style.css'
 
 const NewExam = ({
 saveInProgress,
@@ -50,14 +45,14 @@ dispatch }) => {
             }
 
             dispatch( addNewExam( 
-                        examTitle, 
-                        examDescription, 
-                        examDateTime, 
-                        currentUser, 
-                        operator, 
-                        examCoursesCovered, 
-                        examLessonsCovered 
-                    ));
+                    examTitle, 
+                    examDescription, 
+                    examDateTime, 
+                    currentUser, 
+                    operator, 
+                    examCoursesCovered, 
+                    examLessonsCovered 
+            ));
 
         }
      };

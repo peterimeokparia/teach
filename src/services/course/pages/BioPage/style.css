@@ -1,4 +1,4 @@
-.MyCourses {
+.MyBios {
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -6,11 +6,11 @@
   background-image: url(../../images/geometry2.png);
   background-size: 300px 300px;
 }
-.MyCourses .items{
+.MyBios .items{
   align-items: center;
 }
 
-.MyCourses header {
+.MyBios header {
   background-color: #673ab7;
   color: #fff;
   display: flex;
@@ -20,7 +20,7 @@
   padding: 10px 20px;
   text-align: center;
 }
-.MyCourses header h1 {
+.MyBios header h1 {
   background-color: #673ab7;
   margin: 0;
   font-size: 24px;
@@ -31,7 +31,7 @@
     padding: 2rem 0;
     font-weight: bold; */
 }
-.MyCourses header h2 {
+.MyBios header h2 {
   background-color: #673ab7;
   margin: 0;
   font-size: 24px;
@@ -44,7 +44,7 @@
     padding: 2rem 0;
     font-weight: bold; */
 }
-.MyCourses header h3 {
+.MyBios header h3 {
   background-color: #673ab7;
   /* padding-top: 200px;
   margin-bottom: 300px; */
@@ -53,26 +53,26 @@
   color: white;
   padding-right: 250px;
 }
-.MyCourses header .current-lesson {
+.MyBios header .current-lesson {
   margin: 0;
   font-size: 16px;
   font-weight: 400;
   opacity: 0.8;
 }
 
-.MyCourses .content {
+.MyBios .content {
   display: flex;
   height: 100vh;
 }
 
-.MyCourses .sidebar {
+.MyBios .sidebar {
   padding-right: 0px;
   padding-left: 0px;
   display: flex;
   flex-direction: column;
 }
 
-.MyCourses .sidebar .lessons {
+.MyBios .sidebar .lessons {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -91,35 +91,35 @@
 }
 
 @media only screen and (min-width: 638px) {
-  .MyCourses .content {
+  .MyBios .content {
     flex-direction: row;
     height: 100%;
   }
 }
- .MyCourses .sidebar {
+ .MyBios .sidebar {
     flex-basis: 300px;
     background: #fbf9ff;
     border-right: 1px solid #bba0ea;
   }
-  .MyCourses .lesson {
+  .MyBios .lesson {
     flex: 1;
   } 
 
 @media only screen and (max-width: 637px) {
-  .MyCourses .content {
+  .MyBios .content {
     flex-direction: column;
   }
-  .MyCourses .sidebar {
+  .MyBios .sidebar {
     background: #fbf9ff;
     border-bottom: 1px solid #bba0ea;
     min-height: 50px;
   }
-  .MyCourses .lesson {
+  .MyBios .lesson {
     flex: 1;
   }
 }
 
-.MyCourses .new-course-btn {
+.MyBios .new-course-btn {
   align-self: flex-end;
   color: #fff;
   font-size: 16px;
@@ -133,16 +133,16 @@
   margin-right: 25px;
 
 }
-.MyCourses .new-course-btn:focus {
+.MyBios .new-course-btn:focus {
   outline: none;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5),
     0 0 5px 2px #673ab7;
 }
-.MyCourses .new-course-btn:active {
+.MyBios .new-course-btn:active {
   background-color: purple;
 }
 
-.MyCourses .view-bio-btn {
+.MyBios .view-bio-btn {
   align-self: flex-end;
   color: #fff;
   font-size: 16px;
@@ -157,16 +157,16 @@
   margin-top: 8px;
 
 }
-.MyCourses .view-bio-btn:focus {
+.MyBios .view-bio-btn:focus {
   outline: none;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5),
     0 0 5px 2px #673ab7;
 }
-.MyCourses .view-bio-btn:active {
+.MyBios .view-bio-btn:active {
   background-color: purple;
 }
 
-.MyCourses .view-courses-btn {
+.MyBios .view-courses-btn {
   align-self: flex-end;
   color: #fff;
   font-size: 16px;
@@ -179,16 +179,16 @@
   border-radius: 3px;
   margin-bottom: 10px;
 }
-.MyCourses .view-course-btn:focus {
+.MyBios .view-course-btn:focus {
   outline: none;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5),
     0 0 5px 2px #9c27b0;
 }
-.MyCourses .view-course-btn:active {
+.MyBios .view-course-btn:active {
   background-color: purple;
 }
 
-.MyCourses .bio-image-btn {
+.MyBios .bio-image-btn {
   align-self: flex-start;
   color: #fff;
   font-size: 16px;
@@ -200,12 +200,12 @@
   border-radius: 3px;
   margin-left: 659px;
 }
-.MyCourses .bio-image-btn:focus {
+.MyBios .bio-image-btn:focus {
   outline: none;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5),
     0 0 5px 2px #673ab7;
 }
-.MyCourses .bio-image-btn:active {
+.MyBios .bio-image-btn:active {
   background-color: purple;
 }
 /***** Course Listing *****/

@@ -4,8 +4,11 @@ import onlineAnswerModel from '../Model/onlineAnswerModel.js';
 
 import {
 getPostData,    
-saveUpdatedData   
-} from '../Helpers/storageHelper.js';
+saveUpdatedData } from '../Helpers/storageHelper.js';
+
+import { 
+ONLINEANSWERSROUTE,
+handleBackEndLogs } from '../Helpers/logHelper.js';
 
 const onlineQuestionAnswersRoute = express.Router();
 
@@ -16,19 +19,22 @@ onlineQuestionAnswersRoute.get('/', (req, res) => {
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log(error);
+        console.log( error );
+        handleBackEndLogs( ONLINEANSWERSROUTE, error );
         return res.status(400).json({ error })
     });
- });
+});
 
-onlineQuestionAnswersRoute.get('/', (req, res) => {
+onlineQuestionAnswersRoute.get('/question', (req, res) => {
     let id = { _id: req.query.questionId };
     onlineAnswerModel.findById( id )   
     .then(data => {
         return res.status(200).json(data);
     })
-    .catch(error =>{    
-        return res.status(400).json({ error }); 
+    .catch( error => {
+        console.log( error );
+        handleBackEndLogs( ONLINEANSWERSROUTE, error );
+        return res.status(400).json({ error })
     });
 });
 
@@ -38,21 +44,34 @@ onlineQuestionAnswersRoute.get('/answer/user', (req, res) => {
     .then(data => {
         return res.status(200).json(data);
     })
-    .catch(error => { 
+    .catch( error => {
+        console.log( error );
+        handleBackEndLogs( ONLINEANSWERSROUTE, error );
         return res.status(400).json({ error })
     });
-})
-
+});
 
 onlineQuestionAnswersRoute.get('/videos', (req, res) => {
-    onlineAnswerModel.find({ _id: req.query._id })
-        .then(data => {
-            console.log('onlineAnswer onlineAnswer videos', data)
-            res.status(200).json(data);
-        })
-         .catch(error => console.log(error));
+ onlineAnswerModel.find({ _id: req.query._id })
+    .then(data => {
+        console.log('onlineAnswer onlineAnswer videos', data)
+        res.status(200).json(data);
+    })
+    .catch( error => {
+        console.log( 'error is not defined :)' );
+        console.log( error );
+        if ( error ) {
+            console.log('logging')
+            console.log( 'error is not defined2 :)' );
+            console.log( JSON.stringify(error) );
+            handleBackEndLogs(ONLINEANSWERSROUTE, error )
+            .then( resp => { console.log( `response response ${JSON.stringify(resp)}`)})
+            .catch( yep => { console.log( `yep yep yep yep  ${yep}`)})
+        }
+        
+        return res.status(400).json({ error })
+    });
  });
-
 
 onlineQuestionAnswersRoute.post('/', (req, res) => {
     console.log('in onlineAnswer onlineAnswer saved saved');
@@ -66,8 +85,9 @@ onlineQuestionAnswersRoute.post('/', (req, res) => {
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log(error);
-        return res.status(400).json({ error });
+        console.log( error );
+        handleBackEndLogs( ONLINEANSWERSROUTE, error );
+        return res.status(400).json({ error })
     });
 });
 
@@ -79,8 +99,9 @@ onlineQuestionAnswersRoute.put('/:answerId', (req, res) => {
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log(error);
-        return res.status(400).json({ error });
+        console.log( error );
+        handleBackEndLogs( ONLINEANSWERSROUTE, error );
+        return res.status(400).json({ error })
     });
 });
 

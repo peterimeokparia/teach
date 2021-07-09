@@ -41,6 +41,7 @@ const initialState = {
     invitees:new Map(),
     login:[],
     lastLoggedInUser:{},
+    operator: {},
     error: null,
     loading: false,
     buy: [],
@@ -62,10 +63,13 @@ const reducer = produce((draft, action) => {
         case SIGN_UP_SUCCESSS:
         case LOGIN_SUCCESS:  
         case RESET_PASSWORD_SUCCESS:
-        case UPDATE_INVITEE_SESSION_URL:
         case UPDATE_USER:
              draft.loading = false;
              draft.user = action.payload;
+             draft.users[action?.payload?._id] = action.payload;   
+        return;
+        case UPDATE_INVITEE_SESSION_URL:
+             draft.loading = false;
              draft.users[action?.payload?._id] = action.payload;   
         return;
         case SIGN_UP_ERRORS:

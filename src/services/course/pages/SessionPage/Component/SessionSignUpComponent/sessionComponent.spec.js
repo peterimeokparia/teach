@@ -1,14 +1,13 @@
 import {
 INCREMENT_SESSION_COUNT,
-DECREMENT_SESSION_COUNT_FOR_PACKAGE_OPTIONS
-} from '../actions.js'
+DECREMENT_SESSION_COUNT_FOR_PACKAGE_OPTIONS} from 'Services/course/Actions/Sessions';
 
 
 import {
 incrementSessionCount,
-decrementSessionCountForPackageOptions } from '../actions.js';
+decrementSessionCountForPackageOptions } from 'Services/course/Actions/Sessions';
 
-jest.mock('../api');
+jest.mock('../../../../Api');
 
 
 describe('incrementSession',  () => {

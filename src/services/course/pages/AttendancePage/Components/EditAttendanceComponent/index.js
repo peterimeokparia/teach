@@ -1,5 +1,4 @@
-import 
-React, { 
+import { 
 useState, 
 useRef, 
 useEffect } from 'react';
@@ -120,7 +119,6 @@ return editing ? (
 </>
 ) : ( 
         children(beginEditing, performDelete)
-);                        
-};
+); };
 
 export default connect( null, { deleteAttendance } )(EditAttendanceComponent);

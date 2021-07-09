@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { 
 ToastContainer, 
 toast } from 'react-toastify';
@@ -118,13 +116,13 @@ export const Validations = {
     } 
  };
 
- const displayErrorMessage = (event, err, toast) => {
-    for(let index = 0; index < err?.length; index++){
-        event.target.value = null;
-        console.log(err[index]);
-        Swal.fire(err[index]);
-        return false;
-    }
+const displayErrorMessage = (event, err, toast) => {
+   for(let index = 0; index < err?.length; index++){
+       event.target.value = null;
+       console.log(err[index]);
+       Swal.fire(err[index]);
+       return false;
+   }
 };
 
 

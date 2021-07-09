@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { 
 connect } from 'react-redux';
 
@@ -18,14 +16,15 @@ forceReload } from 'Services/course/helpers/ServerHelper';
 import { 
 getOperatorFromOperatorBusinessName } from 'Services/course/Selectors';
 
+import LockIcon from '@material-ui/icons/Lock';
 import Swal from 'sweetalert2';
 import './style.css';
 
 const LoginLogout = ({ 
-operatorBusinessName,
-operator, 
-user,  
-logOut }) => {
+  operatorBusinessName,
+  operator, 
+  user,  
+  logOut }) => {
 const logInPage = `/${operatorBusinessName}/login`;
 const performLoginLogOut = (e) => {
   e.preventDefault();
@@ -63,13 +62,8 @@ const userLogOut = ( usr ) => {
 
 return (
   <span>
-    <button
-      className="preview-btn"
-      onClick={e => performLoginLogOut(e)}
-    > 
-    { user  ? "LogOut" : "Login" }
-   </button>
-   {Validations.setErrorMessageContainer()}
+    <LockIcon onClick={e => performLoginLogOut(e)} />
+    { Validations.setErrorMessageContainer() }
   </span>  
   );          
 };

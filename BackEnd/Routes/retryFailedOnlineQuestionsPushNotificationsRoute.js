@@ -4,8 +4,11 @@ import retryFailedPushNotificationsModel from '../Model/retryFailedPushNotificat
 
 import {
 getPostData,    
-saveUpdatedData   
-} from '../Helpers/storageHelper.js';
+saveUpdatedData } from '../Helpers/storageHelper.js';
+
+import { 
+FAILEDPUSHNOTIFICATIONSROUTE,
+handleBackEndLogs } from '../Helpers/logHelper.js';
 
 const retryFailedOnlineQuestionsPushNotificationsRoute = express.Router();
 
@@ -27,8 +30,10 @@ retryFailedOnlineQuestionsPushNotificationsRoute.get('/push/byNotificationId', (
     .then(data => {
         return res.status(200).json(data);
     })
-    .catch(error =>{    
-        return res.status(400).json({ error }); 
+    .catch( error => {
+        console.log( error );
+        handleBackEndLogs(FAILEDPUSHNOTIFICATIONSROUTE, error );
+        return res.status(400).json({ error })
     });
 });
 
@@ -38,10 +43,12 @@ retryFailedOnlineQuestionsPushNotificationsRoute.get('/push/user', (req, res) =>
     .then(data => {
         return res.status(200).json(data);
     })
-    .catch(error => { 
+    .catch( error => {
+        console.log( error );
+        handleBackEndLogs(FAILEDPUSHNOTIFICATIONSROUTE, error );
         return res.status(400).json({ error })
     });
-})
+});
 
 retryFailedOnlineQuestionsPushNotificationsRoute.post('/push', (req, res) => {
     console.log( req );
@@ -54,8 +61,9 @@ retryFailedOnlineQuestionsPushNotificationsRoute.post('/push', (req, res) => {
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log(error);
-        return res.status(400).json({ error });
+        console.log( error );
+        handleBackEndLogs(FAILEDPUSHNOTIFICATIONSROUTE, error );
+        return res.status(400).json({ error })
     });
 });
 
@@ -70,18 +78,17 @@ retryFailedOnlineQuestionsPushNotificationsRoute.put('/push/:notificationId', (r
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log(error);
-        return res.status(400).json({ error });
+        console.log( error );
+        handleBackEndLogs(FAILEDPUSHNOTIFICATIONSROUTE, error );
+        return res.status(400).json({ error })
     });
 });
 
 retryFailedOnlineQuestionsPushNotificationsRoute.delete('/push/:notificationId', (req, res) => {
-    console.log('retryFailedOnlineQuestionsPushNotificationsRoute.delete')
-    console.log(req)
-    console.log(req.params.notificationId)
     retryFailedPushNotificationsModel.remove({ _id: req.params.notificationId }, ( error, result ) => {
         if ( error ) {
             console.log(error)
+            handleBackEndLogs(FAILEDPUSHNOTIFICATIONSROUTE, error );
             return res.status(400).send(error);
         }
         else {

@@ -4,8 +4,11 @@ import onlineQuestionModel from '../Model/onlineQuestionModel.js';
 
 import {
 getPostData,    
-saveUpdatedData   
-} from '../Helpers/storageHelper.js';
+saveUpdatedData } from '../Helpers/storageHelper.js';
+
+import { 
+ONLINEQUESTIONSROUTE,
+handleBackEndLogs } from '../Helpers/logHelper.js';
 
 const onlineQuestionRoute = express.Router();
 
@@ -16,7 +19,8 @@ onlineQuestionRoute.get('/', (req, res) => {
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log(error);
+        console.log( error );
+        handleBackEndLogs(ONLINEQUESTIONSROUTE, error )
         return res.status(400).json({ error })
     });
  });
@@ -27,8 +31,10 @@ onlineQuestionRoute.get('/', (req, res) => {
     .then(data => {
         return res.status(200).json(data);
     })
-    .catch(error =>{    
-        return res.status(400).json({ error }); 
+    .catch( error => {
+        console.log( error );
+        handleBackEndLogs(ONLINEQUESTIONSROUTE, error )
+        return res.status(400).json({ error })
     });
 });
 
@@ -38,10 +44,12 @@ onlineQuestionRoute.get('/question/question', (req, res) => {
     .then(data => {
         return res.status(200).json(data);
     })
-    .catch(error => { 
+    .catch( error => {
+        console.log( error );
+        handleBackEndLogs(ONLINEQUESTIONSROUTE, error )
         return res.status(400).json({ error })
     });
-})
+});
 
 onlineQuestionRoute.get('/question/user', (req, res) => {
     let userId = { userId: req?.query?.userId };
@@ -49,10 +57,12 @@ onlineQuestionRoute.get('/question/user', (req, res) => {
     .then(data => {
         return res.status(200).json(data);
     })
-    .catch(error => { 
+    .catch( error => {
+        console.log( error );
+        handleBackEndLogs(ONLINEQUESTIONSROUTE, error )
         return res.status(400).json({ error })
     });
-})
+});
 
 onlineQuestionRoute.get('/videos', (req, res) => {
     onlineQuestionModel.find({ _id: req.query._id })
@@ -74,8 +84,9 @@ onlineQuestionRoute.post('/', (req, res) => {
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log(error);
-        return res.status(400).json({ error });
+        console.log( error );
+        handleBackEndLogs(ONLINEQUESTIONSROUTE, error )
+        return res.status(400).json({ error })
     });
 });
 
@@ -90,8 +101,9 @@ onlineQuestionRoute.put('/:questionId', (req, res) => {
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log(error);
-        return res.status(400).json({ error });
+        console.log( error );
+        handleBackEndLogs(ONLINEQUESTIONSROUTE, error )
+        return res.status(400).json({ error })
     });
 });
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import './style.css';
 
 const ReactIframe = ({  
     className, 
@@ -9,18 +9,21 @@ const ReactIframe = ({
     scrolling, 
     frameBorder }) => {
     return (
-        <iframe
-            title={name}
-            name={name} 
-            src={source}
-            width={width}
-            height={height}
-            allow="camera;microphone"
-            scrolling={scrolling}
-            frameBorder={frameBorder}
-            className={className}
-        >
-        </iframe>
+        <div className={"iframe"}>
+            <iframe
+                title={name}
+                name={name} 
+                src={source}
+                width={width}
+                height={height}
+                allow="camera;microphone"
+                scrolling={scrolling}
+                frameBorder={frameBorder}
+                className={className}
+            >
+            </iframe>
+        </div>
+       
     );
 };
 

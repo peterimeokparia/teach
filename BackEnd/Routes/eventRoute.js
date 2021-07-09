@@ -4,8 +4,11 @@ import eventModel from '../Model/eventModel.js';
 
 import {
 getPostData,    
-saveUpdatedData   
-} from '../Helpers/storageHelper.js';
+saveUpdatedData } from '../Helpers/storageHelper.js';
+
+import { 
+EVENTROUTE,
+handleBackEndLogs } from '../Helpers/logHelper.js';
 
 const eventRoute = express.Router();
 
@@ -16,7 +19,8 @@ eventRoute.get('/', (req, res) => {
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log(error);
+        console.log( error );
+        handleBackEndLogs( EVENTROUTE, error );
         return res.status(400).json({ error })
     });
  });
@@ -27,8 +31,10 @@ eventRoute.get('/', (req, res) => {
     .then(data => {
         return res.status(200).json(data);
     })
-    .catch(error =>{    
-        return res.status(400).json({ error }); 
+    .catch( error => {
+        console.log( error );
+        handleBackEndLogs( EVENTROUTE, error );
+        return res.status(400).json({ error })
     });
 });
   
@@ -38,10 +44,12 @@ eventRoute.get('/events/byUserId', (req, res) => {
     .then(data => {
         return res.status(200).json(data);
     })
-    .catch(error => { 
+    .catch( error => {
+        console.log( error );
+        handleBackEndLogs( EVENTROUTE, error );
         return res.status(400).json({ error })
     });
-})
+});
 
 eventRoute.post('/', (req, res) => {
     let eventData = getPostData( req );
@@ -52,25 +60,24 @@ eventRoute.post('/', (req, res) => {
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log(error);
-        return res.status(400).json({ error });
+        console.log( error );
+        handleBackEndLogs( EVENTROUTE, error );
+        return res.status(400).json({ error })
     });
 });
 
 eventRoute.put('/:eventId', (req, res) => {
     console.log('eventRoute eventRoute eventRoute put b4')
-    console.log('eventRoute eventRoute eventRoute put b4')
     console.log(req?.params)
-    console.log(  req?.params?.eventId )
     saveUpdatedData(req, eventModel, req.params?.eventId)
     .then( data => {
-        console.log('eventRoute eventRoute eventRoute put after')
         console.log(data);
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log(error);
-        return res.status(400).json({ error });
+        console.log( error );
+        handleBackEndLogs( EVENTROUTE, error );
+        return res.status(400).json({ error })
     });
 });
 

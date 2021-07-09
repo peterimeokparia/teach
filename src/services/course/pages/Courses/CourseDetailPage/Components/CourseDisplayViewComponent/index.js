@@ -1,18 +1,39 @@
-import React from 'react';
+import { 
+useEffect,
+useState } from 'react';
 
 import { 
 connect } from 'react-redux';
 
 import { 
-addNewLesson, 
-saveLesson } from 'Services/course/Actions/Lessons';
+Link,
+navigate } from '@reach/router';
 
+import { 
+loadLessons,
+addNewLesson, 
+saveLesson,
+setLessonPlanUrl,
+setCurrentLesson } from 'Services/course/Actions/Lessons';
+
+import { 
+togglePreviewMode } from 'Services/course/Actions/App';
+
+import { 
+SET_LESSON_MARKDOWN } from 'Services/course/Actions/Lessons'; 
+
+import { 
+setMarkDown } from 'Services/course/helpers/EditorHelpers'; 
+    
 import {
 role } from 'Services/course/helpers/PageHelpers';
 
 import { 
-Link,
-navigate } from '@reach/router';
+emailInputOptions,    
+emailMessageOptions } from  'Services/course/Pages/Courses/helpers';
+
+import { 
+deleteLessonFileByFileName } from 'Services/course/Api';
 
 import {
 LessonFileUpload } from 'Services/course/Pages/Courses/Components/LessonFileUpload';
@@ -20,6 +41,23 @@ LessonFileUpload } from 'Services/course/Pages/Courses/Components/LessonFileUplo
 import { 
 navContent } from 'Services/course/Pages/Components/NavigationHelper';
 
+import { 
+getUsersByOperatorId,    
+getCoursesByCreatedByIdSelector, 
+getEventsByUserIdSelector} from 'Services/course/Selectors';
+
+import { 
+toast } from 'react-toastify';
+
+import { 
+Markup } from 'interweave';
+
+import { 
+deleteQuestionIconStyle } from '../inlineStyles';
+
+import Interweave from 'interweave';
+import EditorComponent  from 'Services/course/Pages/Components/EditorComponent';
+import EditIcon from '@material-ui/icons/Edit';
 import MainMenu from 'Services/course/Pages/Components/MainMenu';
 import NewLessonPage from 'Services/course/Pages/Lessons/NewLessonPage';
 import LoginLogout from 'Services/course/Pages/LoginPage/Components/LoginLogout';
@@ -27,74 +65,105 @@ import Roles from 'Services/course/Pages/Components/Roles';
 import LessonPlanIframeComponent from 'Services/course/Pages/Lessons/LessonPlan/Components/LessonPlanIframeComponent';
 import MultiInputEmailComponent from 'Services/course/Pages/Email/MultiInputEmailComponent';
 import ListItem from 'Services/course/Pages/Components/ListItem';
-import './style.css';
 
 const CourseDisplayViewComponent = ({
-operatorBusinessName,
-operator,   
-course,
-courseId,
-selectedTutorId,
-currentUser,
-setPreviewEditMode,
-previewMode,
-lessons,
-saveLesson,
-lessonDate,
-addNewLesson,
-courseDetailChildren,
-fileUploadUrl,
-setFileToRemove,
-emailInputOptions,
-emailMessageOptions,
-setCurrentLesson,
-setVideoUrl,
-setLessonPlanUrl,
-currentLesson,
-currentLessonVideoUrl }) => {
-if ( ! currentUser?.userIsValidated || ! operator ){
-    navigate(`/${operatorBusinessName}/login`);
-}
+    previewMode,
+    saveLesson,
+    setMarkDown,
+    addNewLesson,
+    lessonId,
+    setVideoUrl,
+    selectedTutorId,
+    currentVideoUrl,
+    setLessonPlanUrl,
+    setCurrentLesson,
+    course,
+    lessons,
+    togglePreviewMode,
+    operatorBusinessName,
+    operator,
+    courseDetailChildren,
+    currentUser, 
+    selectedLessonPlanLesson }) => {
+    // if ( ! currentUser?.userIsValidated ){
+    //     navigate(`/${operatorBusinessName}/login`);
+    // }
+
+    const invitationUrl = `http://localhost:3000/${operatorBusinessName}/LessonPlan/invite/userverification/classRoom/${course?.createdBy}`;
+    const fileUploadUrl = 'http://localhost:9005/api/v1/fileUploads';
+    const [ fileToRemove, setFileToRemove ] = useState( undefined );
+    useEffect(() => {
+    });
 
 function onMatchListItem( match, listItem ) {
     if( match ){
-        setVideoUrl( listItem?.videoUrl );
         setCurrentLesson( listItem );
-        setLessonPlanUrl(`/${operatorBusinessName}/LessonPlan/${courseId}/${listItem._id}/${listItem.title}`);
+        setLessonPlanUrl(`/${operatorBusinessName}/LessonPlan/${course?._id}/${listItem._id}/${listItem.title}`);
     }
-} 
+}; 
+
+const setPreviewEditMode = () => {
+    if ( ! selectedLessonPlanLesson ) {
+        toast.error("Please click on the lesson link.");
+        return;  
+    }
+    togglePreviewMode();
+};
+
+if ( fileToRemove ) {
+    selectedLessonPlanLesson.files = selectedLessonPlanLesson?.files?.filter( files => files !== fileToRemove );
+    saveLesson( selectedLessonPlanLesson );
+    deleteLessonFileByFileName( fileToRemove?.split('/files/')[1]);       
+}
+
+function handleChange( editor, element ){
+  let duration = 2000;  
+
+  if ( test ) {
+    setMarkDown(
+        test, 
+        editor.getHTML(), 
+        { propNameOne: "lessons",  propNameTwo: "lessons" }, 
+        SET_LESSON_MARKDOWN, 
+        saveLesson, 
+        duration
+      );
+  }
+
+};
 
 let navigationContent = navContent( currentUser, operatorBusinessName, currentUser?.role,  "Student" ).users;   
+let lessonsByCourseId = lessons?.filter( lesson => lesson?.courseId === course?._id && lesson?.userId === selectedTutorId );
 
 return (
     <div className="CourseDetail"> 
         <header>
-            <div>
-            <h1>{course?.name}</h1>
+          <div>
+            <span className="multiColor"> {course?.name} </span>
             <MainMenu 
                 navContent={navigationContent}
             /> 
             </div>
                 <Roles
-                    role={currentUser?.role === role.Tutor }
+                    role={  currentUser?.role === role.Tutor }
                 >
-                    <button
-                        className="preview-btn"
+                    <EditIcon 
                         onClick={setPreviewEditMode}
-                        >
-                        { previewMode ? 'Preview' : 'Edit' }
-
-                    </button>
+                        color="action"
+                        className="comment-round-button-1"
+                        style={ deleteQuestionIconStyle() }
+                    />
                 </Roles>
                 <LoginLogout
                     operatorBusinessName={operatorBusinessName}
                     user={currentUser} 
+                    operator={operator}
                 />
         </header>
         <div className="content"> 
                 <div className="sidebar"> 
                 <ListItem
-                    collection={lessons}
+                    collection={lessonsByCourseId}
                     onMatchListItem={onMatchListItem}
                     path={"lessons"}
                 >
@@ -102,18 +171,18 @@ return (
                         < NewLessonPage
                             something={lesson.title}
                             className="lesson-item"
-                            lessons={lessons}
+                            lessons={lessonsByCourseId}
                             lesson={lesson}
-                            courseId={courseId}
-                            onSubmit={(title) => saveLesson({...lesson, title})}
+                            courseId={course?._id}
+                            onSubmit={(title) => saveLesson({lesson, title})}
                         >
                         { (edit, remove, questions, assignments, exams) => (
                         <div>      
                             <div>
-                                <Link to={`lessons/${lesson._id}`}> <span title={lesson?._id} >{ lesson?.title } </span> </Link> 
+                                <Link to={`lessons/${lesson._id}`}> <span title={lesson?._id} className="lessonMultiColor">{ lesson?.title } </span> </Link> 
                             <div> 
                             <Roles
-                                role={currentUser?.role === role.Tutor }
+                                role={ currentUser?.role === role.Tutor }
                             >
                                 <button 
                                     className="edit-lesson-btn"
@@ -136,14 +205,18 @@ return (
                                 role={currentUser?.role === role.Tutor  ||  currentUser?.role === role.Student}
                             >
                                 <button
-                                        className="delete-lesson-btn"
-                                        onClick={() => { questions(lesson?._id); }} 
+                                    className="delete-lesson-btn"
+                                    onClick={() => { questions(lesson?._id); }} 
                                 >
                                     Questions
                                 </button>
                             </Roles>
                             </div>  
                          </div>
+                         {/* <EditorComponent
+                            handleChange={(editor) => handleChange(editor,  lesson)}
+                            content={ lesson?.markDown }
+                        />  */}
                         </div>
                         )}
                         </NewLessonPage> 
@@ -154,9 +227,9 @@ return (
                 >
                     < NewLessonPage 
                         className="add-lesson-button"
-                        onSubmit={title => addNewLesson(title, courseId, lessonDate, selectedTutorId)} 
-                        lessons={lessons}
-                        courseId={courseId}
+                        onSubmit={title => addNewLesson(title, course?._id, Date.now(), selectedTutorId)} 
+                        lessons={lessonsByCourseId}
+                        courseId={course?._id}
                     >
                         {(edit) =>  (
                             <button 
@@ -169,20 +242,43 @@ return (
                 </Roles>
                 {/*SIDE BAR 1 */}
                 </div>
-                <div className="lesson"> 
+                <div className="lesson-content"> 
                     < LessonPlanIframeComponent
                             name="embed_readwrite" 
-                            source={currentLessonVideoUrl}
-                            width="500px"
+                            source={selectedLessonPlanLesson?.videoUrl}
+                            // source={currentVideoUrl[ lessonId ]}
+                            width="700px"
                             height="400px"
                             allow="camera;microphone"
                             scrolling="auto"
-                            frameBorder="0" 
+                            frameBorder="10" 
+                            className={"iframe"}
                     />
-                    <div className="lesson2">   {courseDetailChildren}  </div> 
+                    <div className="lesson2">   
+
+                    { courseDetailChildren }
+
+                    {
+                        <div> 
+                            <h5>
+                                <Markup content={selectedLessonPlanLesson?.introduction} />
+                            </h5>
+                        </div>
+                    }
+                     {/* { props.courseDetailChildren:children}   */}
+
+                    {/* { ( selectedLessonPlanLesson?.markDown) &&
+                         <EditorComponent
+                            handleChange={(editor) => handleChange(editor,  selectedLessonPlanLesson)}
+                            content={ testR }
+                         /> 
+                
+                    } */}
+        
+                    </div> 
                         < LessonFileUpload
                             previewMode={previewMode}
-                            currentLesson={currentLesson}
+                            currentLesson={selectedLessonPlanLesson}
                             typeOfUpload={'userlessonfiles'}
                             fileUploadUrl={fileUploadUrl}
                             setFilesToRemove={setFileToRemove}
@@ -193,9 +289,9 @@ return (
                 >
                     <div className="sidebar"> 
                         <MultiInputEmailComponent
-                            setLesson={currentLesson}
+                            setLesson={selectedLessonPlanLesson}
                             inputFieldOptions={emailInputOptions}
-                            messageOptions={emailMessageOptions} 
+                            messageOptions={emailMessageOptions(currentUser,invitationUrl)} 
                         />
                     </div>
                 </Roles>          
@@ -204,4 +300,36 @@ return (
     );
 };
 
-export default connect(null, { addNewLesson, saveLesson })(CourseDisplayViewComponent);
+const mapDispatch = {
+    addNewLesson, 
+    saveLesson, 
+    setMarkDown,
+    setLessonPlanUrl,
+    setCurrentLesson,
+    togglePreviewMode
+};
+
+const mapState = (state, ownProps) => {
+    return {
+        operator: state.operators.opeator,
+        operatorBusinessName: state?.operator?.operatorBusinessName,
+        courseTutor: state.courses.courseTutor,
+        currentUser: state.users.user,
+        previewMode: state.app.previewMode,
+        isLessonsLoading:state.lessons.lessonsLoading,
+        videoUrl: state.lessons.videoUrl,
+        lessonPlanUrl: state.lessons.lessonPlanUrl,
+        selectedLessonPlanLesson: state.lessons.selectedLessonPlanLesson,
+        course: state.lessons.course,
+        onLessonError: state.lessons.onSaveLessonError,
+        lessons: Object.values(state.lessons.lessons),
+        coursesByTutor: getCoursesByCreatedByIdSelector( state, ownProps ),
+        currentVideoUrl: state.lessons.currentVideoUrl,
+        studentsSubscribedToThisCourse : getUsersByOperatorId(state, ownProps)?.filter(user => user?.role === "Student" && user?.courses?.includes(ownProps?.courseId)),
+        lessonStarted: state.lessons.lessonStarted,
+        sessions: Object.values(state?.sessions?.sessions)?.filter(session => session?.courseId === ownProps?.courseId),
+        onSessionRenewal: state.sessions.autoRenewedPackageSuccess, 
+    };
+};
+
+export default connect( mapState, mapDispatch )(CourseDisplayViewComponent);

@@ -43,19 +43,23 @@
     font-size: 40px;
 }
 .answerCard {
-    text-Align: center;
-    margin-Top: 100px;
-    padding-Bottom: 100px;
-    /* background: rgb(183, 246, 57); */
-    /* background: yellowgreen; */
-    /* background-image: linear-gradient(to left, lightyellow,  lightgreen); */
-    background:  rgb(101, 245, 101);
-    border-radius: 25px;
-    font-family: sans-serif;
+  text-align: center;
+  margin-top: 100px;
+  padding-Bottom: 100px;
+  background:  rgb(101, 245, 101);
+  border-radius: 25px;
+  font-family: sans-serif;
+}
+.answerEditor {
+  text-align: left;
+  margin-top: 30px;
+  background:  rgb(101, 245, 101);
+  border-radius: 25px;
+  padding-bottom: 9px;
 }
 .answerDisplay {
     font-size: 20px;
-    padding-top: 25px;
+    padding-top: 5px;
     padding-bottom: 25px;
 }
 .answerValue{
@@ -135,6 +139,9 @@
 .userBioSub {
     margin-left: 39%;
 }
+.userBioSub-support {
+  margin-left: 39%;
+}
 .userBio img {
     box-shadow: 10px 10px black;
     /* margin-top: 30px; */
@@ -193,10 +200,6 @@
   }
   .moreInfo .popup .popuptext {
     visibility: visible;
-    /* -webkit-animation: fadeIn 1s; */
-    /* animation: fadeIn 1s ease-in-out 3s; */
-    /* animation-delay: 5s; */
-    /* animation-fill-mode: forwards;  */
   }
   .moreInfo .popup .popuptext-hidden {
     visibility: hidden;
@@ -212,7 +215,6 @@
     left: 50%;
     margin-left: -80px;
   }
-  
   .ComponentUserList .user-list-items-users .multicolortext{
     background-color: #673ab7;
     margin: 0;
@@ -226,8 +228,6 @@
     background-clip: text;
     color: transparent;
   }
-
-
 .round-button-1,  .round-button-2, 
 .round-button-3,  .round-button-4, 
 .round-button-5,  .round-button-6, 
@@ -235,7 +235,6 @@
     align-self: flex-end; 
     width:30px;
     border: 2px solid #f5f5f5;
-    /* border-radius: 50%;  */
     margin-right: 15px;
     transition: transform .7s ease-in-out;
     box-shadow: 10px 10px black;
@@ -249,41 +248,34 @@
  {
   background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
   background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
-  /* background: #777555; */
 }
 .ComponentUserList .user-list-items-users .round-button-3:hover, .round-button-4:hover
  {
   background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
   background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
-  /* background: #777555; */
 }
 .ComponentUserList .user-list-items-users .round-button-4:hover   
  {
   background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
   background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
-  /* background: #777555; */
 }
 .ComponentUserList .user-list-items-users .round-button-5:hover   
  {
   background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
   background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
-  /* background: #777555; */
 }
 .ComponentUserList .user-list-items-users .round-button-6:hover   
  {
   background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
   background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
-  /* background: #777555; */
 }
 .ComponentUserList .user-list-items-users .round-button-7:hover   
  {
   background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
   background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
-  /* background: #777555; */
 }
 .ComponentUserList .user-list-items-users .round-button-1 { 
     background: orange;
-    /* box-shadow: 10px 10px black; */
   }
   .ComponentUserList .user-list-items-users .round-button-2 { 
     background: green
@@ -314,15 +306,11 @@
     transition-duration: 0.3s;
     -webkit-transition-property: transform;
     transition-property: transform;
-  
     -webkit-transform: scale(1);
     transform: scale(1);
-    
     margin-top: -10%;
     margin-left: -14.5%;
-  
   }
-  
   .answerVideoSection-recording {
     display: inline-block;
     vertical-align: middle;
@@ -333,18 +321,13 @@
     transition-duration: 0.3s;
     -webkit-transition-property: transform;
     transition-property: transform;
-  
     -webkit-transform: scale(1.9);
     transform: scale(1.9);
-  
-
     top: 20%;
     margin-top: -20%;
     margin-left: 50%; 
-    margin-bottom: 50%; 
-
+    margin-bottom: 15%; 
    }
-
 .answerVideoSection-recordingStopped {
   display: inline-block;
   vertical-align: middle;
@@ -355,12 +338,8 @@
   transition-duration: 0.3s;
   -webkit-transition-property: transform;
   transition-property: transform;
-
   -webkit-transform: scale(1);
   transform: scale(1);
-
-
-
   margin-top: -10%;
   margin-left: -14.5%;
   margin-bottom: -50%;
@@ -388,15 +367,13 @@
   border-radius: 2em;
 }
 .answerCard .answerVideoPlayer {
-    /* visibility: hidden; */
-    /* border: 0px solid #999; */
-    width: 0%;
-    max-width: 0px; 
-    width: 500px;
-    height: 300px;
-    max-width: 700px;
-    max-height: 500px;
-    margin-right: 20%;
+  width: 0%;
+  max-width: 0px; 
+  width: 500px;
+  height: 300px;
+  max-width: 700px;
+  max-height: 500px;
+  margin-right: 20%;
 }
 .answerCard .answerVideoSectionCallOut{
    margin-left: 730px;
@@ -413,7 +390,7 @@
   margin-bottom: 200%;
 }
 .answerCard .question-card-top-right {
-  margin-right: 40px
+  margin-right: 70px
 }
 .answerCard .onlineQuestionImage {
   margin-top: -40%;
@@ -433,8 +410,7 @@
   }
   .userBioSub {
     margin-left: 39%;
-}
-  
+  }  
 }
 
 /* 
@@ -452,7 +428,13 @@
   }
   .userBioSub {
     margin-left: 39%;
-}
+  }
+
+  .userBioSub-support {
+    margin-top: 50px;
+    margin-left: -22%;
+    margin-bottom: 80px;
+  }
   
 }
 
@@ -474,7 +456,13 @@
   }
   .userBioSub {
     margin-left: 19%;
-}
+  }
+
+  .userBioSub-support {
+    margin-top: 50px;
+    margin-left: -22%;
+    margin-bottom: 80px;
+  }
   
 }
 
@@ -496,15 +484,19 @@
   }
   .userBioSub {
     margin-left: 19%;
-}
+  }
+
+  .userBioSub-support {
+    margin-top: 50px;
+    margin-left: -22%;
+    margin-bottom: 80px;
+  }
   
 }
-
 /* 
   ##Device = Low Resolution Tablets, Mobiles (Landscape)
   ##Screen = B/w 481px to 767px
 */
-
 @media (min-width: 481px) and (max-width: 767px) {
   
   /* CSS */
@@ -518,7 +510,59 @@
   }
   .userBioSub {
     margin-left: 19%;
+  }
+  .userBioSub-support {
+    margin-top: 50px;
+    margin-left: 10px; 
+    margin-bottom: 80px;
+  }
+  .onlineQuestionImage img {
+    height: 70px;
+    width: 70px;
+  }
+  .answerCard video {
+    border-radius: 2em;
+    width: 0px;
+  }
+  .answerCard .answerVideoSectionCallOut{
+    margin-left: 80px;
+    margin-top: -45%;
+    font-size: 10px;
+ }
+ .answerVideoSection-recording {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transform: scale(1.9);
+    transform: scale(1.9);
+    top: 20%;
+    margin-top: -20%;
+    margin-left: 5%; 
+    margin-bottom: 50%; 
 }
+.answerVideoSection-recordingStopped {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  margin-top: -10%;
+  margin-left: -14.5%;
+  margin-bottom: -50%;
+  } 
+
 }
 
 /* 
@@ -541,9 +585,20 @@
   .userBioSub {
     margin-left: 19%;
   }
+  .userBioSub-support {
+    margin-top: 50px;
+    margin-left: -22%;
+    margin-right: 100%;
+    margin-bottom: 80px;
+  }
   .answerCard video {
     border-radius: 2em;
-    width: 300px;
+    width: 150px;
+  }
+
+  .answerCard .onlineQuestionVideoComponent video {
+    margin-left: 70%;
+    margin-top: 5%;
   }
 
   .answerCard .answerVideoSectionCallOut{
@@ -551,7 +606,6 @@
     margin-top: -45%;
     font-size: 10px;
  }
-
  .answerVideoSection-recording {
   display: inline-block;
   vertical-align: middle;
@@ -562,18 +616,13 @@
   transition-duration: 0.3s;
   -webkit-transition-property: transform;
   transition-property: transform;
-
   -webkit-transform: scale(1.9);
   transform: scale(1.9);
-
-
   top: 20%;
   margin-top: -20%;
   margin-left: 5%; 
   margin-bottom: 50%; 
-
- }
-
+}
 .answerVideoSection-recordingStopped {
 display: inline-block;
 vertical-align: middle;
@@ -584,28 +633,22 @@ box-shadow: 0 0 1px rgba(0, 0, 0, 0);
 transition-duration: 0.3s;
 -webkit-transition-property: transform;
 transition-property: transform;
-
 -webkit-transform: scale(1);
 transform: scale(1);
-
-
-
 margin-top: -10%;
 margin-left: -14.5%;
 margin-bottom: -50%;
-
 } 
 
 }
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;} 
+  to {opacity: 1;}
+}
 
-  /* Add animation (fade in the popup) */
-  @-webkit-keyframes fadeIn {
-    from {opacity: 0;} 
-    to {opacity: 1;}
-  }
-  
-  @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity:1 ;}
-  }
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
 

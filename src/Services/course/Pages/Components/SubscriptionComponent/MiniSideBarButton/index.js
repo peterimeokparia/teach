@@ -1,11 +1,10 @@
-import React from 'react';
 import './style.css';
 
-const MiniSideBarButton = ({ mouseDown, navMenuVisible, key }) => {
+const MiniSideBarButton = ({ mouseDown, navMenuVisible  }) => {
     return (
             <span className="sideburgerMenuDiv"
                 onMouseDown={mouseDown}
-                key={ key } 
+                // key={ key } 
             >
                 <div className={navMenuVisible ? 'sideDivOneClose' : 'sideDivOne'}></div>
                 <div className={navMenuVisible ? 'sideDivTwoClose' : 'sideDivTwo'}></div>

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import ReactDOM from 'react-dom';
 
 import { 
@@ -51,25 +49,46 @@ import {
 loadTimeLines } from 'Services/course/Actions/TimeLines';
 
 import {
-loadOnlineQuestions } from 'Services/course/Actions/OnlineQuestions'; 
+loadOnlineQuestions } from 'Services/course/Actions/OnlineQuestions';
 
 import {
-loadOnlineAnswers } from 'Services/course/Actions/OnlineAnswers'; 
+loadOnlineAnswers } from 'Services/course/Actions/OnlineAnswers';
 
 import {
-loadOnlineComments } from 'Services/course/Actions/OnlineComments'; 
+loadOnlineComments } from 'Services/course/Actions/OnlineComments';
 
 import { 
-notifications } from 'Services/course/MiddleWare/notifications';
+subscriptions } from 'Services/course/MiddleWare/subscriptions';
 
 import { 
-saveAuthToken } from 'Services/course/MiddleWare/users';
+calendar } from 'Services/course/MiddleWare/calendar';
+
+import { 
+classrooms } from 'Services/course/MiddleWare/classrooms';
+
+import { 
+courses } from 'Services/course/MiddleWare/courses';
 
 import {
-loadFailedPushNotifications } from 'Services/course/Actions/FailedPushNotifications'; 
+events } from 'Services/course/MiddleWare/events';
+
+import { 
+users } from 'Services/course/MiddleWare/users';
+
+import { 
+sessions } from 'Services/course/MiddleWare/sessions';
 
 import {
-loadFailedEmailNotifications } from 'Services/course/Actions/FailedEmailNotifications'; 
+grades } from 'Services/course/MiddleWare/grades';
+
+import {
+loadFailedPushNotifications } from 'Services/course/Actions/FailedPushNotifications';
+
+import {
+loadFailedEmailNotifications } from 'Services/course/Actions/FailedEmailNotifications';
+
+import {
+loadLogs } from 'Services/course/Actions/LogForTeach';
 
 import App from './App';
 import reducer from 'Services/course/reducers';
@@ -87,36 +106,44 @@ const composeEnhancers =
       trace: true
 }) : compose;
 
-const enhancer = composeEnhancers(
+
+export const enhancer = composeEnhancers(
   applyMiddleware(
     thunk, 
-    saveAuthToken, 
-    notifications),
+    users,
+    subscriptions, 
+    calendar,
+    classrooms,
+    courses,
+    events,
+    sessions,
+    grades ),
   // other store enhancers if any
 );
 
-const store = createStore(
+export const store = createStore(
   reducer, 
   enhancer
 );
 
-store.dispatch(loadFailedPushNotifications());
-store.dispatch(loadFailedEmailNotifications());
+//store.dispatch(loadFailedPushNotifications());
+//store.dispatch(loadFailedEmailNotifications());
+store.dispatch(loadLogs());
 store.dispatch(loadOnlineComments());
 store.dispatch(loadOnlineAnswers());
 store.dispatch(loadOnlineQuestions());
 store.dispatch(loadAllEvents());
 store.dispatch(loadTimeLines());
 store.dispatch(loadSubscribedPushNotificationUsers());
-store.dispatch(loadQuestions());  
-store.dispatch(loadMeetings());     
-store.dispatch(loadAttendance());   
-store.dispatch(loadGrades());  
-store.dispatch(loadOperators()); 
-store.dispatch(loadUsers());  
-store.dispatch(lastLoggedInUser());   
+store.dispatch(loadQuestions());
+store.dispatch(loadMeetings());
+store.dispatch(loadAttendance());
+store.dispatch(loadGrades());
+store.dispatch(loadOperators());
+store.dispatch(loadUsers());
+store.dispatch(lastLoggedInUser());
 store.dispatch(loadCourses());
-store.dispatch(loadSessions()); 
+store.dispatch(loadSessions());
 store.dispatch(loadClassRooms());
 store.dispatch(loadAllCalendars());
 

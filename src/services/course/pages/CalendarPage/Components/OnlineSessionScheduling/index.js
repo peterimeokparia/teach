@@ -1,9 +1,8 @@
-import React from 'react';
 import Select from 'react-select';
 import DropDown from 'Services/course/Pages/Components/DropDown';
 import ToggleButton from 'Services/course/Pages/Components/ToggleButton';
 
-const OnlineTutoringRequestForm = ({ config })  => {
+const OnlineSessionScheduling = ({ config })  => {
 
     return(
       <span>
@@ -109,73 +108,74 @@ const OnlineTutoringRequestForm = ({ config })  => {
                     />
                  </span>
             </span>
-            {( config?.recurringEvent ) &&  <div>
-                                            <span className="row"> 
-                                            <span className="col-sm-3"> 
-                                            <label className="recurring">
-                                                <label className="recurring">
-                                                    Frequency:                                
-                                                </label> 
-                                                <label className="recurring">
-                                                <span className="tooltiptext">
-                                                    How often?
-                                                </span>
-                                               </label>
-                                               </label> 
-                                            </span>
-                                            <div class="w-10"></div>
-                                                <span className="col-sm-6">
-                                                    <DropDown 
-                                                        label={""}
-                                                        key={"_id"}
-                                                        value={"name"}
-                                                        optionCollection={(config.isEditMode && config.recurringEvent) ? config?.freqCollectionData : config?.frequencyCollection}
-                                                        setOptionSelectedValue={config?.setFrequency} 
-                                                    />
-                                                </span>
-                                            </span>
-                                            <label className="recurring">
-                                            Interval:
-                                            <span className="tooltiptext">
-                                                How often do you want to repeat this recurring event per your frequency selection?
-                                                Default is 1.
-                                            </span>
-                                            <input
-                                                type="number"
-                                                min="1" 
-                                                max="100" 
-                                                disabled={config?.saveInProgress} 
-                                                value={config?.interval} 
-                                                onChange={(e) => config?.setInterval(e.target.value)}
-                                            />
-                                            </label> 
+            {( config?.recurringEvent ) &&  
+                <div>
+                    <span className="row"> 
+                    <span className="col-sm-3"> 
+                    <label className="recurring">
+                        <label className="recurring">
+                            Frequency:                                
+                        </label> 
+                        <label className="recurring">
+                        <span className="tooltiptext">
+                            How often?
+                        </span>
+                    </label>
+                    </label> 
+                    </span>
+                    <div class="w-10"></div>
+                        <span className="col-sm-6">
+                            <DropDown 
+                                label={""}
+                                key={"_id"}
+                                value={"name"}
+                                optionCollection={(config.isEditMode && config.recurringEvent) ? config?.freqCollectionData : config?.frequencyCollection}
+                                setOptionSelectedValue={config?.setFrequency} 
+                            />
+                        </span>
+                    </span>
+                    <label className="recurring">
+                    Interval:
+                    <span className="tooltiptext">
+                        How often do you want to repeat this recurring event per your frequency selection?
+                        Default is 1.
+                    </span>
+                    <input
+                        type="number"
+                        min="1" 
+                        max="100" 
+                        disabled={config?.saveInProgress} 
+                        value={config?.interval} 
+                        onChange={(e) => config?.setInterval(e.target.value)}
+                    />
+                    </label> 
 
-                                            <label className="recurring">
-                                            Only on these week days:
-                                            <span className="tooltiptext">
-                                                Set recurring events only on the weekdays selected.
-                                            </span>
-                                            <Select
-                                                isMulti
-                                                value={config?.weekDays}
-                                                onChange={config?.setWeekDays}
-                                                options={config?.days} 
-                                            />
-                                            </label>
+                    <label className="recurring">
+                    Only on these week days:
+                    <span className="tooltiptext">
+                        Set recurring events only on the weekdays selected.
+                    </span>
+                    <Select
+                        isMulti
+                        value={config?.weekDays}
+                        onChange={config?.setWeekDays}
+                        options={config?.days} 
+                    />
+                    </label>
 
-                                            <label className="recurring">
-                                            Until:
-                                            <span className="tooltiptext">
-                                                Stop this recurring event on the date specified.
-                                            </span> 
-                                            <input
-                                                type="date" 
-                                                disabled={config?.saveInProgress} 
-                                                value={config?.endDate} 
-                                                onChange={(e) => config?.setEndDate(e.target.value)}
-                                            />
-                                            </label>
-                                            </div>
+                    <label className="recurring">
+                    Until:
+                    <span className="tooltiptext">
+                        Stop this recurring event on the date specified.
+                    </span> 
+                    <input
+                        type="date" 
+                        disabled={config?.saveInProgress} 
+                        value={config?.endDate} 
+                        onChange={(e) => config?.setEndDate(e.target.value)}
+                    />
+                    </label>
+                </div>
             }  
             { config?.onSaveError && (
                 <div className="saveError-message">
@@ -188,4 +188,4 @@ const OnlineTutoringRequestForm = ({ config })  => {
     );
 }
 
-export default OnlineTutoringRequestForm;
+export default OnlineSessionScheduling;

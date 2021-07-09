@@ -1,5 +1,3 @@
-import React from 'react';
-
 const SingleInputEmailComponent = ( { type, handleChange, value, placeHolderText } ) => {
     return(
         <label>

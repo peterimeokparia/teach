@@ -18,6 +18,7 @@ export const SAVE_QUESTION_BEGIN = "SAVE QUESTION BEGIN";
 export const SAVE_QUESTION_ERROR = "SAVE QUESTION ERROR";
 export const SAVE_QUESTION_SUCCESS = "SAVE QUESTION SUCCESS";
 export const SET_EXPLANATION_ANSWER_MARKDOWN = "SET EXPLANATION ANSWER MARKDOWN";
+export const SET_MARKDOWN_EDITOR = "SET MARKDOWN EDITOR";
 
 export const addNewQuestion = ( lessonId, studentId, operatorId, coursesCovered, lessonsCovered, examId, assignmentId, questions ) => {
     return dispatch => {
@@ -87,23 +88,8 @@ export const loadQuestionsByLessonId = ( lessonId ) => {
     };
 };
 
-let timerHandle = null;
+export const setMarkDownEditor = ( markDownEditors ) => ({
+    type: SET_MARKDOWN_EDITOR,
+    payload: markDownEditors
+});
 
-export const setMarkDown = ( teachObject, markDown, teachObjectType="", actionType, saveAction  ) => {
-    return ( dispatch, getState )  => {
-        dispatch({ type: actionType, payload: {   
-            teachObject,
-            markDown
-          }});
-
-        if ( timerHandle ){
-            clearTimeout( timerHandle );
-        }
-        timerHandle = setTimeout(() => {
-            console.log("...saving markdown text"); 
-            const latestTeachObjectData = getState()[teachObjectType][teachObjectType][ teachObject?._id ]; 
-            
-            dispatch(saveAction( latestTeachObjectData ));
-        }, 2000);  
-    };
-};

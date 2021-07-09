@@ -1,114 +1,4 @@
-.MyCourses {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  background-image: url(../../../../images/geometry2.png);
-  background-size: 300px 300px;
-}
-.MyCourses .items{
-  align-items: center;
-}
-
-.MyCourses header {
-  background-color: #673ab7;
-  color: #fff;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px;
-  text-align: center;
-}
-.MyCourses header h1 {
-  background-color: #673ab7;
-  margin: 0;
-  font-size: 24px;
-  text-align: center;
-}
-.MyCourses header h2 {
-  background-color: #673ab7;
-  margin: 0;
-  font-size: 24px;
-  text-align: center;
-  color: white;
-  padding-right: 250px;
-}
-.MyCourses header h3 {
-  background-color: #673ab7;
-  /* padding-top: 200px;
-  margin-bottom: 300px; */
-  font-size: 24px;
-  text-align: center;
-  color: white;
-  padding-right: 250px;
-}
-.MyCourses header .current-lesson {
-  margin: 0;
-  font-size: 16px;
-  font-weight: 400;
-  opacity: 0.8;
-}
-.CreateCourse {
-    height: 100%;
-    padding-top: 80px;
-    text-align: center;
-  }
-  .CreateCourse h1 {
-    font-size: 30px;
-  }
-  .CreateCourse {
-    background-image: url(../../../../images/geometry2.png);
-  }
-  .CreateCourse form {
-    max-width: 600px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    padding: 0 20px;
-    margin: 0 auto;
-  }
-  .CreateCourse form input {
-    width: 100%;
-    border: 1px solid #c244d8;
-    outline: none;
-    transition: box-shadow 0.2s;
-    margin-bottom: 20px;
-  }
-  .CreateCourse form input:focus {
-    box-shadow: 0 0 3px #c244d8;
-  }
-  .CreateCourse form label {
-    margin-bottom: 0.6em;
-    display: block;
-  }
-  .CreateCourse form button {
-    color: #fff;
-    background-color: #c244d8;
-    font-size: 16px;
-    padding: 10px;
-    border-radius: 2px;
-    width: 200px;
-    margin: 0 auto;
-    display: block;
-    border: none;
-    border-bottom: 3px solid #673ab7;
-    transition: all 0.2s;
-  }
-  .createCourse-form button:focus {
-    outline: none;
-    box-shadow: 0 0 4px #673ab7;
-  }
-  .createCourse-form button:active {
-    border-bottom: none;
-    margin-top: 2px;
-    box-shadow: 0 2px 0 #673ab7 inset;
-  }
-  .createCourse-form button:disabled {
-    background-color: #dec5e2;
-    border-bottom: 2px solid #f0e9fd;
-  }
-  /***** Course Listing *****/
+/***** Course Listing *****/
   .ComponentCourseList {
     padding: 20px;
     display: flex;
@@ -148,14 +38,10 @@
     padding: 10px;
     padding-top: 1px;
     margin-top: 15px;
-    /* max-width: 2000px; */
-    /* max-height: 2000px; */
     height: 110px;
     margin-left: 300px;
     margin-right: 300px;
     box-shadow: 10px 10px;
-  
-    /* display: inline-block; */
     vertical-align: middle;
     -webkit-transform: perspective(1px) translateZ(0);
     transform: perspective(1px) translateZ(0);
@@ -350,17 +236,7 @@
 .component-list-items:hover .tooltiptext {
   visibility: visible;
 }
-.ComponentCourseList .component-seconday-list, .component-secondary-list-body-one {
-  /* border-radius: 25px; */
-  /* background: #673ab7; */
-  /* padding: 10px; */
-  /* margin-top: 25px; */
-  /* padding-top: 1px;
-  margin-top: 25px;  */
-
-  /* max-width: 2000px; */
-  /* max-height: 2000px; */
-  
+.ComponentCourseList .component-seconday-list, .component-secondary-list-body-one {  
   padding-top: 1px;
   padding: 30px;
   border-radius: 25px;
@@ -368,19 +244,17 @@
   background: #673ab7;
   height: 200px;
   box-shadow: 10px 10px;
-
-  /* margin-left: 300px; */
-  /* margin-left: 300px;
-  margin-right: 300px; */
-  /* box-shadow: 10px 10px; */
-
 }
 .ComponentCourseList .multicolortext {
-  /* background-image: linear-gradient(to left, violet, indigo, green, blue, yellow, orange, red); */
-  /* background-image: linear-gradient(to left, violet, red, white, yellow, orange, red); */
   background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
   -webkit-background-clip: text;
   -moz-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+.checkBoxViewGradesLink {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 15px;
+  font-family: 'Courier New', Courier, monospace;
 }

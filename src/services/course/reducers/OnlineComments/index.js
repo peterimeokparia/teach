@@ -11,13 +11,14 @@ LOAD_ONLINECOMMENTS_ERROR,
 SAVE_ONLINECOMMENTS_SUCCESS, 
 SAVE_ONLINECOMMENTS_BEGIN, 
 SAVE_ONLINECOMMENTS_ERROR, 
-RESET_ONLINECOMMENTS_ERROR, 
-DELETE_ONLINECOMMENTS_SUCCESS, 
-SET_ONLINECOMMENTS_MARKDOWN,
-SET_EXPLANATION_ANSWER_MARKDOWN } from '../../Actions/OnlineComments';
+RESET_ONLINECOMMENTS_ERROR,
+SET_ONLINECOMMENTS_MARKDOWN, 
+DELETE_ONLINECOMMENTS_SUCCESS,
+DELETE_ONLINECOMMENTS_ERROR } from '../../Actions/OnlineComments';
 
 const initialState = {
     onlineComments: {},
+    sortedComments:{},
     latestOnlineComments: {},
     commentMarkDown: {},
     saveInProgress: false,
@@ -53,7 +54,7 @@ const reducer = produce((draft, action) => {
              draft.onlineCommentsLoading = false;
              action.payload.forEach( comment => {
                 draft.onlineComments[ comment._id ] = comment;
-              });  
+              }); 
         return;
         case LOAD_LATEST_ONLINECOMMENTS_SUCCESS:
              draft.onlineCommentsLoading = false;
@@ -65,12 +66,7 @@ const reducer = produce((draft, action) => {
         return; 
         case SET_ONLINECOMMENTS_MARKDOWN:
              if ( draft.onlineComments[action.payload.teachObject?._id] ) {
-                draft.onlineComments[action.payload.teachObject?._id].markDown = action.payload.markDown; 
-             }    
-        return;
-        case SET_EXPLANATION_ANSWER_MARKDOWN:
-             if ( draft.onlineComments[action.payload.teachObject?._id] ) {
-                draft.onlineComments[action.payload.teachObject?._id].markDown = action.payload.markDown; 
+                draft.onlineComments[action.payload.teachObject?._id].markDownContent = action.payload.markDown; 
              }    
         return;
         case RESET_ONLINECOMMENTS_ERROR:
@@ -79,6 +75,10 @@ const reducer = produce((draft, action) => {
        case DELETE_ONLINECOMMENTS_SUCCESS:
             delete draft.onlineComments[action.payload?._id];
        return; 
+       case DELETE_ONLINECOMMENTS_ERROR:
+             draft.onCommentsLoadingError = action.error;
+             draft.onlineCommentsLoading = false;
+        return; 
        default:
     return;
     

@@ -1,4 +1,6 @@
-import React from 'react';
+import { 
+useState,
+useEffect } from 'react';
 
 import { 
 connect } from 'react-redux';
@@ -8,202 +10,262 @@ getOperatorFromOperatorBusinessName,
 getSortedRecordsByDate } from 'Services/course/Selectors';
 
 import {
+loadOnlineComments,
 addNewOnlineComment,
+deleteOnlineComment,
 saveOnlineComment } from 'Services/course/Actions/OnlineComments'; 
+
+import {
+SET_ONLINECOMMENTS_MARKDOWN } from 'Services/course/Actions/OnlineComments'; 
 
 import {
 manageCommentsFieldCollection } from 'Services/course/Pages/QuestionsPage/helpers';
 
 import {
-commentsPlaceHolder,    
-saveMarkDownContent } from 'Services/course/helpers/EditorHelpers'; 
+getCalendarColor } from 'Services/course/Pages/CalendarPage/helpers';
 
 import {
-getCalendarColor } from 'Services/course/Pages/CalendarPage/helpers';
+getCommentIdCollection } from './helpers';
 
 import { 
 Accordion, 
-AccordionSummary, 
-// AccordionDetails 
+AccordionSummary
 } from '@material-ui/core';
+
+import { 
+styleObj, 
+replyIconStyle, 
+deleteIconStyle, 
+iconStyle } from './inlineStyles';
 
 import moment from "moment";
 import EditorComponent  from '../../../Components/EditorComponent';
 import ReplyIcon from '@material-ui/icons/Reply';
 import DeleteIcon from '@material-ui/icons/Delete';
-// import EditIcon from '@material-ui/icons/Edit';
-// import AddCommentIcon from '@material-ui/icons/AddComment';
 import AddCommentOutlinedIcon from '@material-ui/icons/AddCommentOutlined';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-
-// import MuiAccordion from '@material-ui/core/Accordion';
-// import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
-// import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
-import Typography from '@material-ui/core/Typography';
-import { styleObj, replyIconStyle, deleteIconStyle, iconStyle} from './inlineStyles';
 import './style.css';
 
 const ReplyComments = ({ 
-    answer,
-    comment,
-    addComment,
-    parentComment,
-    operator,
-    currentUser,
-    currentUsers,
-    comments,
-    courseId, 
-    questionId, 
-    onlineQuestionAnswerId, 
-    addNewOnlineComment,
-    saveOnlineComment,
-    commentParentId }) => {
-    const [expanded, setExpanded] = React.useState('panel1');
-    let inputFieldOptions;
+  answer,
+  sortedComments,
+  loadOnlineComments,
+  comment,
+  addComment,
+  parentComment,
+  onlineCommentsCollectionTest,
+  operator,
+  currentUser,
+  currentUsers,
+  comments,
+  courseId, 
+  question, 
+  onlineQuestionAnswerId, 
+  addNewOnlineComment,
+  deleteOnlineComment,
+  saveOnlineComment,
+  parentComments,
+  getSortedCommentContent,
+  commentParentId }) => {
+  const [ contentChanged, setContentChanged ] = useState( false );
+  let inputFieldOptions;
 
-    let onlineComments = getSortedRecordsByDate( comments?.filter( comment => comment?.onlineQuestionId === questionId && comment?.onlineQuestionAnswerId === answer?._id ), 'commentDateTime');
+  useEffect(() => {
+    loadOnlineComments();
+    if ( contentChanged  ) {
+      loadOnlineComments();
+      setContentChanged( false );
+    }
+  }, [ loadOnlineComments, contentChanged ] );      
 
-    if ( ! onlineComments ) { return <div>{''}</div>; }
-    const addNewComment = ( parentComment ) => {
-        let config = { 
-            onlineQuestionId: questionId,
-            onlineQuestionAnswerId: answer?._id,
-            commentParentId: ( parentComment?._id === undefined ) ? null :  parentComment?._id,
-            childComments: [],
-            courseId, 
-            userId: currentUser?._id, 
-            placeHolder: commentsPlaceHolder,
-            questionCreatedBy: ( currentUser?._id ) ? (currentUser?.firstname) : 'anonymous', 
-            operator: operator?._id,
-            color: ( parentComment?._id === undefined ) ? getCalendarColor( parentComment ) :  parentComment?.color, 
-            inputFieldOptions, 
-        };
+  let onlineComments = getSortedRecordsByDate( comments?.filter( comment => comment?.onlineQuestionId === question?._id && comment?.onlineQuestionAnswerId === answer?._id ), 'commentDateTime');
 
-        addNewOnlineComment( manageCommentsFieldCollection(config) );
-    };
+  if ( ! onlineComments ) { return <div>{''}</div>; }
 
-    // const removeComments = () => {
-    //       // let lastCommentField = comments[ ( comments?.length - 1 ) ];
-    //       // let decrementedCommentSet = comments?.filter( input => input?.name !== lastCommentField?.name );
-    // }
+const addNewComment = ( parentComment ) => {
+  let config = { 
+      onlineQuestionId: question?._id,
+      onlineQuestionAnswerId: answer?._id,
+      commentParentId: ( parentComment?._id === undefined ) ? null :  parentComment?._id,
+      childComments: [],
+      courseId, 
+      userId: currentUser?._id, 
+      placeHolder: null,
+      questionCreatedBy: ( currentUser?._id ) ? (currentUser?.firstname) : 'anonymous', 
+      operator: operator?._id,
+      color: ( parentComment?._id === undefined ) ? getCalendarColor( parentComment ) :  parentComment?.color, 
+      inputFieldOptions, 
+  };
 
-    let commentsHandleChangeTimerHandle = null, timeOutDuration = 5000;
-     const handleChange = ( editor, comments ) => {
-       saveMarkDownContent( 
-        commentsHandleChangeTimerHandle, 
-        saveOnlineComment,
-         comments,
-         JSON.stringify( editor.emitSerializedOutput() ),
-         `${comments?._id}`,
-         timeOutDuration
-       );     
-     };
+  addNewOnlineComment( manageCommentsFieldCollection(config) );
+  setContentChanged( true );
+};
 
-    const getCommentIdCollection = () => {
-        let commentObjects = {};
-        let children = getSortedRecordsByDate( onlineComments?.filter(_comments => _comments?.commentParentId === null ), 'commentDateTime');
+const onhandleSelected = ( selectedComment ) => {
+  deleteOnlineComment( selectedComment );
+  setContentChanged( true );
+};
 
-        commentObjects[ comment?._id ] = { children };
-      return commentObjects;
-    };
-
-    const handleAccordionChange = (panel) => (event, newExpanded) => {
-        setExpanded(newExpanded ? panel : false);
-    };
-
-  const getChildComments = ( collection ) => {
-    return <>  
-        {collection.map(( element, index )  => {      
-       return  [ element ]?.map( comment => {
-        return <div>
-          <> 
-              <div className={"commentCards"}> 
-              <div style={styleObj( comment?.color )}> 
-              <div className={""}>
-                <EditorComponent
-                        className={""}
-                        key={ comment?._id }
-                        id={ comment?._id }
-                        name={ comment?.name } 
-                        onChange={(editor) => handleChange( editor, element )}
-                        content={JSON.parse( comment?.markDownContent ) }
-                    /> 
-               </div>
-               
-                 <div>
-                    { <span>{`Comment by ${ currentUsers?.find(_user => _user?._id === comment?.userId)?.firstname }`}</span> }
-                    { <span>{` on ${  moment( comment?.commentDateTime ).local() }`} </span>}
-                </div>
-                <span> 
-                    <span>
-                          <ReplyIcon
-                              style={replyIconStyle()}
-                              className="comment-round-button-1"
-                              onClick={() => addNewComment(comment)}
-                          />
-                    </span>
-                    <span>
-                          <DeleteIcon 
-                            style={deleteIconStyle()}
-                            className="comment-round-button-3"
-                            onClick={() => addNewComment(comment)}
-                        />
-                    </span>
-                </span> 
-              </div>
-              </div>
-          </> 
-          {
-            <Accordion square  expanded={expanded === `panel${index}`} onChange={handleAccordionChange(`panel${index}`)}>  
-                 <AccordionSummary aria-controls={`panel${index}-content`} id="panel1d-header">
-                    { ( expanded === `panel${index}` ) ? (comment?.commentParentId === null) && <ExpandLessIcon />   : (comment?.commentParentId === null) &&  <ExpandMoreIcon />}  
-                    { (comment?.commentParentId === null) &&  <Typography>{ ( expanded === `panel${index}` ) ? `Hide Comments` :  `Show Comments`}</Typography> }
-                 </AccordionSummary>
-                <div className={"parentCommentHighLight"}>
-                 {  
-                     getChildComments( getSortedRecordsByDate( onlineComments?.filter( _comment => _comment?.commentParentId === comment?._id ), 'commentDateTime') )
-                 }
-                </div> 
-          </Accordion> 
+const getMainComment = ( comment ) => {
+return <div> {
+  <div className={"commentCards"}>  
+    <div style={styleObj( comment?.color )}> 
+    <div className={""}>
+    { 
+        <div>
+          {<div>{`ParentId ${ comment?.commentParentId }`}</div> }
+          {<div>{`CommentId ${ comment?._id }`}</div>}
+          { 
+            <div> 
+                { <span>{`Comment by ${ currentUsers?.find(_user => _user?._id === comment?.userId)?.firstname }`}</span> }
+                { <span>{` on ${  moment( comment?.commentDateTime ).local() }`} </span>}
+            </div>
           }
-        </div>;
-        });
-    })
-   }
-    </>;
+          <span> 
+              <span>
+                <ReplyIcon
+                  style={replyIconStyle()}
+                  className="comment-round-button-1"
+                  onClick={() => addNewComment(comment)}
+                />
+              </span>
+              <span>
+                <DeleteIcon 
+                  style={deleteIconStyle()}
+                  className="comment-round-button-3"
+                  onClick={() => onhandleSelected(comment)}
+                />
+              </span>
+          </span>
+          </div>     
+    }
+     </div>
+    </div>
+  </div>  
+  } 
+</div>;
+};
+
+const getChildComments = ( collection ) => {
+  return <>  
+      { collection?.map(( element, index )  => {      
+      return  [ element ].map( (comment, subindex ) => {
+      return <div id={comment?._id}>
+        <> 
+            <div className={"commentCards"}> 
+            <div style={styleObj( comment?.color )}> 
+            <div className={""}>
+              <EditorComponent
+                  className={""}
+                  id={ comment?._id }
+                  name={ comment?.name } 
+                  editorConfiguration={{
+                    enableAutoSave: true,
+                    entity: comment, 
+                    stateObjectType: { propNameOne: "onlineComments",  propNameTwo: "onlineComments" }, 
+                    actionDescription: SET_ONLINECOMMENTS_MARKDOWN, 
+                    actionObject: saveOnlineComment, 
+                    duration: 2000 
+                   }}
+                  content={ comment?.markDownContent }
+              /> 
+              </div>
+              <div>
+                  { <div>{`ParentId ${ comment?.commentParentId }`}</div> }
+                  { <div>{`CommentId ${ comment?._id }`}</div>  }
+                  { <span>{`Comment by ${ currentUsers?.find(_user => _user?._id === comment?.userId)?.firstname }`}</span> }
+                  { <span>{` on ${  moment( comment?.commentDateTime ).local() }`} </span>  }
+              </div>
+              <span> 
+                  <span>
+                    <ReplyIcon
+                        style={replyIconStyle()}
+                        className="comment-round-button-1"
+                        onClick={() => addNewComment(comment)}
+                    />
+                  </span>
+                  <span>
+                      <DeleteIcon 
+                        style={deleteIconStyle()}
+                        className="comment-round-button-3"
+                        onClick={() => onhandleSelected(comment)}
+                      />
+                  </span>
+              </span> 
+            </div>
+            </div>
+        </> 
+          <div className={ "parentCommentHighLight"}> 
+            { ( onlineComments?.filter( _comment => _comment?.commentParentId ===  comment?._id)?.length > 0) &&       
+               <Accordion square>  
+                <AccordionSummary  
+                  id="panel1d-header"
+                  className="panel1d-header"
+                  expandIcon={ ( onlineComments?.filter( _comment => _comment?.commentParentId ===  comment?._id)?.length > 0) && <ExpandMoreIcon fontSize={'large'}/>}
+                  aria-controls="panel1a-content"
+                > 
+                </AccordionSummary>
+                {
+                  <div>
+                    {
+                      getChildComments( getSortedRecordsByDate(onlineComments?.filter( _comment => _comment?.commentParentId ===  comment?._id), 'commentDateTime') )
+                    }
+                  </div>
+                }
+              </Accordion>       
+            }     
+            </div> 
+      </div>;
+      });
+  })
+  }
+  </>;
 };
 
 const callOnLineComments = ( ) => { 
-    return Object.values( getCommentIdCollection() )?.map( answerComments => {
-            return getChildComments ( answerComments?.children );
-    });   
+  return Object.values( getCommentIdCollection() )?.filter(test => test?.parentkey !== null )?.map( (answerComments, index) => {  
+      if ( answerComments?.commentKey === 'parent' ) {               
+            return getMainComment( answerComments?.children );
+          } else {
+            return<Accordion square >  
+            <AccordionSummary 
+              expandIcon={ ( answerComments?.children)?.length > 0 && <ExpandMoreIcon fontSize={'large'}/>}
+            >
+            </AccordionSummary>
+            <div className={"parentCommentHighLight"}>
+              {  
+                getChildComments( answerComments?.children )
+              }
+            </div>
+         </Accordion>; 
+      }
+  });   
 };
 
 return (
-        <>
-            {
-              <span>
-                <AddCommentOutlinedIcon
-                    style={iconStyle()}
-                    className="comment-round-button-1"
-                    onClick={() => addNewComment(comment)}
-                />
-              </span>
-            }            
-            { 
-                callOnLineComments() 
-            }                         
-        </>
+  <>
+    {
+      <span>
+        <AddCommentOutlinedIcon
+            style={iconStyle()}
+            className="comment-round-button-1"
+            onClick={() => addNewComment( comment )}
+        />
+      </span>
+    }            
+    { 
+      callOnLineComments() 
+    }                         
+  </>
 ); };
 
 const mapState = ( state, ownProps ) => {
-    return {
-      operator: getOperatorFromOperatorBusinessName(state, ownProps),
-      currentUser: state.users.user,
-      currentUsers: Object.values( state.users.users ),
-      comments: Object.values( state?.onlineComments?.onlineComments )
-    };
+  return {
+    operator: getOperatorFromOperatorBusinessName(state, ownProps),
+    currentUser: state.users.user,
+    currentUsers: Object.values( state.users.users ), 
+    comments: Object.values( state?.onlineComments?.onlineComments )
   };
+};
   
-export default connect(mapState, { addNewOnlineComment, saveOnlineComment  })(ReplyComments);
+export default connect(mapState, { loadOnlineComments, addNewOnlineComment, saveOnlineComment, deleteOnlineComment })(ReplyComments);

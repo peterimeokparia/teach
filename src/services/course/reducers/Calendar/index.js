@@ -13,12 +13,14 @@ LOAD_CALENDARS_ERROR,
 DELETE_CALENDAR_BEGIN,
 DELETE_CALENDAR_SUCCESS,
 DELETE_CALENDAR_ERROR,
-TOGGLE_CALENDAR_NEW_INPUT
+TOGGLE_CALENDAR_NEW_INPUT,
+CALENDAR_EVENT_TYPE
  } from 'Services/course/Actions/Calendar';
 
 const initialState = {
      calendar:{},
      calendars:{},
+     calendarEventType:{},
      isAdding: false,
      isSaving: false,
      isLoading: false,
@@ -72,7 +74,7 @@ const reducer =  produce( (draft, action) => {
           case DELETE_CALENDAR_SUCCESS:
                draft.isDeleting = false;
                draft.onError = null;
-               delete draft.calendars[action.payload?._id];
+               delete draft.calendars[action.payload?.resp?._id];
           return;
           case DELETE_CALENDAR_ERROR:
                draft.isDeleting = false;
@@ -81,6 +83,9 @@ const reducer =  produce( (draft, action) => {
           case TOGGLE_CALENDAR_NEW_INPUT:
                draft.toggleCalendarNewEventView = (! draft.toggleCalendarNewEventView);
           return;    
+          case CALENDAR_EVENT_TYPE:
+               draft.calendarEventType = action.payload;
+          return;   
           default:
                
      }

@@ -1,4 +1,6 @@
-import React  from 'react';
+import { 
+createRef, 
+Component } from 'react';
 
 import { 
 connect } from 'react-redux';
@@ -13,9 +15,8 @@ recordingStatusRecordingStopped } from 'Services/course/Actions/Video';
 import { 
 saveAs } from 'file-saver';
 import './style.css';
-// class VideoPage extends React.PureComponent {
 
-  class VideoPage extends React.Component {
+class VideoPage extends Component {
 
   constructor(props){
     super(props);
@@ -25,7 +26,7 @@ import './style.css';
       cameraOn:false,
       mediaStream: null
     };
-    this.videoRef = React.createRef();
+    this.videoRef = createRef();
     this.enableScreenSharing = this.enableScreenSharing.bind(this);
     this.enableCamera = this.enableCamera.bind(this);
     this.setCapture = this.setCapture.bind(this);
@@ -88,7 +89,6 @@ import './style.css';
       }
     } 
   };
-
 
   componentWillUnmount = () => {
   };
@@ -233,7 +233,7 @@ import './style.css';
       this.addMicToTrack( screen, false );
   }).catch(e => { 
       console.error('getUserMedia() failed: ' + e); 
-      //this.props.resetAllStopSettings();
+      this.props.resetAllStopSettings();
   }); 
 
   if ( this.state.screenSharing ) {

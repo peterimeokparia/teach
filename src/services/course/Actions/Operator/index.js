@@ -1,7 +1,7 @@
 import {
 get,
-sendEmail,
 operatorSignUp } from 'Services/course/Api';
+import StateManager from 'react-select';
 
 export const OPERATOR_LOGIN_BEGIN = "OPERATOR LOGIN BEGIN";
 export const OPERATOR_LOGIN_SUCCESS = "OPERATOR LOGIN SUCCESS";
@@ -15,6 +15,8 @@ export const LOAD_OPERATORS_ERROR = "LOAD OPERATORS ERROR";
 export const SAVE_OPERATOR_BEGIN = "SAVE OPERATOR BEGIN";
 export const SAVE_OPERATOR_SUCCESS = "SAVE_OPERATOR_SUCCESS";
 export const SAVE_OPERATOR_ERROR = "SAVE_OPERATOR_ERROR";
+export const SET_OPERATOR = "SET OPERATOR";
+export const SET_BUSINESS_NAME = "SET BUSINESS NAME";
 
 export const loadOperators = () => {
     return dispatch => {
@@ -34,15 +36,18 @@ export const createOperator = (newUser) => {
      return operatorSignUp(newUser)
          .then( operator => {
              dispatch({ type: OPERATOR_SIGN_UP_SUCCESSS, payload: operator });
-                sendEmail(
-                    "teachpadsconnect247@gmail.com",
-                    operator?.email, 
-                    "Welcome to teach!",
-                    `Your credentials: ${operator.email}, ${operator.password}. Your website url:http://localhost:3000/${operator?.businessName}/login`,
-                    operator?._id
-                );
          }).catch( error => {
                dispatch({ type: OPERATOR_SIGN_UP_ERRORS , error });
         });
     };
 };
+
+export const setOperator = operator => ({
+   type: SET_OPERATOR,
+   operator
+}); 
+
+export const setOperatorBusinessName = businessName => ({
+    type: SET_BUSINESS_NAME,
+    businessName
+ }); 

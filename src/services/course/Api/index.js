@@ -100,10 +100,12 @@ export const updateSession = (sessionId, session) => {
 };
 
 export const incrementSession = (session) => {
-  session.numberOfSessions += 1;
+  let numberOfSessions = session?.numberOfSessions;
+  
+  numberOfSessions += 1;
   return updateSession(session?._id, {
-    ...session
-    // numberOfSessions: session.numberOfSessions
+    ...session,
+    numberOfSessions 
   });    
 };
 
@@ -156,7 +158,7 @@ export const remove = (data, route, prefix=PREFIX) => {
 
 export const login = (user) => {
   if ( ! user?.userIsVerified ) {
-    return new Error(`${user?.email} has not been verified. Kindly check  your email address inbox or spam.`);
+    Error(`${user?.email} has not been verified. Kindly check  your email address inbox or spam.`);
   }
   let token = tokenGenerator({username: user?.email, password: user.password}, privateKey, { expiresIn: '1h' });
   let loginCount = user?.loginCount; 
@@ -166,9 +168,9 @@ export const login = (user) => {
   let unHarshedPassword = user?.unHarshedPassword;
 
   if ( loginCount === undefined || loginCount === 0 ) {
-       loginCount = 1;
+      loginCount = 1;
   } else {
-       loginCount += 1;
+      loginCount += 1;
   }
   return putData(PREFIX + `/users/login/${user?._id}`, {
     unHarshedPassword,
@@ -190,10 +192,10 @@ export const resetPassword = (user) => {
  });
 };
 
-export const signUp = (user) => {
+export const signUp = (user, route='/users/register') => {
   let token = tokenGenerator({usename: user.username, password: user.password}, privateKey, { expiresIn: '1h' });
 
-  return postData(PREFIX + '/users/register', {  
+  return postData(PREFIX + route, {  
     ...user,
     token
  });
@@ -293,7 +295,10 @@ export const purchase = ( currentUser ) => {
   try {
     if( approvePayment(currentUser) ) {   
          currentUser.cart.forEach(course  => {
-          currentUser.courses.push( course?.course?._id );
+          if ( ! currentUser.courses?.includes( course?.course?._id ) ) {
+            currentUser = { ...currentUser, courses: [ ...currentUser.courses, course?.course?._id ] };
+          }
+          // currentUser.courses.push( course?.course?._id );
       });
       return updateUser({ 
           ...currentUser,

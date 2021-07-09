@@ -1,7 +1,6 @@
 const ToggleUsersRadioButtons = ({
-inputRef,
-setOption,
-}) => {
+    inputRef,
+    setOption }) => {
 return  <span className="LoginPageRadioButton">
     <span className="left">
         <label className="label"> 

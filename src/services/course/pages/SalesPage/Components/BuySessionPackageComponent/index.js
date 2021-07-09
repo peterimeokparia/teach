@@ -27,7 +27,6 @@ const BuySessionPackageComponent = async ( setOptionToSelect ) => {
   
   if ( sessionType ) {
      setOptionToSelect( sessionType ); 
-    //  return;
   } 
 };
 

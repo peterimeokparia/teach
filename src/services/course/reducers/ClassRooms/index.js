@@ -39,7 +39,7 @@ const reducer = produce((draft, action) => {
         case ADD_CLASSROOM_SUCCESS:
         case SAVE_CLASSROOM_SUCCESS:     
              draft.saveInProgress = false;
-             draft.classrooms[action.payload._id] = action.payload;
+             draft.classrooms[action.payload?.classroom?._id] = action.payload?.classroom;
              draft.isModalOpen = false;
         return;
         case ADD_CLASSROOM_ERROR:

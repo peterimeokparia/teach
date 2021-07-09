@@ -6,99 +6,37 @@ export const askHomeWorkQuestionPlaceHolder = {"blocks":[{"key":"99c5e","text":"
 export const homeWorkAnswerPlaceHolder = {"blocks":[{"key":"99c5e","text":"Answer question. ","type":"unstyled","depth":0,"inlineStyleRanges":[{"offset":0,"length":26,"style":"BOLD"}],"entityRanges":[],"data":{}},{"key":"29ovb","text":"Cras vel viverra ante. Mauris ac condimentum dui, et venenatis quam. Integer pellentesque convallis placerat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In a elit aliquam, vulputate leo quis, sodales massa. Interdum et malesuada fames ac ante ipsum primis in faucibus. Cras pharetra mollis consequat. Vivamus rutrum libero non imperdiet consectetur. Integer auctor metus at libero fringilla","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}};
 export const commentsPlaceHolder = {"blocks":[{"key":"99c5e","text":"Enter comments here. ","type":"unstyled","depth":0,"inlineStyleRanges":[{"offset":0,"length":26,"style":"BOLD"}],"entityRanges":[],"data":{}},{"key":"29ovb","text":"Cras vel viverra ante. Mauris ac condimentum dui, et venenatis quam. Integer pellentesque convallis placerat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In a elit aliquam, vulputate leo quis, sodales massa. Interdum et malesuada fames ac ante ipsum primis in faucibus. Cras pharetra mollis consequat. Vivamus rutrum libero non imperdiet consectetur. Integer auctor metus at libero fringilla","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}};
 
-export const saveMarkDownContent = (saveAction, teachObject, content,  cacheName, timeoutDuration) => {
-  if ( !  ( cacheName || timeoutDuration )  ) return Error('passSaveMarkDownContentTimerHandleByValue-Config is not set.');
-  let timerHandle = undefined;
+let timerHandle = null;
 
-  try {
-   if ( timerHandle ) {
-      clearTimeout( timerHandle  );
-   }
+export const setMarkDown = ( teachObject, markDown, teachObjectType, actionType, saveAction, duration  ) => {
+    alert('in markdown')
+    alert(JSON.stringify(teachObject))
+    
+    return ( dispatch, getState )  => {
+        dispatch({ type: actionType, payload: {   
+            teachObject,
+            markDown
+          }});
+          
+        if ( timerHandle ){
+            clearTimeout( timerHandle );
+        };
+        timerHandle = setTimeout(() => {
+            const latestTeachObjectData = getState()[teachObjectType.propNameOne][teachObjectType.propNameTwo][ teachObject?._id ]; 
+            
+            alert('in latestTeachObjectData')
+            alert(JSON.stringify(latestTeachObjectData))
+ 
+            alert(teachObject?._id)
+            alert(JSON.stringify(teachObject))
+     
+         
 
-    timerHandle = setTimeout(()=>{
-    // let markDownContent = sessionStorage.getItem( cacheName );
-    let markDownContent = content;
-    // alert('saving content');
-    // alert(JSON.stringify( teachObject ) );
-    // alert(  content );
-    saveAction( { ...teachObject, markDownContent } );
-   }, timeoutDuration );   
-  } catch (error) {
-    throw Error( error );
-  };
+            if ( latestTeachObjectData !== undefined  ) {
+                saveAction( latestTeachObjectData );
+            }
+           
+            // saveAction( latestTeachObjectData );
+        }, duration);  
+    };
 };
-
-
-
-
-
-// export const saveMarkDownContent = ( timerHandle, saveAction, teachObject, editorContent, cacheName, timeoutDuration) => {
-
-//   if ( !  ( editorContent || cacheName || timeoutDuration )  ) return Error('passSaveMarkDownContentTimerHandleByValue-Config is not set.');
-
-//   try {
-
-       
-//    let timeHandleTest;
-
-//    if ( timeHandleTest ) {
-//     clearTimeout( timeHandleTest  )
-//    }
-
-//    if ( timerHandle ) {
-//       clearTimeout( timerHandle  )
-//    }
-   
-//    //sessionStorage.setItem(cacheName, editorContent );
-
-
-//     timerHandle = setTimeout(()=> {
-
-//       //sessionStorage.setItem(cacheName, editorContent );
-
-//      timeHandleTest = setTimeout(() => {
-  
-  
-//       let markDownContent = sessionStorage.getItem( cacheName );
-//        saveAction({...teachObject, markDownContent});
-  
-//      })
-
-
-
-//    }, timeoutDuration, timeHandleTest );
-
-
-    
-//   } catch (error) {
-//     throw Error( error );
-//   }
-// }
-
-
-
-
-
-
-
-// export const saveMarkDownContent = ( timerHandle, saveAction, teachObject, editorContent, cacheName, timeoutDuration) => {
-
-//   if ( !  ( editorContent || cacheName || timeoutDuration )  ) return Error('passSaveMarkDownContentTimerHandleByValue-Config is not set.');
-
-//   try {
-//     sessionStorage.setItem(cacheName, editorContent );
-       
-//    if ( timerHandle ) {
-//       clearTimeout( timerHandle  )
-//    }
-
-//     timerHandle = setTimeout(()=>{
-
-//     let markDownContent = sessionStorage.getItem( cacheName );
-//     saveAction({...teachObject, markDownContent});
-//    }, timeoutDuration );
-    
-//   } catch (error) {
-//     throw Error( error );
-//   }
-// }

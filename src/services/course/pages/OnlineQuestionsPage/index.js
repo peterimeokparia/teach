@@ -1,25 +1,38 @@
-import 
-React, { 
+import { 
 useEffect } from 'react';
+
+import { 
+connect } from 'react-redux';
+
+import {
+onlineQuestionCourseId } from 'Services/course/Actions/OnlineQuestions';
 
 import OnlineQuestionsMultiEditorComponent from './Components/OnlineQuestionsMultiEditorComponent';
 
-const OnlineQuestionsPage = ({ operatorBusinessName, onlineQuestionId, courseId }) => {
-useEffect(() => {}, []);
+const OnlineQuestionsPage = ({ 
+  operatorBusinessName, 
+  onlineQuestionId, 
+  courseId, 
+  onlineQuestionCourseId }) => {
+    
+  useEffect(() => {
+    if ( courseId ) {
+      onlineQuestionCourseId( courseId );
+    }
+}, [ courseId, onlineQuestionCourseId ]);
  
 return (
     <div className="stage" id="stage">
       <div className="" id=""> 
         <div>
-            <OnlineQuestionsMultiEditorComponent 
-              onlineQuestionId={onlineQuestionId} 
-              courseId={courseId}
-              operatorBusinessName={operatorBusinessName}
-            />
+          <OnlineQuestionsMultiEditorComponent 
+            onlineQuestionId={onlineQuestionId} 
+            operatorBusinessName={operatorBusinessName}
+          />
         </div>    
     </div>      
   </div>  
  );
 };
 
-export default OnlineQuestionsPage;
+export default connect(null, { onlineQuestionCourseId })( OnlineQuestionsPage );

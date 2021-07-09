@@ -1,7 +1,4 @@
-import 
-React, {
-useEffect,
-useState }from 'react';
+import { useEffect, useState } from 'react';
 
 import {  
 navigate } from '@reach/router';
@@ -18,7 +15,6 @@ import {
 getOperatorFromOperatorBusinessName } from 'Services/course/Selectors';
 
 import Swal from 'sweetalert2';
-import './style.css';
 
 const PasswordReset = ({  
 userPasswordReset,  

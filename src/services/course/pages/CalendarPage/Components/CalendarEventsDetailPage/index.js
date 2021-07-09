@@ -1,8 +1,6 @@
-import 
-React,{
-useEffect,
-useState    
-} from 'react';
+import { 
+useEffect, 
+useState } from 'react';
 
 import { 
 connect } from 'react-redux';
@@ -37,7 +35,6 @@ import Roles from 'Services/course/Pages/Components/Roles';
 import EventListItems from 'Services/course/Pages/CalendarPage/Components/EventListItems';
 import EditCalendarEvents from 'Services/course/Pages/CalendarPage/Components/EditCalendarEvents';
 import './style.css';
-
 
 const CalendarEventsDetailPage = ({ 
 operatorBusinessName,
@@ -138,7 +135,7 @@ let emailAddresses = Object.values(currentUsers)?.filter(user => testAdminUsers?
 
 function showAllCalendarEvents () {
     setShowAllCalendarEvents(true);
-}
+};
 
 function getClassName(item) {
     return ( isEditMode & selectedItemId !== item?._id ) ? ( isRecurringEvent & selectedItemId === item?._id ) ? liClassName : liClassNameEditView : liClassName; 
@@ -165,17 +162,10 @@ return   (
                         >
                         {( selectedEvent ) => (            
                         < EditCalendarEvents
-                            currentUsers={currentUsers}
-                            calendarEventType={calendarEventType}
                             setIsRecurringEvent={setIsRecurringEvent}
                             setIsEditMode={setIsEditMode}
                             setSelectedItemId={setSelectedItemId}
-                            calendar={calendar}
-                            testAdminUsers={testAdminUsers}
-                            emailAddresses={emailAddresses}
                             currentEvent={selectedEvent}
-                            currentUser={currentUser}
-                            pushNotificationSubscribers={pushNotificationSubscribers}
                             className="lesson-item"
                             onSubmit={( updatedEvent ) => saveEvent({
                                 ...updatedCalendarEvent( updatedEvent, selectedEvent, events, selectedCalendarEventId )
@@ -337,6 +327,7 @@ const mapState = (state, ownProps)   => {
     events: getEventsByOperatorId(state, ownProps),
     pushNotUsers: state?.notifications?.pushNotificationSubscribers,
     pushNotificationSubscribers: getPushNotificationUsersByOperatorId(state, ownProps),
+    calendarEventType: state.calendar.calendarEventType
   };
 };
 

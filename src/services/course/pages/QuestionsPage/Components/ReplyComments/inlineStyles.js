@@ -7,6 +7,16 @@ export const replyIconStyle = (   ) => {
       top: "-3%",
     };
   };
+
+  export const saveIconStyle = (   ) => {
+    return {
+      fontSize: 55,
+      "z-index": 1, 
+      "margin-left": "17%",
+      "margin-right": "12%",
+      top: "-3%",
+    };
+  };
   
   export const deleteIconStyle = (   ) => {
     return {
@@ -20,7 +30,7 @@ export const replyIconStyle = (   ) => {
 
   export const iconStyle = (   ) => {
     return {
-      fontSize: 70,
+      fontSize: 60,
       "margin-left": "30px"
     };
 };

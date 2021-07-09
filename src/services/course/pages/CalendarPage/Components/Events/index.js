@@ -1,8 +1,4 @@
-import 
-React, { 
-useState, 
-useEffect, 
-useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import {
 frequencyCollection,
@@ -11,25 +7,6 @@ transformDateTime } from 'Services/course/Pages/CalendarPage/helpers';
 
 import EventForm from 'Services/course/Pages/CalendarPage/Components/EventForm'
 import './style.css'
-
-// submitEvent,
-// submitEventButtonText === Add / Save
-// saveInProgress,
-// onSaveError,
-// setEndDate,
-// endDate,
-// days,
-// setWeekDays,
-// weekDays,
-// setInterval,
-// interval,
-// setFrequency,
-// frequencyCollection,
-// handleRecurringEvent,
-// setEventTitle,
-// title,
-// inputRef
-// handleSubmit
 
 const Events = ({
 handleSubmit,    
@@ -53,7 +30,6 @@ const [ duration, setDuration ] = useState(1);
 const inputRef = useRef();
 
 useEffect (() => {
-
     if ( inputRef ) {
         inputRef.current.focus();
     }
@@ -69,8 +45,6 @@ if ( onSaveError ) {
 }
 
 const handleRecurringEvent = (event) => {
-
-    alert('test test')
     let isChecked = event.target.checked;
     let value = event.target.value;
 
@@ -83,7 +57,7 @@ const handleRecurringEvent = (event) => {
     }
 }
 
-const submit = (e) => {
+const submit = (e, formData) => {
     e.preventDefault();
 
 const [ start, end, startStr, endStr, allDay ] = Object.entries(slotInfo);
@@ -92,12 +66,11 @@ let event = {}
 let dateTimeString = transformDateTime( startStr, endStr, undefined );    
 
 if ( recurringEvent ) {
-
     event =  { 
-        title: title,
+        title: formData?.title,
         rrule: {
-            freq: frequency,
-            interval: interval,
+            freq: formData?.frequency,
+            interval: formData?.interval,
             dtstart: dateTimeString?.resStartStr,
             until: dateTimeString?.resEndStr
         },
@@ -105,10 +78,9 @@ if ( recurringEvent ) {
     };
     
 } else {
-
     event = {
-        title: title,
-        allDay: allDay[1],
+        title: formData?.title,
+        allDay: formData?.allDay[1],
         start: dateTimeString?.resStartStr,
         end: dateTimeString?.resEndStr,
         duration
@@ -116,6 +88,7 @@ if ( recurringEvent ) {
 }
 
 handleSubmit(event);  
+
 }
 
 let eventFormConfig = {

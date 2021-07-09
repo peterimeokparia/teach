@@ -2,6 +2,7 @@ import {
 add,
 update,
 get,
+remove,
 getById } from 'Services/course/Api';
 
 export const SET_ONLINECOMMENTS_MARKDOWN = "SET ONLINECOMMENTS MARKDOWN";
@@ -13,6 +14,7 @@ export const LOAD_ONLINECOMMENTS_SUCCESS = "LOAD ONLINECOMMENTS SUCCESS";
 export const LOAD_LATEST_ONLINECOMMENTS_SUCCESS = "LOAD LATEST ONLINECOMMENTS SUCCESS";
 export const LOAD_ONLINECOMMENTS_ERROR = "LOAD ONLINECOMMENTS ERROR";
 export const DELETE_ONLINECOMMENTS_SUCCESS = "DELETE ONLINECOMMENTS SUCCESS";
+export const DELETE_ONLINECOMMENTS_ERROR = "DELETE ONLINECOMMENTS ERROR";
 export const RESET_ONLINECOMMENTS_ERROR = "RESET ONLINECOMMENTS ERROR";
 export const SAVE_ONLINECOMMENTS_BEGIN = "SAVE ONLINECOMMENTS BEGIN";
 export const SAVE_ONLINECOMMENTS_ERROR = "SAVE ONLINECOMMENTS ERROR";
@@ -20,7 +22,6 @@ export const SAVE_ONLINECOMMENTS_SUCCESS = "SAVE ONLINECOMMENTS SUCCESS";
 export const SET_EXPLANATION_ANSWER_MARKDOWN = "SET EXPLANATION ANSWER MARKDOWN";
 
 export const addNewOnlineComment = ( comment ) => {
-    // let childComments = [];
     return ( dispatch, getState ) => {
         dispatch({ type: ADD_ONLINECOMMENTS_BEGIN });
         return add( comment, `/onlinecomments` )
@@ -34,8 +35,6 @@ export const addNewOnlineComment = ( comment ) => {
 };
 
 export const saveOnlineComment = ( comment ) => {
-    //alert( 'saveOnlineComment ')
-    //alert(JSON.stringify( comment ))
     return dispatch => {
          dispatch({ type: SAVE_ONLINECOMMENTS_BEGIN });
          return update( comment, `/onlinecomments/` )
@@ -60,10 +59,23 @@ export const loadOnlineComments = ( ) => {
     };
 };
 
-export const loadOnlineCommentsByQuestionId = ( commentId ) => {
+export const loadOnlineCommentsByQuestionId = ( questionId ) => {
     return dispatch => {
          dispatch({ type: LOAD_ONLINECOMMENTS_BEGIN });
-         return getById( commentId, `/onlinecomments/comments/question?questionId=`) // fix in router
+         return getById( questionId, `/onlinecomments/question?questionId=`) // fix in router
+          .then( comment  => { 
+                dispatch({ type: LOAD_ONLINECOMMENTS_SUCCESS, payload: comment });
+                dispatch({ type: LOAD_LATEST_ONLINECOMMENTS_SUCCESS, payload: comment });
+           }).catch( error => {
+                dispatch({ type: LOAD_ONLINECOMMENTS_ERROR , error });
+           });       
+    };
+};
+
+export const loadOnlineCommentsByAnswerId = ( answerId ) => {
+    return dispatch => {
+         dispatch({ type: LOAD_ONLINECOMMENTS_BEGIN });
+         return getById( answerId, `/onlinecomments/answer?answerId=`) // fix in router
           .then( comment  => { 
                 dispatch({ type: LOAD_ONLINECOMMENTS_SUCCESS, payload: comment });
                 dispatch({ type: LOAD_LATEST_ONLINECOMMENTS_SUCCESS, payload: comment });
@@ -86,7 +98,16 @@ export const loadOnlineCommentsByUserId = ( userId ) => {
     };
 };
 
-export const deleteOnlineComment = ( question ) => {};
+export const deleteOnlineComment = comment => {
+    return dispatch => {
+         return remove( comment, `/onlinecomments/` )
+         .then( () => {
+             dispatch({ type: DELETE_ONLINECOMMENTS_SUCCESS, payload: comment });
+         }).catch( error => {
+            dispatch({ type: DELETE_ONLINECOMMENTS_ERROR , error });
+        });
+    };
+};
 
 let timerHandle = null;
  
@@ -101,7 +122,6 @@ export const setMarkDown = ( teachObject, markDownContent, teachObjectType="", a
         };
         timerHandle = setTimeout(() => {
             console.log("...saving markdown text"); 
-            //const latestTeachObjectData = getState()[teachObjectType][teachObjectType][ teachObject?._id ]; 
            dispatch(saveAction( getState()[teachObjectType][teachObjectType][ teachObject?._id ] ));
         }, 2000);  
     };

@@ -1,13 +1,8 @@
-import 
-React, { 
-useEffect } from 'react';
+import { useEffect } from 'react';
 
 import NavLinks from './node_modules/Services/course/Pages/Components/NavLinks';
 
-import OnlineQuestionsMultiEditorComponent from './node_modules/Services/course/Pages/OnlineQuestionsPage/Components/OnlineQuestionsMultiEditorComponent';
-import './style.css';
-
-const OnlineQuestionsSavedAnswersPage = ({ 
+const OnlineQuestionDetailPage = ({ 
   operatorBusinessName, 
   onlineQuestionId, 
   courseId }) => {
@@ -15,7 +10,6 @@ const OnlineQuestionsSavedAnswersPage = ({
 useEffect(() => {}, []);
 
 return (
-    // <div className="LessonPlan">
     <div className="">
       <div className="stage" id="stage"> 
         <div>
@@ -28,4 +22,4 @@ return (
  );
 }
 
-export default OnlineQuestionsSavedAnswersPage;
+export default OnlineQuestionDetailPage;

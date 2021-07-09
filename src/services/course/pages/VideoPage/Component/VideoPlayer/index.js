@@ -1,5 +1,3 @@
-import React from 'react';
-
 const VideoPlayer = ({ className, videoRef, handleCanPlay  }) => {
     return   (    
          <span> 

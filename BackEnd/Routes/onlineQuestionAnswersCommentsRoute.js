@@ -4,8 +4,11 @@ import onlineCommentModel from '../Model/onlineCommentModel.js';
 
 import {
 getPostData,    
-saveUpdatedData   
-} from '../Helpers/storageHelper.js';
+saveUpdatedData } from '../Helpers/storageHelper.js';
+
+import { 
+ONLINECOMMENTSROUTE,
+handleBackEndLogs } from '../Helpers/logHelper.js';
 
 const onlineQuestionAnswersCommentsRoute = express.Router();
 
@@ -16,7 +19,8 @@ onlineQuestionAnswersCommentsRoute.get('/', (req, res) => {
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log(error);
+        console.log( error );
+        handleBackEndLogs( ONLINECOMMENTSROUTE, error );
         return res.status(400).json({ error })
     });
  });
@@ -27,10 +31,38 @@ onlineQuestionAnswersCommentsRoute.get('/', (req, res) => {
     .then(data => {
         return res.status(200).json(data);
     })
-    .catch(error =>{    
-        return res.status(400).json({ error }); 
+    .catch( error => {
+        console.log( error );
+        handleBackEndLogs( ONLINECOMMENTSROUTE, error );
+        return res.status(400).json({ error })
     });
 });
+
+onlineQuestionAnswersCommentsRoute.get('/question', (req, res) => {
+    onlineCommentModel.find({ onlineQuestionId: req.query.questionId })
+    .then(data => {
+        console.log('onlineQuestionAnswersCommentsRoute onlineQuestionAnswersCommentsRoute', data);
+        return res.status(200).json(data);
+    })
+    .catch( error => {
+        console.log( error );
+        handleBackEndLogs( ONLINECOMMENTSROUTE, error );
+        return res.status(400).json({ error })
+    });
+ });
+
+ onlineQuestionAnswersCommentsRoute.get('/answer', (req, res) => {
+    onlineCommentModel.find({ onlineQuestionAnswerId: req.query.answerId })
+    .then(data => {
+        console.log('onlineQuestionAnswersCommentsRoute onlineQuestionAnswersCommentsRoute', data);
+        return res.status(200).json(data);
+    })
+    .catch( error => {
+        console.log( error );
+        handleBackEndLogs( ONLINECOMMENTSROUTE, error );
+        return res.status(400).json({ error })
+    });
+ });
 
 onlineQuestionAnswersCommentsRoute.get('/comment/user', (req, res) => {
     let userId = { userId: req?.query?.userId };
@@ -38,7 +70,9 @@ onlineQuestionAnswersCommentsRoute.get('/comment/user', (req, res) => {
     .then(data => {
         return res.status(200).json(data);
     })
-    .catch(error => { 
+    .catch( error => {
+        console.log( error );
+        handleBackEndLogs( ONLINECOMMENTSROUTE, error );
         return res.status(400).json({ error })
     });
 })
@@ -55,8 +89,9 @@ onlineQuestionAnswersCommentsRoute.post('/', (req, res) => {
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log(error);
-        return res.status(400).json({ error });
+        console.log( error );
+        handleBackEndLogs( ONLINECOMMENTSROUTE, error );
+        return res.status(400).json({ error })
     });
 });
 
@@ -68,8 +103,9 @@ onlineQuestionAnswersCommentsRoute.put('/:commentId', (req, res) => {
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log(error);
-        return res.status(400).json({ error });
+        console.log( error );
+        handleBackEndLogs( ONLINECOMMENTSROUTE, error );
+        return res.status(400).json({ error })
     });
 });
 
@@ -80,6 +116,7 @@ onlineQuestionAnswersCommentsRoute.delete('/:commentId', (req, res) => {
     onlineCommentModel.remove({ _id: req.params.commentId }, ( error, result ) => {
         if ( error ) {
             console.log(error)
+            handleBackEndLogs( ONLINECOMMENTSROUTE, error );
             return res.status(400).send(error);
         }
         else {

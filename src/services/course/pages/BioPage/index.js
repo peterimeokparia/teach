@@ -1,6 +1,4 @@
-import 
-React, { 
-useState } from 'react';
+import { useState } from 'react';
 
 import { 
 connect } from 'react-redux';
@@ -50,7 +48,7 @@ const BioPage = ({
 
   return  (
           <div> 
-              <div className="MyCourses">
+              <div className="MyBios">
                       <header> 
                           <h1>  {`Welcome ${user?.firstname}! `} </h1>
                           <div>  
@@ -60,13 +58,12 @@ const BioPage = ({
                           />
                           <Cart />
                           </div>
-                        </header>
+                      </header>
                       <br></br>
-                      { (user?.role === "Tutor" && 
-                          tutor?.firstname === user?.firstname) && 
-                            <button className="view-bio-btn" onClick={toggleEditing}>
-                              {editing ? 'Preview' : 'Edit'}
-                            </button> }  
+                      { (user?.role === "Tutor" && tutor?.firstname === user?.firstname) && 
+                          <button className="view-bio-btn" onClick={toggleEditing}>
+                            {editing ? 'Preview' : 'Edit'}
+                          </button> }  
                       <div className="row">
                         <div className="col">
                         <h1>  {`${tutor?.firstname} `} </h1>           
@@ -79,8 +76,7 @@ const BioPage = ({
                                 teachObjectName={"users"}
                             />
                         </div> 
-                      </div>                          
-                    
+                      </div>                                  
                       <div className="content">                                                     
                           <div className="sidebar" />
                           <div className={"bio-editor"}>

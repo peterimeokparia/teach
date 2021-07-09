@@ -76,9 +76,11 @@ const reducer =  produce( (draft, action) => {
              draft.onSessionsError = action.error;
         return;
         case AUTO_RENEW_PACKAGE_SUCCESS:
-             draft.autoRenewedPackageSuccess = (action.payload?.paymentStatus === "approved");
+             draft.autoRenewedPackageSuccess = (action.payload?.User?.paymentStatus === "approved");
         return;    
-        case AUTO_RENEW_PACKAGE_ERROR:      
+        case AUTO_RENEW_PACKAGE_ERROR:   
+            draft.onSessionsError = action.payload.error;  
+        return; 
         default:
         return;
 

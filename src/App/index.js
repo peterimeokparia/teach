@@ -1,4 +1,3 @@
-import React from 'react';
 import MainRoute from './MainRoute';
 import './style.css';
 import dotenv from 'dotenv';

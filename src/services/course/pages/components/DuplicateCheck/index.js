@@ -1,5 +1,3 @@
-import React from 'react';
-
 const DuplicateCheck = ({item, collection}) => {
   return ( collection?.includes( item ) && <div> 
               <video width={width} height={height} controls >

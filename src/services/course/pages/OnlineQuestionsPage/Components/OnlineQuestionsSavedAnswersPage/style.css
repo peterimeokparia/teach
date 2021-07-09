@@ -1,34 +1,27 @@
 .savedAnswers{
-  position: fixed;
-
+  position: absolute;
+  background: white;
 }
 .savedAnswers .content .sidebar {
   flex-basis: 300px;
-  background: #fbf9ff;
+  background: white;
   border-right: 0px solid #bba0ea;
   padding-left: 0px; 
 }
-
 .savedAnswersList{
   list-style: none;
-  /* background: #fbf9ff; */
   margin-top:  -10px;
   margin-left:  -320px;
-  /* padding-left: -3000px; */
   overflow: auto;
   height: 500px;
-  width: 160px;
+  width: 360px;
 }
-
 .savedAnswers-item{
- padding-bottom: 10px;
- border-bottom-width: 10px;
- border-right: 1px solid black;
- border-bottom:  1px solid #bba0ea;
- margin-left: 10px;
- margin-bottom: 5px;
- /* border-style: solid; */
- border-radius: 13px;
+  text-transform: capitalize;
+  padding-bottom: 20px;
+  margin-bottom: 5px;
+  margin-left: 30px;
+  background: white;
 }
 .navlink-text {
   text-align: block;
@@ -36,8 +29,101 @@
   padding-bottom: 20px;
 }
 .sideBarSavedCourses{
-  position: fixed;
-  margin-top: -15px;
-  margin-left: -130px;
-  margin-right: 300px;
+  position: absolute;
+  background: white;
+  text-transform: capitalize;
+  margin-left: 200px;
+  width: 1000px;
+  overflow: auto;
+}
+@media (min-width: 1281px) {
+  
+  /* CSS */
+  
+}
+
+/* 
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+  
+  /* CSS */
+  
+}
+
+/* 
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  
+  /* CSS */
+  
+}
+
+/* 
+  ##Device = Tablets, Ipads (landscape)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  
+  /* CSS */  
+}
+
+/* 
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+
+@media (min-width: 481px) and (max-width: 767px) {    
+  /* CSS */
+  .sideBarSavedCourses{
+    position: absolute;
+    background: white;
+    text-transform: capitalize;
+    margin-left: 10px;
+    width: 320px;
+    overflow: auto;
+  }
+}
+/* 
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+@media (min-width: 320px) and (max-width: 480px) {
+  /* CSS */
+  .savedAnswers{
+    /* position: relative; */
+    background: white;
+  }
+  .savedAnswers header {
+    width: 20px;
+  }
+  .savedAnswers .content .sidebar {
+    flex-basis: 300px;
+    background: white;
+    border-right: 0px solid #bba0ea;
+    padding-left: 0px; 
+  }
+  .savedAnswersList{
+  list-style: none;
+  margin-top:  -10px;
+  margin-left:  -350px;
+  overflow: auto;
+  height: 300px;
+  width: 220px;
+}
+.sideBarSavedCourses{
+  /* position: absolute; */
+  /* position: relative; */
+  background: white;
+  text-transform: capitalize;
+  margin-left: -80px;
+  width: 250px;
+  overflow: auto;
+}
 }

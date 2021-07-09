@@ -30,7 +30,7 @@ export const loadClassRooms = () => {
         dispatch({ type: LOAD_CLASSROOMS_BEGIN });
         get('/classrooms')
          .then( classroom => {
-             dispatch({ type: LOAD_CLASSROOMS_SUCCESS, payload: classroom });
+            dispatch({ type: LOAD_CLASSROOMS_SUCCESS, payload: classroom });
          }).catch( error => {
             dispatch({ type: LOAD_CLASSROOMS_ERROR , error });
         });
@@ -41,18 +41,11 @@ export const addNewClassRoom = ( name, description, classRoomUsers,  user, opera
     return dispatch => {
        user = { ...user,  classRooms: user?.classRooms, operatorId: operator?._id };
         dispatch({ type: ADD_CLASSROOM_BEGIN });
-        return add({ name, description, classRoomUsers, userId: user?._id, operatorId: operator?._id} , '/classrooms')
+        return add( { name, description, classRoomUsers, userId: user?._id, operatorId: operator?._id} , '/classrooms')
         .then(classroom => {
-            classRoomUsers.forEach(classroomuser => {
-                classroomuser.value.classRooms.push( classroom?._id );
-                updateUser( classroomuser?.value );
-            });
-           user.classRooms.push( classroom?._id ); 
-           updateUser(user);
-           dispatch({ type: ADD_CLASSROOM_SUCCESS, payload: classroom });
-           dispatch({ type: LAST_LOGGEDIN_USER, payload: user });  
+           dispatch({ type: ADD_CLASSROOM_SUCCESS, payload: { classroom, user, classRoomUsers } });
         }).catch(error => { 
-             dispatch({ type: ADD_CLASSROOM_ERROR, error });
+           dispatch({ type: ADD_CLASSROOM_ERROR, error });
      });
     };
 };
@@ -63,7 +56,7 @@ export const saveClassRoom = ( classroom ) => {
         return update( classroom, `/classrooms/` )
          .then( classroom => {  
              dispatch({        
-              type: SAVE_CLASSROOM_SUCCESS, payload: classroom }); 
+              type: SAVE_CLASSROOM_SUCCESS, payload: { classroom } }); 
           }).catch( error => {
               dispatch({ type: SAVE_CLASSROOM_ERROR , error });
         });        

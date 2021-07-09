@@ -1,8 +1,4 @@
-import 
-React, { 
-useState, 
-useRef, 
-useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 import { 
 connect } from 'react-redux';
@@ -74,7 +70,6 @@ return (
       {
         <div className="NewDetailedLessonPage"> 
             <label>
-                Add New Lesson
             </label>  
             <form
                 className= {`${className || ''} editing ${error ? 'error' : ''}`}
@@ -82,15 +77,17 @@ return (
             >
             <label>
             <input 
+                className={"new-lesson-text"}
                 ref={ inputRef }
                 value={ title }
                 type="text"
                 onChange={ e => setLessonTitle( e.target.value) }
                 disabled={saveInProgress}
-                placeholder="Title"
+                placeholder="Add A New Lesson Title"
             />
             </label>
             <input
+                className={"new-lesson-submit-button"}
                 ref={ inputRef }
                 name="submit"
                 type="submit"
@@ -100,9 +97,11 @@ return (
             </input> 
             </form>
             <form
-                className= {`${className || ''} editing ${error ? 'error' : ''}`} 
+                // className= {`${className || ''} editing ${error ? 'error' : ''}`} 
+                className={"add-new-lesson"}
             >
             <input
+                className={"new-lesson-reset-button"}
                 ref={ inputRef }
                 name="reset"
                 type="submit"

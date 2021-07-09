@@ -1,5 +1,4 @@
-import 
-React, { 
+import { 
 useState, 
 useEffect } from 'react';
 
@@ -15,6 +14,7 @@ import{
 incrementSessionCount } from 'Services/course/Actions/Sessions';
 
 import{
+saveLesson,
 toggleTeachBoardOrEditor,   
 setLessonInProgressStatus } from 'Services/course/Actions/Lessons';
 
@@ -30,112 +30,154 @@ getUsersByOperatorId,
 getCoursesByOperatorId } from 'Services/course/Selectors';
 
 import { 
-meetingConfigSettings, 
-getUrls } from  './helpers';
+getUrls } from  'Services/course/Pages/Lessons/LessonPlan/helpers';
+
+import {
+getLessonPlanUrls } from 'Services/course/Pages/ClassRoomPage/helpers';
 
 import { 
-getMeetings } from  'Services/course/Pages/Meeting/helpers';
+meetingConfigSettings } from  'Services/course/Pages/Lessons/LessonPlan/helpers';
+
+import {
+updateMeetingStatus } from 'Services/course/Pages/Meeting/helpers';
+  
+import {
+role } from 'Services/course/helpers/PageHelpers';
 
 import { 
-Validations } from  'Services/course/helpers/Validations';
-
-import { 
-Rnd } from 'react-rnd';
+Validations } from 'Services/course/helpers/Validations';
 
 import { 
 Redirect, 
 navigate } from '@reach/router';
+  
+import {
+toggleVideoModalMode } from 'Services/course/Actions/Video';
 
 import { 
-navContent } from  'Services/course/Pages/Components/NavigationHelper';
-  
-import MainMenu from '../../Components/MainMenu';
-import NavLinks  from '../../Components/NavLinks';
-import LessonPlanIframeComponent from 'Services/course/Pages/Lessons/LessonPlan/Components/LessonPlanIframeComponent';
+navContent } from 'Services/course/Pages/Components/NavigationHelper';
+
+import {
+videoCallIconMain,
+videoCallIcon,
+adjustRoomIcon,
+shareScreenIcon,
+exitVideoCallIcon,  
+onlineQuestionVideoDeleteIconStyle,
+iconStyleMain,
+videoMeta } from 'Services/course/Pages/Lessons/LessonPlan/inlineStyles.js';
+
+import { 
+Rnd } from 'react-rnd';
+
+import LessonPlanIframeComponent  from 'Services/course/Pages/Components/LessonPlanIframeComponent';
+import Meeting from 'Services/course/Pages/Meeting';
+import MaterialUiVideoComponent from 'Services/course/Pages/Components/MaterialUiVideoComponent';
+import MainMenu from 'Services/course/Pages/Components/MainMenu';
+import NavLinks  from 'Services/course/Pages/Components/NavLinks';
+import NotesIcon from '@material-ui/icons/Notes';
+import VideoCallIcon from '@material-ui/icons/VideoCall';
+import AdjustIcon from '@material-ui/icons/Adjust';
+import NoteAddTwoToneIcon from '@material-ui/icons/NoteAddTwoTone';
+import Swal from 'sweetalert2';
+import BoardEditorDisplay from 'Services/course/Pages/Lessons/LessonPlan/Components/BoardEditorDisplay';
+import DraggableMeetingComponent from 'Services/course/Pages/Lessons/LessonPlan/Components/DraggableMeetingComponent';
 import VideoPage from 'Services/course/Pages/VideoPage';
-import Meeting from '../../Meeting';
 import './style.css';
 
 const LessonPlan = ({ 
-operatorBusinessName,
-operator,  
-courseId,
-classRoomGroupId,
-classRoomGroupName,
-classRoomId,
-classRoomName,  
-lessonId, 
-lessonTitle,
-lessons,
-selectedCourseTutor,
-classRoomLessonPlan,
-users,
-currentUser,
-boardOrEditor,
-toggleTeachBoardOrEditor,
-lastLoggedInUser,
-studentsSubscribedToThisCourse,
-loadMeetings,
-loadMeetingsByMeetingId,
-paidSessions,
-courses,
-incrementSessionCount,
-updateUserInvitationUrl,
-saveMeeting,
-currentMeetings }) => {
-const urls = getUrls(currentUser, courseId, lessonId, lessonTitle);
-const editorUrl = urls.editor.dev;
-const canvasUrl = urls.canvas.dev;   
-const fullScreenSize = "1536px";
+  operatorBusinessName,
+  operator,  
+  toggleVideoModalMode,
+  courseId,
+  classRoomGroupId,
+  classRoomGroupName,
+  classRoomId,
+  classRoomName,  
+  videoState,
+  lessons,
+  selectedCourseTutor,
+  classRoomLessonPlan,
+  saveLesson,
+  users,
+  currentUser,
+  boardOrEditor,
+  toggleTeachBoardOrEditor,
+  lastLoggedInUser,
+  studentsSubscribedToThisCourse,
+  loadUsers,
+  loadMeetings,
+  loadMeetingsByMeetingId,
+  paidSessions,
+  courses,
+  incrementSessionCount,
+  updateUserInvitationUrl,
+  saveMeeting,
+  selectedCourseFromLessonPlanCourseDropDown,
+  selectedLessonFromLessonPlanDropDown,
+  currentMeetings }) => {
+  const fullScreenSize = "1536px";
+  const [ hideMeetingStage, setHideMeetingStage ] = useState(false);
+  const [ fullMeetingStage, setFullMeetingStage ] = useState(false);
+  const [ videoModalModeOn,  setVideoModalMode ] = useState(false);
+  const [ session, setSession] = useState( false );  
+  let [ roomSize, setRoomSize] = useState(1);  
+  const [ selectedTutor, setSelectedTutor ] = useState( undefined );  
+  const paidSession = paidSessions?.filter(session => session?.courseId === courseId)?.find( currentSession => currentSession?.userId === currentUser?._id );
+  const lesson = selectedLessonFromLessonPlanDropDown; 
+  const course = selectedCourseFromLessonPlanCourseDropDown;
+  // const meetingSettings = meetingConfigSettings( course?.name, lesson?.title );;
+  // const meetingStyleContainer = ( fullMeetingStage ) ? 'meeting-full' :  ( hideMeetingStage ) ? 'meeting-hide' : `meeting`;
+  const urls = getUrls(currentUser, courseId, lesson?._id, lesson?.title)
+  const editorUrl = urls.editor.dev;
+  const canvasUrl = urls.canvas.dev; 
 
-const [ hideMeetingStage, setHideMeetingStage ] = useState(false);
-const [ fullMeetingStage, setFullMeetingStage ] = useState(false);
-const [ videoModalModeOn,  setVideoModalMode ] = useState(false);
-const [ session, setSession] = useState( false );  
-const paidSession = paidSessions?.filter(session => session?.courseId === courseId)?.find( currentSession => currentSession?.userId === currentUser?._id );
-const lesson = classRoomLessonPlan[classRoomId]?.selectedLesson; 
-const currentCourse = courses?.find(course => course?._id === courseId)?.name;
-
-useEffect(()=>{
-  loadUsers();
-  loadMeetings();
-}, [ fullMeetingStage, hideMeetingStage, loadMeetings  ]);
+  useEffect(() => {
+    loadUsers();
+    loadMeetings();
+  }, [ loadMeetings, loadUsers   ]);
 
 handleRedirectionsOnPageLoad();
 
 const toggleTeach = () => {
+  
+  let tutor =  users?.find(usr => usr?._id === classRoomId );
+
   if ( session ) {
-      if ( videoModalModeOn ){
-        Validations.warn( 'Recording In Progress. To end this teaching session, please stop the recording.' );
-        return;
-      }
+    if ( videoModalModeOn ){
+      Validations.warn( 'Recording In Progress. To end this teaching session, please stop the recording.' );
+      return;
+    }
 
-      if ( fullMeetingStage ){
-        setFullMeetingStage(false); 
-      }
+    if ( fullMeetingStage ){
+      setFullMeetingStage(false); 
+    }
 
-      setSession(false);
-      setHideMeetingStage(false);
-      let selectedTutor = users?.find(usr => usr?._id === classRoomId );
-
-      handleMeetings(currentMeetings, selectedTutor, currentUser);
+    setSession(false);
+    setHideMeetingStage(false);
+    loadUsers();
+    loadMeetings();
+    handleMeetings(  tutor, currentUser  );
+    setSelectedTutor( tutor );
   }
+  
   else{
-      setSession(true);
-      setHideMeetingStage(false);
-      loadMeetingsByMeetingId(currentUser?._id);
-  };
+    setSession(true);
+    setHideMeetingStage(false);
+    loadUsers();
+    loadMeetingsByMeetingId(tutor?.meetingId);
+  }
 };
 
-const showFullMeetingStage = () => {
-  if ( fullMeetingStage ) {
-      setFullMeetingStage(false);
-      setHideMeetingStage(false);
+const toggleRoomSize = () => {
+  if ( roomSize === 2) {
+    roomSize = 0;
   }
-  else {
-    setFullMeetingStage(true);
-    setHideMeetingStage(true);
-  } 
+  let newSize = roomSize;
+
+  newSize += 1;
+  alert(newSize);
+  setRoomSize( newSize );
 };
 
 const resetAllStartSettings = () => {
@@ -158,59 +200,158 @@ const hidePopUpWindow = () => {
   }
 };
 
+const saveVideoRecording = ( element ) => {
+  alert('videoRecording')
+  alert(JSON.stringify(element?.videoUrl))
+  saveLesson( element );
+};
+
 function handleRedirectionsOnPageLoad(){
-  if ( ! currentUser?.userIsValidated ) {  
+  if ( currentUser && !currentUser?.userIsValidated ) {  
       navigate(`/${operatorBusinessName}/LessonPlan/invite/userverification/classRoom/${classRoomId}`); 
   } 
-
   if ( paidSession?.numberOfSessions === session?.totalNumberOfSessions  && session?.typeOfSession === "Package" && currentUser?.role === "Student" ) { 
     return <Redirect to={`/${operatorBusinessName}/mycourses`} noThrow />;
   }
-}
+};
 
-function handleMeetings( meetings, tutor, currentUser ){
+function handleMeetings( tutor, user ){
+  let usersWhoJoinedTheMeeting = [];
+
   try {
-    let setInvitationUrl = "", nameOfLessonInProgress = "", lessonInProgress = false;
-
-    loadMeetings();
-    let meeting = getMeetings(meetings, tutor);
-
-    if ( meeting ) {
-        meeting.invitees.forEach( user => {
-          user[ 'timeMeetingEnded' ] =  Date.now();
-          incrementSessionCount( meeting?.sessions?.find(session => session?.userId === user?._id ) ); 
-          updateUserInvitationUrl(user, setInvitationUrl, nameOfLessonInProgress, lessonInProgress);   
-        });
-    }
-    saveMeeting(tutor?.meetingId, { ...meeting, timeEnded: Date.now() });
-    lastLoggedInUser(currentUser);
+    loadMeetingsByMeetingId( tutor?.meetingId )
+    .then(meeting => {
+      updateMeetingStatus(user, lastLoggedInUser );
+        if ( user?.role === role.Tutor ) {
+          incrementSessionCountForMeetingUsers( meeting, usersWhoJoinedTheMeeting );
+          saveMeeting(tutor?.meetingId, { ...meeting, timeEnded: Date.now(), 
+            usersWhoJoinedTheMeeting: ( meeting.usersWhoJoinedTheMeeting === undefined )
+              ? usersWhoJoinedTheMeeting
+              : (meeting?.usersWhoJoinedTheMeeting.includes(currentUser?._id) 
+                  ? [ ...meeting?.usersWhoJoinedTheMeeting, ...usersWhoJoinedTheMeeting ] 
+                  : [ ...meeting?.usersWhoJoinedTheMeeting, currentUser?._id, ...usersWhoJoinedTheMeeting ]) 
+          }
+          );
+        }
+      })
+      .catch( error => {
+        throw Error(`handleMeetings: loadMeetingsByMeetingId: ${error}`);
+    });  
   } catch (error) {
-    console.log( error );
-  }
-}
+        console.error( error );
+        throw Error(`handleMeetings: loadMeetingsByMeetingId: ${error}`);
+    }
+};
 
-const meetingSettings = meetingConfigSettings(currentCourse, lessonTitle);
-const meetingStyleContainer = ( fullMeetingStage ) ? 'meeting-full' :  ( hideMeetingStage ) ? 'meeting-hide' : `meeting`; 
-let navigationContent = navContent( currentUser, operatorBusinessName, currentUser?.role,  "Student" ).users;   
-  
+function incrementSessionCountForMeetingUsers( meeting, usersWhoJoinedTheMeeting ){
+  let setInvitationUrl = "", nameOfLessonInProgress = "", lessonInProgress = false, meetingId = "";
+
+  if ( meeting && currentUser?.role === role.Tutor ) { 
+    currentUser = currentUser = { ...currentUser, timeMeetingEnded: Date.now() , setInvitationUrl, nameOfLessonInProgress, lessonInProgress, meetingId };
+    updateUserInvitationUrl( currentUser, setInvitationUrl, nameOfLessonInProgress, lessonInProgress, meetingId);  
+    meeting?.invitees?.forEach( user => {
+      let session = meeting?.sessions?.find(session => session?.userId === user?._id );
+
+      verifyMeetingStatusBeforeIncrementingSessionCount( session, user, usersWhoJoinedTheMeeting )
+      updateUserInvitationUrl(user, setInvitationUrl, nameOfLessonInProgress, lessonInProgress, meetingId);  
+    });
+  }
+};
+
+function handleIncrementingSessionCountForMeetingInvitees( session ){
+  if ( session ) {
+    incrementSessionCount( session );
+  }
+};
+
+function verifyMeetingStatusBeforeIncrementingSessionCount( session, invitee, usersWhoJoinedTheMeeting ) {
+  Swal.fire({
+    title: 'Please Verify Meeting Attendees',
+    icon: 'warning',
+    html:`<div> ${invitee?.firstname}. </div> <div> ${invitee?.email}. </div> <div>Attended ?</div>`,
+    showCancelButton: true,
+    confirmButtonText: 'Attended',
+    confirmButtonColor: '#673ab7',
+    cancelButtonText: 'Did not attend'
+  }).then( (response) => {
+      if ( response?.value ) {
+         usersWhoJoinedTheMeeting = [ ...usersWhoJoinedTheMeeting, invitee ];
+          handleIncrementingSessionCountForMeetingInvitees( session );
+      } 
+  });
+
+};
+
+function adjustRoomSize( roomsize ){
+  let settings = {}, roomSizeSettings = { 
+    settings: ( containerStyle, meetingRoomHeight, meetingRoomWidth ) => { return {
+      containerStyle, 
+      meetingRoomHeight, 
+      meetingRoomWidth
+    } } 
+  };
+
+  let size = {
+    videoCall:'video-call',
+    videoCallFull:'video-call-full',
+    videoCallHide:'video-call-hide',
+    videoCallPercentageOne:'100%',
+    videoCallPixelPoints:'920px'   // optimal is between 720 & 920
+  }
+
+  switch (roomsize) { 
+    case 1:
+      settings = roomSizeSettings.settings(size.videoCall, size.videoCallPercentageOne, size.videoCallPercentageOne);
+      break;
+    case 2:
+      settings = roomSizeSettings.settings(size.videoCallFull, size.videoCallPixelPoints, size.videoCallPixelPoints);
+      break;
+    default:
+      settings = roomSizeSettings.settings(size.videoCall, size.videoCallPercentageOne, size.videoCallPercentageOne);
+      break;
+  }
+  return settings;
+}
 return (
-      <div className="LessonPlan" onDoubleClick={hidePopUpWindow}>  
-            <header> 
-                <MainMenu 
-                  navContent={navigationContent}
-                />
-                  <h1>
-                    <NavLinks to={`/${operatorBusinessName}/classroomgroups/${classRoomGroupId}/${classRoomGroupName}/classroom/${classRoomId}`}> {classRoomName}   </NavLinks>
-                  </h1>
-                  <div className="lesson-item"> 
-                      <span className="span-btns">  
-                          {/* images / gif */}
-                            <button className="plan-lesson-btn" onClick={toggleTeach}> { session ? 'End' : 'Start Video' } </button>
-                            <button className={ `toggle-stage-btns${fullMeetingStage ? "-hide" : "-show"}` } onClick={toggleTeachBoardOrEditor}> { boardOrEditor ? 'Board' : 'Editor' } </button>         
-                            <button className={`toggle-stage-btns${(session) ? (fullMeetingStage) ?  "-show" : "-show" : "-hide" }`}  onClick={showFullMeetingStage}> { ( session && fullMeetingStage) ? "Hide Room"  :  "Show Room"  } </button> 
-                            <VideoPage 
+    <div className="MeetingPlan" onDoubleClick={hidePopUpWindow}>  
+      <header> 
+      <MainMenu 
+        navContent={ navContent( currentUser, operatorBusinessName, currentUser?.role,  "Student" )?.users }
+      />
+        <h1>
+          <NavLinks to={`/${operatorBusinessName}/classroomgroups/${classRoomGroupId}/${classRoomGroupName}/classroom/${classRoomId}`}> 
+          {classRoomName}   
+          </NavLinks>
+        </h1>
+        <div className="lesson-item"> 
+        <span className="span-btns">  
+        <VideoCallIcon 
+            style={ videoCallIcon(  ) }
+            className={ ( session ) ? "lesson-plan-round-button-3" : "lesson-plan-round-button-2" }
+            onClick={() => toggleTeach( lesson )} 
+        />
+        <NotesIcon
+            style={ iconStyleMain() }
+            className="lesson-plan-round-button-1"
+            onClick={() => toggleTeachBoardOrEditor( lesson )} 
+        />
+        <AdjustIcon
+            style={ adjustRoomIcon( session ) }
+            className="lesson-plan-round-button-1"
+            onClick={() => toggleRoomSize()} 
+        />
+        < MaterialUiVideoComponent 
+            className={""} 
+            element={ lesson } 
+            videoMeta={videoMeta( lesson )}
+            resetAllStartSettings={resetAllStartSettings}
+            resetAllStopSettings={resetAllStopSettings}
+            setVideoModalMode={(stage) => setVideoModalMode(stage)}
+            VideoModalMode={videoModalModeOn}
+            // saveRecording={saveVideoRecording}
+        />
+                    {/* <VideoPage 
                                 buttonClassName={`toggle-stage-btns${( session ) ? "-show" : "-hide"}`} 
-                                recordStream={session}
                                 enableScreenShare={true} 
                                 enableCameraStream={false}
                                 resetAllStartSettings={ resetAllStartSettings }  
@@ -220,60 +361,59 @@ return (
                                 videoMetaData={lesson}
                                 videoMetaDataExternalId={"courseId"}
                                 videoNamePrefix={"LessonVideo"}
-                            />
-                        </span>
-                  </div>
+                            /> */}
+        </span>
+        </div>
           </header>
-            <div className="content">    
+          <div className="content">    
             <div> 
-              <div className={ meetingStyleContainer }>   
-                  <Rnd>                 
-                      <div>
-                      { ( session  ) 
-                          ? <Meeting
-                              userName={currentUser?.firstname}   
-                              roomName={meetingSettings.roomName}
-                              containerWidth={( fullMeetingStage ) 
-                                ? meetingSettings.fullScreen.meetingContainerStyle.containerWidth 
-                                : meetingSettings.popOutScreen.meetingContainerStyle.containerWidth}
-                              containerHeight={( fullMeetingStage ) 
-                                ? meetingSettings.fullScreen.meetingContainerStyle.containerHeight 
-                                : meetingSettings.popOutScreen.meetingContainerStyle.containerHeight}   
-                            />
-                          : <div> </div>          
-                      }
-                      </div>
-                  </Rnd> 
-              </div> 
-            <div className={ fullMeetingStage ? `tools-hide` : `tools`    }> 
-              {boardOrEditor ? <div className={`editor${hideMeetingStage}-show`}> 
-                                      < LessonPlanIframeComponent 
-                                        name="embed_readwrite" 
-                                        source={editorUrl}
-                                        width={fullScreenSize}
-                                        height="900px"
-                                        allow="camera;microphone"
-                                        scrolling="yes"
-                                        frameBorder="0" 
-                                      /> 
-                                </div>
-                            :   <div className={`canvas${hideMeetingStage}-show`}> 
-                                      < LessonPlanIframeComponent 
-                                        name="embed_readwrite" 
-                                        source={canvasUrl}
-                                        width={fullScreenSize}
-                                        height="900px"
-                                        allow="camera;microphone"
-                                        scrolling="yes"
-                                        frameBorder="0"
-                                        allowFullScreen
-                                      />
-                                </div>                             
-              } 
-                    </div>
-                </div>          
-                    {Validations.setErrorMessageContainer()}
+          <div className={ fullMeetingStage ? `tools-hide` : `tools`    }> 
+            {boardOrEditor 
+            ? <div className={`editor${hideMeetingStage}-show`}> 
+                < LessonPlanIframeComponent 
+                  name="embed_readwrite" 
+                  source={editorUrl}
+                  width={fullScreenSize}
+                  height="900px"
+                  allow="camera;microphone"
+                  scrolling="yes"
+                  frameBorder="0" 
+                /> 
+             </div>
+            : <div className={`canvas${hideMeetingStage}-show`}> 
+                  < LessonPlanIframeComponent 
+                    name="embed_readwrite" 
+                    source={canvasUrl}
+                    width={fullScreenSize}
+                    height="900px"
+                    allow="camera;microphone"
+                    scrolling="yes"
+                    frameBorder="0"
+                    allowFullScreen
+                  />
+              </div>                          
+            } 
+            </div>
+            </div>        
+            <div className=''>
+            <div>
+            <div className={adjustRoomSize( roomSize ).containerStyle}>   
+              <div className={`meeting-stage-${(hideMeetingStage) ? 'hidden' : 'visible'}`}>
+              { ( session  )? <Meeting
+                      userName={currentUser?.firstname}   
+                      roomName={lesson?.title}
+                      containerHeight={adjustRoomSize( roomSize )?.meetingRoomHeight}
+                      containerWidth={adjustRoomSize( roomSize )?.meetingRoomWidth}  
+                    />
+                  : <div> </div>          
+              }
               </div>
+            
+            </div> 
+            </div>
+          </div>  
+          { Validations.setErrorMessageContainer() }
+      </div>
         </div>
       );
 };
@@ -282,16 +422,20 @@ const mapDispatch = {
   toggleTeachBoardOrEditor, 
   updateUserInvitationUrl, 
   setLessonInProgressStatus,  
-  inviteStudentsToLearningSession, 
+  inviteStudentsToLearningSession,
+  saveLesson,
+  loadUsers, 
   loadMeetings, 
   loadMeetingsByMeetingId,
   saveMeeting, 
   incrementSessionCount,
-  lastLoggedInUser
+  lastLoggedInUser,
+  toggleVideoModalMode
 };
 
 const mapState = ( state, ownProps )   => {
   return {
+    videoState: state.hasRecordingStarted.recording,
     selectedCourseTutor: state.courses.courseTutor,
     classRoomLessonPlan: state.classrooms.classRoomLessonPlan,
     operator: getOperatorFromOperatorBusinessName(state, ownProps),
@@ -306,8 +450,13 @@ const mapState = ( state, ownProps )   => {
     studentsSubscribedToThisCourse : Object.values(state?.users?.users)?.filter(user => user?.role === "Student" && user?.courses?.includes(ownProps?.courseId)),
     currentMeetings: state.meetings.meetings,
     paidSessions: Object.values(state?.sessions?.sessions),
-    onSessionRenewal: state.sessions.autoRenewedPackageSuccess
-};
+    onSessionRenewal: state.sessions.autoRenewedPackageSuccess,
+    allSessions: Object.values(state?.sessions?.sessions),
+    courses: getCoursesByOperatorId(state, ownProps),
+    selectedCourseFromLessonPlanCourseDropDown: state.courses.selectedCourseFromLessonPlanCourseDropDown,
+    selectedLessonFromLessonPlanDropDown: state.lessons.selectedLessonFromLessonPlanDropDown
+  };
 };
 
 export default connect(mapState, mapDispatch )(LessonPlan);
+

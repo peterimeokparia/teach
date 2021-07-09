@@ -4,8 +4,11 @@ import calendarModel from '../Model/calendarModel.js';
 
 import {
 getPostData,    
-saveUpdatedData   
-} from '../Helpers/storageHelper.js';
+saveUpdatedData } from '../Helpers/storageHelper.js';
+
+import { 
+CALENDARROUTE,
+handleBackEndLogs } from '../Helpers/logHelper.js';
 
 const calendarRoute = express.Router();
 
@@ -16,7 +19,8 @@ calendarRoute.get('/', (req, res) => {
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log(error);
+        console.log( error );
+        handleBackEndLogs( CALENDARROUTE, error );
         return res.status(400).json({ error })
     });
  });
@@ -27,8 +31,10 @@ calendarRoute.get('/', (req, res) => {
     .then(data => {
         return res.status(200).json(data);
     })
-    .catch(error =>{    
-        return res.status(400).json({ error }); 
+    .catch( error => {
+        console.log( error );
+        handleBackEndLogs( CALENDARROUTE, error );
+        return res.status(400).json({ error });
     });
 });
   
@@ -38,8 +44,10 @@ calendarRoute.get('/calendars/byUserId', (req, res) => {
     .then(data => {
         return res.status(200).json(data);
     })
-    .catch(error => { 
-        return res.status(400).json({ error })
+    .catch( error => {
+        console.log( error );
+        handleBackEndLogs( CALENDARROUTE, error );
+        return res.status(400).json({ error });
     });
 })
 
@@ -54,7 +62,8 @@ calendarRoute.post('/', (req, res) => {
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log(error);
+        console.log( error );
+        handleBackEndLogs( CALENDARROUTE, error );
         return res.status(400).json({ error });
     });
 });
@@ -67,7 +76,8 @@ calendarRoute.put('/:calendarId', (req, res) => {
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log(error);
+        console.log( error );
+        handleBackEndLogs( CALENDARROUTE, error );
         return res.status(400).json({ error });
     });
 });
@@ -75,10 +85,10 @@ calendarRoute.put('/:calendarId', (req, res) => {
 calendarRoute.delete('/:calendarId', (req, res) => {
     console.log('calendarRoute.delete')
     console.log(req)
-    console.log(req.params.calendarId)
     calendarModel.remove({ _id: req.params.calendarId }, ( error, result ) => {
         if ( error ) {
             console.log(error)
+            handleBackEndLogs( CALENDARROUTE, error );
             return res.status(400).send(error);
         }
         else {

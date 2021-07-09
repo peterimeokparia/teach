@@ -1,54 +1,32 @@
+export const handleAddPushNotificationSubscriptionToEntity  = ( element, subscribers, currentUser, saveAction, entityType ) => {
+  let entityObject = { ...element };
 
-export const handleAddPushNotificationSubscriptionToEntity  = ( subscribers, currentUser, saveAction, entitySubscriptionName ) => {
-  let entityObject = {};
-
-  if ( !subscribers?.includes( currentUser?._id ) ) {
-    let entityPushNotificationSubscribers = [ ...subscribers, currentUser?._id ];
-
-    entityObject[ entitySubscriptionName ] = entityPushNotificationSubscribers;
-    saveAction( entityObject );
+  if ( !subscribers.includes( currentUser?._id ) ) {
+    entityObject[ entityType ] = [ ...subscribers, currentUser?._id ];
   } else {
-    let entityPushNotificationSubscribers = subscribers.filter( id => currentUser?._id !== id ); 
-
-    entityObject[ entitySubscriptionName ] = entityPushNotificationSubscribers;
-    saveAction( entityObject );
+    entityObject[ entityType ] = subscribers.filter( id => currentUser?._id !== id ); 
   }
+  saveAction( entityObject );
 };
 
-export const handleEmailNotificationSubscriptionToEntity  = ( subscribers, currentUser, saveAction, entitySubscriptionName ) => {
-  let entityObject = {};
+export const handleEmailNotificationSubscriptionToEntity  = ( element, subscribers, currentUser, saveAction, entityType ) => {
+  let entityObject = { ...element };
 
-  if ( !subscribers?.includes( currentUser?._id ) ) {
-    let entityEmailNotificationSubscribers = [ ...subscribers, currentUser?._id ];
-
-    entityObject[ entitySubscriptionName ] = entityEmailNotificationSubscribers;
-    saveAction( entityObject );
+  if ( !subscribers.includes( currentUser?._id ) ) {
+    entityObject[ entityType ] = [ ...subscribers, currentUser?._id ];
   } else {
-    let entityEmailNotificationSubscribers = subscribers.filter( id => currentUser?._id !== id );
-
-    entityObject[ entitySubscriptionName ] = entityEmailNotificationSubscribers;
-    saveAction( entityObject );
+    entityObject[ entityType ] = subscribers.filter( id => currentUser?._id !== id );
   }
+  saveAction( entityObject );
 };
 
-export const handleSavingEntityAction  = ( subscribers, currentUser, saveAction, entitySubscriptionName ) => {
-  let entityObject = {};
-
-  if ( !subscribers?.includes( currentUser?._id ) ) {
-    let savedEntity = [ ...subscribers, currentUser?._id ];
-    
-    entitySubscriptionName.forEach( entityObjectPropertyName => {
-      if ( !entityObject[ entityObjectPropertyName ]?.includes( currentUser?._id )) {
-        entityObject[ entityObjectPropertyName ] = savedEntity;
-      }
-    });
-    saveAction( entityObject );
+export const handleSavingEntityAction  = ( element, subscribers, currentUser, saveAction, entityType ) => {
+  let entityObject = { ...element };
+   
+  if ( !subscribers.includes( currentUser?._id ) ) {
+    entityObject[ entityType ] = [ ...subscribers, currentUser?._id ];
   } else {
-    entitySubscriptionName.forEach( entityObjectPropertyName => {
-      if ( entityObject[ entityObjectPropertyName ]?.includes( currentUser?._id )) {
-        entityObject[ entityObjectPropertyName ] = entityObject[ entityObjectPropertyName ]?.filter( id => currentUser?._id !== id );
-      }
-    });
-    saveAction( entityObject );
+    entityObject[ entityType ] = subscribers.filter( id => currentUser?._id !== id );
   }
+  saveAction( entityObject );
 };

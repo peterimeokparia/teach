@@ -1,17 +1,7 @@
-import 
-React, { 
-useState, 
-useEffect, 
-useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import { 
 connect } from 'react-redux';
-
-// import { 
-// addNewCourse } from 'Services/course/Actions/Courses';
-
-// import { 
-// Validations } from  'Services/course/helpers/Validations';
 
 import { 
 getOperatorFromOperatorBusinessName, 
@@ -22,31 +12,33 @@ import DropDown from 'Services/course/Pages/Components/DropDown';
 import './style.css';
 
 const OnlineTutoringRequestForm = ({
-saveInProgress,
-onSaveError,
-user,
-tutors,
-courses,
-operatorBusinessName,
-operator,
-dispatch }) => {
-const [ courseName, setCourseName ] = useState('');
-const [ immediateHelp, setImmediateHelp ] = useState( false );
-const [ getTutor, setGetATutor ] = useState( false );
-const inputRef = useRef();
-//let currentUser = user;
+    saveInProgress,
+    onSaveError,
+    calendarEventType,
+    user,
+    tutors,
+    courses,
+    operatorBusinessName,
+    operator,
+    dispatch }) => {
 
-useEffect (() => {
-    // inputRef.current.focus();
-}, []); 
+    const [ courseName, setCourseName ] = useState('');
+    const [ immediateHelp, setImmediateHelp ] = useState( false );
+    const [ getTutor, setGetATutor ] = useState( false );
+    const inputRef = useRef();
+    //let currentUser = user;
 
-if ( saveInProgress ) {
-        return <div>...loading</div>;
-} 
+    useEffect (() => {
+        // inputRef.current.focus();
+    }, []); 
 
-if ( onSaveError ) {
-    return <div> { onSaveError.message } </div> ;
-}      
+    if ( saveInProgress ) {
+            return <div>...loading</div>;
+    } 
+
+    if ( onSaveError ) {
+        return <div> { onSaveError.message } </div> ;
+    }      
 
 const handleSubmit = e => { 
     e.preventDefault(); 

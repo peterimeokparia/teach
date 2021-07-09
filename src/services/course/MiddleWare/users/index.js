@@ -1,25 +1,47 @@
 import { 
+BUY_COURSE_SUCCESS,     
 LOGIN_SUCCESS, 
 LOGOUT_SUCCESS, 
 LAST_LOGGEDIN_USER,
 RESET_USERS_CART,
-UPDATE_USER } from "Services/course/Actions/Users";
+UPDATE_USER,
+SIGN_UP_SUCCESSS } from 'Services/course/Actions/Users';
+
+import {
+OPERATOR_SIGN_UP_SUCCESSS } from 'Services/course/Actions/Operator';
+
+import {
+handleCartOnPurchase,
+handleOperatorSignUpSuccess,
+handleSignUpSuccess } from 'Services/course/MiddleWare/users/helpers';
 
 import { 
-setToken } from "Services/course/helpers/ServerHelper";
+setToken } from 'Services/course/helpers/ServerHelper';
 
 import { 
-setAuthToken } from "Services/course/Api";
+setAuthToken } from 'Services/course/Api';
 
 import jstz from 'jstz';
 
-export const saveAuthToken = store => next =>  action => {
+export const users = store => next =>  action => {
      const timeZone = jstz?.determine();
 
      switch(action.type){
-
+          
+          case SIGN_UP_SUCCESSS:  
+               handleSignUpSuccess( action.payload ); // get operator business name from the store toDo!!!
+               next(action);
+          return;
+          case OPERATOR_SIGN_UP_SUCCESSS:  
+               handleOperatorSignUpSuccess( action.payload ); // get operator business name from the store toDo!!!
+               next(action);
+          return;
+          case BUY_COURSE_SUCCESS:  
+               handleCartOnPurchase( action.payload, store );
+               next(action);
+          return;
           case LOGIN_SUCCESS:
-          case LAST_LOGGEDIN_USER:     
+          case LAST_LOGGEDIN_USER:   
                setToken(action.payload?.token); 
                setAuthToken(action.payload?.token);
                sessionStorage.removeItem('lastState');

@@ -7,6 +7,10 @@ import express from 'express';
 import webpush  from 'web-push';
 import notificationModel from '../Model/notificationModel.js';
 
+import {
+NOTIFICATIONROUTE,
+handleBackEndLogs } from '../Helpers/logHelper.js';
+
 const notificationRoute = express.Router();
 
 webpush.setVapidDetails('mailto:peter.imeokparia@gmail.com', vapidKeys.publicVapidKey, vapidKeys.privateVapidKey);
@@ -18,9 +22,10 @@ notificationRoute.get('/', ( request, response ) => {
         console.log(' notificationRoute notificationRoute notificationRouteUsers Users', data)
         return response.status(200).json(data);
     })
-     .catch(error => {
-         console.log(error);
-         return response.status(400).json({ error });
+    .catch( error => {
+        console.log( error );
+        handleBackEndLogs( NOTIFICATIONROUTE, error );
+        return res.status(400).json({ error })
     });
 });
 
@@ -32,10 +37,11 @@ notificationRoute.get('/subscribedUser/byId', ( request, response ) => {
             console.log('Users Users', data)
             return response.status(200).json(data);
         })
-        .catch(error => {
-            console.log(error);
-            return res.status(400).json({ error });
-       });
+        .catch( error => {
+            console.log( error );
+            handleBackEndLogs( NOTIFICATIONROUTE, error );
+            return res.status(400).json({ error })
+        });
 });
 
 //Route:  http:localhost:9007/api/v1/notifications/subscribe/user
@@ -51,10 +57,11 @@ notificationRoute.post('/subscribe/user', ( request, response ) => {
       .then(data => {
         console.log('saved', data);
         response.status(200).json(data)})
-      .catch( error => {
-        console.log(error); 
-        response.status(400).json({ error });
-    });        
+        .catch( error => {
+            console.log( error );
+            handleBackEndLogs( NOTIFICATIONROUTE, error );
+            return res.status(400).json({ error })
+        });  
 });
 
 //Route:  http:localhost:9007/api/v1/notifications/subscribe/user/{userId}
@@ -62,12 +69,13 @@ notificationRoute.put('/subscribe/user/:Id', ( request, response ) => {
     saveUpdatedData(request, notificationModel, request.params?.Id)
     .then( data => {
         if ( data ) {
-            response.status(200).json(data);
+           return response.status(200).json(data);
         }
     })
     .catch( error => {     
         if ( error ) {
-            response.status(400).json({ error })
+            handleBackEndLogs( NOTIFICATIONROUTE, error );
+           return response.status(400).json({ error })
         }
     });
 });
@@ -97,6 +105,7 @@ notificationRoute.put('/sendPushNotifications/user/:Id', ( request, response ) =
              })
          }).catch( error => { console.log( error )})
       } catch ( error ) {
+        handleBackEndLogs( NOTIFICATIONROUTE, error );
          return response.status(400)?.json( { error } );
       }
 });
@@ -124,24 +133,15 @@ notificationRoute.put('/retryPushNotifications/user/:Id', ( request, response ) 
                      }
                  })
                  .catch(error => {
+                    handleBackEndLogs( NOTIFICATIONROUTE, error );
                       console.log( error )
                  })
              })
          }).catch( error => { console.log( error )})
       } catch ( error ) {
+        handleBackEndLogs( NOTIFICATIONROUTE, error );
          return response.status(400)?.json( { error } );
       }
-    //   try {
-    //     console.log('sendSubscriptions'); 
-    //     sendSubscriptions( user, request, payload, response )
-    //      .then( response => {
-    //         console.log('sendSubscriptions - promise'); 
-    //          console.log( response );
-    //      }).catch( error => { console.log( error )})
-    //     //  return response.status(200)?.json( sendSubscriptions( user, request, payload, response ) );
-    //   } catch (error) {
-    //      return response.status(400)?.json({error});
-    //   }
 });
 
 //Route:  http:localhost:9007/api/v1/notifications/subscribe
@@ -184,6 +184,6 @@ notificationRoute.post('/sendPushNotifications/users', ( request, response ) => 
 
 //unsubscribe user
 notificationRoute.get('/delete',  ( request, response) => { 
-})
+});
 
 export default notificationRoute;

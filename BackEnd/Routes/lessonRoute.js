@@ -4,8 +4,11 @@ import lessonModel from '../Model/lessonModel.js';
 
 import {
 getPostData,    
-saveUpdatedData   
-} from '../Helpers/storageHelper.js';
+saveUpdatedData } from '../Helpers/storageHelper.js';
+
+import { 
+LESSONROUTE,
+handleBackEndLogs } from '../Helpers/logHelper.js';
 
 const lessonRoute = express.Router();
 
@@ -16,7 +19,8 @@ lessonRoute.get('/', (req, res) => {
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log(error);
+        console.log( error );
+        handleBackEndLogs( LESSONROUTE, error );
         return res.status(400).json({ error })
     });
  });
@@ -29,8 +33,9 @@ lessonRoute.get('/videos', (req, res) => {
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log(error);
-        return res.status(400).json({ error });
+        console.log( error );
+        handleBackEndLogs( LESSONROUTE, error );
+        return res.status(400).json({ error })
     });
 });
  
@@ -41,8 +46,9 @@ lessonRoute.get('/files', (req, res) => {
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log(error);
-        return res.status(400).json({ error });
+        console.log( error );
+        handleBackEndLogs( LESSONROUTE, error );
+        return res.status(400).json({ error })
     });
 });
 
@@ -55,8 +61,9 @@ lessonRoute.post('/', (req, res) => {
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log(error);
-        return res.status(400).json({ error });
+        console.log( error );
+        handleBackEndLogs( LESSONROUTE, error );
+        return res.status(400).json({ error })
     });
 });
 
@@ -67,8 +74,9 @@ lessonRoute.put('/:lessonId', (req, res) => {
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log(error);
-        return res.status(400).json({ error });
+        console.log( error );
+        handleBackEndLogs( LESSONROUTE, error );
+        return res.status(400).json({ error })
     });
 });
 

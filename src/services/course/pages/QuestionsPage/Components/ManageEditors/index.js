@@ -1,6 +1,5 @@
-import 
-React, { 
-useState,
+import { 
+useState, 
 useEffect } from 'react';
 
 import { 
@@ -10,244 +9,164 @@ import {
 addNewOnlineAnswer,
 saveOnlineAnswer,
 loadOnlineAnswers,
-deleteOnlineAnswer,
-setMarkDown } from 'Services/course/Actions/OnlineAnswers';
+deleteOnlineAnswer } from 'Services/course/Actions/OnlineAnswers';
+
+import { 
+setMarkDown } from 'Services/course/helpers/EditorHelpers'; 
+  
+import {
+SET_ONLINEANSWERS_MARKDOWN } from 'Services/course/Actions/OnlineAnswers';
 
 import { 
 navigate } from '@reach/router';
 
 import {
-saveMarkDownContent } from 'Services/course/helpers/EditorHelpers'; 
+elementMeta,  
+editorContentType } from 'Services/course/Pages/QuestionsPage/helpers';
 
 import {
 manageEditorsFieldCollection } from 'Services/course/Pages/QuestionsPage/helpers';
 
+import {
+upload_url, 
+uploadImageUrl } from 'Services/course/Pages/OnlineQuestionsPage/helpers';
+
 import { 
 getSelectedOnlineAnswersByCourseId } from 'Services/course/Selectors';
 
-import {  
-homeWorkAnswerPlaceHolder } from 'Services/course/helpers/EditorHelpers';
+import {
+pageNavigationHelper } from './helpers';
 
 import {
-videoCallIcon,
-exitVideoCallIcon,
-shareScreenIcon,
+videoMeta,
 plusOneIconStyle,
 iconStyleMain,
-iconStyle,
-videoCallIconMain,
-onlineAnswerVideoDeleteIconStyle,
-saveIconStyle,
-editorSaveIconStyle 
-} from './inlineStyles';
+iconStyle } from './inlineStyles';
 
-// import parse from 'html-react-parser';
-import { Markup } from 'interweave';
-import OnlineQuestionVideoComponent from 'Services/course/Pages/OnlineQuestionsPage/Components/OnlineQuestionVideoComponent';
-import SaveIcon from '@material-ui/icons/Save';
+import MaterialUiVideoComponent from 'Services/course/Pages/Components/MaterialUiVideoComponent';
+import OnlineAnswersVideoComponent from 'Services/course/Pages/OnlineQuestionsPage/Components/OnlineAnswersVideoComponent';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import EditorComponent from 'Services/course/Pages/Components/EditorComponent';
 import PlusOneIcon from '@material-ui/icons/PlusOne';
 import DeleteIcon from '@material-ui/icons/Delete';
 import NotesIcon from '@material-ui/icons/Notes';
 import NoteAddTwoToneIcon from '@material-ui/icons/NoteAddTwoTone';
-import Loading from 'Services/course/Pages/Components/Loading';
 import moment from "moment";
 import './style.css';
 
 const ManageEditors = ({ 
-  config,
   operatorBusinessName,
   courseId,
   currentUser,
   currentUsers,
-  questionId,
+  question,
   addNewOnlineAnswer,
   saveOnlineAnswer,
   loadOnlineAnswers,
   answers,
   deleteOnlineAnswer,
+  videoComponentMeta,
   setMarkDown,
   children }) => {
-  const [ elapsedTime, setElapsedTime ] = useState( false ); 
-  const [ markDownEditorAnswer, setMarkDownEditorAnswer ] = useState( undefined );
-  const [ markDownContent, setMarkDownContent ] = useState( undefined );
-  // const [ answersExist, setAnswersExist ] = useState( ( answers?.length === 0 ? undefined : answers?.length ) );
   const [ contentChanged, setContentChanged ] = useState( undefined );
-  let toggleSavingEditorContentHandle = undefined;
 
-  useEffect(() => {
-    // if ( answers?.length === 0 || answers?.length === undefined ) {
-    //   return <Loading />;
-    // } else {
-    //   setAnswersExist( answers?.length === 0 ? undefined : answers?.length  );
-    // }
+    useEffect(() => { 
+      if ( contentChanged ) {
+          loadOnlineAnswers();
+          setContentChanged( false );
+      }
+    }, [ answers?.length, loadOnlineAnswers, contentChanged, setContentChanged ] );   
 
-    // if ( elapsedTime ) {
-    //   if ( markDownEditorAnswer  ) {
-    //     setElapsedTime( false );
-    //     saveMarkDownContent( 
-    //       saveOnlineAnswer,
-    //       markDownEditorAnswer,
-    //       markDownContent,
-    //       `${markDownEditorAnswer?._id}`,
-    //       2000
-    //     ); 
+    if ( answers?.length === 0 || answers?.length === undefined ) {
+      return  <span className="">
+                {
+                  <PlusOneIcon 
+                    style={plusOneIconStyle()}
+                    className="comment-round-button-2"
+                    onClick={() => addNewEditor()}
+                    />
+                }
+              </span>;  
+    }; 
 
-    //     loadOnlineAnswers();
-    //   }
-    // }
-
-    // if ( contentChanged ) {
-    //    setContentChanged( false );
-    // }
-
-  // }, [ answers?.length, markDownContent, contentChanged, markDownEditorAnswer, elapsedTime, setElapsedTime, saveOnlineAnswer ] );   
-}, [ answers?.length ] );   
-
-  // if ( !answersExist ) {
-  //   return <Loading />;
-  // };
-  
-  const addNewEditor = () => {
-    let config = {
-      onlineQuestionId: questionId,
-      type: "",
-      //placeHolder: null,
-      placeHolder: homeWorkAnswerPlaceHolder,
-      courseId,    
-      userId: currentUser?._id,
-      files: [],
-      answerBy: currentUser?.firstname,
-      videoUrl: ""
-    };
-
-    addNewOnlineAnswer( manageEditorsFieldCollection( config ) );
-    setContentChanged( true );
-  }; 
-  
-  const onhandleSelected = ( selected ) => {
-    deleteOnlineAnswer( selected );
-    setContentChanged( true );
+const addNewEditor = () => {
+  let config = {
+    question,
+    type: "",  
+    userId: currentUser?._id,
+    files: [],
+    answerBy: currentUser?.firstname,
+    videoUrl: "",
+    questionNumber: question?._id, 
+    courseId, 
+    onlineQuestionId:  question?._id,
+    editorContentType: editorContentType.Explanation, 
+    fieldName: elementMeta.explanationAnswerCollection, 
+    placeHolder: null,
+    currentQuestion: question
   };
 
-  let timeOutDuration = 0;
-  const handleChange = ( editor ) => {
-      //if ( editor?.element ) {
-      let cacheName = `${ editor?.element?._id }`, editorContent = JSON.stringify( editor?.editor.getHTML() );
-
-      //sessionStorage.setItem( cacheName, editorContent );
-      setMarkDownContent( editor?.editor.getHTML()  );
-      setMarkDownEditorAnswer( editor?.element );
-     //}; 
-
-    //  toggleSavingEditorContentHandle = toggleSavingEditorContent( timeOutDuration );
-  };
-
-  function toggleSavingEditorContent( timeoutDuration ) {
-    if ( toggleSavingEditorContentHandle ) {
-      clearTimeout( toggleSavingEditorContentHandle );
-    }
- 
-   return setTimeout(() => {
-      setElapsedTime( true );
-    }, timeoutDuration);
-  };
-
-  // function setRecordingCompletionStatus( videoUploaded, id ){
-  //   if ( videoUploaded ) {
-  //     setVideoUploaded( videoUploaded );
-  //   }
-  // }
-
-// const handleSubmit = () => {
-//   // if ( previewMode && videoUploaded ) { // change for video upload
-//   //     togglePreviewMode();  
-//   if ( videoUploaded ) {     
-//       loadOnlineAnswers(); 
-//   } else {
-//     // if ( savedQuestionsExist( currentCourseQuestions ) ) {
-//     //     saveOnlineQuestion( { ...currentCourseQuestions } ); // change
-//     // } 
-//   }   
-// }
- 
-const deleteVideo = ( selectedAnswer ) => {
-  saveOnlineAnswer( selectedAnswer );
+  addNewOnlineAnswer( manageEditorsFieldCollection( config ) );
   setContentChanged( true );
 };
 
+const onhandleSelected = ( selected ) => {
+  deleteOnlineAnswer( selected );
+  setContentChanged( true );
+};
+ 
 const goToBlackBoard = ( answer ) => {
-  navigate(`/${operatorBusinessName}/homework/askquestion/board/course/${courseId}/answer/${answer?._id}`);
+  navigate(pageNavigationHelper.homeWorkAskQuestionBoard( operatorBusinessName, courseId, answer));
 };
 
-let onlineVideoConfig = ( element, recordingOn ) => {
-  return {
-    videoUploaded: config?.videoUploaded,
-    saveRecording: config?.saveRecording,
-    handleSubmit: config?.handleSubmit,
-    setRecordingCompletionStatus: config?.setRecordingCompletionStatus,
-    videoCallIcon,
-    exitVideoCallIcon,
-    shareScreenIcon,
-    deleteIconStyle: onlineAnswerVideoDeleteIconStyle,
-    videoCallIconMain,
-    saveIconStyle: saveIconStyle,
-    recordingOn: false,
-    videoNamePrefix: 'OnlineAnswerVideoMarkDownEditors', 
-    recordButtonText: 'Record Answer',
-    videoSectionClassNameRecording: "answerVideoSection-recording",
-    videoSectionClassNameRecordingStopped: "answerVideoSection-recordingStopped",
-    videoSectionClassNameNoRecording: "mainVideoSection-recordingStopped", 
-    videoClassName: ( element?.videoUrl === "" || element?.videoUrl === undefined ) ? "" : "",
-    deleteVideo: () => deleteVideo( element ),
-    exitVideoCallIconPageName: "ManageEditors",
-    videoSectionCallOut: "answerVideoSectionCallOut"
-  };
+const saveRecording = ( selectedElement ) => {
+  // saveOnlineAnswer( selectedElement );
+};
+
+function handleChange( editor, element ){
+  let duration = 2000;  
+
+  setMarkDown(
+    element, 
+    editor.getHTML(), 
+    { propNameOne: "onlineAnswers",  propNameTwo: "onlineAnswers" }, 
+    SET_ONLINEANSWERS_MARKDOWN, 
+    saveOnlineAnswer, 
+    duration
+  );
 };
 
 return (
   <div 
     className="" 
-    id="EditorComponent"
-    > 
+  > 
       <div>
           { answers?.map( element => (
               <>               
               {
                 <div 
-                  id="answerCard"
-                  className="answerCard"
+                  className="answerEditor"
                 >
                   <div className="question-card-top-right">
                   {
-                    <span key={element?._id}>
-                        <SaveIcon 
-                            style={editorSaveIconStyle()}
-                            className="comment-round-button-4"
-                            onClick={() => onhandleSelected( element )}
-                        />
-
-                        <DeleteIcon 
-                            style={iconStyle()}
-                            className="comment-round-button-3"
-                            onClick={() => onhandleSelected( element )}
-                        />
+                    <span>
+                      <DeleteIcon 
+                        style={iconStyle()}
+                        className="comment-round-button-3"
+                        onClick={() => onhandleSelected( element )}
+                      />
                     </span>
                    }
 
                   </div>
-                  {/* <Markup content={ element?.markDownContent } /> */}
                    <EditorComponent
-                    className={"answerDisplay"}
-                    key={ element?._id }
+                    className={"answerEditor"}
                     id={ element?._id }
                     name={ element?.name } 
-                    onChange={( editor ) => handleChange( { editor, element } )}
+                    handleChange={(editor) => handleChange(editor, element)}
                     content={ element?.markDownContent }
-                    upload_url={ config.upload_url }
-                    upload_handler={( file, imageBlock ) => config?.uploadImageUrl( file, imageBlock )}
-                    // upload_handler={( file, imageBlock ) => config?.uploadImageUrl( file, imageBlock, editors?.length )}  <- fix
+                    upload_url={ upload_url }
+                    upload_handler={ ( file, imageBlock ) => uploadImageUrl( file, imageBlock, element, saveOnlineAnswer ) }
                     readOnly={ false }
                     // readOnly={config.previewMode? true : false }
                   /> 
@@ -260,10 +179,14 @@ return (
                       <span className=""> </span>
                       <span className="cols">     
                       <span className="onlineQuestionVideoComponent"> 
-                        <OnlineQuestionVideoComponent 
-                          element={element} 
-                          config={ onlineVideoConfig( element, false ) }
-                        />
+                      {/* <OnlineAnswersVideoComponent element={element} /> */}
+                      < MaterialUiVideoComponent 
+                          className={ "onlineQuestionVideoComponent" } 
+                          element={ element } 
+                          videoMeta={videoMeta( element ) }
+                          saveRecording={saveRecording}
+                          extendedMeetingSettings={false} 
+                      />
                       </span>
                       </span>
                       <span className="cols">
@@ -272,23 +195,24 @@ return (
                             className="comment-round-button-1"
                             onClick={() => goToBlackBoard( element )} 
                          />
-                        {( element?.boardVideoUrl  ) &&
-                           <NotesIcon
+                      {( element?.boardVideoUrl  ) &&
+                          <NotesIcon
                               style={ iconStyleMain() }
                               className="comment-round-button-2"
                               onClick={() => window.open(`${element.boardVideoUrl}`)}
                           />
-                        }    
+                      }    
                       </span>
                       <span>
                       </span>
                       </div>
                       </div>
+                      <div className="answerCard">
                       <div className="row">
-                          <div className="userBioSub">
+                          <div className="userBioSub-support">
                             <div className="onlineQuestionVideoComponent">
                             <span className="col-1"> 
-                                <img className="onlineQuestionImage" src={currentUsers?.find(_user => _user?._id === element?.userId)?.avatarUrl} width="80" height="70"  alt=''/>                                        
+                                <img className="onlineQuestionImage" src={currentUsers?.find(_user => _user?._id === element?.userId)?.avatarUrl} width="70" height="70"  alt=''/>                                        
                             </span>
                                 <div className="col-1"> 
                                   <div className="onlineQuestionCalendarIcon">
@@ -300,64 +224,47 @@ return (
                                   </div>                    
                                 </div>
                             </div>
-                            </div>
+                          </div>
                       </div>  
                       <div className="comment"> 
-                          { <span>{` Answered by ${currentUsers?.find(_user => _user?._id === element?.userId)?.firstname} on ${  moment( element?.answerDateTime ).local() }`} </span>}
+                        { <span> {` Answered by ${currentUsers?.find(_user => _user?._id === element?.userId)?.firstname} on ${  moment( element?.answerDateTime ).local() }`} </span>}
                       </div> 
+                   </div>
                       </div> 
                     </div>
                 }
                   </div>
                   </div>    
-                }
-                {/* {
-                  <span key={element?._id}>
-                      <DeleteIcon 
-                          style={iconStyle()}
-                          className="comment-round-button-3"
-                          onClick={() => onhandleSelected( element )}
-                      />
-                  </span>
-                } */}
-                
+                }                
                   <span> 
-                    {
-                        children( element )
-                    }
+                  {
+                    children( element )
+                  }
                   </span>
-                  <span>
-                    {
-                      <PlusOneIcon 
-                        style={plusOneIconStyle()}
-                        className="comment-round-button-2"
-                        onClick={() => addNewEditor()}
-                       />
-                    }
-                      
+                  <span className="">
+                  {
+                    <PlusOneIcon 
+                      style={plusOneIconStyle()}
+                      className="comment-round-button-2"
+                      onClick={() => addNewEditor()}
+                      />
+                  }
                   </span>
               </>
               )) 
           }
         </div>
-        <div>
-          <PlusOneIcon 
-              style={plusOneIconStyle()}
-              className="comment-round-button-2"
-              onClick={() => addNewEditor()}
-          />
-        </div>   
   </div>  
   );
 };
 
-  const mapState = ( state, ownProps ) => { 
-    return {
-      currentUser: state.users.user,
-      currentUsers: Object.values( state.users.users ),
-      answers: getSelectedOnlineAnswersByCourseId(state, ownProps)?.filter(answers => answers?.onlineQuestionId === ownProps?.questionId),
-      onlineQuestions:  Object.values( state.onlineQuestions.onlineQuestions ),
-    };
+const mapState = ( state, ownProps ) => { 
+  return {
+    currentUser: state.users.user,
+    currentUsers: Object.values( state.users.users ),
+    answers: getSelectedOnlineAnswersByCourseId(state, ownProps)?.filter(answers => answers?.onlineQuestionId === ownProps?.question?._id),
+    onlineQuestions:  Object.values( state.onlineQuestions.onlineQuestions ),
   };
+};
 
- export default connect(mapState, { addNewOnlineAnswer, saveOnlineAnswer, loadOnlineAnswers, setMarkDown, deleteOnlineAnswer })(ManageEditors);
+export default connect(mapState, { addNewOnlineAnswer, saveOnlineAnswer, loadOnlineAnswers, setMarkDown, deleteOnlineAnswer })(ManageEditors);

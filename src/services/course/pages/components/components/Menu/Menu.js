@@ -1,4 +1,3 @@
-import React from 'react';
 import { StyledMenu } from './Menu.styled';
 import { bool } from 'prop-types';
 

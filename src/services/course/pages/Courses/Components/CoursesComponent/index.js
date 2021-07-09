@@ -1,5 +1,4 @@
-import 
-React, { 
+import { 
 useEffect, 
 useRef, 
 useState } from 'react';
@@ -32,46 +31,46 @@ import MiniSideBarMenu from 'Services/course/Pages/Components/SubscriptionCompon
 import './style.css';
 
 const CoursesComponent = ({
-operatorBusinessName,
-selectedTutorId,
-user,
-users, 
-courses,
-coursesLoading,
-onCoursesError,
-lessons,
-saveCourse,
-deleteCourse,
-unSubscribeFromCourse,
-sessions }) => {
-const inputRef = useRef();
-const [ editing, setEditing ] = useState(false);
-const [ name, setNewName ] = useState('');
-const [ currentName, setCurrentName ] = useState('');
-const [ description, setNewDescription ] = useState('');
-const [ currentDescription, setCurrentDescription ] = useState('');
-const [ currentCourse, setCurrentCourse ] = useState({});
-const [ deleting, setDelete ] = useState(false);
+    operatorBusinessName,
+    selectedTutorId,
+    user,
+    users, 
+    courses,
+    coursesLoading,
+    onCoursesError,
+    lessons,
+    saveCourse,
+    deleteCourse,
+    unSubscribeFromCourse,
+    sessions }) => {
+        
+    const inputRef = useRef();
+    const [ editing, setEditing ] = useState(false);
+    const [ name, setNewName ] = useState('');
+    const [ currentName, setCurrentName ] = useState('');
+    const [ description, setNewDescription ] = useState('');
+    const [ currentDescription, setCurrentDescription ] = useState('');
+    const [ currentCourse, setCurrentCourse ] = useState({});
+    const [ deleting, setDelete ] = useState(false);
 
-useEffect(() => {
-    loadCourses();
+    useEffect(() => {
+        loadCourses();
+        if ( editing ) {
+            inputRef.current.focus();
+        }
+        if ( deleting ) {
+            setDelete(false);
+        }
+        //[ loadCourses, editing, courses, deleting ]);
+    }, [ editing, courses, deleting ]);
 
-    if ( editing ) {
-        inputRef.current.focus();
+    if ( coursesLoading ) {
+        return <Loading />;
     }
-    if ( deleting ) {
-        setDelete(false);
+
+    if ( onCoursesError ) {
+        return <div> { onCoursesError.message } </div>; 
     }
-    //[ loadCourses, editing, courses, deleting ]);
-}, [ editing, courses, deleting ]);
-
-if ( coursesLoading ) {
-    return <Loading />;
-}
-
-if ( onCoursesError ) {
-    return <div> { onCoursesError.message } </div>; 
-}
 
 const beginEditing = ( course ) => {
     setCurrentCourse(course);
@@ -166,111 +165,111 @@ function performCourseValidation( title, icon, htmlTitle, course ) {
     });
 }
 
-return  editing ? (<div>
-                        <form
-                            onSubmit={submitForm}
+return  editing 
+    ? ( <div>
+            <form
+                onSubmit={submitForm}
+            >
+            <input
+                name="courseTitle"
+                ref={inputRef}
+                value={name}
+                onChange={e => setNewName(e.target.value)}
+                placeholder={currentName}
+            >
+            </input> 
+            </form>
+            <form
+                onSubmit={submitForm}
+            > 
+                <input
+                    name="courseName"
+                    value={description}
+                    onChange={e => setNewDescription(e.target.value)}
+                    placeholder={currentDescription}
+                >
+                </input> 
+            </form>
+        </div>) 
+    : ( <div className="ComponentCourseListItem">
+            <ul>
+            {courses?.map(course => (        
+                <li 
+                key={course?._id}
+                className={"component-seconday-list-body"}
+                >             
+                <div className={"user-list-items"}>
+                <div className="row">
+                    <div className="col-1"> 
+                        <img alt='' src={testImage} width="80" height="80"/>
+                    </div>
+                    <div className="col-10">
+                    <NavLinks to={`/${operatorBusinessName}/tutor/${ course?.createdBy }/courses/${ course?._id }`}>
+                        <span className="multicolortext"> {course?.name}</span>
+                    </NavLinks>
+                    <div className="price"> { course?.description }   </div> 
+                    {/* <span className="price"> ${ course?.price.toFixed(2) }   </span>  */}
+                        {<span>
+                        {user?._id ===  course?.createdBy && (
+                        <span>
+                        <button
+                            className="edit-course-btn"  // rename
+                            onClick={() => beginEditing(course)}> 
+                            Edit   
+                        </button>
+                        <button
+                            className="delete-course-btn"
+                            onClick={() => performDelete(course)}> 
+                            Delete 
+                        </button>
+                        </span>
+                        )}
+                        {<span>
+                        <MiniSideBarMenu 
+                            element={ course }
+                            key={ course?._id }
+                            currentUser={ user }
+                            question={ course }
+                            pushNotificationsEnabled={ course?.questionPushNotificationSubscribers?.includes( user?._id ) || course?.userId === user?._id }
+                            emailNotificationsEnabled={ course?.questionEmailNotificationSubscribers?.includes( user?._id )  }  
+                            entitySavedEnabled={ course?.savedQuestions?.includes( user?._id ) }
+                            handleAddPushNotificationSubscription={() => handleAddPushNotificationSubscriptionToEntity( course, course?.questionPushNotificationSubscribers, user,  saveCourse, 'questionPushNotificationSubscribers'  )}
+                            handleEmailNotificationSubscription={() => handleEmailNotificationSubscriptionToEntity( course, course?.questionEmailNotificationSubscribers, user,  saveCourse, 'questionEmailNotificationSubscribers' )}
+                            handleSaving={() => handleSavingEntityAction( course, course?.savedQuestions, user,  saveCourse, 'savedQuestions' ) }
                         >
-                            <input
-                                name="courseTitle"
-                                ref={inputRef}
-                                value={name}
-                                onChange={e => setNewName(e.target.value)}
-                                placeholder={currentName}
-                            >
-                            </input> 
-                        </form>
-                        <form
-                            onSubmit={submitForm}
-                        > 
-                            <input
-                                name="courseName"
-                                value={description}
-                                onChange={e => setNewDescription(e.target.value)}
-                                placeholder={currentDescription}
-                            >
-                            </input> 
-                        </form>
-                    </div>) : (
-
-                <div className="ComponentCourseListItem">
-                   <ul>
-                    {courses?.map(course => (        
-                       <li 
-                        key={course?._id}
-                        className={"component-seconday-list-body"}
-                       >             
-                        <div className={"user-list-items"}>
-                            <div className="row">
-                                <div className="col-1"> 
-                                    <img alt='' src={testImage} width="80" height="80"/>
-                                </div>
-                                    <div className="col-10">
-                                <NavLinks to={`/${operatorBusinessName}/courses/${course?._id}/${selectedTutorId}`}>
-                                    <span className="multicolortext"> {course?.name}</span>
-                                </NavLinks>
-                             <div className="price"> { course?.description }   </div> 
-                                {/* <span className="price"> ${ course?.price.toFixed(2) }   </span>  */}
-                                 {<span>
-                                    {user?._id ===  course?.createdBy && (
-                                        <span>
-                                            <button
-                                                className="edit-course-btn"  // rename
-                                                onClick={() => beginEditing(course)}> 
-                                                Edit   
-                                            </button>
-                                            <button
-                                                className="delete-course-btn"
-                                                onClick={() => performDelete(course)}> 
-                                                Delete 
-                                            </button>
-                                        </span>
-                                    )}
-                                    {
-                                        <span>
-                                        <MiniSideBarMenu 
-                                            element={ course }
-                                            key={ course?._id }
-                                            currentUser={ user }
-                                            question={ course }
-                                            pushNotificationsEnabled={ course?.questionPushNotificationSubscribers?.includes( user?._id ) || course?.userId === user?._id }
-                                            emailNotificationsEnabled={ course?.questionEmailNotificationSubscribers?.includes( user?._id )  }  
-                                            entitySavedEnabled={ course?.savedQuestions?.includes( user?._id ) }
-                                            handleAddPushNotificationSubscription={() => handleAddPushNotificationSubscriptionToEntity( course, course?.questionPushNotificationSubscribers, user,  saveCourse, 'questionPushNotificationSubscribers'  )}
-                                            handleEmailNotificationSubscription={() => handleEmailNotificationSubscriptionToEntity( course, course?.questionEmailNotificationSubscribers, user,  saveCourse, 'questionEmailNotificationSubscribers' )}
-                                            handleSaving={() => handleSavingEntityAction( course, course?.savedQuestions, user,  saveCourse, 'savedQuestions' ) }
-                                        >
-                                            {( key, handleMouseDown, menuVisible ) => (
-                                                <button
-                                                    className="delete-course-btn"
-                                                    onClick={handleMouseDown }
-                                                    key={ key }
-                                                    mouseDown={ handleMouseDown }
-                                                    navMenuVisible={ menuVisible } 
-                                                > 
-                                                    Notifications 
-                                                </button>
-                                            )}
-                                        </MiniSideBarMenu>    
-                                        </span>
-                                    }  
-                                    {((user?.courses?.find(mycourseId => mycourseId === course?._id)) &&  <span>
-                                            <button
-                                                className="delete-course-btn"
-                                                onClick={() => updateSubscription(course)}> 
-                                                Unsubscribe 
-                                            </button> 
-                                     </span>     
-                                    )}       
-                                 </span>     
-                                 }
-                                </div>
-                             </div> 
-                           </div>
-                        </li>
-                     
-                     ))}
-                 </ul>
-            </div>
+                            {( key, handleMouseDown, menuVisible ) => (
+                                <button
+                                    className="delete-course-btn"
+                                    onClick={handleMouseDown }
+                                    key={ key }
+                                    mouseDown={ handleMouseDown }
+                                    navMenuVisible={ menuVisible } 
+                                > 
+                                    Notifications 
+                                </button>
+                            )}
+                        </MiniSideBarMenu>    
+                        </span>
+                        }  
+                        {((user?.courses?.find(mycourseId => mycourseId === course?._id)) &&  
+                        <span>
+                        <button
+                            className="delete-course-btn"
+                            onClick={() => updateSubscription(course)}> 
+                            Unsubscribe 
+                        </button> 
+                        </span>     
+                        )}       
+                        </span>     
+                        }
+                    </div>
+                    </div> 
+                    </div>
+                </li>
+                
+                ))}
+            </ul>
+    </div>
 ); };
 
 const mapState = ( state, ownProps) => ({

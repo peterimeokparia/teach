@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { 
 connect } from 'react-redux';
 
@@ -23,23 +21,17 @@ import MultiInputEmailComponent from 'Services/course/Pages/Email/MultiInputEmai
 import NavLinks from '../../../Components/NavLinks';
 
 const StudentDisplayViewComponent = ({
-operatorBusinessName,
-operator,       
+operatorBusinessName,     
 currentUser,
 selectedStudents,
 emailInputOptions,
 emailMessageOptions,
-lessonPlanUrl,
 setCurrentPage,
-setLessonPlanUrl,
-currentPage,
 courseId,
 lessonId,
-course,
 lessons,
 navigationHistory,
-parentChild,
-children  }) => {
+parentChild }) => {
 function onMatchListItem( match, listItem ) {
   if ( match ){
       setCurrentPage( listItem );
@@ -55,7 +47,7 @@ let links = [
  
 return (
     <div className="CourseDetail"> 
-    <header>                
+    <header className="header">                
         <NavLinks to={navigationHistory?.replace('http://localhost:3000', "")}>  
           <h1>{selectedStudents?.firstname + " : StudentId:" + selectedStudents?._id}</h1> 
         </NavLinks> 

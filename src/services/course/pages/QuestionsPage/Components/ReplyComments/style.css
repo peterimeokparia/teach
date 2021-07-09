@@ -3,11 +3,14 @@
    background-color: whitesmoke;
    margin-left: 20px;
    margin-bottom: 10px;
-   border-style: dashed;
+   border-style: solid;
    border-left-width: thin;
    border-bottom-style: none;
    border-right-style: none;
    border-top-style: none;
+}
+.noParentCommentHighLight{
+  background-color: blue;
 }
 .childCommentHighLight {
     margin-left: 10px;
@@ -66,4 +69,35 @@
  {
   background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
   background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+}
+.hideDiv{
+  visibility: hidden;
+}
+.showDiv{
+  visibility: visible;
+}
+
+.collapsible {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: #ccc;
+}
+.parentCommentHighLight .panel1d-header{
+  background-color: white;
+  border-style: none;
+  border-left-width: none;
+  border-bottom-style: none;
+  border-right-style: none;
+  border-top-style: none;
+  border-color: white;
 }

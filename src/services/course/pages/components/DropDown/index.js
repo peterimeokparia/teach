@@ -1,8 +1,9 @@
-import React from 'react';
+import { Component } from 'react';
 import { connect } from 'react-redux';
+import Select from '@material-ui/core/Select';
 import './style.css';
 
-class DropDown extends React.Component {
+class DropDown extends Component {
 
   constructor( props ) {
     super( props );
@@ -26,16 +27,30 @@ class DropDown extends React.Component {
               <span>
                 <form onSubmit={this.handleSubmit}>
                   <label>
-                     {this.props.label } 
+                    <span className="main-title">
+                    {this.props.label } 
+                    </span>
+                 
                   </label>  
                   <label> 
-                      <select value={this.state.value} onChange={this.handleChange.bind( this )} >
-                        {
+                      <Select 
+                        value={this.state.value} 
+                        onChange={this.handleChange.bind( this )} 
+                        inputProps={{ 'aria-label': 'Without label' }}
+                        className={'space-between-select'}
+                      >
+                        {( this.props.optionCollection.length > 0 ) &&
                           this.props.optionCollection?.map(( optionValue, index ) => (
-                            <option key={optionValue['_id']} value={optionValue['_id']}> {optionValue[this.props?.value]} </option>
+                            <option 
+                              key={optionValue['_id']} 
+                              value={optionValue['_id']}
+                              className={'space-between-select'}
+                            > 
+                            { optionValue[ this.props?.value ] }  
+                            </option>
                           ))
                         }
-                      </select>
+                      </Select>
                     </label>
                 </form>
               </span>

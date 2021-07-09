@@ -4,53 +4,65 @@ import courseModel from '../Model/courseModel.js';
 
 import {
 getPostData,    
-saveUpdatedData   
-} from '../Helpers/storageHelper.js';
+saveUpdatedData } from '../Helpers/storageHelper.js';
 
+import { 
+COURSEROUTE,
+handleBackEndLogs } from '../Helpers/logHelper.js';
 
 const courseRoute = express.Router();
 
-
 courseRoute.get('/', (req, res) => {
     courseModel.find({ })
-        .then(data => {
-            console.log('Courses Courses', data)
-            res.status(200).json(data);
-        })
-         .catch(error => console.log(error));
-})
+    .then(data => {
+        console.log('Courses Courses', data)
+        return res.status(200).json(data);
+    })
+    .catch( error => {
+        console.log( error );
+        handleBackEndLogs( COURSEROUTE, error );
+        return res.status(400).json({ error })
+    });
+});
 
 courseRoute.post('/', (req, res) => {
     let courseData = getPostData( req );
     let courses = new courseModel(courseData);  
     courses.save()
-        .then(data => {
+    .then(data => {
         console.log('saved', data);
-        res.status(200).json(data)})
-        .catch( error => console.log(error) )
+        return res.status(200).json(data)})
+    .catch( error => {
+        console.log( error );
+        handleBackEndLogs( COURSEROUTE, error );
+        return res.status(400).json({ error })
+    });
 });
 
 courseRoute.put('/:courseId', (req, res) => { 
     saveUpdatedData(req, courseModel, req.params.courseId)
     .then( data => {
       console.log(data);
-      res.status(200).json(data)
+      return res.status(200).json(data)
     })
-     .catch( error => {
-        console.log(error);
-        res.status(400).json({ error })
-     });
+    .catch( error => {
+        console.log( error );
+        handleBackEndLogs( COURSEROUTE, error );
+        return res.status(400).json({ error })
+    });
 });
 
 courseRoute.delete('/:courseId', (req, res) => {
     courseModel.findByIdAndDelete(req.params.courseId)
      .then(data => {
         console.log('data - doc', data);
-        res.status(200).json(data)
+        return res.status(200).json(data)
      })
-       .catch(error => {
-        res.status(400).json({error});
-       })
+     .catch( error => {
+        console.log( error );
+        handleBackEndLogs( COURSEROUTE, error );
+        return res.status(400).json({ error })
+    });
 });
 
 export default courseRoute;

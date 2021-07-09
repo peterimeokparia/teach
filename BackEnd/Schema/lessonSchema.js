@@ -7,6 +7,10 @@ const lessonSchema = new Schema ({
         type: String,
         required: true,
     },
+    introduction: { 
+        type: String,
+        required: true,
+    },
     courseId: { 
         type: String, 
         required: true  

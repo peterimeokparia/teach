@@ -1,25 +1,25 @@
-import 
-React, { 
+import { 
 useState, 
 useEffect } from 'react';
-// import ProgressComponent from '@material-ui/core/CircularProgress';
 
 function Meeting({ roomName, width, height, containerWidth, containerHeight, userName }) {
   const [loading, setLoading] = useState(true);
-  
   const containerStyle = {
       width: containerWidth,
       height: containerHeight
   };
-  
+  //   defaults
+  //   width: ( containerWidth === "100%" ) ? 365 : 720,
+  //  height: ( containerHeight === "100%" ) ? 200 : 720, 
+  //   optimal range for video conf is b/w 720 to 920 px
   const jitsiContainerStyle = {
     display: (loading ? 'none' : 'block'),
-    width: ( containerWidth === "100%" ) ? 365 : 720,// clean - create object
-    height: ( containerHeight === "100%" ) ? 200 : 720, 
+    width: ( containerWidth === "100%" ) ? 365 : 720, 
+    height: ( containerHeight === "100%" ) ? 875 : 720, 
+   
   };
-
  const smallScreenWidth = 200;
-
+ 
  function startConference() {
   try {
     const domain = `joinmeet.today`;
@@ -51,20 +51,13 @@ function Meeting({ roomName, width, height, containerWidth, containerHeight, use
       'videoquality', 'filmstrip',  'feedback', 'stats', 'shortcuts',
       'tileview', 'videobackgroundblur', 'download', 'help', 'mute-everyone', 'security'
     ],
-    // TOOLBAR_BUTTONS: [
-    //   'microphone', 'camera', 'closedcaptions', 'desktop', 'embedmeeting', 'fullscreen',
-    //   'fodeviceselection', 'hangup', 'profile', 'chat', 'recording', 'localrecording',
-    //   'livestreaming', 'etherpad', 'sharedvideo', 'settings', 'raisehand',
-    //   'videoquality', 'filmstrip', 'invite', 'feedback', 'stats', 'shortcuts',
-    //   'tileview', 'videobackgroundblur', 'download', 'help', 'mute-everyone', 'security'
-    // ]
-    TOOLBAR_TIMEOUT: 500, //( width === smallScreenWidth )  ? minTimeOut : maxTimeOut,
-    VIDEO_QUALITY_LABEL_DISABLED: true //( width ) === smallScreenWidth ? true : false,
+    TOOLBAR_TIMEOUT: 500,
+    VIDEO_QUALITY_LABEL_DISABLED: true
     },
     configOverwrite: {
       enableWelcomePage: false,
       enableClosePage: true,
-      disableSimulcast: false,  //maxFullResolutionParticipants:  enableNoisyMicDetection
+      disableSimulcast: false,
     localRecording: {
        enabled: false,
        format: 'ogg'  
@@ -104,12 +97,12 @@ function Meeting({ roomName, width, height, containerWidth, containerHeight, use
        startConference();
   else 
        alert('script not loaded');
-  });
-//  }, []);
+  // });
+}, []);
+
  return (
   <div style={containerStyle}
   >
-   {/* {loading && <ProgressComponent />} */}
     {loading }
    <div id="mycontainer" style={jitsiContainerStyle}/>
   </div>

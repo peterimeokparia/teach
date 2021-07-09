@@ -1,8 +1,4 @@
-import 
-React, { 
-useState, 
-useEffect, 
-useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import { 
 connect } from 'react-redux';
@@ -36,11 +32,22 @@ const handleSubmit = e => {
     e.preventDefault(); 
 
     if ( (Validations.checkFormInputString("Course Title", courseName)) && 
-        (Validations.checkFormInputNumber("Course Price", coursePrice))) {        
+            (Validations.checkFormInputNumber("Course Price", coursePrice))) {        
         if ( Validations.duplicateCheck( courseName,  courses, "course title", "name" ) ) {
             return;
         }
-        dispatch(addNewCourse(courseName, coursePrice, courseDescription, currentUser, operator));
+
+        let newCourse = { 
+            name: courseName, 
+            price: coursePrice, 
+            description: courseDescription, 
+            user: currentUser, 
+            operator,
+            coursePushNotificationSubscribers: [ currentUser?._id ],
+            courseEmailNotificationSubscribers: [ currentUser?._id ] 
+        };
+
+        dispatch( addNewCourse( newCourse ) );
     }
 };
 

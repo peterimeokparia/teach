@@ -20,19 +20,17 @@ export const DELETE_ASSIGNMENT_ERROR = "DELETE ASSIGNMENT ERROR";
 export const LAST_LOGGEDIN_USER = "LAST LOGGEDIN USER";
 
 export const addNewAssignment = ( user, operator, assignment ) => {    
-    let userToUpdate; 
-
     return dispatch => {   
         dispatch({ type: ADD_ASSIGNMENT_BEGIN });
         return add( { ...assignment,  operatorId: operator?._id }, '/assignments')
         .then(assignment => {
             if (assignment?.createdBy === user._id ) {
-                userToUpdate = {...user, assignments: user?.assignments };
-                userToUpdate.assignments.push(assignment._id);
-            };
-            updateUser( userToUpdate );
+                user = { ...user, assignments: [ ...user.assignments, assignment._id ]  };
+                updateUser( user );
+            };    
             dispatch({ type: ADD_ASSIGNMENT_SUCCESS, payload: assignment }); 
             dispatch({ type: LAST_LOGGEDIN_USER, payload: user });  
+            //toDo: Send push & email messages to students & parents every time attendance is taken. 
             //dispatch( sendPushNotificationMessage( pushNotificationUser?.
             // filter(pushuser => pushuser?.userId === student?._id), {title:'Attendance Taken!', body:`Attendance taken for course: ${ course?.name }`}) )
         }).catch(error => { 

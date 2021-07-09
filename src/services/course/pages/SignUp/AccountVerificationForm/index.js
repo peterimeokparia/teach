@@ -1,7 +1,4 @@
-import 
-React, {
-useEffect,
-useState }from 'react';
+import { useEffect, useState } from 'react';
 
 import {  
 navigate } from '@reach/router';
@@ -16,26 +13,29 @@ loginUser } from 'Services/course/Actions/Users';
 import { 
 getOperatorFromOperatorBusinessName } from 'Services/course//Selectors';
 
-import Swal from 'sweetalert2';
+import {
+pageNavigationHelper } from './helpers';
 
+import Swal from 'sweetalert2';
 import './style.css';
 
 const AccountVerificationForm = ({  
-updateCurrentUser,    
-loginUser,    
-users,    
-operator,
-operatorBusinessName,
-userId,
-classRoomId }) => {
-useEffect(() =>{ 
-  if ( ! users ) { 
-    updateCurrentUser( { _id: userId } );
-  }
-},  [ updateCurrentUser, userId, users ]);   
-// },  [])   
+  updateCurrentUser,    
+  loginUser,    
+  users,    
+  operator,
+  operatorBusinessName,
+  userId,
+  classRoomId }) => {
 
-const [ passWordValue, setPasswordValue ] = useState("");
+  useEffect(() =>{ 
+    if ( ! users ) { 
+      updateCurrentUser( { _id: userId } );
+    }
+  },  [ updateCurrentUser, userId, users ]);   
+  // },  [])   
+
+  const [ passWordValue, setPasswordValue ] = useState("");
 
 const handleLoginUser = (event) => {   
   if ( users.length > 0 ) {
@@ -43,20 +43,20 @@ const handleLoginUser = (event) => {
 
       if ( currentUser ) {    
           if ( currentUser?.userIsVerified ) {
-            navigate(`http://localhost:3000/${operatorBusinessName}/users`);   
+            navigate(pageNavigationHelper?.users( operatorBusinessName ));   
           }   
           if ( currentUser ) {
               if (passWordValue) {
                 loginUser( { ...currentUser, password: passWordValue, userIsVerified: true, unHarshedPassword: passWordValue } );
                 if ( classRoomId ) {
-                  navigate(`/${operatorBusinessName}/LessonPlan/invite/userverified/classRoom/${classRoomId}`);
+                  navigate(pageNavigationHelper.classRoom( operatorBusinessName, classRoomId ));
                 } else {
-                  navigate(`http://localhost:3000/${operatorBusinessName}/users`);
+                  navigate(pageNavigationHelper?.users( operatorBusinessName ));
                 }
               }
           } else {
               Swal.fire({title: 'Account does not exist', icon: 'warning', text: `Please contact the administrator.` });
-              navigate(`http://localhost:3000/${operatorBusinessName}/login`);
+              navigate(pageNavigationHelper?.login( operatorBusinessName ));
           }
         }
     }    

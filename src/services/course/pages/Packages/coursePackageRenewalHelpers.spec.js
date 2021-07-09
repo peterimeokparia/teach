@@ -1,10 +1,10 @@
 import { 
-checkIfPackageIsSetToAutoRenew } from './helpers/coursePackageRenewalHelpers';
+checkIfPackageIsSetToAutoRenew } from 'Services/course/Pages/Packages/helpers';
 
 import {
-autoRenewSessionPackages } from '../../actions.js';
+autoRenewSessionPackages } from 'Services/course/Actions/Sessions';
 
-jest.mock('../../api');
+jest.mock('../../Api');
 
 describe('handleAutoRenewPackageSessions', () => {
   
@@ -25,10 +25,7 @@ describe('handleAutoRenewPackageSessions', () => {
    });
 });
 
-
-
-describe('autoRenewSessionPackages', () => {
-  
+describe('autoRenewSessionPackages', () => {  
    let currentUser = {
        role: "Student",
        paymentStatus: "approved"
@@ -50,7 +47,8 @@ describe('autoRenewSessionPackages', () => {
 
       await autoRenewSessionPackages( currentUser,  currentSession )(mockDispatch);
 
-      expect(mockDispatch.mock.calls.length).toBe(2);
+      console.log( mockDispatch.mock.calls[0][0] )
+      expect(mockDispatch.mock.calls.length).toBe(1);
       expect(mockDispatch.mock.calls[0][0]).toEqual({
          type: 'AUTO RENEW PACKAGE SUCCESS',
          payload: {

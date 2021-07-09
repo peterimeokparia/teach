@@ -1,4 +1,5 @@
-import React from 'react';
+import { 
+useState } from 'react';
 
 import { 
 connect } from 'react-redux';
@@ -10,22 +11,28 @@ navigate } from '@reach/router';
 import { 
 buyCourse } from 'Services/course/Actions/Users';
 
-import ReactModal from 'react-modal-resizable-draggable';
-
+import Modal from 'react-modal'; 
 import './style.css';
 
 const Cart = ({ currentUser, buyCourse }) => {
-  const buyOrLogin = () => {
-    if ( currentUser ) {
-        buyCourse(currentUser);
-        return;
-    } else {
-        navigate('/login');
-    }
+  const [ toggleModal, setToggleModal ] = useState( currentUser?.cart?.length > 0 );
+
+const closeNewCourseModal = () => {
+  setToggleModal( false );
+};
+
+const buyOrLogin = () => {
+  if ( currentUser ) {
+      setToggleModal( false );
+      buyCourse(currentUser);
+      return;
+  } else {
+      navigate('/login');
+  }
 };
 
 return (<span> 
-              <ReactModal initWidth={400} initHeight={300}top left className="cart" isOpen={currentUser?.cart?.length > 0} onRequestClose={currentUser?.cart?.length === 0}>  
+              <Modal isOpen={  toggleModal } onRequestClose={closeNewCourseModal}> 
                   <h3>New Sessions</h3>
                       <div className="body">
                           <p></p>
@@ -52,7 +59,7 @@ return (<span>
                               <button onClick={buyOrLogin}>Add</button>
                               </div>
                       </div>
-            </ReactModal>
+                </Modal>
           </span> 
               );
 };
@@ -61,5 +68,5 @@ const mapState = (state)  => ({
   currentUser : state.users.user,
 });
 
-export default connect(mapState, {buyCourse})( Cart );
+export default connect(mapState, { buyCourse })( Cart );
 

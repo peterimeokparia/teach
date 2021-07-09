@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { 
 connect } from 'react-redux';
 
@@ -22,6 +20,7 @@ import LoginLogout from './node_modules/Services/course/Pages/LoginPage/Componen
 import Roles from './node_modules/Services/course/Pages/Components/Roles';
 import MultiInputEmailComponent from './node_modules/Services/course/Pages/Email/MultiInputEmailComponent';
 import NavLinks from '../../../Components/NavLinks';
+import './style.css';
 
 const StudentDisplayViewComponent = ({
 operatorBusinessName,
@@ -57,10 +56,10 @@ let links = [
 ];
  
 return (
-    <div className="CourseDetail"> 
+    <div className="StudentDetails"> 
     <header>                
         <NavLinks to={navigationHistory?.replace('http://localhost:3000', "")}>  
-          <h1>{selectedStudents?.firstname + " : StudentId:" + selectedStudents?._id}</h1> 
+          {/* <h1>{selectedStudents?.firstname + " : StudentId:" + selectedStudents?._id}</h1>  */}
         </NavLinks> 
         <LoginLogout
           operatorBusinessName={operatorBusinessName}

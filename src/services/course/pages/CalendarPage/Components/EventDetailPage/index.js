@@ -1,7 +1,4 @@
-import 
-React,{
-useEffect    
-} from 'react';
+import { useEffect } from 'react';
 
 import { 
 connect } from 'react-redux';
@@ -72,10 +69,13 @@ function updatedCalendarEvent(events, selectedEvent, updatedEvent) {
     let localCalendarEvents = events;
     let eventToUpdate = localCalendarEvents?.find(event => event?._id === selectedEvent?._id);
 
-    eventToUpdate['title'] =  updatedEvent?.event?.title;
-    eventToUpdate['start'] = updatedEvent?.event?.start;
-    eventToUpdate['end'] = updatedEvent?.event?.end;
-    eventToUpdate['allDay'] = updatedEvent?.event?.allDay;
+    eventToUpdate = {
+        ...eventToUpdate, 
+        title: updatedEvent?.event?.title,
+        start: updatedEvent?.event?.start,
+        end: updatedEvent?.event?.end,
+        allDay: updatedEvent?.event?.allDay
+    };
     localCalendarEvents[selectedEvent?._id] = eventToUpdate;
     return localCalendarEvents;
 }
@@ -175,7 +175,6 @@ function getEventDetails(){
 
 let testAdminUsers =  [ calendar?.userId, '603d37814967c605df1bb450', '6039cdc8560b6e1314d7bccc' ];
 let emailAddresses = Object.values(currentUsers).filter(user => testAdminUsers.includes(user?._id))?.map(user => user?.email);
-
 let event = events.find(event => event?._id === eventId);
 
 return (
@@ -224,7 +223,7 @@ return (
                             type={'time'}
                         />
 
-<div> 
+                <div> 
                     <h5>{'Notes'}</h5>
                     <input
                        type={'textarea'}

@@ -14,12 +14,14 @@ SAVE_QUESTION_ERROR,
 RESET_QUESTION_ERROR, 
 DELETE_QUESTION_SUCCESS, 
 SET_QUESTION_MARKDOWN,
-SET_EXPLANATION_ANSWER_MARKDOWN } from '../../Actions/Questions';
+SET_EXPLANATION_ANSWER_MARKDOWN,
+SET_MARKDOWN_EDITOR  } from '../../Actions/Questions';
 
 const initialState = {
     questions: {},
     latestQuestion: {},
     questionMarkDown: {},
+    markDownEditors: {},
     studentExplanationAnswerMarkDown: {},
     explanationAnswerMarkDownKey:{},
     saveInProgress: false,
@@ -75,12 +77,15 @@ const reducer = produce((draft, action) => {
              }    
         return;
         case RESET_QUESTION_ERROR:
-             draft.onSaveError = null;
-       return; 
-       case DELETE_QUESTION_SUCCESS:
-            delete draft.questions[action.payload?._id];
-       return; 
-       default:
+          draft.onSaveError = null;
+        return; 
+        case SET_MARKDOWN_EDITOR:
+             draft.markDownEditors = action?.payload;
+        return;  
+        case DELETE_QUESTION_SUCCESS:
+             delete draft.questions[action.payload?._id];
+        return; 
+        default:
     return;
 
     }

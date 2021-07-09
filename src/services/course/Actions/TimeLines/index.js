@@ -23,9 +23,9 @@ export const loadTimeLines = ( ) => {
          dispatch({ type: LOAD_TIMELINES_BEGIN });
          return get(`/timelines`)
           .then( timelines => { 
-                dispatch({ type: LOAD_TIMELINES_SUCCESS, payload: timelines }); 
+            dispatch({ type: LOAD_TIMELINES_SUCCESS, payload: timelines }); 
            }).catch( error => {
-               dispatch({ type: LOAD_TIMELINES_ERROR , error });
+            dispatch({ type: LOAD_TIMELINES_ERROR , error });
            }); 
     };
 };
@@ -37,7 +37,7 @@ export const loadTimeLinesByTimeLineId = ( timeLineId ) => {
           .then( timelines => {           
             dispatch({ type: LOAD_TIMELINES_SUCCESS, payload: timelines }); 
            }).catch( error => {
-               dispatch({ type: LOAD_TIMELINES_ERROR , error });
+             dispatch({ type: LOAD_TIMELINES_ERROR , error });
            });         
     };
 };
@@ -46,12 +46,12 @@ export const addNewTimeLine = ( timeLineName, groups, items, operatorId  ) => {
     return dispatch => {
        dispatch({ type: ADD_NEW_TIMELINE_BEGIN });
         return add({ timeLineName, groups, items, operatorId }, '/timelines' )
-                .then( timelines => { 
-                    dispatch({ type: ADD_NEW_TIMELINE_SUCCESS, payload: timelines });
-                })
-                .catch( error => {
-                    dispatch({ type: ADD_NEW_TIMELINE_ERROR , error });
-                });   
+        .then( timelines => { 
+          dispatch({ type: ADD_NEW_TIMELINE_SUCCESS, payload: timelines });
+         })
+         .catch( error => {
+          dispatch({ type: ADD_NEW_TIMELINE_ERROR , error });
+         });   
     };
 };
 

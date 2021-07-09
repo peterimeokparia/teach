@@ -1,6 +1,4 @@
-import 
-React, { 
-useState } from 'react';
+import { useState } from 'react';
 
 import {
 manageCommentsFieldCollection } from 'Services/course/Pages/QuestionsPage/helpers';

@@ -70,3 +70,30 @@ export const shareScreenIcon = ( capturingVideo, id, selectedId  ) => {
     visibility: ( capturingVideo && id === selectedId ) ? "visible" : "hidden"
   };
 };
+
+export const videoMeta = element  => { 
+  return {
+    videoCallIconMain,
+    deleteIconStyle: onlineQuestionVideoDeleteIconStyle,
+    videoCallIcon,
+    shareScreenIcon,
+    exitVideoCallIcon,
+    videoNamePrefix: 'OnlineQuestionVideoMarkDownEditors', 
+    recordButtonText: 'Record Question',
+    displayMaterialButton: true,
+    videoSectionClassNameRecording: "mainVideoSection-recording",
+    videoSectionClassNameRecordingStopped: "mainVideoSection-recordingStopped",
+    videoSectionClassNameNoRecording: "mainVideoSection-recordingStopped", 
+    videoClassName: ( element?.videoUrl === ""  ) ? "videoPlayer" : "",
+    exitVideoCallIconPageName: "OnlineListItems",
+    videoSectionCallOut: "videoSectionCallOut",
+    videoMetaData: { inputFieldId: element?._id, currentQuestion: element, name: element?._id?.toString() },
+    videoName: `${element?._id}_${element?._id}_${element?._id}_${element?.type}`,
+    videoMetaDataExternalId:'name',
+    buttonClassName: `toggle-stage-btns${( true ) ? "-show" : "-hide"}`, 
+    objectId: element?._id, 
+    displaySavedRecording: true
+  }};
+  
+
+

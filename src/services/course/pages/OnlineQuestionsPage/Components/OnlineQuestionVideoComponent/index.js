@@ -1,77 +1,98 @@
-import React from 'react';
+import { 
+useEffect } from 'react';
 
 import { 
 connect } from 'react-redux';
 
 import {
-recordingStatusRecordingStarted,
-recordingStatusRecordingStopped,
-recordingDialogOpen,
-recordingDialogClosed } from 'Services/course/Actions/Video';
+videoComponentMeta } from 'Services/course/Actions/Video';
 
-import VideoComponent from 'Services/course/Pages/QuestionsPage/Components/VideoComponent';
-// import SaveIcon from '@material-ui/icons/Save';
+import MaterialVideoPage from 'Services/course/Pages/MaterialVideoPage';
+
+import { 
+videoCallIconMain,
+videoCallIcon,
+shareScreenIcon,
+exitVideoCallIcon,  
+onlineQuestionVideoDeleteIconStyle  } from '../OnlineQuestionVideoComponent/inlineStyles';
+
 import './style.css';
 
 const OnlineQuestionVideoComponent = ({
 element,
-config,
+videoComponentMeta,
+video,
 } ) => { 
+
+let videoMeta = {
+  videoCallIconMain,
+  videoCallIcon,
+  shareScreenIcon,
+  exitVideoCallIcon,
+  deleteIconStyle: onlineQuestionVideoDeleteIconStyle,
+  videoNamePrefix: 'OnlineQuestionVideoMarkDownEditors', 
+  recordButtonText: 'Record Question',
+  displayMaterialButton: true,
+  videoSectionClassNameRecording: "mainVideoSection-recording",
+  videoSectionClassNameRecordingStopped: "mainVideoSection-recordingStopped",
+  videoSectionClassNameNoRecording: "mainVideoSection-recordingStopped", 
+  videoClassName: ( element?.videoUrl === ""  ) ? "videoPlayer" : "",
+  exitVideoCallIconPageName: "OnlineListItems",
+  videoSectionCallOut: "videoSectionCallOut",
+  videoMetaData: { inputFieldId: element?._id, currentQuestion: element },
+  videoName: `${element?._id}_${element?._id}_${element?._id}_${element?.type}`,
+  videoMetaDataExternalId:'name',
+  buttonClassName: `toggle-stage-btns${( true ) ? "-show" : "-hide"}`, 
+  objectId: element?._id 
+};  
+
+useEffect(() => {
+
+  videoComponentMeta({ ...video, videoMeta  });
+  
+}, [ video, videoComponentMeta ])
+
 return (
-      <span className=""> 
-        <span>
-          {
-            <div className={ config?.videoClassName }>
-               <video
-                 className={ config?.videoClassName }
-                 src={element?.videoUrl}
-                 autoPlay={false}
-                 controls
-               >
-               </video>
-            </div>
-          }   
-          <span> 
-          <span>
-            <VideoComponent
-                element={element}
-                config={config}
-                key={ element?._id }
-                id={ element?._id }
-                name={element?._id}
-                recordButtonText={ config?.recordButtonText }
-                objectId={ element?._id }
-                videoMetaData={{inputFieldId: element?._id, currentQuestion: element} }
-                videoMetaDataExternalId={'name'}
-                videoNamePrefix={ config?.videoNamePrefix }
-                videoName={`${element?._id}_${element?._id}_${element?._id}_${element?.type}`}
-                setRecordingCompletionStatus={status => config.setRecordingCompletionStatus( status, element?._id )}
-                handleSubmit={config.handleSubmit}
-            />
-          </span>
-          { 
-            // <span
-            //   key={element?._id}
-            //   id={ element?._id }
-            //   name={element?._id}
-            // >
-            //   <SaveIcon
-            //     style={config.saveIconStyle( )} 
-            //     onClick={ config.saveRecording }
-            //   />
-            // </span>
-          }
-          </span>
-        </span>        
+ <span className="onlineQuestionVideoComponent"> 
+    <span>
+      {
+        <div className={ video?.videoMeta?.videoClassName }>
+            <video
+              className={ video?.videoMeta?.videoClassName }
+              src={element?.videoUrl}
+              autoPlay={false}
+              controls
+            >
+            </video>
+        </div>
+      }   
+      <span> 
+    <span>
+    <span 
+      className={''}
+    > 
+      <MaterialVideoPage element={element} />  
+    </span>      
+      </span>
+      </span>
+    </span>        
     </span>  
   );
 };
 
+const mapDispatch = {
+  videoComponentMeta,
+};
+
 const mapState = ( state, ownProps ) => {
   return {
+    video: state.hasRecordingStarted.recording[ ownProps?.element?._id ],
     hasRecordingStarted: state.hasRecordingStarted.hasRecordingStarted,
     isRecordingDialogOpen: state.hasRecordingStarted.recordingDialogOpen
   };
 };
 
-export default connect( mapState, { recordingStatusRecordingStarted, recordingStatusRecordingStopped, recordingDialogClosed, recordingDialogOpen } )( OnlineQuestionVideoComponent );
+export default connect( mapState, mapDispatch )( OnlineQuestionVideoComponent );
+
+
+

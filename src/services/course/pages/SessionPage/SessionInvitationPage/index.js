@@ -1,6 +1,4 @@
-import 
-React, { 
-useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { 
 connect } from 'react-redux';
@@ -61,7 +59,7 @@ if ( users.filter( authenticateUser => authenticateUser?._id === user?._id)?.len
 
 const mapState = (state)   => {
     return {
-            users: Object.values(state.users.users), // set up selector
+            users: Object.values(state.users.users), 
             error: state.users.error,
             loading: state.users.loading  
     };

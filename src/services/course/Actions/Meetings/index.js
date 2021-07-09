@@ -22,58 +22,15 @@ export const UPDATE_INVITEE_LIST = "UPDATE INVITEE LIST";
 export const LAST_LOGGEDIN_USER = "LAST_LOGGEDIN_USER";
 export const LOAD_SINGLE_MEETING_SUCCESS = "LOAD SINGLE MEETING SUCCESS";
 
-export const addNewMeeting = (
-invitees, 
-userId,
-sessions,
-timeStarted,
-courseId,
-lessonId,
-courseTitle,
-lessonTitle,
-lessonPlanUrl,
-currentUser, 
-usersWhoJoinedTheMeeting ) => {
-return dispatch => {
-    dispatch({ type: ADD_NEW_MEETING_BEGIN });
-        return add({ 
-            invitees, 
-            userId,
-            sessions,
-            timeStarted,
-            courseId,
-            lessonId,
-            courseTitle,
-            lessonTitle,
-            lessonPlanUrl,
-            currentUser,
-            usersWhoJoinedTheMeeting
-        }, '/meetings')
-        .then( meeting => { 
-            currentUser.meetings.push(meeting?._id );
-            updateUser({
-                ...currentUser, 
-                meetingId: meeting?._id, 
-                meetings: currentUser.meetings
-            });
-            dispatch({ type: LAST_LOGGEDIN_USER, payload: {
-                ...currentUser, 
-                meetingId: meeting?._id, 
-                meetings: currentUser.meetings
-            }});
-                
-            if (  meeting?.invitees ) {
-                meeting.invitees.forEach(user => {
-                    updateUser({
-                        ...user, 
-                        meetingId: meeting?._id, 
-                        meetings: user.meetings
-                    });   
-                });
-            }
-            dispatch({type: ADD_NEW_MEETING_SUCCESS, payload: meeting }); 
-        }).catch( error => {
-            dispatch({ type: ADD_NEW_MEETING_ERROR , error });
+export const addNewMeeting = ( meetingConfig ) => {
+    return dispatch => {
+        dispatch({ type: ADD_NEW_MEETING_BEGIN }); 
+        return add( meetingConfig, '/meetings')
+            .then( meeting => { 
+                dispatch({type: ADD_NEW_MEETING_SUCCESS, payload: meeting }); 
+                return meeting;
+            }).catch( error => {
+                dispatch({ type: ADD_NEW_MEETING_ERROR , error });
         });
     };
 };
@@ -127,4 +84,51 @@ export const deleteMeeting = meeting => {
     };
 };
 
-
+// export const addNewMeeting = (
+// invitees, 
+// userId,
+// sessions,
+// timeStarted,
+// courseId,
+// lessonId,
+// courseTitle,
+// lessonTitle,
+// lessonPlanUrl,
+// currentUser, 
+// usersWhoJoinedTheMeeting ) => {
+// return dispatch => {
+//     dispatch({ type: ADD_NEW_MEETING_BEGIN }); // move side effect(s)... I know :)
+//         return add({ 
+//             invitees, 
+//             userId,
+//             sessions,
+//             timeStarted,
+//             courseId,
+//             lessonId,
+//             courseTitle,
+//             lessonTitle,
+//             lessonPlanUrl,
+//             currentUser,
+//             usersWhoJoinedTheMeeting
+//         }, '/meetings')
+//         .then( meeting => { 
+//             handleMeeting(meeting, currentUser, dispatch);
+//             dispatch({type: ADD_NEW_MEETING_SUCCESS, payload: meeting }); 
+//         }).catch( error => {
+//             dispatch({ type: ADD_NEW_MEETING_ERROR , error });
+//         });
+//     };
+// };
+// let meetingConfig = {
+//     invitees, 
+//     userId,
+//     sessions,
+//     timeStarted,
+//     courseId,
+//     lessonId,
+//     courseTitle,
+//     lessonTitle,
+//     lessonPlanUrl,
+//     currentUser, 
+//     usersWhoJoinedTheMeeting
+// }

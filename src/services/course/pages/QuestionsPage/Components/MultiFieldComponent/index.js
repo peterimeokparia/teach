@@ -1,13 +1,23 @@
-import 
-React, { 
+import { 
 useState, 
 useEffect } from 'react';
+
+import {
+connect } from 'react-redux';
 
 import {
 role } from 'Services/course/helpers/PageHelpers';
 
 import { 
 placeHolder } from 'Services/course/helpers/EditorHelpers';
+
+import {
+loadQuestions,
+saveQuestion,
+setMarkDownEditor } from 'Services/course/Actions/Questions';
+
+import {
+toggleRecordingStatus } from 'Services/course/Actions/Video';
 
 import {
 elementMeta,
@@ -22,52 +32,55 @@ handleMultiFieldFormEvents,
 contentType, 
 setFieldCollection} from 'Services/course/Pages/QuestionsPage/helpers';
 
-//import EditorComponent  from 'Services/course/Pages/QuestionsPage/Components/EditorComponent';
+import EditorComponent from 'Services/course/Pages/Components/EditorComponent';
 import VideoComponent from 'Services/course/Pages/QuestionsPage/Components/VideoComponent';
 import LessonPlanIframeComponent from 'Services/course/Pages/Lessons/LessonPlan/Components/LessonPlanIframeComponent';
 import DropDown from 'Services/course/Pages/Components/DropDown';
 import './style.css';
+// upload files to do
 
 const MultiFieldComponent = ( { 
-currentUser,  
-questionNumber,
-markDownEditorNumber,
-inputFieldOptions,
-handleUpdatingMarkDownEditor,
-handleUpdatingMarkDownEditorPointsReceived,
-previewMode,
-inputFieldData,
-objectId,
-loadQuestions,
-togglePreviewMode,
-handleSubmit }) =>  { 
-const [ fieldName,  setFieldName ] = useState( "" );
-const [ fieldValue,  setFieldValue ] = useState( "" );
-// const [ multipleChoiceAnswer, setMultipleChoiceAnswer ] = useState( "" );
-const [ inputFields, setInputFields ] = useState([]);
-const [ labelDropDownSelectedValue, setlabelDropDownSelectedValue ] = useState( "" );
-const [ inputTypeValue, setinputTypeValue ] = useState( "" );
-const [ videoUploaded, setVideoUploaded ] = useState( false );
+  currentUser,  
+  element,
+  lessonId,
+  markDownEditors,
+  setMarkDownEditor,
+  inputFieldOptions,
+  previewMode,
+  objectId,
+  questions,
+  loadQuestions,
+  saveQuestion,
+  toggleRecordingStatus,
+  video,
+  togglePreviewMode }) =>  { 
 
-useEffect(() => {
-  let inputFieldBuilder = document.getElementById( elementMeta.InputFieldCreator );
+  const [ fieldName,  setFieldName ] = useState( "" );
+  const [ fieldValue,  setFieldValue ] = useState( "" );
+  // const [ multipleChoiceAnswer, setMultipleChoiceAnswer ] = useState( "" );
+  const [ inputFields, setInputFields ] = useState([]);
+  const [ labelDropDownSelectedValue, setlabelDropDownSelectedValue ] = useState( "" );
+  const [ inputTypeValue, setinputTypeValue ] = useState( "" );
 
-  handleMultiFieldFormEvents( inputFieldBuilder, 'click', inputFields, handleUpdatingMarkDownEditor, elementMeta.markDownEditorFormInputFields ); 
-  handleMultiFieldFormEvents( inputFieldBuilder, 'mouseup', inputFields, handleUpdatingMarkDownEditor, elementMeta.markDownEditorFormInputFields ); 
-  handleMultiFieldFormEvents( inputFieldBuilder, 'mousedown', inputFields, handleUpdatingMarkDownEditor, elementMeta.markDownEditorFormInputFields ); 
+  useEffect(() => {
+    let inputFieldBuilder = document.getElementById( elementMeta.InputFieldCreator );
 
-  if ( inputFieldData ) {
-    setInputFields( inputFieldData?.markDownEditorFormInputFields );
-  } 
-  if ( previewMode ) {
-     setVideoUploaded( false );
-  }
-}, [ inputFields, inputTypeValue, setInputFields, handleUpdatingMarkDownEditor, inputFieldData, previewMode ] );  
-// }, [ inputFields, inputTypeValue, setInputFields ] )  
+    handleMultiFieldFormEvents( inputFieldBuilder, 'click', inputFields, handleUpdatingMarkDownEditor, elementMeta.markDownEditorFormInputFields ); 
+    handleMultiFieldFormEvents( inputFieldBuilder, 'mouseup', inputFields, handleUpdatingMarkDownEditor, elementMeta.markDownEditorFormInputFields ); 
+    handleMultiFieldFormEvents( inputFieldBuilder, 'mousedown', inputFields, handleUpdatingMarkDownEditor, elementMeta.markDownEditorFormInputFields ); 
 
-let config = { questionNumber, markDownEditorNumber, inputFields, inputTypeValue, inputFieldOptions, labelDropDownSelectedValue, placeHolder };
+    if ( element ) {
+      setInputFields( element?.markDownEditorFormInputFields );
+    } 
+  }, [ inputFields, inputTypeValue, setInputFields, handleUpdatingMarkDownEditor, element ] );  
+
+  let questionNumber = element?.id;
+  let markDownEditorNumber= element?.name;
+  let currentLessonQuestions = questions.find( question => question?.lessonId === lessonId );  
 
 const addNewInputField = () => {
+  let config = { questionNumber, markDownEditorNumber, inputFields, inputTypeValue, inputFieldOptions, labelDropDownSelectedValue, placeHolder };
+
   if ( inputFields ) {
      handleUpdatingMarkDownEditor( { data: inputFields, fieldName: elementMeta.markDownEditorFormInputFields } ); 
   }
@@ -94,7 +107,7 @@ const removeInputField = () => {
   handleUpdatingMarkDownEditor( { data: decrementedFieldSet, fieldName: elementMeta.markDownEditorFormInputFields } ); 
 };
 
-const handleChange = ( event ) => {
+const handleMarkDownContentChange = ( event ) => {
   setFieldName( event.target.name );
   setFieldValue( event.target.value );
   inputFields.find(obj => obj?.name === event?.target?.name && 
@@ -117,8 +130,7 @@ const handleMultipleChoiceAnswerChange = ( event ) => {
           inputFields.find(obj => obj?.questionNumber === questionNumber && obj?.markDownEditorNumber === markDownEditorNumber)[ elementMeta.questionAnsweredOnDateTime ] = Date.now(); 
           inputField[ elementMeta.multipleChoiceAnswerValue ] = event.target.value;
           handleSettingMultipleChoiceValue( inputField, event,  elementMeta.multipleChoiceQuestionStudentAnswer, elementMeta.multipleChoiceQuestionStudentAnswerInputValue, handleUpdatingMarkDownEditor );
-          handleUpdatingMarkDownEditorPointsReceived( { data: calculatePointsReceived( inputFieldData?.multipleChoiceQuestionAnswerKey, event.target.value, inputFieldData?.questionPoints  ), fieldName: elementMeta.pointsReceived } ); 
-          handleSubmit();
+          handleUpdatingMarkDownEditorPointsReceived( { data: calculatePointsReceived( element?.multipleChoiceQuestionAnswerKey, event.target.value, element?.questionPoints  ), fieldName: elementMeta.pointsReceived } ); 
       }
    }    
 };
@@ -131,20 +143,42 @@ const handleDropDownSelectorInputTypeChange = ( selectedOption ) => {
   handleDropDownSelectors( setinputTypeValue, elementMeta.inputTypeDropDownSelectedValue, selectedOption );
 };
 
-const saveRecording = () => { 
+const saveRecording = ( element ) => { 
   togglePreviewMode();
-  setVideoUploaded( false );
+  toggleRecordingStatus({ ...video[ element?._id ], recordingStatus: false });
 };
 
 const handleFormSubmit = ( event ) => {
     event.preventDefault();
 };
 
-function setRecordingCompletionStatus( videoUploaded, id ){
-  if ( videoUploaded ) {
-      setVideoUploaded( videoUploaded );
+const handleChange = ( editor, id, type ) => {
+  if ( markDownEditors.find( obj => obj?.id === id )[ elementMeta.markDownContent ] === JSON.stringify( editor.emitSerializedOutput() )) return;
+  if (  type === editorContentType.Question  ) {  
+      if ( markDownEditors ) {
+          markDownEditors.find( obj => obj?.id === id )[ elementMeta.markDownContent ]  = JSON.stringify( editor.emitSerializedOutput() ); 
+      }   
   }
-}
+  setMarkDownEditor( markDownEditors );
+};
+
+const handleUpdatingMarkDownEditorPointsReceived = ( inputfieldData, id ) => {
+  let currentEditor = markDownEditors.find( editor => editor.questionNumber === id  );
+
+  currentEditor[ inputfieldData?.fieldName ][currentUser?._id] = inputfieldData?.data;
+  if ( inputfieldData?.fieldName === elementMeta.pointsReceived ) {
+        calculateTotalPointsReceived(currentUser); 
+  }
+  setMarkDownEditor( markDownEditors );
+  saveQuestion( { ...currentLessonQuestions, questions: markDownEditors } );
+};
+
+function handleUpdatingMarkDownEditor( inputfieldData, id ){
+  let currentEditor = markDownEditors.find( editor => editor.questionNumber === id  );
+
+  currentEditor[ inputfieldData?.fieldName ] = inputfieldData?.data;
+  setMarkDownEditor( markDownEditors );
+};
 
 function handleDropDownSelectors( setSelectedOptionHandler, label, selectedOption ){
   setSelectedOptionHandler( selectedOption );
@@ -152,14 +186,32 @@ function handleDropDownSelectors( setSelectedOptionHandler, label, selectedOptio
     inputFields.find(obj => obj?.questionNumber === questionNumber && 
       obj?.markDownEditorNumber === markDownEditorNumber )[ label ] = selectedOption;
   }  
-}
+};
 
-let formInputFields = ( previewMode ) ? inputFieldData?.markDownEditorFormInputFields : inputFields;
+let totalPointsReceived = 0;
+
+function calculateTotalPointsReceived(user){
+  markDownEditors.forEach( element => {
+   let value =  isNaN(parseInt( element[ elementMeta.pointsReceived ][user?._id], 10 ))  ? 0 : parseInt( element[ elementMeta.pointsReceived ][user?._id], 10 );
+
+    totalPointsReceived += value;
+    let total = {};
+
+    total[user._id] = totalPointsReceived;
+    // setPointsReceived(total);
+    element[elementMeta.totalPointsReceived][user?._id] = totalPointsReceived;
+  });
+  markDownEditors[0].totalPointsReceived[user?._id] = totalPointsReceived;
+  setMarkDownEditor( markDownEditors );
+  loadQuestions();
+};
+
+let formInputFields = ( previewMode ) ? element?.markDownEditorFormInputFields : inputFields;
 
 return(
     <div className={elementMeta.InputFieldCreator}  id={elementMeta.InputFieldCreator}>
       <form onSubmit={ handleFormSubmit }>
-      {formInputFields?.map((element) => (
+      {formInputFields?.map( (element) => (
           <div className={elementMeta.multipleChoice}>
               <label name={ element?.id } />
               <span className={elementMeta.multipleChoicelabel}> 
@@ -174,7 +226,6 @@ return(
         {( contentType( element.editorContentType ).isMultipleChoiceContentType )  &&    
                 <span className={elementMeta.multipleChoicelabel}> 
                     <input
-                      key={element?.id}
                       id={element?.id} 
                       name={elementMeta.multipleChoiceAnswer}
                       type={elementMeta.radio}
@@ -184,23 +235,21 @@ return(
                     />
                 </span>
         }
-        {
-        // ( contentType( element.editorContentType ).isExplanationContentType )  && 
-        //         <EditorComponent
-        //             key={element?.id}
-        //             id={`input${element?.id}`}
-        //             name={`editor${element?.id}`}
-        //             content={ JSON.parse( element?.explanationAnswerValue )}
-        //             onChange={ ( editor ) => handleMarkDownContentChange( inputFields, editor, element?.id, 
-        //                         currentUser?.role, editorContentType.Explanation, handleUpdatingMarkDownEditor, 
-        //                                 questionNumber, markDownEditorNumber )}
-        //         />
+        {( contentType( element.editorContentType ).isExplanationContentType )  && 
+                <EditorComponent
+                  id={`input${element?.id}`}
+                  name={`editor${element?.id}`}
+                  content={ JSON.parse( element?.explanationAnswerValue )}
+                  onChange={handleMarkDownContentChange}
+                  // onChange={ ( editor ) => handleMarkDownContentChange( inputFields, editor, element?.id, 
+                  //             currentUser?.role, editorContentType.Explanation, handleUpdatingMarkDownEditor, 
+                  //                     questionNumber, markDownEditorNumber )}
+                />
         }
         {( contentType( element.editorContentType ).isMultipleChoiceContentType  )  ?
               ( previewMode )   ?   <span>{element?.value}</span>    
                                 :   <input
                                       className={elementMeta.multipleChoice}
-                                      key={element?.id}
                                       id={element?.id} 
                                       name={element?.name}
                                       type={element?.type}
@@ -213,7 +262,6 @@ return(
         {( contentType( element.editorContentType ).isVideoContentType ) &&   ( previewMode )  &&  
                                  <div>
                                     < LessonPlanIframeComponent
-                                        key={element?.id}
                                         id={element?.id}
                                         name="embed_readwrite"
                                         source={element?.videoUrl}
@@ -226,25 +274,52 @@ return(
                                   </div>
       }
       { ( contentType( element.editorContentType ).isVideoContentType ) &&   ( !previewMode )  &&  
-                                    <div> 
-                                      <VideoComponent
-                                          key={element?.id}
-                                          id={element?.id}
-                                          name={element?.id}
-                                          objectId={objectId}
-                                          videoMetaData={{inputFieldId: element?.id, currentQuestion: inputFieldData} }
-                                          videoMetaDataExternalId={'name'}
-                                          videoNamePrefix={"QuestionVideoMultipleChoiceInputFields"}
-                                          videoName={`${inputFieldData?.id}_${inputFieldData?.questionNumber}_${element?.id}_${element?.type}`}
-                                          setRecordingCompletionStatus={status => setRecordingCompletionStatus( status, element?.id )}
-                                          handleSubmit={handleSubmit}
-                                        />
-                                      {(element.editorContentType === editorContentType.VideoPlayer && videoUploaded ) && <button className="test" onClick={ saveRecording }>Save Recording</button> }
-                                    </div>
+                                  <div> 
+                                    <VideoComponent
+                                        id={element?.id}
+                                        objectId={objectId}
+                                        videoMetaDataExternalId={'name'}
+                                        videoNamePrefix={"QuestionVideoMultipleChoiceInputFields"}
+                                      />
+                                    {(element.editorContentType === editorContentType.VideoPlayer &&  video[ element?._id ]?.recordingStatus ) && <button className="test" onClick={ () => saveRecording( element ) }>Save Recording</button> }
+                                  </div>
+
+                      // export const videoMeta = element  => { 
+                      //   return {
+                      //     videoCallIconMain,
+                      //     deleteIconStyle: onlineQuestionVideoDeleteIconStyle,
+                      //     videoCallIcon,
+                      //     shareScreenIcon,
+                      //     exitVideoCallIcon,
+                      //     videoNamePrefix: 'OnlineQuestionVideoMarkDownEditors', 
+                      //     recordButtonText: 'Record Question',
+                      //     displayMaterialButton: true,
+                      //     videoSectionClassNameRecording: "mainVideoSection-recording",
+                      //     videoSectionClassNameRecordingStopped: "mainVideoSection-recordingStopped",
+                      //     videoSectionClassNameNoRecording: "mainVideoSection-recordingStopped", 
+                      //     videoClassName: ( element?.videoUrl === ""  ) ? "videoPlayer" : "",
+                      //     exitVideoCallIconPageName: "OnlineListItems",
+                      //     videoSectionCallOut: "videoSectionCallOut",
+                      //     videoMetaData: { inputFieldId: element?._id, currentQuestion: element, name: element?._id?.toString() },
+                      //     videoName: `${element?._id}_${element?._id}_${element?._id}_${element?.type}`,
+                      //     videoMetaDataExternalId:'name',
+                      //     buttonClassName: `toggle-stage-btns${( true ) ? "-show" : "-hide"}`, 
+                      //     objectId: element?._id, 
+                      //     displaySavedRecording: true
+                      //   }};
+
+                      //   < MaterialUiVideoComponent 
+                      //   className={"onlineQuestionVideoComponent"} 
+                      //   element={ element } 
+                      //   videoMeta={videoMeta( element )}
+                      //   saveRecording={saveRecording}
+                      //   extendedMeetingSettings={false} 
+                      // />
+
       }
     </div>
       ))} 
-              {( ! previewMode) && 
+          {( ! previewMode) && 
                   <div>
                         <div className="input-field-builder-selector">  
                           <DropDown 
@@ -271,10 +346,10 @@ return(
                   </div>
               }
               {( inputTypeValue ) && ( ! previewMode) && 
-                        <span>
-                            <input className="input-field-builder-btn" type="button" onClick={addNewInputField} value="+" />
-                            <input className="input-field-builder-btn" type="button" onClick={removeInputField} value="-" />
-                        </span>
+                  <span>
+                      <input className="input-field-builder-btn" type="button" onClick={addNewInputField} value="+" />
+                      <input className="input-field-builder-btn" type="button" onClick={removeInputField} value="-" />
+                  </span>
               }
         </form>  
         <div>                         
@@ -284,4 +359,19 @@ return(
     );
 };
 
-export default MultiFieldComponent;
+const mapState = ( state, ownProps ) => {
+  return {
+    questions: Object.values(state.questions.questions),
+    currentUser: state.users.user,
+    video: state.hasRecordingStarted.recording,
+    questions: Object.values(state.questions.questions),
+    latestQuestion: state.questions.latestQuestion,
+    lessons: Object.values(state.lessons.lessons),
+    markDownEditors: state.questions.markDownEditors,
+    previewMode: state.questions.previewMode,
+  };
+};
+
+export default connect( mapState, { setMarkDownEditor, loadQuestions, saveQuestion, toggleRecordingStatus } )( MultiFieldComponent );
+
+// }, [ inputFields, inputTypeValue, setInputFields ] )  

@@ -5,14 +5,7 @@ update,
 //updateUser,
 remove, 
 getById,
-sendEmail, 
 getEventsByUserId } from 'Services/course/Api';
-
-import {
-sendPushNotificationMessage } from 'Services/course/Actions/Notifications';
-
-import {
-getTimeLineItems} from 'Services/course/Pages/CalendarPage/helpers';
 
 export const ADD_EVENT_BEGIN = "ADD EVENT BEGIN";
 export const ADD_EVENT_SUCCESS = "ADD EVENT SUCCESS";
@@ -32,46 +25,20 @@ export const DELETE_EVENT_SUCCESS = "DELETE EVENT SUCCESS";
 export const DELETE_EVENT_ERROR = "DELETE EVENT ERROR";
 export const TOGGLE_EVENT_EDIT_FORM = "TOGGLE_EVENT_EDIT_FORM";
 
-/// We know whose available at what date & time to take students or schedule for ad hoc online sessions
+/// We know who is available at what date & time to take students or schedule ad hoc online sessions
 export const addEvent = ( eventConfig ) => {
-    // let userData = { ...eventConfig?.currentUser };
-    //let userData = eventConfig?.currentUser;
     return dispatch => {
-            dispatch({ type: ADD_EVENT_BEGIN });
-       return add({ ...eventConfig?.event }, '/event')
-       .then(calendarEventData => {
-            dispatch({ type: ADD_EVENT_SUCCESS, payload: calendarEventData});
-            dispatch(sendPushNotificationMessage( 
-                eventConfig?.pushNotificationUser, 
-                { 
-                title:`${ eventConfig?.currentUser?.firstname } Added New Calendar Event!`, 
-                body:`New Calendar Event: ${ calendarEventData?.event?.title } ${ calendarEventData?.event?.start }` 
-            })); 
-            eventConfig.emailAddresses.forEach(email => {
-                sendEmail(
-                    "teachpadsconnect247@gmail.com", 
-                    email, 
-                    "New Calendar Event!",
-                    `View Event: http://localhost:3000/boomingllc/accountverification/${calendarEventData?._id}`,  /// change
-                    eventConfig?.currentUser?._id
-                );
+        dispatch({ type: ADD_EVENT_BEGIN });
+        return add({ ...eventConfig?.event }, '/event')
+            .then(calendarEventData => {
+                dispatch({ type: ADD_EVENT_SUCCESS, payload: { calendarEventData, eventConfig } });
+                return calendarEventData; 
+            })
+            .catch( error => {
+                dispatch({ type: ADD_EVENT_ERROR, payload: error });
+                console.log( error );
+                return error;
             });
-            // eventConfig.currentUser['calendarEvents'] = [ ...eventConfig?.currentUser?.calendarEvents, calendarEventData?._id ];
-            // updateUser(  eventConfig?.currentUser )
-            // .then(user => { 
-            //     dispatch({ type: LAST_LOGGEDIN_USER, payload: user });
-            //     dispatch({ type: SAVE_USER_SUCCESS, payload: user })             
-            // });
-            let timeLineItems = getTimeLineItems( calendarEventData );
-
-            dispatch(saveEvent({...calendarEventData, timeLineItems }, eventConfig?.currentUser, eventConfig?.pushNotificationUser, eventConfig?.emailAddresses));
-            return calendarEventData; 
-        })
-        .catch( error => {
-            dispatch({ type: ADD_EVENT_ERROR, payload: error });
-            console.log( error );
-            return error;
-        });
     };
 };
 
@@ -79,28 +46,14 @@ export const saveEvent = ( calendarEvent, currentUser, pushNotificationUser, ema
     return dispatch => {
          dispatch({ type: SAVE_EVENT_BEGIN });
          return update( calendarEvent, `/event/` )
-             .then( event => {  
-                 dispatch({ type: SAVE_EVENT_SUCCESS, payload: event });
-                 dispatch(sendPushNotificationMessage( 
-                    pushNotificationUser, { 
-                    title:`${ currentUser?.firstname } Modified Calendar Event!`, 
-                    body:`Modified Calendar Event: ${  calendarEvent?.title } Event StartTime: ${ ( calendarEvent?.rrule) ?  calendarEvent?.rrule?.dtstart :  calendarEvent?.start }` 
-                })); 
-                emailAddresses.forEach(email => {
-                    sendEmail(
-                        "teachpadsconnect247@gmail.com",
-                        email, 
-                        "Modifiied Calendar Event(s)!",
-                        `View Event: http://localhost:3000/boomingllc/accountverification/${event?._id}`,  /// change
-                        currentUser?._id
-                    );
-                });
-                 return event; 
+            .then( calendarEventData => {  
+                dispatch({ type: SAVE_EVENT_SUCCESS, payload: { calendarEventData, calendarEvent, currentUser, pushNotificationUser, emailAddresses } });
+                return calendarEventData; 
              })
-             .catch( error => {
+            .catch( error => {
                  dispatch({ type: SAVE_EVENT_ERROR , error });
                  return error;
-         });  
+            });  
     };
  };
 
@@ -109,13 +62,8 @@ export const saveEvent = ( calendarEvent, currentUser, pushNotificationUser, ema
         dispatch({ type: DELETE_EVENT_BEGIN });
          return remove( event, `/event/` )
          .then( resp => {
-             dispatch({ type: DELETE_EVENT_SUCCESS, payload: resp });
-             dispatch(sendPushNotificationMessage( 
-                pushNotificationUser, { 
-                title:`${ currentUser?.firstname } Deleted A Calendar Event!`, 
-                body:`Deleted Calendar Event: ${ event?._id }` 
-            })); 
-             return event;
+            dispatch({ type: DELETE_EVENT_SUCCESS, payload:{ resp, event, currentUser, pushNotificationUser }} ); 
+            return event;
          }).catch( error => {
             dispatch({ type: DELETE_EVENT_ERROR , error });
             return error;

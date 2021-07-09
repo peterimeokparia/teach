@@ -1,5 +1,3 @@
-import React from 'react';
- 
 import {
 connect } from 'react-redux';
 
@@ -11,20 +9,21 @@ Link } from '@reach/router';
 
 import {
 role } from 'Services/course/helpers/PageHelpers';
- 
+
 import Roles from 'Services/course/Pages/Components/Roles';
 import ListItem from 'Services/course/Pages/Components/ListItem';
 import EditSessionComponent from './Component/EditSessionComponent';
 
 const SessionPage = ({ 
-studentId,
-currentUser,
-courseId, 
-saveSession,
-sessions }) => {
+    studentId,
+    currentUser,
+    courseId, 
+    saveSession,
+    sessions }) => {
+
 function onMatchListItem( match, listItem ) {
     if ( match ){
-        // fix
+        console.log(`Selected: ${listItem}`)
     }
 } 
 return   (    
@@ -79,9 +78,7 @@ return   (
                                         <button
                                             className="delete-lesson-btn"
                                             onClick={() => { remove( selectedSession ); }}> 
-
                                             Delete 
-
                                         </button> 
                                     </span>
                                 </Roles>

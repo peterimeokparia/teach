@@ -1,53 +1,52 @@
-import React from 'react';
 import Select from 'react-select';
 import DropDown from 'Services/course/Pages/Components/DropDown';
 import ToggleButton from 'Services/course/Pages/Components/ToggleButton';
 
-const EventForm = ({ config })  => {
+const EventForm = ({ props })  => {
     return(
       <span>
         <form className={""}
-              onSubmit={config?.Submit}> 
+              onSubmit={props?.Submit}> 
             <span className="row">    
                 <input
-                    ref={config?.inputRef}
+                    ref={props?.inputRef}
                     type="text" 
-                    disabled={config?.saveInProgress} 
-                    value={config?.title} 
-                    onChange={(e) => config?.setEventTitle(e.target.value)}
+                    disabled={props?.saveInProgress} 
+                    value={props?.title} 
+                    onChange={(e) => props?.setEventTitle(e.target.value)}
                     placeholder="Event Title"
                 />
             </span>
             <span className="row">    
                 <input
-                    ref={config?.inputRef}
+                    ref={props?.inputRef}
                     type="text" 
-                    disabled={config?.saveInProgress} 
-                    value={config?.location} 
-                    onChange={(e) => config?.setEventLocation(e.target.value)}
+                    disabled={props?.saveInProgress} 
+                    value={props?.location} 
+                    onChange={(e) => props?.setEventLocation(e.target.value)}
                     placeholder="Event Location"
                 />
             </span>
             <span className="row"> 
             <span className='col'>
-                {"Start Date"}
+            {"Start Date"}
                <input
-                    ref={config?.inputRef}
+                    ref={props?.inputRef}
                     type="date" 
-                    //disabled={config?.saveInProgress} 
-                    value={config?.startDateDateTime} 
-                    onChange={(e) => config?.setStartDateDateTime(e.target.value)}
+                    //disabled={props?.saveInProgress} 
+                    value={props?.startDateDateTime} 
+                    onChange={(e) => props?.setStartDateDateTime(e.target.value)}
                     placeholder="Event Start"
                 />
             </span>
             <span className="col">
             {"Start Time"}
                 <input
-                    ref={config?.inputRef}
+                    ref={props?.inputRef}
                     type="time" 
-                    disabled={config?.saveInProgress} 
-                    value={config?.startTimeDateTime} 
-                    onChange={(e) => config?.setStartTimeDateTime(e.target.value)}
+                    disabled={props?.saveInProgress} 
+                    value={props?.startTimeDateTime} 
+                    onChange={(e) => props?.setStartTimeDateTime(e.target.value)}
                     placeholder="Event Start"
                 />
             </span>
@@ -56,22 +55,22 @@ const EventForm = ({ config })  => {
             <span className='col'>
             {"End Date"}
                <input
-                    ref={config?.inputRef}
+                    ref={props?.inputRef}
                     type="date" 
-                    disabled={config?.saveInProgress} 
-                    value={config?.endDateDateTime} 
-                    onChange={(e) => config?.setEndDateDateTime(e.target.value)}
+                    disabled={props?.saveInProgress} 
+                    value={props?.endDateDateTime} 
+                    onChange={(e) => props?.setEndDateDateTime(e.target.value)}
                     placeholder="Event End"
                 />
             </span>
             <span className="col">
             {"End Time"}
                 <input
-                    ref={config?.inputRef}
+                    ref={props?.inputRef}
                     type="time" 
-                    disabled={config?.saveInProgress} 
-                    value={config?.endTimeDateTime} 
-                    onChange={(e) => config?.setEndTimeDateTime(e.target.value)}
+                    disabled={props?.saveInProgress} 
+                    value={props?.endTimeDateTime} 
+                    onChange={(e) => props?.setEndTimeDateTime(e.target.value)}
                     placeholder="Event End"
                 />
             </span>
@@ -85,10 +84,10 @@ const EventForm = ({ config })  => {
                 <div class="w-10"></div>
                  <span className="col-sm-6"> 
                     <ToggleButton
-                        isChecked={config?.allDay}
-                        isDisabled={config?.saveInProgress}
+                        isChecked={props?.allDay}
+                        isDisabled={props?.saveInProgress}
                         value={'isAllDay'}
-                        onChange={config?.handleAllDayEvent} 
+                        onChange={props?.handleAllDayEvent} 
                     />
                  </span>
             </span>
@@ -101,14 +100,14 @@ const EventForm = ({ config })  => {
                 <div class="w-10"></div>
                  <span className="col-sm-6"> 
                     <ToggleButton
-                        isChecked={config?.recurringEvent}
-                        isDisabled={config?.saveInProgress}
+                        isChecked={props?.recurringEvent}
+                        isDisabled={props?.saveInProgress}
                         value={'isRecurring'}
-                        onChange={config?.handleRecurringEvent} 
+                        onChange={props?.handleRecurringEvent} 
                     />
                  </span>
             </span>
-            {( config?.recurringEvent ) &&  <div>
+            {( props?.recurringEvent ) &&  <div>
                                             <span className="row"> 
                                             <span className="col-sm-3"> 
                                             <label className="recurring">
@@ -128,8 +127,8 @@ const EventForm = ({ config })  => {
                                                         label={""}
                                                         key={"_id"}
                                                         value={"name"}
-                                                        optionCollection={(config.isEditMode && config.recurringEvent) ? config?.freqCollectionData : config?.frequencyCollection}
-                                                        setOptionSelectedValue={config?.setFrequency} 
+                                                        optionCollection={(props.isEditMode && props.recurringEvent) ? props?.freqCollectionData : props?.frequencyCollection}
+                                                        setOptionSelectedValue={props?.setFrequency} 
                                                     />
                                                 </span>
                                             </span>
@@ -143,9 +142,9 @@ const EventForm = ({ config })  => {
                                                 type="number"
                                                 min="1" 
                                                 max="100" 
-                                                disabled={config?.saveInProgress} 
-                                                value={config?.interval} 
-                                                onChange={(e) => config?.setInterval(e.target.value)}
+                                                disabled={props?.saveInProgress} 
+                                                value={props?.interval} 
+                                                onChange={(e) => props?.setInterval(e.target.value)}
                                             />
                                             </label> 
 
@@ -156,9 +155,9 @@ const EventForm = ({ config })  => {
                                             </span>
                                             <Select
                                                 isMulti
-                                                value={config?.weekDays}
-                                                onChange={config?.setWeekDays}
-                                                options={config?.days} 
+                                                value={props?.weekDays}
+                                                onChange={props?.setWeekDays}
+                                                options={props?.days} 
                                             />
                                             </label>
 
@@ -171,35 +170,35 @@ const EventForm = ({ config })  => {
                                             <span className='col'>
                                             {"End Date"}
                                             <input
-                                                    ref={config?.inputRef}
-                                                    type="date" 
-                                                    disabled={config?.saveInProgress} 
-                                                    value={config?.endDate} 
-                                                    onChange={(e) => config?.setEndDate(e.target.value)}
-                                                    placeholder="Event End"
-                                                />
+                                                ref={props?.inputRef}
+                                                type="date" 
+                                                disabled={props?.saveInProgress} 
+                                                value={props?.endDate} 
+                                                onChange={(e) => props?.setEndDate(e.target.value)}
+                                                placeholder="Event End"
+                                            />
                                             </span>
                                             <span className="col">
                                             {"End Time"}
-                                                <input
-                                                    ref={config?.inputRef}
-                                                    type="time" 
-                                                    disabled={config?.saveInProgress} 
-                                                    value={config?.endTimeDateTime} 
-                                                    onChange={(e) => config?.setEndTimeDateTime(e.target.value)}
-                                                    placeholder="Event End"
-                                                />
+                                            <input
+                                                ref={props?.inputRef}
+                                                type="time" 
+                                                disabled={props?.saveInProgress} 
+                                                value={props?.endTimeDateTime} 
+                                                onChange={(e) => props?.setEndTimeDateTime(e.target.value)}
+                                                placeholder="Event End"
+                                            />
                                             </span>
                                             </span>
                                             </label>
                                             </div>
             }  
-            { config?.onSaveError && (
+            { props?.onSaveError && (
                 <div className="saveError-message">
-                    Error: { config?.onSaveError.message }
+                    Error: { props?.onSaveError.message }
                 </div>
             )}
-             <button onClick={config?.submit} disabled={config?.saveInProgress} > {`${config?.submitEventButtonText}`} </button> 
+             <button onClick={props?.submit} disabled={props?.saveInProgress} > {`${props?.submitEventButtonText}`} </button> 
         </form>
         </span>
     );

@@ -1,5 +1,4 @@
-import 
-React, { 
+import { 
 useState } from 'react';
 
 import { 
@@ -8,20 +7,21 @@ connect } from 'react-redux';
 import { 
 saveOnlineQuestion } from 'Services/course/Actions/OnlineQuestions';
 
+import {
+handleAddPushNotificationSubscriptionToEntity,
+handleEmailNotificationSubscriptionToEntity,
+handleSavingEntityAction } from 'Services/course/Pages/Components/SubscriptionComponent/MiniSideBarMenu/helper';
+
+import {
+elementMeta } from 'Services/course/Pages/QuestionsPage/helpers';
+
 import ToggleButton from 'Services/course/Pages/Components/ToggleButton';
 import './style.css';
 
 const MiniSideBarMenu = ({ 
 question, 
 currentUser, 
-key,
 saveOnlineQuestion,
-handleAddPushNotificationSubscription,
-handleEmailNotificationSubscription,
-handleSaving,
-pushNotificationsEnabled,
-emailNotificationsEnabled,
-entitySavedEnabled,
 children }) => {
 const [ menuVisible, setMenuVisibility ] = useState(false);
 const handleMouseDown = ( event ) => {
@@ -30,40 +30,40 @@ const handleMouseDown = ( event ) => {
 };
 
 return (
-    <span key={ key }
-    >
-        { children( key, handleMouseDown,  menuVisible ) }
+    <span >
+        { children( handleMouseDown,  menuVisible ) }
         <div
-            key={ key }
             id="sideFlyoutMenu"
             className={ menuVisible ? "show" : "hide" }
         >
             {
-                  <span key={ question?._id } className={ "navlinkItem" }>
+                <span>
+                <span  className={ "navlinkItem" }>
                   <label> Receive push notifications. </label>
                   <ToggleButton
                       className={ "toggleButton" }
-                      isChecked={ pushNotificationsEnabled }
+                      isChecked={ (question?.questionPushNotificationSubscribers?.includes( currentUser?._id ) || question?.userId === currentUser?._id) }
                       value={ 'isRecurring' }
-                      onChange={ handleAddPushNotificationSubscription }
+                      onChange={ () => handleAddPushNotificationSubscriptionToEntity( question, question?.questionPushNotificationSubscribers, currentUser,  saveOnlineQuestion, elementMeta.questionPushNotificationSubscribers  ) }
                       placeHolder="push" 
                   />
-                  <span key={question?._id} className={ "toggleButton" }>
+                </span>
+                <span className={ "toggleButton" }>
                   <label> Receive email notifications. </label>
                   <ToggleButton
                       className={ "navlinkItem" }
-                      isChecked={ emailNotificationsEnabled }
+                      isChecked={ (question?.questionEmailNotificationSubscribers?.includes( currentUser?._id )) }
                       value={ 'isRecurring' }
-                      onChange={ handleEmailNotificationSubscription } 
+                      onChange={ () => handleEmailNotificationSubscriptionToEntity( question, question?.questionEmailNotificationSubscribers, currentUser,  saveOnlineQuestion, elementMeta.questionEmailNotificationSubscribers  ) } 
                       placeHolder="email" 
                   />
                   </span>
-                  <span key={question?._id} className={ "toggleButton" }>
+                  <span  className={ "toggleButton" }>
                   <label> Save question. </label>
                   <ToggleButton
-                      isChecked={ entitySavedEnabled }
+                      isChecked={ (question?.savedQuestions?.includes( currentUser?._id )) }
                       value={ 'isRecurring' }
-                      onChange={ handleSaving } 
+                      onChange={ ( ) => handleSavingEntityAction( question, question?.savedQuestions, currentUser, saveOnlineQuestion, elementMeta.savedQuestions ) } 
                       placeHolder="save" 
                   />
                   </span>
@@ -75,4 +75,12 @@ return (
     );
 };
 
-export default connect( null, { saveOnlineQuestion } )( MiniSideBarMenu );
+const mapState = ( state, ownProps ) => {
+    return {
+      currentUser: state.users.user,
+      courses: Object.values( state?.courses?.courses ),
+      hasRecordingStarted: state.hasRecordingStarted.hasRecordingStarted
+    };
+  };
+
+export default connect( mapState, { saveOnlineQuestion } )( MiniSideBarMenu );

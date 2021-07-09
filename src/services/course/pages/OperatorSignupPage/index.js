@@ -1,5 +1,3 @@
-import React   from 'react';
-
 import {  
 navigate } from '@reach/router';
 
@@ -25,8 +23,8 @@ const OperatorSignUpPage = ({
   loading, 
   createOperator }) => {
   const handleCreateUser = (email, password, firstname, lastname, businessname, phone ) => {
+    
     let operatorUser = new Operator();
-
     operatorUser.email = email;
     operatorUser.password = password;
     operatorUser.firstName = firstname;
@@ -39,7 +37,8 @@ const OperatorSignUpPage = ({
       Swal.fire({
         title: `Welcome!`,
         icon: 'warning',
-        html: (`<div> <p> <u>Your service account link </u> </p> </div> <div> <p> http://localhost:3000/${businessname}/login </p> </div> <div><p> A confirmation email has been sent to your email address.  </p></div>`),
+        html: (`<div> <p> <u>Your service account link </u> </p> </div> <div> <p> http://localhost:3000/${businessname}/login </p> 
+                  </div> <div><p> A confirmation email has been sent to your email address.  </p></div>`),
         showCancelButton: false,
         confirmButtonText: 'Ok',
         confirmButtonColor: '#673ab7',

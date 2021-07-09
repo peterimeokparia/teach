@@ -5,10 +5,6 @@ remove,
 get,
 getById } from 'Services/course/Api';
 
-import {
-sendPushNotificationMessage
-} from 'Services/course/Actions/Notifications';
-
 export const LOAD_GRADES_BEGIN = "LOAD GRADES BEGIN";
 export const LOAD_GRADES_SUCCESS = "LOAD GRADES SUCCESS";
 export const LOAD_GRADES_ERROR = "LOAD GRADES ERROR";
@@ -47,51 +43,17 @@ export const loadGradesByStudentId = ( studentId ) => {
     };
 };
 
-export const addNewGrade = ( student, course, grade, currentGrades, pushNotificationUser ) => {
+export const addNewGrade = ( latestGrade, course, pushNotificationUser ) => {
     return dispatch => {
        dispatch({ type: ADD_NEW_GRADE_BEGIN });
-         let result, symbol;
-
-         if ( currentGrades ) {
-            let previousTestScore = currentGrades[currentGrades?.length -1]?.score;
-            let currentTestScore = parseInt(grade?.score, 10);
-
-               if ( previousTestScore ) {
-                    if ( previousTestScore > currentTestScore ) {
-                        result =  ( ( ( previousTestScore - currentTestScore ) / previousTestScore ) * 100 );
-                        symbol = "<";
-                     }
-            
-                    if ( currentTestScore > previousTestScore ) {
-                        result =  ( ( ( currentTestScore - previousTestScore ) / previousTestScore ) * 100 );        
-                        symbol = ">";
-                    }
-
-                   if ( currentTestScore === previousTestScore ) {
-                        result = 0;
-                        symbol = "-";
-                    }
-                }      
-         } else {
-            result = 0;
-            symbol = "-";
-        } 
-        grade = { ...grade, studentId: student?._id, percentChange: result, symbol: symbol }; 
-        return add({ ...grade }, '/grades' )
-                .then( grade => { 
-                        dispatch({        
-                            type: ADD_NEW_GRADE_SUCCESS, payload: grade });
-                            dispatch(sendPushNotificationMessage( 
-                                 pushNotificationUser, { 
-                                 title:'Grade Added!', 
-                                 body:`New Grade Added for course: ${ course?.name }` 
-                            })); 
-                }).catch( error => {
-                    dispatch({ type: ADD_NEW_GRADE_ERROR , error });
-        });   
+        return add({ ...latestGrade }, '/grades' )
+            .then( grade => { 
+                dispatch({ type: ADD_NEW_GRADE_SUCCESS, payload: { grade, course, pushNotificationUser } });
+            }).catch( error => {
+                dispatch({ type: ADD_NEW_GRADE_ERROR , error });
+            });   
     };
 };
-
 
 export const saveGrade = ( grade ) => {
    return dispatch => {
@@ -117,3 +79,51 @@ export const deleteGrade = grade => {
         });
    };
 };
+
+// export const addNewGrade = ( student, course, grade, currentGrades, pushNotificationUser ) => {
+//     return dispatch => {
+//        dispatch({ type: ADD_NEW_GRADE_BEGIN });
+//         return add({ ...calculateGrade( student, course, grade, currentGrades ) }, '/grades' )
+//                 .then( grade => { 
+//                         dispatch({        
+//                             type: ADD_NEW_GRADE_SUCCESS, payload: grade });
+//                             dispatch(sendPushNotificationMessage( 
+//                                  pushNotificationUser, { 
+//                                  title:'Grade Added!', 
+//                                  body:`New Grade Added for course: ${ course?.name }` 
+//                             })); 
+//                 }).catch( error => {
+//                     dispatch({ type: ADD_NEW_GRADE_ERROR , error });
+//         });   
+//     };
+// };
+
+// function calculateGrade( student, course, grade, currentGrades ){
+//          let result, symbol;
+
+//          if ( currentGrades ) {
+//             let previousTestScore = currentGrades[currentGrades?.length -1]?.score;
+//             let currentTestScore = parseInt(grade?.score, 10);
+
+//                if ( previousTestScore ) {
+//                     if ( previousTestScore > currentTestScore ) {
+//                         result =  ( ( ( previousTestScore - currentTestScore ) / previousTestScore ) * 100 );
+//                         symbol = "<";
+//                      }
+            
+//                     if ( currentTestScore > previousTestScore ) {
+//                         result =  ( ( ( currentTestScore - previousTestScore ) / previousTestScore ) * 100 );        
+//                         symbol = ">";
+//                     }
+
+//                    if ( currentTestScore === previousTestScore ) {
+//                         result = 0;
+//                         symbol = "-";
+//                     }
+//                 }      
+//          } else {
+//             result = 0;
+//             symbol = "-";
+//         } 
+//     return { ...grade, studentId: student?._id, percentChange: result, symbol: symbol }; 
+// }

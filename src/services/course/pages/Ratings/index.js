@@ -1,15 +1,12 @@
-import React from 'react';
-
 import { 
 connect } from 'react-redux';
 
 const CourseRatingsPage = ({ 
-courseId, 
-users, 
-currentUser, 
-userId,
-courses 
-}) => {
+  courseId, 
+  users, 
+  currentUser, 
+  userId,
+  courses }) => {
 return   (    
       <span> 
           courseId: {courseId} || userId: {userId}  || Review: Great course. Seasoned tutor.
@@ -18,8 +15,8 @@ return   (
 
 const mapState = ( state )   => {
   return {
-         currentUser: state.users.user,
-         courses: Object.values(state?.courses?.courses),
+      currentUser: state.users.user,
+      courses: Object.values(state?.courses?.courses),
   };
 };
 

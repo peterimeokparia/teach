@@ -1,4 +1,3 @@
-import React from 'react';
 import MyCoursesPage from 'Services/course/Pages/Courses/MyCoursesPage';
 import ShowMeeting from 'Services/course/Pages/Meeting/Components/ShowMeeting';
 import CourseListPage from 'Services/course/Pages/Courses/CourseListPage';
@@ -6,7 +5,7 @@ import CourseDetailPage from 'Services/course/Pages/Courses/CourseDetailPage';
 import LessonPage from 'Services/course/Pages/Lessons/LessonPage';
 import LoginPage from 'Services/course/Pages/LoginPage';
 import VideoPlayer  from 'Services/course/Pages/VideoPage/Component/VideoPlayer';
-import LessonPlan from 'Services/course/Pages/LessonPlan';
+import LessonPlan from 'Services/course/Pages/Lessons/LessonPlan';
 import LessonPlanInviteUserVerification from 'Services/course/Pages/Lessons/LessonPlan/Components/LessonPlanInviteUserVerification';
 import LessonPlanInviteUserVerifiedPage from 'Services/course/Pages/Lessons/LessonPlan/Components/LessonPlanInviteUserVerifiedPage';
 import VideoPage from 'Services/course/Pages/VideoPage';
@@ -22,44 +21,40 @@ import CourseDetailCheckBoxComponent from 'Services/course/Pages/Courses/Compone
 import CourseRatingsPage from 'Services/course/Pages/Ratings';
 import StudyHall from 'Services/course/Pages/StudyHall';
 import ClassRoomPage from 'Services/course/Pages/ClassRoomPage';
-import CourseDropDownPage from 'Services/course/Pages/Courses/CourseDropDownPage';
-import OperatorSignUpPage from 'Services/course/Pages/OperatorSignupPage'; 
-import StudentDetailPage from 'Services/course/Pages/Users/StudentDetailPage'; 
+import OperatorSignUpPage from 'Services/course/Pages/OperatorSignupPage';
+import StudentDetailPage from 'Services/course/Pages/Users/StudentDetailPage';
 import SessionPage from 'Services/course/Pages/SessionPage';
 import GradesPage from 'Services/course/Pages/GradesPage';
 import AttendancePage from 'Services/course/Pages/AttendancePage';
-import EditorDemo from 'Services/course/Pages/Lessons/EditorDemo';
 import SendNotificationsPage from 'Services/course/Pages/SendNotificationsPage';
 import QuestionPage from 'Services/course/Pages/QuestionsPage';
 import OnlineQuestionPage from 'Services/course/Pages/OnlineQuestionsPage';
 import AccountVerificationForm from 'Services/course/Pages/SignUp/AccountVerificationForm';
 import PasswordReset from 'Services/course/Pages/LoginPage/Components/PasswordReset';
-import CalendarPage from 'Services/course/Pages/CalendarPage'; 
-import CalendarEventsDetailPage from 'Services/course/Pages/CalendarPage/Components/CalendarEventsDetailPage'; 
-import EventDetailPage  from 'Services/course/Pages/CalendarPage/Components/EventDetailPage'; 
-import AddNewCalendar from 'Services/course/Pages/CalendarPage/Components/AddNewCalendar'; 
-import TimeLine from 'Services/course/Pages/CalendarPage/Components/TimeLine'; 
+import CalendarPage from 'Services/course/Pages/CalendarPage';
+import CalendarEventsDetailPage from 'Services/course/Pages/CalendarPage/Components/CalendarEventsDetailPage';
+import EventDetailPage  from 'Services/course/Pages/CalendarPage/Components/EventDetailPage';
+import AddNewCalendar from 'Services/course/Pages/CalendarPage/Components/AddNewCalendar';
+import TimeLine from 'Services/course/Pages/CalendarPage/Components/TimeLine';
 import OnlineQuestionsSavedAnswersPage from 'Services/course/Pages/OnlineQuestionsPage/Components/OnlineQuestionsSavedAnswersPage';
 import OnlineQuestionsSavedAnswersDetailPage from 'Services/course/Pages/OnlineQuestionsPage/Components/OnlineQuestionsSavedAnswersDetailPage';
 import OnlineQuestionsCourseListPage from 'Services/course/Pages/OnlineQuestionsPage/Components/OnlineQuestionsCourseListPage';
-import TestPocPage from 'Services/course/Pages/TestPOCPage';
-//import // const lessonPlanUrl = `/${operatorBusinessName}/LessonPlan/classRoom/${selectedUserId}`;  TestPOCPage
-//import ClassRoomGroupsPage from 'Services/course/Pages/ClassRoomGroupsPage';
-//import Boards from 'Services/course/Pages/Boards';
+import InlineVideoComponent from 'Services/course/Pages/InlineVideoComponent';
+import FormFields from 'Services/course/Pages/TestBuilder/FormFields';
+import MoreLessonContentPage from 'Services/course/Pages/Courses/CourseDetailPage/MoreLessonContentPage';
 import { Router, Redirect } from '@reach/router';
 
 const MainRoute = () => {
     return (
         <Router>
              <Redirect noThrow from="/" to="/users" />
-             <ClassRoomPage path="/:operatorBusinessName/classroomgroups/:groupId/:classRoomName" >
-                 <CourseDropDownPage path="classroom/:userId" /> 
-             </ClassRoomPage>
+             <FormFields path="/fieldTest" />
+             <ClassRoomPage path="/:operatorBusinessName/classroomgroups/:groupId/:classRoomName"  />
 
              <ClassRoomPage path="/:operatorBusinessName/classroom/:selectedUserId" /> 
              <CourseListPage path="/:operatorBusinessName/courses"/>
              
-             <CourseDetailPage path="/:operatorBusinessName/courses/:courseId/:selectedTutorId">   
+             <CourseDetailPage path="/:operatorBusinessName/tutor/:selectedTutorId/courses/:courseId/">   
                 <LessonPage path="lessons/:lessonId" /> 
              </CourseDetailPage>
              
@@ -86,7 +81,6 @@ const MainRoute = () => {
                    <AttendancePage path="student/:studentId/attendance"/>
               </StudentDetailPage>
 
-             
              <PasswordReset path="/:operatorBusinessName/passwordreset/:userId"/>
              <AccountVerificationForm path="/:operatorBusinessName/accountverification/:userId" />
              <UpdateCart path="/:operatorBusinessName/updatecart/:courseId"/>
@@ -108,7 +102,6 @@ const MainRoute = () => {
              <CourseDetailCheckBoxComponent path="/students/:courseId" />
              <StudyHall path="/:operatorBusinessName/LessonPlan/StudyHall/:userId" />
              <NotFoundPage default />
-             <EditorDemo path="/demo/editor/:lessonId"/>
              <QuestionPage path="/formBuilder/:lessonId"/>
              <SendNotificationsPage path="/:operatorBusinessName/demo/sendnotifications" />
              <CalendarPage path="/:operatorBusinessName/schedule/:calendarEventType/calendar/:calendarId/user/:userId"/>
@@ -119,8 +112,9 @@ const MainRoute = () => {
              <AddNewCalendar path="/:operatorBusinessName/add/calendar" />
              <OnlineQuestionPage path="/:operatorBusinessName/homework/askquestion/course/:courseId" />
              <OnlineQuestionPage path="/:operatorBusinessName/homework/askquestion/course/:courseId/question/:onlineQuestionId" />
-             <TestPocPage path="/:operatorBusinessName/homework/askquestion/board/course/:courseId/answer/:answerId"/>
+             <InlineVideoComponent path="/:operatorBusinessName/homework/askquestion/board/course/:courseId/answer/:answerId"/>
              <OnlineQuestionsCourseListPage path="/:operatorBusinessName/homework/askquestion/course"/>
+             <MoreLessonContentPage path="/lessons/:lessonId/more" />
         </Router>
 
     );

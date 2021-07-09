@@ -1,14 +1,32 @@
-import React from 'react';
+import { 
+Component } from 'react';
+
+import { 
+connect } from 'react-redux';
+
+import {
+selectCourseFromLessonPlanCourseDropDown } from 'Services/course/Actions/Courses';
+
+import{
+selectLessonFromLessonPlanDropDown } from 'Services/course/Actions/Lessons';
+
+import{
+toggleClassRoomSideBarDropDownDisplay } from 'Services/course/Actions/ClassRooms';
+
+import { 
+userNavigationHistory } from 'Services/course/Actions/Users';
 
 import { 
 navigateToStudentDetailPage } from  'Services/course/Pages/ClassRoomPage/helpers';
 
 import './style.css';
 
-class CourseDetailCheckBoxComponent extends React.Component {
+class CourseDetailCheckBoxComponent extends Component {
 
     constructor(props){
         super(props);
+        this.currentGrades = this.currentGrades.bind(this);
+        this.currentSession = this.currentSession.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.submitForm = this.submitForm.bind(this);
     }
@@ -19,7 +37,18 @@ class CourseDetailCheckBoxComponent extends React.Component {
         e.preventDefault();
     } 
 
-    componentDidUpdate(){     
+    componentDidMount(){       
+    };
+
+    componentDidUpdate(){   
+    };
+
+    currentGrades(){
+        return this.props.grades?.filter(grd => grd?.courseId === this.props.selectedCourseFromLessonPlanCourseDropDown?._id); 
+    };
+
+    currentSession(){
+      return this.props.allSessions?.filter( usersession => usersession?.courseId === this.props.selectedCourseFromLessonPlanCourseDropDown?._id );  
     };
 
     handleChange(event){
@@ -54,21 +83,21 @@ class CourseDetailCheckBoxComponent extends React.Component {
                                 type="checkbox"
                                 value={item?._id}
                                 onChange={this.handleChange}
-                                disabled={(this.props.sessions?.find(session => session.userId ===  item?._id)?.typeOfSession === "Package") &&  
-                                         (this.props.sessions?.find(session => session.userId ===  item?._id)?.numberOfSessions === this.props.sessions?.find(session => session.userId ===  item?._id)?.totalNumberOfSessions) }
+                                disabled={(this.currentSession()?.find(session => session.userId ===  item?._id)?.typeOfSession === "Package") &&  
+                                         (this.currentSession()?.find(session => session.userId ===  item?._id)?.numberOfSessions === this.currentSession()?.find(session => session.userId ===  item?._id)?.totalNumberOfSessions) }
                             /> 
-                            <a href onClick={() => navigateToStudentDetailPage(`/${this.props.operatorBusinessName}/student/${item?._id}/course/${this.props.courseId}/lessons/${this.props.lessonId}`, this.props.userNavigationHistory)}> 
+                            <a href onClick={() => navigateToStudentDetailPage(`/${this.props.operatorBusinessName}/student/${item?._id}/course/${this.props.selectedCourseFromLessonPlanCourseDropDown?._id}/lessons/${this.props.selectedLesson2FromLessonPlanCourseDropDown?._id}`, this.props.userNavigationHistory)}> 
                             <span className="checkBoxViewGradesLink"> 
                                 {item[this.props.description]} 
                             </span> 
                             </a>               
                             <span className="tooltiptext">
-                                Type: {this.props.sessions?.find(session => session.userId ===  item?._id)?.typeOfSession}<br/> 
-                                Sessions: {this.props.sessions?.find(session => session.userId ===  item?._id)?.numberOfSessions} <br/> 
-                                Total:  {this.props.sessions?.find(session => session.userId ===  item?._id)?.totalNumberOfSessions} <br/> 
-                                LastGrade:  {this.props.grades?.find(grade => grade?.courseId === this.props.courseId && grade?.studentId === item?._id)?.score} <br/> 
-                                %Change:  {this.props.grades?.find(grade => grade?.courseId === this.props.courseId && grade?.studentId === item?._id)?.percentChange + "%"} <br/> 
-                                Symbol: {this.props.grades?.find(grade => grade?.courseId === this.props.courseId && grade?.studentId === item?._id)?.symbol} <br/> 
+                                Type: {this.currentSession()?.find(session => session.userId ===  item?._id)?.typeOfSession}<br/> 
+                                Sessions: {this.currentSession()?.find(session => session.userId ===  item?._id)?.numberOfSessions} <br/> 
+                                Total:  {this.currentSession()?.find(session => session.userId ===  item?._id)?.totalNumberOfSessions} <br/> 
+                                LastGrade:  {this.currentGrades()?.find(grade => grade?.courseId === this.props.selectedCourseFromLessonPlanCourseDropDown?._id && grade?.studentId === item?._id)?.score} <br/> 
+                                %Change:  {this.currentGrades()?.find(grade => grade?.courseId === this.props.selectedCourseFromLessonPlanCourseDropDown?._id && grade?.studentId === item?._id)?.percentChange + "%"} <br/> 
+                                Symbol: {this.currentGrades()?.find(grade => grade?.courseId === this.props.selectedCourseFromLessonPlanCourseDropDown?._id && grade?.studentId === item?._id)?.symbol} <br/> 
                             </span>
 
                         </label>
@@ -80,7 +109,21 @@ class CourseDetailCheckBoxComponent extends React.Component {
                 </ul>
         </div>
     ); }; 
-
 }
 
-export default CourseDetailCheckBoxComponent;
+const mapDispatch = {
+    userNavigationHistory, 
+    toggleClassRoomSideBarDropDownDisplay,
+    selectCourseFromLessonPlanCourseDropDown,
+    selectLessonFromLessonPlanDropDown
+};
+
+const mapState = (state, ownProps) => {
+    return {
+        allSessions: Object.values(state?.sessions?.sessions),
+        selectedCourseFromLessonPlanCourseDropDown: state.courses.selectedCourseFromLessonPlanCourseDropDown,
+        selectedLessonFromLessonPlanDropDown: state.lessons.selectedLessonFromLessonPlanDropDown,
+    };
+};
+
+export default connect( mapState, mapDispatch )( CourseDetailCheckBoxComponent );

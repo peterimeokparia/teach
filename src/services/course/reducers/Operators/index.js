@@ -12,11 +12,14 @@ LOAD_OPERATORS_SUCCESS,
 LOAD_OPERATORS_ERROR,
 SAVE_OPERATOR_BEGIN,
 SAVE_OPERATOR_SUCCESS,
-SAVE_OPERATOR_ERROR } from '../../Actions/Operator';
+SAVE_OPERATOR_ERROR,
+SET_OPERATOR,
+SET_BUSINESS_NAME } from '../../Actions/Operator';
 
 const initialState = {
     operators: {},
     operator:{},
+    operatorBusinessName:'',
     error: null,
     loading: false,
     saveOperatorInProgress: false,
@@ -68,7 +71,13 @@ const reducer = produce((draft, action) => {
          case SAVE_OPERATOR_ERROR:
              draft.saveOperatorInProgress = false;    
              draft.onSaveOperatorError = action.error;
-        return;     
+        return;    
+        case SET_OPERATOR:
+            draft.operator = action.payload;    
+        return;   
+        case SET_BUSINESS_NAME:
+            draft.operatorBusinessName = action.payload;    
+        return;
         default:
         return;
         

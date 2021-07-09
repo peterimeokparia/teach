@@ -28,7 +28,7 @@ const reducer =  produce( (draft, action) => {
              draft.onError = false;  
         return; 
         case ADD_NEW_GRADE_SUCCESS:    
-             draft.grades[action.payload._id] = action.payload;  
+             draft.grades[action.payload?.grade?._id] = action.payload?.grade;  
         return;
         case ADD_NEW_GRADE_ERROR:    
              draft.isLoading = false;

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { 
 connect } from 'react-redux';
 
@@ -23,18 +21,16 @@ getCoursesByOperatorId } from 'Services/course/Selectors';
 import { 
 Redirect } from '@reach/router';
 
-import './style.css';
-
 const LessonPlanInviteUserVerifiedPage = ({ 
-operatorBusinessName,
-operator,
-classRoomId,  
-courseId,  
-lessonId, 
-lessonTitle,
-currentUser,
-paidSessions })  =>  {
-const paidSession = paidSessions?.find( currentSession => currentSession?.userId === currentUser?._id );  
+  operatorBusinessName,
+  operator,
+  classRoomId,  
+  courseId,  
+  lessonId, 
+  lessonTitle,
+  currentUser,
+  paidSessions })  =>  {
+  const paidSession = paidSessions?.find( currentSession => currentSession?.userId === currentUser?._id );  
 
   if ( currentUser?.email === undefined ) {
     return <Redirect to={`/${operatorBusinessName}/LessonPlan/invite/userverification/classRoom/${classRoomId}`} noThrow />;

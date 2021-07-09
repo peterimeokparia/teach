@@ -28,9 +28,9 @@ function handleExpiredPackages( currentUser, currentPackage, autoRenewAction ){
             cancelButtonText: 'No'
         }).then( (response) => {
             if ( response?.value ) {
-                    autoRenewProcess( currentUser, currentPackage,  autoRenewAction); //
-                } else {         
-                    Swal.fire( `Please contact your tutor or the administrator.` );
+                autoRenewProcess( currentUser, currentPackage,  autoRenewAction); //
+            } else {         
+                Swal.fire( `Please contact your tutor or the administrator.` );
             }
         });
     }
@@ -42,7 +42,7 @@ export function checkIfPackageIsSetToAutoRenew( currentUser,  sessions ){
     if (  currentUser?.role === "Student" ) {
         sessions.forEach(session => {
             if ( session?.typeOfSession === "Package" &&  session?.numberOfSessions === session?.totalNumberOfSessions ) {    
-                 expiredSessions.push( session );
+                expiredSessions.push( session );
             };
         });
     }
@@ -57,8 +57,8 @@ export function sendRenewalNotification( currentUser, currentSession,  onrenewal
     if ( onrenewal ) {
         sendEmailConfirmation( currentSession, currentUser );
     } else {
-        sendEmailToAdministrator( currentUser );
-        return;
+      sendEmailToAdministrator( currentUser );
+      return;
     }
 }
 

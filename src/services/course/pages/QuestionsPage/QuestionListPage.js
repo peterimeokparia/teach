@@ -1,5 +1,3 @@
-import React from 'react';
- 
 import {
 connect } from 'react-redux';
 
@@ -14,7 +12,7 @@ getSortedRecordsByDate } from '../../Selectors';
 
 import {
 role } from '../../../../helpers/pageHelpers';
- 
+
 import Roles from '../Components/roles/Role';
 import ListItemComponent from '../Components/ListItemComponent';
 import EditQuestionComponent from './EditQuestionComponent';

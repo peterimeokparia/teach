@@ -1,19 +1,21 @@
-import 
-React, { 
+import { 
 useState } from 'react';
+
+import {
+role } from 'Services/course/helpers/PageHelpers'
 
 import './style.css';
 
 const OperatorRegistrationForm = ({ 
-error, 
-loading,
-handleCreateUser }) => {
-const [ email, setEmail ] = useState('');
-const [ password, setPassword ] = useState('');
-const [ firstName, setFirstName ] = useState('');
-const [ lastName, setLastName ] = useState('');
-const [ businessName, setBusinessName ] = useState('');
-const [ phone, setPhone ] = useState('');
+  error, 
+  loading,
+  handleCreateUser }) => {
+  const [ email, setEmail ] = useState('');
+  const [ password, setPassword ] = useState('');
+  const [ firstName, setFirstName ] = useState('');
+  const [ lastName, setLastName ] = useState('');
+  const [ businessName, setBusinessName ] = useState('');
+  const [ phone, setPhone ] = useState('');
 
 const handleSubmit = (e) => {
   e.preventDefault();
@@ -66,7 +68,48 @@ return (
                 >
                 </input>
                 </label>
-                <label>
+                <span className="LoginPageRadioButton">
+                  <span className="left">
+                      <label>                         
+                        School
+                        <input
+                          name="firstName"
+                          type="radio"
+                          value={role.Student}
+                         // onChange={ e => setUserRole( e.target.value ) }
+                          placeholder="first name"
+                        >
+                        </input>
+                      </label>                    
+                  </span>                    
+                 <span className="right">
+                 <label>
+                    Organization
+                    <input
+                      name="firstName"
+                      type="radio"
+                      value={role.Tutor}
+                      //onChange={ e => setUserRole( e.target.value ) }
+                      placeholder="first name"
+                    >
+                    </input> 
+                  </label>  
+                 </span>      
+                 <span className="right">
+                 <label>
+                    Individual
+                    <input
+                      name="firstName"
+                      type="radio"
+                      value={role.Tutor}
+                      //onChange={ e => setUserRole( e.target.value ) }
+                      placeholder="first name"
+                    >
+                    </input> 
+                  </label>  
+                 </span>                                              
+                  </span>
+                {/* <label>
                   Business Name   
                   <input
                       name="businessName"
@@ -76,7 +119,7 @@ return (
                       placeholder="business name"
                   >
                   </input>
-                  </label>
+                  </label> */}
                   <label>
                     Phone
                     <input

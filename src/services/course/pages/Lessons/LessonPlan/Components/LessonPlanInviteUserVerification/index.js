@@ -1,12 +1,12 @@
-import 
-React, { 
-useState } from 'react';
+import { 
+useState,
+useEffect } from 'react';
 
 import { 
 connect } from 'react-redux';
 
 import { 
-Redirect, navigate } from '@reach/router';
+Redirect } from '@reach/router';
 
 import {
 loadUsers,   
@@ -23,56 +23,58 @@ import SiteUser from 'Services/course/helpers/SiteUser';
 import './style.css';
 
 const LessonPlanInviteUserVerification = ({ 
-operatorBusinessName,
-operator,
-classRoomId,
-users,  
-courseId,  
-lessonId, 
-lessonTitle,
-currentUser,
-studyHallOwner,
-studyHallName,
-loadUsers,
-createUser,
-loginUser  }) => {  
-const [userCredentials, setUserCredentials] = useState(null);
+  operatorBusinessName,
+  operator,
+  classRoomId,
+  users,  
+  courseId,  
+  lessonId, 
+  lessonTitle,
+  currentUser,
+  studyHallOwner,
+  studyHallName,
+  loadUsers,
+  createUser,
+  loginUser  }) => {  
+  const [userCredentials, setUserCredentials] = useState(undefined);
 
+  useEffect(() => {
+    loadUsers();
+    if ( userCredentials?.existingUser === "Yes" ) {
+      let user = users.find( usr => usr?.email === userCredentials?.email );
+    
+      if ( user ) {
+        loginUser({...user, unHarshedPassword: userCredentials?.password, userIsVerified: true }); 
+      }
+    }
+    if ( userCredentials?.existingUser === "No" ) {
+        setUserCredentials( {...userCredentials, existingUser: "Yes" } );
+        createUser({
+          ...new SiteUser(), 
+          firstname: userCredentials?.firstName, 
+          email: userCredentials?.email, 
+          password: userCredentials?.password, 
+          role: userCredentials?.userRole,
+          operatorId: operator?._id
+        }).then(user => { 
+          if ( user ) {
+            loginUser({...user, unHarshedPassword: userCredentials?.password, userIsVerified: true }); 
+          }
+        }).catch( error => error );
+    }
+  }, [ userCredentials ]);
+  
   if ( currentUser?.userIsValidated && currentUser?.userIsVerified ) {
     if ( studyHallName ) {
-      return <Redirect to={`/${operatorBusinessName}/LessonPlan/invite/userverified/${studyHallOwner}/${currentUser?.firstname}/${studyHallName}`} noThrow />;   
+        return <Redirect to={`/${operatorBusinessName}/LessonPlan/invite/userverified/${studyHallOwner}/${currentUser?.firstname}/${studyHallName}`} noThrow />;   
     } 
     return <Redirect to={`/${operatorBusinessName}/LessonPlan/invite/userverified/classRoom/${classRoomId}`} noThrow />;       
   }
-
   if ( ( ! currentUser?.isVerified ) && (! currentUser?.userIsValidated ) && (! userCredentials )) {
         LessonPlanSignUpComponent(setUserCredentials);
   }
   
-  if ( userCredentials?.existingUser === "No" ) {
-      userCredentials['existingUser'] = "Yes"; 
-      setUserCredentials(userCredentials);
-      createUser({
-        ...new SiteUser(), 
-        firstname: userCredentials?.firstName, 
-        email: userCredentials?.email, 
-        password: userCredentials?.password, 
-        role: userCredentials?.userRole,
-        operatorId: operator?._id
-      });
-      
-      loadUsers();
-  }
-
-  if ( userCredentials?.existingUser === "Yes" ) {
-     let user = users.find( usr => usr?.email === userCredentials?.email );
-
-     if ( user ) {
-        loginUser({...user, unHarshedPassword: userCredentials?.password, userIsVerified: true });  
-        navigate(`/${operatorBusinessName}/LessonPlan/invite/userverified/classRoom/${classRoomId}`);
-     }
-  }
-  return ( <div> Please wait. We are verifying your account. Thank you.</div> );
+return ( <div> Please wait. We are verifying your account. Thank you.</div> );
 };
 
 const mapDispatch = {

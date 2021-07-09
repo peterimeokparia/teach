@@ -1,8 +1,4 @@
-import 
-React, { 
-useState } from 'react';
-
-import './style.css';
+import { useState } from 'react';
 
 const LoginForm = ({ 
 error, 

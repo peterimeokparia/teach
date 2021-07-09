@@ -1,5 +1,4 @@
-import 
-React, { 
+import { 
 useState, 
 useEffect } from 'react';
 
@@ -15,8 +14,7 @@ getOperatorFromOperatorBusinessName,
 getCoursesByCourseIdSelector  } from 'Services/course/Selectors';
 
 import { 
-addToSalesCart, 
-loginUser  } from 'Services/course/Actions/Users';
+addToSalesCart } from 'Services/course/Actions/Users';
 
 import { 
 Validations } from  'Services/course/helpers/Validations';
@@ -29,29 +27,30 @@ import BuySessionPackageComponent from './Components/BuySessionPackageComponent'
 import './style.css'; 
 
 const SalesPage = ({ 
-operatorBusinessName,
-operator,    
-course, 
-courseId, 
-navigate, 
-addToSalesCart, 
-currentUser, 
-users,
-children }) => {
-const [ totalNumberOfSessions, setTotalNumberOfSessions ] = useState(1);
-const [ sessionType, setSessionType ] = useState(undefined);
-const [ autoRenew, setAutoRenewal ] = useState(false);
-const MyCourses = `/${operatorBusinessName}/mycourses`;
+    operatorBusinessName,
+    operator,    
+    loginUser,
+    course, 
+    courseId, 
+    navigate, 
+    addToSalesCart, 
+    currentUser, 
+    users,
+    children }) => {
+    const [ totalNumberOfSessions, setTotalNumberOfSessions ] = useState(1);
+    const [ sessionType, setSessionType ] = useState(undefined);
+    const [ autoRenew, setAutoRenewal ] = useState(false);
+    const MyCourses = `/${operatorBusinessName}/mycourses`;
 
-useEffect(() => {
-    if ( ! userOwnsCourse(currentUser, courseId) ) {       
-        BuySessionPackageComponent(setSessionType);              
-    } 
-}, [ currentUser, courseId]);
+    useEffect(() => {
+        if ( ! userOwnsCourse(currentUser, courseId) && ( ! sessionType ) ) {       
+            BuySessionPackageComponent(setSessionType);              
+        } 
+    }, [ currentUser, courseId, sessionType ]);
 
-if ( currentUser?.paymentStatus === "approved" ) {
-    navigate(MyCourses);
-}
+    if ( currentUser?.paymentStatus === "approved" ) {
+        navigate(MyCourses);
+    }
 
 const userOwnsCourse = (user, courseId) => {
     if ( ! user ) {
@@ -70,55 +69,36 @@ if ( userOwnsCourse(currentUser, courseId) ) {
 
 let tutor = users.find(user => user._id === course?.createdBy), numberOfSessions = 0;
 
-const addToCartAndReturnToCourses = () => {
-addCourseToCart(
-course, 
-sessionType,  
-numberOfSessions, 
-totalNumberOfSessions, 
-currentUser?._id, 
-tutor,
-Date.now(),
-Date.now(),
-true,
-autoRenew,
-Date.now() );
+let cartConfig = {
+    course, 
+    sessionType: sessionType, 
+    numberOfSessions: numberOfSessions, 
+    totalNumberOfSessions: totalNumberOfSessions, 
+    userId: currentUser?._id, 
+    tutor: tutor,
+    startDate: Date.now(),
+    endDate: Date.now(),
+    status: true, 
+    autoRenew: autoRenew,
+    autoRenewDates: Date.now()
 };
 
-const addCourseToCart = ( 
-course, 
-sessionType,  
-numberOfSessions, 
-totalNumberOfSessions, 
-userId,  
-tutor, 
-startDate,
-endDate,
-status,
-autoRenew,
-autoRenewDates  ) => {
+const addToCartAndReturnToCourses = () => {
+addCourseToCart( cartConfig );
+};
+
+const addCourseToCart = ( salesCartConfig ) => {
 let duplicateItemsExist = ( (currentUser?.cart?.filter(item => item?.course?._id === courseId ))?.length > 0 );
 
 if ( duplicateItemsExist ) {  
-    Validations.warn(`Duplicate. ${course?.name} is already in your cart.`);
+    Validations.warn(`Duplicate. ${salesCartConfig.course?.name} is already in your cart.`);
     navigate(MyCourses);
     return;
 }
 else {
-        addToSalesCart( 
-        course, 
-        sessionType,  
-        numberOfSessions, 
-        totalNumberOfSessions, 
-        userId, 
-        tutor,
-        startDate,
-        endDate,
-        status,
-        autoRenew,
-        autoRenewDates );
-        navigate(MyCourses);
-    }
+    addToSalesCart( salesCartConfig ); 
+    navigate(MyCourses);
+ };
 };
 
 let tutorsName = `${tutor?.firstname}`;
@@ -144,8 +124,8 @@ return (
 
                     }
                     <div> <Link to={`/${operatorBusinessName}/course/${course?._id}/user/${tutor?._id}/review`}> { "Ratings & Review" }</Link> </div>
-                    <button onClick={addToCartAndReturnToCourses}>ADD SESSION</button>   
-                    {Validations.setErrorMessageContainer()}
+                    <button onClick={ addToCartAndReturnToCourses }>ADD SESSION</button>   
+                        { Validations.setErrorMessageContainer() }
                 </div>
                 <div class="marquee">
                 <div class="reviews">  { children } </div>
@@ -159,8 +139,7 @@ const mapState = (state, ownProps) => ({
     currentUser: state.users.user,
     course: getCoursesByCourseIdSelector(state, ownProps),
     operator: getOperatorFromOperatorBusinessName(state, ownProps),
-    users: getUsersByOperatorId(state, ownProps),
-    //   userOwnsCourse: userOwnsCourse(state, props)
+    users: getUsersByOperatorId(state, ownProps)
 });
 
-export default connect(mapState, { addToSalesCart, loginUser })(SalesPage);
+export default connect(mapState, { addToSalesCart })(SalesPage);

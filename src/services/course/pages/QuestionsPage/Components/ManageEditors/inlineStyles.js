@@ -8,20 +8,11 @@ export const helpIconStyle = () => {
   };
 };
 
-
-
-// export const iconStyle = () => { 
-//   return {
-//     fontSize: 70,
-//     "margin-right": "60px",
-//   };
-// };
-
 export const iconStyle = () => { 
   return {
     fontSize: 60,
     "top": "-95%",
-    "marginLeft": "100%",
+    "marginLeft": "55%",
     "marginBottom": "1%",
   };
 };
@@ -30,38 +21,32 @@ export const editorSaveIconStyle = () => {
   return {
     fontSize: 60,
     "top": "-95%",
-    "marginLeft": "100%",
+    "marginLeft": "55%",
     "marginBottom": "1%",
   };
 };
 
-// export const plusOneIconStyle = () => {
-//   return {
-//     fontSize: 70,
-//     "margin-left": "50%",
-//   }
-// }
 export const plusOneIconStyle = () => {
   return {
-    fontSize: 70,
-    "margin-left": "25%"
+    fontSize: 60,
+    "margin-left": "2%"
   };
 };
 
 export const iconStyleMain = () => {
   return {
-    fontSize: 60,
+    fontSize: 67,
     'margin-left': '90px'
   };
 };
 
-export const videoCallIconMain = ( capturingVideo ) => {
+export const videoCallIconMain = ( capturingVideo, id, selectedId ) => {
   return {
     fontSize: 60,
     position: "relative",
-    "top": ( capturingVideo ) ? "-130px" : "",
-    "margin-left": ( capturingVideo ) ? "20%" : "1%",
-    "visibility": ( capturingVideo ) ? "hidden" : "visible", 
+    "top": ( capturingVideo && id === selectedId  ) ? "-130px" : "",
+    "margin-left": ( capturingVideo && id === selectedId  ) ? "20%" : "1%",
+    "visibility": ( capturingVideo && id === selectedId  ) ? "hidden" : "visible", 
   };
 };
 
@@ -80,7 +65,7 @@ export const saveIconStyle = ( id, selectedId ) => {
   };
 };
 
-export const exitVideoCallIcon = (capturingVideo ) => {
+export const exitVideoCallIcon = ( capturingVideo ) => {
   return {
     fontSize: 60,
     position: "relative",
@@ -103,3 +88,30 @@ export const shareScreenIcon = ( capturingVideo ) => {
     "visibility": ( capturingVideo ) ? "visible" : "hidden",
   };
 };
+
+export const videoMeta = element => { 
+  return {
+  videoCallIcon,
+  exitVideoCallIcon,
+  shareScreenIcon,
+  deleteIconStyle: onlineAnswerVideoDeleteIconStyle,
+  videoCallIconMain,
+  saveIconStyle: saveIconStyle,
+  recordingOn: false,
+  videoNamePrefix: 'OnlineAnswerVideoMarkDownEditors', 
+  displayMaterialButton: true,
+  recordButtonText: 'Record Answer',
+  videoSectionClassNameRecording: "answerVideoSection-recording",
+  videoSectionClassNameRecordingStopped: "answerVideoSection-recordingStopped",
+  videoSectionClassNameNoRecording: "mainVideoSection-recordingStopped", 
+  videoClassName: ( element?.videoUrl === "" || element?.videoUrl === undefined ) ? "" : "",
+  videoName: `${element?._id}_${element?._id}_${element?._id}_${element?.type}`,
+  //videoMetaData: { inputFieldId: element?._id, currentQuestion: element },
+  videoMetaData: { inputFieldId: element?._id, currentQuestion: element, name: element?._id?.toString() },
+  //deleteVideo: () => deleteVideo( element ),
+  exitVideoCallIconPageName: "ManageEditors",
+  videoSectionCallOut: "answerVideoSectionCallOut",
+  videoMetaDataExternalId:'name',
+  objectId: element?._id,
+  displaySavedRecording: true
+}}; 

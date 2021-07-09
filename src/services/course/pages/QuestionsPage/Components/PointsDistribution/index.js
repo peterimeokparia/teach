@@ -1,6 +1,3 @@
-import React from 'react';
-
-
 const PointsDistribution = ({ element, name, value, handlePointsPerQuestion, handlePointsPerQuestionParam }) => {
  return <>
     <input

@@ -39,8 +39,8 @@ const reducer =  produce( (draft, action) => {
                draft.isAdding = false;
                draft.isSaving = false;
                draft.onError = null;  
-               draft.event = action.payload;   
-               draft.events[action.payload._id] = action.payload;  
+               draft.event = action.payload?.calendarEventData;   
+               draft.events[action.payload?.calendarEventData?._id] = action.payload?.calendarEventData;  
           return;
           case ADD_EVENT_ERROR:
           case SAVE_EVENT_ERROR:     
@@ -70,7 +70,7 @@ const reducer =  produce( (draft, action) => {
           case DELETE_EVENT_SUCCESS:
                draft.isDeleting = false;
                draft.onError = null;
-               delete draft.events[action.payload?._id];
+               delete draft.events[action.payload?.resp?._id];
           return;
           case DELETE_EVENT_ERROR:
                draft.isDeleting = false;

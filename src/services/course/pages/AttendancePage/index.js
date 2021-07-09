@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {
 connect } from 'react-redux';
 
@@ -26,7 +24,7 @@ saveAttendance,
 attendances }) => {
 function onMatchListItem( match, listItem ) {
     if ( match ){
-       // fix
+       console.log(`${listItem}`);
     }
 }     
 return   (    
@@ -88,7 +86,7 @@ return   (
                     </ListItem>                  
             }
     </div> 
-    ) ;
+    );
 };
 
 const mapState = (state, ownProps)   => {

@@ -290,6 +290,43 @@ https://github.com/michelson/dante
 Resizable Draggable div
 ---------------------------
 https://codepen.io/jkasun/pen/QrLjXP
+https://bestofreactjs.com/repo/bokuweb-react-resizable-and-movable-react-miscellaneous
 
 github
 https://adamtheautomator.com/visual-studio-code-github-setup/#Staging_Committing_and_Pushing_Changes_to_GitHub
+
+Jest
+-----------
+https://medium.com/opendoor-labs/testing-react-components-with-jest-a7e8e4d312d8
+
+PluralSight
+--------------
+https://app.pluralsight.com/course-player?clipId=945c7ac9-4e70-4fec-9510-a0bdf40563df
+https://app.pluralsight.com/course-player?clipId=3952d81a-3d21-4086-b023-56772b3b920b
+https://app.pluralsight.com/course-player?clipId=0d130ec8-b200-464a-8acb-54f73ca3046e
+
+Best Practices
+-------------
+https://onoufriosm.medium.com/react-best-practices-react-at-scale-part-1-74234290ef19
+https://betterprogramming.pub/best-practices-i-wish-all-react-developers-knew-part-1-ff6cdee0666a
+https://www.smashingmagazine.com/2020/04/react-hooks-best-practices/
+https://medium.com/@bryanmanuele/react-hooks-best-practices-a-shift-in-mindset-8fd0e58e4b0b
+https://reactjs.org/blog/2016/07/13/mixins-considered-harmful.html
+https://programmingwithmosh.com/react/5-react-best-practices-to-learn-in-2020/
+https://programmingwithmosh.com/react/react-higher-order-components-for-the-newbie/
+https://codewithmosh.com/p/mastering-react?_ga=2.13109810.466414773.1625736573-2086801351.1625736573
+https://github.com/testing-library/react-testing-library
+https://www.sitepoint.com/react-architecture-best-practices/
+https://blog.openreplay.com/6-react-best-practices-for-2021
+https://reactjs.org/docs/hooks-rules.html
+https://onoufriosm.medium.com/react-best-practices-react-at-scale-part-1-74234290ef19
+
+React-Redux
+https://willowtreeapps.com/ideas/best-practices-for-unit-testing-with-a-react-redux-approach
+https://slawkolodziej.com/posts/guide-testing-redux-connected-components-with-react-testing-library-and-jest
+https://lifesaver.codes/answer/react-native-syntaxerror-unexpected-token-import
+https://slawkolodziej.com/posts/guide-testing-redux-connected-components-with-react-testing-library-and-jest
+https://www.robinwieruch.de/react-connected-component-test
+https://dev.to/fredrikbergqvist/mocking-redux-useselector-hook-2ale
+https://medium.com/@szpytfire/react-redux-testing-mocking-useselector-and-usedispatch-e004c3f2b2e0
+https://medium.com/@szpytfire/react-redux-testing-mocking-useselector-and-usedispatch-e004c3f2b2e0

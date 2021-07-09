@@ -1,6 +1,5 @@
 export const getUrls = (currentUser, courseId, lessonId, lessonTitle) => {
   const page = `${courseId}_${lessonId}_${lessonTitle}`; 
-
   return {
       meeting:{ prod: `https://joinmeet.today/${page}`, dev:`https://joinmeet.today/${page}`},
       editor:{ prod:`https://padsconnect247.com/editor/p/${lessonTitle}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false`, dev:`http://localhost:9002/p/${lessonTitle}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false` },
@@ -53,23 +52,10 @@ export function getCurrentStudentsPaidSessions(usersPaidSessions, student, tutor
   return usersPaidSessions?.find( currentSession => currentSession?.userId === student?._id && 
                      currentSession?.tutorId === tutor?._id &&  
                          currentSession?.courseId === selectedCourseId );  
-}
+};
 
 export function urls() {
   return { 
     // fix
   };
-}
-
-// export function handleRedirectionsOnPageLoad(){
-
-//   if ( ! currentUser?.userIsValidated ) {  
-//       navigate(`/${operatorBusinessName}/LessonPlan/invite/userverification/classRoom/${classRoomId}`); 
-//       return <Redirect to={`/${operatorBusinessName}/courses/${courseId}/buy`} noThrow/>
-//       return <Redirect to={`/${operatorBusinessName}/LessonPlan/invite/userverification/classRoom/${classRoomId}`} noThrow />
-//   } 
-
-//   if ( paidSession?.numberOfSessions === session?.totalNumberOfSessions  && session?.typeOfSession === "Package" && currentUser?.role === "Student" ) { 
-//     return <Redirect to={`/${operatorBusinessName}/mycourses`} noThrow />
-//   }
-// }
+};

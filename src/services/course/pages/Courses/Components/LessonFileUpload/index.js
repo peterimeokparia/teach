@@ -1,5 +1,3 @@
-import React from 'react';
-
 import FileUpload from 'Services/course/Pages/Components/FileUpload';
 
 export function LessonFileUpload({

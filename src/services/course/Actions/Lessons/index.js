@@ -21,11 +21,16 @@ export const SET_LESSON_MARKDOWN = "SET LESSON MARKDOWN";
 export const SELECTED_LESSON_URL = "SELECTED LESSON URL";
 export const LESSON_IN_PROGRESS = "LESSON IN PROGRESS";
 export const TOGGLE_BOARD_OR_EDITOR = "TOGGLE BOARD OR EDITOR";
+export const VIDEO_URL = "VIDEO URL";
+export const SELECTED_LESSONPLAN_LESSON = "SELECTED LESSONPLAN LESSON";
+export const LESSONPLAN_URL = "LESSONPLAN URL";
+export const LESSONPLAN_COURSE = "LESSONPLAN COURSE";
+export const LESSONPLAN_DROPDOWN_LESSON = "LESSONPLAN DROPDOWN LESSON";
 
-export const addNewLesson = ( title, courseId, lessonDate, userId ) => {
+export const addNewLesson = ( title, introduction,  courseId, lessonDate, userId ) => {
     return dispatch => {
         dispatch({ type: ADD_NEW_LESSON_BEGIN });
-        return add({ title, courseId, lessonDate, userId }, '/lessons')  
+        return add({ title, introduction, courseId, lessonDate, userId }, '/lessons')  
         .then( lesson => { 
             dispatch({ type: ADD_NEW_LESSON_SUCCESS, payload: lesson }); 
         }).catch( error => {
@@ -41,6 +46,7 @@ export const saveLesson = ( lesson ) => {
             .then( lesson => {  
                 dispatch({        
                 type: SAVE_LESSON_SUCCESS, payload: lesson }); 
+                return lesson;
             }).catch( error => {
                 dispatch({ type: SAVE_LESSON_ERROR , error });
         });  
@@ -53,6 +59,7 @@ export const loadLessons = ( courseId ) => {
         return getById( courseId, `/lessons?courseId=`)
             .then( lesson => {
                 dispatch({ type: LOAD_LESSONS_SUCCESS, payload: lesson });
+                return lesson;
             })
             .catch( error => {
                 dispatch({ type: LOAD_LESSONS_ERROR , error });
@@ -72,33 +79,18 @@ export const deleteLesson = lesson => {
     };
 };
 
-let timerHandle = null;
-
-export const setMarkDown = ( teachObject, markDown, teachObjectType="", actionType, saveAction  ) => {
-    return ( dispatch, getState )  => {
-        dispatch({ type: actionType, payload: {   
-            teachObject,
-            markDown
-          }});
-
-        if ( timerHandle ){
-            clearTimeout( timerHandle );
-        };
-        timerHandle = setTimeout(() => {
-            const latestTeachObjectData = getState()[teachObjectType][teachObjectType][ teachObject?._id ]; 
-            
-            dispatch(saveAction( latestTeachObjectData ));
-        }, 2000);  
-    };
-};
+export const selectLessonFromLessonPlanDropDown = lesson => ({
+    type: LESSONPLAN_DROPDOWN_LESSON,
+    payload: lesson
+});
 
 export const setLessonInProgressStatus = () => ({
     type: LESSON_IN_PROGRESS
 });
 
-export const getLessonVideoUrl = (videoUrl) => {
+export const getLessonVideoUrl = ( lesson, videoUrl) => {
     return dispatch => {
-        dispatch({ type: SELECTED_LESSON_URL, payload: videoUrl});
+        dispatch({ type: SELECTED_LESSON_URL, payload: { lesson, videoUrl } });
     };
 };
 
@@ -108,4 +100,19 @@ export const toggleTeachBoardOrEditor = () => ({
 
 export const resetLessonError = () => ({
     type: RESET_LESSON_ERROR
+});
+
+export const setCurrentLesson = lesson => ({
+    type: SELECTED_LESSONPLAN_LESSON,
+    payload: lesson
+});
+
+export const setLessonPlanUrl = link => ({
+    type: LESSONPLAN_URL,
+    payload: link
+});
+
+export const setLessonCourse = course => ({
+    type: LESSONPLAN_COURSE,
+    payload: course
 });

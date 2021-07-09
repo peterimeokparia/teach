@@ -1,8 +1,4 @@
-import 
-React, { 
-useState, 
-useRef, 
-useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 import { 
 connect } from 'react-redux';
@@ -21,41 +17,38 @@ newSiteUser,
 role } from 'Services/course/helpers/PageHelpers';
 
 import ToggleUsersRadioButtons from 'Services/course/Pages/NewClassRoomUserPage/Components/ToggleUsersRadioButtons';
-import ResetForm from 'Services/course/Pages/NewClassRoomUserPage/Components/ResetForm';
+import ResetForm from 'Services/course/Pages/NewClassRoomUserPage/Components/NewUser/ResetForm';
 import NewUser from 'Services/course/Pages/NewClassRoomUserPage/Components/NewUser';
 import DropDown from 'Services/course/Pages/Components/DropDown';
-import './style.css';
 
 const NewClassRoomUserPage = ({
-operator,
-currentUser,
-users,
-selectedUsersFirstName,
-classRoomUsers,
-selectedUser,
-classRoomGroupId,
-resetClassRoomUserError, 
-saveInProgress,
-dispatch,
-loadUsers, 
-saveUser, 
-unSubscribe,
-error,
-className,
-onSubmit,
-children }) => {
-
-let emailInitialValue = selectedUser ? selectedUser?.email : ''; 
-let firstNameInitialValue = selectedUser ? selectedUser?.firstname : ''; 
-let lastNameInitialValue = selectedUser ? selectedUser?.lastName : ''; 
-let roleInitialValue = selectedUser ? selectedUser?.userrole : ''; 
-
-const [ editing, setEditing ] = useState(false);
-const [ email, setEmail ] = useState(emailInitialValue);
-const [ firstName, setFirstName ] = useState(firstNameInitialValue);
-const [ userrole, setRole ] = useState(roleInitialValue);
-const [ option, setOption ] = useState('');
-const inputRef = useRef();
+    operator,
+    currentUser,
+    users,
+    selectedUsersFirstName,
+    classRoomUsers,
+    selectedUser,
+    classRoomGroupId,
+    resetClassRoomUserError, 
+    saveInProgress,
+    dispatch,
+    loadUsers, 
+    saveUser, 
+    unSubscribe,
+    error,
+    className,
+    onSubmit,
+    children }) => {
+    let emailInitialValue = selectedUser ? selectedUser?.email : ''; 
+    let firstNameInitialValue = selectedUser ? selectedUser?.firstname : ''; 
+    let lastNameInitialValue = selectedUser ? selectedUser?.lastName : ''; 
+    let roleInitialValue = selectedUser ? selectedUser?.userrole : ''; 
+    const [ editing, setEditing ] = useState(false);
+    const [ email, setEmail ] = useState(emailInitialValue);
+    const [ firstName, setFirstName ] = useState(firstNameInitialValue);
+    const [ userrole, setRole ] = useState(roleInitialValue);
+    const [ option, setOption ] = useState('');
+    const inputRef = useRef();
 
 const roles = {
     Tutor: "Tutor",
@@ -97,7 +90,7 @@ const addExistingUser = ( selectedUserId ) => {
   selectedUser.classRooms.push( classRoomGroupId );
   saveUser(selectedUser)
   .then(reset)
-  .catch(error => { console.log( error )})
+  .catch(error => { throw Error(`  ${error}`)})
 }
 
 const setInitialValuesForInputFields = () => {
@@ -122,7 +115,7 @@ const performDelete = (  ) => {
 const unSubscribeCurrentUser = () => {
     unSubscribe( selectedUser, classRoomGroupId )
     .then(reset)
-    .catch(error => { console.log( error )})  
+    .catch(error => {  throw Error(`  ${error}`);})  
 }
  
 useEffect (() => {
@@ -147,7 +140,7 @@ return editing ? (
       } 
       {
          ( option === "Existing" )  ? 
-                 <div><DropDown
+                 <div> <DropDown
                             label={""}
                             key={"_id"}
                             value={"firstname"}
@@ -160,20 +153,71 @@ return editing ? (
                             className={className}
                             error={error} 
                         />        
-                    </div>
+                 </div>
                 :    <div> 
-                       <NewUser
-                            className={className}
-                            error={error}
-                            inputRef={inputRef}
-                            firstName={firstName}
-                            setFirstName={setFirstName}
-                            email={email}
-                            setEmail={setEmail}
-                            setRole={setRole}
-                            saveInProgress={saveInProgress}
-                            commitEdit={commitEdit} 
-                       />   
+                    <form
+                        className= {`${className || ''} editing ${error ? 'error' : ''}`}
+                        onSubmit={commitEdit}           
+                    >
+                        <label>
+                            <b> Email </b>
+                        <input 
+                            ref={ inputRef }
+                            value={ email }
+                            type="email"
+                            onChange={ e => setEmail( e.target.value) }
+                            disabled={saveInProgress}
+                        />
+                        </label>
+                        <label>
+                        <b>First Name </b>
+                        <input 
+                            ref={ inputRef }
+                            value={ firstName }
+                            type="text"
+                            onChange={ e => setFirstName( e.target.value) }
+                            disabled={saveInProgress}
+                        />
+                        </label>
+                        <span className="LoginPageRadioButton">
+                        <span className="left">
+                        <label> 
+                        Tutor
+                        <input
+                            ref={ inputRef }
+                            name="userrole"
+                            type="radio"
+                            value={'Tutor'}
+                            onChange={ e => setRole( e.target.value ) }
+                            placeholder="userrole"
+                        >
+                        </input>
+                        </label>
+                        </span>
+                        <span className="right">
+                        <label>
+                            Student
+                            <input
+                            ref={ inputRef }
+                                name="userrole"
+                                type="radio"
+                                value={'Student'}
+                                onChange={ e => setRole( e.target.value ) }
+                                placeholder="userrole"
+                            >
+                            </input> 
+                            </label>  
+                        </span>
+                        </span> 
+                        <input
+                            ref={ inputRef }
+                            name="submit"
+                            type="submit"
+                            value={'Submit'}
+                            onChange={ commitEdit }
+                            >
+                        </input> 
+                        </form>    
                        <ResetForm
                             inputRef={inputRef}
                             cancelEdit={cancelEdit}
@@ -187,8 +231,7 @@ return editing ? (
     </>
             ) : ( 
             children(beginEditing, performDelete, unSubscribeCurrentUser)
-        );         
-                
+        );               
 };
 
 const mapState = ( state, ownProps ) => {

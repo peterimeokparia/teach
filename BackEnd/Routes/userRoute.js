@@ -6,6 +6,10 @@ verifyUser,
 resetUserPassword   
 } from '../Helpers/storageHelper.js';
 
+import { 
+USERROUTE,
+handleBackEndLogs } from '../Helpers/logHelper.js';
+
 import express from 'express';
 import bcrypt from 'bcrypt';
 import userModel from '../Model/userModel.js';
@@ -14,10 +18,12 @@ const userRoute = express.Router();
   userRoute.get('/', (req, res) => {
     userModel.find({ })
     .then(data => {
-      return res.status(200).json(data);
+      return res.status(200).json(data);;
     })
-    .catch(error => { 
-      return res.status(400).json({ error }); 
+    .catch( error => {
+      console.log( error );
+      handleBackEndLogs(USERROUTE, error );
+      return res.status(400).json({ error });
     });
 });
 
@@ -27,8 +33,10 @@ userRoute.get('/user', (req, res) => {
   .then(data => {
     return res.status(200).json(data);
   })
-  .catch(error =>{    
-    return res.status(400).json({ error }); 
+  .catch( error => {
+    console.log( error );
+    handleBackEndLogs(USERROUTE, error );
+    return res.status(400).json({ error });
   });
 });
 
@@ -43,9 +51,11 @@ userRoute.get('/user/byEmail', (req, res) => {
     }
       return res.status(200).json(data);
     })
-  .catch(error => { 
-    return res.status(400).json({ error })
-  });
+    .catch( error => {
+      console.log( error );
+      handleBackEndLogs(USERROUTE, error );
+      return res.status(400).json({ error });
+    });
 })
 
 userRoute.get('/files', (req, res) => {
@@ -53,7 +63,9 @@ userRoute.get('/files', (req, res) => {
   .then(data => {
     return res.status(200).json(data);
   })
-  .catch(error => { 
+  .catch( error => {
+    console.log( error );
+    handleBackEndLogs(USERROUTE, error );
     return res.status(400).json({ error });
   });
 });
@@ -63,10 +75,12 @@ userRoute.post('/', (req, res) => {
   let user = new userModel(userData);  
   user.save()
   .then(data => {
-    return res.status(200).json(data)
+    return res.status(200).json(data);
   })
   .catch( error => {
-    return res.status(400).json({ error })
+    console.log( error );
+    handleBackEndLogs(USERROUTE, error );
+    return res.status(400).json({ error });
   });
 });
 
@@ -86,6 +100,7 @@ let userData = getPostData( req );
     })
     .catch( err => { 
       if ( err ) {
+        handleBackEndLogs(USERROUTE, error );
         return res.status(400).json({ msg: err.message });
       }
     })
@@ -93,9 +108,10 @@ let userData = getPostData( req );
       let user = new userModel(userData);  
       let savedUserData =  await user.save();
         if ( savedUserData ) {
-            return res.status(200).json(savedUserData);
+          return res.status(200).json(savedUserData);
         }
     } catch (error) {
+        handleBackEndLogs(USERROUTE, error );
         return res.status(400).json({ msg: error.message });
     }
 });
@@ -103,10 +119,11 @@ let userData = getPostData( req );
 userRoute.put('/reset/:userId', async (req, res) => {
    resetUserPassword(req, res, userModel, req.params.userId)
     .then( data => {
-      return res.status(200).json(data)
+      return res.status(200).json(data);
     })
     .catch( error => {
-       console.log(error);
+      console.log( error );
+      handleBackEndLogs(USERROUTE, error );
       return res.status(400).json({ error })
     });
 });
@@ -114,21 +131,26 @@ userRoute.put('/reset/:userId', async (req, res) => {
 userRoute.put('/login/:userId', async (req, res) => {
    saveUpdateUserOnLogin(req, res, userModel, req.params.userId)
     .then( data => {
-      return res.status(200).json(data)
+      return res.status(200).json(data);
     })
     .catch( error => {
-      return res.status(400).json({ error })
+      console.log( error );
+      handleBackEndLogs(USERROUTE, error );
+      return res.status(400).json({ error });
     });
 });
 
 userRoute.put('/:userId', (req, res) => {
+  console.log( 'userID userID UserID @@@@@@@' )
+  console.log( req.params.userId )
   saveUpdatedData(req, userModel, req.params.userId)
   .then( data => {
     console.log(data);
-    return res.status(200).json(data)
+    return res.status(200).json(data);
   })
   .catch( error => {
-      console.log(error);
+    console.log( error );
+    handleBackEndLogs(USERROUTE, error );
     return res.status(400).json({ error })
   });
 });
@@ -137,11 +159,13 @@ userRoute.delete('/:userId', (req, res) => {
   userModel.findByIdAndDelete(req.params.userId)
     .then(data => {
       console.log('data - doc', data);
-      return res.status(200).json(data)
+      return res.status(200).json(data);
     })
-    .catch(error => {
-      return res.status(400).json({error});
-    })   
+    .catch( error => {
+      console.log( error );
+      handleBackEndLogs(USERROUTE, error );
+      return res.status(400).json({ error })
+    }); 
 });
 
 export default userRoute;

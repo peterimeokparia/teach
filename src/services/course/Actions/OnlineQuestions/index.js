@@ -20,6 +20,8 @@ export const SAVE_ONLINEQUESTION_BEGIN = "SAVE ONLINEQUESTION BEGIN";
 export const SAVE_ONLINEQUESTION_ERROR = "SAVE ONLINEQUESTION ERROR";
 export const SAVE_ONLINEQUESTION_SUCCESS = "SAVE ONLINEQUESTION SUCCESS";
 export const SET_EXPLANATION_ANSWER_MARKDOWN = "SET EXPLANATION ANSWER MARKDOWN";
+export const QUESTION_META = "QUESTION META";
+export const ONLINE_QUESTION_COURSEID = "ONLINE_QUESTION_COURSEID";
 
 export const addNewOnlineQuestion = ( question ) => {
     return dispatch => {
@@ -95,6 +97,16 @@ export const deleteOnlineQuestion = question => {
         });
     };
 };
+
+export const questionMeta = questionMeta => ({
+    type: QUESTION_META,
+    payload: questionMeta
+});
+
+export const onlineQuestionCourseId = courseId => ({
+     type: ONLINE_QUESTION_COURSEID,
+     payload: courseId
+})
 
 let timerHandle = null;
 

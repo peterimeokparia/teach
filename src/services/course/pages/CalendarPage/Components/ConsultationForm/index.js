@@ -1,8 +1,4 @@
-import 
-React, { 
-useState, 
-useEffect, 
-useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import {
 courseOption,     
@@ -10,7 +6,6 @@ newCalendarEventData,
 transformDateTime } from 'Services/course/Pages/CalendarPage/helpers';
 
 import Select from 'react-select';
-import './style.css';
 
 const ConsultationForm = ({
 handleSubmit,    

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { 
 connect } from 'react-redux';
 
@@ -20,7 +18,6 @@ import LoginLogout from 'Services/course/Pages/LoginPage/Components/LoginLogout'
 import CoursesComponent from 'Services/course/Pages/Courses/Components/CoursesComponent';
 import Cart from 'Services/course/Pages/SalesPage/Cart';
 import MainMenu from 'Services/course/Pages/Components/MainMenu';
-import './style.css';
 
 const IndividualUsersCourseList = ({
 operatorBusinessName,
@@ -69,21 +66,21 @@ return ( <div className="MyCourses">
             </header>  
 
          {
-              ( tutorsCourses?.length === 0 ) 
+            ( tutorsCourses?.length === 0 ) 
                 ? ( <div> <h3>{tutor?.firstname} doesn't have any courses.  Please check back. 
                         <div> In the meantime, you can view other 
-                            <h4><Link to={"/courses"}> courses. </Link></h4> 
+                            <h4><Link to={`/${ operatorBusinessName }/courses`}> courses. </Link></h4> 
                         </div></h3> 
                     </div>
-                  ) 
+                    ) 
                 : ( <div> 
                     <CoursesComponent
                         selectedTutorId={userId}
                         operatorBusinessName={operatorBusinessName}
                         courses={tutorsCourses}
                     />     
-                    </div>
-                  )
+                </div>
+            )
          } 
     </div>
 ); };

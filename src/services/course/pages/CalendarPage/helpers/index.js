@@ -10,9 +10,11 @@ import randomColor from 'randomcolor';
 export const getCalendarColor = ( calendars ) => {
     let color = null;
     let existingColor = null;
+    
+    color = generateRandomColor();
 
     do {
-        existingColor = calendars?.find( calendar => calendar?.color === generateRandomColor() );
+        existingColor = calendars?.find( calendar => calendar?.color === color );
         
         if ( !existingColor ) {
             break;
@@ -29,18 +31,16 @@ export const getCalendarPageHeading = ( calendarEventType ) => {
     let calendarHeading = null;
 
     switch ( calendarEventType ) {
-
+        
         case eventEnum.ConsultationForm:
         calendarHeading = 'New Consultation'; 
-            break;
-
+        break;
         case eventEnum.SessionScheduling:
         calendarHeading = 'Schedule Session'; 
-            break;
-
+        break;
         default:
         calendarHeading = 'Calendar';
-            break;
+        break;
 
     };
     return calendarHeading;
@@ -112,22 +112,22 @@ export const createNewCalendarEvent = (config) => {
 
         if ( config?.recurringAppointment ) {
             event =  { 
-                title: config?.title,
-                rrule: {
-                    freq: config?.frequency,
-                    interval: config?.interval,
-                    dtstart: resStr, 
-                    until: resEnd
-                },
-                duration: config?.duration
+            title: config?.title,
+            rrule: {
+                freq: config?.frequency,
+                interval: config?.interval,
+                dtstart: resStr, 
+                until: resEnd
+            },
+            duration: config?.duration
             };
         } else {
             event = {
-                title: config?.title,
-                allDay: allDay[1],
-                start: resStr,
-                end: resEnd,
-                duration: config?.duraton
+            title: config?.title,
+            allDay: allDay[1],
+            start: resStr,
+            end: resEnd,
+            duration: config?.duraton
             };
         }
     } catch (error) { 
@@ -140,7 +140,7 @@ export const eventEnum = {
     NewEvent: "newevent",
     IsModalOpen: "ismodalopen",
     ConsultationForm: "consultationform",
-    SessionScheduling: "sessionscheduling",
+    SessionScheduling: "sessionscheduling", 
     OnlineTutoringRequest: "onlinetutoringrequest",
     FullCalendar: "fullcalendar",
     DayGridMonth: "dayGridMonth",
@@ -266,7 +266,7 @@ export function getTimeLineItems( calendarEvent ) {
                 });
         };   
     } catch ( error ) {
-        console.log( error );
+        console.error( error );
     };
     return eventCollection;
 };
@@ -389,7 +389,7 @@ function getTheNumberOfCalendarEventSlots(config) {
 
         };
     } catch ( error ) {
-        console.log( error );    
+        console.error( error );    
     }; 
     return numberOfCalendarEventSlots;
 };

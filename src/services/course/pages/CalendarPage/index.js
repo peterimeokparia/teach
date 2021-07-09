@@ -1,5 +1,4 @@
-import 
-React, { 
+import { 
 useState, 
 useEffect } from "react";
 
@@ -7,7 +6,8 @@ import {
 connect } from 'react-redux';
 
 import {
-eventEnum, getCalendarColor } from 'Services/course/Pages/CalendarPage/helpers';
+eventEnum, 
+getCalendarColor } from 'Services/course/Pages/CalendarPage/helpers';
 
 import { 
 navigate } from '@reach/router';
@@ -20,6 +20,7 @@ addNewTimeLine,
 saveTimeLine } from 'Services/course/Actions/TimeLines'; 
 
 import { 
+setCalendarEventType,
 addCalendar,
 saveCalendar,
 loadAllCalendars } from 'Services/course/Actions/Calendar';
@@ -58,65 +59,64 @@ import listWeek from "@fullcalendar/list";
 import ConsultationForm from 'Services/course/Pages/CalendarPage/Components/ConsultationForm';
 import Modal from "react-modal";
 import moment from "moment";
-import SessionScheduling from 'Services/course/Pages/CalendarPage/Components/SessionScheduling';
+import SessionScheduling from 'Services/course/Pages/CalendarPage/Components/TimeLine/SessionScheduling';
 import OnlineTutoringRequestForm from 'Services/course/Pages/CalendarPage/Components/OnlineTutoringRequestForm';
 import Scheduling from 'Services/course/Pages/CalendarPage/Components/Scheduling/index.js';
-import "react-big-calendar/lib/css/react-big-calendar.css";
-import "react-big-calendar-like-google/lib/css/react-big-calendar.css";
 import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/list/main.css";
-import './style.css';
 moment.locale("en-GB");
 // const localizer = momentLocalizer(moment);
 
 const CalendarPage = ({
-operatorBusinessName,
-pushNotificationSubscribers,
-operator,
-addEvent,
-saveEvent,
-loadCourses,
-loadAllEvents,
-calendarEventType,
-calendar,
-calendarId,
-calendars,
-events,
-pushNotUsers,
-addCalendar,
-saveCalendar,
-loadAllCalendars,
-loadSubscribedPushNotificationUsers,
-timeLines,
-users,
-user,
-userId,
-addNewTimeLine,
-saveTimeLine,
-courses,
-}) => {
-const [ isModalOpen, setModalOpen] = useState(false);
-const [ component, setComponent] = useState(eventEnum);
-const [ calendarSlotInfo, setCalendarSlotInfo ] = useState(undefined);
-// const [ eventData, setEventData ] = useState(undefined);
-const [ scheduledStudents, setScheduledStudents ] = useState([]);
+    operatorBusinessName,
+    pushNotificationSubscribers,
+    operator,
+    addEvent,
+    saveEvent,
+    loadCourses,
+    loadAllEvents,
+    calendarEventType,
+    setCalendarEventType,
+    calendar,
+    calendarId,
+    calendars,
+    events,
+    pushNotUsers,
+    addCalendar,
+    saveCalendar,
+    loadAllCalendars,
+    loadSubscribedPushNotificationUsers,
+    timeLines,
+    users,
+    user,
+    userId,
+    addNewTimeLine,
+    saveTimeLine,
+    courses }) => {
+    const [ isModalOpen, setModalOpen] = useState(false);
+    const [ component, setComponent] = useState(eventEnum);
+    const [ calendarSlotInfo, setCalendarSlotInfo ] = useState(undefined);
+    // const [ eventData, setEventData ] = useState(undefined);
+    const [ scheduledStudents, setScheduledStudents ] = useState([]);
 
-useEffect(( ) => {
-    loadCourses();
-    loadAllCalendars();
-    loadAllEvents();
-    loadSubscribedPushNotificationUsers();
-},[ loadAllCalendars, loadSubscribedPushNotificationUsers, loadAllEvents,loadCourses ]);
+    useEffect(( ) => {
+        loadCourses();
+        loadAllCalendars();
+        loadAllEvents();
+        loadSubscribedPushNotificationUsers();
+        setCalendarEventType( calendarEventType );
+    },[ loadAllCalendars, loadSubscribedPushNotificationUsers, loadAllEvents, loadCourses, calendarEventType ]);
 
-if ( ! user?.userIsValidated || ! operator ){
-    navigate(`/${operatorBusinessName}/login`);
-};
+    if ( ! user?.userIsValidated || ! operator ){
+        navigate(`/${operatorBusinessName}/login`);
+    };
 
-let eventDataObj = null;
+    let eventDataObj = null;
 
-if ( events?.length > 0  ) {
-    eventDataObj = events?.filter(evnt => evnt?.calendarEventType === calendarEventType && evnt?.calendarId === calendarId )?.map(eventData => (  eventDataFunc( eventData )  ));
-};
+    if ( events?.length > 0  ) {
+        eventDataObj = events?.filter(evnt => evnt?.calendarEventType === calendarEventType && 
+            evnt?.calendarId === calendarId )?.map(eventData => (  eventDataFunc( eventData )  ));
+    };
 
 function eventDataFunc( eventData ) {
     let newObjectTest = null;
@@ -128,18 +128,19 @@ function eventDataFunc( eventData ) {
             allDay:  eventData?.event?.allDay,
             start: eventData?.event?.start, 
             end: eventData?.event?.end,
-                rrule: {
-                    freq: eventData?.event?.rrule?.freq,
-                    interval: eventData?.event?.rrule?.interval,
-                    dtstart: eventData?.event?.rrule?.dtstart,
-                    until: eventData?.event?.rrule?.until
-                },
+            rrule: {
+                freq: eventData?.event?.rrule?.freq,
+                interval: eventData?.event?.rrule?.interval,
+                dtstart: eventData?.event?.rrule?.dtstart,
+                until: eventData?.event?.rrule?.until
+            },
             userId: eventData?.event?.userId,
             calendarId: eventData?.event?.calendarId,   
             duration: 1,    
         };
     }
     else {
+
         newObjectTest = {
             id: eventData?._id, 
             title: eventData?.event?.title,
@@ -156,7 +157,6 @@ function eventDataFunc( eventData ) {
 
 const handleSelect = ( slotInfo ) => {
     //const [ start, end, startStr, endStr ] =  Object.entries( slotInfo );
-
     switch ( calendarEventType ) {
 
         case eventEnum.NewEvent:
@@ -175,7 +175,7 @@ const handleSelect = ( slotInfo ) => {
             setComponent( eventEnum.SessionScheduling );
             setCalendarSlotInfo( slotInfo );
             setModalOpen( true );
-            // setEventData( slotInfo );
+            //setEventData( slotInfo );
             return;    
 
         case eventEnum.OnlineTutoringRequest:
@@ -235,6 +235,7 @@ function saveEventData(calendar, calendarEventData, emailAddresses, testAdminUse
             };
 
             addEvent( addEventConfig );
+
         } else {
             let color = getCalendarColor( calendars );
 
@@ -260,7 +261,7 @@ function saveEventData(calendar, calendarEventData, emailAddresses, testAdminUse
             addCalendar( calendarConfig );
         }
     } catch (error) {
-        console.log( error );    
+        throw Error(`CalendarPage: saveEventData: ${error}`);   
     }
 }
 
@@ -363,7 +364,8 @@ const mapDispatch = {
     loadSubscribedPushNotificationUsers,
     addNewTimeLine,
     saveTimeLine,
-    loadCourses
+    loadCourses,
+    setCalendarEventType
 };
 
 const mapState = ( state, ownProps )  => ({

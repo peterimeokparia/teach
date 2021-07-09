@@ -5,6 +5,7 @@
    text-align: center;
   background-image: url(../../../images/geometry2.png);
   background-size: 300px 300px;
+  font-family: 'Courier New', Courier, monospace;
 }
 .MyCourses .items{
   align-items: center;

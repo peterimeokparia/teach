@@ -3,14 +3,17 @@ connect } from 'react-redux';
 
 import {
 addNewGrade,
-saveGrade } from './node_modules/Services/course/Actions/Grades';
+saveGrade } from 'Services/course/Actions/Grades';
 
 import {
 markAttendance,
-saveAttendance } from './node_modules/Services/course/Actions/Attendance';
+saveAttendance } from 'Services/course/Actions/Attendance';
 
 import {
-role } from './node_modules/Services/course/helpers/PageHelpers';
+role } from 'Services/course/helpers/PageHelpers';
+
+import {
+Links } from 'Services/course/Pages/OnlineQuestionsPage/helpers';
 
 import {
 Link } from '@reach/router';
@@ -47,13 +50,6 @@ function onMatchListItem( match, listItem ) {
       setCurrentPage( listItem );
   }
 } 
-
-let links = [ 
-  { id: "SavedAnswers", title: "Saved Answers", path:`student/${ selectedStudents?._id }/savedanswers`, _id: selectedStudents?._id }, 
-  { id: "Grades", title: "Grades", path:`student/${ selectedStudents?._id }/grades`, _id: selectedStudents?._id }, 
-  { id: "Attendance", title: "Attendance", path: `student/${ selectedStudents?._id  }/attendance`, _id: selectedStudents?._id }, 
-  { id: "Session", title: "Session", path: `student/${ selectedStudents?._id  }/sessions/courseId/${courseId}`, _id: selectedStudents?._id },
-];
  
 return (
     <div className="StudentDetails"> 
@@ -71,26 +67,26 @@ return (
                 <ListItemComponent
                     id={selectedStudents?._id}
                     altLinkPath={"student"}
-                    collection={links}
+                    collection={Links( selectedStudents )}
                     onMatchListItem={onMatchListItem}
                     path={undefined}
                  >
-                     {( selectedPage ) => (
-                          <div>      
-                            <div>
-                              <Link to={selectedPage?.path}> <span title={selectedPage?.title} > { selectedPage?.title } </span> </Link> 
-                              <br></br>
-                              <div> 
-                              </div>  
-                            </div>                            
-                          </div>                    
-                      )}
-                 </ListItemComponent>    
+                  {( selectedPage ) => (
+                    <div>      
+                      <div>
+                        <Link to={selectedPage?.path}> <span title={selectedPage?.title} > { selectedPage?.title } </span> </Link> 
+                        <br></br>
+                        <div> 
+                        </div>  
+                      </div>                            
+                    </div>                    
+                  )}
+                </ListItemComponent>    
                 </div>          
                 <div className="lesson"> 
-                    <div>
-                         { parentChild }
-                    </div>                                           
+                  <div>
+                    { parentChild }
+                  </div>                                           
                 </div>
                 <div className="sidebar"> 
                 <Roles

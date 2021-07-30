@@ -27,7 +27,7 @@ export const toggleResetOptions= element => ({
 export const toggleRecordingStatus= element => ({
     type: TOGGLE_RECORDING_STATUS,
     payload: element
-})
+});
 
 export const toggleCameraStatus= element => ({
     type: TOGGLE_CAMERA_STATUS,

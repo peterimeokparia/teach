@@ -1,5 +1,6 @@
 export const getUrls = (currentUser, courseId, lessonId, lessonTitle) => {
   const page = `${courseId}_${lessonId}_${lessonTitle}`; 
+
   return {
       meeting:{ prod: `https://joinmeet.today/${page}`, dev:`https://joinmeet.today/${page}`},
       editor:{ prod:`https://padsconnect247.com/editor/p/${lessonTitle}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false`, dev:`http://localhost:9002/p/${lessonTitle}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false` },
@@ -58,4 +59,37 @@ export function urls() {
   return { 
     // fix
   };
+};
+
+export function adjustRoomSize( roomsize ) {
+  let settings = {}, roomSizeSettings = { 
+    settings: ( containerStyle, meetingRoomHeight, meetingRoomWidth ) => { return {
+      containerStyle, 
+      meetingRoomHeight, 
+      meetingRoomWidth
+    }; } 
+  };
+
+  let size = {
+    videoCall:'video-call',
+    videoCallFull:'video-call-full',
+    videoCallHide:'video-call-hide',
+    videoCallPercentageOne:'100%',
+    videoCallPixelPoints:'920px'   // optimal is between 720 & 920
+  };
+
+  switch (roomsize) { 
+
+    case 1:
+      settings = roomSizeSettings.settings(size.videoCall, size.videoCallPercentageOne, size.videoCallPercentageOne);
+      break;
+    case 2:
+      settings = roomSizeSettings.settings(size.videoCallFull, size.videoCallPixelPoints, size.videoCallPixelPoints);
+      break;
+    default:
+      settings = roomSizeSettings.settings(size.videoCall, size.videoCallPercentageOne, size.videoCallPercentageOne);
+      break;
+      
+  }
+  return settings;
 };

@@ -1,9 +1,4 @@
 import { 
-useState, 
-useRef, 
-useEffect } from 'react';
-
-import { 
 connect } from 'react-redux';
 
 import {
@@ -11,26 +6,19 @@ saveCalendar,
 deleteCalendar } from 'Services/course/Actions/Calendar';
 
 import {
-saveTimeLine } from 'Services/course/Actions/TimeLines'; 
-
-import {
-initializeEventForm } from './helpers';
-
-import {
 frequencyCollection,
 days,
-eventEnum,
-// getTimeLineItemDetailsFromCalendarEvents,
-getCurrentTimeInUsersLocale,
-updateFrequencyCollection } from 'Services/course/Pages/CalendarPage/helpers';
+eventEnum } from 'Services/course/Pages/CalendarPage/helpers';
 
 import {
 studentsOption } from 'Services/course/Pages/CalendarPage/helpers';
 
-import SessionScheduling from 'Services/course/Pages/CalendarPage/Components/TimeLine/SessionScheduling';
+import useEditCalendarEventsHook from 'Services/course/Pages/CalendarPage/hooks/useEditCalendarEventsHook';
+import SessionScheduling from 'Services/course/Pages/CalendarPage/Components/TimeLines/SessionScheduling';
 import Select from 'react-select';
 import DropDown from 'Services/course/Pages/Components/DropDown';
 import ToggleButton from 'Services/course/Pages/Components/ToggleButton';
+import './style.css';
 
 const EditCalendarEvents = ({
     saveInProgress,  
@@ -53,35 +41,50 @@ const EditCalendarEvents = ({
     setIsEditMode,
     setSelectedItemId,
     timeLines,
-    saveTimeLine,
     children }) => {
-
-    const initialValue = initializeEventForm( currentEvent );
-    const [ title, setEventTitle ] = useState(initialValue?.title);
-    const [ location, setEventLocation ] = useState(initialValue?.location);
-    const [ start, setEventStartTime ] = useState(initialValue?.startTime);
-    const [ end, setEventEndTime ] = useState(initialValue?.endTime);
-    const [ allDay, setAllDay ] = useState(initialValue?.allDay);
-    const [ recurringEvent, setRecurringEvent ] = useState(initialValue?.recurringEvent);   
-    const [ weekDays, setWeekDays ] = useState(initialValue?.weekDays);
-    const [ endDate, setEndDate ] = useState( getCurrentTimeInUsersLocale( initialValue?.endDate )?.format('YYYY-MM-DD') ); 
-    const [ frequency, setFrequency ] = useState(initialValue?.frequency); 
-    const [ interval, setInterval ] = useState(initialValue?.interval); 
-    const [ duration, setDuration ] = useState(initialValue?.duration);
-    const [ freqCollectionData, setFreqCollectionData ] = useState(frequencyCollection); 
-    const [ startDateDateTime, setStartDateDateTime ] = useState((start) ? getCurrentTimeInUsersLocale( start )?.format('YYYY-MM-DD'): new Date()?.toLocaleDateString('en-US'));
-    const [ endDateDateTime, setEndDateDateTime ] = useState((end) ? getCurrentTimeInUsersLocale( end )?.format('YYYY-MM-DD') : new Date()?.toLocaleDateString('en-US'));
-    const [ startTimeDateTime, setStartTimeDateTime ] = useState((start) ? getCurrentTimeInUsersLocale( start )?.format('HH:mm:ss') : new Date()?.toLocaleTimeString('en-US'));
-    const [ endTimeDateTime, setEndTimeDateTime ] = useState((end) ? getCurrentTimeInUsersLocale( end )?.format('HH:mm:ss') : new Date()?.toLocaleTimeString('en-US'));
-    const [ schedulingData, setSchedulingData ] = useState((calendarEventType === eventEnum.SessionScheduling && initialValue?.schedulingData?.length > 0) ? initialValue?.schedulingData : []);
-    const [ editing, setEditing ] = useState(false);
-    const inputRef = useRef();
-
-    useEffect (() => {
-    if ( editing ) {
-        inputRef.current.focus();
-    }
-    }, [ editing ]); 
+    let useEditCalendarEventHookProp = {
+        currentEvent, 
+        eventEnum,
+        calendarEventType,
+        onSubmit,
+        setIsRecurringEvent,
+        setSelectedItemId,
+        setIsEditMode
+    };
+    let {
+        title,
+        location,
+        allDay,
+        recurringEvent,
+        weekDays,
+        endDate,
+        frequency,
+        interval,
+        freqCollectionData,
+        startDateDateTime,
+        endDateDateTime,
+        startTimeDateTime,
+        endTimeDateTime, 
+        schedulingData,
+        editing,
+        inputRef,
+        setEventTitle,
+        setEventLocation,
+        setWeekDays,
+        setEndDate,
+        setFrequency,
+        setInterval,
+        setStartDateDateTime,
+        setEndDateDateTime,
+        setStartTimeDateTime,
+        setEndTimeDateTime,
+        setSchedulingData,
+        reset,
+        submit,
+        handleRecurringEvent,
+        handleAllDayEvent,
+        beginEditing
+    } = useEditCalendarEventsHook( useEditCalendarEventHookProp );
 
     if ( saveInProgress ) {
         return <div>...loading</div>;
@@ -89,84 +92,6 @@ const EditCalendarEvents = ({
     if ( onSaveError ) {
         return <div> { onSaveError.message } </div> ;
     }
-
-const reset = () => {
-    setValues();
-    setEditing(false);
-};
-
-const submit = (e) => {
-    e.preventDefault();
-    onSubmit({
-        title, 
-        start: `${startDateDateTime}T${startTimeDateTime}`, 
-        end: `${endDateDateTime}T${endTimeDateTime}`,
-        startDateDateTime,
-        endDateDateTime,
-        startTimeDateTime,
-        endTimeDateTime,
-        recurringEvent,
-        weekDays,
-        endDate,
-        frequency, 
-        interval,
-        duration,
-        schedulingData,
-        location
-    }).then(reset)
-     .catch( error => {
-        setEditing(false);
-        setEditing(true);
-        console.error( error );
-    });
- };
-
- const handleRecurringEvent = (e) => {
-    let isChecked = e.target.checked;
-    let value = e.target.value;
-
-    if ( isChecked && ( value === 'isRecurring' ) ) {
-        setRecurringEvent(true);
-
-        if ( editing ) {
-            setIsRecurringEvent(true);
-        }
-    }
-
-    if ( !isChecked && ( value === 'isRecurring' ) ) {
-        setRecurringEvent(false);
-
-        if ( editing ) {
-            setIsRecurringEvent(false);
-            setFrequency('Select');
-            updateFrequencyCollection(frequency, setFreqCollectionData);
-        };
-    };  
-};
-
-const handleAllDayEvent = (e) => {  
-   let isChecked = e.target.checked;
-   let value = e.target.value;
-
-   if ( isChecked && ( value === 'isAllDay' ) ) {
-        setAllDay(true);
-   }
-   if ( !isChecked && ( value === 'isAllDay' ) ) {
-       setAllDay(false);
-   }  
-};
-
-const beginEditing = ( selectedItem ) => {
-    setValues();
-    setEditing(true);
-    setSelectedItemId(selectedItem?._id);
-    setIsEditMode(true);
-
-    if ( selectedItem?.event?.recurringEvent ) {
-        setIsRecurringEvent(true);
-        updateFrequencyCollection(frequency, setFreqCollectionData);
-    }  
-};
 
 const performDelete = () => { // change to saveEvent
     let calendarEvents = calendar?.calendarEvents?.filter(eventToRemove => eventToRemove?.id !== currentEvent?.event?.id );
@@ -192,34 +117,17 @@ const cancelEdit = (e) => {
     reset();
 };
  
-function setValues () {
-    setEventTitle(initialValue?.title);
-    setEventLocation(initialValue?.location);
-    setEventStartTime(initialValue?.startTime);
-    setEventEndTime(initialValue?.endTime);
-    setRecurringEvent(initialValue?.recurringEvent);
-    setWeekDays(initialValue?.weekDays);
-    setEndDate( getCurrentTimeInUsersLocale( initialValue?.endDate )?.format('YYYY-MM-DD') );
-    setFrequency(initialValue?.frequency);
-    setInterval(initializeEventForm?.interval);
-    setDuration(initializeEventForm?.duration);
-    setSchedulingData((calendarEventType === eventEnum.SessionScheduling && initialValue?.schedulingData?.length > 0) ? initialValue?.schedulingData : []);
-    setStartDateDateTime((start) ? getCurrentTimeInUsersLocale( start )?.format('YYYY-MM-DD') : new Date()?.toLocaleDateString('en-US'));
-    setEndDateDateTime((end) ? getCurrentTimeInUsersLocale( end )?.format('YYYY-MM-DD') : new Date()?.toLocaleDateString('en-US'));
-    setStartTimeDateTime((start) ? getCurrentTimeInUsersLocale( start )?.format('HH:mm:ss') : new Date()?.toLocaleTimeString('en-US'));
-    setEndTimeDateTime((end) ? getCurrentTimeInUsersLocale( end )?.format('HH:mm:ss') : new Date()?.toLocaleTimeString('en-US'));
-};
 return editing ? (
-           <> 
-            <span className="events"> 
-                {(calendarEventType === eventEnum.SessionScheduling) &&  
-                    <SessionScheduling 
-                        scheduledStudents={schedulingData}
-                        onChange={setSchedulingData}
-                        options={studentsOption(currentUsers)}
-                    /> 
-                }
-                     <span>
+        <> 
+        <span className="events"> 
+            {(calendarEventType === eventEnum.SessionScheduling) &&  
+                <SessionScheduling 
+                    scheduledStudents={schedulingData}
+                    onChange={setSchedulingData}
+                    options={studentsOption(currentUsers)}
+                /> 
+            }
+        <span>
         <form className={""} onSubmit={submit}> 
             <span className="row">    
                 <input
@@ -341,6 +249,7 @@ return editing ? (
                                 label={""}
                                 key={"_id"}
                                 value={"name"}
+                                initialValue={frequency}
                                 optionCollection={( editing && recurringEvent ) ? freqCollectionData : frequencyCollection }
                                 setOptionSelectedValue={setFrequency} 
                             />
@@ -438,73 +347,4 @@ return editing ? (
                 );                         
 };
 
-export default connect(null, { saveCalendar, deleteCalendar, saveTimeLine } )(EditCalendarEvents);
-
-
-
-
-
-
-
-// let timeLine = timeLines?.find(timeLine => timeLine?.timeLineName === calendarEventType );
-    // alert('testUpdatedTimeLineItems before delete');
-    // alert( JSON.stringify( timeLine ) );
-
-    // let items = timeLine?.items.filter(item => item?.id.includes( currentEvent?.event?.id ));
-
-    // if ( items?.length > 1 && !recurringEvent ) { // when would this be true?
-
-    //     let itemIdsToUpdate = timeLine?.items?.filter(item => item?.id.includes( currentEvent?.event?.id ) && item?.isRecurringEvent)?.map( items => items?.id );
-
-    //     timeLine = {...timeLine, items: timeLine?.items?.filter(item => !itemIdsToUpdate.includes(item?.id)) }
-       
-    //     timeLine = { 
-    //         ...timeLine,
-    //         items:{
-    //             ...timeLine.items, 
-    //             id:`${currentEvent?.event?.id}_${timeLine?.items?.length + 1}`,
-    //             title,
-    //             start_time: moment(`${startDateDateTime}T${startTimeDateTime}`).local().format(),
-    //             end_time: moment(`${endDateDateTime}T${endTimeDateTime}`).local().format(),
-    //             isRecurringEvent: recurringEvent
-    //         }         
-    //      }
-    // }
-
-    // if ( items?.length > 1 && recurringEvent ) {
-    //     timeLine = {...timeLine, items: timeLine?.items.filter(item => !item.includes(currentEvent?.event?.id)) }
-
-    //     let config = {
-    //         title, 
-    //         frequency,
-    //         duration, 
-    //         calendarEventType,
-    //         calendars,
-    //         eventId: currentEvent?.event?.id,  
-    //         calendarId: calendar?._id, 
-    //         isRecurringEvent: recurringEvent,
-    //         users: currentUsers,
-    //         timeLines: {...timeLines, timeLine },
-    //         initialDateStartTime: `${startDateDateTime}T${startTimeDateTime}`,
-    //         initialDateEndTime: ( recurringEvent ) ? `${moment(`${endDate}T${endTimeDateTime}`)?.local().format('YYYY-MM-DD[T]HH:mm:ss') }` : `${endDateDateTime}T${endTimeDateTime}`  } // fix 
-
-    //         timeLine = getTimeLineItemDetailsFromCalendarEvents( config )
-    // }
-
-    // let testUpdatedTimeLineItem = { ...timeLine, items };
-    // alert('testUpdatedTimeLineItems after delete');
-    // alert( JSON.stringify( testUpdatedTimeLineItem ) );
- 
-    // alert('timeLine timeLine timeLine');
-    // alert( JSON.stringify( timeLine ) );
-    // saveTimeLine( timeLine );
-
-
-
-// let timeLine = timeLines?.find(timeLine => timeLine?.timeLineName === calendarEventType );
-// let items = timeLine?.items.filter(item => !item?.id.includes( currentEvent?.event?.id ));
-// let testUpdatedTimeLineItem = { ...timeLine, items };
-//  //update items on the backEnd with action
-//     if ( timeLine ) {
-//         saveTimeLine( testUpdatedTimeLineItem );
-//     }
+export default connect(null, { saveCalendar, deleteCalendar } )(EditCalendarEvents);

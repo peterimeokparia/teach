@@ -43,7 +43,6 @@ const CoursesComponent = ({
     deleteCourse,
     unSubscribeFromCourse,
     sessions }) => {
-        
     const inputRef = useRef();
     const [ editing, setEditing ] = useState(false);
     const [ name, setNewName ] = useState('');

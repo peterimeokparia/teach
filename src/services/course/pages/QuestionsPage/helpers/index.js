@@ -166,7 +166,7 @@ export function contentType ( elementType ){
       isQuestionContentType: (elementType === editorContentType.Question),
   };
 };
-// askHomeWorkQuestionPlaceHolder, homeWorkAnswerPlaceHolder
+
 export function markDownEditorFieldCollection(config){
   return  { 
     questionNumber: config?.markDownEditors?.length + 1,     
@@ -175,16 +175,16 @@ export function markDownEditorFieldCollection(config){
     type: config?.inputFieldOptions?.type,  
     placeHolderText: config?.inputFieldOptions?.askHomeWorkQuestionPlaceHolder,
     questionCreatedOnDateTime: Date.now(),
-    markDownContent: null, //JSON.stringify(config?.placeHolder),
+    markDownContent: null,
     value: "",
     multipleChoiceQuestionAnswerKey: "",
     multipleChoiceQuestionStudentAnswer: "",
     multipleChoiceQuestionStudentAnswerInputValue: "",
     multipleChoiceQuestionAnswerKeyInputValue: "",
-    multipleChoiceQuestionExplanationAnswer: null,//JSON.stringify(config?.placeHolder),
+    multipleChoiceQuestionExplanationAnswer: null,
     explanationQuestionAnswerKey: JSON.stringify(config?.homeWorkAnswerPlaceHolder),
     explanationQuestionAnswer: JSON.stringify(config?.homeWorkAnswerPlaceHolder),
-    explanationAnswerCollection: [],//config.answerMarkDownEditors,
+    explanationAnswerCollection: [],
     commentsCollection: config?.commentsMarkDownEditors,
     markDownEditorFormInputFields: [],
     pointsPerQuestion: config?.pointsDistributionType,

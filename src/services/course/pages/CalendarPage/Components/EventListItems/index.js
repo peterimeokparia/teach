@@ -10,7 +10,7 @@ path,
 children,
 ulClassName,
 getClassName,
-}) => {
+}) => { 
 const getPath = ( item ) => { return ( path ) ? `${ path }/${ item?._id }`  : `${ altLinkPath }/${ id }`; }; 
 
 return (
@@ -25,7 +25,7 @@ return (
                   > 
                   {({ match } ) => {             
                     onMatchListItem( match, item ); 
-                    return <li className={getClassName( item )} >
+                     return <li className={getClassName( item )} >
                     { children( item ) }
                     </li>;
                     }}
@@ -35,6 +35,5 @@ return (
         )}   
 </div>
 ); };
-
 
 export default EventListItems;

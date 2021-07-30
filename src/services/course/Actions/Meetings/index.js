@@ -3,8 +3,7 @@ add,
 update,
 remove,
 get,
-getById,
-updateUser } from 'Services/course/Api';
+getById } from 'Services/course/Api';
 
 export const ADD_NEW_MEETING_BEGIN = "ADD NEW MEETING BEGIN";
 export const ADD_NEW_MEETING_SUCCESS = "ADD NEW MEETING SUCCESS";
@@ -21,6 +20,8 @@ export const DELETE_MEETING_ERROR = "DELETE MEETING ERROR";
 export const UPDATE_INVITEE_LIST = "UPDATE INVITEE LIST";
 export const LAST_LOGGEDIN_USER = "LAST_LOGGEDIN_USER";
 export const LOAD_SINGLE_MEETING_SUCCESS = "LOAD SINGLE MEETING SUCCESS";
+export const START_NEW_MEETING = "START NEW MEETING";
+export const END_MEETING = "END MEETING";
 
 export const addNewMeeting = ( meetingConfig ) => {
     return dispatch => {
@@ -72,6 +73,18 @@ export const loadMeetingsByMeetingId = ( meetingId ) => {
     };
 };
 
+export const startMeeting = ( meeting ) => { 
+    return dispatch => {
+        dispatch({ type: START_NEW_MEETING, payload: meeting });
+    };
+};
+
+export const endMeeting = ( meeting ) => { 
+    return dispatch => {
+        dispatch({ type: END_MEETING, payload: meeting });
+    };
+};
+
 export const deleteMeeting = meeting => {
     return dispatch => {
         dispatch({ type: DELETE_MEETING_BEGIN });
@@ -83,52 +96,3 @@ export const deleteMeeting = meeting => {
         });
     };
 };
-
-// export const addNewMeeting = (
-// invitees, 
-// userId,
-// sessions,
-// timeStarted,
-// courseId,
-// lessonId,
-// courseTitle,
-// lessonTitle,
-// lessonPlanUrl,
-// currentUser, 
-// usersWhoJoinedTheMeeting ) => {
-// return dispatch => {
-//     dispatch({ type: ADD_NEW_MEETING_BEGIN }); // move side effect(s)... I know :)
-//         return add({ 
-//             invitees, 
-//             userId,
-//             sessions,
-//             timeStarted,
-//             courseId,
-//             lessonId,
-//             courseTitle,
-//             lessonTitle,
-//             lessonPlanUrl,
-//             currentUser,
-//             usersWhoJoinedTheMeeting
-//         }, '/meetings')
-//         .then( meeting => { 
-//             handleMeeting(meeting, currentUser, dispatch);
-//             dispatch({type: ADD_NEW_MEETING_SUCCESS, payload: meeting }); 
-//         }).catch( error => {
-//             dispatch({ type: ADD_NEW_MEETING_ERROR , error });
-//         });
-//     };
-// };
-// let meetingConfig = {
-//     invitees, 
-//     userId,
-//     sessions,
-//     timeStarted,
-//     courseId,
-//     lessonId,
-//     courseTitle,
-//     lessonTitle,
-//     lessonPlanUrl,
-//     currentUser, 
-//     usersWhoJoinedTheMeeting
-// }

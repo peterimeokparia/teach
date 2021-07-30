@@ -18,12 +18,16 @@ getOperatorFromOperatorBusinessName } from 'Services/course/Selectors';
 import { 
 role } from 'Services/course/helpers/PageHelpers';
 
+import { 
+helpIconStyle } from './inlineStyles';
+
 import Loading from 'Services/course/Pages/Components/Loading';
 import LoginLogout from 'Services/course/Pages/LoginPage/Components/LoginLogout';
 import CoursesComponent from 'Services/course/Pages/Courses/Components/CoursesComponent';
 import NewCoursePage from 'Services/course/Pages/Courses/NewCoursePage';
 import Cart from 'Services/course/Pages/SalesPage/Cart';
 import MainMenu from 'Services/course/Pages/Components/MainMenu';
+import PostAddIcon from '@material-ui/icons/PostAdd';
 import Modal from 'react-modal';
 
 const CourseListPage = ({ 
@@ -36,15 +40,12 @@ const CourseListPage = ({
     openNewCourseModal,
     closeNewCourseModal,
     isModalOpen }) => {
-
     if ( ! user && !user?.userIsValidated ){
         return <Redirect to={`/${operatorBusinessName}/login`} noThrow />;
     }
-
     if ( coursesLoading) {
         return <Loading />;
     }         
-
     if ( onCoursesError ) {
         return <div> { onCoursesError.message } </div> ;
     }
@@ -62,7 +63,13 @@ return (
         </div>
     </header>
     <br></br>   
-    { ( user?.role === role.Tutor ) && <button className="new-course-btn" onClick={openNewCourseModal}>Add New Course</button> }
+    { ( user?.role === role.Tutor ) && 
+         <PostAddIcon 
+            style={helpIconStyle()}
+            className="comment-round-button-5"
+            onClick={openNewCourseModal}
+        />
+    }
         <CoursesComponent
             operatorBusinessName={operatorBusinessName} 
             user={user} 

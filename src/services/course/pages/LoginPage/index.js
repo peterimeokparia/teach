@@ -1,16 +1,5 @@
 import { 
-useState, 
-useEffect } from 'react';
-
-import { 
-Redirect, 
-navigate } from '@reach/router';
-
-import { 
 connect } from 'react-redux';
-
-import {
-updateUser } from 'Services/course/Api';
 
 import { 
 loginUser, 
@@ -44,21 +33,15 @@ getUsersByOperatorId,
 getPushNotificationUsersByOperatorId } from 'Services/course/Selectors';
 
 import {
-updateMeetingStatus } from 'Services/course/Pages/Meeting/helpers';
-
-import { 
-Validations } from 'Services/course/helpers/Validations';
-
-import {
-joinInProgressMeeting, 
-getMeetings } from 'Services/course/Pages/Meeting/helpers';
-
-import {
-role,   
 handlePushNotificationSubscription } from 'Services/course/helpers/PageHelpers';
 
-import Loading from 'Services/course/Pages/Components/Loading';
-import NotFoundPage from 'Services/course/Pages/Components/NotFoundPage';
+import {
+setUpNewUser,
+directUserNavigation,
+validateUseCredentialsOnlogin,
+handleUserMeetingsOnLogin } from 'Services/course/Pages/LoginPage/helpers';
+
+import useLoginPageHook from 'Services/course/Pages/LoginPage/hooks/useLoginPageHook'
 import LoginForm from 'Services/course/Pages/LoginPage/Components/LoginForm';
 import RegistrationForm from 'Services/course/Pages/SignUp/RegistrationForm';
 import CoursePackageRenewal from 'Services/course/Pages/Packages/CoursePackageRenewal';
@@ -93,178 +76,71 @@ const LoginPage = ({
   pushNotificationSubscribers,
   subscribePushNotificationUser,
   savePushNotificationUser }) => {
-    const [ signUpOrLoginPreference, setSignUpOrLoginInPreference ] = useState(false);
-    let newSiteUser = new SiteUser(), currentUser = null;
 
-    useEffect(() => {
-      loadUsers();
-      loadSessions();
-      loadMeetings();
-      loadSubscribedPushNotificationUsers();
-
-      // if ( operator ) {
-      //   setOperator( operator );
-      // }
-      
-       if ( operatorBusinessName ) {
-          setOperatorBusinessName( operatorBusinessName );
-        }
-     
-    }, [loadUsers, loadSessions, loadMeetings, loadSubscribedPushNotificationUsers]);
-
-    if ( ! operator  ) {
-      return <NotFoundPage />;
-    }
-
-    if ( loading ) {
-      return <Loading />;
-    } 
-
-    if ( error ) {
-      return <div> { error.message } </div> ;
-    }
-  
-    if ( user?.userIsValidated ) {
-      loadUsers();
-
-      if ( user?.role === role.Tutor ) {
-        return <Redirect to={`/${operatorBusinessName}/users`} noThrow />;
-      }
-
-      if ( user?.role === role.Student ) {
-        CoursePackageRenewal( user, sessions, autoRenewSessionPackages, loadSessions, loadUsers );
-        return <Redirect to={`/${operatorBusinessName}/users`} noThrow />;
-      }
-      return <Redirect to={`/${operatorBusinessName}/login`} noThrow />;
-    } 
-
-  const handleCreateUser = (error, loading, email, password, firstname, role) => {
-    if (( Validations.checkFormInputString("User Name", email  ) && 
-          Validations.checkFormInputString("Password", password) ) && 
-          Validations.checkFormInputString("Role", role) ) {
-          newSiteUser.email = email.toLowerCase();
-          newSiteUser.password = password;
-          newSiteUser.firstname = firstname;
-          newSiteUser.role = role;
-          newSiteUser.operatorId = operator?._id;
-    }
-    createUser( newSiteUser )
-    .then( resp => {
-    if ( resp ) {
-        Swal.fire({title: 'Your account has been created.', icon: 'info', text: `Kindly check your email.` });
-    } }).catch( error => { 
-      throw Error(` handleCreateUser: There was a problem with creating your account. ${error}`); 
-    });   
+  let loginPageProps = {
+    operatorBusinessName,
+    operator,
+    loading,
+    error,
+    user,
+    sessions,
+    autoRenewSessionPackages, 
+    loadSessions, 
+    loadUsers
   };
 
-  async function handleLoginUser( email, password ) {
-    sessionStorage.clear();
-    currentUser = await getCurrentUser( email.toLowerCase(), password );
-    
-    let currentMeeting = undefined;
+  let { 
+    signUpOrLoginPreference, 
+    setSignUpOrLoginInPreferenceValue,
+  } = useLoginPageHook( loginPageProps );
 
-    if ( currentUser?.meetingId !== "" ) {
-        currentMeeting = await getMeetings(currentUser, loadMeetingsByMeetingId);
-    } 
+const handleCreateUser = ( newSiteUser ) => {
+  createUser( setUpNewUser({ ...newSiteUser, operator, siteUser: new SiteUser() }) )
+  .then( resp => {
+  if ( resp ) {
+      Swal.fire({title: 'Your account has been created.', icon: 'info', text: `Kindly check your email.` });
+  } }).catch( error => { 
+    throw Error(` handleCreateUser: There was a problem with creating your account. ${error}`); 
+  });   
+};
 
-    if ( currentUser ) {
-      currentUser = { ...currentUser, operatorId: operator?._id };
-      lastLoggedInUser( currentUser );
-    }
-
-    if ( ! currentUser ) {
-      Validations.warn("Account does not exist. Please create a new account");
-      return ( <div>Please create a new account.</div>);
-    }
-
-    if ( ! currentUser?.userIsVerified ) {
-      Swal.fire({title: 'Your account has not been verified.', icon: 'info', text: `Kindly check your email.` });
-      return ( <div>Please check your email.</div>);
-    }
-
-    Validations.checkFormInputString("User Name", email );
-
-    if ( email && !password ) {
-        navigate(`/${operatorBusinessName}/passwordreset/${currentUser?._id}`); 
-    } 
-
-    if ( ( email && password ) ) {
-      loginUser( { ...currentUser, unHarshedPassword: password } )
-        .then( response => {
-          if ( response?.userIsValidated ) {
-            handlePushNotificationSubscription(pushNotificationSubscribers, currentUser, subscribePushNotificationUser, savePushNotificationUser ); 
-          }
-      }).catch( error => { 
-        throw Error(` loginUser: There is a problem with your login. ${error}`); 
-      });
-
-      if ( currentUser?.lessonInProgress ) {
-
-            if ( currentMeeting ) { 
-
-                Swal.fire({
-                  title: `Please join the following lesson in progress: ${currentUser?.nameOfLessonInProgress}`,
-                  icon: 'warning',
-                  showCancelButton: true,
-                  confirmButtonText: 'Join',
-                  confirmButtonColor: '#673ab7',
-                  cancelButtonText: 'Next time'
-
-              }).then( (response) => {
-
-                  if ( response?.value ) {
-
-                      joinInProgressMeeting( currentUser, currentMeeting, saveMeeting, undefined );
-                      navigate(currentUser?.inviteeSessionUrl);
-
-                  } else { 
-
-                      directUserNavigation( currentUser ); 
-                  }
-
-              });  
-
-          } else {
-
-              Swal.fire({title: 'Your meeting can not be found.', icon: 'info', text: `Kindly contact your teacher or the administrator.` });
-              let inviteeSessionUrl = "", nameOfLessonInProgress = "", lessonInProgress = false, meetingId = "";
-  
-              currentUser = { ...currentUser, timeMeetingEnded: Date.now() , inviteeSessionUrl, nameOfLessonInProgress, lessonInProgress, meetingId } ;
-              updateUser( currentUser );
-              lastLoggedInUser( currentUser );
-          }       
-        } 
-        CoursePackageRenewal( currentUser, sessions, autoRenewSessionPackages, loadSessions, loadUsers );
-        directUserNavigation( currentUser );           
-    }
-}
-  
-function directUserNavigation ( loggedInUser ) {
-  if ( loggedInUser?.role === role.Tutor ) {
-      navigate(`/${operatorBusinessName}/users`);                              
-  } else {
-      navigate(`/${operatorBusinessName}/users`); 
-  }
+function handleLoginUser( email, password ) { 
+  getCurrentUser( email?.toLowerCase(), password )
+    .then( currentUser => 
+      {
+        validateUseCredentialsOnlogin( currentUser, operatorBusinessName, email, password );
+        if ( currentUser?.userIsVerified ) {
+          loginUser( { ...currentUser, unHarshedPassword: password, operatorId: operator?._id } )
+            .then( response => {
+              if ( response?.userIsValidated ) {
+                handlePushNotificationSubscription(pushNotificationSubscribers, currentUser, subscribePushNotificationUser, savePushNotificationUser ); 
+                handleUserMeetingsOnLogin( currentUser, operatorBusinessName, loadMeetingsByMeetingId, saveMeeting, lastLoggedInUser );
+                CoursePackageRenewal( currentUser, sessions, autoRenewSessionPackages, loadSessions, loadUsers );
+                directUserNavigation( currentUser, operatorBusinessName );
+              }
+          }).catch( error => { 
+            throw Error(` loginUser: There is a problem with your login. ${error}`); 
+          });
+        }
+      }).catch( error => {
+        throw Error(`There was a problem with your sign on attempt. Please contact support. ${ error }`)
+  });
 }
 
-function setSignUpOrLoginInPreferenceValue () {  
-  setSignUpOrLoginInPreference( !signUpOrLoginPreference );
-}
-
-async function getCurrentUser( email, password  ){
+async function getCurrentUser( email, password ){
   return loadUserByEmail( { email, password } )
     .then(user => {
       return user[0];
     }).catch(error => {
       return error;
   });
-}
-
+};
+  
 return (
   <div className="LoginPage"> 
     {
-        signUpOrLoginPreference ? <p> Please <button className="buttonTest" onClick={setSignUpOrLoginInPreferenceValue}> log in </button> or  sign up to continue.</p>
-                                : <p> Please log in or <button className="buttonTest" onClick={setSignUpOrLoginInPreferenceValue}> sign up </button> to continue.</p>
+        signUpOrLoginPreference ? <p> Please <button  data-cy={`signin`} className="buttonTest" onClick={setSignUpOrLoginInPreferenceValue}> log in </button> or  sign up to continue.</p>
+                                : <p> Please log in or <button  data-cy={`signup`} className="buttonTest" onClick={setSignUpOrLoginInPreferenceValue}> sign up </button> to continue.</p>
     } 
     {
         signUpOrLoginPreference  ? <RegistrationForm
@@ -279,7 +155,6 @@ return (
                                       handleLoginUser={handleLoginUser}
                                     />
     }
-
     {
       ( error ) &&  <div> { error.message } {error} </div>
     }

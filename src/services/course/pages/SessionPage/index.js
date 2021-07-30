@@ -95,11 +95,11 @@ return   (
     );
 };
 
-const mapState = (state, ownProps)   => {
+const mapState = (state, ownProps)  => {
   return {
-    currentUser: state.users.user,
-    sessions: Object.values(state?.sessions?.sessions),
-    lesson: state.lessons.lessons[ownProps.lessonId]
+    currentUser: state?.users?.user,
+    sessions: state?.sessions?.sessions,
+    lesson: state?.lessons?.lessons[ownProps.lessonId]
   };
 };
 

@@ -22,6 +22,66 @@ const emailMessageConfig = {
     emailHeaderDeletedEvent: "Deleted Calendar Event(s)!"
 };
 
+export const addTimeLineItemsToEvent = ( calendarEvent, store ) => {
+    let timeLineItems = getTimeLineItems( calendarEvent?.calendarEventData );
+
+    store?.dispatch(saveEvent({
+        ...calendarEvent?.calendarEventData, 
+        timeLineItems }, 
+        calendarEvent?.eventConfig?.currentUser, 
+        calendarEvent?.eventConfig?.pushNotificationUser, 
+        calendarEvent?.eventConfig?.emailAddresses
+    ));
+};
+
+export const updateTimeLineItemsToMatchEventUpdates = ( calendarEventData, store ) => {
+    let { currentUser, pushNotificationUser, emailAddresses } = calendarEventData;
+
+    let { calendarEvent } = updateTimeLineItems( calendarEventData );
+
+    store?.dispatch(saveEvent(
+        calendarEvent, 
+        currentUser, 
+        pushNotificationUser, 
+        emailAddresses
+    ));
+};
+
+export const updateTimeLineItems = ( _calendarEvent ) => {
+    let eventData = {};
+    
+    let calendarEvent = {
+    ..._calendarEvent?.calendarEventData, 
+    timeLineItems: updateTimeLineEvents( _calendarEvent ) 
+    };
+    let currentUser = calendarEvent?.currentUser;
+    let pushNotificationUser = calendarEvent?.pushNotificationUser;
+    let emailAddresses = calendarEvent?.emailAddresses;
+
+    eventData = {
+        calendarEvent,
+        currentUser,
+        pushNotificationUser,
+        emailAddresses
+    };
+    return eventData;
+};
+
+function updateTimeLineEvents( calendarEvent ) {
+    let timeLineItems = [   ...calendarEvent?.calendarEventData?.timeLineItems  ];
+
+    try {
+        let clonedCalendarEvent = calendarEvent?.calendarEventData;
+
+        clonedCalendarEvent = { ...clonedCalendarEvent, timeLineItems: [] };
+        timeLineItems = getTimeLineItems( clonedCalendarEvent );
+    } catch (error) {
+        console.warn('There was a problem updating timeline events. Rollback changes.');
+        return timeLineItems;
+    }
+    return timeLineItems;
+};
+
 export const sendUpdatesAfterAddingNewCalendarEvents = ( calendarEvent, store ) => {
     try {
         store?.dispatch(sendPushNotificationMessage( 
@@ -45,22 +105,13 @@ export const sendUpdatesAfterAddingNewCalendarEvents = ( calendarEvent, store ) 
             calendarEvents:[ ...calendarEvent?.eventConfig?.currentUser?.calendarEvents, 
             calendarEvent?.eventConfig?.calendarEventData?._id ]  
         };
-
-            updateUser( currentUser  )
+        
+        updateUser( currentUser  )
             .then(user => { 
                 store?.dispatch({ type: LAST_LOGGEDIN_USER, payload: user });
                 store?.dispatch({ type: SAVE_USER_SUCCESS, payload: user });             
             })
             .catch(error => { console.error( error ); });
-        let timeLineItems = getTimeLineItems( calendarEvent?.calendarEventData );
-
-        store?.dispatch(saveEvent({
-            ...calendarEvent?.calendarEventData, 
-            timeLineItems }, 
-            calendarEvent?.eventConfig?.currentUser, 
-            calendarEvent?.eventConfig?.pushNotificationUser, 
-            calendarEvent?.eventConfig?.emailAddresses
-        ));
     } catch (error) {
         console.error(`Problem with adding a calendar event: ${ error }`);
     }

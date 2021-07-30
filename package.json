@@ -6,13 +6,13 @@
     "@babel/core": "^7.14.3",
     "@babel/preset-react": "^7.13.13",
     "@emotion/styled": "10.0.14",
-    "@fullcalendar/core": "^5.5.1",
-    "@fullcalendar/daygrid": "^5.5.0",
-    "@fullcalendar/interaction": "^5.5.0",
-    "@fullcalendar/list": "^5.5.0",
-    "@fullcalendar/react": "^5.5.0",
-    "@fullcalendar/rrule": "^5.5.1",
-    "@fullcalendar/timegrid": "^5.5.1",
+    "@fullcalendar/core": "^5.8.0",
+    "@fullcalendar/daygrid": "^5.8.0",
+    "@fullcalendar/interaction": "^5.8.0",
+    "@fullcalendar/list": "^5.8.0",
+    "@fullcalendar/react": "^5.8.0",
+    "@fullcalendar/rrule": "^5.8.0",
+    "@fullcalendar/timegrid": "^5.8.0",
     "@interactjs/types": "^1.10.9",
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
@@ -83,10 +83,11 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dev-server": "json-server db.json --routes routes.json -w -p 8082",
-    "lint": "EXTEND_ESLINT=true eslint --ext=js,jsx --ignore-path=.gitignore --max-warnings=0 --color . || true"
+    "lint": "EXTEND_ESLINT=true eslint --ext=js,jsx --ignore-path=.gitignore --max-warnings=0 --color . || true",
+    "cypress": "cypress open",
+    "cypress:headless": "cypress run --spec src/Services/course/cypress/integration/teach/init.spec.js"
   },
-  
-  "jest" : {
+  "jest": {
     "transform": {
       "^.+\\.js?$": "babel-jest"
     },
@@ -94,7 +95,6 @@
       "!node_modules/react-runtime"
     ]
   },
-
   "proxy": "http://localhost:9005",
   "secure": false,
   "eslintConfig": {
@@ -113,6 +113,7 @@
     ]
   },
   "devDependencies": {
+    "cypress": "^8.0.0",
     "redux-mock-store": "^1.5.4"
   },
   "type": "module"

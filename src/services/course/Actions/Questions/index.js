@@ -2,6 +2,7 @@ import {
 add,
 update,
 get,
+remove,
 getById } from 'Services/course/Api';
 
 export const SET_QUESTION_MARKDOWN = "SET_QUESTION_MARKDOWN";
@@ -13,6 +14,7 @@ export const LOAD_QUESTIONS_SUCCESS = "LOAD QUESTIONS SUCCESS";
 export const LOAD_LATEST_QUESTION_SUCCESS = "LOAD LATEST QUESTION SUCCESS";
 export const LOAD_QUESTIONS_ERROR = "LOAD QUESTIONS ERROR";
 export const DELETE_QUESTION_SUCCESS = "DELETE QUESTION SUCCESS";
+export const DELETE_QUESTION_ERROR = "DELETE QUESTION ERROR";
 export const RESET_QUESTION_ERROR = "RESET QUESTION ERROR";
 export const SAVE_QUESTION_BEGIN = "SAVE QUESTION BEGIN";
 export const SAVE_QUESTION_ERROR = "SAVE QUESTION ERROR";
@@ -20,11 +22,9 @@ export const SAVE_QUESTION_SUCCESS = "SAVE QUESTION SUCCESS";
 export const SET_EXPLANATION_ANSWER_MARKDOWN = "SET EXPLANATION ANSWER MARKDOWN";
 export const SET_MARKDOWN_EDITOR = "SET MARKDOWN EDITOR";
 
-export const addNewQuestion = ( lessonId, studentId, operatorId, coursesCovered, lessonsCovered, examId, assignmentId, questions ) => {
+export const addNewQuestion = ( questionData ) => {
     return dispatch => {
         dispatch({ type: ADD_QUESTION_BEGIN });
-        let questionData = { questions, lessonId, studentId, operatorId, coursesCovered, lessonsCovered, examId, assignmentId };
-
         return add( questionData, `/questions` )
         .then( response => { 
             dispatch({        
@@ -85,6 +85,17 @@ export const loadQuestionsByLessonId = ( lessonId ) => {
            }).catch( error => {
                 dispatch({ type: LOAD_QUESTIONS_ERROR , error });
         });       
+    };
+};
+
+export const deleteQuestion = question => {
+    return dispatch => {
+         return remove( question, `/questions/` )
+         .then( () => {
+             dispatch({ type: DELETE_QUESTION_SUCCESS, payload: question });
+         }).catch( error => {
+            dispatch({ type: DELETE_QUESTION_ERROR , error });
+        });
     };
 };
 

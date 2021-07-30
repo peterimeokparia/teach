@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { 
+useEffect } from 'react';
 
 import { 
 connect } from 'react-redux';
@@ -15,66 +16,35 @@ loadSessions } from 'Services/course/Actions/Sessions';
 import {  
 loadLessons} from 'Services/course/Actions/Lessons';
 
-import { 
-getLessonsByCourseIdSelector, 
-getCoursesByCourseIdSelector,
-getOperatorFromOperatorBusinessName } from 'Services/course/Selectors';
-
-import { 
-emailMessageOptions, 
-emailInputOptions } from  'Services/course/Pages/Courses/helpers';
-
 import StudentDisplayViewComponent from '../Components/StudentDisplayViewComponent';
 import 'react-toastify/dist/ReactToastify.css';
 
 const StudentDetailPage = ({
-operatorBusinessName,
-savedAnswers,
-operatorId,
-operator,    
-studentId,
-courseId,
-lessonId,
-currentUser,
-course,
-lessons,
-users,
-sessions,
-navigationHistory,
-children }) => {
-useEffect(() => {
-loadGrades( studentId );
-loadSessions();
-loadAttendance();
+    operatorBusinessName,
+    studentId,
+    courseId,
+    lessonId,
+    users,
+    children }) => {
 
-if ( courseId ) {
-    loadLessons( courseId );
-}
-}, [  courseId, studentId ]);  
-// }, [ loadGrades, loadSessions, loadAttendance, loadLessons ]);  
+    useEffect(() => {
+    loadGrades( studentId );
+    loadSessions();
+    loadAttendance();
 
-const [ currentPage, setCurrentPage ] = useState('');
-const [ lessonPlanUrl, setLessonPlanUrl ] = useState('');
+        if ( courseId ) {
+            loadLessons( courseId );
+        }
+    }, [  courseId, studentId, loadLessons ]); 
+    
+    let props = {
+        operatorBusinessName,
+        selectedStudents: users?.find(usr => usr?._id === studentId),
+        childrenProps: children
+    };
 
 return (     
-        <StudentDisplayViewComponent 
-            operatorBusinessName={operatorBusinessName}
-            operator={operator}       
-            currentUser={currentUser}
-            selectedStudents={users?.find(usr => usr?._id === studentId)}
-            emailInputOptions={emailInputOptions}
-            emailMessageOptions={emailMessageOptions}
-            setLessonPlanUrl={setLessonPlanUrl}
-            lessonPlanUrl={lessonPlanUrl}
-            setCurrentPage={setCurrentPage}
-            currentPage={currentPage}
-            courseId={courseId}
-            lessonId={lessonId}
-            course={course}
-            lessons={lessons}
-            navigationHistory={navigationHistory}
-            parentChild={children}
-        />             
+    <StudentDisplayViewComponent props={props}/>             
     );
 };
 
@@ -87,14 +57,8 @@ const mapDispatch = {
 
 const mapState = (state, ownProps) => {
     return {
-        operator: getOperatorFromOperatorBusinessName(state, ownProps),
         courseTutor: state.courses.courseTutor,
-        currentUser: state.users.user,
         users: Object.values(state?.users?.users),
-        course: getCoursesByCourseIdSelector( state, ownProps ),
-        lessons: getLessonsByCourseIdSelector( state, ownProps ),
-        sessions: Object.values(state?.sessions?.sessions)?.filter(session => session?.courseId === ownProps?.courseId),
-        navigationHistory: state.users.navigationHistory
     };
 };
 

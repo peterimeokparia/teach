@@ -1,8 +1,3 @@
-//https://zellwk.com/blog/endpoint-testing/
-//https://betterprogramming.pub/adding-tests-to-express-apps-with-jest-and-supertest-d0e7aaac4c08
-//https://www.freecodecamp.org/news/end-point-testing/
-// https://github.com/zellwk/endpoint-testing-example/blob/master/package.json
-
 import {
 ADD_NEW_LESSON_BEGIN,
 ADD_NEW_LESSON_SUCCESS,

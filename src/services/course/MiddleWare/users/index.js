@@ -29,11 +29,11 @@ export const users = store => next =>  action => {
      switch(action.type){
           
           case SIGN_UP_SUCCESSS:  
-               handleSignUpSuccess( action.payload ); // get operator business name from the store toDo!!!
+               handleSignUpSuccess( action.payload, store ); 
                next(action);
           return;
           case OPERATOR_SIGN_UP_SUCCESSS:  
-               handleOperatorSignUpSuccess( action.payload ); // get operator business name from the store toDo!!!
+               handleOperatorSignUpSuccess( action.payload );
                next(action);
           return;
           case BUY_COURSE_SUCCESS:  

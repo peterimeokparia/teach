@@ -8,8 +8,6 @@ MARK_ATTENDANCE_SUCCESS } from 'Services/course/Actions/Attendance';
 jest.mock('../../../Api');
 
 describe('markAttendance', () => {
-
-
    const studentId = "5fab4846c2a96278c56381c9";
    const studentOne = { _id: studentId };
    const selectedStudents = [ studentOne ];

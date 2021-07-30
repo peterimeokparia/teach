@@ -113,15 +113,42 @@ export const login = ( user ) => {
     });
 };
 
+export const purchase = ( currentUser ) => {
+    try {
+        console.log("Mock implementation purchase");
+      if( approvePayment(currentUser) ) {   
+           currentUser.cart.forEach(course  => {
+            if ( ! currentUser.courses?.includes( course?.course?._id ) ) {
+              currentUser = { ...currentUser, courses: [ ...currentUser.courses, course?.course?._id ] };
+            }
+        }); 
+        return updateUser({ 
+            ...currentUser,
+            cart:[],
+            courses: currentUser.courses,
+            sessions: currentUser.sessions,
+            paymentStatus: "Approved"                 
+        });
+       }
+    } catch (error) {
+      
+          throw Error(`Problem with payment processing. ${error}`)
+    };
+  };
+
 export const add = ( testobject, route  ) => {
-    console.log("Mock implementation add", { ...testobject });
+    console.log("Mock implementation add");
+    console.log(testobject);
     return new Promise((resolve, reject) => {
         process.nextTick(() => {
             let _id = getId();
             let data = { ...testobject, _id };
           
             if ( Object.values( testobject).filter(_value => _value !== undefined ))   {
-                seedData[route] = [...seedData[route], data ]
+                // seedData[route] = [...seedData[route], data ]
+                let updatedData =  [...seedData[route], data ];
+                seedData[route] = updatedData;
+                console.log( seedData[route])
                 resolve( testobject ); 
             } else {
                 reject({ error: 'Bad request'})
@@ -284,9 +311,6 @@ return new Promise( ( resolve, reject ) => {
     if ( session ) {
         resolve({User: { ...resultObject } })
     }
-    //(currentUser || session ) ? resolve(resultObject)
-        //                           : reject( { error: ' there was a problem'} )
-    
     });
 });
 };

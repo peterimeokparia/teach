@@ -16,7 +16,7 @@ const RegistrationForm = ({
   users }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [firstName, setFirstName] = useState('');
+  const [firstName, setFirstName] = useState(''); // change firstname to firstName on reseeding db
   const [userRole, setUserRole] = useState('');
   const [ displayOtherFormFields, setToDisplayOtherFormFields ] = useState(false);
 
@@ -40,6 +40,20 @@ const getOtherFormFields = () => {
     } 
 };
 
+const validateRegistrationCredentials = ( credentials ) =>{
+  
+  let { error, loading, email, password, firstName, role } = credentials;
+
+  if (( Validations.checkFormInputString("User Name", email  ) && 
+      Validations.checkFormInputString("Password", password) ) && 
+      Validations.checkFormInputString("Role", role) ) {
+
+      if (!email || !password || !role || !firstName) return;
+  }
+
+  return credentials;
+};
+
 return (    
           <div className="LoginPage"> 
               <form onSubmit={ e => handleSubmit(e)}>
@@ -48,6 +62,7 @@ return (
                   <label>  
                     Email
                     <input
+                        data-cy={`email`}
                         name="email"
                         type="email"
                         value={email}
@@ -59,6 +74,7 @@ return (
                   {( displayOtherFormFields ) 
                       ? ""
                       : <button
+                          data-cy={`submit`}
                           type="submit"
                           disabled={loading}
                           onClick={getOtherFormFields}
@@ -72,6 +88,7 @@ return (
                    <label>
                     Password   
                   <input
+                    data-cy={`password`}
                     name="password"
                     type="password"
                     value={password}
@@ -83,6 +100,7 @@ return (
                   <label>
                     First Name   
                     <input
+                      data-cy={`firstName`}
                       name="firstName"
                       type="text"
                       value={firstName}
@@ -96,6 +114,7 @@ return (
                       <label>                         
                         Student
                         <input
+                          data-cy={`radio-student`}
                           name="firstName"
                           type="radio"
                           value={roles.Student}
@@ -109,7 +128,8 @@ return (
                  <label>
                     Tutor
                     <input
-                      name="firstName"
+                      data-cy={`radio-Tutor`}
+                      name="Tutor"
                       type="radio"
                       value={roles.Tutor}
                       onChange={ e => setUserRole( e.target.value ) }
@@ -125,9 +145,10 @@ return (
                       { error  && (<div className="error"> { error }</div>)}
                         <div></div>                       
                           <button
+                              data-cy={`submit`}
                               type="submit"
                               disabled={loading}
-                              onClick={e => handleCreateUser(error, loading, email, password, firstName, userRole)}
+                              onClick={e => handleCreateUser({ error, loading, email, password, firstName, role: userRole })} // change firstname to firstName on reseeding db
                             >
                               Create User
                             </button>

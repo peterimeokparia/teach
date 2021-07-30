@@ -1,6 +1,9 @@
 module.exports = {
-    testEnvironment: 'node'
+    testEnvironment: 'node',
+    testPathIgnorePatterns: ["<rootDir>/src/Services/course/cypress"],
+    "testRegex": "(/__testss__/.*|(\\.|/)(tesst|sspec))\\.[jt]sx?$"
 };
+
 
 // module.exports = {
 //     collectCoverageFrom: ["src/**/*.{js,jsx,mjs}"],

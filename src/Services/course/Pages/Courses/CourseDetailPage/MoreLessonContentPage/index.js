@@ -1,6 +1,5 @@
 import { 
-useEffect,
-useState } from 'react';
+useEffect } from 'react';
 
 import { 
 connect } from 'react-redux';
@@ -50,8 +49,8 @@ const MoreLessonContentPage = ({
     selectedLessonPlanLesson
 }) => {
     useEffect(() => {
-        loadLessons(courseId)
-    }, [])
+        loadLessons(courseId);
+    }, [ courseId ]);
 
 function handleChange( editor, element ){
     let duration = 2000;  
@@ -66,7 +65,7 @@ function handleChange( editor, element ){
     );
 };
 
-let lesson = lessons.find(lsn => lsn?._id === lessonId )
+let lesson = lessons.find(lsn => lsn?._id === lessonId );
 
 return <div className="builder2"> 
         <header>
@@ -99,7 +98,7 @@ return <div className="builder2">
             </div>
         </div>
         </div>
-    </div>
+    </div>;
 };
 
 const mapDispatch = {

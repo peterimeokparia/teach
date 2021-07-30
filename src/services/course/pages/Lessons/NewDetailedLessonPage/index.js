@@ -1,4 +1,7 @@
-import { useState, useRef, useEffect } from 'react';
+import { 
+useState, 
+useRef, 
+useEffect } from 'react';
 
 import { 
 connect } from 'react-redux';
@@ -11,6 +14,8 @@ import './style.css';
 const NewDetailedLessonPage = ({
 className,
 selectedLesson,
+currentUser,
+lessonError,
 resetClassRoomUserError, 
 saveInProgress,
 error,
@@ -25,18 +30,19 @@ const inputRef = useRef();
 const reset = () => {
     setLessonTitle(titleInitialValue);
     setEditing(false);
-    resetClassRoomUserError();   
+    resetClassRoomUserError();  
 };
 
 const commitEdit = (e) => {
     e.preventDefault();
-    let lessonData = { title: title,  courseId: selectedCourse?._id, lessonDate: Date.now() };
+    let lessonData = { title: title, introduction: title,  courseId: selectedCourse?._id, lessonDate: Date.now(), userId: currentUser?._id  };
 
     onSubmit(lessonData)
     .then(reset)
     .catch( error => {
         setEditing(false);
         setEditing(true);
+        Error(`AddNewLesson: NewDetailedLessonPage: There was a problem adding the new lesson. ${ error }`);
     });
 };
 
@@ -113,14 +119,17 @@ return (
         </div>             
     }  
     { error && <div>{error.message}</div> }
+    {lessonError && <div>{lessonError?.message}</div>}
     </>
     );                       
 };
 
 const mapState = ( state, ownProps ) => {
     return {
+        currentUser: state.users.user,
         saveInProgress: state.classrooms.saveLessonInProgress,
-        error: state.classrooms.onSaveError
+        error: state.classrooms.onSaveError,
+        lessonError: state.lessons.onSaveLessonError
     };
 };
 

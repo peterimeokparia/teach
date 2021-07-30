@@ -9,9 +9,6 @@ export const commentsPlaceHolder = {"blocks":[{"key":"99c5e","text":"Enter comme
 let timerHandle = null;
 
 export const setMarkDown = ( teachObject, markDown, teachObjectType, actionType, saveAction, duration  ) => {
-    alert('in markdown')
-    alert(JSON.stringify(teachObject))
-    
     return ( dispatch, getState )  => {
         dispatch({ type: actionType, payload: {   
             teachObject,
@@ -23,20 +20,9 @@ export const setMarkDown = ( teachObject, markDown, teachObjectType, actionType,
         };
         timerHandle = setTimeout(() => {
             const latestTeachObjectData = getState()[teachObjectType.propNameOne][teachObjectType.propNameTwo][ teachObject?._id ]; 
-            
-            alert('in latestTeachObjectData')
-            alert(JSON.stringify(latestTeachObjectData))
- 
-            alert(teachObject?._id)
-            alert(JSON.stringify(teachObject))
-     
-         
-
             if ( latestTeachObjectData !== undefined  ) {
                 saveAction( latestTeachObjectData );
             }
-           
-            // saveAction( latestTeachObjectData );
         }, duration);  
     };
 };

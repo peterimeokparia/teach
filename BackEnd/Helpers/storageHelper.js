@@ -51,6 +51,8 @@ export async function resetUserPassword( req,  resp,  model, id ) {
 }
 
 export async function saveUpdateUserOnLogin( req,  resp,  model, id ) {
+  console.log('saveUpdateUserOnLogin saveUpdateUserOnLogin saveUpdateUserOnLogin')
+  console.log(id)
   let existingUser = await model.findById( mongoose.Types.ObjectId(id) );
   let harshedPassword = existingUser[ 'password' ];
    if ( existingUser ) {

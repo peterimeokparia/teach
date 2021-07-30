@@ -1,11 +1,11 @@
-import React from 'react';
-import ClassRoomComponent  from 'Services/course/Pages/ClassRoomPage/Components/ClassRoomComponent';
-import renderer from 'react-test-renderer';
-import thunk from "redux-thunk"; 
-import * as reactRedux from 'react-redux';
-import { Provider, useSelector } from "react-redux";
-import { applyMiddleware } from 'redux'; 
-import configureStore from 'redux-mock-store';
+import React from 'Services/course/Pages/ClassRoomPage/tests/node_modules/react';
+import ClassRoomComponent  from 'Services/course/Pages/ClassRoomPage/tests/node_modules/Services/course/Pages/ClassRoomPage/Components/ClassRoomComponent';
+import renderer from 'Services/course/Pages/ClassRoomPage/tests/node_modules/react-test-renderer';
+import thunk from "Services/course/Pages/ClassRoomPage/tests/node_modules/redux-thunk"; 
+import * as reactRedux from 'Services/course/Pages/ClassRoomPage/tests/node_modules/react-redux';
+import { Provider, useSelector } from "Services/course/Pages/ClassRoomPage/tests/node_modules/react-redux";
+import { applyMiddleware } from 'Services/course/Pages/ClassRoomPage/tests/node_modules/redux'; 
+import configureStore from 'Services/course/Pages/ClassRoomPage/tests/node_modules/redux-mock-store';
 
 jest.mock('../../../Api');
 
@@ -50,11 +50,7 @@ describe('ClassRoomComponent', () =>  {
       /> 
     </Provider>
     );
-      //console.log( happy - tree  - no sad trees );
       expect(tree.toJSON()).toMatchSnapshot();
   })
 });
-
-
-
 

@@ -9,7 +9,7 @@ export const sendEmailMessage = async ( config ) => {
     handleEmailNotifications( config );      
 }; 
 
-function handleEmailNotifications( config ) {
+function handleEmailNotifications( config ) { 
     let notificationMessage = config?.getEmailSubscribers( config?.state, config?.action );
 
     try {

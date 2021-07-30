@@ -8,9 +8,7 @@ import Swal from 'sweetalert2';
 const MultiInputEmailComponent = ( { 
 setLesson, 
 inputFieldOptions, 
-messageOptions, 
-animateInvitationButton, 
-testName } ) => {  
+messageOptions } ) => {  
 const [ inputValue, setInputValue ] = useState( "" );
 const [ inputName, setInputName ] = useState( "" );
 const [ testObj,  setTestObj ] = useState({});
@@ -99,7 +97,8 @@ useEffect(() => {}, [] );
           <input className="invite-btn" type="button" onClick={addNewEmailInputField} value="+" />
           <input className="invite-btn" type="button" onClick={removeEmailInputField} value="-" />         
           <div>
-            <input className={(animateInvitationButton ? 'invite-btn-animation' : 'invite-btn')} type="submit" value="invite" />  
+          <input className="invite-btn" type="submit" value="invite" />  
+            {/* <input className={(animateInvitationButton ? 'invite-btn-animation' : 'invite-btn')} type="submit" value="invite" />   */}
           </div>
         </form>  
         <div>                         

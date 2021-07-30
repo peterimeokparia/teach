@@ -7,14 +7,8 @@ markAttendance } from 'Services/course/Actions/Attendance';
 import {
 addNewGrade } from 'Services/course/Actions/Grades';
 
-import {
-loadMeetingsByMeetingId,
-addNewMeeting,  
-saveMeeting } from 'Services/course/Actions/Meetings'; 
-
 import{
-updateCurrentClassRoomLessonPlan,     
-updateCurrentTutor } from 'Services/course/Actions/ClassRooms';
+enableTeachPlatform } from 'Services/course/Actions/ClassRooms';
 
 import { 
 addNewGradesForSelectedStudents } from 'Services/course/Pages/GradesPage/Components/AddStudentGrade/helpers';
@@ -28,21 +22,7 @@ role } from 'Services/course/helpers/PageHelpers';
 import { 
 navContent } from 'Services/course/Pages/Components/NavigationHelper';
 
-import {
-sendPushNotificationMessage,
-getSelectedPushNotificationUsers } from 'Services/course/Actions/Notifications';
 
-import{
-setLessonInProgressStatus } from 'Services/course/Actions/Lessons';
-
-import{
-sendEmails } from 'Services/course/Actions/Emails';
-
-import{
-updateUserInvitationUrl, 
-loadUserByEmail,
-getCurrentUserById,
-updateCurrentUser } from 'Services/course/Actions/Users';
 
 import {  
 getUsersByOperatorId,    
@@ -57,9 +37,16 @@ getSelectedUser,
 getStudentsSubscribedToCoursesByThisTutor, 
 toggleBetweenAttendanceGradeDisplay,
 emailInputOptions, 
-emailMessageOptions,
-verifyInviteeList } from  '../../helpers';
+emailMessageOptions } from  '../CourseLessonDropDownComponent/helpers';
 
+import { 
+openNewCourseModal, 
+closeNewCourseModal } from 'Services/course/Actions/Courses';
+
+import { 
+helpIconStyle } from './inlineStyles';
+    
+import NewCoursePage from 'Services/course/Pages/Courses/NewCoursePage';
 import useClassRoomComponentHook from '../../hooks/useClassRoomComponentHook';
 import MainMenu from 'Services/course/Pages/Components/MainMenu';
 import DropDown from 'Services/course/Pages/Components/DropDown';
@@ -70,9 +57,13 @@ import CourseDetailCheckBoxComponent from 'Services/course/Pages/Courses/Compone
 import AddStudentGradeComponent from 'Services/course/Pages/GradesPage/Components/AddStudentGrade';
 import MarkAttendanceComponent from 'Services/course/Pages/AttendancePage/Components/MarkAttendanceComponent';
 import MultiInputEmailComponent from 'Services/course/Pages/Email/MultiInputEmailComponent';
+import Modal from 'react-modal';
+import PostAddIcon from '@material-ui/icons/PostAdd';
+import Swal from 'sweetalert2';
 import './style.css';
 
 const ClassRoomComponent = ({
+    enableTeachPlatform,
     selectedUserId,
     operator,
     operatorBusinessName,
@@ -86,19 +77,9 @@ const ClassRoomComponent = ({
     toggleSideBarDisplay,
     pushNotificationSubscribers,
     selectedCourseFromLessonPlanCourseDropDown, 
-    selectedLessonFromLessonPlanDropDown, 
-    updateUserInvitationUrl,
-    addNewMeeting,
-    saveMeeting,
-    updateCurrentUser,
-    getCurrentUserById,
-    sendPushNotificationMessage,
-    getSelectedPushNotificationUsers,
-    setLessonInProgressStatus,
-    loadMeetingsByMeetingId,
-    sendEmails,
-    loadUserByEmail }) => {
-             
+    isModalOpen,
+    openNewCourseModal,
+    closeNewCourseModal }) => {
     const selectedUser = getSelectedUser( users, selectedUserId );
     const currentGrades = grades?.filter(grd => grd?.courseId === selectedCourseFromLessonPlanCourseDropDown?._id);
     const url = getLessonPlanUrls( operatorBusinessName, selectedUserId );
@@ -107,44 +88,32 @@ const ClassRoomComponent = ({
     let {
         setListOfStudents,
         setDropDownDisplayOption,
-        setAnimationForEmailInvitationEffect,
-        setNewMeetingTimerHandle,
         dropDownDisplayOption, 
         listOfStudents,
-        animateInvitationButton,
-        setUpdateUserTimerHandle
-    } = useClassRoomComponentHook(selectedUser, "boomingllc" );
+    } = useClassRoomComponentHook(operatorBusinessName, selectedUser );
 
     const pushNotificationUsers = pushNotificationSubscribers?.filter(pushuser => listOfStudents?.find(student => student?._id === pushuser?.userId));
     
-    let teachPlatformProps = { 
-        listOfStudents, 
-        sessions, 
-        currentUser, 
-        operatorBusinessName, 
-        selectedUserId, 
-        selectedCourseFromLessonPlanCourseDropDown, 
-        selectedLessonFromLessonPlanDropDown, 
-        addNewMeeting,
-        updateUserInvitationUrl,
-        saveMeeting,
-        pushNotificationSubscribers,
-        users,
-        pushNotificationSubscribers,
-        users,
-        setUpdateUserTimerHandle,
-        setNewMeetingTimerHandle,
-        setAnimationForEmailInvitationEffect, 
-        updateCurrentUser,
-        getCurrentUserById, 
-        sendPushNotificationMessage,
-        getSelectedPushNotificationUsers,
-        setLessonInProgressStatus,
-        updateCurrentTutor,
-        loadMeetingsByMeetingId,
-        sendEmails,
-        loadUserByEmail
-    };
+    function enableTeachCoursePlatform( ) {
+        if ( ( !listOfStudents ) || ( listOfStudents?.length === 0 ) ) {
+            Swal.fire({
+                title: `Please invite students before starting a new teaching session.`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Invite.',
+                confirmButtonColor: '#673ab7',
+                cancelButtonText: 'Not now.'
+            }).then( (response) => {
+              if ( response?.value ) {
+                  return;
+              } else { 
+                  enableTeachPlatform({ listOfStudents, selectedUserId, operatorBusinessName, sessions, operator } );
+              }
+            }); 
+    } else {
+        enableTeachPlatform({ listOfStudents, selectedUserId, operatorBusinessName, sessions, operator });
+    }
+};
 
 return (
     <div className="ClassRoomDetail"> 
@@ -160,7 +129,7 @@ return (
                 <span>   
                     <button
                         className="plan-lesson-btn"
-                        onClick={() => verifyInviteeList(teachPlatformProps)}
+                        onClick={() => enableTeachCoursePlatform()}
                     >
                         { currentUser?.role === role.Tutor ? "Teach"  : "Join" }
                     </button>
@@ -189,34 +158,46 @@ return (
                 }
                 </div> 
                  <div className="class"> 
-                <div>
-                    {( dropDownDisplayOption === "Courses" || 
-                        dropDownDisplayOption === "" ) &&  
-                        <CourseLessonDropDownComponent
-                            className="add-class-button"
-                            operatorBusinessName={operatorBusinessName}
-                            selectedUserId={selectedUserId}     
-                        />
-                    }
-                    {( dropDownDisplayOption === "Grade" ) &&  
-                        <div className="AddStudentGradeComponent"> 
-                        <AddStudentGradeComponent
-                            className="add-class-button"
-                            selectedStudents={listOfStudents}
-                            onSubmit={newGrade => addNewGradesForSelectedStudents( pushNotificationUsers, selectedCourseFromLessonPlanCourseDropDown, newGrade, currentGrades, addNewGrade  ) }
-                        />
-                        </div>    
-                    }
-                    {( dropDownDisplayOption === "Attendance" ) &&    
-                        <div className="MarkAttendanceComponent">   
-                        <MarkAttendanceComponent 
-                            className="add-class-button"
-                            selectedStudents={listOfStudents}
-                            onSubmit={attendance => markAttendanceForSelectedStudents( pushNotificationUsers, selectedCourseFromLessonPlanCourseDropDown, attendance, markAttendance  ) }
-                        />
-                        </div>    
-                    }
-                </div>
+                {( courses?.filter( course => course?.createdBy === selectedUserId)?.length === 0 && ( currentUser?.role === role.Tutor ) ) 
+                    ? <div> 
+                        { ( currentUser?.role === role.Tutor ) && 
+                            <PostAddIcon 
+                                style={helpIconStyle()}
+                                className="comment-round-button-5"
+                                onClick={openNewCourseModal}
+                            />
+                        }
+                        <Modal isOpen={isModalOpen} onRequestClose={closeNewCourseModal}> <NewCoursePage user={currentUser} operator={operator}/> </Modal>
+                     </div> 
+                    : <div>
+                        {( dropDownDisplayOption === "Courses" || 
+                            dropDownDisplayOption === "" ) &&  
+                            <CourseLessonDropDownComponent
+                                className="add-class-button"
+                                operatorBusinessName={operatorBusinessName}
+                                selectedUserId={selectedUserId}     
+                            />
+                        }
+                        {( dropDownDisplayOption === "Grade" ) &&  
+                            <div className="AddStudentGradeComponent"> 
+                            <AddStudentGradeComponent
+                                className="add-class-button"
+                                selectedStudents={listOfStudents}
+                                onSubmit={newGrade => addNewGradesForSelectedStudents( pushNotificationUsers, selectedCourseFromLessonPlanCourseDropDown, newGrade, currentGrades, addNewGrade  ) }
+                            />
+                            </div>    
+                        }
+                        {( dropDownDisplayOption === "Attendance" ) &&    
+                            <div className="MarkAttendanceComponent">   
+                            <MarkAttendanceComponent 
+                                className="add-class-button"
+                                selectedStudents={listOfStudents}
+                                onSubmit={attendance => markAttendanceForSelectedStudents( pushNotificationUsers, selectedCourseFromLessonPlanCourseDropDown, attendance, markAttendance  ) }
+                            />
+                            </div>    
+                        }
+                    </div>
+                }
                 </div>
                 <Roles
                     role={ currentUser?.role === role.Tutor }
@@ -238,7 +219,6 @@ return (
                         setLesson={selectedUser}
                         inputFieldOptions={emailInputOptions}
                         messageOptions={emailMessageOptions(currentUser, url?.lessonPageUrl)}
-                        animateInvitationButton={animateInvitationButton} 
                     />
                 </div>
                       </Roles>
@@ -248,21 +228,11 @@ return (
 };
 
 const mapDispatch = {
-    updateCurrentUser,
-    getCurrentUserById,
-    addNewMeeting,
-    updateUserInvitationUrl,
-    saveMeeting,
+    enableTeachPlatform,
+    openNewCourseModal,
+    closeNewCourseModal,
     markAttendance, 
     addNewGrade,
-    updateCurrentTutor,
-    updateCurrentClassRoomLessonPlan,
-    sendPushNotificationMessage,
-    getSelectedPushNotificationUsers,
-    setLessonInProgressStatus,
-    loadMeetingsByMeetingId,
-    sendEmails,
-    loadUserByEmail
 };
 
 const mapState = (state, ownProps) => {
@@ -275,8 +245,8 @@ const mapState = (state, ownProps) => {
         grades:  getSortedRecordsByDate(Object.values(state?.grades?.grades), 'testDate'),
         toggleSideBarDisplay: state.classrooms.displaySideBarDropDown,
         allSessions: Object.values(state?.sessions?.sessions),
-        selectedLessonFromLessonPlanDropDown: state.lessons.selectedLessonFromLessonPlanDropDown,
         selectedCourseFromLessonPlanCourseDropDown: state.courses.selectedCourseFromLessonPlanCourseDropDown,
+        isModalOpen: state?.courses?.isModalOpen
     };
 };
 

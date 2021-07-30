@@ -20,13 +20,15 @@ return (
               { collection.map(item => 
                 (
                  <Match 
-                    key={item._id}
+                    key={item?._id}
                     path={ getPath( item )}
                     // path={`${path}/${item._id}`}
                   > 
                   {({ match } ) => {                                 
                     onMatchListItem( match, item );
-            return <li className={liClassName}>
+            return <li key={item?._id} 
+                      className={liClassName}
+                      >
                     { children( item ) }
                     </li>;
                     } }

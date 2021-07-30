@@ -17,7 +17,7 @@ import {
 userNavigationHistory } from 'Services/course/Actions/Users';
 
 import { 
-navigateToStudentDetailPage } from  'Services/course/Pages/ClassRoomPage/helpers';
+navigateToStudentDetailPage } from  'Services/course/Pages/ClassRoomPage/Components/CourseLessonDropDownComponent/helpers';
 
 import './style.css';
 
@@ -86,7 +86,7 @@ class CourseDetailCheckBoxComponent extends Component {
                                 disabled={(this.currentSession()?.find(session => session.userId ===  item?._id)?.typeOfSession === "Package") &&  
                                          (this.currentSession()?.find(session => session.userId ===  item?._id)?.numberOfSessions === this.currentSession()?.find(session => session.userId ===  item?._id)?.totalNumberOfSessions) }
                             /> 
-                            <a href onClick={() => navigateToStudentDetailPage(`/${this.props.operatorBusinessName}/student/${item?._id}/course/${this.props.selectedCourseFromLessonPlanCourseDropDown?._id}/lessons/${this.props.selectedLesson2FromLessonPlanCourseDropDown?._id}`, this.props.userNavigationHistory)}> 
+                            <a href onClick={() => navigateToStudentDetailPage(`/${this.props.operatorBusinessName}/student/${item?._id}/course/${this.props.selectedCourseFromLessonPlanCourseDropDown?._id}/lessons/${this.props.selectedLessonFromLessonPlanDropDown?._id}`, this.props.userNavigationHistory)}> 
                             <span className="checkBoxViewGradesLink"> 
                                 {item[this.props.description]} 
                             </span> 
@@ -109,6 +109,7 @@ class CourseDetailCheckBoxComponent extends Component {
                 </ul>
         </div>
     ); }; 
+    
 }
 
 const mapDispatch = {
@@ -122,7 +123,7 @@ const mapState = (state, ownProps) => {
     return {
         allSessions: Object.values(state?.sessions?.sessions),
         selectedCourseFromLessonPlanCourseDropDown: state.courses.selectedCourseFromLessonPlanCourseDropDown,
-        selectedLessonFromLessonPlanDropDown: state.lessons.selectedLessonFromLessonPlanDropDown,
+        selectedLessonFromLessonPlanDropDown: state.lessons.selectedLessonFromLessonPlanDropDown
     };
 };
 

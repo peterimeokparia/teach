@@ -1,10 +1,5 @@
 import { 
-useState, 
-useEffect } from 'react';
-
-import { 
-connect,
-useDispatch } from 'react-redux';
+connect } from 'react-redux';
 
 import { 
 loginUser } from 'Services/course/Actions/Users';
@@ -30,6 +25,7 @@ import {
 getOperatorFromOperatorBusinessName,
 getPushNotificationUsersByOperatorId } from 'Services/course/Selectors';
 
+import useOnlineQuestionsHook from 'Services/course/Pages/OnlineQuestionsPage/hooks/useOnlineQuestionsHook';
 import OnlineListItems from '../OnlineListItems';
 import HelpIcon from '@material-ui/icons/Help';
 import { helpIconStyle } from './inlineStyles';
@@ -49,6 +45,7 @@ const OnlineQuestionsMultiEditorComponent = ( {
   onlineQuestion,
   onlineQuestions,
   latestQuestion,
+  currentCourseQuestions,
   addNewOnlineQuestion,
   saveOnlineQuestion,
   loadOnlineQuestions,
@@ -58,21 +55,19 @@ const OnlineQuestionsMultiEditorComponent = ( {
   loadSubscribedPushNotificationUsers,
   subscribePushNotificationUser,
   savePushNotificationUser  } ) => {
-  let currentCourseQuestionCollection = onlineQuestions?.filter( question => question?.courseId === courseId );
-  let currentCourseQuestions = ( onlineQuestionId === undefined || !onlineQuestionId ) 
-          ? currentCourseQuestionCollection
-          : currentCourseQuestionCollection?.filter(question => question?._id === onlineQuestionId);
-            
-  const [ contentChanged, setContentChanged ] = useState( false );
-  const dispatch = useDispatch();
+  
+  let onlineQuestionsConfig = {
+      onlineQuestionId, 
+      currentCourseQuestions,
+      courseId, 
+      failedOnlineQuestionNotifications, 
+      currentUser, 
+      pushNotificationUsers,
+  };
 
-  useEffect(() => {
-    if ( contentChanged ) {
-      loadOnlineQuestions();
-    }
-    
-    }, [ dispatch, contentChanged, loadOnlineQuestions, failedOnlineQuestionNotifications, currentUser, pushNotificationUsers, 
-      retryPushNotificationMessage, subscribePushNotificationUser, savePushNotificationUser, loadSubscribedPushNotificationUserByUserId]);
+  let {
+    setContentChanged
+  } = useOnlineQuestionsHook( onlineQuestionsConfig );
 
 const addNewQuestion = () => {
   let config = {  
@@ -88,8 +83,6 @@ const addNewQuestion = () => {
   addNewOnlineQuestion( onlineMarkDownEditorFieldCollection( config ) );
   setContentChanged( true );  
 }; 
-
-let form = currentCourseQuestions?.length > 0 ? currentCourseQuestions : undefined;
 return(
     <div className="builder"> 
         <header>
@@ -104,9 +97,10 @@ return(
                 {
                   <div className="onlinequestion-list-items"> 
                     <OnlineListItems 
-                        form={form}
                         operator={operator}
+                        courseId={courseId}
                         onlineQuestionId={ onlineQuestionId } 
+                        currentCourseQuestions={currentCourseQuestions}
                     />
                   </div>
                 }
@@ -146,7 +140,6 @@ const mapState = ( state, ownProps ) => {
   return {
     operator: getOperatorFromOperatorBusinessName(state, ownProps),
     currentUser: state.users.user,
-    courseId: state.onlineQuestions.onlineQuestionCourseId,
     onlineQuestions: Object.values(state.onlineQuestions.onlineQuestions),
     latestQuestion: state.onlineQuestions.latestOnlineQuestions,
     pushNotificationUsers: getPushNotificationUsersByOperatorId(state, ownProps),

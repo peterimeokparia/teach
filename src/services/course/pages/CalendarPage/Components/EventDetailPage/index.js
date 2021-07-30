@@ -36,28 +36,28 @@ import ToggleButton from 'Services/course/Pages/Components/ToggleButton';
 import Select from 'react-select';
 
 const EventDetailPage = ({ 
-operatorBusinessName,
-operator, 
-currentUser,
-user,
-currentUsers,
-calendar,
-calendars,
-events,
-saveCalendar,
-pushNotificationSubscribers,
-calendarEventType,
-calendarId,
-eventId,
-userId,
-loadAllEvents,
-loadAllCalendars,
-loadSubscribedPushNotificationUsers }) => {
-useEffect(( ) => {
-    loadAllEvents();
-    loadAllCalendars();
-    loadSubscribedPushNotificationUsers();
-},[ loadAllCalendars,loadSubscribedPushNotificationUsers, loadAllEvents ]);
+    operatorBusinessName,
+    operator, 
+    currentUser,
+    user,
+    currentUsers,
+    calendar,
+    calendars,
+    events,
+    saveCalendar,
+    pushNotificationSubscribers,
+    calendarEventType,
+    calendarId,
+    eventId,
+    userId,
+    loadAllEvents,
+    loadAllCalendars,
+    loadSubscribedPushNotificationUsers }) => {
+    useEffect(( ) => {
+        loadAllEvents();
+        loadAllCalendars();
+        loadSubscribedPushNotificationUsers();
+    },[ loadAllCalendars,loadSubscribedPushNotificationUsers, loadAllEvents ]);
 
 function onMatchListItem( match, listItem ) {
     if ( match ){

@@ -58,7 +58,6 @@ return (
                   </button>
             </form>
         </div>
-);
-};
+);};
 
 export default SendNotificationForm;

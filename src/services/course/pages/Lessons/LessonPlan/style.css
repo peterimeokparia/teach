@@ -14,6 +14,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 10px 20px;
+    background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
   }
   .MeetingPlan header h1 {
     background-color: #673ab7;
@@ -388,15 +389,6 @@
       background-image: url(../../../images/geometry2.png);
   /* 
       margin-left: -50%; */
-    }
-    .MeetingPlan header {
-      /* background-color: #673ab7;
-      color: #fff;
-      display: flex;
-      flex-direction: row;
-      align-items: left;
-      justify-content: left;
-      padding: 10px 20px; */
     }
     .MeetingPlan .content {
       height: 100%;

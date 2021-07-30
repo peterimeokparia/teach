@@ -15,11 +15,11 @@ selectCourseFromLessonPlanCourseDropDown } from 'Services/course/Actions/Courses
             
 import{
 selectLessonFromLessonPlanDropDown } from 'Services/course/Actions/Lessons';
-        
+
 import {  
 getListOfCoursesForTheSelectedStudent,
 getListOfLessonsForTheSelectedStudent,
-navigateToStudentDetailPage } from  '../../helpers';
+navigateToStudentDetailPage } from  './helpers';
 
 import {  
 getOperatorFromOperatorBusinessName,
@@ -35,21 +35,19 @@ import NewDetailedLessonPage from 'Services/course/Pages/Lessons/NewDetailedLess
 import './style.css';
 
 const CourseLessonDropDownComponent = ({
-currentUser,
-operator,
-operatorBusinessName,
-courses,
-lessons,
-allSessions,
-selectedUserId,
-selectedCourseFromLessonPlanCourseDropDown,
-selectedLessonFromLessonPlanDropDown,
-addNewLesson,
-userNavigationHistory,
-selectCourseFromLessonPlanCourseDropDown,
-selectLessonFromLessonPlanDropDown,
-}) => {
-
+    currentUser,
+    operator,
+    operatorBusinessName,
+    courses,
+    lessons,
+    allSessions,
+    selectedUserId,
+    selectedCourseFromLessonPlanCourseDropDown,
+    selectedLessonFromLessonPlanDropDown,
+    addNewLesson,
+    userNavigationHistory,
+    selectCourseFromLessonPlanCourseDropDown,
+    selectLessonFromLessonPlanDropDown }) => {
 const setCourseFromDropDown = ( selectedCourseId ) => {
     if ( selectedCourseId ) {
         try {  
@@ -67,8 +65,7 @@ const setLessonFromDropDown = ( selectedLessonId ) => {
        try {
             let lesson = lessons?.find( lsn => lsn._id === selectedLessonId );
 
-            selectLessonFromLessonPlanDropDown( lesson )
-       
+            selectLessonFromLessonPlanDropDown( lesson );
        } catch (error) {
             throw Error('setLessonFromDropDown' + error);
        }
@@ -118,7 +115,7 @@ return (
                             className="add-new-lesson"
                             selectedCourse={selectedCourseFromLessonPlanCourseDropDown}
                             selectedLesson={selectedLessonFromLessonPlanDropDown}
-                            onSubmit={newlesson => addNewLesson( newlesson.title, newlesson.courseId, newlesson.lessonDate  ) }
+                            onSubmit={newlesson => addNewLesson( newlesson.title, newlesson.title, newlesson.courseId, newlesson.lessonDate, currentUser?._id  ) }
                         />
                     </Roles>
              }

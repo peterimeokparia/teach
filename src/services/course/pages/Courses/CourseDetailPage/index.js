@@ -1,5 +1,4 @@
 import { 
-useState,
 useEffect } from 'react';
 
 import { 
@@ -32,7 +31,6 @@ getLastUsersState } from 'Services/course/Api';
 import { 
 role } from 'Services/course/helpers/PageHelpers';
 
-import EditorComponent  from 'Services/course/Pages/Components/EditorComponent';
 import NotFoundPage from 'Services/course/Pages/Components/NotFoundPage';
 import Loading from 'Services/course/Pages/Components/Loading';
 import CourseDisplayViewComponent from 'Services/course/Pages/Courses/CourseDetailPage/Components/CourseDisplayViewComponent';
@@ -61,8 +59,6 @@ const CourseDetailPage = ({
     setLessonCourse,
     onLessonError,
     children }) => {
-
-    let   [ currentLesson, setLesson ] = useState( undefined );
     useEffect(() => {
         setLessonCourse( course );
         loadLessons( courseId );
@@ -100,7 +96,6 @@ return (
     <div>    
         <CourseDisplayViewComponent 
                 lessonId={lessonId}
-                currentLesson={currentLesson}
                 selectedTutorId={selectedTutorId}
                 courseDetailChildren={children}
         />  
@@ -130,7 +125,7 @@ const mapState = (state, ownProps) => {
         selectedLessonPlanLesson: state.lessons.selectedLessonPlanLesson,
         isLessonsLoading:state.lessons.lessonsLoading,
         onLessonError: state.lessons.onSaveLessonError,
-        course: getCoursesByCourseIdSelector( state, ownProps ),
+        courses: getCoursesByCourseIdSelector( state, ownProps ),
         lessons: getLessonsByCourseIdSelector( state, ownProps ),
         coursesByTutor: getCoursesByCreatedByIdSelector( state, ownProps ),
         currentVideoUrl: state.lessons.currentVideoUrl,

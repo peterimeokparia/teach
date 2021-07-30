@@ -20,19 +20,19 @@ import NavLinks from 'Services/course/Pages/Components/NavLinks';
 import './style.css';
 
 const OnlineQuestionsSavedAnswersDetailPage = ({ 
-operatorBusinessName, 
-studentId, 
-onlineQuestions,
-loadCourses,
-courses,
-courseId, 
-children }) => {
-useEffect(() => {
-  loadOnlineQuestions();
-  loadCourses();
-}, []);
+  operatorBusinessName, 
+  studentId, 
+  onlineQuestions,
+  loadCourses,
+  courses,
+  courseId, 
+  children }) => {
+  useEffect(() => {
+    loadOnlineQuestions();
+    loadCourses();
+  }, []);
 
-let savedQuestions = onlineQuestions?.filter(question => question.savedQuestions?.includes( studentId ) && question?.courseId === courseId );
+  let savedQuestions = onlineQuestions?.filter(question => question.savedQuestions?.includes( studentId ) && question?.courseId === courseId );
     
 return (
   <div className="stage" id="stage">

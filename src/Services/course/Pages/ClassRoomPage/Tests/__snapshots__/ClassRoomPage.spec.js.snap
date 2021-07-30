@@ -205,7 +205,6 @@ exports[`ClassRoomComponent renders as expected 1`] = `
                           onAnimationStart={[Function]}
                           onChange={[Function]}
                           tabIndex={-1}
-                          value={0}
                         />
                         <svg
                           aria-hidden={true}

@@ -24,6 +24,7 @@ export const UPDATE_CURRENT_CLASSROOM_TUTOR = "UPDATE CURRENT CLASSROOM TUTOR";
 export const UPDATE_CURRENT_CLASSROOM_LESSON_PLAN = "UPDATE CURRENT CLASSROOM LESSON PLAN";
 export const TOGGLE_SIDEBAR_DROPDOWN_MENU = "TOGGLE SIDEBAR DROPDOWN MENU";
 export const LAST_LOGGEDIN_USER = "LAST LOGGEDIN USER";
+export const ENABLE_TEACH_PLATFORM = "ENABLE TEACH PLATFORM";
 
 export const loadClassRooms = () => {
     return dispatch => {
@@ -74,12 +75,18 @@ export const deleteClassRoom = classroom => {
         });
    };
 };
-// change name
+
 export const unSubscribe = ( currentUser, itemId ) => {
     return dispatch => {
        let classRooms = currentUser.classRooms.filter( classroom => ! classroom.includes(itemId) );
        
         return updateUser({ ...currentUser, classRooms });
+    };
+};
+
+export const enableTeachPlatform = ( meeting ) => {
+    return dispatch => {
+        dispatch( { type: ENABLE_TEACH_PLATFORM , payload: meeting });
     };
 };
 

@@ -7,7 +7,7 @@ class DropDown extends Component {
 
   constructor( props ) {
     super( props );
-    this.state = { value: 0};
+    this.state = { value: this.props.initialValue};
     this.handleSubmit = this.handleSubmit.bind( this );
     this.handleChange = this.handleChange.bind( this );
   }

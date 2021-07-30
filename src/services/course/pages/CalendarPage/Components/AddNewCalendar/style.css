@@ -82,5 +82,5 @@
     right: 105%; */
 }
 .recurring:hover .tooltiptext {
-    visibility: visible;
+    visibility: hidden;
 }

@@ -9,7 +9,6 @@
 .MyCourses .items{
   align-items: center;
 }
-
 .MyCourses header {
   background-color: #673ab7;
   color: #fff;
@@ -19,12 +18,14 @@
   justify-content: space-between;
   padding: 10px 20px;
   text-align: center;
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
 }
 .MyCourses header h1 {
   background-color: #673ab7;
   margin: 0;
   font-size: 24px;
   text-align: center;
+  text-transform: capitalize;
 
   /* text-transform: uppercase;
     letter-spacing: 0.5rem;
@@ -38,6 +39,7 @@
   text-align: center; 
   color: white;
   padding-right: 0px;
+  text-transform: capitalize;
 
   /* text-transform: uppercase;
     letter-spacing: 0.5rem;

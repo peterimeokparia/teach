@@ -6,11 +6,9 @@ import {
 connect } from 'react-redux';
 
 import { 
-Link,
-navigate } from '@reach/router';
+Link } from '@reach/router';
 
 import { 
-loadLessons,
 addNewLesson, 
 saveLesson,
 setLessonPlanUrl,
@@ -18,9 +16,6 @@ setCurrentLesson } from 'Services/course/Actions/Lessons';
 
 import { 
 togglePreviewMode } from 'Services/course/Actions/App';
-
-import { 
-SET_LESSON_MARKDOWN } from 'Services/course/Actions/Lessons'; 
 
 import { 
 setMarkDown } from 'Services/course/helpers/EditorHelpers'; 
@@ -43,8 +38,7 @@ navContent } from 'Services/course/Pages/Components/NavigationHelper';
 
 import { 
 getUsersByOperatorId,    
-getCoursesByCreatedByIdSelector, 
-getEventsByUserIdSelector} from 'Services/course/Selectors';
+getCoursesByCreatedByIdSelector } from 'Services/course/Selectors';
 
 import { 
 toast } from 'react-toastify';
@@ -55,8 +49,6 @@ Markup } from 'interweave';
 import { 
 deleteQuestionIconStyle } from '../inlineStyles';
 
-import Interweave from 'interweave';
-import EditorComponent  from 'Services/course/Pages/Components/EditorComponent';
 import EditIcon from '@material-ui/icons/Edit';
 import MainMenu from 'Services/course/Pages/Components/MainMenu';
 import NewLessonPage from 'Services/course/Pages/Lessons/NewLessonPage';
@@ -65,6 +57,7 @@ import Roles from 'Services/course/Pages/Components/Roles';
 import LessonPlanIframeComponent from 'Services/course/Pages/Lessons/LessonPlan/Components/LessonPlanIframeComponent';
 import MultiInputEmailComponent from 'Services/course/Pages/Email/MultiInputEmailComponent';
 import ListItem from 'Services/course/Pages/Components/ListItem';
+import Swal from 'sweetalert2';
 
 const CourseDisplayViewComponent = ({
     previewMode,
@@ -85,13 +78,10 @@ const CourseDisplayViewComponent = ({
     courseDetailChildren,
     currentUser, 
     selectedLessonPlanLesson }) => {
-    // if ( ! currentUser?.userIsValidated ){
-    //     navigate(`/${operatorBusinessName}/login`);
-    // }
-
     const invitationUrl = `http://localhost:3000/${operatorBusinessName}/LessonPlan/invite/userverification/classRoom/${course?.createdBy}`;
-    const fileUploadUrl = 'http://localhost:9005/api/v1/fileUploads';
+    const fileUploadUrl =  "/api/v1/fileUploads";
     const [ fileToRemove, setFileToRemove ] = useState( undefined );
+
     useEffect(() => {
     });
 
@@ -99,6 +89,13 @@ function onMatchListItem( match, listItem ) {
     if( match ){
         setCurrentLesson( listItem );
         setLessonPlanUrl(`/${operatorBusinessName}/LessonPlan/${course?._id}/${listItem._id}/${listItem.title}`);
+        
+        if ( previewMode && (currentUser?.role === role.Tutor) && (!listItem?.introduction || listItem?.introduction === "") ) {
+            const msg = "Please enter a lesson introduction.";
+            
+            Swal.fire(msg);
+            return false;
+        }
     }
 }; 
 
@@ -115,22 +112,6 @@ if ( fileToRemove ) {
     saveLesson( selectedLessonPlanLesson );
     deleteLessonFileByFileName( fileToRemove?.split('/files/')[1]);       
 }
-
-function handleChange( editor, element ){
-  let duration = 2000;  
-
-  if ( test ) {
-    setMarkDown(
-        test, 
-        editor.getHTML(), 
-        { propNameOne: "lessons",  propNameTwo: "lessons" }, 
-        SET_LESSON_MARKDOWN, 
-        saveLesson, 
-        duration
-      );
-  }
-
-};
 
 let navigationContent = navContent( currentUser, operatorBusinessName, currentUser?.role,  "Student" ).users;   
 let lessonsByCourseId = lessons?.filter( lesson => lesson?.courseId === course?._id && lesson?.userId === selectedTutorId );
@@ -213,10 +194,6 @@ return (
                             </Roles>
                             </div>  
                          </div>
-                         {/* <EditorComponent
-                            handleChange={(editor) => handleChange(editor,  lesson)}
-                            content={ lesson?.markDown }
-                        />  */}
                         </div>
                         )}
                         </NewLessonPage> 
@@ -244,15 +221,14 @@ return (
                 </div>
                 <div className="lesson-content"> 
                     < LessonPlanIframeComponent
-                            name="embed_readwrite" 
-                            source={selectedLessonPlanLesson?.videoUrl}
-                            // source={currentVideoUrl[ lessonId ]}
-                            width="700px"
-                            height="400px"
-                            allow="camera;microphone"
-                            scrolling="auto"
-                            frameBorder="10" 
-                            className={"iframe"}
+                        name="embed_readwrite" 
+                        source={selectedLessonPlanLesson?.videoUrl}
+                        width="700px"
+                        height="400px"
+                        allow="camera;microphone"
+                        scrolling="auto"
+                        frameBorder="10" 
+                        className={"iframe"}
                     />
                     <div className="lesson2">   
 
@@ -265,16 +241,6 @@ return (
                             </h5>
                         </div>
                     }
-                     {/* { props.courseDetailChildren:children}   */}
-
-                    {/* { ( selectedLessonPlanLesson?.markDown) &&
-                         <EditorComponent
-                            handleChange={(editor) => handleChange(editor,  selectedLessonPlanLesson)}
-                            content={ testR }
-                         /> 
-                
-                    } */}
-        
                     </div> 
                         < LessonFileUpload
                             previewMode={previewMode}
@@ -282,6 +248,8 @@ return (
                             typeOfUpload={'userlessonfiles'}
                             fileUploadUrl={fileUploadUrl}
                             setFilesToRemove={setFileToRemove}
+                            msg={"Please click on the lesson link before uploading files."}
+                            saveAction={saveLesson}
                         /> 
                 </div>           
                 <Roles

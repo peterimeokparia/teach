@@ -14,9 +14,11 @@ const handleSubmit = (e) => {
 return   (    
   <div className="LoginPage"> 
       <form onSubmit={ e => handleSubmit(e)}>
-          <label>  
+        <label>  
             Email
           <input
+            data-cy={`email`}
+            id="email"
             name="email"
             type="email"
             value={email}
@@ -24,29 +26,33 @@ return   (
             placeholder="email"
           >
           </input>
-          </label>
-            <label>
-            Password   
-            <input
-              name="password"
-              type="password"
-              value={password}
-              onChange={ e => setPassword( e.target.value ) }
-              placeholder="password"
-            >
-            </input>
-            </label>
-            <div>                   
-            </div>
-            { error  && (<div className="error"> { error.message }</div>)}
-            <div></div>
-            <button
-              type="submit"
-              disabled={loading}
-              onClick={e => handleLoginUser(email, password)}
-            >
-                Sign In
-            </button>
+        </label>
+        <label>
+          Password   
+          <input
+            data-cy={`password`}
+            id="password"
+            name="password"
+            type="password"
+            value={password}
+            onChange={ e => setPassword( e.target.value ) }
+            placeholder="password"
+          >
+          </input>
+        </label>
+          <div>                   
+          </div>
+          { error  && (<div className="error"> { error.message }</div>)}
+          <div></div>
+          <button
+            data-cy={`submit-login`}
+            id="submit-login"
+            type="submit"
+            disabled={loading}
+            onClick={e => handleLoginUser(email, password)}
+          >
+              Sign In
+          </button>
         </form>    
   </div> 
   );

@@ -32,8 +32,7 @@ const ClassRoomPage = ({
     loadMeetings,
     loadUsers,
     loadSubscribedPushNotificationUsers }) => {  
-    
-    if ( ! currentUser?.userIsValidated || ! operator ) {
+    if ( ! currentUser?.userIsValidated  ) {
         navigate(`/${operatorBusinessName}/login`);
     }
     

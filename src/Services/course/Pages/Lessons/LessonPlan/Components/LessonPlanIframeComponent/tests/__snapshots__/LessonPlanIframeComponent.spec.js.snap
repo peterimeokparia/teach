@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LessonPlanIframeComponent renders as expected 1`] = `
+<div>
+  <div
+    className="iframe"
+  >
+    <iframe
+      allow="camera;microphone"
+      frameBorder="0"
+      height="900px"
+      name="embed_readwrite"
+      scrolling="yes"
+      src="test"
+      title="embed_readwrite"
+      width="1536px"
+    />
+  </div>
+</div>
+`;

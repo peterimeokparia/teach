@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditSessionComponent renders as expected 1`] = `
+Array [
+  <form
+    className=" editing "
+    onSubmit={[Function]}
+  >
+    <label>
+      <b>
+         Number of Sessions 
+      </b>
+      <input
+        name="lessondate"
+        onChange={[Function]}
+        type="number"
+        value=""
+      />
+    </label>
+    <label>
+      <b>
+          Total Number of Sessions 
+      </b>
+      <input
+        onChange={[Function]}
+        type="number"
+        value=""
+      />
+    </label>
+    <input
+      name="submit"
+      onChange={[Function]}
+      type="submit"
+      value="Submit"
+    />
+  </form>,
+  <form
+    className=" editing "
+  >
+    <input
+      name="reset"
+      onChange={[Function]}
+      type="submit"
+      value="Reset"
+    />
+  </form>,
+]
+`;

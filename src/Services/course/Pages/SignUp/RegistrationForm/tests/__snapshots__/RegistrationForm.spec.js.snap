@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RegistrationForm renders as expected 1`] = `
+<div
+  className="LoginPage"
+>
+  <form
+    onSubmit={[Function]}
+  >
+    <label>
+      Email
+      <input
+        data-cy="email"
+        name="email"
+        onChange={[Function]}
+        placeholder="email"
+        type="email"
+        value=""
+      />
+    </label>
+    <button
+      data-cy="submit"
+      onClick={[Function]}
+      type="submit"
+    >
+      Next
+    </button>
+  </form>
+  <div>
+    <div>
+      <div
+        className="Toastify"
+      />
+    </div>
+  </div>
+</div>
+`;

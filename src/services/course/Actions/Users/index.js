@@ -9,8 +9,8 @@ signUp,
 getCurrentUserByEmail,
 getLoggedInUsers,
 purchase,
-updateInvitationUrl,
-uploadUserAvatar } from 'Services/course/Api';
+remove,
+updateInvitationUrl } from 'Services/course/Api';
 
 export const LOGIN_BEGIN = "LOGIN BEGIN";
 export const LOGIN_SUCCESS = "LOGIN SUCCESS";
@@ -47,6 +47,8 @@ export const RESET_PASSWORD_BEGIN = "RESET PASSWORD BEGIN";
 export const RESET_PASSWORD_SUCCESS = "RESET PASSWORD SUCCESS";
 export const RESET_PASSWORD_ERROR = "RESET PASSWORD ERROR";
 export const USER_UPDATED = "USER UPDATED";
+export const DELETE_USER_SUCCESS = "DELETE USER SUCCESS";
+export const DELETE_USER_ERROR = "DELETE USER ERROR";
 
 export const loginUser = (newUser) => {
    return dispatch => {
@@ -306,21 +308,6 @@ export const updateUserInvitationUrl = (user, inviteeSessionUrl, nameOfLessonInP
     };
 };
 
-export const uploadAvatarImages = ( selectedFiles, file, url, teachObjectName, typeOfUpload ) => {
-    return dispatch => {
-        uploadUserAvatar(selectedFiles, file, url, teachObjectName,  typeOfUpload);
-        getCurrentUserByEmail(JSON.stringify({ email: file?.email, password: file?.password }))
-        .then(user => {
-            dispatch({  type: UPDATE_USER, payload: user });
-            dispatch({  type: USER_UPDATED, payload: user }); 
-            return user;
-        })
-        .catch(error => {
-            return error;
-        });
-    };
-};
-
 export const loginPageError = ( error ) => {
     return dispatch => {
         dispatch({ type: SIGN_UP_ERRORS, payload: error });
@@ -330,5 +317,18 @@ export const loginPageError = ( error ) => {
 export const userNavigationHistory = ( timeTravel ) => {
     return dispatch => {
         dispatch({ type: NAVIGATION_HISTORY, payload: timeTravel });
+    };
+};
+
+export const deleteUser = ( user ) => {
+    return dispatch => {
+        return remove( user, `/users/` )
+        .then( response => {
+            dispatch({ type: DELETE_USER_SUCCESS, payload: user });
+            return user;
+        })
+        .catch(error => {
+            dispatch({ type: DELETE_USER_ERROR, error });
+        });
     };
 };

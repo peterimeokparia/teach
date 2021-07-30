@@ -1,3 +1,6 @@
+import {
+updateUser } from 'Services/course/Api';
+
 import { 
 navigate } from '@reach/router';
 
@@ -9,6 +12,8 @@ role } from 'Services/course/helpers/PageHelpers';
 
 import Swal from 'sweetalert2';
 
+let newMeetingTimerHandle = null;
+
 export async function enablePlatformForStudentRole( config, selectedUser ){
     if ( !config ) return;
 
@@ -18,7 +23,7 @@ export async function enablePlatformForStudentRole( config, selectedUser ){
         config?.loadUserByEmail(config?.currentUser)
         .then(user => {
             if ( ( currentMeeting ) && ( user?.lessonInProgress ) && ( user?.meetingId === selectedUser?.meetingId ) ) {
-                joinInProgressMeeting( user, currentMeeting, config?.saveMeeting, config?.setUpdateUserTimerHandle ); 
+                joinInProgressMeeting( user, currentMeeting, config?.saveMeeting, newMeetingTimerHandle); 
             } else {
                 waititingForMeetingToStartBeforeJoining( user, user?.lessonInProgress, config );
               return;            
@@ -33,6 +38,13 @@ export async function enablePlatformForStudentRole( config, selectedUser ){
 };
 
 export function joinInProgressMeeting( user, currentMeeting, saveMeetingAction, updateCurrentUserTimerHandle ){
+
+    let inviteeToUpdate = getMeetingInvitees( user, currentMeeting, updateCurrentUserTimerHandle);
+
+    saveMeetingAction( inviteeToUpdate?.meetingId, { ...currentMeeting, usersWhoJoinedTheMeeting:[ ...currentMeeting?.usersWhoJoinedTheMeeting, user?._id ]});
+}
+
+export function getMeetingInvitees( user, currentMeeting, updateCurrentUserTimerHandle){
     let inviteeToUpdate = ( user.role === role.Student ) ? currentMeeting?.invitees?.find(usr => usr._id === user?._id)
                                                          : user;   
 
@@ -48,7 +60,9 @@ export function joinInProgressMeeting( user, currentMeeting, saveMeetingAction, 
     if ( inviteeToUpdate ) {
         inviteeToUpdate = { ...inviteeToUpdate, timeMeetingStarted: Date.now() };
     }
-    saveMeetingAction( inviteeToUpdate?.meetingId, { ...currentMeeting, usersWhoJoinedTheMeeting:[ ...currentMeeting?.usersWhoJoinedTheMeeting, user?._id ]});
+    return {
+        inviteeToUpdate,
+    }
 }
 
 export async function getMeetings( user, getMeetingByIdAction ) {
@@ -57,12 +71,10 @@ export async function getMeetings( user, getMeetingByIdAction ) {
     try {
         meeting = await getMeetingByIdAction(user?.meetingId);
     } catch (error) {
-         return error;
+        return error;
     }
     return meeting;
 }
-
-let newMeetingTimerHandle = null;
 
 export function waititingForMeetingToStartBeforeJoining( user, lessonInProgress, config ){
     let timeOutPeriod = 15000; 
@@ -73,34 +85,29 @@ export function waititingForMeetingToStartBeforeJoining( user, lessonInProgress,
 
     newMeetingTimerHandle = setInterval( updateCurrentUserAfterASetInterval, timeOutPeriod, user, config, newMeetingTimerHandle );
     
-    if ( newMeetingTimerHandle ) {
-        config.setNewMeetingTimerHandle( newMeetingTimerHandle );
-    }
-
     if ( !lessonInProgress ) {
-        newMeetingInvitePromoMessage( config?.setAnimationForEmailInvitationEffect, config?.lessonPlanUrl, newMeetingTimerHandle );
+        newMeetingInvitePromoMessage( config?.lessonPlanUrl, newMeetingTimerHandle );
     }
 };
 
-export const newMeetingInvitePromoMessage = ( setInviteButtonAnimationEffect, lessonPlan, newMeetingTimerHandle ) => {
+export const newMeetingInvitePromoMessage = ( lessonPlan, newMeetingTimerHandle ) => {
     Swal.fire({
         title: "Please wait. Your meeting has not started.",
         icon: 'info',
         html: '<div><p> While you wait,<br></br> earn points, gift cards and rewards. <br></br> Invite your friends to use the platform. </p></div>',
         showCancelButton: true,
         showConfirmButton: ( true ),
-        confirmButtonText: 'Invite Your Friends',
+        confirmButtonText: 'Go to meeting.',
         confirmButtonColor: '#20c997',
         cancelButtonText: 'Next time'
         }).then( (response) => {
         if ( response?.value ) {
-            setInviteButtonAnimationEffect( true );
-        } else {
+            // clean
             navigate(lessonPlan);
             if ( newMeetingTimerHandle ) {
                 clearTimeout( newMeetingTimerHandle );
             }
-        }
+        } 
     });  
 };
 
@@ -110,7 +117,6 @@ export function updateCurrentUserAfterASetInterval( meetingUser, config, newMeet
         if ( meetingUser?.lessonInProgress && newMeetingTimerHandle) {
             config?.updateCurrentUser( meetingUser );
             clearTimeout( newMeetingTimerHandle );
-            clearTimeout( config?.setUpdateUserTimerHandle );
             return;
         }
         return;
@@ -119,26 +125,22 @@ export function updateCurrentUserAfterASetInterval( meetingUser, config, newMeet
 
 export function showJoinMeetingPopupAfterTheTutorStartsTheMeeting( props ){
     let {
-        setUpdateUserTimerHandle, 
         selectedCourseFromLessonPlanCourseDropDown, 
         currentUser, 
         operatorBusinessName, 
-        setNewMeetingTimerHandle, 
-        meetings, 
+        meetings,
         saveMeeting
     } = props;
 
     let meetingHasStartedMessage = `Your lesson has started. Please join the following course: ${ selectedCourseFromLessonPlanCourseDropDown?.name }.`;        
     let cancellationUrl =  `/${operatorBusinessName}/users`;
-
    
-
     if ( currentUser?.lessonInProgress && currentUser?.inviteeSessionUrl ) { 
-        joinMeetingPopupMessage( meetingHasStartedMessage, currentUser?.lessonInProgress, currentUser?.inviteeSessionUrl, cancellationUrl, setUpdateUserTimerHandle );
-        joinInProgressMeeting( currentUser, meetings, saveMeeting, setUpdateUserTimerHandle );
-        if ( setUpdateUserTimerHandle ) {
-            clearTimeout( setUpdateUserTimerHandle );
-            setNewMeetingTimerHandle( undefined );
+        joinMeetingPopupMessage( meetingHasStartedMessage, currentUser?.lessonInProgress, currentUser?.inviteeSessionUrl, cancellationUrl, newMeetingTimerHandle );
+        joinInProgressMeeting( currentUser, meetings, saveMeeting, newMeetingTimerHandle );
+        if ( newMeetingTimerHandle ) {
+            clearTimeout( newMeetingTimerHandle );
+            newMeetingTimerHandle =  undefined;
         }
     } 
 };
@@ -169,17 +171,3 @@ export const joinMeetingPopupMessage = ( swalTitle, showConfirmationButton, onCo
         throw Error(` joinMeetingPopupMessage. ${error}`);
      });              
 };
-
-export function updateMeetingStatus( user, lastLoggedInUserAction ){
-    let setInvitationUrl = "", nameOfLessonInProgress = "", lessonInProgress = false, meetingId = "";
-  
-    if ( user.role === role.Tutor ) {
-        user = { ...user, timeMeetingEnded: Date.now() , setInvitationUrl, nameOfLessonInProgress, lessonInProgress, meetingId };
-        lastLoggedInUserAction( user );
-      }
-  
-     if ( user.role === role.Student ) {
-          user = { ...user, timeMeetingEnded: Date.now() , setInvitationUrl, nameOfLessonInProgress, lessonInProgress, meetingId };
-          lastLoggedInUserAction( user );
-      }
-  };

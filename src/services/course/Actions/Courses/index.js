@@ -3,11 +3,7 @@ add,
 update,
 remove,
 get,
-updateUser,
-uploadUserAvatar } from 'Services/course/Api';
-
-import {
-loadUserByEmail } from 'Services/course/Actions/Users';
+updateUser } from 'Services/course/Api';
 
 export const ADD_COURSE_BEGIN = "ADD COURSE BEGIN";
 export const ADD_COURSE_SUCCESS = "ADD COURSE SUCCESS";
@@ -76,17 +72,6 @@ export const loadCourses = () => {
         .catch( error => {
             dispatch({ type: LOAD_COURSES_ERROR , error });
         });
-    };
-};
-
-export const uploadAvatarImages = ( selectedFiles, file, url, teachObjectName, typeOfUpload ) => {
-    return dispatch => {
-        uploadUserAvatar(selectedFiles, file, url, teachObjectName,  typeOfUpload)
-         .then( resp => { 
-            dispatch( loadUserByEmail(file?.email, file?.password ) );
-            dispatch({  type: USER_UPDATED, payload: resp }); 
-         })
-         .catch( error => console.log( error ));
     };
 };
 

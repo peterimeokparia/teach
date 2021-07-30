@@ -41,10 +41,14 @@ userRoute.get('/user', (req, res) => {
 });
 
 userRoute.get('/user/byEmail', (req, res) => {
+  console.log('@@@@@@by email')
+  console.log(req?.query?.email)
   let userCredentials = JSON.parse(req?.query?.email)
   let userEmail = { email: userCredentials.email };
   userModel.find(userEmail)   
   .then(data => {
+    console.log('@@@@@@by email data')
+    console.log(data)
     let isUserVerified = verifyUser( data[0], userCredentials.password );
     if ( !isUserVerified  ) {
       return res.status(400).json({ error, message: "The password entered is incorrect." })
@@ -86,6 +90,9 @@ userRoute.post('/', (req, res) => {
 
 userRoute.post('/register', async (req, res) => {
 let userData = getPostData( req ); 
+
+  if( ! userData || !userData?.password || !userData?.email ){ return res.status(400).json({msg: "Please provide a valid email address & password."});}
+
   const salt = await bcrypt.genSalt();
     userData = {
       ...userData,
@@ -104,6 +111,7 @@ let userData = getPostData( req );
         return res.status(400).json({ msg: err.message });
       }
     })
+
     try {
       let user = new userModel(userData);  
       let savedUserData =  await user.save();
@@ -129,8 +137,13 @@ userRoute.put('/reset/:userId', async (req, res) => {
 });
 
 userRoute.put('/login/:userId', async (req, res) => {
+
+  console.log( 'in log in in log in in log in  req'  );
+  console.log( req );
    saveUpdateUserOnLogin(req, res, userModel, req.params.userId)
     .then( data => {
+      console.log( 'in log in in log in in log in  data'  );
+      console.log( data );
       return res.status(200).json(data);
     })
     .catch( error => {

@@ -25,7 +25,6 @@ export const DELETE_EVENT_SUCCESS = "DELETE EVENT SUCCESS";
 export const DELETE_EVENT_ERROR = "DELETE EVENT ERROR";
 export const TOGGLE_EVENT_EDIT_FORM = "TOGGLE_EVENT_EDIT_FORM";
 
-/// We know who is available at what date & time to take students or schedule ad hoc online sessions
 export const addEvent = ( eventConfig ) => {
     return dispatch => {
         dispatch({ type: ADD_EVENT_BEGIN });

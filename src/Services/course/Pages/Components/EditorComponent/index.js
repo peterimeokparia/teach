@@ -46,20 +46,6 @@ upload_url,
 body_placeholder,
 upload_handler,
 editorConfiguration }) => {
-  
-// function handleChange( editor ){
-//   let duration = 2000;  
-
-//   setMarkDown(
-//     editorConfiguration?.entity, 
-//     editor.getHTML(), 
-//     editorConfiguration?.stateObjectType, 
-//     editorConfiguration?.actionDescription, 
-//     editorConfiguration?.actionObject, 
-//     duration
-//   );
-// }
-
 return (
        <div 
          id={id}
@@ -81,7 +67,7 @@ return (
             //      },
             //    }),
             //]}
-           read_only={false} 
+           read_only={readOnly} 
            //read_only={readOnly} 
          />   
        </div>      

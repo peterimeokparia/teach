@@ -35,7 +35,6 @@ class SiteUser {
     this.assignedStudents = [];
     this.assignedTutors = [];
   }
-  
-}
+};
 
 export default SiteUser;

@@ -18,12 +18,16 @@ getOperatorFromOperatorBusinessName,
 getUsersByOperatorId,
 getCoursesByOperatorId } from 'Services/course/Selectors';
 
+import { 
+helpIconStyle } from './inlineStyles';
+
 import LoginLogout from 'Services/course/Pages/LoginPage/Components/LoginLogout';
 import CoursesComponent from 'Services/course/Pages/Courses/Components/CoursesComponent';
 import NewCoursePage from 'Services/course/Pages/Courses/NewCoursePage';
 import MainMenu from 'Services/course/Pages/Components/MainMenu';
 import Cart from 'Services/course/Pages/SalesPage/Cart';
 import Modal from 'react-modal';
+import PostAddIcon from '@material-ui/icons/PostAdd';
 import './style.css';
 
 const MyCoursesPage = ({
@@ -34,7 +38,7 @@ courses,
 openNewCourseModal,
 closeNewCourseModal,
 isModalOpen }) => {
-if ( ! user?.userIsValidated || ! operator ){
+if ( ! user?.userIsValidated ){
     navigate(`/${operatorBusinessName}/login`);
 }
 
@@ -64,13 +68,25 @@ return (
             <h3>You are not subscribed to any  <span><Link to={"/courses"}> courses. </Link></span></h3>
         </div>
         <div>   
-            {(user?.role === "Tutor" ) && <button className="new-course-btn" onClick={openNewCourseModal}>New Course</button> }
+            {(user?.role === "Tutor" ) &&   
+                <PostAddIcon 
+                    style={helpIconStyle()}
+                    className="comment-round-button-5"
+                    onClick={openNewCourseModal}
+                />
+            }
         </div>
             <Modal isOpen={isModalOpen} onRequestClose={closeNewCourseModal}> <NewCoursePage user={user}/> </Modal>
         </div>
     )}
     <br></br>   
-        {( user?.role === "Tutor" ) && <button className="new-course-btn" onClick={openNewCourseModal}>Add New Course</button> }
+        {( user?.role === "Tutor" ) && 
+             <PostAddIcon 
+                style={helpIconStyle()}
+                className="comment-round-button-5"
+                onClick={openNewCourseModal}
+            />
+        }
             <CoursesComponent
                 operatorBusinessName={operatorBusinessName}
                 modal={isModalOpen} 

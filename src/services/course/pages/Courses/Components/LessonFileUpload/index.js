@@ -4,19 +4,26 @@ export function LessonFileUpload({
 previewMode,
 currentLesson,
 fileUploadUrl,
-typeOfUpload,
-setFilesToRemove
+setFilesToRemove,
+saveAction
 }){
+const onChangeHandler = event => {
+    let files = [ ...currentLesson?.files ];
+
+    for (let index = 0; index < event.target.files.length; index++) {    
+        files = [...files, `http://localhost:3000/files/${event.target.files[index]?.name}` ];            
+    }
+    saveAction({ ...currentLesson, files });
+};
+
 return (
     <div>                                
         {( previewMode )  
         ?   ( 
             <div> 
                 <FileUpload 
-                    teachObject={currentLesson}
                     fileUploadUrl={fileUploadUrl}
-                    typeOfUpload={typeOfUpload}
-                    teachObjectName={"lessons"}
+                    onChangeHandler={onChangeHandler}
                 />
             <div> 
             {currentLesson?.files?.length > 0 && (

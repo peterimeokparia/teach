@@ -4,25 +4,14 @@ connect } from 'react-redux';
 import {
 Redirect } from '@reach/router';
 
-import Loading from '../Components/Loading';
 import LessonPlan from '../Lessons/LessonPlan';
 import './style.css';
 
 const StudyHall = ({ 
     operatorBusinessName,
-    user,
-    coursesLoading,
-    onCoursesError }) => {
+    user }) => {
     if ( ! user ){
         return <Redirect to="/login" noThrow />;
-    }
-
-    if ( coursesLoading) {
-        return <Loading />;
-    }         
-
-    if ( onCoursesError ) {
-        return <div> { onCoursesError.message } </div> ;
     }
 return (<div className="">
             <br></br>   
@@ -35,9 +24,6 @@ return (<div className="">
 
 const mapState = state => ({
     user: state?.users?.user,
-    courses: Object.values(state?.courses?.courses),
-    coursesLoading: state?.courses?.coursesLoading,
-    onCoursesError: state?.courses?.onCoursesError,
     isModalOpen: state?.courses?.isModalOpen
 });
 

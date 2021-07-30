@@ -1,7 +1,4 @@
 import { 
-useEffect } from 'react';
-
-import { 
 connect } from 'react-redux';
 
 import { 
@@ -19,57 +16,40 @@ toggleCameraStatus,
 toggleScreenSharingStatus } from 'Services/course/Actions/Video';
 
 import {   
-onlineQuestionCourseId,
 deleteOnlineQuestion,
 saveOnlineQuestion } from 'Services/course/Actions/OnlineQuestions';
-
-import { 
-deleteQuestionIconStyle } from '../OnlineQuestionVideoComponent/inlineStyles';
 
 import {
 upload_url,
 uploadImageUrl } from 'Services/course/Pages/OnlineQuestionsPage/helpers';
 
 import {
+deleteQuestionIconStyle,
 videoMeta } from './inlineStyles';
 
+import useOnlineQuestionsHook from 'Services/course/Pages/OnlineQuestionsPage/hooks/useOnlineQuestionsHook';
 import MaterialUiVideoComponent from 'Services/course/Pages/Components/MaterialUiVideoComponent';
 import EditorComponent from 'Services/course/Pages/Components/EditorComponent';
-import AnswerComponent from 'Services/course/Pages/QuestionsPage/Components/AnswerComponent';
+import AnswerComponent from 'Services/course/Pages/OnlineQuestionsPage/Components/AnswerComponent';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MiniSideBarMenu from 'Services/course/Pages/Components/SubscriptionComponent/MiniSideBarMenu';
-import OnlineQuestionVideoComponent from 'Services/course/Pages/OnlineQuestionsPage/Components/OnlineQuestionVideoComponent';
 import MiniSideBarButton from '../../../Components/SubscriptionComponent/MiniSideBarButton';
 import './style.css';
 
 const OnlineListItems = ({ 
-  form,
   setMarkDown,
   operator, 
+  currentCourseQuestions,
   onlineQuestionId,
-  onlineQuestionCourseId,
   videoComponentMeta,
   courseId,
   saveOnlineQuestion,
   currentUser }) => {
 
-  if ( form === undefined ) {
-    return  ( <> <div> </div> </>);
-  } 
-   
-  useEffect(() => {
-
-    onlineQuestionCourseId(courseId);
-
-  }, [ onlineQuestionCourseId ])
-
-const saveRecording = ( selectedQuestion ) => {
-  // saveOnlineQuestion( selectedQuestion );
-};
-
-const deleteQuestion = ( selectedQuestion ) => {
-  deleteOnlineQuestion( selectedQuestion );
-};
+  let {
+    saveRecording,
+    deleteQuestion
+  } = useOnlineQuestionsHook({ courseId, currentCourseQuestions });
 
 function handleChange( editor, element ){
   let duration = 2000;  
@@ -84,7 +64,7 @@ function handleChange( editor, element ){
   );
 };
 
-return form?.map((element) => (
+return currentCourseQuestions?.map((element) => (
     <>
       <div className={"OnlineListItems"}
         id={ element?._id }
@@ -114,10 +94,8 @@ return form?.map((element) => (
             content={ element?.markDownContent }
             upload_url={upload_url}
             upload_handler={( file, imageBlock ) => uploadImageUrl( file, imageBlock, element, saveOnlineQuestion ) }
-            //readOnly={config.previewMode? true : false } fix
+            readOnly={(element?.questionCreatedBy === currentUser?._id) ? false : true}
           /> 
-
-          {/* < OnlineQuestionVideoComponent /> */}
           < MaterialUiVideoComponent 
               className={"onlineQuestionVideoComponent"} 
               element={ element } 
@@ -125,7 +103,6 @@ return form?.map((element) => (
               saveRecording={saveRecording}
               extendedMeetingSettings={false} 
           />
-
           < AnswerComponent 
               question={ element }
               courseId={courseId}
@@ -137,7 +114,6 @@ return form?.map((element) => (
 };
 
 const mapDispatch = {
-  onlineQuestionCourseId,
   saveOnlineQuestion,
   deleteOnlineQuestion,
   videoComponentMeta,
@@ -152,7 +128,6 @@ const mapDispatch = {
 const mapState = ( state, ownProps ) => {
   return {
     currentUser: state.users.user,
-    courseId: state.onlineQuestions.onlineQuestionCourseId,
     courses: Object.values( state?.courses?.courses ),
     hasRecordingStarted: state.hasRecordingStarted.hasRecordingStarted,
   };

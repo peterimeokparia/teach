@@ -41,8 +41,9 @@ const handleSubmit = e => {
             name: courseName, 
             price: coursePrice, 
             description: courseDescription, 
+            createdBy: currentUser?._id,
             user: currentUser, 
-            operator,
+            operatorId: operator?._id,
             coursePushNotificationSubscribers: [ currentUser?._id ],
             courseEmailNotificationSubscribers: [ currentUser?._id ] 
         };

@@ -234,7 +234,7 @@ class MaterialVideoPage extends PureComponent {
         videoName: this.props?.videoMeta?.videoName };
 
       uploadVideos( videoData, this.props?.videoMeta?.videoMetaDataExternalId, this.props?.videoMeta?.videoNamePrefix ); 
-      saveAs(this.url, "yummypizza.webm");
+      saveAs(this.url, "recording.webm");
       this.theStream = null;
       this.props.extendedMeetingSettings && this.props.resetAllStopSettings();
     }
@@ -245,7 +245,7 @@ class MaterialVideoPage extends PureComponent {
   };
 
   saveRecording = ( selectedElement ) => {
-    // this.props?.saveRecording( selectedElement );
+    this.props?.saveRecording( selectedElement );
   };
 
   enableScreenSharing = () => {

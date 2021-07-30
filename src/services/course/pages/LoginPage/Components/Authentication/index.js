@@ -4,7 +4,7 @@ export const privateKey = "secret_nsa_key";
 
 export const tokenGenerator = ( user, key ) => {
   const token = Jwt.sign({  user }, key);
-
+  
    return token;
 };
 

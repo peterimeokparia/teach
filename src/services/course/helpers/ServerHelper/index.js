@@ -18,24 +18,6 @@ export function deleteData(url = ``, data = {}) {
     return fetchWithData( url, data, 'DELETE');
 }
 
-export const uploadFiles = ( selectedFiles, file, url, teachObjectName, typeOfUpload ) => {
-    if ( ! file  ) return;
-
-    if ( selectedFiles.length === 0 ) return;
-    let formData = new FormData();
-
-        formData.append('fileName', file?._id);
-        formData.append('teachObjectName', teachObjectName);
-        formData.append('typeOfUpload', typeOfUpload); 
-
-    for( var x = 0; x < selectedFiles.length; x++ ) {
-         formData.append('name', selectedFiles[x]?.name ); // might break with multi file upload - test
-         formData.append('file', selectedFiles[x]);
-    };
-
-    return uploadContent(url, formData);
-};
-
 export const deleteFiles = ( file ) => {
     let url = routeUrl().DeleteFile;
     let formData = new FormData();

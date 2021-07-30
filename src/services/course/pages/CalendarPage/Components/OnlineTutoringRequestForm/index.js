@@ -1,5 +1,3 @@
-import { useState, useEffect, useRef } from 'react';
-
 import { 
 connect } from 'react-redux';
 
@@ -8,6 +6,7 @@ getOperatorFromOperatorBusinessName,
 getUsersByOperatorId,
 getCoursesByOperatorId } from 'Services/course/Selectors';
 
+import useOnlineTutoringRequestFormHook from 'Services/course/Pages/CalendarPage/hooks/useOnlineTutoringRequestFormHook';
 import DropDown from 'Services/course/Pages/Components/DropDown';
 import './style.css';
 
@@ -21,19 +20,18 @@ const OnlineTutoringRequestForm = ({
     operatorBusinessName,
     operator,
     dispatch }) => {
-
-    const [ courseName, setCourseName ] = useState('');
-    const [ immediateHelp, setImmediateHelp ] = useState( false );
-    const [ getTutor, setGetATutor ] = useState( false );
-    const inputRef = useRef();
-    //let currentUser = user;
-
-    useEffect (() => {
-        // inputRef.current.focus();
-    }, []); 
-
+    let{
+        courseName, 
+        setCourseName,
+        immediateHelp, 
+        setImmediateHelp, 
+        getTutor, 
+        setGetATutor,
+        inputRef
+    } = useOnlineTutoringRequestFormHook();
+        
     if ( saveInProgress ) {
-            return <div>...loading</div>;
+        return <div>...loading</div>;
     } 
 
     if ( onSaveError ) {
@@ -99,7 +97,7 @@ return (
                     <label>
                         <div>   {'How can we assist you?'} </div>
                         <div className="row justify-content-sm-center">
-                            <DropDown />
+                            <DropDown optionCollection={ [] }/>
                         </div>    
                     </label>
                     <button className={( immediateHelp ) ? "show-quick-intro-form" : "show-quick-intro-form-hidden"} onClick={ getATutor } disabled={ saveInProgress } > {`Get a Tutor`} </button> 
@@ -125,7 +123,6 @@ const mapState = ( state, ownProps ) => ({
     calendarEvents: state?.calendar?.calendarEvents, // get calendar events by operator id
     tutors: getUsersByOperatorId(state, ownProps)?.filter(user => user?.role === "Tutor"),
     courses: getCoursesByOperatorId(state, ownProps),
-    // courses: Object.values(state?.courses?.courses)?.filter(crs => crs?.operatorId === ownProps.operator?._id),
     saveInProgress: state.courses.saveInProgress,
     onSaveError: state.courses.onSaveError,
 });

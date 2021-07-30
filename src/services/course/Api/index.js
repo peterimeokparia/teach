@@ -2,7 +2,6 @@ import {
 postData, 
 putData, 
 deleteData,   
-uploadFiles, 
 paymentStatus } from 'Services/course/helpers/ServerHelper';
 
 import { 
@@ -32,10 +31,6 @@ export const updateUser = ( user ) => {
 
 export const updateInvitationUrl = ( userId,  user) => {
   return putData(PREFIX + `/users/${ userId }`, user);
-};
-
-export const uploadUserAvatar = ( selectedFiles, file, prefix, teachObjectName, typeOfUpload ) => {
-  return uploadFiles( selectedFiles, file, prefix, teachObjectName,  typeOfUpload );
 };
 
 export const autoRenew = (currentUser, session) => {
@@ -158,7 +153,7 @@ export const remove = (data, route, prefix=PREFIX) => {
 
 export const login = (user) => {
   if ( ! user?.userIsVerified ) {
-    Error(`${user?.email} has not been verified. Kindly check  your email address inbox or spam.`);
+    return Error(`Please verify your account. Kindly, check your email.`);
   }
   let token = tokenGenerator({username: user?.email, password: user.password}, privateKey, { expiresIn: '1h' });
   let loginCount = user?.loginCount; 
@@ -172,7 +167,7 @@ export const login = (user) => {
   } else {
       loginCount += 1;
   }
-  return putData(PREFIX + `/users/login/${user?._id}`, {
+  return putData(PREFIX + `/users/login/${user?._id}`, { 
     unHarshedPassword,
     token,
     userIsValidated,
@@ -317,6 +312,36 @@ export const purchase = ( currentUser ) => {
       });
     throw new Error( error );    // throw new Error( "Payment processing failed!" ); 4 later
   };
+};
+
+let operatorBusinessName= "boomingllc";
+
+export const mockStoreObject = {
+  operators: { operators: {_id: "5fcb0e19fd5e0117dc09dcfa", operatorBusinessName} },
+  operator: { operators: {_id: "5fcb0e19fd5e0117dc09dcfa", operatorBusinessName} },
+  notifications: { pushNotificationSubscribers : {_id:"5fcb0e19fd5e0117dc09dcfa", operatorBusinessName, operatorId: "5fcb0e19fd5e0117dc09dcfa" } },
+  users: { users: {_id: "PERSON5fcb0e19fd5e0117dc09dcfa", operatorBusinessName, operatorId: "5fcb0e19fd5e0117dc09dcfa" }},
+  user: { users: {_id: "PERSON5fcb0e19fd5e0117dc09dcfa", operatorBusinessName, operatorId: "5fcb0e19fd5e0117dc09dcfa" }},
+  currentUser: { user: {_id: "PERSON5fcb0e19fd5e0117dc09dcfa", operatorBusinessName, operatorId: "5fcb0e19fd5e0117dc09dcfa" }},
+  courses: { courses: {_id: "COURSE5fcb0e19fd5e0117dc09dcfa", operatorBusinessName, operatorId: "5fcb0e19fd5e0117dc09dcfa" }},
+  grades: { grades: {_id: "COURSE5fcb0e19fd5e0117dc09dcfa", operatorBusinessName, operatorId: "5fcb0e19fd5e0117dc09dcfa" }},
+  classrooms: { classrooms: {displaySideBarDropDown: false }},
+  sessions: { sessions: {_id: "SESSIONS5fcb0e19fd5e0117dc09dcfa", numberOfSessions: 9, totalNumberOfSessions: 1, status: true } },
+  lessons: { lessons: { selectedLessonFromLessonPlanDropDown: "Test Lesson" } },
+  // courses: { courses: { selectedCourseFromLessonPlanCourseDropDown: "Test Course" }  },
+  meetings: { meetings: {_id: "MEETING5fcb0e19fd5e0117dc09dcfa", numberOfSessions: 9, totalNumberOfSessions: 1, status: true }  },
+  timeLines: { timeLines: { _id: "MEETING5fcb0e19fd5e0117dc09dcfa",  timeLines: "Test timeLines" }  },
+  calendar: { calendars: { calendar: "Test calendar" }  },
+  calendars: { calendars: { calendars: "Test calendars" }  },
+  events: { events: {}},
+  questions: { questions: {}},
+  calendarEventType: { calendar: {}},
+  onlineQuestions: { onlineQuestionCourseId: { onlineQuestionCourseId: "Test Course" }  },
+  hasRecordingStarted: { hasRecordingStarted: false  },
+  onlineAnswers: { onlineAnswers: []  },
+  // onlineQuestions: { onlineQuestions: []  },
+  app: { preview: false },
+  onlineComments: { onlineComments: []}
 };
 
 function handleErrors(response){

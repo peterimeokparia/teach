@@ -1,0 +1,6 @@
+ {
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": ["<rootDir>/src/Services/course/cypress"]
+}
+
+

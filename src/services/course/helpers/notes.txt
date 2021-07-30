@@ -99,3 +99,14 @@ moment( initialEventDateTime )?.local().format('YYYY-MM-DD[T]HH:mm:ss'),
 
 Mongoose / Jest
 Mongoose: looks like you're trying to test a Mongoose app with Jest's default jsdom test environment. Please make sure you read Mongoose's docs on configuring Jest to test Node.js apps: http://mongoosejs.com/docs/jest.html
+
+Full Calendar
+--------------
+Event After Render
+----------------
+  eventAfterRender: function (event, element, view) {
+                    birthday = new Date('<somedate>');
+                    year = new Date(event.start).getFullYear();
+                    month = new Date(event.start).getMonth();
+                    day = new Date(event.start).getDate();
+                    alert(year + ' ' + month + ' ' + day);

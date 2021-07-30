@@ -14,6 +14,17 @@ role } from 'Services/course/helpers/PageHelpers';
 import {
 Link } from '@reach/router';
 
+import { 
+getLessonsByCourseIdSelector, 
+getOperatorFromOperatorBusinessName } from 'Services/course/Selectors';
+
+import { 
+emailMessageOptions, 
+emailInputOptions } from  'Services/course/Pages/Courses/helpers';
+
+import { 
+links } from 'Services/course/Pages/Users/helpers';
+
 import ListItemComponent from '../ListItemComponent';
 import LoginLogout from 'Services/course/Pages/LoginPage/Components/LoginLogout';
 import Roles from 'Services/course/Pages/Components/Roles';
@@ -21,29 +32,19 @@ import MultiInputEmailComponent from 'Services/course/Pages/Email/MultiInputEmai
 import NavLinks from '../../../Components/NavLinks';
 
 const StudentDisplayViewComponent = ({
-operatorBusinessName,     
-currentUser,
-selectedStudents,
-emailInputOptions,
-emailMessageOptions,
-setCurrentPage,
-courseId,
-lessonId,
-lessons,
-navigationHistory,
-parentChild }) => {
+  props,
+  currentUser,
+  selectedCourseFromLessonPlanCourseDropDown,
+  selectedLessonFromLessonPlanDropDown,
+  lessons,
+  navigationHistory  }) => {
+  let {operatorBusinessName, selectedStudents, childrenProps} = props;
+
 function onMatchListItem( match, listItem ) {
   if ( match ){
-      setCurrentPage( listItem );
+     console.log(`Item match ${listItem}`);
   }
 }; 
-
-let links = [ 
-  { id: "SavedAnswers", title: "Saved Answers", path:`student/${ selectedStudents?._id }/savedanswers`, _id: selectedStudents?._id }, 
-  { id: "Grades", title: "Grades", path:`student/${ selectedStudents?._id }/grades`, _id: selectedStudents?._id }, 
-  { id: "Attendance", title: "Attendance", path: `student/${ selectedStudents?._id  }/attendance`, _id: selectedStudents?._id }, 
-  { id: "Session", title: "Session", path: `student/${ selectedStudents?._id  }/sessions/courseId/${courseId}`, _id: selectedStudents?._id },
-];
  
 return (
     <div className="CourseDetail"> 
@@ -63,14 +64,14 @@ return (
                     ulClassName={"lessons"}
                     liClassName={"lesson-item"}
                     altLinkPath={"student"}
-                    collection={links}
+                    collection={links( selectedStudents, selectedCourseFromLessonPlanCourseDropDown?._id )}
                     onMatchListItem={onMatchListItem}
                     path={undefined}
                  >
                      {( selectedPage ) => (
                           <div>      
                             <div>
-                              <Link to={selectedPage?.path}> <span title={selectedPage?.title} > { selectedPage?.title } </span> </Link> 
+                              <Link to={selectedPage?.path} > <span title={selectedPage?.title} > { selectedPage?.title } </span> </Link> 
                               <br></br>
                               <div> 
                               </div>  
@@ -81,18 +82,18 @@ return (
                 </div>          
                 <div className="lesson"> 
                     <div>
-                         {parentChild}
+                         {childrenProps}
                     </div>                                           
                 </div>
                 <div className="sidebar"> 
                 <Roles
                   role={currentUser?.role === role.Student }
                 >                         
-                    <MultiInputEmailComponent
-                      setLesson={lessons && Object.values(lessons)?.find(lesson => lesson?._id === lessonId)}
-                      inputFieldOptions={emailInputOptions}
-                      messageOptions={emailMessageOptions} 
-                    />
+                  <MultiInputEmailComponent
+                    setLesson={lessons && Object.values(lessons)?.find(lesson => lesson?._id === selectedLessonFromLessonPlanDropDown?._id)}
+                    inputFieldOptions={emailInputOptions}
+                    messageOptions={emailMessageOptions} 
+                  />
                 </Roles>
                 </div>
           </div>
@@ -100,4 +101,18 @@ return (
       );
 };
 
-export default connect( null, { saveGrade,  markAttendance, saveAttendance } )(StudentDisplayViewComponent);
+const mapState = (state, ownProps) => {
+  return {
+      operator: getOperatorFromOperatorBusinessName(state, ownProps),
+      courseTutor: state.courses.courseTutor,
+      currentUser: state.users.user,
+      users: Object.values(state?.users?.users),
+      lessons: getLessonsByCourseIdSelector( state, ownProps ),
+      sessions: Object.values(state?.sessions?.sessions)?.filter(session => session?.courseId === ownProps?.courseId),
+      selectedCourseFromLessonPlanCourseDropDown: state.courses.selectedCourseFromLessonPlanCourseDropDown,
+      selectedLessonFromLessonPlanDropDown: state.lessons.selectedLessonFromLessonPlanDropDown,
+      navigationHistory: state.users.navigationHistory
+  };
+};
+
+export default connect( mapState, { saveGrade,  markAttendance, saveAttendance } )(StudentDisplayViewComponent);

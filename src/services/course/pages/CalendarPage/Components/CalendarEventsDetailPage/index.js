@@ -1,25 +1,14 @@
 import { 
-useEffect, 
-useState } from 'react';
-
-import { 
 connect } from 'react-redux';
 
 import { 
 Link } from '@reach/router';
 
 import {
-loadAllCalendars } from 'Services/course/Actions/Calendar';
-
-import {
-loadAllEvents,
 saveEvent } from 'Services/course/Actions/Event';
 
 import {
-style } from 'Services/course/Pages/CalendarPage/helpers';
-
-import {
-loadSubscribedPushNotificationUsers } from 'Services/course/Actions/Notifications';
+updatedCurrentEvent} from 'Services/course/Pages/CalendarPage/helpers';
 
 import {
 getUsersByOperatorId,
@@ -35,114 +24,67 @@ import Roles from 'Services/course/Pages/Components/Roles';
 import EventListItems from 'Services/course/Pages/CalendarPage/Components/EventListItems';
 import EditCalendarEvents from 'Services/course/Pages/CalendarPage/Components/EditCalendarEvents';
 import './style.css';
+import useCalendarEventsDetailHook from '../../hooks/useCalendarEventsDetailHook';
 
 const CalendarEventsDetailPage = ({ 
-operatorBusinessName,
-operator, 
-currentUser,
-user,
-currentUsers,
-calendar,
-events,
-pushNotificationSubscribers,
-selectedCalendarEventId,
-calendarEventType,
-calendarId,
-eventId,
-userId,
-loadAllCalendars,
-loadAllEvents,
-saveEvent,
-loadSubscribedPushNotificationUsers }) => {
-const [isRecurringEvent, setIsRecurringEvent] = useState(false);
-const [isEditMode, setIsEditMode]  = useState(false);
-const [selectedItemId, setSelectedItemId]  = useState('');
-const [ShowAllCalendarEvents, setShowAllCalendarEvents] = useState(false);
-let liClassName = style.eventListBody ,  liClassNameEditView = "";
-
-useEffect(( ) => {
-    loadAllEvents();
-    loadAllCalendars();
-    loadSubscribedPushNotificationUsers();   
-}, [ loadAllCalendars,loadSubscribedPushNotificationUsers, loadAllEvents ]);
-// }, [ loadAllCalendars,loadSubscribedPushNotificationUsers ]);
-
-if ( isEditMode ) {
-    liClassName =  style.eventListBodyEdit;
-    liClassNameEditView= style.eventListBodyOthers;
-}
-
-if ( isRecurringEvent ) {
-    liClassName =  style.eventListBodyEditRecurring;
-    liClassNameEditView= style.eventListBodyOthers;
-}
+    operatorBusinessName,
+    operator, 
+    currentUser,
+    user,
+    currentUsers,
+    calendar,
+    events,
+    pushNotificationSubscribers,
+    selectedCalendarEventId,
+    calendarEventType,
+    calendarId,
+    eventId,
+    userId,
+    saveEvent }) => {
+    let {
+        liClassName,
+        liClassNameEditView,
+        isRecurringEvent, 
+        setIsRecurringEvent,
+        isEditMode, 
+        setIsEditMode,
+        setSelectedItemId,
+        ShowAllCalendarEvents, 
+        setShowAllCalendarEvents
+    } = useCalendarEventsDetailHook();
+    
 
 function onMatchListItem( match, listItem ) {
+    // remove?
 }
 
-function updatedCalendarEvent( updatedEvent, selectedEvent, events, selectedCalendarEventId ) {
+function updatedCalendarEvent( updatedEvent, events, selectedCalendarEventId ) {
     let currentEvent = events?.find(evnt => evnt?._id === selectedCalendarEventId),  updatedCalendarEvent = {};
  
     if ( updatedEvent?.recurringEvent ) {
         const { allDay, ...updatedExistingEvent } = currentEvent;
-    
-        updatedCalendarEvent = {
-            ...updatedExistingEvent,
-            event: {
-                title: updatedEvent?.title,
-                duration: updatedEvent?.duration,
-                recurringEvent: updatedEvent?.recurringEvent,
-                start: updatedEvent?.start, 
-                end: updatedEvent?.end,
-                rrule: {
-                    dtstart: updatedEvent?.start,
-                    until: updatedEvent?.endDate,
-                    byweekday: updatedEvent?.weekDays,
-                    freq: updatedEvent?.frequency,
-                    interval: updatedEvent?.interval,
-                }
-            },
-            location: updatedEvent?.location,
-            schedulingData: updatedEvent?.schedulingData
-        };
+        
+        updatedCalendarEvent = updatedCurrentEvent( updatedExistingEvent, updatedEvent );
     } else {
-        updatedCalendarEvent = { 
-            ...currentEvent,
-            event: {
-                title: updatedEvent?.title,
-                duration: updatedEvent?.duration,
-                allDay: updatedEvent?.allDay,
-                recurringEvent: updatedEvent?.recurringEvent,
-                start: updatedEvent?.start, 
-                end: updatedEvent?.end,
-                rrule: {
-                    dtstart: currentEvent?.event?.rrule?.dtstart,
-                    until: currentEvent?.event?.rrule?.until,
-                    byweekday: currentEvent?.event?.rrule?.byweekday,
-                    freq: currentEvent?.event?.rrule?.freq,
-                    interval: currentEvent?.event?.rrule?.interval,
-                }
-            },
-            location: updatedEvent?.location,
-            schedulingData: updatedEvent?.schedulingData
-        };
+        updatedCalendarEvent = updatedCurrentEvent( currentEvent, updatedEvent );
     }
     return updatedCalendarEvent;
 }
 
-let testAdminUsers =  [ calendar?.userId, '603d37814967c605df1bb450', '6039cdc8560b6e1314d7bccc' ];
-let emailAddresses = Object.values(currentUsers)?.filter(user => testAdminUsers?.includes(user?._id))?.map(user => user?.email);
+    let testAdminUsers =  [ calendar?.userId, '603d37814967c605df1bb450', '6039cdc8560b6e1314d7bccc' ];
+    let emailAddresses = Object.values(currentUsers)?.filter(user => testAdminUsers?.includes(user?._id))?.map(user => user?.email);
 
 function showAllCalendarEvents () {
     setShowAllCalendarEvents(true);
 };
 
 function getClassName(item) {
-    return ( isEditMode & selectedItemId !== item?._id ) ? ( isRecurringEvent & selectedItemId === item?._id ) ? liClassName : liClassNameEditView : liClassName; 
+    // return ( isEditMode & selectedItemId !== item?._id ) ? ( isRecurringEvent & selectedItemId === item?._id ) ? liClassName : liClassNameEditView : liClassName; 
+    return ( isEditMode && isRecurringEvent ) ?  liClassNameEditView : liClassName; 
 };
 
 function getEventsForSelectedUser() {
-    return events?.filter(evnt => evnt?.userId === userId );
+    return events?.filter( evnt => evnt?.userId === userId );
 };
 
 let currentEvents = getEventsForSelectedUser();
@@ -168,7 +110,7 @@ return   (
                             currentEvent={selectedEvent}
                             className="lesson-item"
                             onSubmit={( updatedEvent ) => saveEvent({
-                                ...updatedCalendarEvent( updatedEvent, selectedEvent, events, selectedCalendarEventId )
+                                ...updatedCalendarEvent( updatedEvent, events, selectedCalendarEventId )
                             },
                                 currentUser,
                                 pushNotificationSubscribers,
@@ -327,8 +269,9 @@ const mapState = (state, ownProps)   => {
     events: getEventsByOperatorId(state, ownProps),
     pushNotUsers: state?.notifications?.pushNotificationSubscribers,
     pushNotificationSubscribers: getPushNotificationUsersByOperatorId(state, ownProps),
-    calendarEventType: state.calendar.calendarEventType
+    calendarEventType: state.calendar.calendarEventType,
+    // adminUsers: state.admins.adminUsers to do
   };
 };
 
-export default connect(mapState, { loadAllEvents, saveEvent, loadAllCalendars, loadSubscribedPushNotificationUsers } )(CalendarEventsDetailPage);
+export default connect(mapState, { saveEvent } )(CalendarEventsDetailPage);

@@ -11,9 +11,6 @@ togglePreviewMode } from 'Services/course/Actions/App';
 import {
 saveLesson } from 'Services/course/Actions/Lessons';
 
-import { 
-navigate } from '@reach/router';
-
 import NavLinks from 'Services/course/Pages/Components/NavLinks';
 import './style.css';
 
@@ -24,20 +21,17 @@ const LessonPage = ({
   saveLesson,
   togglePreviewMode, 
   currentUser  }) => { 
-
   const [ textAreaValue, setTextAreaValue ] = useState("");
 
   useEffect(() => {
-
     if ( textAreaValue && textAreaValue !== "" ) {
       saveLesson({...lesson, introduction: textAreaValue });
     }
-
   }, [ previewMode ]);
 
   const handleTextAreaInput = ( eat ) => {
-    setTextAreaValue( eat?.target?.value )
-  }
+    setTextAreaValue( eat?.target?.value );
+  };
 
 return <div className="lessonPage">
   <NavLinks to={`/lessons/${lessonId}/more`}>

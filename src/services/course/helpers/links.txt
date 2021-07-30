@@ -23,10 +23,8 @@ https://www.mckennaconsultants.com/web-application-development-using-wopi-to-emb
 PodDetail
 https://medium.com/@ABiasedHypocrite/simplest-and-fastest-react-express-app-setup-8497ed8db0d1
 
-
 Sales
 https://stackoverflow.com/questions/32638465/how-to-scroll-text-smoothly-using-html5
-
 
 Jitsi
 https://github.com/jitsi/jitsi-meet/issues/3720
@@ -34,13 +32,11 @@ https://dev.to/metamodal/add-jitsi-meet-to-your-react-app-33j9
 https://github.com/jitsi/jitsi-meet/blob/master/config.js
 https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-iframe
 
-
 Server
 https://dev.to/pacheco/my-fullstack-setup-node-js-react-js-and-mongodb-2a4k
 https://medium.com/@ABiasedHypocrite/simplest-and-fastest-react-express-app-setup-8497ed8db0d1
 https://medium.com/@bhanushalimahesh3/creating-a-simple-website-with-node-js-express-and-ejs-view-engine-856382a4578f
 es lint0
-
 
 Fetch
 https://stackoverflow.com/questions/54163952/async-await-in-fetch-how-to-handle-errors
@@ -57,6 +53,13 @@ https://www.npmjs.com/package/react-modal-resizable-draggable
 ImageUpload
 https://www.geeksforgeeks.org/file-uploading-in-react-js/
 https://dev.to/asimdahall/client-side-image-upload-in-react-5ffc
+
+FileUpload
+https://stackabuse.com/handling-file-uploads-in-node-js-with-expres-and-multer - good
+https://www.bezkoder.com/node-js-upload-multiple-files/
+https://stackabuse.com/handling-file-uploads-in-node-js-with-expres-and-multer
+https://www.bezkoder.com/node-js-upload-multiple-files/
+https://dev.to/chandrapantachhetri/responsive-react-file-upload-component-with-drag-and-drop-4ef8
 
 Forms
 https://reactjs.org/docs/forms.html
@@ -216,6 +219,24 @@ https://www.npmjs.com/package/rrule
 https://github.com/fullcalendar/fullcalendar-example-projects/blob/master/react/src/DemoApp.jsx
 https://thecodersblog.com/using-rrule-to-display-recurring-event-in-big-calender/
 
+issue
+https://stackoverflow.com/questions/56665773/what-is-the-proper-way-to-update-an-rrule-event-in-fullcalendar-4
+
+Event After render
+-------------------
+https://stackoverflow.com/questions/7555876/fullcalendar-alert-on-event-date
+https://fullcalendar.io/docs/v4/eventRender
+https://fullcalendar.io/docs/v4/background-events
+
+Event Render hooks
+------------------
+https://fullcalendar.io/docs/event-render-hooks
+
+Event Sources
+---------------
+https://fullcalendar.io/docs/events-json-feed
+
+
 Bootstrap Grid
 ---------------------
 https://stackoverflow.com/questions/24175998/meaning-of-numbers-in-col-md-4-col-xs-1-col-lg-2-in-bootstrap
@@ -298,6 +319,28 @@ https://adamtheautomator.com/visual-studio-code-github-setup/#Staging_Committing
 Jest
 -----------
 https://medium.com/opendoor-labs/testing-react-components-with-jest-a7e8e4d312d8
+https://dev.to/fredrikbergqvist/mocking-redux-useselector-hook-2ale
+https://jondot.medium.com/how-to-snapshot-test-everything-in-your-redux-app-with-jest-fde305ebedea
+https://dev.to/d_ir/verifying-children-passed-to-react-mock-components-2mf9
+https://testing-library.com/docs/example-input-event/
+
+
+Cypress
+---------
+https://docs.cypress.io/guides/getting-started/installing-cypress#Run-binary
+https://medium.com/swlh/add-cypress-tests-to-your-react-app-75f7a8e1f18b
+https://app.pluralsight.com/library/courses/cypress-end-to-end-javascript-testing/table-of-contents
+https://app.pluralsight.com/course-player?clipId=454d8d5d-4263-4a3a-a9b5-be4344e5a055
+https://docs.cypress.io/guides/tooling/plugins-guide#Screenshot-handling
+https://docs.cypress.io/guides/references/configuration#Options
+https://docs.cypress.io/api/commands/click#Syntax
+https://docs.cypress.io/api/commands/contains#Selector
+https://example.cypress.io/commands/querying
+
+Cypress Best Practices
+-------------------------
+https://docs.cypress.io/guides/references/best-practices
+
 
 PluralSight
 --------------
@@ -330,3 +373,18 @@ https://www.robinwieruch.de/react-connected-component-test
 https://dev.to/fredrikbergqvist/mocking-redux-useselector-hook-2ale
 https://medium.com/@szpytfire/react-redux-testing-mocking-useselector-and-usedispatch-e004c3f2b2e0
 https://medium.com/@szpytfire/react-redux-testing-mocking-useselector-and-usedispatch-e004c3f2b2e0
+
+//https://zellwk.com/blog/endpoint-testing/
+//https://betterprogramming.pub/adding-tests-to-express-apps-with-jest-and-supertest-d0e7aaac4c08
+//https://www.freecodecamp.org/news/end-point-testing/
+// https://github.com/zellwk/endpoint-testing-example/blob/master/package.json
+
+Encryption / Decrytion
+-----------------------
+https://webdevtrick.com/javascript-encrypt-decrypt-program/
+https://webdevtrick.com/create-javascript-quiz-program/
+
+Password - Regex
+------------------
+https://www.geeksforgeeks.org/how-to-validate-a-password-using-regular-expressions-in-java/
+https://www.aspsnippets.com/Articles/Password-Strength-validation-example-using-JavaScript-and-jQuery.aspx#:~:text=The%20Password%20strength%20validation%20in%20JavaScript%20and%20jQuery,event%20handler%20which%20calls%20the%20CheckPasswordStrength%20JavaScript%20function.

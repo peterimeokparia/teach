@@ -1,53 +1,25 @@
-import { useState } from 'react';
-
 import { 
 connect } from 'react-redux';
 
 import { 
-uploadFiles } from  'Services/course/helpers/ServerHelper';
-
-import { 
 Validations } from  'Services/course/helpers/Validations';
-
 import './style.css';
 
 const FileUpload = ({ 
-teachObject, 
-fileUploadUrl, 
-teachObjectName, 
-typeOfUpload }) => {
-const [ fileSelected,  selectFile ] = useState( null );
-const onChangeHandler = event => {
-    if ( Validations.maxSelectFile(event) && Validations.checkMimeType(event) &&    Validations.checkMimeType(event) ) { 
-        selectFile(event.target.files);
-    }
-};
-
-const onClickHandler = () => {
-    try {
-        if ( Validations.itemNotSelected( teachObject, "Please click on the lesson link before uploading a file.") ) {
-            return;
-        }
-        if ( fileSelected ){  
-            uploadFiles( fileSelected, teachObject, fileUploadUrl, teachObjectName, typeOfUpload );
-        }
-    } catch (error) {
-        console.log(error);
-    }          
-};
-
+    fileUploadUrl,
+    onChangeHandler }) => {
 return (
     <div class="container"> 
         <div className="files-file-Container">
         <div class="row"> 
         <div class="col-md-6">
-            <form method="post" action="#" id="#">
+        <form method="POST" action={fileUploadUrl} id="#" enctype="multipart/form-data">
             <div class="form-group files"> 
-            <label>Upload lesson specific files </label>
-            <input type="file" name="file" class="form-control" multiple onChange={onChangeHandler}></input>  
+            <label>Upload file(s). </label>
+            <input type="file" name="file" class="form-control" multiple onChange={onChangeHandler}></input> 
             </div> 
-            <button type="button" class="button uploadBtn" onClick={onClickHandler}> Upload </button>     
-            </form>      
+            <button type="submit" class="button uploadBtn" value="upload" />    
+        </form>  
         </div>
         {Validations.setErrorMessageContainer() }
         </div>
@@ -55,4 +27,4 @@ return (
     </div>
 ); };
 
-export default connect( null, uploadFiles )( FileUpload );
+export default connect()( FileUpload );

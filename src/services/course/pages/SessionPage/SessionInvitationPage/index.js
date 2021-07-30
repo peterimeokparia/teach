@@ -1,54 +1,35 @@
-import { useEffect } from 'react';
-
 import { 
 connect } from 'react-redux';
 
 import { 
 loadUsers } from 'Services/course/Actions/Users';
 
-import { 
-navigate } from '@reach/router';
-
+import useSessionHook from 'Services/course/Pages/SessionPage/hooks/useSessionHook';
 import './style.css';
 
 const SessionInvitationPage = ({
-user, 
-users }) => {
+    user, 
+    users }) => {
 
-const [ password, setPassword ] = userState('')     
-
-useEffect(() => {
-    loadUsers();    
-}, []);
-
-const handleOnChange = (event) => {
-    setPassword(event.target.value);
-}
-
-const handleSubmit = (event) => {
-    event.preventDefault();
-
-    if ( password &&   users?.find( authenticateUser => authenticateUser?.password === password)) {   
-        navigate('');
-    }
-    else {
-        return ( <div> Retry. Wrong password entered.</div>)
-    }
-}
-
+    let { 
+        password,
+        handleSubmit,
+        handleOnChange,
+     } = useSessionHook({ user, users });
+   
 if ( users.filter( authenticateUser => authenticateUser?._id === user?._id)?.length === 1 ) {
     return ( <div>
             <form onSubmit={handleSubmit}>
-                <label>
-                    Password
-                    <input 
-                        required
-                        value={password}
-                        onChange={handleOnChange}
-                        placeholder="Enter password to join video session"    
-                    />
-                </label>
-                    <input type="submit" />
+            <label>
+                Password
+                <input 
+                    required
+                    value={password}
+                    onChange={handleOnChange}
+                    placeholder="Enter password to join video session"    
+                />
+            </label>
+                <input type="submit" />
             </form>
     </div>)
 
@@ -59,10 +40,10 @@ if ( users.filter( authenticateUser => authenticateUser?._id === user?._id)?.len
 
 const mapState = (state)   => {
     return {
-            users: Object.values(state.users.users), 
-            error: state.users.error,
-            loading: state.users.loading  
+        users: Object.values(state.users.users), 
+        error: state.users.error,
+        loading: state.users.loading  
     };
 }
 
-export default connect(mapState, { loginUser, createUser, loadUsers  })(SessionInvitationPage);
+export default connect(mapState, {  loadUsers  })(SessionInvitationPage);

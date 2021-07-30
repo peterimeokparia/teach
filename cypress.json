@@ -1,0 +1,10 @@
+{
+    "pluginsFile": false,
+    "baseUrl": "http://localhost:3000/boomingllc",
+    "fixturesFolder": "src/Services/course/cypress/fixtures",
+    "integrationFolder": "src/Services/course/cypress/integration",
+    "screenshotsFolder": "src/Services/course/cypress/screenshots",
+    "videosFolder": "src/Services/course/cypress/videos",
+    "supportFile": "src/Services/course/cypress/support/index.js",
+    "Api": "src/Services/course/Api"
+}

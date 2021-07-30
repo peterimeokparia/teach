@@ -1,10 +1,5 @@
-import { useState } from 'react';
-
 import { 
 connect } from 'react-redux';
-
-import { 
-Validations } from  'Services/course/helpers/Validations';
 
 import { 
 updateUser } from 'Services/course/Api';
@@ -12,10 +7,11 @@ updateUser } from 'Services/course/Api';
 import { 
 forceReload } from 'Services/course/helpers/ServerHelper';
 
-import {
-uploadAvatarImages,       
-getUserByEmail } from 'Services/course/Actions/Users';
+import {     
+getUserByEmail, 
+saveUser} from 'Services/course/Actions/Users';
 
+import FileUpload from 'Services/course/Pages/Components/FileUpload';
 import ImageCrop from 'react-image-crop-component';
 import 'react-image-crop-component/style.css';
 import './style.css';
@@ -24,21 +20,10 @@ const ImageComponent = ({
 user, 
 imageSrc, 
 url, 
-typeOfUpload,
-teachObjectName, 
 editMode,
-uploadAvatarImages,
 getUserByEmail,
-}) => {
-const [ fileSelected,  selectFile ] = useState( null );
-    
-const onChangeHandler = event => {
-   if ( Validations.maxSelectFile(event) && Validations.checkMimeType(event) &&    Validations.checkMimeType(event) ) { 
-       selectFile(event.target.files);
-       uploadAvatarImages( event.target.files, {...user, avatarUrl: `http://localhost:3000/files/${fileSelected[0].name}`}, url, teachObjectName, typeOfUpload );
-   }
-};
-
+saveUser
+}) => {   
 async function onCrop( croppedImage ) {
 let updatedUser, getUser =  null;
 
@@ -52,7 +37,7 @@ try {
         if ( getUser ) {
              forceReload();   
         }
-    }   
+    }  
 } catch (error) {
     console.log( error );
 }
@@ -60,23 +45,33 @@ try {
 forceReload();   
  return getUserByEmail;
 }
+
+const onChangeHandler = event => {
+    let avatarUrl, files = [];
+
+    for (let index = 0; index < event.target.files.length; index++) {    
+        avatarUrl = `http://localhost:3000/files/${event.target.files[index]?.name}`;       
+        files = [avatarUrl, ...user?.files ];     
+    }
+    saveUser({ ...user, avatarUrl, files });
+};
+
 return  (editMode) ? <div className={""}>  
        <div className={"col"}>
        <div >
-            <form method="post" action="#" id="#">
-                <div> 
-                <input type="file" name="file"  multiple onChange={onChangeHandler}></input>  
-                </div> 
-            </form>      
-                <ImageCrop 
-                    src={ user.files[0] }
-                    setWidth={300} 
-                    setHeight={300}
-                    resize={true}
-                    border={"dashed #ffffff 2px"}
-                    onCrop={onCrop}
-                />
-            </div>
+       <FileUpload 
+            fileUploadUrl={url}
+            onChangeHandler={onChangeHandler}
+        />
+        <ImageCrop 
+            src={ user.files[0] }
+            setWidth={300} 
+            setHeight={300}
+            resize={true}
+            border={"dashed #ffffff 2px"}
+            onCrop={onCrop}
+        />
+        </div>
        </div>
     </div>
     : ( <div>
@@ -84,7 +79,7 @@ return  (editMode) ? <div className={""}>
     </div> );
 };
 
-async function getCurrentUser( email, password  ){
+async function getCurrentUser( email, password  ){  // remove & use getUserByEmail
     return await getUserByEmail( { email, password } )
      .then(user => {
         return user[0];
@@ -93,4 +88,4 @@ async function getCurrentUser( email, password  ){
     });
 }
 
-export default connect( null, { uploadAvatarImages, getUserByEmail } )( ImageComponent );
+export default connect( null, { saveUser, getUserByEmail } )( ImageComponent );

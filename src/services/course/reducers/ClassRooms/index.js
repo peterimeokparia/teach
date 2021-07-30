@@ -15,11 +15,13 @@ SAVE_CLASSROOM_ERROR,
 DELETE_CLASSROOM_SUCCESS,
 RESET_CLASSROOM_USER_ERROR,
 UPDATE_CURRENT_CLASSROOM_LESSON_PLAN,
-TOGGLE_SIDEBAR_DROPDOWN_MENU } from '../../Actions/ClassRooms';
+TOGGLE_SIDEBAR_DROPDOWN_MENU,
+ENABLE_TEACH_PLATFORM } from '../../Actions/ClassRooms';
 
 const initialState = {
     classrooms: {},
     classRoomLessonPlan: {},
+    meeting: {},
     displaySideBarDropDown: false,
     saveInProgress: false,
     onSaveError: null,
@@ -79,6 +81,8 @@ const reducer = produce((draft, action) => {
         case TOGGLE_SIDEBAR_DROPDOWN_MENU:
              draft.displaySideBarDropDown = (!draft.displaySideBarDropDown);
         return; 
+        case ENABLE_TEACH_PLATFORM:
+             draft.meeting = action.payload;
         default:
         return;
 

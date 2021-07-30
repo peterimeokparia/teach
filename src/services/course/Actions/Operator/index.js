@@ -1,7 +1,6 @@
 import {
 get,
 operatorSignUp } from 'Services/course/Api';
-import StateManager from 'react-select';
 
 export const OPERATOR_LOGIN_BEGIN = "OPERATOR LOGIN BEGIN";
 export const OPERATOR_LOGIN_SUCCESS = "OPERATOR LOGIN SUCCESS";

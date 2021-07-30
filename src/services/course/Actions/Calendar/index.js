@@ -28,9 +28,23 @@ export const CALENDAR_EVENT_TYPE = "CALENDAR EVENT TYPE";
 export const addCalendar = ( newCalendar ) => {
     return dispatch => {
             dispatch({ type: ADD_NEW_CALENDAR_BEGIN });
-       return add({ ...newCalendar?.calendar }, '/calendar')
+    //    return add({ ...newCalendar?.calendar }, '/calendar')
+    return add({ ...newCalendar?.calendar }, '/calendar')
         .then(calendarData => {
-            dispatch({ type: ADD_NEW_CALENDAR_SUCCESS, payload: calendarData });
+            dispatch({ type: ADD_NEW_CALENDAR_SUCCESS, 
+                payload: { 
+                    _id: calendarData?._id, 
+                    calendarEventType: calendarData?.calendarEventType,
+                    color:  calendarData?.color,
+                    firstName: calendarData?.firstName,
+                    operatorId:  calendarData?.operatorId,
+                    userId:  calendarData?.userId,
+                    currentUser: newCalendar?.event?.currentUser, 
+                    pushNotificationUser: newCalendar?.event?.pushNotificationUser, 
+                    emailAddresses: newCalendar?.event?.emailAddresses,
+                    event: newCalendar?.event?.event?.event,
+                    location: newCalendar?.event?.event?.location,
+                } });
             return calendarData; 
         })
         .catch( error => {

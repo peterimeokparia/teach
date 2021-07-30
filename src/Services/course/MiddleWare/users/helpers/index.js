@@ -28,14 +28,19 @@ export const handleCartOnPurchase = ( user, store ) => {
      });
 };
 
-export const handleSignUpSuccess = ( user ) => {
+export const handleSignUpSuccess = ( user, store ) => {
     if (!user) return;
+
+    let currentState = store?.getState();
+
+    let operatorBusinessName = (currentState?.operators?.operators[user?.operatorId])?.businessName;
+    
     try {
         sendEmail(
             emailMessageConfig?.sendersEmailAddress, // change
             user?.email, 
             emailMessageConfig?.emailHeader, // too specific change
-            `Kindly verify your account ${routePrefix}/${user?.operatorBusinessName}/accountverification/${user?._id}`,  /// add operatorBusiness name to user or as args 
+            `Kindly verify your account ${routePrefix}/${operatorBusinessName}/accountverification/${user?._id}`,  /// add operatorBusiness name to user or as args 
             user?._id
         );
         

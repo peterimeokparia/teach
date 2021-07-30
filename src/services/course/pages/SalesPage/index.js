@@ -1,29 +1,22 @@
 import { 
-useState, 
-useEffect } from 'react';
-
-import { 
 connect } from 'react-redux';
 
 import { 
-Redirect } from '@reach/router';
+Link } from '@reach/router';
 
 import {
 getUsersByOperatorId,    
 getOperatorFromOperatorBusinessName,     
 getCoursesByCourseIdSelector  } from 'Services/course/Selectors';
 
-import { 
+import {
 addToSalesCart } from 'Services/course/Actions/Users';
 
 import { 
 Validations } from  'Services/course/helpers/Validations';
 
-import { 
-Link } from '@reach/router';
-
+import useSalesHook from 'Services/course/Pages/SalesPage/hooks/useSalesHook';
 import SessionSignUpComponent from 'Services/course/Pages/SessionPage/Component/SessionSignUpComponent';
-import BuySessionPackageComponent from './Components/BuySessionPackageComponent';
 import './style.css'; 
 
 const SalesPage = ({ 
@@ -32,76 +25,26 @@ const SalesPage = ({
     loginUser,
     course, 
     courseId, 
-    navigate, 
     addToSalesCart, 
     currentUser, 
     users,
     children }) => {
-    const [ totalNumberOfSessions, setTotalNumberOfSessions ] = useState(1);
-    const [ sessionType, setSessionType ] = useState(undefined);
-    const [ autoRenew, setAutoRenewal ] = useState(false);
-    const MyCourses = `/${operatorBusinessName}/mycourses`;
 
-    useEffect(() => {
-        if ( ! userOwnsCourse(currentUser, courseId) && ( ! sessionType ) ) {       
-            BuySessionPackageComponent(setSessionType);              
-        } 
-    }, [ currentUser, courseId, sessionType ]);
+    let salesConfig =  {
+        currentUser, 
+        courseId,
+        users,
+        operatorBusinessName,
+    };
 
-    if ( currentUser?.paymentStatus === "approved" ) {
-        navigate(MyCourses);
-    }
+    let {
+        tutor,
+        sessionType,
+        addToCartAndReturnToCourses,
+        setTotalNumberOfSessions,
+        setAutoRenewal
+    } = useSalesHook( salesConfig )
 
-const userOwnsCourse = (user, courseId) => {
-    if ( ! user ) {
-        return false;
-    }
-
-    if ( user.userRole === 'admin' ) {
-        return true;
-    }
-    return user?.courses?.includes(courseId);
-};
-
-if ( userOwnsCourse(currentUser, courseId) ) { 
-    return <Redirect to={`/${operatorBusinessName}/courses/${courseId}`} noThrow/>;
-} 
-
-let tutor = users.find(user => user._id === course?.createdBy), numberOfSessions = 0;
-
-let cartConfig = {
-    course, 
-    sessionType: sessionType, 
-    numberOfSessions: numberOfSessions, 
-    totalNumberOfSessions: totalNumberOfSessions, 
-    userId: currentUser?._id, 
-    tutor: tutor,
-    startDate: Date.now(),
-    endDate: Date.now(),
-    status: true, 
-    autoRenew: autoRenew,
-    autoRenewDates: Date.now()
-};
-
-const addToCartAndReturnToCourses = () => {
-addCourseToCart( cartConfig );
-};
-
-const addCourseToCart = ( salesCartConfig ) => {
-let duplicateItemsExist = ( (currentUser?.cart?.filter(item => item?.course?._id === courseId ))?.length > 0 );
-
-if ( duplicateItemsExist ) {  
-    Validations.warn(`Duplicate. ${salesCartConfig.course?.name} is already in your cart.`);
-    navigate(MyCourses);
-    return;
-}
-else {
-    addToSalesCart( salesCartConfig ); 
-    navigate(MyCourses);
- };
-};
-
-let tutorsName = `${tutor?.firstname}`;
 
 return (
         <div className={"Sales"}>
@@ -112,7 +55,7 @@ return (
                     <h1> NEW SESSION </h1>  <div> <br></br>   <h3> {course && course?.name }</h3> </div>  
                     <div>by</div> 
                     <img src={tutor?.avatarUrl} className={"avatar-img-preview"} alt="user profile"/>
-                    <div> { course && tutorsName } </div>
+                    <div> { course && tutor?.firstname } </div>
                     <div> { course && course?.description } </div>
                     {  
                         ( sessionType === "Package" ) 

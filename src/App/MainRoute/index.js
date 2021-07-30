@@ -1,14 +1,15 @@
+import { 
+Router, 
+Redirect } from '@reach/router';
 import MyCoursesPage from 'Services/course/Pages/Courses/MyCoursesPage';
 import ShowMeeting from 'Services/course/Pages/Meeting/Components/ShowMeeting';
 import CourseListPage from 'Services/course/Pages/Courses/CourseListPage';
 import CourseDetailPage from 'Services/course/Pages/Courses/CourseDetailPage';
 import LessonPage from 'Services/course/Pages/Lessons/LessonPage';
 import LoginPage from 'Services/course/Pages/LoginPage';
-import VideoPlayer  from 'Services/course/Pages/VideoPage/Component/VideoPlayer';
 import LessonPlan from 'Services/course/Pages/Lessons/LessonPlan';
 import LessonPlanInviteUserVerification from 'Services/course/Pages/Lessons/LessonPlan/Components/LessonPlanInviteUserVerification';
 import LessonPlanInviteUserVerifiedPage from 'Services/course/Pages/Lessons/LessonPlan/Components/LessonPlanInviteUserVerifiedPage';
-import VideoPage from 'Services/course/Pages/VideoPage';
 import NotFoundPage from 'Services/course/Pages/Components/NotFoundPage';
 import SalesPage from 'Services/course/Pages/SalesPage';
 import Cart from 'Services/course/Pages/SalesPage/Cart';
@@ -27,7 +28,6 @@ import SessionPage from 'Services/course/Pages/SessionPage';
 import GradesPage from 'Services/course/Pages/GradesPage';
 import AttendancePage from 'Services/course/Pages/AttendancePage';
 import SendNotificationsPage from 'Services/course/Pages/SendNotificationsPage';
-import QuestionPage from 'Services/course/Pages/QuestionsPage';
 import OnlineQuestionPage from 'Services/course/Pages/OnlineQuestionsPage';
 import AccountVerificationForm from 'Services/course/Pages/SignUp/AccountVerificationForm';
 import PasswordReset from 'Services/course/Pages/LoginPage/Components/PasswordReset';
@@ -35,20 +35,16 @@ import CalendarPage from 'Services/course/Pages/CalendarPage';
 import CalendarEventsDetailPage from 'Services/course/Pages/CalendarPage/Components/CalendarEventsDetailPage';
 import EventDetailPage  from 'Services/course/Pages/CalendarPage/Components/EventDetailPage';
 import AddNewCalendar from 'Services/course/Pages/CalendarPage/Components/AddNewCalendar';
-import TimeLine from 'Services/course/Pages/CalendarPage/Components/TimeLine';
+import TimeLines from 'Services/course/Pages/CalendarPage/Components/TimeLines';
 import OnlineQuestionsSavedAnswersPage from 'Services/course/Pages/OnlineQuestionsPage/Components/OnlineQuestionsSavedAnswersPage';
 import OnlineQuestionsSavedAnswersDetailPage from 'Services/course/Pages/OnlineQuestionsPage/Components/OnlineQuestionsSavedAnswersDetailPage';
 import OnlineQuestionsCourseListPage from 'Services/course/Pages/OnlineQuestionsPage/Components/OnlineQuestionsCourseListPage';
-import InlineVideoComponent from 'Services/course/Pages/InlineVideoComponent';
-import FormFields from 'Services/course/Pages/TestBuilder/FormFields';
 import MoreLessonContentPage from 'Services/course/Pages/Courses/CourseDetailPage/MoreLessonContentPage';
-import { Router, Redirect } from '@reach/router';
 
 const MainRoute = () => {
     return (
         <Router>
              <Redirect noThrow from="/" to="/users" />
-             <FormFields path="/fieldTest" />
              <ClassRoomPage path="/:operatorBusinessName/classroomgroups/:groupId/:classRoomName"  />
 
              <ClassRoomPage path="/:operatorBusinessName/classroom/:selectedUserId" /> 
@@ -91,8 +87,6 @@ const MainRoute = () => {
              <LessonPlanInviteUserVerifiedPage path="/:operatorBusinessName/LessonPlan/invite/userverified/classRoom/:classRoomId"/> 
              <LoginPage path="/:operatorBusinessName/login"/>
              <OperatorSignUpPage path="/operator/signup" />
-             <VideoPlayer path="/videoplayer/:stream" />
-             <VideoPage path="/video"/>
              <ShowMeeting path="/meeting/:teach" /> 
              <FileUpload path="/files" />
              <Users path="/:operatorBusinessName/users"/>
@@ -102,17 +96,15 @@ const MainRoute = () => {
              <CourseDetailCheckBoxComponent path="/students/:courseId" />
              <StudyHall path="/:operatorBusinessName/LessonPlan/StudyHall/:userId" />
              <NotFoundPage default />
-             <QuestionPage path="/formBuilder/:lessonId"/>
              <SendNotificationsPage path="/:operatorBusinessName/demo/sendnotifications" />
              <CalendarPage path="/:operatorBusinessName/schedule/:calendarEventType/calendar/:calendarId/user/:userId"/>
              <CalendarEventsDetailPage path="/:operatorBusinessName/:calendarEventType/calendar/:calendarId/:userId/:selectedCalendarEventId"/>
              <CalendarEventsDetailPage path="/:operatorBusinessName/:calendarEventType/calendar/:calendarId/:userId"/>
              <EventDetailPage path="/:operatorBusinessName/:calendarEventType/calendar/:calendarId/user/:userId/event/:eventId" />
-             <TimeLine path="/:operatorBusinessName/schedule/:calendarEventType/timeline/:userId"/>
+             <TimeLines path="/:operatorBusinessName/schedule/:calendarEventType/timeline/:userId"/>
              <AddNewCalendar path="/:operatorBusinessName/add/calendar" />
              <OnlineQuestionPage path="/:operatorBusinessName/homework/askquestion/course/:courseId" />
              <OnlineQuestionPage path="/:operatorBusinessName/homework/askquestion/course/:courseId/question/:onlineQuestionId" />
-             <InlineVideoComponent path="/:operatorBusinessName/homework/askquestion/board/course/:courseId/answer/:answerId"/>
              <OnlineQuestionsCourseListPage path="/:operatorBusinessName/homework/askquestion/course"/>
              <MoreLessonContentPage path="/lessons/:lessonId/more" />
         </Router>

@@ -95,5 +95,50 @@ export const handlePushNotificationSubscription = ( subscribedUsers, user,  newS
 
 export const validateOperatorBusinessName = () => <div>{"Please verify the url"}</div> ;
 
+export const passwordFailedValidationMessages = {
+    upperCase: "Must include an uppercase character.",
+    lowerCase: "Must include a lowercase character.",
+    number: "Must include a number.",
+    symbol: "Must contain one of the following symbols: $@$!%*#?&",
+    length: "Must be between 8 to 20 characters in length."
+};
+export function passwordValidator(password){
+    if ( password === "" ) { throw Error('Please enter a valid password.') }
 
+    let result = {}, regexRequirement = [
+        {regex: "[A-Z]", message: passwordFailedValidationMessages?.upperCase, points: 20}, 
+        {regex: "[a-z]", message: passwordFailedValidationMessages?.lowerCase, points: 20}, 
+        {regex: "[0-9]", message: passwordFailedValidationMessages?.number, points: 20}, 
+        {regex: "[ $@$!%*#?& ]", message: passwordFailedValidationMessages?.symbol, points: 20},
+        {regex: ".{8,20}", message: passwordFailedValidationMessages?.length, points: 20},
+        // {regex: ".{,20}", message: passwordFailedValidationMessages?.maxLength, points: 10}
+    ];
+
+    try {
+        result = getValue( regexRequirement, password );
+    } catch (error) {
+        Error(`Password Validation: ${error}`)
+    }
+
+    return result;
+};
+
+function getValue(regexPatternRequirement, password){
+    let failedPasswordTest = [], validPasswordTest = [], passwordStrength=0; 
+
+    for( let i = 0; i < regexPatternRequirement?.length; i++ ){
+        if ( new RegExp( regexPatternRequirement[i]?.regex ).test(password) ) {
+            validPasswordTest = [ ...validPasswordTest, regexPatternRequirement[i] ];
+            passwordStrength += regexPatternRequirement[i]?.points;
+        } else {
+            failedPasswordTest = [ ...failedPasswordTest, regexPatternRequirement[i]?.message ];
+        }
+    }
+    return {
+        validPasswordTest,
+        passwordStrength,
+        failedPasswordTest,
+        password
+    };
+};
        

@@ -1,8 +1,4 @@
 import { 
-useState, 
-useEffect } from "react";
-
-import { 
 connect } from 'react-redux';
 
 import {
@@ -15,26 +11,14 @@ getCalendarsByOperatorId,
 getTimeLinesByOperatorId } from 'Services/course/Selectors';
 
 import { 
-loadUsers } from "Services/course/Actions/Users";
+addCalendar } from 'Services/course/Actions/Calendar';
 
-import { 
-addCalendar,
-saveCalendar,
-loadAllCalendars } from 'Services/course/Actions/Calendar';
-
-import { 
-addEvent,
-saveEvent,    
-loadAllEvents } from 'Services/course/Actions/Event';
-
-import {
-loadSubscribedPushNotificationUsers } from 'Services/course/Actions/Notifications';
-    
 import {
 calendarOptions,    
 tutorsOption,
 getCalendarColor } from 'Services/course/Pages/CalendarPage/helpers';
 
+import useAddNewCalendarHook from 'Services/course/Pages/CalendarPage/hooks/useAddNewCalendarHook';
 import Select from 'react-select';
 import './style.css';
 
@@ -42,9 +26,6 @@ const AddNewCalendar = ({
     operatorBusinessName,
     pushNotificationSubscribers,
     operator,
-    addEvent,
-    saveEvent,
-    loadAllEvents,
     calendarEventType,
     calendar,
     calendarId,
@@ -52,26 +33,15 @@ const AddNewCalendar = ({
     events,
     pushNotUsers,
     addCalendar,
-    saveCalendar,
-    loadAllCalendars,
-    loadSubscribedPushNotificationUsers,
     timeLines,
     users,
     userId }) => {
-    const [ selectedTutors,  setSelctedTutors ] = useState([]);
-    const [ calendarType,  setCalendarType ] = useState([]);
-
-    useEffect(( ) => {
-        loadAllCalendars();
-        loadAllEvents();
-        loadSubscribedPushNotificationUsers();
-        loadUsers();
-    },[ loadAllCalendars, loadSubscribedPushNotificationUsers, loadAllEvents  ]);
-    // },[ loadAllCalendars, loadSubscribedPushNotificationUsers, loadAllEvents, loadUsers  ]);
-
-const onChange = ( data ) => {
-    setSelctedTutors( data );
-};
+    let {
+        selectedTutors,  
+        calendarType,  
+        setCalendarType,
+        onChange
+    } = useAddNewCalendarHook();
 
 const onFormSubmit = ( evnt ) => {
     evnt.preventDefault();
@@ -84,7 +54,7 @@ const submitForm = () => {
         let operatorId = operator?._id; 
    
         let calendarConfig = ( tutor ) => {
-            return {
+            return { // refactor // use calendar and event class objects
                 calendar: {
                 userId: tutor?._id,
                 calendarEventType: calendarType?.label,
@@ -140,13 +110,7 @@ return (
 ); };
 
 const mapDispatch = {
-    addCalendar,
-    saveCalendar,
-    addEvent,
-    saveEvent,
-    loadAllCalendars,
-    loadAllEvents,
-    loadSubscribedPushNotificationUsers,
+    addCalendar
 };
 
 const mapState = ( state, ownProps )  => ({

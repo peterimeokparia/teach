@@ -1,119 +1,86 @@
-import { useState, useRef, useEffect } from 'react';
-
 import { 
 connect } from 'react-redux';
 
 import { 
 deleteSession } from 'Services/course/Actions/Sessions';
 
+import useSessionHook from 'Services/course/Pages/SessionPage/hooks/useSessionHook';
 import './style.css';
 
 const EditSessionComponent = ({
-session,
-error,
-className,
-onSubmit,
-deleteSession, 
-children }) => {
-let numberOfSessionsInitialValue = session ? session?.numberOfSessions : '';
-let totalNumberOfSessionsInitialValue = session ? session?.totalNumberOfSessions : '';
-const [ editing, setEditing ] = useState(false);
-const [ numberOfSessions, setNumberOfSessions ] = useState(numberOfSessionsInitialValue);
-const [ totalNumberOfSessions, setTotalNumberOfSessions ] = useState(totalNumberOfSessionsInitialValue);
-const inputRef = useRef();
+    session,
+    error,
+    className,
+    onSubmit,
+    deleteSession, 
+    children }) => {
 
-const reset = () => {
-    setTotalNumberOfSessions(totalNumberOfSessionsInitialValue);
-    setNumberOfSessions(numberOfSessionsInitialValue);
-    setEditing(false);
-};
+    let sessionProps = { session, onSubmit }
 
-const commitEdit = (e) => {
-    e.preventDefault();
-    onSubmit( numberOfSessions, totalNumberOfSessions )
-     .then(reset)
-      .catch( error => {
-        setEditing(false);
-        setEditing(true);
-     });
-};
-
-const setValues = () => {
-    setNumberOfSessions(numberOfSessionsInitialValue);
-    setTotalNumberOfSessions(totalNumberOfSessionsInitialValue);
-};
-
-const beginEditing = () => {
-    setValues();
-    setEditing(true);
-};
-
-const performDelete = () => {
-    deleteSession(session);
-};
-
-const cancelEdit = (e) => {
-    e.preventDefault();
-    reset();
-};
- 
-useEffect (() => {
-    if ( editing ) {
-        inputRef.current.focus();
-    }
-}, [ editing ]); 
+    let {
+        inputRef,
+        editing,
+        numberOfSessions,
+        totalNumberOfSessions,
+        beginEditing, 
+        performDelete,
+        cancelEdit,
+        commitEdit,
+        setNumberOfSessions,
+        setTotalNumberOfSessions
+    } = useSessionHook( sessionProps );
 
 return editing ? (
            <>
-                <form
-                    className= {`${className || ''} editing ${error ? 'error' : ''}`}
-                    onSubmit={commitEdit}           
+            <form
+                className= {`${className || ''} editing ${error ? 'error' : ''}`}
+                onSubmit={commitEdit}           
+            >
+                <label>
+                    <b> Number of Sessions </b>
+                <input 
+                    name="lessondate"
+                    ref={ inputRef }
+                    value={ numberOfSessions }
+                    type="number"
+                    onChange={ e => setNumberOfSessions( e.target.value) }
+                />
+                </label>  
+                <label>
+                    <b>  Total Number of Sessions </b>
+                <input 
+                    ref={ inputRef }
+                    value={ totalNumberOfSessions }
+                    type="number"
+                    onChange={ e => setTotalNumberOfSessions( e.target.value) }
+                
+                />
+                </label>
+                <input
+                    ref={ inputRef }
+                    name="submit"
+                    type="submit"
+                    value={'Submit'}
+                    onChange={ commitEdit }
                 >
-                    <label>
-                        <b> Number of Sessions </b>
-                    <input 
-                        name="lessondate"
-                        ref={ inputRef }
-                        value={ numberOfSessions }
-                        type="number"
-                        onChange={ e => setNumberOfSessions( e.target.value) }
-                    />
-                    </label>  
-                    <label>
-                        <b>  Total Number of Sessions </b>
-                    <input 
-                        ref={ inputRef }
-                        value={ totalNumberOfSessions }
-                        type="number"
-                        onChange={ e => setTotalNumberOfSessions( e.target.value) }
-                 
-                    />
-                    </label>
-                    <input
-                        ref={ inputRef }
-                        name="submit"
-                        type="submit"
-                        value={'Submit'}
-                        onChange={ commitEdit }
-                    >
-                    </input> 
-                </form>
-                <form
-                    className= {`${className || ''} editing ${error ? 'error' : ''}`} 
+                </input> 
+            </form>
+            <form
+                className= {`${className || ''} editing ${error ? 'error' : ''}`} 
+            >
+                <input
+                    ref={ inputRef }
+                    name="reset"
+                    type="submit"
+                    value={'Reset'}
+                    onChange={ cancelEdit }
                 >
-                    <input
-                        ref={ inputRef }
-                        name="reset"
-                        type="submit"
-                        value={'Reset'}
-                        onChange={ cancelEdit }
-                    >
-                    </input> 
-                </form>
-                   {error && <div>{error.message}</div>}
+                </input> 
+            </form>
+                {error && <div>{error.message}</div>}
            </>
             ) : ( 
-                   children(beginEditing, performDelete)
+                children(beginEditing, performDelete)
         );                         
 };
 

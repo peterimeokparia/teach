@@ -28,6 +28,9 @@ import {
 loadCourses } from 'Services/course/Actions/Courses';
 
 import {
+loadLessons } from 'Services/course/Actions/Lessons';
+
+import {
 loadSessions } from 'Services/course/Actions/Sessions';
 
 import {
@@ -128,8 +131,9 @@ export const store = createStore(
 
 //store.dispatch(loadFailedPushNotifications());
 //store.dispatch(loadFailedEmailNotifications());
-store.dispatch(loadLogs());
+store?.dispatch(loadCourses());
 store.dispatch(loadOnlineComments());
+store.dispatch(loadLogs());
 store.dispatch(loadOnlineAnswers());
 store.dispatch(loadOnlineQuestions());
 store.dispatch(loadAllEvents());
@@ -142,13 +146,12 @@ store.dispatch(loadGrades());
 store.dispatch(loadOperators());
 store.dispatch(loadUsers());
 store.dispatch(lastLoggedInUser());
-store.dispatch(loadCourses());
+store.dispatch( loadLessons());
 store.dispatch(loadSessions());
 store.dispatch(loadClassRooms());
 store.dispatch(loadAllCalendars());
 
 Modal.setAppElement('#root');
-
 //const portalRoot = document.getElementById("portal");
 
 ReactDOM.render( 

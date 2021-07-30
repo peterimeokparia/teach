@@ -3,7 +3,6 @@ ToastContainer,
 toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
-
 import Swal from 'sweetalert2';
 
 export const Validations = {
@@ -28,11 +27,15 @@ export const Validations = {
         return true;
     },
     maxSelectFile: function ( event ) {
-        let files = event.target.files;
+        let files = event?.target?.files;
 
+        if ( !files ) {
+            const msg = "No image(s) selected.";
+            Swal.fire(msg);
+            return false;
+        }
         if (files?.length > 3){
             const msg = "Only 3 images can be uploaded at one time";
-
             Swal.fire(msg);
             event.target.value = null;
             console.log(msg);
@@ -41,7 +44,13 @@ export const Validations = {
         return true;
     }, 
     checkMimeType: function ( event ) {
-        let files = event.target.files;
+        let files = event?.target?.files;
+
+        if ( !files ) {
+            const msg = "No image(s) selected.";
+            Swal.fire(msg);
+            return false;
+        }
 
         let err = [];
         const types = ['image/png', 'image/jpeg', 'image/gif', 'application/pdf', 'video/webm', 'video/mp4', 'audio/mp4'];
@@ -54,7 +63,13 @@ export const Validations = {
         return ( err?.length > 0 ) ? displayErrorMessage(event, err, toast) :  true;
     },
     checkFileSize: function ( event ) {
-        let files = event.target.files;
+        let files = event?.target?.files;
+
+        if ( !files ) {
+            const msg = "No image(s) selected.";
+            Swal.fire(msg);
+            return false;
+        }
         let size = 15000;
         let err = [];
 

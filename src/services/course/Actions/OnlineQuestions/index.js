@@ -106,7 +106,7 @@ export const questionMeta = questionMeta => ({
 export const onlineQuestionCourseId = courseId => ({
      type: ONLINE_QUESTION_COURSEID,
      payload: courseId
-})
+});
 
 let timerHandle = null;
 

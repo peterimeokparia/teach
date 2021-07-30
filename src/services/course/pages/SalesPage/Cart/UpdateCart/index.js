@@ -2,23 +2,16 @@ import {
 connect } from 'react-redux';
 
 import { 
-navigate } from '@reach/router';
-
-import { 
-removeItemFromCart  } from 'Services/course/Actions/Users';
-
-import { 
 getCoursesByCourseIdSelector  } from 'Services/course/Selectors';
 
-const UpdateCart = ({ courseId, course, removeItemFromCart }) => {  
-const removeFromCart = () => {
-    removeItemFromCart( course );
-    navigate('/mycourses');
-};
+import useSalesHook from 'Services/course/Pages/SalesPage/hooks/useSalesHook';
 
-const returnToCourseListPage = () => { 
-    navigate('/mycourses');
-};
+const UpdateCart = ({ course }) => {  
+
+    let {
+        removeFromCart,
+        returnToCourseListPage,
+    } = useSalesHook({ course });
 
 return ( <div> 
             <div> {`are you sure you want to remove ${course?.name} from your cart?`} </div> 
@@ -35,4 +28,4 @@ const mapState = (state, props)  => ({
     course: getCoursesByCourseIdSelector(state, props),
 });
 
-export default connect(mapState, { removeItemFromCart })( UpdateCart );
+export default connect(mapState, null)( UpdateCart );

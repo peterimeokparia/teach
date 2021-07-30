@@ -1,57 +1,58 @@
-import { useState, useEffect, useRef } from 'react';
-
 import {
 courseOption,     
 newCalendarEventData,
 transformDateTime } from 'Services/course/Pages/CalendarPage/helpers';
 
+import useConsultationFormHook from 'Services/course/Pages/CalendarPage/hooks/useConsultationFormHook';
 import Select from 'react-select';
 
 const ConsultationForm = ({
-handleSubmit,    
-saveInProgress,
-onSaveError,
-courses,
-slotInfo }) => {
-const [ firstName, setFirstName ] = useState('');
-const [ lastName, setLastName ] = useState('');
-const [ studentsName, setStudentsName ] = useState('');
-const [ email, setEmail ] = useState('');
-const [ phone, setPhone ] = useState(''); 
-const [ coursesInterestedIn, setCoursesInterestedIn ] = useState([]);
-const inputRef = useRef();
+    handleSubmit,    
+    saveInProgress,
+    onSaveError,
+    courses,
+    slotInfo }) => {
+    let {
+        firstName, 
+        setFirstName,
+        lastName, 
+        setLastName,
+        studentsName, 
+        setStudentsName, 
+        email, 
+        setEmail,
+        phone, 
+        setPhone,
+        coursesInterestedIn, 
+        setCoursesInterestedIn,
+        inputRef
 
-useEffect (() => {
-    if ( inputRef ) {
-        inputRef.current.focus();
-    }
-}, []); 
-
-if ( saveInProgress ) {
-    return <div>...loading</div>;
-};
-if ( onSaveError ) {
-    return <div> { onSaveError.message } </div> ;
-};
+    } = useConsultationFormHook();
+    
+    if ( saveInProgress ) {
+        return <div>...loading</div>;
+    };
+    if ( onSaveError ) {
+        return <div> { onSaveError.message } </div> ;
+    };
 
 const onSubmit = (e) => {
     e.preventDefault();
 };
 
 const submitForm = () => {
-const [ start, end, allDay ] = Object.entries(slotInfo);
-const [ calendarViewType ] = Object.entries(slotInfo?.view);
+    const [ start, end, allDay ] = Object.entries(slotInfo);
+    const [ calendarViewType ] = Object.entries(slotInfo?.view);
+    let event = {}, dateTimeString = transformDateTime( start[1], end[1], calendarViewType, allDay[1] );
 
-let event = {}, dateTimeString = transformDateTime( start[1], end[1], calendarViewType, allDay[1] );
-
-event = {
-    title: `Consultation with ${firstName} ${lastName}`,
-    recurringEvent:false,
-    allDay: false,
-    start: dateTimeString?.resStartStr,
-    end: dateTimeString?.resEndStr,
-    duration: ( new Date( dateTimeString?.resEndStr ) - new Date( dateTimeString?.resStartStr ) )
-};
+    event = {
+        title: `Consultation with ${firstName} ${lastName}`,
+        recurringEvent:false,
+        allDay: false,
+        start: dateTimeString?.resStartStr,
+        end: dateTimeString?.resEndStr,
+        duration: ( new Date( dateTimeString?.resEndStr ) - new Date( dateTimeString?.resStartStr ) )
+    };
 
 handleSubmit( newCalendarEventData(event, undefined, undefined, { firstName, lastName, studentsName, email, phone, coursesInterestedIn } ) );  
 };

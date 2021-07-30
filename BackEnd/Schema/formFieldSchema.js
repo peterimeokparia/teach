@@ -5,15 +5,15 @@ const Schema = mongoose.Schema;
 //Build new exam from existing set of questions
 const formFieldSchema = new Schema ({
    
-    questionId:{
+    formId:{
         type: String,
         required: false,
     },
-    answerId:{
+    parentComponentId:{
         type: String,
         required: false,
     },
-    formFieldGroupId:{
+    formType:{
         type: String,
         required: false,
     },

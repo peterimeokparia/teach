@@ -1,19 +1,19 @@
 import {
 jabraTutorTestPassword,
-testToken } from 'Services/course/Api/__mocks__/token.js';
+testToken } from 'Services/course/Pages/SignUp/tests/node_modules/Services/course/Api/__mocks__/token.js.js';
 
 import {
-role } from 'Services/course/helpers/PageHelpers';
+role } from 'Services/course/Pages/SignUp/tests/node_modules/Services/course/helpers/PageHelpers';
 
 import {
 SIGN_UP_BEGINS,  
 SIGN_UP_SUCCESSS,
 SAVE_USER_BEGIN,
-SAVE_USER_SUCCESS } from 'Services/course/Actions/Users';
+SAVE_USER_SUCCESS } from 'Services/course/Pages/SignUp/tests/node_modules/Services/course/Actions/Users';
 
 import {
 createUser,
-saveUser } from 'Services/course/Actions/Users'; 
+saveUser } from 'Services/course/Pages/SignUp/tests/node_modules/Services/course/Actions/Users'; 
 
 jest.mock('../../../Api');
 

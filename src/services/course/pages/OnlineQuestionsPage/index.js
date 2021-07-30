@@ -1,33 +1,31 @@
 import { 
-useEffect } from 'react';
-
-import { 
 connect } from 'react-redux';
 
 import {
-onlineQuestionCourseId } from 'Services/course/Actions/OnlineQuestions';
+getOperatorFromOperatorBusinessName,
+getPushNotificationUsersByOperatorId } from 'Services/course/Selectors';
+
+import {
+getOnlineQuestion } from './helpers';
 
 import OnlineQuestionsMultiEditorComponent from './Components/OnlineQuestionsMultiEditorComponent';
 
 const OnlineQuestionsPage = ({ 
   operatorBusinessName, 
   onlineQuestionId, 
-  courseId, 
-  onlineQuestionCourseId }) => {
-    
-  useEffect(() => {
-    if ( courseId ) {
-      onlineQuestionCourseId( courseId );
-    }
-}, [ courseId, onlineQuestionCourseId ]);
+  courseId,
+  onlineQuestions }) => {
  
+let currentCourseQuestions = getOnlineQuestion( onlineQuestions, courseId, onlineQuestionId )
 return (
     <div className="stage" id="stage">
       <div className="" id=""> 
         <div>
           <OnlineQuestionsMultiEditorComponent 
             onlineQuestionId={onlineQuestionId} 
+            courseId={courseId}
             operatorBusinessName={operatorBusinessName}
+            currentCourseQuestions={currentCourseQuestions}
           />
         </div>    
     </div>      
@@ -35,4 +33,15 @@ return (
  );
 };
 
-export default connect(null, { onlineQuestionCourseId })( OnlineQuestionsPage );
+const mapState = ( state, ownProps ) => {
+  return {
+    operator: getOperatorFromOperatorBusinessName(state, ownProps),
+    currentUser: state.users.user,
+    onlineQuestions: Object.values(state.onlineQuestions.onlineQuestions),
+    latestQuestion: state.onlineQuestions.latestOnlineQuestions,
+    pushNotificationUsers: getPushNotificationUsersByOperatorId(state, ownProps),
+    failedOnlineQuestionNotifications: Object.values( state?.failedNotifications.failedPushNotifications )
+  };
+};
+
+export default connect(mapState, null )( OnlineQuestionsPage );

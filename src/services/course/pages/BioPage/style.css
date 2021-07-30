@@ -25,6 +25,7 @@
   margin: 0;
   font-size: 24px;
   text-align: center;
+  text-transform: capitalize;
 
   /* text-transform: uppercase;
     letter-spacing: 0.5rem;

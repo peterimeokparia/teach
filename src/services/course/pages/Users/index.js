@@ -23,6 +23,7 @@ getOperatorFromOperatorBusinessName,
 getUsersByOperatorId,
 getCoursesByOperatorId } from 'Services/course/Selectors';
 
+import NotFoundPage from 'Services/course/Pages/Components/NotFoundPage';
 import Loading from '../Components/Loading';
 import LoginLogout from '../LoginPage/Components/LoginLogout';
 import MainMenu from 'Services/course/Pages/Components/MainMenu';
@@ -33,6 +34,7 @@ import ScheduleIcon from '@material-ui/icons/Schedule';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import BookIcon from '@material-ui/icons/Book';
 import ForumIcon from '@material-ui/icons/Forum';
+import Calendar from 'Services/course/helpers/Calendar';
 import './style.css';
 
 const Users = ({
@@ -44,10 +46,15 @@ const Users = ({
     calendar,
     calendars,
     events,
+    addCalendar,
     pushNotificationSubscribers,
     user,
     users }) => {
-    if ( ! user?.userIsValidated || ! operator ){
+    if ( ! operator || ! operatorBusinessName  ) {
+        return <NotFoundPage />;
+    }
+
+    if ( ! user?.userIsValidated ){
         navigate(`/${operatorBusinessName}/login`);
     }
 
@@ -59,6 +66,17 @@ const Users = ({
         return <div> { onCoursesError.message } </div> ;
     }
 
+    let calendarConfig = ( tutor, calendarType ) => 
+        { return {
+            users: users,
+            userId: tutor?._id,
+            calendarEventType: calendarType,
+            operatorId: operator?._id,
+            firstName: tutor?.firstname,
+            color: getCalendarColor( calendars )
+        }
+    }
+
 const viewCurrentUsersCourseList = ( userId ) => {
     navigate(`/${operatorBusinessName}/coursestaught/${userId}`); 
 };
@@ -66,14 +84,14 @@ const viewCurrentUsersCourseList = ( userId ) => {
 const gotToLessonPlan = ( user ) => { 
     navigate(`/${operatorBusinessName}/classroom/${user._id}`);
 };
-// <CalendarPage path="/:operatorBusinessName/schedule/:calendarEventType/calendar/:calendarId/user/:userId"/>
+
 const gotToCalendar = ( user ) => {
     let schedulingCalendar = calendars?.find( cal => cal?.calendarEventType === eventEnum.SessionScheduling && cal?.userId === user?._id);
 
     if ( schedulingCalendar ) {
         navigate(`/${operatorBusinessName}/schedule/${eventEnum.SessionScheduling}/calendar/${schedulingCalendar._id}/user/${user._id}`);
     } else {
-        addCalendar( addNewUserCalendar( user, eventEnum?.SessionScheduling ) )
+        addCalendar( { calendar: new Calendar( calendarConfig( user, eventEnum?.SessionScheduling ) ).calendar()} )
          .then(calendar => {
              if ( calendar ) {
                  navigateUserAfterGeneratingNewCalendar( user, eventEnum.SessionScheduling );
@@ -120,13 +138,7 @@ const goToTimeLine = ( user ) => {
 };
 
 function navigateUserAfterGeneratingNewCalendar(user, calendarEventType){ 
-    addCalendar( addNewUserCalendar( user, calendarEventType ) )
-        .then(calendar => {
-            if ( calendar ) {
-            navigate(`/${operatorBusinessName}/schedule/${calendarEventType}/calendar/${calendar._id}/user/${user._id}`);
-            }
-        })
-        .catch( error => console.log( error ));
+    navigate(`/${operatorBusinessName}/schedule/${calendarEventType}/calendar/${calendar._id}/user/${user._id}`);
 };
 
 function addNewUserCalendar( tutor, calendarType ){
@@ -137,19 +149,9 @@ function addNewUserCalendar( tutor, calendarType ){
         operatorId: operator?._id,
         firstName: tutor?.firstname,
         color: getCalendarColor( calendars )
-        }, 
-        event: undefined, 
-        location: undefined, 
-        schedulingData: undefined, 
-        consultation: undefined, 
-        calendarEventType: calendarType, 
-        operatorId: operator?._id, 
-        currentUser: tutor, 
-        pushNotificationUser: pushNotificationSubscribers?.filter(subscriber =>  subscriber?.userId === tutor?._id  ), 
-        emailAddresses: [ tutor?.email ]
+    }
    };
 };
-
 return (
     <div className="Users">
         <header> 
@@ -157,15 +159,20 @@ return (
                 navContent={navContent( user, operatorBusinessName, user?.role,  "Student" ).users}
             />           
             <h1>  {`Welcome ${user?.firstname}! `} </h1>
-            <LoginLogout
-                operatorBusinessName={operatorBusinessName}
-                user 
-            />                      
+
+            <div id="logout">
+                    <LoginLogout
+                        id="LoginLogout"
+                        operatorBusinessName={operatorBusinessName}
+                        user 
+                    /> 
+            </div>
+                                
         </header>
             <div className="ComponentUserList">
-        <ul >
+        <ul className={"component-seconday-ul"}>
             {users.map(singleUser => 
-                <li className={"component-seconday-list-body-users"}> 
+                <li className={"component-seconday-list-body-users"} data-cy={`li_${singleUser?.firstname}`}> 
                     <div className={ "user-list-items-users"}>
                         <div className="row">
                             <div className="col-1"> 
@@ -173,35 +180,47 @@ return (
                             </div>
                             <div className="col-10">
                             <NavLinks to={`/${operatorBusinessName}/coursestaught/about/${singleUser?._id}`}>
-                                <span className="multicolortext"> {singleUser?.firstname} </span>
+                                <span id={`multicolortext`} className="multicolortext" data-cy={`multicolortext_${singleUser?.firstname}`}> {singleUser?.firstname} </span>
                             </NavLinks>
                                 <span className="price"> <h6>{singleUser?.courses?.length} {singleUser?.courses?.length === 1  ? "Course.": "Courses."}  </h6></span>  
                                 <SchoolIcon 
+                                    id="SchoolIcon"
+                                    data-cy={`${(singleUser?.firstname)?.toLowerCase()}_SchoolIcon`}
                                     className="round-button-1"
                                     onClick={() => viewCurrentUsersCourseList(singleUser?._id)}
                                     disabled={singleUser?.courses?.length === 0} 
                                 />
                                 <BookIcon 
+                                    id="BookIcon"
+                                    data-cy={`${(singleUser?.firstname)?.toLowerCase()}_BookIcon`}
                                     className="round-button-2"
                                     onClick={() => gotToLessonPlan(singleUser)}
                                     disabled={singleUser?.courses?.length === 0} 
                                 />
                                 <ScheduleIcon
+                                    id="ScheduleIcon"
+                                    data-cy={`${(singleUser?.firstname)?.toLowerCase()}_ScheduleIcon`}
                                     className="round-button-3"
                                     onClick={() => gotToCalendar(singleUser)}
                                     disabled={singleUser?.courses?.length === 0}  
                                 />
                                 <CalendarTodayIcon 
+                                    id="CalendarTodayIcon"
+                                    data-cy={`${(singleUser?.firstname)?.toLowerCase()}_CalendarTodayIcon`}
                                     className="round-button-5"
                                     onClick={() => gotToConsultationCalendar(singleUser)}
                                     disabled={singleUser?.courses?.length === 0} 
                                 />
                                 <ForumIcon 
+                                    id="ForumIcon"
+                                    data-cy={`${(singleUser?.firstname)?.toLowerCase()}_ForumIcon`}
                                     className="round-button-6"
                                     onClick={() => goToOnlineTutoringRequest(singleUser)}
                                     disabled={singleUser?.courses?.length === 0} 
                                 />
                                 <TimelineIcon 
+                                    id="TimelineIcon"
+                                    data-cy={`${(singleUser?.firstname)?.toLowerCase()}_TimelineIcon`}
                                     className="round-button-7"
                                     onClick={() => goToTimeLine(singleUser)}
                                     disabled={singleUser?.courses?.length === 0} 
@@ -231,4 +250,4 @@ const mapState = ( state, ownProps ) => ({
     pushNotificationSubscribers: getPushNotificationUsersByOperatorId(state, ownProps) 
 });
 
-export default connect(mapState)(Users);
+export default connect(mapState, { addCalendar })(Users);

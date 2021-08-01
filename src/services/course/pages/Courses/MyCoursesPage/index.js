@@ -8,24 +8,24 @@ navigate } from '@reach/router';
 
 import { 
 openNewCourseModal, 
-closeNewCourseModal } from 'Services/course/Actions/Courses';
+closeNewCourseModal } from 'services/course/actions/courses';
 
 import { 
-navContent } from  'Services/course/Pages/Components/NavigationHelper';
+navContent } from  'services/course/pages/components/NavigationHelper';
 
 import { 
 getOperatorFromOperatorBusinessName, 
 getUsersByOperatorId,
-getCoursesByOperatorId } from 'Services/course/Selectors';
+getCoursesByOperatorId } from 'services/course/selectors';
 
 import { 
 helpIconStyle } from './inlineStyles';
 
-import LoginLogout from 'Services/course/Pages/LoginPage/Components/LoginLogout';
-import CoursesComponent from 'Services/course/Pages/Courses/Components/CoursesComponent';
-import NewCoursePage from 'Services/course/Pages/Courses/NewCoursePage';
-import MainMenu from 'Services/course/Pages/Components/MainMenu';
-import Cart from 'Services/course/Pages/SalesPage/Cart';
+import LoginLogout from 'services/course/pages/LoginPage/components/LoginLogout';
+import CoursesComponent from 'services/course/pages/Courses/components/CoursesComponent';
+import NewCoursePage from 'services/course/pages/Courses/NewCoursePage';
+import MainMenu from 'services/course/pages/components/MainMenu';
+import Cart from 'services/course/pages/SalesPage/Cart';
 import Modal from 'react-modal';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import './style.css';
@@ -76,7 +76,7 @@ return (
                 />
             }
         </div>
-            <Modal isOpen={isModalOpen} onRequestClose={closeNewCourseModal}> <NewCoursePage user={user}/> </Modal>
+            <Modal isOpen={isModalOpen} onRequestClose={closeNewCourseModal}> <NewCoursePage user={user} operatorBusinessName={operatorBusinessName}/> </Modal>
         </div>
     )}
     <br></br>   
@@ -96,7 +96,7 @@ return (
                 isOpen={isModalOpen} 
                 onRequestClose={closeNewCourseModal}
             > 
-                <NewCoursePage user={user}/> 
+                <NewCoursePage user={user} operatorBusinessName={operatorBusinessName}/> 
             </Modal>
     </div>
 ); };

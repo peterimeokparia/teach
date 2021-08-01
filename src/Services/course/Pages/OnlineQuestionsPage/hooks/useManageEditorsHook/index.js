@@ -9,20 +9,20 @@ import {
 addNewOnlineAnswer,
 saveOnlineAnswer,
 loadOnlineAnswers,
-deleteOnlineAnswer } from 'Services/course/Actions/OnlineAnswers';
+deleteOnlineAnswer } from 'services/course/actions/onlineanswers';
 
 import { 
 navigate } from '@reach/router';
 
 import {
 elementMeta,  
-editorContentType } from 'Services/course/Pages/QuestionsPage/helpers';
+editorContentType } from 'services/course/pages/QuestionsPage/helpers';
 
 import {
-manageEditorsFieldCollection } from 'Services/course/Pages/QuestionsPage/helpers';
+manageEditorsFieldCollection } from 'services/course/pages/QuestionsPage/helpers';
 
 import {
-pageNavigationHelper } from 'Services/course/Pages/OnlineQuestionsPage/Components/ManageEditors/helpers';
+pageNavigationHelper } from 'services/course/pages/OnlineQuestionsPage/components/ManageEditors/helpers';
 
 function useManageEditorsHook( answers, question, currentUser, operatorBusinessName, courseId ){
 

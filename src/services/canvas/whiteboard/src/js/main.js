@@ -1,16 +1,17 @@
 import keymage from "keymage";
-import io from "socket.io-client";
+import { io } from "socket.io-client";
 import whiteboard from "./whiteboard";
 import keybinds from "./keybinds";
 import Picker from "vanilla-picker";
 import { dom } from "@fortawesome/fontawesome-svg-core";
-import pdfjsLib from "pdfjs-dist/webpack";
 import shortcutFunctions from "./shortcutFunctions";
 import ReadOnlyService from "./services/ReadOnlyService";
 import InfoService from "./services/InfoService";
 import { getSubDir } from "./utils";
 import ConfigService from "./services/ConfigService";
 import { v4 as uuidv4 } from "uuid";
+
+const pdfjsLib = require("pdfjs-dist");
 
 const urlParams = new URLSearchParams(window.location.search);
 let whiteboardId = urlParams.get("whiteboardid");
@@ -35,6 +36,7 @@ if (urlParams.get("whiteboardid") !== whiteboardId) {
 
 const myUsername = urlParams.get("username") || "unknown" + (Math.random() + "").substring(2, 6);
 const accessToken = urlParams.get("accesstoken") || "";
+const copyfromwid = urlParams.get("copyfromwid") || "";
 
 // Custom Html Title
 const title = urlParams.get("title");
@@ -152,7 +154,7 @@ function initWhiteboard() {
         whiteboard.loadWhiteboard("#whiteboardContainer", {
             //Load the whiteboard
             whiteboardId: whiteboardId,
-            username: btoa(myUsername),
+            username: btoa(encodeURIComponent(myUsername)),
             backgroundGridUrl: "./images/" + ConfigService.backgroundGridImage,
             sendFunction: function (content) {
                 if (ReadOnlyService.readOnlyActive) return;
@@ -169,7 +171,17 @@ function initWhiteboard() {
         // request whiteboard from server
         $.get(subdir + "/api/loadwhiteboard", { wid: whiteboardId, at: accessToken }).done(
             function (data) {
+                console.log(data);
                 whiteboard.loadData(data);
+                if (copyfromwid && data.length == 0) {
+                    //Copy from witheboard if current is empty and get parameter is given
+                    $.get(subdir + "/api/loadwhiteboard", {
+                        wid: copyfromwid,
+                        at: accessToken,
+                    }).done(function (data) {
+                        whiteboard.loadData(data);
+                    });
+                }
             }
         );
 
@@ -246,19 +258,19 @@ function initWhiteboard() {
             .off("click")
             .click(function () {
                 $("#whiteboardTrashBtnConfirm").show().focus();
-                $(this).css({ visibility: "hidden" });
+                $(this).hide();
             });
 
         $("#whiteboardTrashBtnConfirm").mouseout(function () {
             $(this).hide();
-            $("#whiteboardTrashBtn").css({ visibility: "inherit" });
+            $("#whiteboardTrashBtn").show();
         });
 
         $("#whiteboardTrashBtnConfirm")
             .off("click")
             .click(function () {
                 $(this).hide();
-                $("#whiteboardTrashBtn").css({ visibility: "inherit" });
+                $("#whiteboardTrashBtn").show();
                 whiteboard.clearWhiteboard();
             });
 
@@ -302,6 +314,12 @@ function initWhiteboard() {
                     $(".activeToolIcon").empty();
                 } else {
                     $(".activeToolIcon").html($(this).html()); //Set Active icon the same as the button icon
+                }
+
+                if (activeTool == "text" || activeTool == "stickynote") {
+                    $("#textboxBackgroundColorPickerBtn").show();
+                } else {
+                    $("#textboxBackgroundColorPickerBtn").hide();
                 }
             });
 
@@ -746,6 +764,15 @@ function initWhiteboard() {
             },
         });
 
+        new Picker({
+            parent: $("#textboxBackgroundColorPicker")[0],
+            color: "#f5f587",
+            bgcolor: "#f5f587",
+            onChange: function (bgcolor) {
+                whiteboard.setTextBackgroundColor(bgcolor.rgbaString);
+            },
+        });
+
         // on startup select mouse
         shortcutFunctions.setTool_mouse();
         // fix bug cursor not showing up
@@ -765,6 +792,8 @@ function initWhiteboard() {
 
         // In any case, if we are on read-only whiteboard we activate read-only mode
         if (ConfigService.isReadOnly) ReadOnlyService.activateReadOnlyMode();
+
+        $("body").show();
     });
 
     //Prevent site from changing tab on drag&drop
@@ -815,7 +844,7 @@ function initWhiteboard() {
         var date = +new Date();
         $.ajax({
             type: "POST",
-            url: document.URL.substr(0, document.URL.lastIndexOf("/")) + "api/upload",
+            url: document.URL.substr(0, document.URL.lastIndexOf("/")) + "/api/upload",
             data: {
                 imagedata: base64data,
                 whiteboardId: whiteboardId,
@@ -827,10 +856,11 @@ function initWhiteboard() {
                 showBasicAlert("Whiteboard was saved to Webdav!", {
                     headercolor: "#5c9e5c",
                 });
-                console.log("Image uploaded for webdav!");
+                console.log("Image uploaded to webdav!");
                 callback();
             },
             error: function (err) {
+                console.error(err);
                 if (err.status == 403) {
                     showBasicAlert(
                         "Could not connect to Webdav folder! Please check the credentials and paths and try again!"
@@ -877,7 +907,7 @@ function initWhiteboard() {
 
     // handle pasting from clipboard
     window.addEventListener("paste", function (e) {
-        if ($(".basicalert").length > 0) {
+        if ($(".basicalert").length > 0 || !!e.origin) {
             return;
         }
         if (e.clipboardData) {
@@ -902,7 +932,7 @@ function initWhiteboard() {
                 }
             }
 
-            if (!imgItemFound && whiteboard.tool != "text") {
+            if (!imgItemFound && whiteboard.tool != "text" && whiteboard.tool != "stickynote") {
                 showBasicAlert(
                     "Please Drag&Drop the image or pdf into the Whiteboard. (Browsers don't allow copy+past from the filesystem directly)"
                 );

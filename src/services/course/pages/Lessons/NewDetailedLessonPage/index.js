@@ -7,7 +7,7 @@ import {
 connect } from 'react-redux';
 
 import { 
-resetClassRoomUserError } from 'Services/course/Actions/ClassRooms';
+resetClassRoomUserError } from 'services/course/actions/classrooms';
 
 import './style.css';
 

@@ -13,27 +13,33 @@ getLessonVideoUrl,
 setLessonCourse,
 loadLessons,
 addNewLesson, 
-saveLesson } from 'Services/course/Actions/Lessons';
+saveLesson } from 'services/course/actions/lessons';
 
 import { 
-loadSessions } from 'Services/course/Actions/Sessions';
+loadSessions } from 'services/course/actions/sessions';
 
 import { 
 getUsersByOperatorId,    
 getLessonsByCourseIdSelector, 
 getCoursesByCourseIdSelector,
 getCoursesByCreatedByIdSelector,
-getOperatorFromOperatorBusinessName } from 'Services/course/Selectors';
+getOperatorFromOperatorBusinessName } from 'services/course/selectors';
 
 import { 
-getLastUsersState } from 'Services/course/Api';
+getLastUsersState } from 'services/course/api';
 
 import { 
-role } from 'Services/course/helpers/PageHelpers';
+role } from 'services/course/helpers/PageHelpers';
 
-import NotFoundPage from 'Services/course/Pages/Components/NotFoundPage';
-import Loading from 'Services/course/Pages/Components/Loading';
-import CourseDisplayViewComponent from 'Services/course/Pages/Courses/CourseDetailPage/Components/CourseDisplayViewComponent';
+import { 
+toast } from 'react-toastify';
+
+import { 
+Validations } from  'services/course/helpers/Validations';
+
+import NotFoundPage from 'services/course/pages/components/NotFoundPage';
+import Loading from 'services/course/pages/components/Loading';
+import CourseDisplayViewComponent from 'services/course/pages/Courses/CourseDetailPage/components/CourseDisplayViewComponent';
 import './style.css';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -64,6 +70,10 @@ const CourseDetailPage = ({
         loadLessons( courseId );
     }, [ courseId, course, loadLessons, setLessonCourse ]);  
 
+    if ( onLessonError ) {
+        toast.error(`There was a problem while adding lesson: ${ onLessonError?.title }: ${ onLessonError?.error?.message }`);
+    }
+
     if ((! userOwnsCourse( currentUser, courseTutor, courseId )) &&                                                                             
             (! getLastUsersState()?.courses?.includes(courseId))) {
         return <Redirect to={`/${operatorBusinessName}/courses/${courseId}/buy`} noThrow/>;
@@ -75,10 +85,6 @@ const CourseDetailPage = ({
 
     if ( ! course ){    
         return <NotFoundPage />;  
-    }
-
-    if ( onLessonError ) {
-        return <div> { onLessonError.message } </div> ;
     }
 
 function userOwnsCourse(user, courseTutor,  courseId){
@@ -94,14 +100,15 @@ function userOwnsCourse(user, courseTutor,  courseId){
 
 return ( 
     <div>    
-        <CourseDisplayViewComponent 
+         {Validations.setErrorMessageContainer()} 
+        <CourseDisplayViewComponent
+                courseId={courseId} 
                 lessonId={lessonId}
                 selectedTutorId={selectedTutorId}
                 courseDetailChildren={children}
-        />  
+        />     
     </div>   
     
-
 ); };
 
 const mapDispatch = {
@@ -121,7 +128,7 @@ const mapState = (state, ownProps) => {
         currentUser: state.users.user,
         previewMode: state.app.previewMode,
         lessonPlanUrl: state.lessons.lessonPlanUrl,
-        course: state.lessons.course,
+        course: state.courses.selectedCourseFromLessonPlanCourseDropDown,
         selectedLessonPlanLesson: state.lessons.selectedLessonPlanLesson,
         isLessonsLoading:state.lessons.lessonsLoading,
         onLessonError: state.lessons.onSaveLessonError,

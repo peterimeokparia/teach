@@ -1,5 +1,5 @@
-import { Fragment, useEffect, useState, useRef } from 'react';
-import { connect } from 'react-redux';
+import { Fragment, useEffect, useState, useRef } from 'services/recorder/stream/node_modules/react';
+import { connect } from 'services/recorder/stream/node_modules/react-redux';
 import { addNewStream } from '../actions';
 import './StreamCreate.css';
 import StreamHeader from './StreamHeader';

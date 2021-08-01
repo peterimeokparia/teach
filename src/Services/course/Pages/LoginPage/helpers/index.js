@@ -2,17 +2,17 @@ import {
 navigate } from '@reach/router';
 
 import { 
-Validations } from 'Services/course/helpers/Validations';
+Validations } from 'services/course/helpers/Validations';
 
 import {
-role } from 'Services/course/helpers/PageHelpers';
+role } from 'services/course/helpers/PageHelpers';
 
 import {
 joinInProgressMeeting, 
-getMeetings } from 'Services/course/Pages/Meeting/helpers';
+getMeetings } from 'services/course/pages/Meeting/helpers';
 
 import {
-updateUser } from 'Services/course/Api';
+updateUser } from 'services/course/api';
 
 import Swal from 'sweetalert2';
 

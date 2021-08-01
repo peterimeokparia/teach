@@ -3,7 +3,7 @@ add,
 update,
 remove,
 get,
-getById } from 'Services/course/Api';
+getById } from 'services/course/api';
 
 export const ADD_NEW_MEETING_BEGIN = "ADD NEW MEETING BEGIN";
 export const ADD_NEW_MEETING_SUCCESS = "ADD NEW MEETING SUCCESS";

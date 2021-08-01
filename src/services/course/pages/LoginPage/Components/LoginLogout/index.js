@@ -5,16 +5,16 @@ import {
 navigate } from '@reach/router';
 
 import { 
-logOut } from 'Services/course/Actions/Users';
+logOut } from 'services/course/actions/users';
 
 import { 
-Validations } from  'Services/course/helpers/Validations';
+Validations } from  'services/course/helpers/Validations';
 
 import { 
-forceReload } from 'Services/course/helpers/ServerHelper';
+forceReload } from 'services/course/helpers/ServerHelper';
 
 import { 
-getOperatorFromOperatorBusinessName } from 'Services/course/Selectors';
+getOperatorFromOperatorBusinessName } from 'services/course/selectors';
 
 import LockIcon from '@material-ui/icons/Lock';
 import Swal from 'sweetalert2';

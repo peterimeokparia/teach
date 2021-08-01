@@ -1,5 +1,4 @@
 class SiteUser {
-
   constructor(){
     this.firstname = ""; 
     this.email = "";

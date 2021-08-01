@@ -1,5 +1,5 @@
 import {
-elementMeta } from 'Services/course/Pages/QuestionsPage/helpers';
+elementMeta } from 'services/course/pages/QuestionsPage/helpers';
   
 export const upload_url = "http://localhost:9005/api/v1/fileUploads";
 

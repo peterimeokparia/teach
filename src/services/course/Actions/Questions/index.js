@@ -3,7 +3,7 @@ add,
 update,
 get,
 remove,
-getById } from 'Services/course/Api';
+getById } from 'services/course/api';
 
 export const SET_QUESTION_MARKDOWN = "SET_QUESTION_MARKDOWN";
 export const ADD_QUESTION_BEGIN = "ADD QUESTION BEGIN";

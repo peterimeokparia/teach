@@ -8,11 +8,9 @@ function useOnlineTutoringRequestFormHook(){
     const [ immediateHelp, setImmediateHelp ] = useState( false );
     const [ getTutor, setGetATutor ] = useState( false );
     const inputRef = useRef();
- 
     useEffect (() => {
         // inputRef.current.focus();
     }, []); 
-
 return {
     courseName, 
     immediateHelp, 

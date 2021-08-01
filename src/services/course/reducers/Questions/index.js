@@ -15,7 +15,7 @@ RESET_QUESTION_ERROR,
 DELETE_QUESTION_SUCCESS, 
 SET_QUESTION_MARKDOWN,
 SET_EXPLANATION_ANSWER_MARKDOWN,
-SET_MARKDOWN_EDITOR  } from '../../Actions/Questions';
+SET_MARKDOWN_EDITOR  } from '../../actions/questions';
 
 const initialState = {
     questions: {},

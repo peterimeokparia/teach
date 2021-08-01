@@ -1,8 +1,8 @@
 import { 
-role } from 'Services/course/helpers/PageHelpers';
+role } from 'services/course/helpers/PageHelpers';
 
 import {
-getTimeZoneDateTime } from 'Services/course/helpers/ServerHelper';
+getTimeZoneDateTime } from 'services/course/helpers/ServerHelper';
 
 import moment from "moment";
 import randomColor from 'randomcolor';

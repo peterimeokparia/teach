@@ -4,10 +4,10 @@ import {
 connect } from 'react-redux';
 
 import { 
-uploadFiles } from 'Services/course/helpers/ServerHelper';
+uploadFiles } from 'services/course/helpers/ServerHelper';
 
 import {
-Validations } from 'Services/course/helpers/Validations';
+Validations } from 'services/course/helpers/Validations';
 import './style.css'
 
 const SimpleUpload = ({ 

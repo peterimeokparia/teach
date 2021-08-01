@@ -1,25 +1,28 @@
-import { useState, useRef, useEffect } from 'react';
+import { 
+useState, 
+useRef, 
+useEffect } from 'react';
 
 import { 
 connect } from 'react-redux';
 
 import { 
 saveUser, 
-loadUsers } from 'Services/course/Actions/Users';
+loadUsers } from 'services/course/actions/users';
 
 import { 
 resetClassRoomUserError,
 unSubscribe,
-deleteClassRoom } from 'Services/course/Actions/ClassRooms';
+deleteClassRoom } from 'services/course/actions/classrooms';
 
 import { 
 newSiteUser, 
-role } from 'Services/course/helpers/PageHelpers';
+role } from 'services/course/helpers/PageHelpers';
 
-import ToggleUsersRadioButtons from 'Services/course/Pages/NewClassRoomUserPage/Components/ToggleUsersRadioButtons';
-import ResetForm from 'Services/course/Pages/NewClassRoomUserPage/Components/NewUser/ResetForm';
-import NewUser from 'Services/course/Pages/NewClassRoomUserPage/Components/NewUser';
-import DropDown from 'Services/course/Pages/Components/DropDown';
+import ToggleUsersRadioButtons from 'services/course/pages/NewClassRoomUserPage/components/ToggleUsersRadioButtons';
+import ResetForm from 'services/course/pages/NewClassRoomUserPage/components/NewUser/ResetForm';
+import NewUser from 'services/course/pages/NewClassRoomUserPage/components/NewUser';
+import DropDown from 'services/course/pages/components/DropDown';
 
 const NewClassRoomUserPage = ({
     operator,

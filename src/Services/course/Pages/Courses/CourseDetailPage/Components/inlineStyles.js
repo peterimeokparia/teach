@@ -17,8 +17,6 @@ export const deleteQuestionIconStyle = () => {
     fontSize: 25,
     "marginTop": "-51%",
     "top": "10%",
-    // "marginLeft": "95%",
-    // "marginBottom": "1%",
   };
 };
 

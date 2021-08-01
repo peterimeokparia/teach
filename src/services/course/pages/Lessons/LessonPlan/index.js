@@ -5,50 +5,50 @@ import {
 addNewMeeting,
 loadMeetings, 
 loadMeetingsByMeetingId,
-saveMeeting } from 'Services/course/Actions/Meetings';
+saveMeeting } from 'services/course/actions/meetings';
 
 import{
-incrementSessionCount } from 'Services/course/Actions/Sessions';
+incrementSessionCount } from 'services/course/actions/sessions';
 
 import{
 loadLessons,
 saveLesson,
 toggleTeachBoardOrEditor,   
 setLessonInProgressStatus,
-selectLessonFromLessonPlanDropDown } from 'Services/course/Actions/Lessons';
+selectLessonFromLessonPlanDropDown } from 'services/course/actions/lessons';
 
 import{
 loadUsers,
 lastLoggedInUser,
 updateUserInvitationUrl, 
-inviteStudentsToLearningSession } from 'Services/course/Actions/Users';
+inviteStudentsToLearningSession } from 'services/course/actions/users';
 
 import { 
 getOperatorFromOperatorBusinessName, 
 getUsersByOperatorId,
-getCoursesByOperatorId } from 'Services/course/Selectors';
+getCoursesByOperatorId } from 'services/course/selectors';
 
 import { 
 getUrls,
-adjustRoomSize } from 'Services/course/Pages/Lessons/LessonPlan/helpers';
+adjustRoomSize } from 'services/course/pages/Lessons/LessonPlan/helpers';
 
 import { 
-Validations } from 'Services/course/helpers/Validations';
+Validations } from 'services/course/helpers/Validations';
 
 import {
-toggleVideoModalMode } from 'Services/course/Actions/Video';
+toggleVideoModalMode } from 'services/course/actions/video';
 
 import {
 videoCallIcon,
 adjustRoomIcon,
 iconStyleMain,
-videoMeta } from 'Services/course/Pages/Lessons/LessonPlan/inlineStyles.js';
+videoMeta } from 'services/course/pages/Lessons/LessonPlan/inlineStyles.js';
 
-import useTeachMeetingSettingsHook  from 'Services/course/Pages/Lessons/hooks/useTeachMeetingSettingsHook';
-import LessonPlanIframeComponent  from 'Services/course/Pages/Components/LessonPlanIframeComponent';
-import Meeting from 'Services/course/Pages/Meeting';
-import MaterialUiVideoComponent from 'Services/course/Pages/Components/MaterialUiVideoComponent';
-import NavLinks  from 'Services/course/Pages/Components/NavLinks';
+import useTeachMeetingSettingsHook  from 'services/course/pages/Lessons/hooks/useTeachMeetingSettingsHook';
+import LessonPlanIframeComponent  from 'services/course/pages/components/LessonPlanIframeComponent';
+import Meeting from 'services/course/pages/Meeting';
+import MaterialUiVideoComponent from 'services/course/pages/components/MaterialUiVideoComponent';
+import NavLinks  from 'services/course/pages/components/NavLinks';
 import NotesIcon from '@material-ui/icons/Notes';
 import VideoCallIcon from '@material-ui/icons/VideoCall';
 import AdjustIcon from '@material-ui/icons/Adjust';

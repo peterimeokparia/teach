@@ -9,21 +9,21 @@ import {
 useDispatch } from 'react-redux';
     
 import { 
-loadMeetings } from 'Services/course/Actions/Meetings';
+loadMeetings } from 'services/course/actions/meetings';
 
 import {
-loadSubscribedPushNotificationUsers } from 'Services/course/Actions/Notifications';
+loadSubscribedPushNotificationUsers } from 'services/course/actions/notifications';
 
 import {
 setOperator,
-setOperatorBusinessName } from 'Services/course/Actions/Operator';
+setOperatorBusinessName } from 'services/course/actions/operator';
     
 import {
-role } from 'Services/course/helpers/PageHelpers';
+role } from 'services/course/helpers/PageHelpers';
 
-import Loading from 'Services/course/Pages/Components/Loading';
-import NotFoundPage from 'Services/course/Pages/Components/NotFoundPage';
-import CoursePackageRenewal from 'Services/course/Pages/Packages/CoursePackageRenewal';
+import Loading from 'services/course/pages/components/Loading';
+import NotFoundPage from 'services/course/pages/components/NotFoundPage';
+import CoursePackageRenewal from 'services/course/pages/Packages/CoursePackageRenewal';
 
 function useLoginPageHook( loginPageProps ){
     const dispatch = useDispatch();
@@ -46,20 +46,25 @@ function useLoginPageHook( loginPageProps ){
         if ( operator ) {
           setOperator( operator );
         }
-        if ( operatorBusinessName ) {
-            dispatch(setOperatorBusinessName( operatorBusinessName ));
-        }    
+       
     }, [ loadUsers, loadSessions, loadMeetings, loadSubscribedPushNotificationUsers ]);
+    
+    if ( operatorBusinessName ) {
+        dispatch(setOperatorBusinessName( operatorBusinessName ));
+    }    
 
     if ( ! operator || ! operatorBusinessName  ) {
         return <NotFoundPage />;
     }
+
     if ( loading ) {
         return <Loading />;
-    } 
+    }
+
     if ( error ) {
         return <div> { error.message } </div> ;
     }
+
     if ( user?.userIsValidated ) {
         // dispatch(loadUsers());
         if ( user?.role === role.Tutor ) {

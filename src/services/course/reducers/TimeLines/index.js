@@ -13,7 +13,7 @@ SAVE_TIMELINE_ERROR,
 // DELETE_TIMELINE_BEGIN,  
 // DELETE_TIMELINE_SUCCESS,   
 // DELETE_TIMELINE_ERROR, 
-} from '../../Actions/TimeLines';
+} from '../../actions/timelines';
 
 const initialState = {
 timeLines:{},

@@ -9,7 +9,7 @@ SAVE_GRADE_SUCCESS,
 SAVE_GRADE_ERROR,
 LOAD_GRADES_BEGIN,
 LOAD_GRADES_SUCCESS,
-LOAD_GRADES_ERROR } from '../../Actions/Grades';
+LOAD_GRADES_ERROR } from '../../actions/grades';
 
 const initialState = {
 grades:{},

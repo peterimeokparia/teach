@@ -1,32 +1,5 @@
-// import React from 'react';
-// import OnlineTutoringRequestForm  from 'Services/course/Pages/CalendarPage/Components/OnlineTutoringRequestForm';
-// import renderer from 'react-test-renderer';
-
-// describe('OnlineTutoringRequestForm', () =>  {  
-
-//   beforeEach(() => {
-  
-//   });
-
-//   it('renders as expected', async () => {
-//     const tree = renderer.create(
-//         <OnlineTutoringRequestForm 
-//           // handleSubmit={handleSubmit}
-//           // schedulingData={{}} 
-//           // slotInfo={{slotInfo}}
-//           // submitEventButtonText={"Submit"}
-//           // children  
-//       /> 
-//     );
-//       expect(tree.toJSON()).toMatchSnapshot();
-//   })
-// });
-
-
-
-
 import React from 'react';
-import OnlineTutoringRequestForm  from 'Services/course/Pages/CalendarPage/Components/OnlineTutoringRequestForm';
+import OnlineTutoringRequestForm  from 'services/course/pages/CalendarPage/components/OnlineTutoringRequestForm';
 import renderer from 'react-test-renderer';
 import thunk from "redux-thunk"; 
 import * as reactRedux from 'react-redux';

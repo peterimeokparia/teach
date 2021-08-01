@@ -9,7 +9,7 @@ MARK_ATTENDANCE_SUCCESS,
 MARK_ATTENDANCE_ERROR,
 SAVE_ATTENDANCE_BEGIN,
 SAVE_ATTENDANCE_SUCCESS,
-SAVE_ATTENDANCE_ERROR } from '../../Actions/Attendance';
+SAVE_ATTENDANCE_ERROR } from '../../actions/attendance';
 
 const initialState = {
     attendanceCollection:{},

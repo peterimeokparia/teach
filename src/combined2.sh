@@ -32,8 +32,8 @@
 # bin/installDeps.sh "$@" || exit 1
 
 #Move to the node folder and start
-echo "Starting Json Server..."
-exec yarn json-server db.json --routes routes.json -w -p 8082 &
+#echo "Starting Json Server..."
+#exec yarn json-server db.json --routes routes.json -w -p 8082 &
 
 echo "Starting Application..."
 exec yarn react-scripts start

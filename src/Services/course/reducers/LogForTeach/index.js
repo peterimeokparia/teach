@@ -9,7 +9,7 @@ LOAD_LOGS_SUCCESS,
 LOAD_LOGS_ERROR,
 SAVE_LOG_BEGIN,
 SAVE_LOG_SUCCESS,
-SAVE_LOG_ERROR } from '../../Actions/LogForTeach';
+SAVE_LOG_ERROR } from '../../actions/logforteach';
 
 const initialState = {
     logs: {},

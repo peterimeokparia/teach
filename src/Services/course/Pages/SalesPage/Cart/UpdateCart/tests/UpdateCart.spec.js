@@ -1,20 +1,20 @@
-import React from 'Services/course/Pages/SalesPage/Cart/UpdateCart/tests/node_modules/react';
+import React from 'react';
 
 import { 
 Provider, 
-useSelector } from "Services/course/Pages/SalesPage/Cart/UpdateCart/tests/node_modules/react-redux";
+useSelector } from "react-redux";
 
 import { 
-applyMiddleware } from 'Services/course/Pages/SalesPage/Cart/UpdateCart/tests/node_modules/redux'; 
+applyMiddleware } from 'redux'; 
 
 import { 
-mockStoreObject } from 'Services/course/Pages/SalesPage/Cart/UpdateCart/tests/node_modules/Services/course/Api';
+mockStoreObject } from 'Services/course/api';
 
-import UpdateCart  from 'Services/course/Pages/SalesPage/Cart/UpdateCart/tests/node_modules/Services/course/Pages/SalesPage/Cart/UpdateCart';
-import renderer from 'Services/course/Pages/SalesPage/Cart/UpdateCart/tests/node_modules/react-test-renderer';
-import thunk from "Services/course/Pages/SalesPage/Cart/UpdateCart/tests/node_modules/redux-thunk"; 
-import * as reactRedux from 'Services/course/Pages/SalesPage/Cart/UpdateCart/tests/node_modules/react-redux';
-import configureStore from 'Services/course/Pages/SalesPage/Cart/UpdateCart/tests/node_modules/redux-mock-store';
+import UpdateCart  from 'services/course/pages/SalesPage/Cart/UpdateCart';
+import renderer from 'react-test-renderer';
+import thunk from "redux-thunk"; 
+import * as reactRedux from 'react-redux';
+import configureStore from 'redux-mock-store';
 
   const mockStore = configureStore([]);
   

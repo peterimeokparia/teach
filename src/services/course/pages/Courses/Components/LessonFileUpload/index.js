@@ -1,4 +1,4 @@
-import FileUpload from 'Services/course/Pages/Components/FileUpload';
+import FileUpload from 'services/course/pages/components/FileUpload';
 
 export function LessonFileUpload({
 previewMode,

@@ -1,9 +1,8 @@
 import React from 'react';
-import OperatorRegistrationForm  from 'Services/course/Pages/OperatorSignupPage/OperatorRegistrationForm';
+import OperatorRegistrationForm  from 'services/course/pages/OperatorSignupPage/OperatorRegistrationForm';
 import renderer from 'react-test-renderer';
 
 describe('OperatorRegistrationForm', () =>  {  
-
   beforeEach(() => {
     jest.spyOn(Date.prototype, 'toLocaleTimeString')
         .mockImplementation(() => '12:00:00');

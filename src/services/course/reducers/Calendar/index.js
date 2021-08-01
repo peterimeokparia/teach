@@ -15,7 +15,7 @@ DELETE_CALENDAR_SUCCESS,
 DELETE_CALENDAR_ERROR,
 TOGGLE_CALENDAR_NEW_INPUT,
 CALENDAR_EVENT_TYPE
- } from 'Services/course/Actions/Calendar';
+ } from 'services/course/actions/calendar';
 
 const initialState = {
      calendar:{},

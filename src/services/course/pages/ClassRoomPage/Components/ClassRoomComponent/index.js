@@ -2,34 +2,32 @@ import {
 connect } from 'react-redux';
 
 import { 
-markAttendance } from 'Services/course/Actions/Attendance';
+markAttendance } from 'services/course/actions/attendance';
 
 import {
-addNewGrade } from 'Services/course/Actions/Grades';
+addNewGrade } from 'services/course/actions/grades';
 
 import{
-enableTeachPlatform } from 'Services/course/Actions/ClassRooms';
+enableTeachPlatform } from 'services/course/actions/classrooms';
 
 import { 
-addNewGradesForSelectedStudents } from 'Services/course/Pages/GradesPage/Components/AddStudentGrade/helpers';
+addNewGradesForSelectedStudents } from 'services/course/pages/GradesPage/components/AddStudentGrade/helpers';
 
 import { 
-markAttendanceForSelectedStudents } from 'Services/course/Pages/AttendancePage/Components/MarkAttendanceComponent/helpers';
+markAttendanceForSelectedStudents } from 'services/course/pages/AttendancePage/components/MarkAttendanceComponent/helpers';
 
 import { 
-role } from 'Services/course/helpers/PageHelpers';
+role } from 'services/course/helpers/PageHelpers';
 
 import { 
-navContent } from 'Services/course/Pages/Components/NavigationHelper';
-
-
+navContent } from 'services/course/pages/components/NavigationHelper';
 
 import {  
 getUsersByOperatorId,    
 getOperatorFromOperatorBusinessName,
 getPushNotificationUsersByOperatorId,
 getCoursesByOperatorId,
-getSortedRecordsByDate } from 'Services/course/Selectors';
+getSortedRecordsByDate } from 'services/course/selectors';
 
 import { 
 getLessonPlanUrls,
@@ -41,22 +39,22 @@ emailMessageOptions } from  '../CourseLessonDropDownComponent/helpers';
 
 import { 
 openNewCourseModal, 
-closeNewCourseModal } from 'Services/course/Actions/Courses';
+closeNewCourseModal } from 'services/course/actions/courses';
 
 import { 
 helpIconStyle } from './inlineStyles';
     
-import NewCoursePage from 'Services/course/Pages/Courses/NewCoursePage';
+import NewCoursePage from 'services/course/pages/Courses/NewCoursePage';
 import useClassRoomComponentHook from '../../hooks/useClassRoomComponentHook';
-import MainMenu from 'Services/course/Pages/Components/MainMenu';
-import DropDown from 'Services/course/Pages/Components/DropDown';
-import CourseLessonDropDownComponent from 'Services/course/Pages/ClassRoomPage/Components/CourseLessonDropDownComponent';
-import LoginLogout from 'Services/course/Pages/LoginPage/Components/LoginLogout';
-import Roles from 'Services/course/Pages/Components/Roles';
-import CourseDetailCheckBoxComponent from 'Services/course/Pages/Courses/Components/CourseDetailCheckBoxComponent';
-import AddStudentGradeComponent from 'Services/course/Pages/GradesPage/Components/AddStudentGrade';
-import MarkAttendanceComponent from 'Services/course/Pages/AttendancePage/Components/MarkAttendanceComponent';
-import MultiInputEmailComponent from 'Services/course/Pages/Email/MultiInputEmailComponent';
+import MainMenu from 'services/course/pages/components/MainMenu';
+import DropDown from 'services/course/pages/components/DropDown';
+import CourseLessonDropDownComponent from 'services/course/pages/ClassRoomPage/components/CourseLessonDropDownComponent';
+import LoginLogout from 'services/course/pages/LoginPage/components/LoginLogout';
+import Roles from 'services/course/pages/components/Roles';
+import CourseDetailCheckBoxComponent from 'services/course/pages/Courses/components/CourseDetailCheckBoxComponent';
+import AddStudentGradeComponent from 'services/course/pages/GradesPage/components/AddStudentGrade';
+import MarkAttendanceComponent from 'services/course/pages/AttendancePage/tests/MarkAttendanceComponent';
+import MultiInputEmailComponent from 'services/course/pages/Email/MultiInputEmailComponent';
 import Modal from 'react-modal';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import Swal from 'sweetalert2';

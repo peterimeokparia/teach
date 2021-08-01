@@ -12,7 +12,7 @@ LOAD_EVENTS_SUCCESS,
 LOAD_EVENTS_ERROR,
 DELETE_EVENT_BEGIN,
 DELETE_EVENT_SUCCESS,
-DELETE_EVENT_ERROR } from 'Services/course/Actions/Event';
+DELETE_EVENT_ERROR } from 'services/course/actions/event';
 
 const initialState = {
      events:{},

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'services/course/cypress/integration/teach/node_modules/axios';
 
 const userName = "peter.imeokparia@gmail.com";
 const PREFIX = "http://localhost:9005/api/v1";

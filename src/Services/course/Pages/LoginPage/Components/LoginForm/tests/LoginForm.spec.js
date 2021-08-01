@@ -1,5 +1,5 @@
 import React from 'react';
-import LoginForm  from 'Services/course/Pages/LoginPage/Components/LoginForm';
+import LoginForm  from 'services/course/pages/LoginPage/components/LoginForm';
 import renderer from 'react-test-renderer';
 
 describe('LoginForm', () =>  {  

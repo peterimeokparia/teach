@@ -2,7 +2,7 @@ import {
 ToastContainer, 
 toast } from 'react-toastify';
 
-import 'react-toastify/dist/ReactToastify.css';
+// import 'ReactToastify.css';
 import Swal from 'sweetalert2';
 
 export const Validations = {

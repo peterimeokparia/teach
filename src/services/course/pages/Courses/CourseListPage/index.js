@@ -6,27 +6,27 @@ Redirect } from '@reach/router';
 
 import { 
 openNewCourseModal, 
-closeNewCourseModal } from 'Services/course/Actions/Courses';
+closeNewCourseModal } from 'services/course/actions/courses';
 
 import { 
-navContent } from  'Services/course/Pages/Components/NavigationHelper';
+navContent } from  'services/course/pages/components/NavigationHelper';
 
 import { 
 getCoursesByOperatorId,
-getOperatorFromOperatorBusinessName } from 'Services/course/Selectors';
+getOperatorFromOperatorBusinessName } from 'services/course/selectors';
 
 import { 
-role } from 'Services/course/helpers/PageHelpers';
+role } from 'services/course/helpers/PageHelpers';
 
 import { 
 helpIconStyle } from './inlineStyles';
 
-import Loading from 'Services/course/Pages/Components/Loading';
-import LoginLogout from 'Services/course/Pages/LoginPage/Components/LoginLogout';
-import CoursesComponent from 'Services/course/Pages/Courses/Components/CoursesComponent';
-import NewCoursePage from 'Services/course/Pages/Courses/NewCoursePage';
-import Cart from 'Services/course/Pages/SalesPage/Cart';
-import MainMenu from 'Services/course/Pages/Components/MainMenu';
+import Loading from 'services/course/pages/components/Loading';
+import LoginLogout from 'services/course/pages/LoginPage/components/LoginLogout';
+import CoursesComponent from 'services/course/pages/Courses/components/CoursesComponent';
+import NewCoursePage from 'services/course/pages/Courses/NewCoursePage';
+import Cart from 'services/course/pages/SalesPage/Cart';
+import MainMenu from 'services/course/pages/components/MainMenu';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import Modal from 'react-modal';
 
@@ -43,12 +43,15 @@ const CourseListPage = ({
     if ( ! user && !user?.userIsValidated ){
         return <Redirect to={`/${operatorBusinessName}/login`} noThrow />;
     }
+
     if ( coursesLoading) {
         return <Loading />;
-    }         
+    } 
+
     if ( onCoursesError ) {
         return <div> { onCoursesError.message } </div> ;
     }
+    
 return (
     <div className="MyCourses">
     <header> 
@@ -75,7 +78,7 @@ return (
             user={user} 
             courses={courses}
         />     
-        <Modal isOpen={isModalOpen} onRequestClose={closeNewCourseModal}> <NewCoursePage user={user} operator={operator}/> </Modal>
+        <Modal isOpen={isModalOpen} onRequestClose={closeNewCourseModal}> <NewCoursePage user={user} operatorBusinessName={operatorBusinessName}/> </Modal>
     </div>
 ); };
 

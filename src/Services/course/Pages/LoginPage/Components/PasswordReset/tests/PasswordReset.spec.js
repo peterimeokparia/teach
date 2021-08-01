@@ -8,14 +8,13 @@ import {
 applyMiddleware } from 'redux'; 
 
 import { 
-mockStoreObject } from 'Services/course/Api';
+mockStoreObject } from 'services/course/api';
 
-import PasswordReset  from 'Services/course/Pages/LoginPage/Components/PasswordReset';
+import PasswordReset  from 'services/course/pages/LoginPage/components/PasswordReset';
 import renderer from 'react-test-renderer';
 import thunk from "redux-thunk"; 
 import * as reactRedux from 'react-redux';
 import configureStore from 'redux-mock-store';
-
 
   const mockStore = configureStore([]);
   

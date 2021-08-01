@@ -8,14 +8,13 @@ import {
 applyMiddleware } from 'redux'; 
 
 import { 
-mockStoreObject } from 'Services/course/Api';
+mockStoreObject } from 'services/course/api';
 
-import ManageEditors  from 'Services/course/Pages/OnlineQuestionsPage/Components/ManageEditors';
+import ManageEditors  from 'services/course/pages/OnlineQuestionsPage/components/ManageEditors';
 import renderer from 'react-test-renderer';
 import thunk from "redux-thunk"; 
 import * as reactRedux from 'react-redux';
 import configureStore from 'redux-mock-store';
-
 
   const mockStore = configureStore([]);
   

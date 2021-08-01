@@ -14,7 +14,7 @@ SAVE_ONLINEANSWERS_ERROR,
 RESET_ONLINEANSWERS_ERROR, 
 DELETE_ONLINEANSWERS_SUCCESS, 
 DELETE_ONLINEANSWERS_ERROR, 
-SET_ONLINEANSWERS_MARKDOWN } from '../../Actions/OnlineAnswers';
+SET_ONLINEANSWERS_MARKDOWN } from '../../actions/onlineanswers';
 
 const initialState = {
     onlineAnswers: {},

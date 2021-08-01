@@ -3,7 +3,7 @@ add,
 update,
 get,
 remove,
-getById } from 'Services/course/Api';
+getById } from 'services/course/api';
 
 export const ADD_QUESTIONFORMS_BEGIN = "ADD QUESTIONFORMS BEGIN";
 export const ADD_QUESTIONFORMS_SUCCESS = "ADD QUESTIONFORMS SUCCESS";

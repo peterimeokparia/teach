@@ -14,7 +14,7 @@ SAVE_FORMFIELDS_ERROR,
 RESET_FORMFIELDS_ERROR, 
 DELETE_FORMFIELDS_SUCCESS, 
 DELETE_FORMFIELDS_ERROR, 
-SET_FORMFIELDS_MARKDOWN } from 'Services/course/Actions/FormFields';
+SET_FORMFIELDS_MARKDOWN } from 'services/course/actions/formfields';
 
 const initialState = {
     formFields: {},

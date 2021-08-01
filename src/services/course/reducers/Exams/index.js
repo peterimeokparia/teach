@@ -10,7 +10,7 @@ SAVE_EXAM_ERROR,
 LOAD_EXAMS_BEGIN,
 LOAD_EXAMS_SUCCESS,
 LOAD_EXAMS_ERROR, 
-DELETE_EXAM_SUCCESS } from '../../Actions/Exams';
+DELETE_EXAM_SUCCESS } from '../../actions/exams';
 
 const initialState = {
     exams: {},

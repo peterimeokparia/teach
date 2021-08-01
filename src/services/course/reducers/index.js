@@ -1,64 +1,64 @@
 import { combineReducers } from 'redux';
-import courses from './Courses';
-import lessons from './Lessons';
-import app from './App';
-import streams from './Streams';
-import users from './Users';
-import purchases from './Purchases';
-import meetings from './Meetings';
-import emails from './Emails';
-import sessions from './Sessions';
-import calendar from './Calendar';
-import events from './Event';
-import classrooms from './ClassRooms';
-import operators from './Operators';
-import grades from './Grades';
-import attendance from './Attendance';
-import notifications from './Notifications';
-import exams from './Exams';
-import questions from './Questions';
-import assignments from './Assignments';
-import timeLines from './TimeLines';
-import onlineQuestions from './OnlineQuestions';
-import onlineAnswers from './OnlineAnswers';
-import onlineComments from './OnlineComments';
-import hasRecordingStarted from './Video';
-import onlineQuestionsEmailSubscriptions from './OnlineQuestionsEmailSubscription';
-import onlineQuestionsPushSubscriptions from './OnlineQuestionsPushSubscription';
-import failedNotifications from './FailedNotifications'; 
-import logs from './LogForTeach';
-import formFields from './FormFields';
+import courses from './courses';
+import lessons from './lessons';
+import app from './app';
+import streams from './streams';
+import users from './users';
+import purchases from './purchases';
+import meetings from './meetings';
+import emails from './emails';
+import sessions from './sessions';
+import calendar from './calendar';
+import events from './event';
+import classrooms from './classrooms';
+import operators from './operators';
+import grades from './grades';
+import attendance from './attendance';
+import notifications from './notifications';
+import exams from './exams';
+import questions from './questions';
+import assignments from './assignments';
+import timeLines from './timelines';
+import onlineQuestions from './onlinequestions';
+import onlineAnswers from './onlineanswers';
+import onlineComments from './onlinecomments';
+import hasRecordingStarted from './video';
+import onlineQuestionsEmailSubscriptions from './onlinequestionsemailsubscription';
+import onlineQuestionsPushSubscriptions from './onlinequestionspushsubscription';
+import failedNotifications from './failednotifications'; 
+import logs from './logforteach';
+import formFields from './formfields';
 
 let reducers = { 
-courses, 
-lessons, 
-app, 
-streams, 
-users, 
-purchases, 
-meetings, 
-emails, 
-sessions, 
-calendar,
-events, 
-classrooms, 
-operators, 
-grades, 
-attendance, 
-notifications,
-exams,
-questions,
-assignments,
-timeLines,
-onlineQuestions,
-onlineAnswers,
-onlineComments,
-hasRecordingStarted,
-onlineQuestionsEmailSubscriptions,
-onlineQuestionsPushSubscriptions,
-failedNotifications,
-logs,
-formFields,
+    courses, 
+    lessons, 
+    app, 
+    streams, 
+    users, 
+    purchases, 
+    meetings, 
+    emails, 
+    sessions, 
+    calendar,
+    events, 
+    classrooms, 
+    operators, 
+    grades, 
+    attendance, 
+    notifications,
+    exams,
+    questions,
+    assignments,
+    timeLines,
+    onlineQuestions,
+    onlineAnswers,
+    onlineComments,
+    hasRecordingStarted,
+    onlineQuestionsEmailSubscriptions,
+    onlineQuestionsPushSubscriptions,
+    failedNotifications,
+    logs,
+    formFields,
 };
 
 export default combineReducers( reducers );

@@ -3,7 +3,7 @@ add,
 update,
 get,
 remove,
-getById } from 'Services/course/Api';
+getById } from 'services/course/api';
 
 export const ADD_FAILEDPUSHNOTIFICATION_BEGIN = "ADD FAILEDPUSHNOTIFICATION BEGIN";
 export const ADD_FAILEDPUSHNOTIFICATION_SUCCESS = "ADD FAILEDPUSHNOTIFICATION SUCCESS";          

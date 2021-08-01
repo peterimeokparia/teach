@@ -16,7 +16,7 @@ DELETE_CLASSROOM_SUCCESS,
 RESET_CLASSROOM_USER_ERROR,
 UPDATE_CURRENT_CLASSROOM_LESSON_PLAN,
 TOGGLE_SIDEBAR_DROPDOWN_MENU,
-ENABLE_TEACH_PLATFORM } from '../../Actions/ClassRooms';
+ENABLE_TEACH_PLATFORM } from '../../actions/classrooms';
 
 const initialState = {
     classrooms: {},

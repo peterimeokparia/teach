@@ -9,7 +9,6 @@
 .MyBios .items{
   align-items: center;
 }
-
 .MyBios header {
   background-color: #673ab7;
   color: #fff;
@@ -89,6 +88,9 @@
 }
 .toggle-stage-btns-hide {
   visibility: hidden;
+}
+.editorName {
+  text-transform: capitalize;
 }
 
 @media only screen and (min-width: 638px) {

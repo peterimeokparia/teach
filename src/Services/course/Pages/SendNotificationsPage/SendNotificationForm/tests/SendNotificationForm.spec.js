@@ -1,5 +1,5 @@
 import React from 'react';
-import SendNotificationForm  from 'Services/course/Pages/SendNotificationsPage/SendNotificationForm';
+import SendNotificationForm  from 'services/course/pages/SendNotificationsPage/SendNotificationForm';
 import renderer from 'react-test-renderer';
 
 describe('SendNotificationForm', () =>  {  

@@ -2,7 +2,7 @@ import {
 useState } from 'react';
 
 import {
-role } from 'Services/course/helpers/PageHelpers'
+role } from 'services/course/helpers/PageHelpers'
 
 import './style.css';
 

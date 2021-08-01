@@ -5,12 +5,9 @@ connect  } from 'react-redux';
 
 import {
 getOperatorFromOperatorBusinessName,
-getCoursesByOperatorId } from 'Services/course/Selectors';
+getCoursesByOperatorId } from 'services/course/selectors';
 
-// import HelpIcon from '@material-ui/icons/Help';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
-// import { 
-// helpIconStyle } from './inlineStyles';
 import './style.css';
 
 const OnlineQuestionsCourseListPage = ( {

@@ -10,91 +10,92 @@ Provider } from 'react-redux';
 
 import {
 loadUsers, 
-lastLoggedInUser } from 'Services/course/Actions/Users';
+lastLoggedInUser } from 'services/course/actions/users';
 
 import {
-loadMeetings } from 'Services/course/Actions/Meetings';
+loadMeetings } from 'services/course/actions/meetings';
+
 
 import {
-loadAttendance } from 'Services/course/Actions/Attendance';
+loadAttendance } from 'services/course/actions/attendance';
 
 import {
-loadGrades } from 'Services/course/Actions/Grades';
+loadGrades } from 'services/course/actions/grades';
 
 import {
-loadOperators } from 'Services/course/Actions/Operator';
+loadOperators } from 'services/course/actions/operator';
 
 import {
-loadCourses } from 'Services/course/Actions/Courses';
+loadCourses } from 'services/course/actions/courses';
 
 import {
-loadLessons } from 'Services/course/Actions/Lessons';
+loadLessons } from 'services/course/actions/lessons';
 
 import {
-loadSessions } from 'Services/course/Actions/Sessions';
+loadSessions } from 'services/course/actions/sessions';
 
 import {
-loadClassRooms } from 'Services/course/Actions/ClassRooms';
+loadClassRooms } from 'services/course/actions/classrooms';
 
 import {
-loadSubscribedPushNotificationUsers } from 'Services/course/Actions/Notifications';
+loadSubscribedPushNotificationUsers } from 'services/course/actions/notifications';
 
 import {
-loadQuestions } from 'Services/course/Actions/Questions';
+loadQuestions } from 'services/course/actions/questions';
 
 import {
-loadAllCalendars } from 'Services/course/Actions/Calendar';
+loadAllCalendars } from 'services/course/actions/calendar';
 
 import {
-loadAllEvents } from 'Services/course/Actions/Event';
+loadAllEvents } from 'services/course/actions/event';
 
 import {
-loadTimeLines } from 'Services/course/Actions/TimeLines';
+loadTimeLines } from 'services/course/actions/timelines';
 
 import {
-loadOnlineQuestions } from 'Services/course/Actions/OnlineQuestions';
+loadOnlineQuestions } from 'services/course/actions/onlinequestions';
 
 import {
-loadOnlineAnswers } from 'Services/course/Actions/OnlineAnswers';
+loadOnlineAnswers } from 'services/course/actions/onlineanswers';
 
 import {
-loadOnlineComments } from 'Services/course/Actions/OnlineComments';
+loadOnlineComments } from 'services/course/actions/onlinecomments';
 
 import { 
-subscriptions } from 'Services/course/MiddleWare/subscriptions';
+subscriptions } from 'services/course/middleware/subscriptions';
 
 import { 
-calendar } from 'Services/course/MiddleWare/calendar';
+calendar } from 'services/course/middleware/calendar';
 
 import { 
-classrooms } from 'Services/course/MiddleWare/classrooms';
+classrooms } from 'services/course/middleware/classrooms';
 
 import { 
-courses } from 'Services/course/MiddleWare/courses';
+courses } from 'services/course/middleware/courses';
 
 import {
-events } from 'Services/course/MiddleWare/events';
+events } from 'services/course/middleware/events';
 
 import { 
-users } from 'Services/course/MiddleWare/users';
+users } from 'services/course/middleware/users';
 
 import { 
-sessions } from 'Services/course/MiddleWare/sessions';
+sessions } from 'services/course/middleware/sessions';
 
 import {
-grades } from 'Services/course/MiddleWare/grades';
+grades } from 'services/course/middleware/grades';
 
 import {
-loadFailedPushNotifications } from 'Services/course/Actions/FailedPushNotifications';
+loadFailedPushNotifications } from 'services/course/actions/failedpushnotifications';
 
 import {
-loadFailedEmailNotifications } from 'Services/course/Actions/FailedEmailNotifications';
+loadFailedEmailNotifications } from 'services/course/actions/failedemailnotifications';
 
 import {
-loadLogs } from 'Services/course/Actions/LogForTeach';
+loadLogs } from 'services/course/actions/logforteach';
 
 import App from './App';
-import reducer from 'Services/course/reducers';
+import reducer from 'services/course/reducers';
 import thunk from 'redux-thunk';
 import Modal from 'react-modal';
 import dotenv from 'dotenv';

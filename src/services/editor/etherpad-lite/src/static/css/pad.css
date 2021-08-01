@@ -14,14 +14,13 @@
 @import url("pad/form.css");
 
 html {
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 15px;
   color: #3e3e3e;
 }
 
 html,
 #sidedivinner > div:before {
-  font-family: Cantarell, Roboto, "Open Sans", "Helvetica Neue", Arial, sans-serif;
+  font-family: Roboto;
 }
 
 .clear {
@@ -72,6 +71,9 @@ input {
   .hide-for-mobile { display: none; }
 }
 
-#importmessagepermission {
-  display: none;
+.etherpadBrand{
+  width:20%;
+  max-width:100px;
+  margin-left:auto;
+  margin-right:auto;
 }

@@ -1,7 +1,7 @@
-import useSchedulingHook from 'Services/course/Pages/CalendarPage/hooks/useSchedulingHook';
+import useSchedulingHook from 'services/course/pages/CalendarPage/hooks/useSchedulingHook';
 import Select from 'react-select';
-import DropDown from 'Services/course/Pages/Components/DropDown';
-import ToggleButton from 'Services/course/Pages/Components/ToggleButton';
+import DropDown from 'services/course/pages/components/DropDown';
+import ToggleButton from 'services/course/pages/components/ToggleButton';
 import './style.css';
 
 const Scheduling = ({  

@@ -4,7 +4,6 @@ export const helpIconStyle = () => {
     position: "fixed",
     "z-index": 1, 
     left: "95%",
-     top: "2%",
-    // top: "-3%",
+     top: "2%"
   };
 };

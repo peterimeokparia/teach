@@ -4,7 +4,6 @@ const MiniSideBarButton = ({ mouseDown, navMenuVisible  }) => {
     return (
             <span className="sideburgerMenuDiv"
                 onMouseDown={mouseDown}
-                // key={ key } 
             >
                 <div className={navMenuVisible ? 'sideDivOneClose' : 'sideDivOne'}></div>
                 <div className={navMenuVisible ? 'sideDivTwoClose' : 'sideDivTwo'}></div>

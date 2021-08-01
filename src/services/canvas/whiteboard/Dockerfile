@@ -14,7 +14,6 @@ COPY assets ./assets
 COPY config ./config
 RUN npm run build
 
-
 #####################
 # Final image
 #####################
@@ -35,4 +34,4 @@ COPY scripts ./scripts
 COPY --from=base /opt/app/dist ./dist
 
 EXPOSE 8080
-ENTRYPOINT ["node", "scripts/server.js", "--mode=production"]
+ENTRYPOINT ["npm", "run", "start"]

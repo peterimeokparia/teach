@@ -1,6 +1,6 @@
 import Select from 'react-select';
-import DropDown from 'Services/course/Pages/Components/DropDown';
-import ToggleButton from 'Services/course/Pages/Components/ToggleButton';
+import DropDown from 'services/course/pages/components/DropDown';
+import ToggleButton from 'services/course/pages/components/ToggleButton';
 
 const OnlineSessionScheduling = ({ config })  => {
 

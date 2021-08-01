@@ -1,6 +1,6 @@
 # whiteboard
 
-This is a lightweight NodeJS collaborative Whiteboard/Sketchboard witch can easily be customized...
+This is a lightweight NodeJS collaborative Whiteboard/Sketchboard which can easily be customized...
 
 ![start](./doc/start.png)
 
@@ -8,27 +8,25 @@ This is a lightweight NodeJS collaborative Whiteboard/Sketchboard witch can easi
 
 [HERE](https://cloud13.de/testwhiteboard/) (Reset every night)
 
-## Updating
-
-Information related to updating this app can be found [here](./doc/updating_guide.md).
-
 ## Some Features
 
 - Shows remote user cursors while drawing
 - Undo / Redo function for each user
 - Drag+Drop / Copy+Paste Images or PDFs from PC and Browsers
 - Resize, Move, Rotate & Draw Images to Canvas or Background
-- Write text
+- Write text and sticky notes
 - Save Whiteboard to Image and JSON
-- Draw angle lines by pressing "shift" while drawing (with line tool)
-- Draw square by pressing "shift" while drawing (with rectangle tool)
+- Draw angle lines by pressing "Shift" while drawing (with line tool)
+- Draw square by pressing "Shift" while drawing (with rectangle tool)
 - Indicator that shows the smallest screen participating
 - Keybindings for ALL the functions
+- REST API
 - Working on PC, Tablet & Mobile
 
 ## Projects using this Whiteboard
 
-- [meetzi](https://meetzi.de/) - WebRtc Conference tool
+- [Meetzi](https://meetzi.de/) - WebRtc Conference tool
+- [LAMS](https://www.lamsfoundation.org) - Managing and delivering online Collaboration learning activities
 - [Accelerator](https://github.com/cracker0dks/Accelerator) - WebRtc Conference tool
 - Your Project here...
 
@@ -96,7 +94,7 @@ The following are predefined shortcuts that you can override in the file [./src/
 | Move selected object left                                        | Left Arrow           | Left Arrow              |
 | Move selected object right                                       | Right Arrow          | Right Arrow             |
 | Drop object                                                      | Ctrl + Enter         | Command + Enter         |
-| Add Image to backgroud                                           | Shift + Enter        | Shift + Enter           |
+| Add Image to background                                          | Shift + Enter        | Shift + Enter           |
 | Cancel all actions                                               | Escape               | Escape                  |
 | Delete selected object                                           | Delete               | Delete                  |
 | Use Line tool when pen is active (Not changeable)                | Shift (Hold)         | Shift (Hold)            |
@@ -108,9 +106,10 @@ Call your site with GET parameters to change the WhiteboardID or the Username
 `http://YOURIP:8080?whiteboardid=MYID&username=MYNAME`
 
 - whiteboardid => All people with the same ID are drawing on the same board
-- username => The name witch is showing to others while drawing
+- username => The name which will be shown to others while drawing
 - title => Change the name of the Browser Tab
 - randomid => if set to true, a random whiteboardId will be generated if not given aswell
+- copyfromwid => set this to a whiteboardId you want a copy from. Only copies the content if the current whiteboard is empty.
 
 ## Configuration
 
@@ -131,13 +130,20 @@ To run the project with custom settings:
 
 #### Security - AccessToken (Optional)
 
-To prevent clients who might know or guess the base URL from abusing the server to upload files and stuff..., you can set an accesstoken at server start (see [here](./config.default.yml)).
+To prevent clients who might know or guess the base URL from abusing the server to upload files and stuff, you can set an accesstoken at server start (see [here](./config.default.yml)).
 
 Then set the same token on the client side as well:
 
 <b>Client (With and without docker):</b> `http://YOURIP:8080?accesstoken=mySecToken&whiteboardid=MYID&username=MYNAME`
 
 Done!
+
+#### REST API
+
+You can fully control the whiteboard through a REST API. Explore and test the API for your server version by surfing to: `[yourRootWhiteboardUrl]/apidoc/index.html`
+You can see the API for the Demowhiteboard here: [DemoAPI](https://cloud13.de/testwhiteboard/apidoc/index.html)
+
+Note: This API is pretty new, so be sure to use the latest Whiteboard version.
 
 #### WebDAV (Optional)
 
@@ -161,7 +167,7 @@ Many more settings can be tweaked. All of them are described in the [default con
 
 ## Things you may want to know
 
-- Whiteboards are gone if you restart the Server, so keep that in mind (or save your whiteboard)
+- Whiteboards are gone if you restart the Server enable "enableFileDatabase" in the config file or export the board to prevent that.
 - You should be able to customize the layout without ever touching the whiteboard.js (take a look at index.html & main.js)
 
 ## ToDo
@@ -180,6 +186,20 @@ Add this to your server part:
         proxy_set_header Connection upgrade;
         proxy_pass http://YOURIP:8080/;
     }
+```
+
+To run it at /whiteboard. Don't forget to change -> YOURIP!
+
+## Apache Reverse Proxy configuration
+
+```
+<VirtualHost example.org:443>
+...
+# Proxy /whiteboard/ to whiteboard container
+ProxyPass "/whiteboard/" "http://YOURIP:8080/"
+ProxyPassReverse "/whiteboard/" "http://YOURIP:8080/"
+...
+</VirtualHost>
 ```
 
 To run it at /whiteboard. Don't forget to change -> YOURIP!

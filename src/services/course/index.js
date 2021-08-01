@@ -1,9 +1,9 @@
-import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
+import ReactDOM from 'services/course/node_modules/react-dom';
+import { createStore } from 'services/course/node_modules/redux';
+import { Provider } from 'services/course/node_modules/react-redux';
 import App from './App';
 import reducer from './reducer';
-import dotenv from 'dotenv';
+import dotenv from 'services/course/node_modules/dotenv';
 import './index.css';
 
 dotenv.config();

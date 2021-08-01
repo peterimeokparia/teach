@@ -2,7 +2,7 @@ import {
 useState } from 'react';
 
 import { 
-Validations } from  'Services/course/helpers/Validations';
+Validations } from  'services/course/helpers/Validations';
 
 import { 
 toast } from 'react-toastify';

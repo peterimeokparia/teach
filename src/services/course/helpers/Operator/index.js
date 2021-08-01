@@ -1,7 +1,4 @@
-
-
 class Operator {
-
   constructor(){
     this.firstname = ""; 
     this.lastname = "";

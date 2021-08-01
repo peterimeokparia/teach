@@ -7,13 +7,13 @@ import {
 connect } from 'react-redux';
 
 import {
-resetClassRoomUserError } from 'Services/course/Actions/ClassRooms';
+resetClassRoomUserError } from 'services/course/actions/classrooms';
 
 import {
-selectCourseFromLessonPlanCourseDropDown } from 'Services/course/Actions/Courses';
+selectCourseFromLessonPlanCourseDropDown } from 'services/course/actions/courses';
             
 import{
-selectLessonFromLessonPlanDropDown } from 'Services/course/Actions/Lessons';
+selectLessonFromLessonPlanDropDown } from 'services/course/actions/lessons';
             
 import Select from '@material-ui/core/Select';
 import './style.css';

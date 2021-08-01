@@ -45,9 +45,6 @@
 .popup input[type=text], #users input[type=text] {
   outline: none;
 }
-.popup a {
-  text-decoration: none
-}
 .popup h1 {
   font-size: 1.8rem;
   margin-bottom: 10px;
@@ -78,9 +75,11 @@
   .popup#users .popup-content {
     overflow: visible;
   }
-  /* Move popup to the bottom, except popup linked to left toolbar, like hyperklink popup */
-  .popup:not(.toolbar-popup) {
-    top: auto;
-    bottom: 1rem;
-  }
+}
+/* Move popup to the bottom, except popup linked to left toolbar, like hyperklink popup */
+.mobile-layout .popup:not(.toolbar-popup) {
+  top: auto;
+  left: 1rem;
+  right: auto;
+  bottom: 1rem;
 }

@@ -1,15 +1,15 @@
 import {
-sendEmailMessage } from 'Services/course/MiddleWare/subscriptions/helpers/emailSubscriptions';
+sendEmailMessage } from 'services/course/middleware/subscriptions/helpers/emailSubscriptions';
 
 import {   
-getOnlineQuestionEmailMessageSubscribers } from 'Services/course/MiddleWare/subscriptions/helpers/subscribers/onlineQuestions';
+getOnlineQuestionEmailMessageSubscribers } from 'services/course/middleware/subscriptions/helpers/subscribers/onlineQuestions';
 
 import {
-getOnlineQuestionsEmailNotificationMessage } from 'Services/course/MiddleWare/subscriptions/helpers/messages/email/onlineQuestions';
+getOnlineQuestionsEmailNotificationMessage } from 'services/course/middleware/subscriptions/helpers/messages/email/onlineQuestions';
 
 import {
 getCurrentUser,    
-NotificationEntityEnum } from 'Services/course/MiddleWare/subscriptions/helpers';
+NotificationEntityEnum } from 'services/course/middleware/subscriptions/helpers';
 
 export const sendOnlineQuestionsEmailSubscriptionMessage = ( config, notificationEntityEnumType ) => {
     config['notificationEnumType'] = notificationEntityEnumType;

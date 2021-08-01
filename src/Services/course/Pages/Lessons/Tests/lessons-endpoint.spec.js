@@ -1,7 +1,7 @@
 import {
 get, 
 add,
-update } from 'Services/course/Api';
+update } from 'services/course/api';
 
 const PREFIX = "http://localhost:3000/api/v1";
 

@@ -3,14 +3,14 @@ get,
 add,
 update,
 getById, 
-signUp} from 'Services/course/Api';
+signUp} from 'services/course/api';
 
 import {
-role } from 'Services/course/helpers/PageHelpers';
+role } from 'services/course/helpers/PageHelpers';
 
 const PREFIX = "http://localhost:3000/api/v1";
 
-jest.mock('../../../Api');
+jest.mock('../../../api');
 
 let user = {
     firstname:"JabraTutorNewSignupENDPOINT",

@@ -1,21 +1,21 @@
 import {
 jabraTutorTestPassword,
-testToken } from 'Services/course/Pages/SignUp/tests/node_modules/Services/course/Api/__mocks__/token.js.js';
+testToken } from 'services/course/api/__mocks__/token.js';
 
 import {
-role } from 'Services/course/Pages/SignUp/tests/node_modules/Services/course/helpers/PageHelpers';
+role } from 'services/course/helpers/PageHelpers';
 
 import {
 SIGN_UP_BEGINS,  
 SIGN_UP_SUCCESSS,
 SAVE_USER_BEGIN,
-SAVE_USER_SUCCESS } from 'Services/course/Pages/SignUp/tests/node_modules/Services/course/Actions/Users';
+SAVE_USER_SUCCESS } from 'Services/course/actions/users';
 
 import {
 createUser,
-saveUser } from 'Services/course/Pages/SignUp/tests/node_modules/Services/course/Actions/Users'; 
+saveUser } from 'services/course/actions/users'; 
 
-jest.mock('../../../Api');
+jest.mock('../../../api');
 
 describe('Adds A New User', () => {  
   let user = {

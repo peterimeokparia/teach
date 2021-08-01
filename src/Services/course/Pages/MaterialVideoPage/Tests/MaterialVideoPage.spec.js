@@ -1,5 +1,5 @@
 import React from 'react';
-import MaterialVideoPage  from 'Services/course/Pages/MaterialVideoPage';
+import MaterialVideoPage  from 'services/course/pages/MaterialVideoPage';
 import renderer from 'react-test-renderer';
 import thunk from "redux-thunk"; 
 import * as reactRedux from 'react-redux';

@@ -1,11 +1,10 @@
-import {
+import{
 add,
 get,
 update,
-//updateUser,
 remove, 
 getById,
-getEventsByUserId } from 'Services/course/Api';
+getEventsByUserId } from 'services/course/api';
 
 export const ADD_EVENT_BEGIN = "ADD EVENT BEGIN";
 export const ADD_EVENT_SUCCESS = "ADD EVENT SUCCESS";

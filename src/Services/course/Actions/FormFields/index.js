@@ -3,7 +3,7 @@ add,
 update,
 remove,
 get,
-getById } from 'Services/course/Api';
+getById } from 'services/course/api';
 
 export const ADD_FORMFIELDS_BEGIN = "ADD FORMFIELDS BEGIN";
 export const ADD_FORMFIELDS_SUCCESS = "ADD FORMFIELDS SUCCESS";

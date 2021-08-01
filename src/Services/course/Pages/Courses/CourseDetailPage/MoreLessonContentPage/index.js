@@ -9,23 +9,21 @@ addNewLesson,
 saveLesson,
 setLessonPlanUrl,
 setCurrentLesson, 
-loadLessons} from 'Services/course/Actions/Lessons';
+loadLessons,
+SET_LESSON_MARKDOWN} from 'services/course/actions/lessons';
 
 import { 
-togglePreviewMode } from 'Services/course/Actions/App';
+togglePreviewMode } from 'services/course/actions/app';
 
 import { 
-SET_LESSON_MARKDOWN } from 'Services/course/Actions/Lessons'; 
-
-import { 
-setMarkDown } from 'Services/course/helpers/EditorHelpers'; 
+setMarkDown } from 'services/course/helpers/EditorHelpers'; 
     
 import { 
 getUsersByOperatorId,    
-getCoursesByCreatedByIdSelector } from 'Services/course/Selectors';
+getCoursesByCreatedByIdSelector } from 'services/course/selectors';
 
-import EditorComponent  from 'Services/course/Pages/Components/EditorComponent';
-import MaterialUiVideoComponent from 'Services/course/Pages/Components/MaterialUiVideoComponent';
+import EditorComponent  from 'services/course/pages/components/EditorComponent';
+import MaterialUiVideoComponent from 'services/course/pages/components/MaterialUiVideoComponent';
 import './style.css';
 
 const MoreLessonContentPage = ({

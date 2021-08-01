@@ -1,5 +1,5 @@
 import { 
-role } from 'Services/course/helpers/PageHelpers';
+role } from 'services/course/helpers/PageHelpers';
 
 import Swal from 'sweetalert2';
 

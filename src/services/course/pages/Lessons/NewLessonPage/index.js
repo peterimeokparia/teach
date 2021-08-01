@@ -1,14 +1,17 @@
-import { useState, useRef, useEffect } from 'react';
+import { 
+useState, 
+useRef, 
+useEffect } from 'react';
 
 import { 
 connect } from 'react-redux';
 
 import { 
 resetLessonError, 
-deleteLesson } from 'Services/course/Actions/Lessons';
+deleteLesson } from 'services/course/actions/lessons';
 
 import { 
-Validations } from 'Services/course/helpers/Validations';
+Validations } from 'services/course/helpers/Validations';
 
 import { 
 navigate } from '@reach/router';

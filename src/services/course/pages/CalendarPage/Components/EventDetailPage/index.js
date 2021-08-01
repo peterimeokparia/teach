@@ -8,31 +8,31 @@ Link } from '@reach/router';
 
 import {
 loadAllCalendars,     
-saveCalendar } from 'Services/course/Actions/Calendar';
+saveCalendar } from 'services/course/actions/calendar';
 
 import {
-loadAllEvents } from 'Services/course/Actions/Event';
+loadAllEvents } from 'services/course/actions/event';
 
 import {
-loadSubscribedPushNotificationUsers } from 'Services/course/Actions/Notifications';
+loadSubscribedPushNotificationUsers } from 'services/course/actions/notifications';
 
 import {
 getEventsByOperatorId,    
 getCalendarsByOperatorId,    
 getOperatorFromOperatorBusinessName,    
 getCalendarEventsByUserIdSelector,
-getPushNotificationUsersByOperatorId } from 'Services/course/Selectors';
+getPushNotificationUsersByOperatorId } from 'services/course/selectors';
 
 import {
-role } from 'Services/course/helpers/PageHelpers';
+role } from 'services/course/helpers/PageHelpers';
 
 import {
-eventEnum } from 'Services/course/Pages/CalendarPage/helpers';
+eventEnum } from 'services/course/pages/CalendarPage/helpers';
 
-import Roles from 'Services/course/Pages/Components/Roles';
-import ListItem from 'Services/course/Pages/Components/ListItem';
-import EditCalendarEvents from 'Services/course/Pages/CalendarPage/Components/EditCalendarEvents';
-import ToggleButton from 'Services/course/Pages/Components/ToggleButton';
+import Roles from 'services/course/pages/components/Roles';
+import ListItem from 'services/course/pages/components/ListItem';
+import EditCalendarEvents from 'services/course/pages/CalendarPage/components/EditCalendarEvents';
+import ToggleButton from 'services/course/pages/components/ToggleButton';
 import Select from 'react-select';
 
 const EventDetailPage = ({ 
@@ -106,9 +106,7 @@ function getEventDetails(){
                             { (edit, remove ) => (
                             <div>      
                             <div>
-                                    {/* <div><h6>{selectedEvent?.title}</h6></div> */}
-                                    {/* <span> Score </span> */}
-                                    <Link to={`event/${selectedEvent?.id}`}> <span title={selectedEvent?._id} >{ selectedEvent?.title } </span> </Link> 
+                                <Link to={`event/${selectedEvent?.id}`}> <span title={selectedEvent?._id} >{ selectedEvent?.title } </span> </Link> 
                                    <div className="row">
                                     <div className="col-2">
                                         <div className="gradesHeader"> Event Id</div>

@@ -1,5 +1,5 @@
 import {
-   updateTimeLineItems } from 'Services/course/MiddleWare/events/helpers';
+   updateTimeLineItems } from 'services/course/middleware/events/helpers';
    
    import moment from "moment";
    

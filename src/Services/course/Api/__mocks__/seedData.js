@@ -1,23 +1,23 @@
 import { 
-lessonSeedData } from 'Services/course/Pages/Lessons/tests/lessonSeedData.js';
+lessonSeedData } from 'services/course/api/__mocks__/node_modules/services/course/Pages/Lessons/tests/lessonSeedData.js.js';
 
 import {
-userSeedData } from 'Services/course/Pages/SignUp/tests/userSeedData.js';
+userSeedData } from 'services/course/api/__mocks__/node_modules/services/course/Pages/SignUp/tests/userSeedData.js.js';
 
 import {
-gradesSeedData } from 'Services/course/Pages/GradesPage/Tests/gradesSeedData.js';
+gradesSeedData } from 'services/course/api/__mocks__/node_modules/services/course/Pages/GradesPage/Tests/gradesSeedData.js.js';
 
 import {
-attendanceSeedData } from 'Services/course/Pages/AttendancePage/tests/attendanceSeedData.js';
+attendanceSeedData } from 'services/course/api/__mocks__/node_modules/services/course/Pages/AttendancePage/tests/attendanceSeedData.js.js';
 
 import {
-meetingSeedData } from 'Services/course/Pages/Meeting/Tests/meetingSeedData.js';
+meetingSeedData } from 'services/course/api/__mocks__/node_modules/services/course/Pages/Meeting/Tests/meetingSeedData.js.js';
 
 import {
-courseSeedData } from 'Services/course/Pages/Courses/tests/courseSeedData.js'
+courseSeedData } from 'services/course/api/__mocks__/node_modules/services/course/Pages/Courses/tests/courseSeedData.js.js'
 
 import { 
-onlineQuestionsSeedData } from 'Services/course/Pages/OnlineQuestionsPage/tests/onlineQuestionsSeedData.js';
+onlineQuestionsSeedData } from 'services/course/api/__mocks__/node_modules/services/course/Pages/OnlineQuestionsPage/tests/onlineQuestionsSeedData.js.js';
 
 export let seedData = {
     '/courses': courseSeedData,

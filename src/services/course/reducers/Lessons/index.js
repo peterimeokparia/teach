@@ -20,7 +20,7 @@ LESSONPLAN_DROPDOWN_LESSON,
 VIDEO_URL,
 SELECTED_LESSONPLAN_LESSON,
 LESSONPLAN_URL,
-LESSONPLAN_COURSE } from '../../Actions/Lessons';
+LESSONPLAN_COURSE } from 'services/course/actions/lessons';
 
 const initialState = {
     lessons: {},
@@ -56,7 +56,7 @@ const reducer = produce((draft, action) => {
         case ADD_NEW_LESSON_ERROR:
         case SAVE_LESSON_ERROR:
             draft.saveLessonInProgress = false;    
-            draft.onSaveLessonError = action.error;
+            draft.onSaveLessonError = action.payload;
         return;
         case LOAD_LESSONS_BEGIN:
             draft.lessonsLoading = true;

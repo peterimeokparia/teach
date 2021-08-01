@@ -34,7 +34,7 @@ NAVIGATION_HISTORY,
 RESET_PASSWORD_BEGIN,
 RESET_PASSWORD_SUCCESS,
 RESET_PASSWORD_ERROR,
-DELETE_USER_SUCCESS } from '../../Actions/Users';
+DELETE_USER_SUCCESS } from '../../actions/users';
 
 const initialState = {
     users: {},

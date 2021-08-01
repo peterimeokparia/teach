@@ -1,4 +1,5 @@
-import { Component } from 'react';
+import { 
+Component } from 'react';
 
 class SessionSignUpComponent extends Component {
 

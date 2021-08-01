@@ -7,23 +7,23 @@ useState,
 useEffect } from "react";
 
 import { 
-role } from 'Services/course/helpers/PageHelpers';
+role } from 'services/course/helpers/PageHelpers';
 
 import {
 loadMeetings,   
-saveMeeting } from 'Services/course/Actions/Meetings';
+saveMeeting } from 'services/course/actions/meetings';
 
 import { 
-loadUsers  } from 'Services/course/Actions/Users';
+loadUsers  } from 'services/course/actions/users';
 
 import {
-loadGrades } from 'Services/course/Actions/Grades';
+loadGrades } from 'services/course/actions/grades';
 
 import{ 
-loadLessons  } from 'Services/course/Actions/Lessons';
+loadLessons  } from 'services/course/actions/lessons';
 
 import {
-showJoinMeetingPopupAfterTheTutorStartsTheMeeting } from 'Services/course/Pages/Meeting/helpers';
+showJoinMeetingPopupAfterTheTutorStartsTheMeeting } from 'services/course/pages/Meeting/helpers';
 
 function useClassRoomComponentHook( operatorBusinessName, selectedUser ) {
     const [ dropDownDisplayOption, setDropDownDisplayOption ] = useState( "" );
@@ -32,7 +32,6 @@ function useClassRoomComponentHook( operatorBusinessName, selectedUser ) {
 
     let currentUser= useSelector(state => state.users.user);
     let selectedCourseFromLessonPlanCourseDropDown= useSelector(state => state.courses.selectedCourseFromLessonPlanCourseDropDown);
-    //let meetings= useSelector(state =>  state.meetings.meetings  );
     let meetings= useSelector(state => Object.values( state.meetings.meetings ) );
     
     useEffect(() => {    

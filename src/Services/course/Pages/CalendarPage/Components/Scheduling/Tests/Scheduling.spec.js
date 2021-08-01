@@ -1,5 +1,5 @@
 import React from 'react';
-import Scheduling  from 'Services/course/Pages/CalendarPage/Components/Scheduling';
+import Scheduling  from 'services/course/pages/CalendarPage/components/Scheduling';
 import renderer from 'react-test-renderer';
 
 const slotInfo = { start:"", end:"", startStr:"", endStr:"", allDay:"", view:"" };

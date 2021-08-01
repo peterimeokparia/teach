@@ -1,4 +1,5 @@
-import { PureComponent } from 'react';
+import { 
+PureComponent } from 'react';
 
 class MultiSelectCheckBoxSelectAllComponent extends PureComponent {
     constructor(props){

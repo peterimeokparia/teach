@@ -1,9 +1,9 @@
 import {
 courseOption,     
 newCalendarEventData,
-transformDateTime } from 'Services/course/Pages/CalendarPage/helpers';
+transformDateTime } from 'services/course/pages/CalendarPage/helpers';
 
-import useConsultationFormHook from 'Services/course/Pages/CalendarPage/hooks/useConsultationFormHook';
+import useConsultationFormHook from 'services/course/pages/CalendarPage/hooks/useConsultationFormHook';
 import Select from 'react-select';
 
 const ConsultationForm = ({

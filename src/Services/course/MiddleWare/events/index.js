@@ -1,14 +1,14 @@
 import { 
 ADD_EVENT_SUCCESS,
 SAVE_EVENT_SUCCESS,
-DELETE_EVENT_SUCCESS } from 'Services/course/Actions/Event';
+DELETE_EVENT_SUCCESS } from 'services/course/actions/event';
 
 import {
 sendUpdatesAfterAddingNewCalendarEvents,
 sendUpdatesAfterModifyingCalendarEvents,
 addTimeLineItemsToEvent,
 sendUpdatesAfterDeletingCalendarEvents,
-updateTimeLineItemsToMatchEventUpdates } from 'Services/course/MiddleWare/events/helpers';
+updateTimeLineItemsToMatchEventUpdates } from 'services/course/middleware/events/helpers';
 
 export const events = store => next =>  action => {
      switch(action.type){

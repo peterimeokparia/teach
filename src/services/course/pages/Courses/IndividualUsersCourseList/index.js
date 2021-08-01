@@ -6,18 +6,18 @@ Link,
 navigate } from '@reach/router';
 
 import {
-navContent } from  'Services/course/Pages/Components/NavigationHelper';
+navContent } from  'services/course/pages/components/NavigationHelper';
 
 import {  
 getUsersByOperatorId,
 getCoursesByOperatorId,
-getOperatorFromOperatorBusinessName } from 'Services/course/Selectors';
+getOperatorFromOperatorBusinessName } from 'services/course/selectors';
 
-import Loading from 'Services/course/Pages/Components/Loading';
-import LoginLogout from 'Services/course/Pages/LoginPage/Components/LoginLogout';
-import CoursesComponent from 'Services/course/Pages/Courses/Components/CoursesComponent';
-import Cart from 'Services/course/Pages/SalesPage/Cart';
-import MainMenu from 'Services/course/Pages/Components/MainMenu';
+import Loading from 'services/course/pages/components/Loading';
+import LoginLogout from 'services/course/pages/LoginPage/components/LoginLogout';
+import CoursesComponent from 'services/course/pages/Courses/components/CoursesComponent';
+import Cart from 'services/course/pages/SalesPage/Cart';
+import MainMenu from 'services/course/pages/components/MainMenu';
 
 const IndividualUsersCourseList = ({
     operatorBusinessName,

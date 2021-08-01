@@ -1,4 +1,4 @@
-import ReactIframe from 'Services/course/Pages/Components/ReactIframe';
+import ReactIframe from 'services/course/pages/components/ReactIframe';
 
 const LessonPlanIframeComponent = ({
 className,

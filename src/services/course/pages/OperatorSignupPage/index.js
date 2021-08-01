@@ -5,17 +5,14 @@ import {
 connect } from 'react-redux';
 
 import { 
-createUser } from 'Services/course/Actions/Users';
+createUser } from 'services/course/actions/users';
 
 import { 
-createOperator } from 'Services/course/Actions/Operator';
+createOperator } from 'services/course/actions/operator';
 
-import Operator from 'Services/course/helpers/Operator';
-
+import Operator from 'services/course/helpers/Operator';
 import Swal from 'sweetalert2';
-
 import OperatorRegistrationForm from './OperatorRegistrationForm';
-
 import './style.css';
 
 const OperatorSignUpPage = ({
@@ -25,12 +22,12 @@ const OperatorSignUpPage = ({
   const handleCreateUser = (email, password, firstname, lastname, businessname, phone ) => {
     
   let operatorUser = new Operator();
-  operatorUser.email = email;
-  operatorUser.password = password;
-  operatorUser.firstName = firstname;
-  operatorUser.lastName = lastname; 
-  operatorUser.businessName = businessname; 
-  operatorUser.phone = phone;          
+    operatorUser.email = email;
+    operatorUser.password = password;
+    operatorUser.firstName = firstname;
+    operatorUser.lastName = lastname; 
+    operatorUser.businessName = businessname; 
+    operatorUser.phone = phone;          
 
   createOperator( operatorUser )
     .then(resp => {
@@ -67,7 +64,6 @@ return (
   </div>
   );
 };
-
 const mapState = ( state, ownProps )   => {  
   return {
     user: state?.users?.user,

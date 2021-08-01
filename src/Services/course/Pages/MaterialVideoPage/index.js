@@ -6,11 +6,11 @@ import {
 connect } from 'react-redux';
 
 import { 
-uploadVideos } from 'Services/course/helpers/ServerHelper';
+uploadVideos } from 'services/course/helpers/ServerHelper';
 
 import {
 recordingStatusRecordingStarted,
-recordingStatusRecordingStopped } from 'Services/course/Actions/Video';
+recordingStatusRecordingStopped } from 'services/course/actions/video';
 
 import { 
 saveAs } from 'file-saver';

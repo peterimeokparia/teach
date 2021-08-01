@@ -4,7 +4,7 @@ update,
 remove,
 get,
 getById,
-updateUser } from 'Services/course/Api';
+updateUser } from 'services/course/api';
 
 export const LOAD_EXAMS_BEGIN = "LOAD EXAMS BEGIN";
 export const LOAD_EXAMS_SUCCESS = "LOAD EXAMS SUCCESS"; 

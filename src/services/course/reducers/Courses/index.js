@@ -13,10 +13,10 @@ SAVE_COURSE_BEGIN,
 SAVE_COURSE_SUCCESS, 
 SAVE_COURSE_ERROR, 
 DELETE_COURSE_SUCCESS,
-LESSONPLAN_DROPDOWN_COURSE } from '../../Actions/Courses';
+LESSONPLAN_DROPDOWN_COURSE } from '../../actions/courses';
 
 import {
-UPDATE_CURRENT_CLASSROOM_TUTOR } from '../../Actions/ClassRooms';
+UPDATE_CURRENT_CLASSROOM_TUTOR } from '../../actions/classrooms';
 
 const initialState = {
     courses: {},

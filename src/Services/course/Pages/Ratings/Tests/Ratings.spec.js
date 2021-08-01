@@ -8,14 +8,13 @@ import {
 applyMiddleware } from 'redux'; 
 
 import { 
-mockStoreObject } from 'Services/course/Api';
+mockStoreObject } from 'services/course/api';
 
-import Ratings  from 'Services/course/Pages/Ratings';
+import Ratings  from 'services/course/pages/Ratings';
 import renderer from 'react-test-renderer';
 import thunk from "redux-thunk"; 
 import * as reactRedux from 'react-redux';
 import configureStore from 'redux-mock-store';
-
 
   const mockStore = configureStore([]);
   

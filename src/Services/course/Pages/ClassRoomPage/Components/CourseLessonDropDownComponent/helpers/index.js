@@ -2,7 +2,7 @@ import {
 navigate } from '@reach/router';
 
 import { 
-role } from '../../../../../helpers/PageHelpers';
+role } from 'services/course/helpers/PageHelpers';
 
 import { 
 toast } from 'react-toastify';

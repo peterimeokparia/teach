@@ -1,5 +1,5 @@
 import React from 'react';
-import LessonPlanIframeComponent  from 'Services/course/Pages/Lessons/LessonPlan/Components/LessonPlanIframeComponent';
+import LessonPlanIframeComponent  from 'services/course/pages/Lessons/LessonPlan/components/LessonPlanIframeComponent';
 import renderer from 'react-test-renderer';
 
 describe('LessonPlanIframeComponent', () =>  {  

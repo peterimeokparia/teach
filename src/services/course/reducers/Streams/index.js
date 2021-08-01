@@ -1,7 +1,7 @@
 import produce from 'immer';
 
 import { 
-LESSON_VIDEO_METADATA} from '../../Actions/Streams';
+LESSON_VIDEO_METADATA} from '../../actions/streams';
 
 const initialState = {
     streams: [],

@@ -2,9 +2,9 @@ import {
 connect } from 'react-redux';
 
 import { 
-togglePreviewMode } from 'Services/course/Actions/App';
+togglePreviewMode } from 'services/course/actions/app';
 
-import LessonEditor from 'Services/course/Pages/Lessons/LessonEditor';
+import LessonEditor from 'services/course/pages/Lessons/LessonEditor';
 import MarkDown from 'react-markdown';
 
 const CourseDropDownPage = ({ lesson, previewMode, togglePreviewMode  }) => {

@@ -1,11 +1,14 @@
-import { useState, useEffect, useRef } from 'react';
+import { 
+useState, 
+useEffect, 
+useRef } from 'react';
 
 import {
 frequencyCollection,
 days,
-transformDateTime } from 'Services/course/Pages/CalendarPage/helpers';
+transformDateTime } from 'services/course/pages/CalendarPage/helpers';
 
-import EventForm from 'Services/course/Pages/CalendarPage/Components/EventForm'
+import EventForm from 'services/course/pages/CalendarPage/components/EventForm'
 import './style.css'
 
 const Events = ({

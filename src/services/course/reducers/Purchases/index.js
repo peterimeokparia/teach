@@ -3,7 +3,7 @@ import produce from 'immer';
 import { 
 PURCHASE_HISTORY_BEGIN, 
 PURCHASE_HISTORY_SUCCESS, 
-PURCHASE_HISTORY_ERROR } from '../../Actions/Purchases';
+PURCHASE_HISTORY_ERROR } from '../../actions/purchases';
 
 const initialState = {
     buy: [],

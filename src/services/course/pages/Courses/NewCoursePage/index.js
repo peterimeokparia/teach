@@ -1,32 +1,48 @@
-import { useState, useEffect, useRef } from 'react';
+import { 
+useState, 
+useEffect, 
+useRef } from 'react';
 
 import { 
 connect } from 'react-redux';
 
 import { 
-addNewCourse } from 'Services/course/Actions/Courses';
+addNewCourse } from 'services/course/actions/courses';
 
 import { 
-Validations } from  'Services/course/helpers/Validations';
+getOperatorFromOperatorBusinessName } from 'services/course/selectors';
 
+import { 
+Validations } from  'services/course/helpers/Validations';
+
+import { 
+toast } from 'react-toastify';
+        
 import './style.css';
 
 const NewCoursePage = ({
-saveInProgress,
-onSaveError,
-user,
-courses,
-operator,
-dispatch }) => {
-const [ courseName, setCourseName ] = useState('');
-const [ coursePrice, setCoursePrice ] = useState('');
-const [ courseDescription, setCourseDescription ] = useState('');
-const inputRef = useRef();
-let currentUser = user;
+    saveInProgress,
+    onSaveError,
+    onCoursesError,
+    user,
+    courses,
+    operatorBusinessName,
+    operator,
+    dispatch }) => {
+    const [ courseName, setCourseName ] = useState('');
+    const [ coursePrice, setCoursePrice ] = useState('');
+    const [ courseDescription, setCourseDescription ] = useState('');
+    const inputRef = useRef();
+    let currentUser = user;
 
-useEffect (() => {
-    inputRef.current.focus();
-}, []); 
+    useEffect (() => {
+        inputRef.current.focus();
+    }, []); 
+
+    if ( onSaveError ) {
+        toast.error(`There was a problem while adding the new course: ${ courseName }: ${ onSaveError?.message }`);
+        // return <div> { onCoursesError.message } </div> ;
+    }
 
 const handleSubmit = e => { 
     e.preventDefault(); 
@@ -56,9 +72,9 @@ const handleSubmit = e => {
         return <div>...loading</div>;
 } 
 
-if ( onSaveError ) {
-    return <div> { onSaveError.message } </div>;
-}      
+// if ( onSaveError ) {
+//     return <div> { onSaveError.message } </div>;
+// }      
 
 return (
     <div className="NewCourse">
@@ -90,6 +106,14 @@ return (
                     onChange={(e) => setCourseDescription(e.target.value)}
                 />         
             </label>
+            {
+                <div>
+                    {
+                        Validations?.setErrorMessageContainer()
+                    }
+                </div>
+                
+            }
                 
             { onSaveError && (
                 <div className="saveError-message">
@@ -105,6 +129,8 @@ const mapState = (state, ownProps ) => ({
     courses: Object.values(state?.courses?.courses)?.filter(crs => crs?.operatorId === ownProps.operator?._id),
     saveInProgress: state.courses.saveInProgress,
     onSaveError: state.courses.onSaveError,
+    onCoursesError: state.courses.onCoursesError,
+    operator: getOperatorFromOperatorBusinessName(state, ownProps),
 });
 
 export default connect(mapState)(NewCoursePage);

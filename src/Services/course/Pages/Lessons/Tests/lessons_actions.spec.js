@@ -1,13 +1,11 @@
 import {
+loadLessons,
+addNewLesson,
+saveLesson
 ADD_NEW_LESSON_BEGIN,
 ADD_NEW_LESSON_SUCCESS,
 SAVE_LESSON_BEGIN,
-SAVE_LESSON_SUCCESS } from 'Services/course/Actions/Lessons';
-
-import {
-loadLessons,
-addNewLesson,
-saveLesson } from 'Services/course/Actions/Lessons'; 
+SAVE_LESSON_SUCCESS  } from 'services/course/actions/lessons'; 
 
 jest.mock('../../../Api');
 
@@ -21,7 +19,6 @@ describe('Adds A New Lesson', () => {
     title: "Solar System",
     introduction: "Earth & Beyond"
   };
-
 
    it('Adds A New Lesson.', async () => {
 

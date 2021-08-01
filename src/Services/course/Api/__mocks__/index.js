@@ -1,9 +1,9 @@
 import { 
 tokenGenerator, 
-privateKey} from 'Services/course/Pages/LoginPage/Components/Authentication';
-
+privateKey} from 'services/course/pages/loginpage/components/Authentication';
+    
 import {
-testToken } from '../__mocks__/token.js';
+testToken } from './token.js';
 
 import {
 seedData } from './seedData.js';
@@ -18,7 +18,7 @@ return new Promise((resolve, reject) => {
     })
 });
 };
-  
+    
 export const decrementSessionCount = ( sessions ) => {
 sessions.numberOfSessions  -= 1;
 return new Promise((resolve, reject) => {
@@ -29,7 +29,7 @@ return new Promise((resolve, reject) => {
     })
 });
 };
-  
+    
 export const updateInvitationUrl = ( userId, user ) => {
 return new Promise((resolve, reject) => {
     process.nextTick(() => {
@@ -49,10 +49,10 @@ export const signUp = ( user, route='/users/register' ) => {
 
             console.log("Mock implementation signUp");
             console.log(data);
-          
+            
             if ( Object.values( user ).filter(_value => _value === undefined ).length  === 0)   {
                 console.log(".. in Mock implementation signUp");
-                 console.log( JSON.stringify(  seedData[route] ) );
+                    console.log( JSON.stringify(  seedData[route] ) );
                 seedData[route] = [...seedData[route], data ]
                 console.log(".. in after adding user to seed data Mock implementation signUp");
                 console.log(route)
@@ -101,7 +101,7 @@ export const login = ( user ) => {
 
             console.log("Mock implementation login");
             console.log(data);
-          
+            
             if ( Object.values( user ).filter(_value => _value === undefined ).length  === 0 && ( user?.userIsVerified ) )   {
                 console.log(".. in Mock implementation login");
                 console.log(".. in after adding user to seed data Mock implementation login");
@@ -116,10 +116,10 @@ export const login = ( user ) => {
 export const purchase = ( currentUser ) => {
     try {
         console.log("Mock implementation purchase");
-      if( approvePayment(currentUser) ) {   
-           currentUser.cart.forEach(course  => {
+        if( approvePayment(currentUser) ) {   
+            currentUser.cart.forEach(course  => {
             if ( ! currentUser.courses?.includes( course?.course?._id ) ) {
-              currentUser = { ...currentUser, courses: [ ...currentUser.courses, course?.course?._id ] };
+                currentUser = { ...currentUser, courses: [ ...currentUser.courses, course?.course?._id ] };
             }
         }); 
         return updateUser({ 
@@ -129,12 +129,12 @@ export const purchase = ( currentUser ) => {
             sessions: currentUser.sessions,
             paymentStatus: "Approved"                 
         });
-       }
+        }
     } catch (error) {
-      
-          throw Error(`Problem with payment processing. ${error}`)
+        
+            throw Error(`Problem with payment processing. ${error}`)
     };
-  };
+    };
 
 export const add = ( testobject, route  ) => {
     console.log("Mock implementation add");
@@ -143,7 +143,7 @@ export const add = ( testobject, route  ) => {
         process.nextTick(() => {
             let _id = getId();
             let data = { ...testobject, _id };
-          
+            
             if ( Object.values( testobject).filter(_value => _value !== undefined ))   {
                 // seedData[route] = [...seedData[route], data ]
                 let updatedData =  [...seedData[route], data ];
@@ -221,7 +221,7 @@ return new Promise((resolve, reject) => {
     })
 })
 };
-  
+    
 export const createCourse = (
 name,
 price,
@@ -241,7 +241,7 @@ return new Promise((resolve, reject) => {
     })
 })
 };
-  
+    
 export const addMeetings = ( 
 invitees, 
 userId,
@@ -261,7 +261,7 @@ return new Promise(( resolve, reject ) => {
     });
 });        
 };
-  
+    
 export const sendEmail = (
 fromEmail,
 toEmail,
@@ -281,7 +281,7 @@ return new Promise((resolve, reject) => {
     });
 }) 
 };
-  
+    
 export const updateUser = (currentUser) => {
 console.log("Mock implementation updateUser")
 return new Promise(( resolve, reject ) => {
@@ -291,7 +291,7 @@ return new Promise(( resolve, reject ) => {
 
 });     
 };
-  
+    
 export const autoRenew = (currentUser, session) => {
 console.log("Mock implementation autoRenew");
 return new Promise( ( resolve, reject ) => {
@@ -314,7 +314,7 @@ return new Promise( ( resolve, reject ) => {
     });
 });
 };
-  
+    
 export const approvePayment = (curentUser) => {
     console.log("Mock implementation approvePayment");
     if (! curentUser) { throw new Error ("please set the curentUser")};
@@ -330,7 +330,7 @@ export const approvePayment = (curentUser) => {
     
 export const updateSession = (sessionId, session) => {
     console.log("Mock implementation updateSession");
- return session;
+    return session;
 }
     
 export const addGrade = ( grade ) => {
@@ -339,7 +339,7 @@ console.log("Mock implementation addGrade", { ...grade });
     process.nextTick(() => {
         resolve({ ...grade });
     })
- });
+    });
 };
 
 export const get = ( route ) => {

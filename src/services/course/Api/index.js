@@ -2,15 +2,12 @@ import {
 postData, 
 putData, 
 deleteData,   
-paymentStatus } from 'Services/course/helpers/ServerHelper';
+paymentStatus } from 'services/course/helpers/ServerHelper';
 
 import { 
 tokenGenerator, 
-privateKey} from 'Services/course/Pages/LoginPage/Components/Authentication';
-
-//dotenv.config // done: fix
+privateKey} from 'services/course/pages/LoginPage/components/Authentication';
 const PREFIX = "/api/v1";
-// const PREFIX = "http://localhost:9005/api/v1";
 
 export let apiAuthToken = undefined;
 

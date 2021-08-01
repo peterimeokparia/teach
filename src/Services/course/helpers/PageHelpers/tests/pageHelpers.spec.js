@@ -1,6 +1,6 @@
 import { 
 passwordFailedValidationMessages,
-passwordValidator } from 'Services/course/helpers/PageHelpers';
+passwordValidator } from 'services/course/helpers/PageHelpers';
 
 jest.mock('../../../Api');
 

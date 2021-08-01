@@ -1,4 +1,4 @@
-import MainRoute from './MainRoute';
+import MainRoute from './mainroute';
 import './style.css';
 import dotenv from 'dotenv';
 dotenv.config();

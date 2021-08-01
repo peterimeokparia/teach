@@ -15,7 +15,7 @@ RESET_ONLINEQUESTION_ERROR,
 DELETE_ONLINEQUESTION_SUCCESS, 
 SET_ONLINEQUESTION_MARKDOWN,
 QUESTION_META, 
-ONLINE_QUESTION_COURSEID} from '../../Actions/OnlineQuestions';
+ONLINE_QUESTION_COURSEID} from '../../actions/onlinequestions';
 
 const initialState = {
     onlineQuestions: {},

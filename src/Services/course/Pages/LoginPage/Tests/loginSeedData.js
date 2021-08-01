@@ -1,12 +1,12 @@
 
 import {
 jabraTutorTestPassword,
-testToken } from './token.js.js';
+testToken } from './token.js';
 
 import {
-role } from 'Services/course/helpers/PageHelpers';
+role } from 'services/course/helpers/PageHelpers';
 
-import SiteUser from 'Services/course/helpers/SiteUser';
+import SiteUser from 'services/course/helpers/SiteUser';
 
 let newSiteUser = new SiteUser();
     

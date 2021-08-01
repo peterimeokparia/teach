@@ -10,10 +10,10 @@ days,
 transformDateTime,
 datePatternIncludesTimeSequence,
 getDate,
-getTime } from 'Services/course/Pages/CalendarPage/helpers';
+getTime } from 'services/course/pages/CalendarPage/helpers';
 
 import { 
-Validations } from 'Services/course/helpers/Validations';
+Validations } from 'services/course/helpers/Validations';
 
 function useSchedulingHook(
     handleSubmit,

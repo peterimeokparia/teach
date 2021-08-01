@@ -11,13 +11,13 @@ loadSubscribedPushNotificationUserByUserId,
 failedOnlineQuestionNotifications,  
 retryPushNotificationMessage,
 subscribePushNotificationUser,
-savePushNotificationUser } from 'Services/course/Actions/Notifications';
+savePushNotificationUser } from 'services/course/actions/notifications';
 
 import { 
 onlineQuestionCourseId,
 deleteOnlineQuestion,
 saveOnlineQuestion,
-loadOnlineQuestions } from 'Services/course/Actions/OnlineQuestions';
+loadOnlineQuestions } from 'services/course/actions/onlinequestions';
 
 function useOnlineQuestionsHook(onlineQuestionsConfig ){
 
@@ -46,11 +46,6 @@ function useOnlineQuestionsHook(onlineQuestionsConfig ){
             retryPushNotificationMessage, subscribePushNotificationUser, savePushNotificationUser, 
             onlineQuestionCourseId, loadSubscribedPushNotificationUserByUserId, courseId ]);
         
-
-        // if ( currentCourseQuestions === undefined || currentCourseQuestions?.length === 0 ) {
-        //     return  ( <> <div>  </div> </>);
-        // } 
-
 const saveRecording = ( selectedQuestion ) => {
     dispatch(saveOnlineQuestion( selectedQuestion ));
 };

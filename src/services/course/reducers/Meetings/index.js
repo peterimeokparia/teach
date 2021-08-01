@@ -6,7 +6,7 @@ import {
   LOAD_MEETINGS_SUCCESS,
   LOAD_SINGLE_MEETING_SUCCESS,  
   SAVE_MEETING_SUCCESS,  
-  UPDATE_INVITEE_LIST } from 'Services/course/Actions/Meetings';
+  UPDATE_INVITEE_LIST } from 'services/course/actions/meetings';
 
 const initialState = {
     meetingsLoaded:false,

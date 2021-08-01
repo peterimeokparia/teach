@@ -15,8 +15,6 @@ body {
 #whiteboardContainer {
     height: calc(var(--vh, 1vh) * 100);
     width: 100%;
-    resize: both;
-    overflow: auto;
 }
 
 .btn-group button {
@@ -32,9 +30,30 @@ body {
     /* Pointer/hand icon */
     float: left;
     /* Float the buttons side by side */
-    font-size: 1.2em;
-    height: 45px;
-    width: 50px;
+}
+
+@media (max-device-width: 1024px) {
+    .btn-group button {
+        font-size: 3em;
+        height: 135px;
+        width: 150px;
+    }
+
+    .minGroup {
+        width: 80px;
+    }
+}
+
+@media (min-device-width: 1024px) {
+    .btn-group button {
+        font-size: 1.2em;
+        height: 45px;
+        width: 50px;
+    }
+
+    .minGroup {
+        width: 25px;
+    }
 }
 
 button::-moz-focus-inner {
@@ -113,6 +132,13 @@ button {
 .textBox.active > .removeIcon,
 .textBox.active > .moveIcon {
     display: block;
+}
+
+.stickyNote {
+    width: 200px;
+    height: 200px;
+    box-shadow: 5px 5px 7px rgba(33, 33, 33, 0.7);
+    overflow-y: auto;
 }
 
 .modalBtn {

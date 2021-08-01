@@ -2,20 +2,20 @@ import {
 connect } from 'react-redux';
 
 import { 
-saveAttendance } from 'Services/course/Actions/Attendance';
+saveAttendance } from 'services/course/actions/attendance';
 
 import { 
 Link } from '@reach/router';
 
 import { 
-getSortedRecordsByDate } from 'Services/course/Selectors';
+getSortedRecordsByDate } from 'services/course/selectors';
 
 import { 
-role } from 'Services/course/helpers/PageHelpers';
+role } from 'services/course/helpers/PageHelpers';
 
-import Roles from 'Services/course/Pages/Components/Roles';
-import ListItem from 'Services/course/Pages/Components/ListItem';
-import EditAttendanceComponent from './Components/EditAttendanceComponent';
+import Roles from 'services/course/pages/components/Roles';
+import ListItem from 'services/course/pages/components/ListItem';
+import EditAttendanceComponent from './components/EditAttendanceComponent';
 
 const AttendancePage = ({ 
 studentId, 

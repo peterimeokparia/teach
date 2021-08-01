@@ -3,12 +3,12 @@ connect } from 'react-redux';
 
 import {
 getOperatorFromOperatorBusinessName,
-getPushNotificationUsersByOperatorId } from 'Services/course/Selectors';
+getPushNotificationUsersByOperatorId } from 'services/course/selectors';
 
 import {
 getOnlineQuestion } from './helpers';
 
-import OnlineQuestionsMultiEditorComponent from './Components/OnlineQuestionsMultiEditorComponent';
+import OnlineQuestionsMultiEditorComponent from './components/OnlineQuestionsMultiEditorComponent';
 
 const OnlineQuestionsPage = ({ 
   operatorBusinessName, 

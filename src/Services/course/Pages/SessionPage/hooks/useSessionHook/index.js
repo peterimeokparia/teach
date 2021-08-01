@@ -7,10 +7,10 @@ import {
 navigate } from '@reach/router';
 
 import { 
-loadUsers } from 'Services/course/Actions/Users';
+loadUsers } from 'services/course/actions/users';
 
 import { 
-deleteSession } from 'Services/course/Actions/Sessions';
+deleteSession } from 'services/course/actions/sessions';
 
 import { 
 useDispatch } from 'react-redux';
@@ -72,7 +72,7 @@ const cancelEdit = (e) => {
     e.preventDefault();
     reset();
 };
-     
+        
 const handleOnChange = (event) => {
     setPassword(event.target.value);
 }

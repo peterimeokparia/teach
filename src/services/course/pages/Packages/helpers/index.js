@@ -1,5 +1,5 @@
 import { 
-sendEmail } from 'Services/course/Api';
+sendEmail } from 'services/course/api';
 
 import Swal from 'sweetalert2';
 

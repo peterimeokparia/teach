@@ -2,7 +2,7 @@ import {
 connect } from 'react-redux';
 
 import { 
-Validations } from  'Services/course/helpers/Validations';
+Validations } from  'services/course/helpers/Validations';
 import './style.css';
 
 const FileUpload = ({ 

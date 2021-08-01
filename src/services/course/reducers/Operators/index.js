@@ -14,7 +14,7 @@ SAVE_OPERATOR_BEGIN,
 SAVE_OPERATOR_SUCCESS,
 SAVE_OPERATOR_ERROR,
 SET_OPERATOR,
-SET_BUSINESS_NAME } from '../../Actions/Operator';
+SET_BUSINESS_NAME } from '../../actions/operator';
 
 const initialState = {
     operators: {},
@@ -76,7 +76,7 @@ const reducer = produce((draft, action) => {
             draft.operator = action.payload;    
         return;   
         case SET_BUSINESS_NAME:
-            draft.operatorBusinessName = action.payload;    
+            draft.operatorBusinessName = action.businessName;    
         return;
         default:
         return;

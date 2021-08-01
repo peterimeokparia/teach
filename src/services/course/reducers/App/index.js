@@ -2,7 +2,7 @@ import produce from 'immer';
 
 import { 
 TOGGLE_PREVIEW_MODE, 
-UPLOAD_FILE_SUCCESS } from '../../Actions/App';
+UPLOAD_FILE_SUCCESS } from '../../actions/app';
 
 const initialState = {
     previewMode : false,

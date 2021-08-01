@@ -1,20 +1,23 @@
-import { useState, useRef, useEffect } from 'react';
+import { 
+useState, 
+useRef, 
+useEffect } from 'react';
 
 import { 
 connect } from 'react-redux';
 
 import { 
-deleteGrade } from 'Services/course/Actions/Grades';
+deleteGrade } from 'services/course/actions/grades';
 
 const EditGrade = ({
-grade,
-error,
-className,
-onSubmit,
-deleteGrade, 
-children }) => {
-let scoreInitialValue = grade ? grade?.score : '';
-let dateInitialValue = grade ? grade?.testDate : Date.now(); 
+    grade,
+    error,
+    className,
+    onSubmit,
+    deleteGrade, 
+    children }) => {
+    let scoreInitialValue = grade ? grade?.score : '';
+    let dateInitialValue = grade ? grade?.testDate : Date.now(); 
 const [ editing, setEditing ] = useState(false);
 const [ testDate, setTestDate ] = useState(dateInitialValue);
 const [ testScore, setTestScore ] = useState(scoreInitialValue);

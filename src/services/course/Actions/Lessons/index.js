@@ -2,7 +2,7 @@ import {
 add,
 remove,
 update,
-getById } from 'Services/course/Api';
+getById } from 'services/course/api';
 
 export const ADD_NEW_LESSON_BEGIN = "ADD NEW LESSON BEGIN";
 export const ADD_NEW_LESSON_SUCCESS = "ADD NEW LESSON SUCCESS";
@@ -33,8 +33,9 @@ export const addNewLesson = ( title, introduction,  courseId, lessonDate, userId
         return add({ title, introduction, courseId, lessonDate, userId }, '/lessons')  
         .then( lesson => { 
             dispatch({ type: ADD_NEW_LESSON_SUCCESS, payload: lesson }); 
+            return lesson;
         }).catch( error => {
-            dispatch({ type: ADD_NEW_LESSON_ERROR , error });
+            dispatch({ type: ADD_NEW_LESSON_ERROR , payload: { error, title } });
         });
     };
 };

@@ -4,7 +4,7 @@ get,
 update,
 remove, 
 getById,
-getCalendarsByUserId } from 'Services/course/Api';
+getCalendarsByUserId } from 'services/course/api';
 
 export const ADD_NEW_CALENDAR_BEGIN = "ADD NEW CALENDAR BEGIN";
 export const ADD_NEW_CALENDAR_SUCCESS = "ADD NEW CALENDAR SUCCESS";
@@ -28,7 +28,6 @@ export const CALENDAR_EVENT_TYPE = "CALENDAR EVENT TYPE";
 export const addCalendar = ( newCalendar ) => {
     return dispatch => {
             dispatch({ type: ADD_NEW_CALENDAR_BEGIN });
-    //    return add({ ...newCalendar?.calendar }, '/calendar')
     return add({ ...newCalendar?.calendar }, '/calendar')
         .then(calendarData => {
             dispatch({ type: ADD_NEW_CALENDAR_SUCCESS, 

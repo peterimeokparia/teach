@@ -6,16 +6,16 @@ import {
 useDispatch } from 'react-redux';
 
 import { 
-loadUsers } from "Services/course/Actions/Users";
+loadUsers } from "services/course/actions/users";
 
 import { 
-loadAllCalendars } from 'Services/course/Actions/Calendar';
+loadAllCalendars } from 'services/course/actions/calendar';
 
 import {   
-loadAllEvents } from 'Services/course/Actions/Event';
+loadAllEvents } from 'services/course/actions/event';
 
 import {
-loadSubscribedPushNotificationUsers } from 'Services/course/Actions/Notifications';
+loadSubscribedPushNotificationUsers } from 'services/course/actions/notifications';
 
 function useAddNewCalendarHook(){
     const [ selectedTutors,  setSelctedTutors ] = useState([]);

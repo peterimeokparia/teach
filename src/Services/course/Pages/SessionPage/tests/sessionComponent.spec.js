@@ -1,4 +1,4 @@
-import React from 'react';
+aimport React from 'react';
 
 import { 
 Provider } from "react-redux";
@@ -7,9 +7,9 @@ import {
 applyMiddleware } from 'redux'; 
 
 import { 
-mockStoreObject } from 'Services/course/Api';
+mockStoreObject } from 'services/course/api';
 
-import SessionPage from 'Services/course/Pages/SessionPage';
+import SessionPage from 'services/course/pages/SessionPage';
 import renderer from 'react-test-renderer';
 import thunk from "redux-thunk"; 
 import * as reactRedux from 'react-redux';
@@ -17,15 +17,15 @@ import configureStore from 'redux-mock-store';
 
 import {
 INCREMENT_SESSION_COUNT,
-DECREMENT_SESSION_COUNT_FOR_PACKAGE_OPTIONS} from 'Services/course/Actions/Sessions';
+DECREMENT_SESSION_COUNT_FOR_PACKAGE_OPTIONS} from 'services/course/actions/sessions';
 
 import {
 incrementSessionCount,
-decrementSessionCountForPackageOptions } from 'Services/course/Actions/Sessions';
+decrementSessionCountForPackageOptions } from 'services/course/actions/sessions';
 
   const mockStore = configureStore([]);
 
-jest.mock('../../../Api');
+jest.mock('../../../api');
 
 describe('incrementSession',  () => {
 

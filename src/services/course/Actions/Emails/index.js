@@ -1,5 +1,5 @@
 import {
-sendEmail } from 'Services/course/Api';
+sendEmail } from 'services/course/api';
 
 export const SEND_EMAIL_SUCCESS = "SEND EMAIL SUCCESS";
 export const SEND_EMAIL_ERROR = "SEND EMAIL ERROR";

@@ -118,11 +118,12 @@ const whiteboard = {
         this.oldGCO = this.ctx.globalCompositeOperation;
 
         window.addEventListener("resize", function () {
-            // Handel resize
+            // Handle resize
             const dbCp = JSON.parse(JSON.stringify(_this.drawBuffer)); // Copy the buffer
             _this.canvas.width = $(window).width();
             _this.canvas.height = $(window).height(); // Set new canvas height
             _this.drawBuffer = [];
+            _this.textContainer.empty();
             _this.loadData(dbCp); // draw old content in
         });
 
@@ -422,11 +423,29 @@ const whiteboard = {
             const currentPos = Point.fromEvent(e);
             const fontsize = _this.thickness * 0.5;
             const txId = "tx" + +new Date();
+            const isStickyNote = _this.tool === "stickynote";
             _this.sendFunction({
                 t: "addTextBox",
-                d: [_this.drawcolor, fontsize, currentPos.x, currentPos.y, txId],
+                d: [
+                    _this.drawcolor,
+                    _this.textboxBackgroundColor,
+                    fontsize,
+                    currentPos.x,
+                    currentPos.y,
+                    txId,
+                    isStickyNote,
+                ],
             });
-            _this.addTextBox(_this.drawcolor, fontsize, currentPos.x, currentPos.y, txId, true);
+            _this.addTextBox(
+                _this.drawcolor,
+                _this.textboxBackgroundColor,
+                fontsize,
+                currentPos.x,
+                currentPos.y,
+                txId,
+                isStickyNote,
+                true
+            );
         });
     },
     /**
@@ -686,6 +705,9 @@ const whiteboard = {
         var steps = Math.ceil(length / 5);
         _this.ctx.beginPath();
         _this.ctx.moveTo(x0, y0);
+        if (steps == 0) {
+            _this.ctx.lineTo(x0, y0);
+        }
         for (var i = 0; i < steps; i++) {
             var point = lanczosInterpolate(xm1, ym1, x0, y0, x1, y1, x2, y2, (i + 1) / steps);
             _this.ctx.lineTo(point[0], point[1]);
@@ -744,7 +766,7 @@ const whiteboard = {
         var _this = this;
         _this.thickness = thickness;
 
-        if (_this.tool == "text" && _this.latestActiveTextBoxId) {
+        if ((_this.tool == "text" || this.tool === "stickynote") && _this.latestActiveTextBoxId) {
             _this.sendFunction({
                 t: "setTextboxFontSize",
                 d: [_this.latestActiveTextBoxId, thickness],
@@ -755,13 +777,20 @@ const whiteboard = {
     addImgToCanvasByUrl: function (url) {
         var _this = this;
         var oldTool = _this.tool;
+
+        const { imageURL } = ConfigService;
+        var finalURL = url;
+        if (imageURL && url.startsWith("/uploads/")) {
+            finalURL = imageURL + url;
+        }
+
         _this.setTool("mouse"); //Set to mouse tool while dropping to prevent errors
         _this.imgDragActive = true;
         _this.mouseOverlay.css({ cursor: "default" });
         var imgDiv = $(
             '<div class="dragMe" style="border: 2px dashed gray; position:absolute; left:200px; top:200px; min-width:160px; min-height:100px; cursor:move;">' +
                 '<img style="width:100%; height:100%;" src="' +
-                url +
+                finalURL +
                 '">' +
                 '<div style="position:absolute; right:5px; top:3px;">' +
                 '<button draw="1" style="margin: 0px 0px; background: #03a9f4; padding: 5px; margin-top: 3px; color: white;" class="addToCanvasBtn btn btn-default">Draw to canvas</button> ' +
@@ -799,15 +828,15 @@ const whiteboard = {
 
                 if (draw == "1") {
                     //draw image to canvas
-                    _this.drawImgToCanvas(url, width, height, left, top, rotationAngle);
+                    _this.drawImgToCanvas(finalURL, width, height, left, top, rotationAngle);
                 } else {
                     //Add image to background
-                    _this.drawImgToBackground(url, width, height, left, top, rotationAngle);
+                    _this.drawImgToBackground(finalURL, width, height, left, top, rotationAngle);
                 }
                 _this.sendFunction({
                     t: "addImgBG",
                     draw: draw,
-                    url: url,
+                    url: finalURL,
                     d: [width, height, left, top, rotationAngle],
                 });
                 _this.drawId++;
@@ -871,21 +900,40 @@ const whiteboard = {
                 '">'
         );
     },
-    addTextBox(textcolor, fontsize, left, top, txId, newLocalBox) {
+    addTextBox(
+        textcolor,
+        textboxBackgroundColor,
+        fontsize,
+        left,
+        top,
+        txId,
+        isStickyNote,
+        newLocalBox
+    ) {
         var _this = this;
+        console.log(isStickyNote);
+        var cssclass = "textBox";
+        if (isStickyNote) {
+            cssclass += " stickyNote";
+        }
         var textBox = $(
             '<div id="' +
                 txId +
-                '" class="textBox" style="font-family: Monospace; position:absolute; top:' +
+                '" class="' +
+                cssclass +
+                '" style="font-family: Monospace; position:absolute; top:' +
                 top +
                 "px; left:" +
                 left +
-                'px;">' +
+                "px;" +
+                "background-color:" +
+                textboxBackgroundColor +
+                ';">' +
                 '<div contentEditable="true" spellcheck="false" class="textContent" style="outline: none; font-size:' +
                 fontsize +
                 "em; color:" +
                 textcolor +
-                '; min-width:50px; min-height:50px;"></div>' +
+                '; min-width:50px; min-height:50px"></div>' +
                 '<div title="remove textbox" class="removeIcon" style="position:absolute; cursor:pointer; top:-4px; right:2px;">x</div>' +
                 '<div title="move textbox" class="moveIcon" style="position:absolute; cursor:move; top:1px; left:2px; font-size: 0.5em;"><i class="fas fa-expand-arrows-alt"></i></div>' +
                 "</div>"
@@ -957,7 +1005,7 @@ const whiteboard = {
                 textBox.find(".textContent").focus();
             }, 0);
         }
-        if (this.tool === "text") {
+        if (this.tool === "text" || this.tool === "stickynote") {
             textBox.addClass("active");
         }
 
@@ -984,6 +1032,11 @@ const whiteboard = {
         $("#" + txId)
             .find(".textContent")
             .css({ color: color });
+    },
+    setTextboxBackgroundColor(txId, textboxBackgroundColor) {
+        $("#" + txId)
+            .find(".textContent")
+            .css({ "background-color": textboxBackgroundColor });
     },
     drawImgToCanvas(url, width, height, left, top, rotationAngle, doneCallback) {
         var _this = this;
@@ -1074,7 +1127,7 @@ const whiteboard = {
     },
     setTool: function (tool) {
         this.tool = tool;
-        if (this.tool === "text") {
+        if (this.tool === "text" || this.tool === "stickynote") {
             $(".textBox").addClass("active");
             this.textContainer.appendTo($(whiteboardContainer)); //Bring textContainer to the front
         } else {
@@ -1089,12 +1142,24 @@ const whiteboard = {
         var _this = this;
         _this.drawcolor = color;
         $("#whiteboardColorpicker").css({ background: color });
-        if (_this.tool == "text" && _this.latestActiveTextBoxId) {
+        if ((_this.tool == "text" || this.tool === "stickynote") && _this.latestActiveTextBoxId) {
             _this.sendFunction({
                 t: "setTextboxFontColor",
                 d: [_this.latestActiveTextBoxId, color],
             });
             _this.setTextboxFontColor(_this.latestActiveTextBoxId, color);
+        }
+    },
+    setTextBackgroundColor(textboxBackgroundColor) {
+        var _this = this;
+        _this.textboxBackgroundColor = textboxBackgroundColor;
+        $("#textboxBackgroundColorPicker").css({ background: textboxBackgroundColor });
+        if ((_this.tool == "text" || this.tool === "stickynote") && _this.latestActiveTextBoxId) {
+            _this.sendFunction({
+                t: "setTextboxBackgroundColor",
+                d: [_this.latestActiveTextBoxId, textboxBackgroundColor],
+            });
+            _this.setTextboxBackgroundColor(_this.latestActiveTextBoxId, textboxBackgroundColor);
         }
     },
     updateSmallestScreenResolution() {
@@ -1126,6 +1191,7 @@ const whiteboard = {
         var color = content["c"];
         var username = content["username"];
         var thickness = content["th"];
+
         window.requestAnimationFrame(function () {
             if (tool === "line" || tool === "pen") {
                 if (data.length == 4) {
@@ -1166,7 +1232,7 @@ const whiteboard = {
                     );
                 }
             } else if (tool === "addTextBox") {
-                _this.addTextBox(data[0], data[1], data[2], data[3], data[4]);
+                _this.addTextBox(data[0], data[1], data[2], data[3], data[4], data[5], data[6]);
             } else if (tool === "setTextboxText") {
                 _this.setTextboxText(data[0], data[1]);
             } else if (tool === "removeTextbox") {
@@ -1177,6 +1243,8 @@ const whiteboard = {
                 _this.setTextboxFontSize(data[0], data[1]);
             } else if (tool === "setTextboxFontColor") {
                 _this.setTextboxFontColor(data[0], data[1]);
+            } else if (tool === "setTextboxBackgroundColor") {
+                _this.setTextboxBackgroundColor(data[0], data[1]);
             } else if (tool === "clear") {
                 _this.canvas.height = _this.canvas.height;
                 _this.imgContainer.empty();
@@ -1231,6 +1299,7 @@ const whiteboard = {
                 "setTextboxPosition",
                 "setTextboxFontSize",
                 "setTextboxFontColor",
+                "setTextboxBackgroundColor",
             ].includes(tool)
         ) {
             content["drawId"] = content["drawId"] ? content["drawId"] : _this.drawId;
@@ -1401,6 +1470,7 @@ const whiteboard = {
                 "setTextboxPosition",
                 "setTextboxFontSize",
                 "setTextboxFontColor",
+                "setTextboxBackgroundColor",
             ].includes(tool)
         ) {
             _this.drawBuffer.push(content);

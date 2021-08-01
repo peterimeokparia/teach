@@ -1,5 +1,5 @@
 import {
-role } from 'Services/course/helpers/PageHelpers';
+role } from 'services/course/helpers/PageHelpers';
 
 export const labelValue = ( labelType, index ) => {
   let alphabet = [ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" ];  

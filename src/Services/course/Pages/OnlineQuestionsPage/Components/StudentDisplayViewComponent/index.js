@@ -3,59 +3,56 @@ connect } from 'react-redux';
 
 import {
 addNewGrade,
-saveGrade } from 'Services/course/Actions/Grades';
+saveGrade } from 'services/course/actions/grades';
 
 import {
 markAttendance,
-saveAttendance } from 'Services/course/Actions/Attendance';
+saveAttendance } from 'services/course/actions/attendance';
 
 import {
-role } from 'Services/course/helpers/PageHelpers';
+role } from 'services/course/helpers/PageHelpers';
 
 import {
-Links } from 'Services/course/Pages/OnlineQuestionsPage/helpers';
+Links } from 'services/course/pages/OnlineQuestionsPage/helpers';
 
 import {
 Link } from '@reach/router';
 
 import ListItemComponent from '../ListItemComponent';
-import LoginLogout from './node_modules/Services/course/Pages/LoginPage/Components/LoginLogout';
-import Roles from './node_modules/Services/course/Pages/Components/Roles';
-import MultiInputEmailComponent from './node_modules/Services/course/Pages/Email/MultiInputEmailComponent';
-import NavLinks from '../../../Components/NavLinks';
+import LoginLogout from 'services/course/pages/LoginPage/components/LoginLogout';
+import Roles from 'services/course/pages/components/Roles';
+import MultiInputEmailComponent from 'services/course/pages/Email/MultiInputEmailComponent';
+import NavLinks from '../../../components/NavLinks';
 import './style.css';
 
 const StudentDisplayViewComponent = ({
-operatorBusinessName,
-operator,       
-currentUser,
-selectedStudents,
-emailInputOptions,
-emailMessageOptions,
-lessonPlanUrl,
-setCurrentPage,
-setLessonPlanUrl,
-currentPage,
-courseId,
-lessonId,
-course,
-lessons,
-navigationHistory,
-parentChild,
-children  }) => {
+  operatorBusinessName,
+  operator,       
+  currentUser,
+  selectedStudents,
+  emailInputOptions,
+  emailMessageOptions,
+  lessonPlanUrl,
+  setCurrentPage,
+  setLessonPlanUrl,
+  currentPage,
+  courseId,
+  lessonId,
+  course,
+  lessons,
+  navigationHistory,
+  parentChild,
+  children  }) => {
 
 function onMatchListItem( match, listItem ) {
-
   if ( match ){
       setCurrentPage( listItem );
   }
 } 
- 
 return (
     <div className="StudentDetails"> 
     <header>                
         <NavLinks to={navigationHistory?.replace('http://localhost:3000', "")}>  
-          {/* <h1>{selectedStudents?.firstname + " : StudentId:" + selectedStudents?._id}</h1>  */}
         </NavLinks> 
         <LoginLogout
           operatorBusinessName={operatorBusinessName}

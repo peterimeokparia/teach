@@ -38,9 +38,12 @@
   background: skyblue
 }
 .comment-round-button-5 { 
-  background: rgb(116, 76, 185);
+  background: rgb(162, 118, 235);
 }
- .comment-round-button-1, .comment-round-button-2, .comment-round-button-3, .comment-round-button-4, .comment-round-button-5 {
+.comment-round-button-6 { 
+  background: white;
+}
+ .comment-round-button-1, .comment-round-button-2, .comment-round-button-3, .comment-round-button-4, .comment-round-button-5, .comment-round-button-6 {
    align-self: flex-end; 
    width:70px;
    height:60px;
@@ -73,6 +76,11 @@
   background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
 }
 .comment-round-button-5:hover
+ {
+  background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+}
+.comment-round-button-6:hover
  {
   background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
   background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);

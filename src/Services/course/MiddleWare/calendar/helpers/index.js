@@ -1,14 +1,14 @@
 import {
-sendEmail } from 'Services/course/Api';
+sendEmail } from 'services/course/api';
 
 import {
-saveCalendar } from 'Services/course/Actions/Calendar';
+saveCalendar } from 'services/course/actions/calendar';
 
 import {
-addEvent } from 'Services/course/Actions/Event';
+addEvent } from 'services/course/actions/event';
 
 import {
-sendPushNotificationMessage } from 'Services/course/Actions/Notifications';
+sendPushNotificationMessage } from 'services/course/actions/notifications';
 
 const emailMessageConfig = {
     sendersEmailAddress: "teachpadsconnect247@gmail.com",

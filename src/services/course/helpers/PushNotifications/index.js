@@ -6,7 +6,7 @@ const vapidKeys = {
 
 export function serviceWorkerSupported(){
     return 'serviceWorker' in navigator;
-}
+};
 
 // Register SW, Register Push, Send Notification
 export async function send( ) {
@@ -35,7 +35,6 @@ const register = await navigator.serviceWorker.register('/../../worker.js', { sc
    return subscription;
 };
 
-//https://stackoverflow.com/questions/47277133/disable-unnecessary-escape-character-no-useless-escape/47277197
 function urlBase64ToUint8Array(base64String) {
     var padding = '='.repeat((4 - base64String.length % 4) % 4);
     var base64 = (base64String + padding)
@@ -49,4 +48,4 @@ function urlBase64ToUint8Array(base64String) {
         outputArray[i] = rawData.charCodeAt(i);
     }
     return outputArray;
-}
+};

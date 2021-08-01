@@ -1,11 +1,11 @@
-import React from 'Services/course/Pages/ClassRoomPage/tests/node_modules/react';
-import ClassRoomComponent  from 'Services/course/Pages/ClassRoomPage/tests/node_modules/Services/course/Pages/ClassRoomPage/Components/ClassRoomComponent';
-import renderer from 'Services/course/Pages/ClassRoomPage/tests/node_modules/react-test-renderer';
-import thunk from "Services/course/Pages/ClassRoomPage/tests/node_modules/redux-thunk"; 
-import * as reactRedux from 'Services/course/Pages/ClassRoomPage/tests/node_modules/react-redux';
-import { Provider, useSelector } from "Services/course/Pages/ClassRoomPage/tests/node_modules/react-redux";
-import { applyMiddleware } from 'Services/course/Pages/ClassRoomPage/tests/node_modules/redux'; 
-import configureStore from 'Services/course/Pages/ClassRoomPage/tests/node_modules/redux-mock-store';
+import React from 'services/course/pages/ClassRoomPage/tests/node_modules/react';
+import ClassRoomComponent  from 'services/course/pages/ClassRoomPage/tests/node_modules/Services/course/Pages/ClassRoomPage/Components/ClassRoomComponent';
+import renderer from 'services/course/pages/ClassRoomPage/tests/node_modules/react-test-renderer';
+import thunk from "services/course/pages/ClassRoomPage/tests/node_modules/redux-thunk"; 
+import * as reactRedux from 'services/course/pages/ClassRoomPage/tests/node_modules/react-redux';
+import { Provider, useSelector } from "services/course/pages/ClassRoomPage/tests/node_modules/react-redux";
+import { applyMiddleware } from 'services/course/pages/ClassRoomPage/tests/node_modules/redux'; 
+import configureStore from 'services/course/pages/ClassRoomPage/tests/node_modules/redux-mock-store';
 
 jest.mock('../../../Api');
 

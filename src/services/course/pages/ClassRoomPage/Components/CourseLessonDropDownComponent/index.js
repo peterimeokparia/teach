@@ -5,16 +5,16 @@ import {
 Link } from '@reach/router';
 
 import { 
-addNewLesson } from 'Services/course/Actions/Lessons';
+addNewLesson } from 'services/course/actions/lessons';
 
 import { 
-userNavigationHistory } from 'Services/course/Actions/Users';
+userNavigationHistory } from 'services/course/actions/users';
 
 import {
-selectCourseFromLessonPlanCourseDropDown } from 'Services/course/Actions/Courses';
+selectCourseFromLessonPlanCourseDropDown } from 'services/course/actions/courses';
             
 import{
-selectLessonFromLessonPlanDropDown } from 'Services/course/Actions/Lessons';
+selectLessonFromLessonPlanDropDown } from 'services/course/actions/lessons';
 
 import {  
 getListOfCoursesForTheSelectedStudent,
@@ -24,16 +24,16 @@ navigateToStudentDetailPage } from  './helpers';
 import {  
 getOperatorFromOperatorBusinessName,
 getCoursesByCourseIdSelector,
-getCoursesByOperatorId } from 'Services/course/Selectors';
+getCoursesByOperatorId } from 'services/course/selectors';
 
 import { 
-role } from 'Services/course/helpers/PageHelpers';
+role } from 'services/course/helpers/PageHelpers';
 
-import Roles from 'Services/course/Pages/Components/Roles';
-import DropDown from 'Services/course/Pages/Components/DropDown';
-import NewDetailedLessonPage from 'Services/course/Pages/Lessons/NewDetailedLessonPage';
+import Roles from 'services/course/pages/components/Roles';
+import DropDown from 'services/course/pages/components/DropDown';
+import NewDetailedLessonPage from 'services/course/pages/Lessons/NewDetailedLessonPage';
 import './style.css';
-
+    
 const CourseLessonDropDownComponent = ({
     currentUser,
     operator,
@@ -62,20 +62,20 @@ const setCourseFromDropDown = ( selectedCourseId ) => {
 
 const setLessonFromDropDown = ( selectedLessonId ) => {
     if ( selectedLessonId ) {
-       try {
+        try {
             let lesson = lessons?.find( lsn => lsn._id === selectedLessonId );
 
             selectLessonFromLessonPlanDropDown( lesson );
-       } catch (error) {
+        } catch (error) {
             throw Error('setLessonFromDropDown' + error);
-       }
+        }
     }
 };
 
 return ( 
     <div>
         <div className="dropdownComponents"> 
-              <span className="left">   
+                <span className="left">   
                 <DropDown
                     label={"Courses"}
                     key={"_id"}
@@ -83,8 +83,8 @@ return (
                     optionCollection={getListOfCoursesForTheSelectedStudent( courses, currentUser, selectedUserId )}
                     setOptionSelectedValue={selectedCourse => setCourseFromDropDown(selectedCourse)} 
                 />  
-             </span>
-             {(selectedCourseFromLessonPlanCourseDropDown) &&  
+                </span>
+                {(selectedCourseFromLessonPlanCourseDropDown) &&  
                 <span className="right">
                     <DropDown
                         label={"Lessons"}
@@ -94,19 +94,19 @@ return (
                         setOptionSelectedValue={selectedLesson => setLessonFromDropDown(selectedLesson)}             
                     />     
                 </span>
-             }
-             { (selectedLessonFromLessonPlanDropDown) && 
+                }
+                { (selectedLessonFromLessonPlanDropDown) && 
                 <div className="generated-lessonlink">    
-                 <Link to={`/${operatorBusinessName}/tutor/${currentUser?._id}/courses/${selectedCourseFromLessonPlanCourseDropDown?._id}/lessons/${selectedLessonFromLessonPlanDropDown?._id}`}> 
+                    <Link to={`/${operatorBusinessName}/tutor/${currentUser?._id}/courses/${selectedCourseFromLessonPlanCourseDropDown?._id}/lessons/${selectedLessonFromLessonPlanDropDown?._id}`}> 
                     <span className="viewGradesLink"> <b> { (selectedCourseFromLessonPlanCourseDropDown?._id !== selectedLessonFromLessonPlanDropDown?.courseId ) 
-                      ? "" 
-                      : `Go to lesson: ${selectedLessonFromLessonPlanDropDown && selectedLessonFromLessonPlanDropDown?.title}` } </b> 
+                        ? "" 
+                        : `Go to lesson: ${selectedLessonFromLessonPlanDropDown && selectedLessonFromLessonPlanDropDown?.title}` } </b> 
                     </span> 
-                 </Link>
+                    </Link>
                 </div> 
                 
-              }  
-             { 
+                }  
+                { 
                 (selectedCourseFromLessonPlanCourseDropDown) &&  
                     <Roles
                         role={currentUser?.role === role.Tutor }
@@ -118,7 +118,7 @@ return (
                             onSubmit={newlesson => addNewLesson( newlesson.title, newlesson.title, newlesson.courseId, newlesson.lessonDate, currentUser?._id  ) }
                         />
                     </Roles>
-             }
+                }
                     <div>
             </div>
                     <Roles
@@ -131,7 +131,7 @@ return (
                         </div> 
                     </Roles>        
             </div> 
-      </div>
+        </div>
     );  
 };
 

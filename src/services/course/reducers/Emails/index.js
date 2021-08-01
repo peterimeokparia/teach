@@ -2,7 +2,7 @@ import produce from 'immer';
 
 import { 
 SEND_EMAIL_SUCCESS, 
-SEND_EMAIL_ERROR } from '../../Actions/Emails';
+SEND_EMAIL_ERROR } from '../../actions/emails';
 
 const initialState = {
     emails:{},

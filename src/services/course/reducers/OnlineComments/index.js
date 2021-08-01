@@ -14,7 +14,7 @@ SAVE_ONLINECOMMENTS_ERROR,
 RESET_ONLINECOMMENTS_ERROR,
 SET_ONLINECOMMENTS_MARKDOWN, 
 DELETE_ONLINECOMMENTS_SUCCESS,
-DELETE_ONLINECOMMENTS_ERROR } from '../../Actions/OnlineComments';
+DELETE_ONLINECOMMENTS_ERROR } from '../../actions/onlinecomments';
 
 const initialState = {
     onlineComments: {},

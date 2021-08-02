@@ -1,4 +1,4 @@
-import produce from 'teach/src/services/course/reducers/questions/node_modules/immer';
+import produce from 'teach/src/services/course/reducers/questions/immer';
 
 import { 
 ADD_QUESTION_BEGIN,

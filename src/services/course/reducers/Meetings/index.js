@@ -1,4 +1,4 @@
-import produce from 'teach/src/services/course/reducers/meetings/node_modules/immer';
+import produce from 'teach/src/services/course/reducers/meetings/immer';
 
 import { 
   LOAD_MEETINGS_BEGIN,  

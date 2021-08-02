@@ -1,4 +1,4 @@
-import produce from 'teach/src/services/course/reducers/formfields/node_modules/immer';
+import produce from 'teach/src/services/course/reducers/formfields/immer';
 
 import { 
 ADD_FORMFIELDS_BEGIN,

@@ -1,4 +1,4 @@
-import produce from 'teach/src/services/course/reducers/calendar/node_modules/immer';
+import produce from 'teach/src/services/course/reducers/calendar/immer';
 
 import { 
 ADD_NEW_CALENDAR_BEGIN,

@@ -1,4 +1,4 @@
-import produce from 'teach/src/services/course/reducers/lessons/node_modules/immer';
+import produce from 'teach/src/services/course/reducers/lessons/immer';
 
 import { 
 ADD_NEW_LESSON_SUCCESS, 

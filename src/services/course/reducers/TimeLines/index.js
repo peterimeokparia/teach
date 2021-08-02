@@ -1,4 +1,4 @@
-import produce from 'teach/src/services/course/reducers/timelines/node_modules/immer';
+import produce from 'teach/src/services/course/reducers/timelines/immer';
   
 import { 
 LOAD_TIMELINES_BEGIN, 

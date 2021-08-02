@@ -1,4 +1,4 @@
-import produce from 'teach/src/services/course/reducers/exams/node_modules/immer';
+import produce from 'teach/src/services/course/reducers/exams/immer';
 
 import {
 ADD_EXAM_BEGIN, 

@@ -19,7 +19,7 @@ import {
 role } from 'services/course/helpers/PageHelpers';
 
 import { 
-helpIconStyle } from 'services/course/pages/CourseListPage/inlineStyles';
+helpIconStyle } from './inlineStyles';
 
 import Loading from 'services/course/pages/components/Loading';
 import LoginLogout from 'services/course/pages/LoginPage/components/LoginLogout';

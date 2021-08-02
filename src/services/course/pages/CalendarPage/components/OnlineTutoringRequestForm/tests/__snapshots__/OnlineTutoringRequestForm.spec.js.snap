@@ -1,0 +1,178 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OnlineTutoringRequestForm renders as expected 1`] = `
+<div
+  className="OnlineHelp"
+>
+  <h1>
+    .
+  </h1>
+  <br />
+  <form
+    onSubmit={[Function]}
+  >
+    <div
+      className="center"
+    >
+      <div
+        className=""
+      >
+        <div
+          className="row justify-content-sm-center"
+        >
+          <span
+            className="col"
+          >
+            <button
+              className=""
+              onClick={[Function]}
+            >
+               
+              Immediate Assistance
+               
+            </button>
+          </span>
+          <span
+            className="col"
+          >
+            <button
+              className=""
+              onClick={[Function]}
+            >
+               
+              Scheduled Session
+               
+            </button>
+          </span>
+        </div>
+      </div>
+      <div>
+        <div
+          className=""
+        >
+          <div
+            className="show-quick-intro-form-hidden"
+          >
+            <label>
+              <input
+                onChange={[Function]}
+                placeholder="Email Address"
+                value=""
+              />
+            </label>
+            <label>
+              <input
+                onChange={[Function]}
+                placeholder="First Name"
+                value=""
+              />
+            </label>
+            <label>
+              <div>
+                   
+                How can we assist you?
+                 
+              </div>
+              <div
+                className="row justify-content-sm-center"
+              >
+                <span
+                  className="dropDownSelector"
+                >
+                  <span>
+                    <form
+                      onSubmit={[Function]}
+                    >
+                      <label>
+                        <span
+                          className="main-title"
+                        />
+                      </label>
+                      <label>
+                        <div
+                          className="MuiInputBase-root MuiInput-root MuiInput-underline space-between-select"
+                          onClick={[Function]}
+                        >
+                          <div
+                            aria-haspopup="listbox"
+                            aria-label="Without label"
+                            className="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
+                            onBlur={[Function]}
+                            onFocus={[Function]}
+                            onKeyDown={[Function]}
+                            onMouseDown={[Function]}
+                            role="button"
+                            tabIndex={0}
+                          >
+                            <span
+                              dangerouslySetInnerHTML={
+                                Object {
+                                  "__html": "&#8203;",
+                                }
+                              }
+                            />
+                          </div>
+                          <input
+                            aria-hidden={true}
+                            className="MuiSelect-nativeInput"
+                            onAnimationStart={[Function]}
+                            onChange={[Function]}
+                            tabIndex={-1}
+                          />
+                          <svg
+                            aria-hidden={true}
+                            className="MuiSvgIcon-root MuiSelect-icon"
+                            focusable="false"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M7 10l5 5 5-5z"
+                            />
+                          </svg>
+                        </div>
+                      </label>
+                    </form>
+                  </span>
+                </span>
+              </div>
+            </label>
+            <button
+              className="show-quick-intro-form-hidden"
+              onClick={[Function]}
+            >
+               
+              Get a Tutor
+               
+            </button>
+          </div>
+        </div>
+        <div
+          className="show-quick-intro-form-hidden"
+        >
+          <div
+            className="blink"
+          >
+              
+            <div>
+                
+              We are getting you connected with a tutor. Please wait...
+                
+            </div>
+              
+          </div>
+          <div>
+             
+             Ad & Promo Rotation. Ad & Promo Rotation. Ad & Promo Rotation. Ad & Promo Rotation.  
+              
+          </div>
+          <div>
+             
+            While you wait, do you know that you can get a discount by signing up today? 
+              
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+`;

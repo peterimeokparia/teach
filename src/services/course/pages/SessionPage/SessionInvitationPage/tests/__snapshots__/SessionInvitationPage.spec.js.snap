@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Shopping cart. renders as expected 1`] = `
+<div>
+   
+  <link
+    to="/loginPage"
+  >
+     Login 
+  </link>
+   and then join the session. 
+</div>
+`;

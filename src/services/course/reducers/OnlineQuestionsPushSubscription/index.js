@@ -1,4 +1,4 @@
-import produce from 'teach/src/services/course/reducers/onlinequestionspushsubscription/immer';
+import produce from 'services/course/reducers/onlinequestionspushsubscription/immer';
 
 import { 
 ADD_NEW_ONLINE_QUESTION_PUSH_SUBSCRIPTION_BEGIN,

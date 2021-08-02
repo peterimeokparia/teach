@@ -2,16 +2,16 @@ import {
 connect } from 'react-redux';
 
 import { 
-updateUser } from 'teach/src/services/course/api';
+updateUser } from 'services/course/api';
 
 import { 
-forceReload } from 'teach/src/services/course/helpers/ServerHelper';
+forceReload } from 'services/course/helpers/ServerHelper';
 
 import {     
 getUserByEmail, 
-saveUser} from 'teach/src/services/course/actions/users';
+saveUser} from 'services/course/actions/users';
 
-import FileUpload from 'teach/src/services/course/pages/components/FileUpload';
+import FileUpload from 'services/course/pages/components/FileUpload';
 import ImageCrop from 'react-image-crop-component';
 import 'react-image-crop-component/style.css';
 import './style.css';

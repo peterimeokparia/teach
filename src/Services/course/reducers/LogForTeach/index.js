@@ -1,4 +1,4 @@
-import produce from 'teach/src/services/course/reducers/logforteach/immer';
+import produce from 'services/course/reducers/logforteach/immer';
 
 import { 
 ADD_NEW_LOG_BEGIN,

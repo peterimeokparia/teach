@@ -8,9 +8,9 @@ import {
 applyMiddleware } from 'redux'; 
 
 import { 
-mockStoreObject } from 'teach/src/services/course/api';
+mockStoreObject } from 'services/course/api';
 
-import EditSessionComponent  from 'teach/src/services/course/pages/SessionPage/component/EditSessionComponent';
+import EditSessionComponent  from 'services/course/pages/SessionPage/component/EditSessionComponent';
 import renderer from 'react-test-renderer';
 import thunk from "redux-thunk"; 
 import * as reactRedux from 'react-redux';

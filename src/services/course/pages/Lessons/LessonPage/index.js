@@ -6,12 +6,12 @@ import {
 connect } from 'react-redux';
 
 import { 
-togglePreviewMode } from 'teach/src/services/course/actions/app';
+togglePreviewMode } from 'services/course/actions/app';
 
 import {
-saveLesson } from 'teach/src/services/course/actions/lessons';
+saveLesson } from 'services/course/actions/lessons';
 
-import NavLinks from 'teach/src/services/course/pages/components/NavLinks';
+import NavLinks from 'services/course/pages/components/NavLinks';
 import './style.css';
 
 const LessonPage = ({ 

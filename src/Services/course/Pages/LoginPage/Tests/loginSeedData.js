@@ -4,9 +4,9 @@ jabraTutorTestPassword,
 testToken } from './token.js';
 
 import {
-role } from 'teach/src/services/course/helpers/PageHelpers';
+role } from 'services/course/helpers/PageHelpers';
 
-import SiteUser from 'teach/src/services/course/helpers/SiteUser';
+import SiteUser from 'services/course/helpers/SiteUser';
 
 let newSiteUser = new SiteUser();
     

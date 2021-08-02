@@ -13,21 +13,21 @@ Redirect } from '@reach/router';
 import{
 loadMeetings,
 startMeeting,
-endMeeting } from 'teach/src/services/course/actions/meetings';
+endMeeting } from 'services/course/actions/meetings';
 
 import { 
 loadCourses, 
-selectCourseFromLessonPlanCourseDropDown } from 'teach/src/services/course/actions/courses';
+selectCourseFromLessonPlanCourseDropDown } from 'services/course/actions/courses';
 
 import { 
 loadLessons,
-selectLessonFromLessonPlanDropDown } from 'teach/src/services/course/actions/lessons';
+selectLessonFromLessonPlanDropDown } from 'services/course/actions/lessons';
 
 import{
-loadUsers } from 'teach/src/services/course/actions/users';
+loadUsers } from 'services/course/actions/users';
     
 import { 
-Validations } from 'teach/src/services/course/helpers/Validations';
+Validations } from 'services/course/helpers/Validations';
     
 function useTeachMeetingSettingsHook( users, currentUser, addNewMeeting, classRoomId, operatorBusinessName ) {
     const [ hideMeetingStage, setHideMeetingStage ] = useState(false);

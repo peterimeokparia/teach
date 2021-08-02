@@ -1,5 +1,5 @@
 import React from 'react';
-import EventForm  from 'teach/src/services/course/pages/CalendarPage/components/EventForm';
+import EventForm  from 'services/course/pages/CalendarPage/components/EventForm';
 import renderer from 'react-test-renderer';
 
 describe('EventForm', () =>  {  

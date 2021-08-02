@@ -1,8 +1,8 @@
 import { 
-ADD_NEW_GRADE_SUCCESS } from 'teach/src/services/course/actions/grades';
+ADD_NEW_GRADE_SUCCESS } from 'services/course/actions/grades';
 
 import {
-updateUserAfterAddingNewGrades } from 'teach/src/services/course/middleware/grades/helpers';
+updateUserAfterAddingNewGrades } from 'services/course/middleware/grades/helpers';
 
 export const grades = store => next =>  action => {
     switch(action.type){

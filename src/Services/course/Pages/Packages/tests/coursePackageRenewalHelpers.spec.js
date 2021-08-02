@@ -1,8 +1,8 @@
 import { 
-   checkIfPackageIsSetToAutoRenew } from 'teach/src/services/course/pages/Packages/helpers';
+   checkIfPackageIsSetToAutoRenew } from 'services/course/pages/Packages/helpers';
    
    import {
-   autoRenewSessionPackages } from 'teach/src/services/course/actions/sessions';
+   autoRenewSessionPackages } from 'services/course/actions/sessions';
    
    jest.mock('../../../Api');
    

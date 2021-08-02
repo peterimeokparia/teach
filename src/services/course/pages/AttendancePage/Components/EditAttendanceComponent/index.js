@@ -7,7 +7,7 @@ import {
 connect } from 'react-redux';
 
 import { 
-deleteAttendance } from 'teach/src/services/course/actions/attendance';
+deleteAttendance } from 'services/course/actions/attendance';
 
 const EditAttendanceComponent = ({
 attendance,

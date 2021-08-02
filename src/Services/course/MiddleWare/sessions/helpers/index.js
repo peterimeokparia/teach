@@ -1,11 +1,11 @@
 import {
-    LAST_LOGGEDIN_USER } from 'teach/src/services/course/actions/users';
+    LAST_LOGGEDIN_USER } from 'services/course/actions/users';
     
     import {
-    setAutoRenewPackageStatus } from 'teach/src/services/course/actions/sessions';
+    setAutoRenewPackageStatus } from 'services/course/actions/sessions';
     
     import { 
-    sendEmailConfirmation } from 'teach/src/services/course/pages/Packages/helpers';
+    sendEmailConfirmation } from 'services/course/pages/Packages/helpers';
     
     export const sendUpdatesAfterRenewingUsersSessionPackage = ( response, store ) => {
         try {

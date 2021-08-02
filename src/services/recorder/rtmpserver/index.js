@@ -1,4 +1,4 @@
-const NodeMediaServer = require('teach/src/services/recorder/rtmpserver/node_modules/node-media-server');
+const NodeMediaServer = require('services/recorder/rtmpserver/node_modules/node-media-server');
 
     const config = {
         rtmp: {

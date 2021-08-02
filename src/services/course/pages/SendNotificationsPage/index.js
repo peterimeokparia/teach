@@ -7,12 +7,12 @@ import {
   
   import { 
   sendPushNotificationMessage,
-  loadSubscribedPushNotificationUsers } from 'teach/src/services/course/actions/notifications';
+  loadSubscribedPushNotificationUsers } from 'services/course/actions/notifications';
   
   import { 
   getOperatorFromOperatorBusinessName, 
   getUsersByOperatorId,
-  getPushNotificationUsersByOperatorId } from 'teach/src/services/course/selectors';
+  getPushNotificationUsersByOperatorId } from 'services/course/selectors';
   
   import Select from 'react-select';
   import SendNotificationForm from './SendNotificationForm';

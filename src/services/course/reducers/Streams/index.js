@@ -1,4 +1,4 @@
-import produce from 'teach/src/services/course/reducers/streams/immer';
+import produce from 'services/course/reducers/streams/immer';
 
 import { 
 LESSON_VIDEO_METADATA} from '../../actions/streams';

@@ -1,14 +1,14 @@
 import {
-updateUser } from 'teach/src/services/course/api';
+updateUser } from 'services/course/api';
 
 import { 
 navigate } from '@reach/router';
 
 import { 
-lastLoggedInUser } from 'teach/src/services/course/actions/users';
+lastLoggedInUser } from 'services/course/actions/users';
 
 import { 
-role } from 'teach/src/services/course/helpers/PageHelpers';
+role } from 'services/course/helpers/PageHelpers';
 
 import Swal from 'sweetalert2';
 

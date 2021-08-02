@@ -1,4 +1,4 @@
-import produce from 'teach/src/services/course/reducers/meetings/immer';
+import produce from 'services/course/reducers/meetings/immer';
 
 import { 
   LOAD_MEETINGS_BEGIN,  
@@ -6,7 +6,7 @@ import {
   LOAD_MEETINGS_SUCCESS,
   LOAD_SINGLE_MEETING_SUCCESS,  
   SAVE_MEETING_SUCCESS,  
-  UPDATE_INVITEE_LIST } from 'teach/src/services/course/reducers/meetings/node_modules/services/course/actions/meetings';
+  UPDATE_INVITEE_LIST } from 'services/course/reducers/meetings/node_modules/services/course/actions/meetings';
 
 const initialState = {
     meetingsLoaded:false,

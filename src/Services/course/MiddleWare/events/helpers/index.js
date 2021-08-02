@@ -1,19 +1,19 @@
 import {
     updateUser,
-    sendEmail } from 'teach/src/services/course/api';
+    sendEmail } from 'services/course/api';
     
     import {
-    saveEvent } from 'teach/src/services/course/actions/event';
+    saveEvent } from 'services/course/actions/event';
     
     import {
-    sendPushNotificationMessage } from 'teach/src/services/course/actions/notifications';
+    sendPushNotificationMessage } from 'services/course/actions/notifications';
         
     import {
-    getTimeLineItems} from 'teach/src/services/course/pages/CalendarPage/helpers';
+    getTimeLineItems} from 'services/course/pages/CalendarPage/helpers';
     
     import {
     SAVE_USER_SUCCESS,
-    LAST_LOGGEDIN_USER } from 'teach/src/services/course/actions/users';
+    LAST_LOGGEDIN_USER } from 'services/course/actions/users';
     
     const emailMessageConfig = {
         sendersEmailAddress: "teachpadsconnect247@gmail.com",

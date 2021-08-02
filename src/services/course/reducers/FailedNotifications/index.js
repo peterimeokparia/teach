@@ -1,4 +1,4 @@
-import produce from 'teach/src/services/course/reducers/failednotifications/immer';
+import produce from 'services/course/reducers/failednotifications/immer';
 
 import { 
 ADD_FAILEDPUSHNOTIFICATION_BEGIN,

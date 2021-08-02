@@ -4,7 +4,7 @@ get,
 update,
 remove, 
 getById,
-getEventsByUserId } from 'teach/src/services/course/api';
+getEventsByUserId } from 'services/course/api';
 
 export const ADD_EVENT_BEGIN = "ADD EVENT BEGIN";
 export const ADD_EVENT_SUCCESS = "ADD EVENT SUCCESS";

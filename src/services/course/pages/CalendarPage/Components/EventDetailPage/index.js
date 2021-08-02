@@ -8,31 +8,31 @@ Link } from '@reach/router';
 
 import {
 loadAllCalendars,     
-saveCalendar } from 'teach/src/services/course/actions/calendar';
+saveCalendar } from 'services/course/actions/calendar';
 
 import {
-loadAllEvents } from 'teach/src/services/course/actions/event';
+loadAllEvents } from 'services/course/actions/event';
 
 import {
-loadSubscribedPushNotificationUsers } from 'teach/src/services/course/actions/notifications';
+loadSubscribedPushNotificationUsers } from 'services/course/actions/notifications';
 
 import {
 getEventsByOperatorId,    
 getCalendarsByOperatorId,    
 getOperatorFromOperatorBusinessName,    
 getCalendarEventsByUserIdSelector,
-getPushNotificationUsersByOperatorId } from 'teach/src/services/course/selectors';
+getPushNotificationUsersByOperatorId } from 'services/course/selectors';
 
 import {
-role } from 'teach/src/services/course/helpers/PageHelpers';
+role } from 'services/course/helpers/PageHelpers';
 
 import {
-eventEnum } from 'teach/src/services/course/pages/CalendarPage/helpers';
+eventEnum } from 'services/course/pages/CalendarPage/helpers';
 
-import Roles from 'teach/src/services/course/pages/components/Roles';
-import ListItem from 'teach/src/services/course/pages/components/ListItem';
-import EditCalendarEvents from 'teach/src/services/course/pages/CalendarPage/components/EditCalendarEvents';
-import ToggleButton from 'teach/src/services/course/pages/components/ToggleButton';
+import Roles from 'services/course/pages/components/Roles';
+import ListItem from 'services/course/pages/components/ListItem';
+import EditCalendarEvents from 'services/course/pages/CalendarPage/components/EditCalendarEvents';
+import ToggleButton from 'services/course/pages/components/ToggleButton';
 import Select from 'react-select';
 
 const EventDetailPage = ({ 

@@ -8,15 +8,15 @@ import {
 addNewOnlineQuestion,
 saveOnlineQuestion,
 loadOnlineQuestions,
-deleteOnlineQuestion } from 'teach/src/services/course/actions/onlinequestions';
+deleteOnlineQuestion } from 'services/course/actions/onlinequestions';
 
 import { 
-loadCourses } from 'teach/src/services/course/actions/courses';
+loadCourses } from 'services/course/actions/courses';
 
 import { 
 Markup } from 'interweave';
 
-import NavLinks from 'teach/src/services/course/pages/components/NavLinks';
+import NavLinks from 'services/course/pages/components/NavLinks';
 import './style.css';
 
 const OnlineQuestionsSavedAnswersDetailPage = ({ 

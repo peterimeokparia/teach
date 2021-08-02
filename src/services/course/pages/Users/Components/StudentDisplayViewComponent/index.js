@@ -2,33 +2,33 @@ import {
   connect } from 'react-redux';
   
   import {
-  saveGrade } from 'teach/src/services/course/actions/grades';
+  saveGrade } from 'services/course/actions/grades';
   
   import {
   markAttendance,
-  saveAttendance } from 'teach/src/services/course/actions/attendance';
+  saveAttendance } from 'services/course/actions/attendance';
   
   import {
-  role } from 'teach/src/services/course/helpers/PageHelpers';
+  role } from 'services/course/helpers/PageHelpers';
   
   import {
   Link } from '@reach/router';
   
   import { 
   getLessonsByCourseIdSelector, 
-  getOperatorFromOperatorBusinessName } from 'teach/src/services/course/selectors';
+  getOperatorFromOperatorBusinessName } from 'services/course/selectors';
   
   import { 
   emailMessageOptions, 
-  emailInputOptions } from  'teach/src/services/course/pages/Courses/helpers';
+  emailInputOptions } from  'services/course/pages/Courses/helpers';
   
   import { 
-  links } from 'teach/src/services/course/pages/Users/helpers';
+  links } from 'services/course/pages/Users/helpers';
   
   import ListItemComponent from '../ListItemComponent';
-  import LoginLogout from 'teach/src/services/course/pages/LoginPage/components/LoginLogout';
-  import Roles from 'teach/src/services/course/pages/components/Roles';
-  import MultiInputEmailComponent from 'teach/src/services/course/pages/Email/MultiInputEmailComponent';
+  import LoginLogout from 'services/course/pages/LoginPage/components/LoginLogout';
+  import Roles from 'services/course/pages/components/Roles';
+  import MultiInputEmailComponent from 'services/course/pages/Email/MultiInputEmailComponent';
   import NavLinks from '../../../components/NavLinks';
   
   const StudentDisplayViewComponent = ({

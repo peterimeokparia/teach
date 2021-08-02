@@ -1,4 +1,4 @@
-import produce from 'teach/src/services/course/reducers/emails/immer';
+import produce from 'services/course/reducers/emails/immer';
 
 import { 
 SEND_EMAIL_SUCCESS, 

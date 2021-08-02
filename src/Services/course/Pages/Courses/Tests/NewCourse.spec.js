@@ -2,11 +2,11 @@ import {
 ADD_COURSE_BEGIN,
 ADD_COURSE_SUCCESS,
 SAVE_COURSE_BEGIN,
-SAVE_COURSE_SUCCESS } from 'teach/src/services/course/actions/courses';
+SAVE_COURSE_SUCCESS } from 'services/course/actions/courses';
 
 import {
 addNewCourse,
-saveCourse } from 'teach/src/services/course/actions/courses';
+saveCourse } from 'services/course/actions/courses';
 
 jest.mock('../../../Api');
 

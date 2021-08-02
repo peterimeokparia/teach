@@ -1,4 +1,4 @@
-import produce from 'teach/src/services/course/reducers/lessons/immer';
+import produce from 'services/course/reducers/lessons/immer';
 
 import { 
 ADD_NEW_LESSON_SUCCESS, 
@@ -20,7 +20,7 @@ LESSONPLAN_DROPDOWN_LESSON,
 VIDEO_URL,
 SELECTED_LESSONPLAN_LESSON,
 LESSONPLAN_URL,
-LESSONPLAN_COURSE } from 'teach/src/services/course/reducers/lessons/node_modules/services/course/actions/lessons';
+LESSONPLAN_COURSE } from 'services/course/reducers/lessons/node_modules/services/course/actions/lessons';
 
 const initialState = {
     lessons: {},

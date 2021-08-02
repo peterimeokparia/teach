@@ -3,28 +3,28 @@ import {
     
     import {
     eventEnum, 
-    getCalendarColor } from 'teach/src/services/course/pages/CalendarPage/helpers';
+    getCalendarColor } from 'services/course/pages/CalendarPage/helpers';
     
     import { 
     navigate } from '@reach/router';
     
     import {
-    loadSubscribedPushNotificationUsers } from 'teach/src/services/course/actions/notifications';
+    loadSubscribedPushNotificationUsers } from 'services/course/actions/notifications';
     
     import {
     addNewTimeLine,    
-    saveTimeLine } from 'teach/src/services/course/actions/timelines'; 
+    saveTimeLine } from 'services/course/actions/timelines'; 
     
     import { 
     setCalendarEventType,
     addCalendar,
     saveCalendar,
-    loadAllCalendars } from 'teach/src/services/course/actions/calendar';
+    loadAllCalendars } from 'services/course/actions/calendar';
     
     import { 
     addEvent,
     saveEvent,    
-    loadAllEvents } from 'teach/src/services/course/actions/event';
+    loadAllEvents } from 'services/course/actions/event';
     
     import { 
     loadCourses } from "services/course/actions/courses";
@@ -37,28 +37,28 @@ import {
     getOperatorFromOperatorBusinessName, 
     getUsersByOperatorId,
     getCalendarsByOperatorId,
-    getTimeLinesByOperatorId } from 'teach/src/services/course/selectors';
+    getTimeLinesByOperatorId } from 'services/course/selectors';
     
     import {
     studentsOption,
-    getCalendarPageHeading } from 'teach/src/services/course/pages/CalendarPage/helpers';
+    getCalendarPageHeading } from 'services/course/pages/CalendarPage/helpers';
     // import { 
     // momentLocalizer } from "react-big-calendar";
     // const localizer = momentLocalizer(moment);
-    import Calendar from 'teach/src/services/course/helpers/Calendar';
-    import CalendarEvent from 'teach/src/services/course/helpers/CalendarEvent';
+    import Calendar from 'services/course/helpers/Calendar';
+    import CalendarEvent from 'services/course/helpers/CalendarEvent';
     import FullCalendar from '@fullcalendar/react';
     import rrulePlugin from "@fullcalendar/rrule";
     import dayGridPlugin from '@fullcalendar/daygrid';
     import timeGridPlugin from '@fullcalendar/timegrid';
     import interactionPlugin from '@fullcalendar/interaction';
     import listWeek from "@fullcalendar/list";
-    import ConsultationForm from 'teach/src/services/course/pages/CalendarPage/components/ConsultationForm';
+    import ConsultationForm from 'services/course/pages/CalendarPage/components/ConsultationForm';
     import Modal from "react-modal";
     import moment from "moment";
-    import SessionScheduling from 'teach/src/services/course/pages/CalendarPage/components/TimeLines/SessionScheduling';
-    import OnlineTutoringRequestForm from 'teach/src/services/course/pages/CalendarPage/components/OnlineTutoringRequestForm';
-    import Scheduling from 'teach/src/services/course/pages/CalendarPage/components/Scheduling/index.js';
+    import SessionScheduling from 'services/course/pages/CalendarPage/components/TimeLines/SessionScheduling';
+    import OnlineTutoringRequestForm from 'services/course/pages/CalendarPage/components/OnlineTutoringRequestForm';
+    import Scheduling from 'services/course/pages/CalendarPage/components/Scheduling/index.js';
     import useBuildEventDataHook from "services/course/pages/CalendarPage/hooks/useBuildEventDataHook";
     import "@fullcalendar/daygrid/main.css";
     import "@fullcalendar/list/main.css";

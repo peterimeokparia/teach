@@ -1,34 +1,34 @@
 import {
-     ADD_COURSE_SUCCESS } from 'teach/src/services/course/actions/courses';
+     ADD_COURSE_SUCCESS } from 'services/course/actions/courses';
      
      import {
      ADD_ONLINEQUESTION_SUCCESS,
-     DELETE_ONLINEQUESTION_SUCCESS } from 'teach/src/services/course/actions/onlinequestions';
+     DELETE_ONLINEQUESTION_SUCCESS } from 'services/course/actions/onlinequestions';
      
      import {
-     ADD_ONLINEANSWERS_SUCCESS } from 'teach/src/services/course/actions/onlineanswers';
+     ADD_ONLINEANSWERS_SUCCESS } from 'services/course/actions/onlineanswers';
      
      import {
-     ADD_ONLINECOMMENTS_SUCCESS } from 'teach/src/services/course/actions/onlinecomments';
+     ADD_ONLINECOMMENTS_SUCCESS } from 'services/course/actions/onlinecomments';
      
      import {
-     RETRY_PUSH_NOTIFICATION_MESSAGE_SUCCESS } from 'teach/src/services/course/actions/notifications';
+     RETRY_PUSH_NOTIFICATION_MESSAGE_SUCCESS } from 'services/course/actions/notifications';
      
      import {
-     deleteFailedPushNotification } from 'teach/src/services/course/actions/failedpushnotifications';
+     deleteFailedPushNotification } from 'services/course/actions/failedpushnotifications';
      
      import {
      sendOnlineQuestionOwnerPushSubscriptionMessage,
-     sendOnlineQuestionUpdatePushSubscriptionMessage } from 'teach/src/services/course/middleware/subscriptions/helpers/pushSubscriptions/onlineQuestions';
+     sendOnlineQuestionUpdatePushSubscriptionMessage } from 'services/course/middleware/subscriptions/helpers/pushSubscriptions/onlineQuestions';
      
      import {
-     sendOnlineQuestionsEmailSubscriptionMessage } from 'teach/src/services/course/middleware/subscriptions/helpers/emailSubscriptions/onlineQuestions';
+     sendOnlineQuestionsEmailSubscriptionMessage } from 'services/course/middleware/subscriptions/helpers/emailSubscriptions/onlineQuestions';
      
      import {
-     sendCourseOwnerPushSubscriptionMessage } from 'teach/src/services/course/middleware/subscriptions/helpers/pushSubscriptions/courses';
+     sendCourseOwnerPushSubscriptionMessage } from 'services/course/middleware/subscriptions/helpers/pushSubscriptions/courses';
      
      import {
-     sendCourseEmailSubscriptionMessage } from 'teach/src/services/course/middleware/subscriptions/helpers/emailSubscriptions/courses';
+     sendCourseEmailSubscriptionMessage } from 'services/course/middleware/subscriptions/helpers/emailSubscriptions/courses';
      
      import {   
      NotificationEntityEnum } from './helpers';

@@ -3,7 +3,7 @@ add,
 update,
 remove,
 get,
-updateUser } from 'teach/src/services/course/api';
+updateUser } from 'services/course/api';
 
 export const RESET_CLASSROOM_USER_ERROR = "RESET CLASSROOM USER ERROR";
 export const ADD_CLASSROOM_BEGIN = "ADD CLASSROOM BEGIN";

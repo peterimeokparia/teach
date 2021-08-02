@@ -7,13 +7,13 @@ import {
     connect } from 'react-redux';
     
     import {
-    selectCourseFromLessonPlanCourseDropDown } from 'teach/src/services/course/actions/courses';
+    selectCourseFromLessonPlanCourseDropDown } from 'services/course/actions/courses';
                 
     import{
-    selectLessonFromLessonPlanDropDown } from 'teach/src/services/course/actions/lessons';
+    selectLessonFromLessonPlanDropDown } from 'services/course/actions/lessons';
             
     import { 
-    resetClassRoomUserError } from 'teach/src/services/course/actions/classrooms';
+    resetClassRoomUserError } from 'services/course/actions/classrooms';
     import './style.css';
     
     const AddStudentGrade = ({

@@ -5,16 +5,16 @@ import {
 Link } from '@reach/router';
 
 import { 
-addNewLesson } from 'teach/src/services/course/actions/lessons';
+addNewLesson } from 'services/course/actions/lessons';
 
 import { 
-userNavigationHistory } from 'teach/src/services/course/actions/users';
+userNavigationHistory } from 'services/course/actions/users';
 
 import {
-selectCourseFromLessonPlanCourseDropDown } from 'teach/src/services/course/actions/courses';
+selectCourseFromLessonPlanCourseDropDown } from 'services/course/actions/courses';
             
 import{
-selectLessonFromLessonPlanDropDown } from 'teach/src/services/course/actions/lessons';
+selectLessonFromLessonPlanDropDown } from 'services/course/actions/lessons';
 
 import {  
 getListOfCoursesForTheSelectedStudent,
@@ -24,14 +24,14 @@ navigateToStudentDetailPage } from  './helpers';
 import {  
 getOperatorFromOperatorBusinessName,
 getCoursesByCourseIdSelector,
-getCoursesByOperatorId } from 'teach/src/services/course/selectors';
+getCoursesByOperatorId } from 'services/course/selectors';
 
 import { 
-role } from 'teach/src/services/course/helpers/PageHelpers';
+role } from 'services/course/helpers/PageHelpers';
 
-import Roles from 'teach/src/services/course/pages/components/Roles';
-import DropDown from 'teach/src/services/course/pages/components/DropDown';
-import NewDetailedLessonPage from 'teach/src/services/course/pages/Lessons/NewDetailedLessonPage';
+import Roles from 'services/course/pages/components/Roles';
+import DropDown from 'services/course/pages/components/DropDown';
+import NewDetailedLessonPage from 'services/course/pages/Lessons/NewDetailedLessonPage';
 import './style.css';
     
 const CourseLessonDropDownComponent = ({

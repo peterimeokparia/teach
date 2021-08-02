@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactIframe  from 'teach/src/services/course/pages/components/ReactIframe';
+import ReactIframe  from 'services/course/pages/components/ReactIframe';
 import renderer from 'react-test-renderer';
 
 describe('ReactIframe', () =>  {  

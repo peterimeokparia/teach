@@ -12,33 +12,33 @@ import {
     addNewLesson, 
     saveLesson,
     setLessonPlanUrl,
-    setCurrentLesson } from 'teach/src/services/course/actions/lessons';
+    setCurrentLesson } from 'services/course/actions/lessons';
     
     import { 
-    togglePreviewMode } from 'teach/src/services/course/actions/app';
+    togglePreviewMode } from 'services/course/actions/app';
     
     import { 
-    setMarkDown } from 'teach/src/services/course/helpers/EditorHelpers'; 
+    setMarkDown } from 'services/course/helpers/EditorHelpers'; 
         
     import {
-    role } from 'teach/src/services/course/helpers/PageHelpers';
+    role } from 'services/course/helpers/PageHelpers';
     
     import { 
     emailInputOptions,    
-    emailMessageOptions } from  'teach/src/services/course/pages/Courses/helpers';
+    emailMessageOptions } from  'services/course/pages/Courses/helpers';
     
     import { 
-    deleteLessonFileByFileName } from 'teach/src/services/course/api';
+    deleteLessonFileByFileName } from 'services/course/api';
     
     import {
-    LessonFileUpload } from 'teach/src/services/course/pages/Courses/components/LessonFileUpload';
+    LessonFileUpload } from 'services/course/pages/Courses/components/LessonFileUpload';
     
     import { 
-    navContent } from 'teach/src/services/course/pages/components/NavigationHelper';
+    navContent } from 'services/course/pages/components/NavigationHelper';
     
     import { 
     getUsersByOperatorId,    
-    getCoursesByCreatedByIdSelector } from 'teach/src/services/course/selectors';
+    getCoursesByCreatedByIdSelector } from 'services/course/selectors';
     
     import { 
     toast } from 'react-toastify';
@@ -50,13 +50,13 @@ import {
     deleteQuestionIconStyle } from '../inlineStyles';
     
     import EditIcon from '@material-ui/icons/Edit';
-    import MainMenu from 'teach/src/services/course/pages/components/MainMenu';
-    import NewLessonPage from 'teach/src/services/course/pages/Lessons/NewLessonPage';
-    import LoginLogout from 'teach/src/services/course/pages/LoginPage/components/LoginLogout';
-    import Roles from 'teach/src/services/course/pages/components/Roles';
-    import LessonPlanIframeComponent from 'teach/src/services/course/pages/Lessons/LessonPlan/components/LessonPlanIframeComponent';
-    import MultiInputEmailComponent from 'teach/src/services/course/pages/Email/MultiInputEmailComponent';
-    import ListItem from 'teach/src/services/course/pages/components/ListItem';
+    import MainMenu from 'services/course/pages/components/MainMenu';
+    import NewLessonPage from 'services/course/pages/Lessons/NewLessonPage';
+    import LoginLogout from 'services/course/pages/LoginPage/components/LoginLogout';
+    import Roles from 'services/course/pages/components/Roles';
+    import LessonPlanIframeComponent from 'services/course/pages/Lessons/LessonPlan/components/LessonPlanIframeComponent';
+    import MultiInputEmailComponent from 'services/course/pages/Email/MultiInputEmailComponent';
+    import ListItem from 'services/course/pages/components/ListItem';
     import Swal from 'sweetalert2';
     
     const CourseDisplayViewComponent = ({

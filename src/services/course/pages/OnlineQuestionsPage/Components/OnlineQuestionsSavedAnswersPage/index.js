@@ -11,12 +11,12 @@ import {
   addNewOnlineQuestion,
   saveOnlineQuestion,
   loadOnlineQuestions,
-  deleteOnlineQuestion } from 'teach/src/services/course/actions/onlinequestions';
+  deleteOnlineQuestion } from 'services/course/actions/onlinequestions';
   
   import { 
-  loadCourses } from 'teach/src/services/course/actions/courses';
+  loadCourses } from 'services/course/actions/courses';
   
-  import ListItemComponent from 'teach/src/services/course/pages/Users/components/ListItemComponent';
+  import ListItemComponent from 'services/course/pages/Users/components/ListItemComponent';
   import './style.css';
   
   const OnlineQuestionsSavedAnswersPage = ({ 

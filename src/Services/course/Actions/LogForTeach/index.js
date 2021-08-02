@@ -1,7 +1,7 @@
 import {
 add,
 update,
-get } from 'teach/src/services/course/api';
+get } from 'services/course/api';
 
 export const ADD_NEW_LOG_BEGIN = "ADD NEW LOG BEGIN";
 export const ADD_NEW_LOG_SUCCESS = "ADD NEW LOG SUCCESS";

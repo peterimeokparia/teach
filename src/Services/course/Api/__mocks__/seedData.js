@@ -1,23 +1,23 @@
 import { 
-lessonSeedData } from 'teach/src/services/course/api/__mocks__/node_modules/services/course/Pages/Lessons/tests/lessonSeedData.js.js';
+lessonSeedData } from 'services/course/api/__mocks__/node_modules/services/course/Pages/Lessons/tests/lessonSeedData.js.js';
 
 import {
-userSeedData } from 'teach/src/services/course/api/__mocks__/node_modules/services/course/Pages/SignUp/tests/userSeedData.js.js';
+userSeedData } from 'services/course/api/__mocks__/node_modules/services/course/Pages/SignUp/tests/userSeedData.js.js';
 
 import {
-gradesSeedData } from 'teach/src/services/course/api/__mocks__/node_modules/services/course/Pages/GradesPage/Tests/gradesSeedData.js.js';
+gradesSeedData } from 'services/course/api/__mocks__/node_modules/services/course/Pages/GradesPage/Tests/gradesSeedData.js.js';
 
 import {
-attendanceSeedData } from 'teach/src/services/course/api/__mocks__/node_modules/services/course/Pages/AttendancePage/tests/attendanceSeedData.js.js';
+attendanceSeedData } from 'services/course/api/__mocks__/node_modules/services/course/Pages/AttendancePage/tests/attendanceSeedData.js.js';
 
 import {
-meetingSeedData } from 'teach/src/services/course/api/__mocks__/node_modules/services/course/Pages/Meeting/Tests/meetingSeedData.js.js';
+meetingSeedData } from 'services/course/api/__mocks__/node_modules/services/course/Pages/Meeting/Tests/meetingSeedData.js.js';
 
 import {
-courseSeedData } from 'teach/src/services/course/api/__mocks__/node_modules/services/course/Pages/Courses/tests/courseSeedData.js.js'
+courseSeedData } from 'services/course/api/__mocks__/node_modules/services/course/Pages/Courses/tests/courseSeedData.js.js'
 
 import { 
-onlineQuestionsSeedData } from 'teach/src/services/course/api/__mocks__/node_modules/services/course/Pages/OnlineQuestionsPage/tests/onlineQuestionsSeedData.js.js';
+onlineQuestionsSeedData } from 'services/course/api/__mocks__/node_modules/services/course/Pages/OnlineQuestionsPage/tests/onlineQuestionsSeedData.js.js';
 
 export let seedData = {
     '/courses': courseSeedData,

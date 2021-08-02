@@ -1,22 +1,22 @@
 import{
-  updateUser } from 'teach/src/services/course/api';
+  updateUser } from 'services/course/api';
   
   import{
-  incrementSessionCount } from 'teach/src/services/course/actions/sessions';
+  incrementSessionCount } from 'services/course/actions/sessions';
   
   import{
   loadUsers,
   updateCurrentUser,
   lastLoggedInUser,
-  updateUserInvitationUrl } from 'teach/src/services/course/actions/users';
+  updateUserInvitationUrl } from 'services/course/actions/users';
   
   import{
   loadMeetingsByMeetingId,
   addNewMeeting,
-  saveMeeting } from 'teach/src/services/course/actions/meetings';
+  saveMeeting } from 'services/course/actions/meetings';
   
   import { 
-  role } from 'teach/src/services/course/helpers/PageHelpers';
+  role } from 'services/course/helpers/PageHelpers';
       
       import Swal from 'sweetalert2';
       

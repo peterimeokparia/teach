@@ -5,12 +5,12 @@ import {
 connect } from 'react-redux';
 
 import { 
-createUser } from 'teach/src/services/course/actions/users';
+createUser } from 'services/course/actions/users';
 
 import { 
-createOperator } from 'teach/src/services/course/actions/operator';
+createOperator } from 'services/course/actions/operator';
 
-import Operator from 'teach/src/services/course/helpers/Operator';
+import Operator from 'services/course/helpers/Operator';
 import Swal from 'sweetalert2';
 import OperatorRegistrationForm from './OperatorRegistrationForm';
 import './style.css';

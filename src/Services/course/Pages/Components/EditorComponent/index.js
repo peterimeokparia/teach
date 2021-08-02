@@ -2,7 +2,7 @@ import {
 connect } from 'react-redux';
 
 import { 
-setMarkDown } from 'teach/src/services/course/helpers/EditorHelpers'; 
+setMarkDown } from 'services/course/helpers/EditorHelpers'; 
 
 import Dante from 'dante3';
 

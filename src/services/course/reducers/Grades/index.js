@@ -1,4 +1,4 @@
-import produce from 'teach/src/services/course/reducers/grades/immer';
+import produce from 'services/course/reducers/grades/immer';
 
 import { 
 ADD_NEW_GRADE_BEGIN,

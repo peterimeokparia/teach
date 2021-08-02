@@ -7,7 +7,7 @@ import {
 connect } from 'react-redux';
 
 import { 
-deleteGrade } from 'teach/src/services/course/actions/grades';
+deleteGrade } from 'services/course/actions/grades';
 
 const EditGrade = ({
     grade,

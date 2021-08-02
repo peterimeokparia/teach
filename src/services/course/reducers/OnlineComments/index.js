@@ -1,4 +1,4 @@
-import produce from 'immer';
+import produce from 'teach/src/services/course/reducers/onlinecomments/node_modules/immer';
 
 import { 
 ADD_ONLINECOMMENTS_BEGIN,

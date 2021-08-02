@@ -6,7 +6,7 @@ import {
   
   import {  
   saveTimeLine,
-  loadTimeLines } from 'services/course/actions/timelines'; 
+  loadTimeLines } from 'teach/src/services/course/actions/timelines'; 
   
   import {
   getEventsByOperatorId,    
@@ -15,7 +15,7 @@ import {
   getOperatorFromOperatorBusinessName, 
   getUsersByOperatorId,
   getCalendarsByOperatorId,
-  getTimeLinesByOperatorId } from 'services/course/selectors';
+  getTimeLinesByOperatorId } from 'teach/src/services/course/selectors';
   
   import { 
   loadAllCalendars } from "services/course/actions/calendar";

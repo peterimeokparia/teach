@@ -2,16 +2,16 @@ import {
   ADD_TO_SALES_CART,
   BUY_COURSE_BEGIN,
   BUY_COURSE_SUCCESS,
-  BUY_COURSE_ERROR } from 'services/course/actions/users';
+  BUY_COURSE_ERROR } from 'teach/src/services/course/actions/users';
   
   import {
   loginUser,
   addToSalesCart,
-  buyCourse } from 'services/course/actions/users';
+  buyCourse } from 'teach/src/services/course/actions/users';
   
   import {
   jabraTutorTestPassword,
-  testToken } from 'services/course/api/__mocks__/token.js';
+  testToken } from 'teach/src/services/course/api/__mocks__/token.js';
   
   jest.mock('../../../api');
   

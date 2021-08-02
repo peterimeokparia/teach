@@ -1,10 +1,10 @@
 import { 
      ADD_CLASSROOM_SUCCESS,
-     ENABLE_TEACH_PLATFORM } from 'services/course/actions/classrooms';
+     ENABLE_TEACH_PLATFORM } from 'teach/src/services/course/actions/classrooms';
      
      import {
      START_NEW_MEETING,
-     END_MEETING } from 'services/course/actions/meetings';
+     END_MEETING } from 'teach/src/services/course/actions/meetings';
      
      import { 
      addCurentMeeting,
@@ -12,7 +12,7 @@ import {
           
      import {
      addNewClassRoomIdToStudentsAndTutors,
-     enableTeachPlatform } from 'services/course/middleware/classrooms/helpers';
+     enableTeachPlatform } from 'teach/src/services/course/middleware/classrooms/helpers';
      
      export const classrooms = store => next =>  action => {
           switch(action.type){  

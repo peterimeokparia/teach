@@ -3,7 +3,7 @@ useState,
 useEffect } from 'react';
 
 import { 
-sendEmail } from 'services/course/api';
+sendEmail } from 'teach/src/services/course/api';
 
 import Swal from 'sweetalert2';
 

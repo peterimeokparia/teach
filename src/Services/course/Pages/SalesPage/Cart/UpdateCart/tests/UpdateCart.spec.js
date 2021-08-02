@@ -10,7 +10,7 @@ applyMiddleware } from 'redux';
 import { 
 mockStoreObject } from 'Services/course/api';
 
-import UpdateCart  from 'services/course/pages/SalesPage/Cart/UpdateCart';
+import UpdateCart  from 'teach/src/services/course/pages/SalesPage/Cart/UpdateCart';
 import renderer from 'react-test-renderer';
 import thunk from "redux-thunk"; 
 import * as reactRedux from 'react-redux';

@@ -5,7 +5,7 @@ import {
 connect } from 'react-redux';
 
 import { 
-buyCourse } from 'services/course/actions/users';
+buyCourse } from 'teach/src/services/course/actions/users';
 
 import { 
 Link,

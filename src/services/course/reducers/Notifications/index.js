@@ -1,4 +1,4 @@
-import produce from 'immer';
+import produce from 'teach/src/services/course/reducers/notifications/node_modules/immer';
 
 import { 
 LOAD_PUSH_NOTIFICATION_USERS_BEGIN,

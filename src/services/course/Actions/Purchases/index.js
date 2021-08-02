@@ -1,5 +1,5 @@
 import {
-purchaseHistory } from 'services/course/api';
+purchaseHistory } from 'teach/src/services/course/api';
 
 export const PURCHASE_HISTORY_BEGIN = "PURCHASE HISTORY BEGIN";
 export const PURCHASE_HISTORY_SUCCESS = "PURCHASE HISTORY SUCCESS";

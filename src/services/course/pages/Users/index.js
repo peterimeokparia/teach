@@ -5,14 +5,14 @@ import {
     navigate } from '@reach/router';
     
     import {
-    navContent } from  'services/course/pages/components/NavigationHelper';
+    navContent } from  'teach/src/services/course/pages/components/NavigationHelper';
     
     import { 
-    addCalendar } from 'services/course/actions/calendar';
+    addCalendar } from 'teach/src/services/course/actions/calendar';
     
     import {
     eventEnum,
-    getCalendarColor } from 'services/course/pages/CalendarPage/helpers';
+    getCalendarColor } from 'teach/src/services/course/pages/CalendarPage/helpers';
     
     import { 
     getPushNotificationUsersByOperatorId,
@@ -21,20 +21,20 @@ import {
     getEventsByOperatorId,    
     getOperatorFromOperatorBusinessName, 
     getUsersByOperatorId,
-    getCoursesByOperatorId } from 'services/course/selectors';
+    getCoursesByOperatorId } from 'teach/src/services/course/selectors';
     
-    import NotFoundPage from 'services/course/pages/components/NotFoundPage';
+    import NotFoundPage from 'teach/src/services/course/pages/components/NotFoundPage';
     import Loading from '../components/Loading';
     import LoginLogout from '../LoginPage/components/LoginLogout';
-    import MainMenu from 'services/course/pages/components/MainMenu';
-    import NavLinks from 'services/course/pages/components/NavLinks';
+    import MainMenu from 'teach/src/services/course/pages/components/MainMenu';
+    import NavLinks from 'teach/src/services/course/pages/components/NavLinks';
     import SchoolIcon from '@material-ui/icons/School';
     import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
     import ScheduleIcon from '@material-ui/icons/Schedule';
     import TimelineIcon from '@material-ui/icons/Timeline';
     import BookIcon from '@material-ui/icons/Book';
     import ForumIcon from '@material-ui/icons/Forum';
-    import Calendar from 'services/course/helpers/Calendar';
+    import Calendar from 'teach/src/services/course/helpers/Calendar';
     import './style.css';
     
     const Users = ({

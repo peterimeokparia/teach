@@ -3,21 +3,21 @@ connect } from 'react-redux';
 
 import {
 saveCalendar,
-deleteCalendar } from 'services/course/actions/calendar';
+deleteCalendar } from 'teach/src/services/course/actions/calendar';
 
 import {
 frequencyCollection,
 days,
-eventEnum } from 'services/course/pages/CalendarPage/helpers';
+eventEnum } from 'teach/src/services/course/pages/CalendarPage/helpers';
 
 import {
-studentsOption } from 'services/course/pages/CalendarPage/helpers';
+studentsOption } from 'teach/src/services/course/pages/CalendarPage/helpers';
 
-import useEditCalendarEventsHook from 'services/course/pages/CalendarPage/hooks/useEditCalendarEventsHook';
-import SessionScheduling from 'services/course/pages/CalendarPage/components/TimeLines/SessionScheduling';
+import useEditCalendarEventsHook from 'teach/src/services/course/pages/CalendarPage/hooks/useEditCalendarEventsHook';
+import SessionScheduling from 'teach/src/services/course/pages/CalendarPage/components/TimeLines/SessionScheduling';
 import Select from 'react-select';
-import DropDown from 'services/course/pages/components/DropDown';
-import ToggleButton from 'services/course/pages/components/ToggleButton';
+import DropDown from 'teach/src/services/course/pages/components/DropDown';
+import ToggleButton from 'teach/src/services/course/pages/components/ToggleButton';
 import './style.css';
 
 const EditCalendarEvents = ({

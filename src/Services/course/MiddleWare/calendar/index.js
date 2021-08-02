@@ -1,12 +1,12 @@
 import { 
 ADD_NEW_CALENDAR_SUCCESS,
-DELETE_CALENDAR_SUCCESS } from 'services/course/actions/calendar';
+DELETE_CALENDAR_SUCCESS } from 'teach/src/services/course/actions/calendar';
 
 import {
 addCalendarEventsOnAddingANewCalendar,
 addCalendarTimeLineGroupOnAddingANewCalendar,
 sendPushNotificationsAfterDeletingACalendar,
-sendEmailNotificationsAfterDeletingACalendar } from 'services/course/middleware/calendar/helpers';
+sendEmailNotificationsAfterDeletingACalendar } from 'teach/src/services/course/middleware/calendar/helpers';
 
 export const calendar = store => next =>  action => {
      switch(action.type){

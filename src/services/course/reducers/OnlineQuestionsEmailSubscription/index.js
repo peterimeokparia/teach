@@ -1,4 +1,4 @@
-import produce from 'immer';
+import produce from 'teach/src/services/course/reducers/onlinequestionsemailsubscription/node_modules/immer';
 
 import { 
 ADD_NEW_ONLINE_QUESTION_EMAIL_SUBSCRIPTION_BEGIN,

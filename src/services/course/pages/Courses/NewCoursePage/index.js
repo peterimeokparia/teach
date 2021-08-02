@@ -7,13 +7,13 @@ import {
 connect } from 'react-redux';
 
 import { 
-addNewCourse } from 'services/course/actions/courses';
+addNewCourse } from 'teach/src/services/course/actions/courses';
 
 import { 
-getOperatorFromOperatorBusinessName } from 'services/course/selectors';
+getOperatorFromOperatorBusinessName } from 'teach/src/services/course/selectors';
 
 import { 
-Validations } from  'services/course/helpers/Validations';
+Validations } from  'teach/src/services/course/helpers/Validations';
 
 import { 
 toast } from 'react-toastify';

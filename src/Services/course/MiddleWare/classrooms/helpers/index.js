@@ -1,50 +1,50 @@
 import {
-    updateUser } from 'services/course/api';
+    updateUser } from 'teach/src/services/course/api';
     
     import { 
     navigate } from '@reach/router';
     
     import{
-    sendEmails } from 'services/course/actions/emails';
+    sendEmails } from 'teach/src/services/course/actions/emails';
     
     import{
-    setLessonInProgressStatus } from 'services/course/actions/lessons';
+    setLessonInProgressStatus } from 'teach/src/services/course/actions/lessons';
     
     import {
     loadMeetingsByMeetingId,
     addNewMeeting,  
-    saveMeeting } from 'services/course/actions/meetings'; 
+    saveMeeting } from 'teach/src/services/course/actions/meetings'; 
     
     import{
     lastLoggedInUser,
     updateUserInvitationUrl, 
     loadUserByEmail,
     getCurrentUserById,
-    updateCurrentUser } from 'services/course/actions/users';
+    updateCurrentUser } from 'teach/src/services/course/actions/users';
     
     import{ 
-    updateCurrentTutor } from 'services/course/actions/classrooms';
+    updateCurrentTutor } from 'teach/src/services/course/actions/classrooms';
     
     import {
     getSelectedPushNotificationUsers,
-    sendPushNotificationMessage } from 'services/course/actions/notifications';
+    sendPushNotificationMessage } from 'teach/src/services/course/actions/notifications';
     
     import {
     getMeetingInvitees,
-    newMeetingInvitePromoMessage } from 'services/course/pages/Meeting/helpers';
+    newMeetingInvitePromoMessage } from 'teach/src/services/course/pages/Meeting/helpers';
     
     import {
     emailMessageOptions,
     getLessonPlanUrls,
     getSelectedUser,
     validationBeforeEnablingTeachPlatform,
-    inviteUsersToLearningSessionConfig } from 'services/course/pages/ClassRoomPage/components/CourseLessonDropDownComponent/helpers';
+    inviteUsersToLearningSessionConfig } from 'teach/src/services/course/pages/ClassRoomPage/components/CourseLessonDropDownComponent/helpers';
     
     import { 
-    role } from 'services/course/helpers/PageHelpers';
+    role } from 'teach/src/services/course/helpers/PageHelpers';
         
     import { 
-    LAST_LOGGEDIN_USER } from 'services/course/actions/users';
+    LAST_LOGGEDIN_USER } from 'teach/src/services/course/actions/users';
     
     export const addNewClassRoomIdToStudentsAndTutors = ( classRoom, store ) => {
         classRoom?.classRoomUsers.forEach(classroomuser => {

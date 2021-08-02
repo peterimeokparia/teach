@@ -3,10 +3,10 @@ get,
 add,
 update,
 getById, 
-signUp} from 'services/course/api';
+signUp} from 'teach/src/services/course/api';
 
 import {
-role } from 'services/course/helpers/PageHelpers';
+role } from 'teach/src/services/course/helpers/PageHelpers';
 
 const PREFIX = "http://localhost:3000/api/v1";
 

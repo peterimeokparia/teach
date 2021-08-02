@@ -11,15 +11,15 @@ import {
   import {
   loadUsers,   
   createUser,
-  loginUser } from 'services/course/actions/users';
+  loginUser } from 'teach/src/services/course/actions/users';
   
   import { 
   getOperatorFromOperatorBusinessName, 
   getUsersByOperatorId,
-  getCoursesByOperatorId } from 'services/course/selectors';
+  getCoursesByOperatorId } from 'teach/src/services/course/selectors';
   
-  import LessonPlanSignUpComponent from 'services/course/pages/Lessons/LessonPlan/components/LessonPlanSignUpComponent';
-  import SiteUser from 'services/course/helpers/SiteUser';
+  import LessonPlanSignUpComponent from 'teach/src/services/course/pages/Lessons/LessonPlan/components/LessonPlanSignUpComponent';
+  import SiteUser from 'teach/src/services/course/helpers/SiteUser';
   import './style.css';
   
   const LessonPlanInviteUserVerification = ({ 

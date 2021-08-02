@@ -1,16 +1,16 @@
 import {
 subscribeEntityOwnerToPushNotification,   
-sendPushNotificationOnUpdate } from 'services/course/middleware/subscriptions/helpers/pushSubscriptions';
+sendPushNotificationOnUpdate } from 'teach/src/services/course/middleware/subscriptions/helpers/pushSubscriptions';
 
 import {
 getCurrentUser,    
-NotificationEntityEnum } from 'services/course/middleware/subscriptions/helpers';
+NotificationEntityEnum } from 'teach/src/services/course/middleware/subscriptions/helpers';
 
 import {   
-getCoursePushMessageSubscribers } from 'services/course/middleware/subscriptions/helpers/subscribers/courses';
+getCoursePushMessageSubscribers } from 'teach/src/services/course/middleware/subscriptions/helpers/subscribers/courses';
 
 import {
-getCoursePushNotificationMessage } from 'services/course/middleware/subscriptions/helpers/messages/push/courses';
+getCoursePushNotificationMessage } from 'teach/src/services/course/middleware/subscriptions/helpers/messages/push/courses';
 
 export const sendCourseOwnerPushSubscriptionMessage = ( config, notificationEntityEnumType  ) => {
     config['notificationEnumType'] = notificationEntityEnumType;

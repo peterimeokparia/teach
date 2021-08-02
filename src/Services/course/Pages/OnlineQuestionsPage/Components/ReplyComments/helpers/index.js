@@ -1,5 +1,5 @@
 import { 
-  getSortedRecordsByDate } from 'services/course/selectors';
+  getSortedRecordsByDate } from 'teach/src/services/course/selectors';
   
   export const getCommentIdCollection = ( onlineComments ) => {
       let commentObjects = {}, children = [];

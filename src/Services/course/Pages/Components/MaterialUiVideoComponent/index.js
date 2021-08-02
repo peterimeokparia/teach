@@ -2,9 +2,9 @@ import {
   connect } from 'react-redux';
   
   import {
-  videoComponentMeta } from 'services/course/actions/video';
+  videoComponentMeta } from 'teach/src/services/course/actions/video';
   
-  import MaterialVideoPage from 'services/course/pages/MaterialVideoPage';
+  import MaterialVideoPage from 'teach/src/services/course/pages/MaterialVideoPage';
   import './style.css';
   
   const MaterialUiVideoComponent = ({

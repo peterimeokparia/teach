@@ -2,11 +2,11 @@ import {
 postData, 
 putData, 
 deleteData,   
-paymentStatus } from 'services/course/helpers/ServerHelper';
+paymentStatus } from 'teach/src/services/course/helpers/ServerHelper';
 
 import { 
 tokenGenerator, 
-privateKey} from 'services/course/pages/LoginPage/components/Authentication';
+privateKey} from 'teach/src/services/course/pages/LoginPage/components/Authentication';
 const PREFIX = "/api/v1";
 
 export let apiAuthToken = undefined;

@@ -2,16 +2,16 @@ import {
     connect } from 'react-redux';
     
     import { 
-    saveSession } from 'services/course/actions/sessions';
+    saveSession } from 'teach/src/services/course/actions/sessions';
     
     import {
     Link } from '@reach/router';
     
     import {
-    role } from 'services/course/helpers/PageHelpers';
+    role } from 'teach/src/services/course/helpers/PageHelpers';
     
-    import Roles from 'services/course/pages/components/Roles';
-    import ListItem from 'services/course/pages/components/ListItem';
+    import Roles from 'teach/src/services/course/pages/components/Roles';
+    import ListItem from 'teach/src/services/course/pages/components/ListItem';
     import EditSessionComponent from './component/EditSessionComponent';
     
     const SessionPage = ({ 

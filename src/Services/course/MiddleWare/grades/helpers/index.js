@@ -1,5 +1,5 @@
 import {
-    sendPushNotificationMessage } from 'services/course/actions/notifications';
+    sendPushNotificationMessage } from 'teach/src/services/course/actions/notifications';
     
     export const updateUserAfterAddingNewGrades = ( grades, store ) => {
         try {

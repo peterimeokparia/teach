@@ -3,7 +3,7 @@ add,
 update,
 remove,
 get,
-getById } from 'services/course/api';
+getById } from 'teach/src/services/course/api';
 
 export const LOAD_PUSH_NOTIFICATION_USERS_BEGIN = "LOAD PUSH NOTIFICATION USERS BEGIN";  
 export const LOAD_PUSH_NOTIFICATION_USERS_SUCCESS = "LOAD PUSH NOTIFICATION USERS SUCCESS";

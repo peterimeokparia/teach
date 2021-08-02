@@ -3,7 +3,7 @@ add,
 update,
 remove,
 get,
-getById } from 'services/course/api';
+getById } from 'teach/src/services/course/api';
 
 export const LOAD_GRADES_BEGIN = "LOAD GRADES BEGIN";
 export const LOAD_GRADES_SUCCESS = "LOAD GRADES SUCCESS";

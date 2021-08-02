@@ -6,9 +6,9 @@ useRef } from 'react';
 import {
 frequencyCollection,
 days,
-transformDateTime } from 'services/course/pages/CalendarPage/helpers';
+transformDateTime } from 'teach/src/services/course/pages/CalendarPage/helpers';
 
-import EventForm from 'services/course/pages/CalendarPage/components/EventForm'
+import EventForm from 'teach/src/services/course/pages/CalendarPage/components/EventForm'
 import './style.css'
 
 const Events = ({

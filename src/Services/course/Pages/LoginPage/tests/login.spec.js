@@ -2,18 +2,18 @@ import {
   LOGIN_BEGIN,
   LOGIN_SUCCESS,
   LOGIN_ERROR,
-  DELETE_USER_SUCCESS  } from 'services/course/actions/users';
+  DELETE_USER_SUCCESS  } from 'teach/src/services/course/actions/users';
   
   import {
   loginUser,
-  deleteUser } from 'services/course/actions/users'; 
+  deleteUser } from 'teach/src/services/course/actions/users'; 
   
   import {
-  role } from 'services/course/helpers/PageHelpers';
+  role } from 'teach/src/services/course/helpers/PageHelpers';
   
   import {
   jabraTutorTestPassword,
-  testToken } from 'services/course/api/__mocks__/token.js';
+  testToken } from 'teach/src/services/course/api/__mocks__/token.js';
   
   jest.mock('../../../Api');
   

@@ -1,4 +1,4 @@
-import produce from 'immer';
+import produce from 'teach/src/services/course/reducers/operators/node_modules/immer';
 
 import {
 OPERATOR_LOGIN_BEGIN, 

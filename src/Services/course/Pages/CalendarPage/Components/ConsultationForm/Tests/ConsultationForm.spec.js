@@ -1,5 +1,5 @@
 import React from 'react';
-import ConsultationForm  from 'services/course/pages/CalendarPage/components/ConsultationForm';
+import ConsultationForm  from 'teach/src/services/course/pages/CalendarPage/components/ConsultationForm';
 import renderer from 'react-test-renderer';
 
 describe('ConsultationForm', () =>  {  

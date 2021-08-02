@@ -5,20 +5,20 @@ import {
   addNewOnlineAnswer,
   saveOnlineAnswer,
   loadOnlineAnswers,
-  deleteOnlineAnswer } from 'services/course/actions/onlineanswers';
+  deleteOnlineAnswer } from 'teach/src/services/course/actions/onlineanswers';
   
   import { 
-  setMarkDown } from 'services/course/helpers/EditorHelpers'; 
+  setMarkDown } from 'teach/src/services/course/helpers/EditorHelpers'; 
     
   import {
-  SET_ONLINEANSWERS_MARKDOWN } from 'services/course/actions/onlineanswers';
+  SET_ONLINEANSWERS_MARKDOWN } from 'teach/src/services/course/actions/onlineanswers';
   
   import {
   upload_url, 
-  uploadImageUrl } from 'services/course/pages/OnlineQuestionsPage/helpers';
+  uploadImageUrl } from 'teach/src/services/course/pages/OnlineQuestionsPage/helpers';
   
   import { 
-  getSelectedOnlineAnswersByCourseId } from 'services/course/selectors';
+  getSelectedOnlineAnswersByCourseId } from 'teach/src/services/course/selectors';
   
   import {
   videoMeta,
@@ -26,10 +26,10 @@ import {
   iconStyleMain,
   iconStyle } from './inlineStyles';
   
-  import useManageEditorsHook from 'services/course/pages/OnlineQuestionsPage/hooks/useManageEditorsHook'
-  import MaterialUiVideoComponent from 'services/course/pages/components/MaterialUiVideoComponent';
+  import useManageEditorsHook from 'teach/src/services/course/pages/OnlineQuestionsPage/hooks/useManageEditorsHook'
+  import MaterialUiVideoComponent from 'teach/src/services/course/pages/components/MaterialUiVideoComponent';
   import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-  import EditorComponent from 'services/course/pages/components/EditorComponent';
+  import EditorComponent from 'teach/src/services/course/pages/components/EditorComponent';
   import PlusOneIcon from '@material-ui/icons/PlusOne';
   import DeleteIcon from '@material-ui/icons/Delete';
   import NotesIcon from '@material-ui/icons/Notes';

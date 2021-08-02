@@ -4,10 +4,10 @@ import {
     import { 
     getOperatorFromOperatorBusinessName, 
     getUsersByOperatorId,
-    getCoursesByOperatorId } from 'services/course/selectors';
+    getCoursesByOperatorId } from 'teach/src/services/course/selectors';
     
-    import useOnlineTutoringRequestFormHook from 'services/course/pages/CalendarPage/hooks/useOnlineTutoringRequestFormHook';
-    import DropDown from 'services/course/pages/components/DropDown';
+    import useOnlineTutoringRequestFormHook from 'teach/src/services/course/pages/CalendarPage/hooks/useOnlineTutoringRequestFormHook';
+    import DropDown from 'teach/src/services/course/pages/components/DropDown';
     import './style.css';
     
     const OnlineTutoringRequestForm = ({

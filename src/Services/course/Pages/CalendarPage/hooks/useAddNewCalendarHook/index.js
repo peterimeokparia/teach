@@ -9,13 +9,13 @@ import {
 loadUsers } from "services/course/actions/users";
 
 import { 
-loadAllCalendars } from 'services/course/actions/calendar';
+loadAllCalendars } from 'teach/src/services/course/actions/calendar';
 
 import {   
-loadAllEvents } from 'services/course/actions/event';
+loadAllEvents } from 'teach/src/services/course/actions/event';
 
 import {
-loadSubscribedPushNotificationUsers } from 'services/course/actions/notifications';
+loadSubscribedPushNotificationUsers } from 'teach/src/services/course/actions/notifications';
 
 function useAddNewCalendarHook(){
     const [ selectedTutors,  setSelctedTutors ] = useState([]);

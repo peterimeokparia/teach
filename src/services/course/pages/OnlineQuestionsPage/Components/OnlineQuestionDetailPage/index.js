@@ -1,7 +1,7 @@
 import { 
 useEffect } from 'react';
 
-import NavLinks from 'services/course/pages/components/NavLinks';
+import NavLinks from 'teach/src/services/course/pages/components/NavLinks';
 
 const OnlineQuestionDetailPage = ({ 
   operatorBusinessName, 

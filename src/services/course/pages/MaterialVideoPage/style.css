@@ -1,0 +1,150 @@
+  .videoSectionCallOut{
+      margin-left: 45%;
+      margin-top: 4%;
+  }
+  .flexible-modal {
+    position: absolute;
+    z-index: 1;
+    border: 1px solid #ccc;
+    background: white;
+    /* padding-left: 1%; */
+  }
+  .flexible-modal-mask {
+    position: fixed;
+    height: 0%;
+    background: rgba(55, 55, 55, 0.6);
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+  }
+  .flexible-modal-resizer {
+    position:absolute;
+    right:0;
+    bottom:0;
+    cursor:se-resize;
+    margin:5px;
+    border-bottom: solid 2px #333;
+    border-right: solid 2px #333;
+  }
+  .flexible-modal-drag-area{
+    background: rgba(22, 22, 333, 0.2);
+    height: 50px;
+    position:absolute;
+    right:0;
+    top:0;
+    cursor:move;
+  }
+  
+  video {
+    border: 10px solid #999;
+    width: 98%;
+    max-width: 860px; 
+    width: 600px;
+    height: 300px;
+    max-width: 700px;
+    max-height: 500px;
+    padding-left: 1%;
+  }
+  .videoComponents {
+    margin-left: -5%;
+  }
+  .videoCallIconMain {
+    width: 98%;
+    max-width: 860px; 
+    width: 600px;
+    height: 300px;
+    max-width: 700px;
+    max-height: 500px;
+    padding-left: 1%;
+    top: -120px;
+    margin-left: 30%;
+  }
+  .videoCallIconBody {
+    top: -120px;
+    margin-left: 1%;
+  }
+  
+  .error {
+    color: red;
+  }
+  
+  .warn {
+    color: orange;
+  }
+  
+  .info {
+    color: darkgreen;
+  }    
+
+  @media (min-width: 1281px) {
+  
+    /* CSS */
+    
+  }
+  
+  /* 
+    ##Device = Laptops, Desktops
+    ##Screen = B/w 1025px to 1280px
+  */
+  
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    
+    /* CSS */
+    
+  }
+  
+  /* 
+    ##Device = Tablets, Ipads (portrait)
+    ##Screen = B/w 768px to 1024px
+  */
+  
+  @media (min-width: 768px) and (max-width: 1024px) {
+    
+    /* CSS */
+    .videoComponents {
+      margin-left: -55%;
+    }
+    
+  }
+  
+  /* 
+    ##Device = Tablets, Ipads (landscape)
+    ##Screen = B/w 768px to 1024px
+  */
+  
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    
+    /* CSS */
+    .videoComponents {
+      margin-left: -55%;
+    }
+    
+  }
+  
+  /* 
+    ##Device = Low Resolution Tablets, Mobiles (Landscape)
+    ##Screen = B/w 481px to 767px
+  */
+  
+  @media (min-width: 481px) and (max-width: 767px) {
+    
+    /* CSS */
+    .videoComponents {
+      margin-left: -25%;
+    }
+  }
+  
+  /* 
+    ##Device = Most of the Smartphones Mobiles (Portrait)
+    ##Screen = B/w 320px to 479px
+  */
+  
+  @media (min-width: 320px) and (max-width: 480px) {
+    
+    /* CSS */
+
+    .videoComponents {
+      margin-left: -43%;
+    }
+  }

@@ -1,0 +1,260 @@
+/***** Course Listing *****/
+  .ComponentCourseList {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  .ComponentCourseList header {
+    background-color: #673ab7;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    /* padding: 20px 800px; */
+  } 
+  .ComponentCourseList h1 {
+    font-family: 'Bebas Neue', 'Helvetica Neue', arial,
+      sans-serif;
+    font-size: 60px;
+    color: #43005a;
+    margin-top: 0.2em;
+  }
+  .ComponentCourseList ul {
+    list-style: none;
+    padding: 0;
+  }
+  .ComponentCourseList .component-list-body {
+    border-radius: 25px;
+    background: #673ab7;
+    padding: 20px;
+    max-width: 2000px;
+    max-height: 2000px;
+  }
+  .ComponentCourseList .component-seconday-list-body, .component-secondary-list-body-one {
+    border-radius: 25px;
+    background: #673ab7;
+    padding: 10px;
+    padding-top: 1px;
+    margin-top: 15px;
+    height: 110px;
+    margin-left: 300px;
+    margin-right: 300px;
+    box-shadow: 10px 10px;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+  }
+  .component-secondary-list-body-one {
+    background: #9c27b0;
+  }
+  .component-seconday-list-body:hover, .component-seconday-list-body:focus, .component-seconday-list-body:active {
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+    -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+    transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+    box-shadow: 0px 0px;
+  }
+  .ComponentCourseList li > a {
+    margin-bottom: 20px;
+    line-height: 1.5;
+    font-weight: 600;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 3px;
+    display: block;
+    text-decoration: none;
+    color: #222;
+
+  }
+  .ComponentCourseList .price {
+    opacity: 0.5;
+  }
+  .ComponentCourseList .list-items {
+    padding-top: 10px;
+    /* margin-bottom: 5px; */
+    border-style: outset;
+    border-radius: 3px;
+    font-size: 20px; 
+
+     /* added */
+    padding-top: 10px;
+    /* color: white; */
+    border-radius: 3px;
+    font-size: 20px;
+
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.5rem;
+  }
+  .ComponentCourseList .user-list-items {
+    padding-top: 10px;
+    color: white;
+    border-radius: 3px;
+    font-size: 20px;
+
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.5rem;
+    /* letter-spacing: 0.5rem;
+    padding: 2rem 0;
+    font-weight: bold; */
+  }
+  .ComponentCourseList .component-list-items {
+    padding-top: 10px;
+    font-size: 10px; 
+    color: white;
+    text-align: center;
+  }
+  .ComponentCourseList .component-text-items { 
+    padding-top: 10px;
+    font-size: 10px; 
+    color: white;
+    padding-left: 40px;
+  }
+  .ComponentCourseList .user-course-btn {
+    align-self: flex-end;
+    color: #fff;
+    font-size: 16px;
+    font-family: 'Source Sans Pro', helvetica, sans-serif;
+    background:#673ab7;
+    border: none;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 1px;
+    box-shadow: 10px 10px black;
+  }
+  
+  .ComponentCourseList .new-course-btn {
+    align-self: flex-end;
+    color: #fff;
+    font-size: 16px;
+    font-family: 'Source Sans Pro', helvetica, sans-serif;
+    background: #9c27b0;
+    border: none;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 1px;
+    box-shadow: 10px 10px;
+  }
+  .ComponentCourseList .new-course-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5),
+      0 0 5px 2px #9c27b0;
+  }
+  .ComponentCourseList .new-course-btn:active {
+    background-color: purple;
+  }
+  .delete-course-btn,
+  .edit-course-btn{
+    opacity: 1;
+    border: 1px;
+    font-size: 10px;
+    cursor: pointer;
+    box-shadow: 10px 10px;
+  }
+  .delete-course-btn{
+   margin-left: 10px;
+  }
+  .edit-course-btn{
+   margin-right: 10px;
+  }
+  .Login-LogOut-btn {
+    padding-left: 1280px; 
+    /* align-self: flex-end; */
+    color: #fff;
+    font-size: 16px;
+    font-family: 'Source Sans Pro', helvetica, sans-serif;
+    border: none;
+    font-weight: 600;
+    border-radius: 1px;
+  }
+  .my-courses-btn {
+    padding-top: 1%;
+    padding-left: 1400px;
+    box-shadow: 10px 10px; 
+  }
+  .invite-btn {
+    opacity: 1;
+    border: 2px;
+    font-size: 10px;
+    cursor: pointer;
+    padding-left: 30px;
+    margin-top: 15px;
+    padding-right: 30px;
+    margin-left:25px;
+    box-shadow: 10px 10px;
+  }
+  .add-substract-btns {
+    opacity: 1;
+    border: 2px;
+    font-size: 10px;
+    cursor: pointer;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-left:25px;
+    box-shadow: 10px 10px;
+  }
+  /* Bounce Out */
+.hvr-bounce-out  {
+  display: inline-block; 
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+}
+.hvr-bounce-out:hover, .hvr-bounce-out:focus, .hvr-bounce-out:active {
+  -webkit-transform: scale(0.8);
+  transform: scale(0.8);
+  -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+  transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+}
+.tooltip {
+  color: white;
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+.component-list-items .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  /* top: -5px;
+  right: 105%; */
+}
+.component-list-items:hover .tooltiptext {
+  visibility: visible;
+}
+.ComponentCourseList .component-seconday-list, .component-secondary-list-body-one {  
+  padding-top: 1px;
+  padding: 30px;
+  border-radius: 25px;
+  margin-top: 25px;
+  background: #673ab7;
+  height: 200px;
+  box-shadow: 10px 10px;
+}
+.ComponentCourseList .multicolortext {
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.checkBoxViewGradesLink {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 15px;
+  font-family: 'Courier New', Courier, monospace;
+}

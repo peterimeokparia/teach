@@ -1,4 +1,4 @@
-import produce from 'immer';
+import produce from 'teach/src/services/course/reducers/courses/immer';
 
 import {
 ADD_COURSE_BEGIN, 

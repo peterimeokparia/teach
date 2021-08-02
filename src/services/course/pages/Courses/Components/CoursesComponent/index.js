@@ -10,24 +10,24 @@ import {
     saveCourse, 
     deleteCourse, 
     loadCourses, 
-    unSubscribeFromCourse } from 'services/course/actions/courses';
+    unSubscribeFromCourse } from 'teach/src/services/course/actions/courses';
     
     import { 
-    getUsersByOperatorId } from 'services/course/selectors';
+    getUsersByOperatorId } from 'teach/src/services/course/selectors';
     
     import {
     handleAddPushNotificationSubscriptionToEntity,
     handleEmailNotificationSubscriptionToEntity,
-    handleSavingEntityAction } from 'services/course/pages/components/SubscriptionComponent/MiniSideBarMenu/helper';
+    handleSavingEntityAction } from 'teach/src/services/course/pages/components/SubscriptionComponent/MiniSideBarMenu/helper';
     
     import { 
-    forceReload } from 'services/course/helpers/ServerHelper';
+    forceReload } from 'teach/src/services/course/helpers/ServerHelper';
     
-    import Loading from 'services/course/pages/components/Loading';
-    import NavLinks from 'services/course/pages/components/NavLinks';
+    import Loading from 'teach/src/services/course/pages/components/Loading';
+    import NavLinks from 'teach/src/services/course/pages/components/NavLinks';
     import Swal from 'sweetalert2';
     import testImage from './images/courses_books.jpeg';
-    import MiniSideBarMenu from 'services/course/pages/components/SubscriptionComponent/MiniSideBarMenu';
+    import MiniSideBarMenu from 'teach/src/services/course/pages/components/SubscriptionComponent/MiniSideBarMenu';
     import './style.css';
     
     const CoursesComponent = ({

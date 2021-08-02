@@ -2,9 +2,9 @@ import {
     connect } from 'react-redux';
     
     import { 
-    deleteSession } from 'services/course/actions/sessions';
+    deleteSession } from 'teach/src/services/course/actions/sessions';
     
-    import useSessionHook from 'services/course/pages/SessionPage/hooks/useSessionHook';
+    import useSessionHook from 'teach/src/services/course/pages/SessionPage/hooks/useSessionHook';
     import './style.css';
     
     const EditSessionComponent = ({

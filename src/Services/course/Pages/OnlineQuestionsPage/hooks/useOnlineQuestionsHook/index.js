@@ -11,13 +11,13 @@ loadSubscribedPushNotificationUserByUserId,
 failedOnlineQuestionNotifications,  
 retryPushNotificationMessage,
 subscribePushNotificationUser,
-savePushNotificationUser } from 'services/course/actions/notifications';
+savePushNotificationUser } from 'teach/src/services/course/actions/notifications';
 
 import { 
 onlineQuestionCourseId,
 deleteOnlineQuestion,
 saveOnlineQuestion,
-loadOnlineQuestions } from 'services/course/actions/onlinequestions';
+loadOnlineQuestions } from 'teach/src/services/course/actions/onlinequestions';
 
 function useOnlineQuestionsHook(onlineQuestionsConfig ){
 

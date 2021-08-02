@@ -5,13 +5,13 @@ import {
 connect } from 'react-redux';
 
 import {
-loadSubscribedPushNotificationUsers } from 'services/course/actions/notifications';
+loadSubscribedPushNotificationUsers } from 'teach/src/services/course/actions/notifications';
 
 import {
-loadMeetings } from 'services/course/actions/meetings'; 
+loadMeetings } from 'teach/src/services/course/actions/meetings'; 
 
 import{
-loadUsers } from 'services/course/actions/users';
+loadUsers } from 'teach/src/services/course/actions/users';
 
 import { 
 navigate } from '@reach/router';
@@ -19,9 +19,9 @@ navigate } from '@reach/router';
 import {  
 getUsersByOperatorId,    
 getOperatorFromOperatorBusinessName,
-getPushNotificationUsersByOperatorId } from 'services/course/selectors';
+getPushNotificationUsersByOperatorId } from 'teach/src/services/course/selectors';
 
-import ClassRoomComponent from './components/ClassRoomComponent';
+import ClassRoomComponent from 'teach/src/services/course/pages/ClassRoomPage/components/ClassRoomComponent';
 import 'react-toastify/dist/ReactToastify.css';
 
 const ClassRoomPage = ({

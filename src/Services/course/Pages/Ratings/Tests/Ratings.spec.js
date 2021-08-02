@@ -8,9 +8,9 @@ import {
 applyMiddleware } from 'redux'; 
 
 import { 
-mockStoreObject } from 'services/course/api';
+mockStoreObject } from 'teach/src/services/course/api';
 
-import Ratings  from 'services/course/pages/Ratings';
+import Ratings  from 'teach/src/services/course/pages/Ratings';
 import renderer from 'react-test-renderer';
 import thunk from "redux-thunk"; 
 import * as reactRedux from 'react-redux';

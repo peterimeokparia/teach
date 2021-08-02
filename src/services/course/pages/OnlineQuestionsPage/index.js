@@ -3,12 +3,12 @@ connect } from 'react-redux';
 
 import {
 getOperatorFromOperatorBusinessName,
-getPushNotificationUsersByOperatorId } from 'services/course/selectors';
+getPushNotificationUsersByOperatorId } from 'teach/src/services/course/selectors';
 
 import {
-getOnlineQuestion } from './helpers';
+getOnlineQuestion } from 'teach/src/services/course/pages/OnlineQuestionsPage/helpers';
 
-import OnlineQuestionsMultiEditorComponent from './components/OnlineQuestionsMultiEditorComponent';
+import OnlineQuestionsMultiEditorComponent from 'teach/src/services/course/pages/OnlineQuestionsPage/components/OnlineQuestionsMultiEditorComponent';
 
 const OnlineQuestionsPage = ({ 
   operatorBusinessName, 

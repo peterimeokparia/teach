@@ -13,33 +13,33 @@ getLessonVideoUrl,
 setLessonCourse,
 loadLessons,
 addNewLesson, 
-saveLesson } from 'services/course/actions/lessons';
+saveLesson } from 'teach/src/services/course/actions/lessons';
 
 import { 
-loadSessions } from 'services/course/actions/sessions';
+loadSessions } from 'teach/src/services/course/actions/sessions';
 
 import { 
 getUsersByOperatorId,    
 getLessonsByCourseIdSelector, 
 getCoursesByCourseIdSelector,
 getCoursesByCreatedByIdSelector,
-getOperatorFromOperatorBusinessName } from 'services/course/selectors';
+getOperatorFromOperatorBusinessName } from 'teach/src/services/course/selectors';
 
 import { 
-getLastUsersState } from 'services/course/api';
+getLastUsersState } from 'teach/src/services/course/api';
 
 import { 
-role } from 'services/course/helpers/PageHelpers';
+role } from 'teach/src/services/course/helpers/PageHelpers';
 
 import { 
 toast } from 'react-toastify';
 
 import { 
-Validations } from  'services/course/helpers/Validations';
+Validations } from  'teach/src/services/course/helpers/Validations';
 
-import NotFoundPage from 'services/course/pages/components/NotFoundPage';
-import Loading from 'services/course/pages/components/Loading';
-import CourseDisplayViewComponent from 'services/course/pages/Courses/CourseDetailPage/components/CourseDisplayViewComponent';
+import NotFoundPage from 'teach/src/services/course/pages/components/NotFoundPage';
+import Loading from 'teach/src/services/course/pages/components/Loading';
+import CourseDisplayViewComponent from 'teach/src/services/course/pages/Courses/CourseDetailPage/components/CourseDisplayViewComponent';
 import './style.css';
 import 'react-toastify/dist/ReactToastify.css';
 

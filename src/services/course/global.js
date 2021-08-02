@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'services/course/node_modules/styled-components'
+import { createGlobalStyle } from 'teach/src/services/course/node_modules/styled-components'
 
 export const GlobalStyles = createGlobalStyle`
   html, body {

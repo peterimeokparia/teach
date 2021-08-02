@@ -8,15 +8,15 @@ import {
   navigate } from '@reach/router';
   
   import { 
-  getOperatorFromOperatorBusinessName } from 'services/course/selectors';
+  getOperatorFromOperatorBusinessName } from 'teach/src/services/course/selectors';
   
   import { 
-  forceReload } from 'services/course/helpers/ServerHelper';
+  forceReload } from 'teach/src/services/course/helpers/ServerHelper';
   
-  import LoginLogout from '../LoginPage/components/LoginLogout';
-  import Cart from '../SalesPage/Cart';
-  import UserBioEditor from './component/UserBioEditor';
-  import ImageComponent from '../components/ImageComponent';
+  import LoginLogout from 'teach/src/services/course/pages/LoginPage/components/LoginLogout';
+  import Cart from 'teach/src/services/course/pages/SalesPage/Cart';
+  import UserBioEditor from 'teach/src/services/course/pages/BioPage/component/UserBioEditor';
+  import ImageComponent from 'teach/src/services/course/pages/components/ImageComponent';
   import './style.css';
   
   const BioPage = ({ 

@@ -2,10 +2,10 @@
 import {
     sendPushNotificationMessage,     
     subscribePushNotificationUser,
-    savePushNotificationUser } from 'services/course/actions/notifications';
+    savePushNotificationUser } from 'teach/src/services/course/actions/notifications';
     
     import {
-    handlePushNotificationSubscription } from 'services/course/helpers/PageHelpers';
+    handlePushNotificationSubscription } from 'teach/src/services/course/helpers/PageHelpers';
     
     export const subscribeEntityOwnerToPushNotification = async ( config ) => {
         let notificationMessage = config?.getPushMessageSubscribers( config?.state, config?.action );

@@ -1,5 +1,5 @@
 import React from 'react';
-import OnlineTutoringRequestForm  from 'services/course/pages/CalendarPage/components/OnlineTutoringRequestForm';
+import OnlineTutoringRequestForm  from 'teach/src/services/course/pages/CalendarPage/components/OnlineTutoringRequestForm';
 import renderer from 'react-test-renderer';
 import thunk from "redux-thunk"; 
 import * as reactRedux from 'react-redux';

@@ -5,13 +5,13 @@ import {
   SAVE_ONLINEQUESTION_SUCCESS,
   LOAD_ONLINEQUESTIONS_BEGIN,
   LOAD_ONLINEQUESTIONS_SUCCESS,
-  DELETE_ONLINEQUESTION_SUCCESS } from 'services/course/actions/onlinequestions';
+  DELETE_ONLINEQUESTION_SUCCESS } from 'teach/src/services/course/actions/onlinequestions';
   
   import {
   loadOnlineQuestions,
   addNewOnlineQuestion,
   saveOnlineQuestion,
-  deleteOnlineQuestion } from 'services/course/actions/onlinequestions'; 
+  deleteOnlineQuestion } from 'teach/src/services/course/actions/onlinequestions'; 
   
   jest.mock('../../../Api');
   

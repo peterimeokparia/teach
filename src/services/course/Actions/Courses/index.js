@@ -3,7 +3,7 @@ add,
 update,
 remove,
 get,
-updateUser } from 'services/course/api';
+updateUser } from 'teach/src/services/course/api';
 
 export const ADD_COURSE_BEGIN = "ADD COURSE BEGIN";
 export const ADD_COURSE_SUCCESS = "ADD COURSE SUCCESS";

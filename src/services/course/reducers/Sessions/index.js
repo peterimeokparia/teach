@@ -1,4 +1,4 @@
-import produce from 'immer';
+import produce from 'teach/src/services/course/reducers/sessions/immer';
 
 import {
 ADD_SESSION_BEGIN,

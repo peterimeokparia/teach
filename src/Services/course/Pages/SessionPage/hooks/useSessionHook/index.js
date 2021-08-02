@@ -7,10 +7,10 @@ import {
 navigate } from '@reach/router';
 
 import { 
-loadUsers } from 'services/course/actions/users';
+loadUsers } from 'teach/src/services/course/actions/users';
 
 import { 
-deleteSession } from 'services/course/actions/sessions';
+deleteSession } from 'teach/src/services/course/actions/sessions';
 
 import { 
 useDispatch } from 'react-redux';

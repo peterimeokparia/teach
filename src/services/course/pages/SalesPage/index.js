@@ -7,16 +7,16 @@ Link } from '@reach/router';
 import {
 getUsersByOperatorId,    
 getOperatorFromOperatorBusinessName,     
-getCoursesByCourseIdSelector  } from 'services/course/selectors';
+getCoursesByCourseIdSelector  } from 'teach/src/services/course/selectors';
 
 import {
-addToSalesCart } from 'services/course/actions/users';
+addToSalesCart } from 'teach/src/services/course/actions/users';
 
 import { 
-Validations } from  'services/course/helpers/Validations';
+Validations } from  'teach/src/services/course/helpers/Validations';
 
-import useSalesHook from 'services/course/pages/SalesPage/hooks/useSalesHook';
-import SessionSignUpComponent from 'services/course/pages/SessionPage/component/SessionSignUpComponent';
+import useSalesHook from 'teach/src/services/course/pages/SalesPage/hooks/useSalesHook';
+import SessionSignUpComponent from 'teach/src/services/course/pages/SessionPage/component/SessionSignUpComponent';
 import './style.css'; 
 
 const SalesPage = ({ 

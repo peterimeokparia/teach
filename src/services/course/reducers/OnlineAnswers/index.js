@@ -1,4 +1,4 @@
-import produce from 'immer';
+import produce from 'teach/src/services/course/reducers/onlineanswers/immer';
 
 import { 
 ADD_ONLINEANSWERS_BEGIN,

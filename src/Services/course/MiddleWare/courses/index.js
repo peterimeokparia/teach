@@ -1,8 +1,8 @@
 import { 
-     ADD_COURSE_SUCCESS } from 'services/course/actions/courses';
+     ADD_COURSE_SUCCESS } from 'teach/src/services/course/actions/courses';
      
      import {
-     updateCourseCreatorAfterAddingNewCourse } from 'services/course/middleware/courses/helpers';
+     updateCourseCreatorAfterAddingNewCourse } from 'teach/src/services/course/middleware/courses/helpers';
      
      export const courses = store => next =>  action => {
           switch(action.type){

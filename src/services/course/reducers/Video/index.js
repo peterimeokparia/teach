@@ -1,4 +1,4 @@
-import produce from 'immer';
+import produce from 'teach/src/services/course/reducers/video/immer';
 
 import {
 RECORDING_STATUS_RECORDING_STARTED, 

@@ -7,16 +7,16 @@ import {
   
   import { 
   getOperatorFromOperatorBusinessName,
-  getSortedRecordsByDate } from 'services/course/selectors';
+  getSortedRecordsByDate } from 'teach/src/services/course/selectors';
   
   import {
   loadOnlineComments,
   addNewOnlineComment,
   deleteOnlineComment,
-  saveOnlineComment } from 'services/course/actions/onlinecomments'; 
+  saveOnlineComment } from 'teach/src/services/course/actions/onlinecomments'; 
   
   import {
-  SET_ONLINECOMMENTS_MARKDOWN } from 'services/course/actions/onlinecomments'; 
+  SET_ONLINECOMMENTS_MARKDOWN } from 'teach/src/services/course/actions/onlinecomments'; 
   
   import {
   getCommentIdCollection } from './helpers';
@@ -32,7 +32,7 @@ import {
   deleteIconStyle, 
   iconStyle } from './inlineStyles';
   
-  import useReplyCommentsHook from 'services/course/pages/OnlineQuestionsPage/hooks/useReplyCommentsHook';
+  import useReplyCommentsHook from 'teach/src/services/course/pages/OnlineQuestionsPage/hooks/useReplyCommentsHook';
   import moment from "moment";
   import EditorComponent  from '../../../components/EditorComponent';
   import ReplyIcon from '@material-ui/icons/Reply';

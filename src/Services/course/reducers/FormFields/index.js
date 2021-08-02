@@ -1,4 +1,4 @@
-import produce from 'immer';
+import produce from 'teach/src/services/course/reducers/formfields/immer';
 
 import { 
 ADD_FORMFIELDS_BEGIN,
@@ -14,7 +14,7 @@ SAVE_FORMFIELDS_ERROR,
 RESET_FORMFIELDS_ERROR, 
 DELETE_FORMFIELDS_SUCCESS, 
 DELETE_FORMFIELDS_ERROR, 
-SET_FORMFIELDS_MARKDOWN } from 'services/course/actions/formfields';
+SET_FORMFIELDS_MARKDOWN } from 'teach/src/services/course/reducers/formfields/node_modules/services/course/actions/formfields';
 
 const initialState = {
     formFields: {},

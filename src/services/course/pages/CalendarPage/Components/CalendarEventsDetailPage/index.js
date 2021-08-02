@@ -5,24 +5,24 @@ import {
     Link } from '@reach/router';
     
     import {
-    saveEvent } from 'services/course/actions/event';
+    saveEvent } from 'teach/src/services/course/actions/event';
     
     import {
-    updatedCurrentEvent} from 'services/course/pages/CalendarPage/helpers';
+    updatedCurrentEvent} from 'teach/src/services/course/pages/CalendarPage/helpers';
     
     import {
     getUsersByOperatorId,
     getOperatorFromOperatorBusinessName,
     getEventsByOperatorId,    
     getCalendarEventsByUserIdSelector,
-    getPushNotificationUsersByOperatorId } from 'services/course/selectors';
+    getPushNotificationUsersByOperatorId } from 'teach/src/services/course/selectors';
     
     import {
-    role } from 'services/course/helpers/PageHelpers';
+    role } from 'teach/src/services/course/helpers/PageHelpers';
     
-    import Roles from 'services/course/pages/components/Roles';
-    import EventListItems from 'services/course/pages/CalendarPage/components/EventListItems';
-    import EditCalendarEvents from 'services/course/pages/CalendarPage/components/EditCalendarEvents';
+    import Roles from 'teach/src/services/course/pages/components/Roles';
+    import EventListItems from 'teach/src/services/course/pages/CalendarPage/components/EventListItems';
+    import EditCalendarEvents from 'teach/src/services/course/pages/CalendarPage/components/EditCalendarEvents';
     import './style.css';
     import useCalendarEventsDetailHook from '../../hooks/useCalendarEventsDetailHook';
     

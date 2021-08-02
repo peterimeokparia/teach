@@ -8,17 +8,17 @@ import {
     getOperatorFromOperatorBusinessName, 
     getUsersByOperatorId,
     getCalendarsByOperatorId,
-    getTimeLinesByOperatorId } from 'services/course/selectors';
+    getTimeLinesByOperatorId } from 'teach/src/services/course/selectors';
     
     import { 
-    addCalendar } from 'services/course/actions/calendar';
+    addCalendar } from 'teach/src/services/course/actions/calendar';
     
     import {
     calendarOptions,    
     tutorsOption,
-    getCalendarColor } from 'services/course/pages/CalendarPage/helpers';
+    getCalendarColor } from 'teach/src/services/course/pages/CalendarPage/helpers';
     
-    import useAddNewCalendarHook from 'services/course/pages/CalendarPage/hooks/useAddNewCalendarHook';
+    import useAddNewCalendarHook from 'teach/src/services/course/pages/CalendarPage/hooks/useAddNewCalendarHook';
     import Select from 'react-select';
     import './style.css';
     

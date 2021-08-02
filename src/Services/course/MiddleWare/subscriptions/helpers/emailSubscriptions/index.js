@@ -1,8 +1,8 @@
 import {
-TEACH_EMAIL_ADDRESS } from 'services/course/actions/emails';
+TEACH_EMAIL_ADDRESS } from 'teach/src/services/course/actions/emails';
 
 import {
-sendEmails } from 'services/course/actions/emails';
+sendEmails } from 'teach/src/services/course/actions/emails';
 
 
 export const sendEmailMessage = async ( config ) => {

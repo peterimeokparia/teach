@@ -7,45 +7,45 @@ import {
   loadUsers,
   lastLoggedInUser, 
   loginPageError, 
-  loadUserByEmail } from 'services/course/actions/users';
+  loadUserByEmail } from 'teach/src/services/course/actions/users';
   
   import { 
   loadMeetingsByMeetingId,  
   loadMeetings,
-  saveMeeting  } from 'services/course/actions/meetings';
+  saveMeeting  } from 'teach/src/services/course/actions/meetings';
   
   import {
   autoRenewSessionPackages,  
-  loadSessions } from 'services/course/actions/sessions';
+  loadSessions } from 'teach/src/services/course/actions/sessions';
   
   import {
   loadSubscribedPushNotificationUsers, 
   subscribePushNotificationUser,
-  savePushNotificationUser } from 'services/course/actions/notifications';
+  savePushNotificationUser } from 'teach/src/services/course/actions/notifications';
   
   import {
   setOperator,
-  setOperatorBusinessName } from 'services/course/actions/operator';
+  setOperatorBusinessName } from 'teach/src/services/course/actions/operator';
   
   import { 
   getOperatorFromOperatorBusinessName, 
   getUsersByOperatorId,
-  getPushNotificationUsersByOperatorId } from 'services/course/selectors';
+  getPushNotificationUsersByOperatorId } from 'teach/src/services/course/selectors';
   
   import {
-  handlePushNotificationSubscription } from 'services/course/helpers/PageHelpers';
+  handlePushNotificationSubscription } from 'teach/src/services/course/helpers/PageHelpers';
   
   import {
   setUpNewUser,
   directUserNavigation,
   validateUseCredentialsOnlogin,
-  handleUserMeetingsOnLogin } from 'services/course/pages/LoginPage/helpers';
+  handleUserMeetingsOnLogin } from 'teach/src/services/course/pages/LoginPage/helpers';
   
-  import useLoginPageHook from 'services/course/pages/LoginPage/hooks/useLoginPageHook'
-  import LoginForm from 'services/course/pages/LoginPage/components/LoginForm';
-  import RegistrationForm from 'services/course/pages/SignUp/RegistrationForm';
-  import CoursePackageRenewal from 'services/course/pages/Packages/CoursePackageRenewal';
-  import SiteUser from 'services/course/helpers/SiteUser';
+  import useLoginPageHook from 'teach/src/services/course/pages/LoginPage/hooks/useLoginPageHook'
+  import LoginForm from 'teach/src/services/course/pages/LoginPage/components/LoginForm';
+  import RegistrationForm from 'teach/src/services/course/pages/SignUp/RegistrationForm';
+  import CoursePackageRenewal from 'teach/src/services/course/pages/Packages/CoursePackageRenewal';
+  import SiteUser from 'teach/src/services/course/helpers/SiteUser';
   import Swal from 'sweetalert2';
   import './style.css';
   

@@ -7,23 +7,23 @@ useState,
 useEffect } from "react";
 
 import { 
-role } from 'services/course/helpers/PageHelpers';
+role } from 'teach/src/services/course/helpers/PageHelpers';
 
 import {
 loadMeetings,   
-saveMeeting } from 'services/course/actions/meetings';
+saveMeeting } from 'teach/src/services/course/actions/meetings';
 
 import { 
-loadUsers  } from 'services/course/actions/users';
+loadUsers  } from 'teach/src/services/course/actions/users';
 
 import {
-loadGrades } from 'services/course/actions/grades';
+loadGrades } from 'teach/src/services/course/actions/grades';
 
 import{ 
-loadLessons  } from 'services/course/actions/lessons';
+loadLessons  } from 'teach/src/services/course/actions/lessons';
 
 import {
-showJoinMeetingPopupAfterTheTutorStartsTheMeeting } from 'services/course/pages/Meeting/helpers';
+showJoinMeetingPopupAfterTheTutorStartsTheMeeting } from 'teach/src/services/course/pages/Meeting/helpers';
 
 function useClassRoomComponentHook( operatorBusinessName, selectedUser ) {
     const [ dropDownDisplayOption, setDropDownDisplayOption ] = useState( "" );

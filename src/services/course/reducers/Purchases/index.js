@@ -1,4 +1,4 @@
-import produce from 'immer';
+import produce from 'teach/src/services/course/reducers/purchases/immer';
 
 import { 
 PURCHASE_HISTORY_BEGIN, 

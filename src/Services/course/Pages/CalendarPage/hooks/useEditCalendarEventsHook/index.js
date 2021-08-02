@@ -6,10 +6,10 @@ useEffect } from 'react';
 import {
 frequencyCollection,
 getCurrentTimeInUsersLocale,
-updateFrequencyCollection } from 'services/course/pages/CalendarPage/helpers';
+updateFrequencyCollection } from 'teach/src/services/course/pages/CalendarPage/helpers';
 
 import {
-initializeEventForm } from 'services/course/pages/CalendarPage/components/EditCalendarEvents/helpers';
+initializeEventForm } from 'teach/src/services/course/pages/CalendarPage/components/EditCalendarEvents/helpers';
 
 function useEditCalendarEventsHook( config ){
     let {

@@ -3,7 +3,7 @@ add,
 update,
 get,
 getById,
-updateUser } from 'services/course/api';
+updateUser } from 'teach/src/services/course/api';
 
 export const LOAD_ASSIGNMENTS_BEGIN = "LOAD ASSIGNMENTS BEGIN";
 export const LOAD_ASSIGNMENTS_SUCCESS = "LOAD ASSIGNMENTS SUCCESS";

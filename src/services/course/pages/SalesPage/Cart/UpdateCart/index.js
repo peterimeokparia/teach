@@ -2,9 +2,9 @@ import {
 connect } from 'react-redux';
 
 import { 
-getCoursesByCourseIdSelector  } from 'services/course/selectors';
+getCoursesByCourseIdSelector  } from 'teach/src/services/course/selectors';
 
-import useSalesHook from 'services/course/pages/SalesPage/hooks/useSalesHook';
+import useSalesHook from 'teach/src/services/course/pages/SalesPage/hooks/useSalesHook';
 
 const UpdateCart = ({ course }) => {  
 

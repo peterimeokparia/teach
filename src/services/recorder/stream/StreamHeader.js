@@ -1,4 +1,4 @@
-import { Link } from 'services/recorder/stream/node_modules/@reach/router';
+import { Link } from 'teach/src/services/recorder/stream/node_modules/@reach/router';
 import './Header.css';
 
 const Header = () => {

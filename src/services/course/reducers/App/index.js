@@ -1,4 +1,4 @@
-import produce from 'immer';
+import produce from 'teach/src/services/course/reducers/app/immer';
 
 import { 
 TOGGLE_PREVIEW_MODE, 

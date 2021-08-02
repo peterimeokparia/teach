@@ -1,11 +1,11 @@
 import {
     add,
     updateUser,
-    sendEmail } from 'services/course/api';
+    sendEmail } from 'teach/src/services/course/api';
     
     import {
     RESET_USERS_CART,
-    LAST_LOGGEDIN_USER } from 'services/course/actions/users';
+    LAST_LOGGEDIN_USER } from 'teach/src/services/course/actions/users';
     
     const emailMessageConfig = {
         sendersEmailAddress: "teachpadsconnect247@gmail.com",

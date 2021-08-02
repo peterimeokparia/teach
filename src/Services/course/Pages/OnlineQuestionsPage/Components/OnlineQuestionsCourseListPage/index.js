@@ -5,7 +5,7 @@ connect  } from 'react-redux';
 
 import {
 getOperatorFromOperatorBusinessName,
-getCoursesByOperatorId } from 'services/course/selectors';
+getCoursesByOperatorId } from 'teach/src/services/course/selectors';
 
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import './style.css';

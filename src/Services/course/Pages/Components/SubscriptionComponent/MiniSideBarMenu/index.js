@@ -5,17 +5,17 @@ import {
   connect } from 'react-redux';
   
   import { 
-  saveOnlineQuestion } from 'services/course/actions/onlinequestions';
+  saveOnlineQuestion } from 'teach/src/services/course/actions/onlinequestions';
   
   import {
   handleAddPushNotificationSubscriptionToEntity,
   handleEmailNotificationSubscriptionToEntity,
-  handleSavingEntityAction } from 'services/course/pages/components/SubscriptionComponent/MiniSideBarMenu/helper';
+  handleSavingEntityAction } from 'teach/src/services/course/pages/components/SubscriptionComponent/MiniSideBarMenu/helper';
   
   import {
-  elementMeta } from 'services/course/pages/QuestionsPage/helpers';
+  elementMeta } from 'teach/src/services/course/pages/QuestionsPage/helpers';
   
-  import ToggleButton from 'services/course/pages/components/ToggleButton';
+  import ToggleButton from 'teach/src/services/course/pages/components/ToggleButton';
   import './style.css';
   
   const MiniSideBarMenu = ({ 

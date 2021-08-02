@@ -3,7 +3,7 @@ add,
 update,
 remove,
 get,
-getById } from 'services/course/api';
+getById } from 'teach/src/services/course/api';
 
 export const ADD_ANSWERFORMS_BEGIN = "ADD ANSWERFORMS BEGIN";
 export const ADD_ANSWERFORMS_SUCCESS = "ADD ANSWERFORMS SUCCESS";

@@ -1,4 +1,4 @@
-import produce from 'immer';
+import produce from 'teach/src/services/course/reducers/calendar/immer';
 
 import { 
 ADD_NEW_CALENDAR_BEGIN,
@@ -15,7 +15,7 @@ DELETE_CALENDAR_SUCCESS,
 DELETE_CALENDAR_ERROR,
 TOGGLE_CALENDAR_NEW_INPUT,
 CALENDAR_EVENT_TYPE
- } from 'services/course/actions/calendar';
+ } from 'teach/src/services/course/reducers/calendar/node_modules/services/course/actions/calendar';
 
 const initialState = {
      calendar:{},

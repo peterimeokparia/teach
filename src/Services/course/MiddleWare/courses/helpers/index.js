@@ -1,8 +1,8 @@
 import {
-    updateUser } from 'services/course/api';
+    updateUser } from 'teach/src/services/course/api';
     
     import { 
-    LAST_LOGGEDIN_USER } from 'services/course/actions/users';
+    LAST_LOGGEDIN_USER } from 'teach/src/services/course/actions/users';
     
     export const updateCourseCreatorAfterAddingNewCourse = ( course, store ) => {
         try {

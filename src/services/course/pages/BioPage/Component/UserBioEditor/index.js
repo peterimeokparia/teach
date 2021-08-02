@@ -2,18 +2,18 @@ import {
     connect } from 'react-redux';
     
     import { 
-    saveUser } from 'services/course/actions/users';
+    saveUser } from 'teach/src/services/course/actions/users';
     
     import { 
-    setMarkDown } from 'services/course/helpers/EditorHelpers';
+    setMarkDown } from 'teach/src/services/course/helpers/EditorHelpers';
     
     import { 
-    SET_USER_BIO_MARKDOWN } from 'services/course/actions/users';
+    SET_USER_BIO_MARKDOWN } from 'teach/src/services/course/actions/users';
     
     import {
-    role } from 'services/course/helpers/PageHelpers';
+    role } from 'teach/src/services/course/helpers/PageHelpers';
     
-    import EditorComponent  from 'services/course/pages/components/EditorComponent';
+    import EditorComponent  from 'teach/src/services/course/pages/components/EditorComponent';
     
     const UserBioEditor = ({ 
         user,  

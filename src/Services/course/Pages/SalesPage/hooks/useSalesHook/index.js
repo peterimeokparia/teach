@@ -13,12 +13,12 @@ import {
    import {
    addToSalesCart,
    buyCourse,
-   removeItemFromCart  } from 'services/course/actions/users';
+   removeItemFromCart  } from 'teach/src/services/course/actions/users';
    
    import { 
-   Validations } from  'services/course/helpers/Validations';
+   Validations } from  'teach/src/services/course/helpers/Validations';
    
-   import BuySessionPackageComponent from 'services/course/pages/SalesPage/components/BuySessionPackageComponent';
+   import BuySessionPackageComponent from 'teach/src/services/course/pages/SalesPage/components/BuySessionPackageComponent';
    
    function useSalesHook( salesConfig ){
    

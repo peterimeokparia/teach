@@ -5,16 +5,16 @@ import {
     connect } from 'react-redux';
     
     import { 
-    loadGrades } from 'services/course/actions/grades';
+    loadGrades } from 'teach/src/services/course/actions/grades';
     
     import { 
-    loadAttendance } from 'services/course/actions/attendance';
+    loadAttendance } from 'teach/src/services/course/actions/attendance';
     
     import { 
-    loadSessions } from 'services/course/actions/sessions';
+    loadSessions } from 'teach/src/services/course/actions/sessions';
     
     import {  
-    loadLessons} from 'services/course/actions/lessons';
+    loadLessons} from 'teach/src/services/course/actions/lessons';
     
     import StudentDisplayViewComponent from '../components/StudentDisplayViewComponent';
     import 'react-toastify/dist/ReactToastify.css';

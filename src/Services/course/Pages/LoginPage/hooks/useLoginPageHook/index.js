@@ -9,21 +9,21 @@ import {
 useDispatch } from 'react-redux';
     
 import { 
-loadMeetings } from 'services/course/actions/meetings';
+loadMeetings } from 'teach/src/services/course/actions/meetings';
 
 import {
-loadSubscribedPushNotificationUsers } from 'services/course/actions/notifications';
+loadSubscribedPushNotificationUsers } from 'teach/src/services/course/actions/notifications';
 
 import {
 setOperator,
-setOperatorBusinessName } from 'services/course/actions/operator';
+setOperatorBusinessName } from 'teach/src/services/course/actions/operator';
     
 import {
-role } from 'services/course/helpers/PageHelpers';
+role } from 'teach/src/services/course/helpers/PageHelpers';
 
-import Loading from 'services/course/pages/components/Loading';
-import NotFoundPage from 'services/course/pages/components/NotFoundPage';
-import CoursePackageRenewal from 'services/course/pages/Packages/CoursePackageRenewal';
+import Loading from 'teach/src/services/course/pages/components/Loading';
+import NotFoundPage from 'teach/src/services/course/pages/components/NotFoundPage';
+import CoursePackageRenewal from 'teach/src/services/course/pages/Packages/CoursePackageRenewal';
 
 function useLoginPageHook( loginPageProps ){
     const dispatch = useDispatch();
@@ -48,7 +48,7 @@ function useLoginPageHook( loginPageProps ){
         }
        
     }, [ loadUsers, loadSessions, loadMeetings, loadSubscribedPushNotificationUsers ]);
-    
+
     if ( operatorBusinessName ) {
         dispatch(setOperatorBusinessName( operatorBusinessName ));
     }    

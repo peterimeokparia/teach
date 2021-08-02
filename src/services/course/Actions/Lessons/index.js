@@ -2,7 +2,7 @@ import {
 add,
 remove,
 update,
-getById } from 'services/course/api';
+getById } from 'teach/src/services/course/api';
 
 export const ADD_NEW_LESSON_BEGIN = "ADD NEW LESSON BEGIN";
 export const ADD_NEW_LESSON_SUCCESS = "ADD NEW LESSON SUCCESS";

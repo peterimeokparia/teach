@@ -3,10 +3,10 @@ import {
     update,
     remove,
     get,
-    getById } from 'services/course/api';
+    getById } from 'teach/src/services/course/api';
     
     import {
-    sendPushNotificationMessage } from 'services/course/actions/notifications';
+    sendPushNotificationMessage } from 'teach/src/services/course/actions/notifications';
     
     export const LOAD_ATTENDANCE_BEGIN = "LOAD ATTENDANCE BEGIN";
     export const LOAD_ATTENDANCE_SUCCESS = "LOAD ATTENDANCE SUCCESS";

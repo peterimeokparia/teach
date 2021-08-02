@@ -9,10 +9,10 @@ connect } from 'react-redux';
 import {
 updateCurrentUser,
 userPasswordReset,     
-loginUser } from 'services/course/actions/users';
+loginUser } from 'teach/src/services/course/actions/users';
 
 import { 
-getOperatorFromOperatorBusinessName } from 'services/course/selectors';
+getOperatorFromOperatorBusinessName } from 'teach/src/services/course/selectors';
 
 import Swal from 'sweetalert2';
 

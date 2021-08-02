@@ -5,7 +5,7 @@ saveLesson
 ADD_NEW_LESSON_BEGIN,
 ADD_NEW_LESSON_SUCCESS,
 SAVE_LESSON_BEGIN,
-SAVE_LESSON_SUCCESS  } from 'teach/src/services/course/actions/lessons'; 
+SAVE_LESSON_SUCCESS  } from 'services/course/actions/lessons'; 
 
 jest.mock('../../../Api');
 

@@ -2,10 +2,10 @@ import {
   connect } from 'react-redux';
   
   import { 
-  setMarkDown } from 'teach/src/services/course/helpers/EditorHelpers'; 
+  setMarkDown } from 'services/course/helpers/EditorHelpers'; 
   
   import { 
-  SET_ONLINEQUESTION_MARKDOWN } from 'teach/src/services/course/actions/onlinequestions';
+  SET_ONLINEQUESTION_MARKDOWN } from 'services/course/actions/onlinequestions';
   
   import {
   videoComponentMeta,
@@ -13,26 +13,26 @@ import {
   toggleResetOptions, 
   toggleRecordingStatus,
   toggleCameraStatus, 
-  toggleScreenSharingStatus } from 'teach/src/services/course/actions/video';
+  toggleScreenSharingStatus } from 'services/course/actions/video';
   
   import {   
   deleteOnlineQuestion,
-  saveOnlineQuestion } from 'teach/src/services/course/actions/onlinequestions';
+  saveOnlineQuestion } from 'services/course/actions/onlinequestions';
   
   import {
   upload_url,
-  uploadImageUrl } from 'teach/src/services/course/pages/OnlineQuestionsPage/helpers';
+  uploadImageUrl } from 'services/course/pages/OnlineQuestionsPage/helpers';
   
   import {
   deleteQuestionIconStyle,
   videoMeta } from './inlineStyles';
   
-  import useOnlineQuestionsHook from 'teach/src/services/course/pages/OnlineQuestionsPage/hooks/useOnlineQuestionsHook';
-  import MaterialUiVideoComponent from 'teach/src/services/course/pages/components/MaterialUiVideoComponent';
-  import EditorComponent from 'teach/src/services/course/pages/components/EditorComponent';
-  import AnswerComponent from 'teach/src/services/course/pages/OnlineQuestionsPage/components/AnswerComponent';
+  import useOnlineQuestionsHook from 'services/course/pages/OnlineQuestionsPage/hooks/useOnlineQuestionsHook';
+  import MaterialUiVideoComponent from 'services/course/pages/components/MaterialUiVideoComponent';
+  import EditorComponent from 'services/course/pages/components/EditorComponent';
+  import AnswerComponent from 'services/course/pages/OnlineQuestionsPage/components/AnswerComponent';
   import DeleteIcon from '@material-ui/icons/Delete';
-  import MiniSideBarMenu from 'teach/src/services/course/pages/components/SubscriptionComponent/MiniSideBarMenu';
+  import MiniSideBarMenu from 'services/course/pages/components/SubscriptionComponent/MiniSideBarMenu';
   import MiniSideBarButton from '../../../components/SubscriptionComponent/MiniSideBarButton';
   import './style.css';
   

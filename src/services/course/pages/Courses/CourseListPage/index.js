@@ -6,27 +6,27 @@ Redirect } from '@reach/router';
 
 import { 
 openNewCourseModal, 
-closeNewCourseModal } from 'teach/src/services/course/actions/courses';
+closeNewCourseModal } from 'services/course/actions/courses';
 
 import { 
-navContent } from  'teach/src/services/course/pages/components/NavigationHelper';
+navContent } from  'services/course/pages/components/NavigationHelper';
 
 import { 
 getCoursesByOperatorId,
-getOperatorFromOperatorBusinessName } from 'teach/src/services/course/selectors';
+getOperatorFromOperatorBusinessName } from 'services/course/selectors';
 
 import { 
-role } from 'teach/src/services/course/helpers/PageHelpers';
+role } from 'services/course/helpers/PageHelpers';
 
 import { 
-helpIconStyle } from 'teach/src/services/course/pages/CourseListPage/inlineStyles';
+helpIconStyle } from 'services/course/pages/CourseListPage/inlineStyles';
 
-import Loading from 'teach/src/services/course/pages/components/Loading';
-import LoginLogout from 'teach/src/services/course/pages/LoginPage/components/LoginLogout';
-import CoursesComponent from 'teach/src/services/course/pages/Courses/components/CoursesComponent';
-import NewCoursePage from 'teach/src/services/course/pages/Courses/NewCoursePage';
-import Cart from 'teach/src/services/course/pages/SalesPage/Cart';
-import MainMenu from 'teach/src/services/course/pages/components/MainMenu';
+import Loading from 'services/course/pages/components/Loading';
+import LoginLogout from 'services/course/pages/LoginPage/components/LoginLogout';
+import CoursesComponent from 'services/course/pages/Courses/components/CoursesComponent';
+import NewCoursePage from 'services/course/pages/Courses/NewCoursePage';
+import Cart from 'services/course/pages/SalesPage/Cart';
+import MainMenu from 'services/course/pages/components/MainMenu';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import Modal from 'react-modal';
 

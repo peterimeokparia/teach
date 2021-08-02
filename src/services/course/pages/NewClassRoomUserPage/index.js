@@ -8,21 +8,21 @@ connect } from 'react-redux';
 
 import { 
 saveUser, 
-loadUsers } from 'teach/src/services/course/actions/users';
+loadUsers } from 'services/course/actions/users';
 
 import { 
 resetClassRoomUserError,
 unSubscribe,
-deleteClassRoom } from 'teach/src/services/course/actions/classrooms';
+deleteClassRoom } from 'services/course/actions/classrooms';
 
 import { 
 newSiteUser, 
-role } from 'teach/src/services/course/helpers/PageHelpers';
+role } from 'services/course/helpers/PageHelpers';
 
-import ToggleUsersRadioButtons from 'teach/src/services/course/pages/NewClassRoomUserPage/components/ToggleUsersRadioButtons';
-import ResetForm from 'teach/src/services/course/pages/NewClassRoomUserPage/components/NewUser/ResetForm';
-import NewUser from 'teach/src/services/course/pages/NewClassRoomUserPage/components/NewUser';
-import DropDown from 'teach/src/services/course/pages/components/DropDown';
+import ToggleUsersRadioButtons from 'services/course/pages/NewClassRoomUserPage/components/ToggleUsersRadioButtons';
+import ResetForm from 'services/course/pages/NewClassRoomUserPage/components/NewUser/ResetForm';
+import NewUser from 'services/course/pages/NewClassRoomUserPage/components/NewUser';
+import DropDown from 'services/course/pages/components/DropDown';
 
 const NewClassRoomUserPage = ({
     operator,

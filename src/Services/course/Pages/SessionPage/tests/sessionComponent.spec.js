@@ -7,9 +7,9 @@ import {
 applyMiddleware } from 'redux'; 
 
 import { 
-mockStoreObject } from 'teach/src/services/course/api';
+mockStoreObject } from 'services/course/api';
 
-import SessionPage from 'teach/src/services/course/pages/SessionPage';
+import SessionPage from 'services/course/pages/SessionPage';
 import renderer from 'react-test-renderer';
 import thunk from "redux-thunk"; 
 import * as reactRedux from 'react-redux';
@@ -17,11 +17,11 @@ import configureStore from 'redux-mock-store';
 
 import {
 INCREMENT_SESSION_COUNT,
-DECREMENT_SESSION_COUNT_FOR_PACKAGE_OPTIONS} from 'teach/src/services/course/actions/sessions';
+DECREMENT_SESSION_COUNT_FOR_PACKAGE_OPTIONS} from 'services/course/actions/sessions';
 
 import {
 incrementSessionCount,
-decrementSessionCountForPackageOptions } from 'teach/src/services/course/actions/sessions';
+decrementSessionCountForPackageOptions } from 'services/course/actions/sessions';
 
   const mockStore = configureStore([]);
 

@@ -5,19 +5,19 @@ import {
     connect } from 'react-redux';
     
     import {
-    selectCourseFromLessonPlanCourseDropDown } from 'teach/src/services/course/actions/courses';
+    selectCourseFromLessonPlanCourseDropDown } from 'services/course/actions/courses';
     
     import{
-    selectLessonFromLessonPlanDropDown } from 'teach/src/services/course/actions/lessons';
+    selectLessonFromLessonPlanDropDown } from 'services/course/actions/lessons';
     
     import{
-    toggleClassRoomSideBarDropDownDisplay } from 'teach/src/services/course/actions/classrooms';
+    toggleClassRoomSideBarDropDownDisplay } from 'services/course/actions/classrooms';
     
     import { 
-    userNavigationHistory } from 'teach/src/services/course/actions/users';
+    userNavigationHistory } from 'services/course/actions/users';
     
     import { 
-    navigateToStudentDetailPage } from  'teach/src/services/course/pages/ClassRoomPage/components/CourseLessonDropDownComponent/helpers';
+    navigateToStudentDetailPage } from  'services/course/pages/ClassRoomPage/components/CourseLessonDropDownComponent/helpers';
     
     import './style.css';
     

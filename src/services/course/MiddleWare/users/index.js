@@ -5,21 +5,21 @@ import {
      LAST_LOGGEDIN_USER,
      RESET_USERS_CART,
      UPDATE_USER,
-     SIGN_UP_SUCCESSS } from 'teach/src/services/course/actions/users';
+     SIGN_UP_SUCCESSS } from 'services/course/actions/users';
      
      import {
-     OPERATOR_SIGN_UP_SUCCESSS } from 'teach/src/services/course/actions/operator';
+     OPERATOR_SIGN_UP_SUCCESSS } from 'services/course/actions/operator';
      
      import {
      handleCartOnPurchase,
      handleOperatorSignUpSuccess,
-     handleSignUpSuccess } from 'teach/src/services/course/middleware/users/helpers';
+     handleSignUpSuccess } from 'services/course/middleware/users/helpers';
      
      import { 
-     setToken } from 'teach/src/services/course/helpers/ServerHelper';
+     setToken } from 'services/course/helpers/ServerHelper';
      
      import { 
-     setAuthToken } from 'teach/src/services/course/api';
+     setAuthToken } from 'services/course/api';
      
      import jstz from 'jstz';
      

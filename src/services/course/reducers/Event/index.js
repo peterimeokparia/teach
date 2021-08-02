@@ -1,4 +1,4 @@
-import produce from 'teach/src/services/course/reducers/event/immer';
+import produce from 'services/course/reducers/event/immer';
 
 import { 
 ADD_EVENT_BEGIN,
@@ -12,7 +12,7 @@ LOAD_EVENTS_SUCCESS,
 LOAD_EVENTS_ERROR,
 DELETE_EVENT_BEGIN,
 DELETE_EVENT_SUCCESS,
-DELETE_EVENT_ERROR } from 'teach/src/services/course/reducers/event/node_modules/services/course/actions/event';
+DELETE_EVENT_ERROR } from 'services/course/reducers/event/node_modules/services/course/actions/event';
 
 const initialState = {
      events:{},

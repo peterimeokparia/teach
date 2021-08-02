@@ -8,10 +8,10 @@ connect } from 'react-redux';
 
 import { 
 resetLessonError, 
-deleteLesson } from 'teach/src/services/course/actions/lessons';
+deleteLesson } from 'services/course/actions/lessons';
 
 import { 
-Validations } from 'teach/src/services/course/helpers/Validations';
+Validations } from 'services/course/helpers/Validations';
 
 import { 
 navigate } from '@reach/router';

@@ -2,20 +2,20 @@ import {
 connect } from 'react-redux';
 
 import {
-saveGrade } from 'teach/src/services/course/actions/grades';
+saveGrade } from 'services/course/actions/grades';
 
 import { 
 Link } from '@reach/router';
 
 import {
-getSortedRecordsByDate } from 'teach/src/services/course/selectors';
+getSortedRecordsByDate } from 'services/course/selectors';
 
 import {
-role } from 'teach/src/services/course/helpers/PageHelpers';
+role } from 'services/course/helpers/PageHelpers';
 
-import Roles from 'teach/src/services/course/pages/components/Roles';
-import ListItem from 'teach/src/services/course/pages/components/ListItem';
-import EditGrade from 'teach/src/services/course/pages/GradesPage/components/EditGrade';
+import Roles from 'services/course/pages/components/Roles';
+import ListItem from 'services/course/pages/components/ListItem';
+import EditGrade from 'services/course/pages/GradesPage/components/EditGrade';
 
 const GradesPage = ({ 
 studentId, 

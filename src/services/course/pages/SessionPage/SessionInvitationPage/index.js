@@ -2,9 +2,9 @@ import {
     connect } from 'react-redux';
     
     import { 
-    loadUsers } from 'teach/src/services/course/actions/users';
+    loadUsers } from 'services/course/actions/users';
     
-    import useSessionHook from 'teach/src/services/course/pages/SessionPage/hooks/useSessionHook';
+    import useSessionHook from 'services/course/pages/SessionPage/hooks/useSessionHook';
     import './style.css';
     
     const SessionInvitationPage = ({

@@ -1,6 +1,6 @@
 import { 
 handleAutoRenewPackageSessions, 
-checkIfPackageIsSetToAutoRenew } from 'teach/src/services/course/pages/Packages/helpers';
+checkIfPackageIsSetToAutoRenew } from 'services/course/pages/Packages/helpers';
 
 export const CoursePackageRenewal = ( currentUser, sessions, autoRenewSessionPackagesAction, refreshSessions, refreshUsers ) => {
     if ( currentUser?.role === "Tutor" ) return; 

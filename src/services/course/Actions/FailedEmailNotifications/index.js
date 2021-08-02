@@ -3,7 +3,7 @@ add,
 update,
 get,
 remove,
-getById } from 'teach/src/services/course/api';
+getById } from 'services/course/api';
     
 export const ADD_FAILEDEMAILNOTIFICATION_BEGIN = "ADD FAILEDEMAILNOTIFICATION BEGIN";
 export const ADD_FAILEDEMAILNOTIFICATION_SUCCESS = "ADD FAILEDEMAILNOTIFICATION SUCCESS";          

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'teach/src/services/recorder/node_modules/react';
+import { useState, useEffect } from 'services/recorder/node_modules/react';
 import { MDCCircularProgress } from '@material/circular-progress';
 
 

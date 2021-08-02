@@ -6,17 +6,17 @@ import {
     useDispatch } from 'react-redux';
     
     import {
-    eventEnum } from 'teach/src/services/course/pages/CalendarPage/helpers';
+    eventEnum } from 'services/course/pages/CalendarPage/helpers';
     
     import {
-    loadSubscribedPushNotificationUsers } from 'teach/src/services/course/actions/notifications';
+    loadSubscribedPushNotificationUsers } from 'services/course/actions/notifications';
     
     import { 
     setCalendarEventType,
-    loadAllCalendars } from 'teach/src/services/course/actions/calendar';
+    loadAllCalendars } from 'services/course/actions/calendar';
     
     import {  
-    loadAllEvents } from 'teach/src/services/course/actions/event';
+    loadAllEvents } from 'services/course/actions/event';
     
     import { 
     loadCourses } from "services/course/actions/courses";

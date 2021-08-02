@@ -9,16 +9,16 @@ import {
 loadOnlineComments,
 addNewOnlineComment,
 deleteOnlineComment,
-saveOnlineComment } from 'teach/src/services/course/actions/onlinecomments'; 
+saveOnlineComment } from 'services/course/actions/onlinecomments'; 
 
 import {
-manageCommentsFieldCollection } from 'teach/src/services/course/pages/QuestionsPage/helpers';
+manageCommentsFieldCollection } from 'services/course/pages/QuestionsPage/helpers';
     
 import { 
-getSortedRecordsByDate } from 'teach/src/services/course/selectors';
+getSortedRecordsByDate } from 'services/course/selectors';
 
 import {
-getCalendarColor } from 'teach/src/services/course/pages/CalendarPage/helpers';
+getCalendarColor } from 'services/course/pages/CalendarPage/helpers';
 
 function useReplyCommentsHook( commentsConfig ){
 

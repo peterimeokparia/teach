@@ -2,7 +2,7 @@ import {
 add,
 remove,
 update,
-getById } from 'teach/src/services/course/api';
+getById } from 'services/course/api';
 
 export const ADD_NEW_ONLINE_QUESTION_PUSH_SUBSCRIPTION_BEGIN = "ADD NEW ONLINE QUESTION PUSH SUBSCRIPTION BEGIN";
 export const ADD_NEW_ONLINE_QUESTION_PUSH_SUBSCRIPTION_SUCCESS = "ADD NEW ONLINE QUESTION PUSH SUBSCRIPTION SUCCESS";

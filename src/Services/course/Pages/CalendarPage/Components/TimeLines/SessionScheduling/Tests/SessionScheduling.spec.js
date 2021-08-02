@@ -1,5 +1,5 @@
 import React from 'react';
-import SessionScheduling  from 'teach/src/services/course/pages/CalendarPage/components/TimeLines/SessionScheduling';
+import SessionScheduling  from 'services/course/pages/CalendarPage/components/TimeLines/SessionScheduling';
 import renderer from 'react-test-renderer';
 
 describe('SessionScheduling', () =>  {  

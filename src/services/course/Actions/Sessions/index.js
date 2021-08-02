@@ -5,7 +5,7 @@ remove,
 get,
 incrementSession,
 decrementSessionCount,
-autoRenew } from 'teach/src/services/course/api';
+autoRenew } from 'services/course/api';
 
 export const DECREMENT_SESSION_COUNT_FOR_PACKAGE_OPTIONS = "DECREMENT SESSION COUNT FOR PACKAGE OPTIONS"; 
 export const INCREMENT_SESSION_COUNT = "INCREMENT SESSION COUNT";

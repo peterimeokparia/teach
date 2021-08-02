@@ -6,16 +6,16 @@ import {
     useDispatch } from 'react-redux';
     
     import {
-    loadAllCalendars } from 'teach/src/services/course/actions/calendar';
+    loadAllCalendars } from 'services/course/actions/calendar';
     
     import {
-    loadAllEvents } from 'teach/src/services/course/actions/event';
+    loadAllEvents } from 'services/course/actions/event';
     
     import {
-    loadSubscribedPushNotificationUsers } from 'teach/src/services/course/actions/notifications';
+    loadSubscribedPushNotificationUsers } from 'services/course/actions/notifications';
     
     import {
-    style } from 'teach/src/services/course/pages/CalendarPage/helpers';
+    style } from 'services/course/pages/CalendarPage/helpers';
     
     function useCalendarEventsDetailHook(){
         const [ isRecurringEvent, setIsRecurringEvent ] = useState(false);

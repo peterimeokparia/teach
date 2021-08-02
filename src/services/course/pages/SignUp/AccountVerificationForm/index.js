@@ -8,13 +8,13 @@ connect } from 'react-redux';
 
 import {
 updateCurrentUser,     
-loginUser } from 'teach/src/services/course/actions/users';
+loginUser } from 'services/course/actions/users';
 
 import { 
-getOperatorFromOperatorBusinessName } from 'teach/src/services/course/selectors';
+getOperatorFromOperatorBusinessName } from 'services/course/selectors';
 
 import {
-pageNavigationHelper } from 'teach/src/services/course/pages/SignUp/AccountVerificationForm/helpers';
+pageNavigationHelper } from 'services/course/pages/SignUp/AccountVerificationForm/helpers';
 
 import Swal from 'sweetalert2';
 import './style.css';

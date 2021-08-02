@@ -8,9 +8,9 @@ import {
 applyMiddleware } from 'redux'; 
 
 import { 
-mockStoreObject } from 'teach/src/services/course/api';
+mockStoreObject } from 'services/course/api';
 
-import AddNewCalendar  from 'teach/src/services/course/pages/CalendarPage/components/AddNewCalendar';
+import AddNewCalendar  from 'services/course/pages/CalendarPage/components/AddNewCalendar';
 import renderer from 'react-test-renderer';
 import thunk from "redux-thunk"; 
 import * as reactRedux from 'react-redux';

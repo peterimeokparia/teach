@@ -3,25 +3,25 @@ connect } from 'react-redux';
 
 import {
 addNewGrade,
-saveGrade } from 'teach/src/services/course/actions/grades';
+saveGrade } from 'services/course/actions/grades';
 
 import {
 markAttendance,
-saveAttendance } from 'teach/src/services/course/actions/attendance';
+saveAttendance } from 'services/course/actions/attendance';
 
 import {
-role } from 'teach/src/services/course/helpers/PageHelpers';
+role } from 'services/course/helpers/PageHelpers';
 
 import {
-Links } from 'teach/src/services/course/pages/OnlineQuestionsPage/helpers';
+Links } from 'services/course/pages/OnlineQuestionsPage/helpers';
 
 import {
 Link } from '@reach/router';
 
 import ListItemComponent from '../ListItemComponent';
-import LoginLogout from 'teach/src/services/course/pages/LoginPage/components/LoginLogout';
-import Roles from 'teach/src/services/course/pages/components/Roles';
-import MultiInputEmailComponent from 'teach/src/services/course/pages/Email/MultiInputEmailComponent';
+import LoginLogout from 'services/course/pages/LoginPage/components/LoginLogout';
+import Roles from 'services/course/pages/components/Roles';
+import MultiInputEmailComponent from 'services/course/pages/Email/MultiInputEmailComponent';
 import NavLinks from '../../../components/NavLinks';
 import './style.css';
 

@@ -1,14 +1,14 @@
 import {
    UPDATE_INVITEE_SESSION_URL,
-   LAST_LOGGEDIN_USER } from 'teach/src/services/course/actions/users';
+   LAST_LOGGEDIN_USER } from 'services/course/actions/users';
    
    import {
-   addNewMeeting } from 'teach/src/services/course/actions/meetings';
+   addNewMeeting } from 'services/course/actions/meetings';
    
    import {
-   updateUserInvitationUrl } from 'teach/src/services/course/actions/users';
+   updateUserInvitationUrl } from 'services/course/actions/users';
    
-   import { meetingConfig } from 'teach/src/services/course/pages/classroompage';
+   import { meetingConfig } from 'services/course/pages/classroompage';
    
    jest.mock('../../../Api');
    

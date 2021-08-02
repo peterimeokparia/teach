@@ -10,20 +10,20 @@ saveLesson,
 setLessonPlanUrl,
 setCurrentLesson, 
 loadLessons,
-SET_LESSON_MARKDOWN} from 'teach/src/services/course/actions/lessons';
+SET_LESSON_MARKDOWN} from 'services/course/actions/lessons';
 
 import { 
-togglePreviewMode } from 'teach/src/services/course/actions/app';
+togglePreviewMode } from 'services/course/actions/app';
 
 import { 
-setMarkDown } from 'teach/src/services/course/helpers/EditorHelpers'; 
+setMarkDown } from 'services/course/helpers/EditorHelpers'; 
     
 import { 
 getUsersByOperatorId,    
-getCoursesByCreatedByIdSelector } from 'teach/src/services/course/selectors';
+getCoursesByCreatedByIdSelector } from 'services/course/selectors';
 
-import EditorComponent  from 'teach/src/services/course/pages/components/EditorComponent';
-import MaterialUiVideoComponent from 'teach/src/services/course/pages/components/MaterialUiVideoComponent';
+import EditorComponent  from 'services/course/pages/components/EditorComponent';
+import MaterialUiVideoComponent from 'services/course/pages/components/MaterialUiVideoComponent';
 import './style.css';
 
 const MoreLessonContentPage = ({

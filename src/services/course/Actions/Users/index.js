@@ -10,7 +10,7 @@ getCurrentUserByEmail,
 getLoggedInUsers,
 purchase,
 remove,
-updateInvitationUrl } from 'teach/src/services/course/api';
+updateInvitationUrl } from 'services/course/api';
 
 export const LOGIN_BEGIN = "LOGIN BEGIN";
 export const LOGIN_SUCCESS = "LOGIN SUCCESS";

@@ -1,5 +1,5 @@
 import {
-getPushMessageConfigValues } from 'teach/src/services/course/middleware/subscriptions/helpers'; 
+getPushMessageConfigValues } from 'services/course/middleware/subscriptions/helpers'; 
 
 export const getOnlineQuestionEmailMessageSubscribers = ( state, action ) => {
     let currentUser = Object.values( state.users.users )?.find(user => user?._id === action?.payload?.userId );

@@ -1,9 +1,9 @@
 import {
-markAttendance  } from 'teach/src/services/course/actions/attendance';
+markAttendance  } from 'services/course/actions/attendance';
 
 import {
 MARK_ATTENDANCE_BEGIN,
-MARK_ATTENDANCE_SUCCESS } from 'teach/src/services/course/actions/attendance';
+MARK_ATTENDANCE_SUCCESS } from 'services/course/actions/attendance';
 
 jest.mock('../../../Api');
 

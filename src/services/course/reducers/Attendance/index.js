@@ -1,4 +1,4 @@
-import produce from 'teach/src/services/course/reducers/attendance/immer';
+import produce from 'services/course/reducers/attendance/immer';
 
 import { 
 LOAD_ATTENDANCE_BEGIN,

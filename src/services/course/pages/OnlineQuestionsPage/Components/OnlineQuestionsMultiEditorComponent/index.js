@@ -2,7 +2,7 @@ import {
   connect } from 'react-redux';
   
   import { 
-  loginUser } from 'teach/src/services/course/actions/users';
+  loginUser } from 'services/course/actions/users';
   
   import {
   loadSubscribedPushNotificationUserByUserId,  
@@ -10,22 +10,22 @@ import {
   retryPushNotificationMessage,
   loadSubscribedPushNotificationUsers, 
   subscribePushNotificationUser,
-  savePushNotificationUser } from 'teach/src/services/course/actions/notifications';
+  savePushNotificationUser } from 'services/course/actions/notifications';
   
   import { 
   addNewOnlineQuestion,
   saveOnlineQuestion,
   loadOnlineQuestions,
-  deleteOnlineQuestion } from 'teach/src/services/course/actions/onlinequestions';
+  deleteOnlineQuestion } from 'services/course/actions/onlinequestions';
   
   import {
-  onlineMarkDownEditorFieldCollection } from 'teach/src/services/course/pages/QuestionsPage/helpers';
+  onlineMarkDownEditorFieldCollection } from 'services/course/pages/QuestionsPage/helpers';
   
   import {
   getOperatorFromOperatorBusinessName,
-  getPushNotificationUsersByOperatorId } from 'teach/src/services/course/selectors';
+  getPushNotificationUsersByOperatorId } from 'services/course/selectors';
   
-  import useOnlineQuestionsHook from 'teach/src/services/course/pages/OnlineQuestionsPage/hooks/useOnlineQuestionsHook';
+  import useOnlineQuestionsHook from 'services/course/pages/OnlineQuestionsPage/hooks/useOnlineQuestionsHook';
   import OnlineListItems from '../OnlineListItems';
   import HelpIcon from '@material-ui/icons/Help';
   import { helpIconStyle } from './inlineStyles';

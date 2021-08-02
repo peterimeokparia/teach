@@ -1,12 +1,12 @@
 import { 
      AUTO_RENEW_PACKAGE_SUCCESS,
-     AUTO_RENEW_PACKAGE_ERROR } from 'teach/src/services/course/actions/sessions';
+     AUTO_RENEW_PACKAGE_ERROR } from 'services/course/actions/sessions';
      
      import { 
-     sendEmailToAdministrator } from 'teach/src/services/course/pages/Packages/helpers';
+     sendEmailToAdministrator } from 'services/course/pages/Packages/helpers';
      
      import {
-     sendUpdatesAfterRenewingUsersSessionPackage } from 'teach/src/services/course/middleware/sessions/helpers';
+     sendUpdatesAfterRenewingUsersSessionPackage } from 'services/course/middleware/sessions/helpers';
      
      export const sessions = store => next =>  action => {
           switch(action.type){

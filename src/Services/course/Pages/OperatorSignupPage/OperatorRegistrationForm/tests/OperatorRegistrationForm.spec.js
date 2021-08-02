@@ -1,5 +1,5 @@
 import React from 'react';
-import OperatorRegistrationForm  from 'teach/src/services/course/pages/OperatorSignupPage/OperatorRegistrationForm';
+import OperatorRegistrationForm  from 'services/course/pages/OperatorSignupPage/OperatorRegistrationForm';
 import renderer from 'react-test-renderer';
 
 describe('OperatorRegistrationForm', () =>  {  

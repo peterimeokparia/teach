@@ -1,6 +1,6 @@
 import { 
 tokenGenerator, 
-privateKey} from 'teach/src/services/course/pages/loginpage/components/Authentication';
+privateKey} from 'services/course/pages/loginpage/components/Authentication';
     
 import {
 testToken } from './token.js';

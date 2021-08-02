@@ -1,5 +1,5 @@
 import {
-NotificationEntityEnum } from 'teach/src/services/course/middleware/subscriptions/helpers';
+NotificationEntityEnum } from 'services/course/middleware/subscriptions/helpers';
 
 export function getOnlinePushNotificationMessage( notificationentityenumtype, action, currentUser ){
     switch ( notificationentityenumtype ) {

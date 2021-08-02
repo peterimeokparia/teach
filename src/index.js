@@ -10,92 +10,92 @@ Provider } from 'react-redux';
 
 import {
 loadUsers, 
-lastLoggedInUser } from 'teach/src/services/course/actions/users';
+lastLoggedInUser } from 'services/course/actions/users';
 
 import {
-loadMeetings } from 'teach/src/services/course/actions/meetings';
+loadMeetings } from 'services/course/actions/meetings';
 
 
 import {
-loadAttendance } from 'teach/src/services/course/actions/attendance';
+loadAttendance } from 'services/course/actions/attendance';
 
 import {
-loadGrades } from 'teach/src/services/course/actions/grades';
+loadGrades } from 'services/course/actions/grades';
 
 import {
-loadOperators } from 'teach/src/services/course/actions/operator';
+loadOperators } from 'services/course/actions/operator';
 
 import {
-loadCourses } from 'teach/src/services/course/actions/courses';
+loadCourses } from 'services/course/actions/courses';
 
 import {
-loadLessons } from 'teach/src/services/course/actions/lessons';
+loadLessons } from 'services/course/actions/lessons';
 
 import {
-loadSessions } from 'teach/src/services/course/actions/sessions';
+loadSessions } from 'services/course/actions/sessions';
 
 import {
-loadClassRooms } from 'teach/src/services/course/actions/classrooms';
+loadClassRooms } from 'services/course/actions/classrooms';
 
 import {
-loadSubscribedPushNotificationUsers } from 'teach/src/services/course/actions/notifications';
+loadSubscribedPushNotificationUsers } from 'services/course/actions/notifications';
 
 import {
-loadQuestions } from 'teach/src/services/course/actions/questions';
+loadQuestions } from 'services/course/actions/questions';
 
 import {
-loadAllCalendars } from 'teach/src/services/course/actions/calendar';
+loadAllCalendars } from 'services/course/actions/calendar';
 
 import {
-loadAllEvents } from 'teach/src/services/course/actions/event';
+loadAllEvents } from 'services/course/actions/event';
 
 import {
-loadTimeLines } from 'teach/src/services/course/actions/timelines';
+loadTimeLines } from 'services/course/actions/timelines';
 
 import {
-loadOnlineQuestions } from 'teach/src/services/course/actions/onlinequestions';
+loadOnlineQuestions } from 'services/course/actions/onlinequestions';
 
 import {
-loadOnlineAnswers } from 'teach/src/services/course/actions/onlineanswers';
+loadOnlineAnswers } from 'services/course/actions/onlineanswers';
 
 import {
-loadOnlineComments } from 'teach/src/services/course/actions/onlinecomments';
+loadOnlineComments } from 'services/course/actions/onlinecomments';
 
 import { 
-subscriptions } from 'teach/src/services/course/middleware/subscriptions';
+subscriptions } from 'services/course/middleware/subscriptions';
 
 import { 
-calendar } from 'teach/src/services/course/middleware/calendar';
+calendar } from 'services/course/middleware/calendar';
 
 import { 
-classrooms } from 'teach/src/services/course/middleware/classrooms';
+classrooms } from 'services/course/middleware/classrooms';
 
 import { 
-courses } from 'teach/src/services/course/middleware/courses';
+courses } from 'services/course/middleware/courses';
 
 import {
-events } from 'teach/src/services/course/middleware/events';
+events } from 'services/course/middleware/events';
 
 import { 
-users } from 'teach/src/services/course/middleware/users';
+users } from 'services/course/middleware/users';
 
 import { 
-sessions } from 'teach/src/services/course/middleware/sessions';
+sessions } from 'services/course/middleware/sessions';
 
 import {
-grades } from 'teach/src/services/course/middleware/grades';
+grades } from 'services/course/middleware/grades';
 
 import {
-loadFailedPushNotifications } from 'teach/src/services/course/actions/failedpushnotifications';
+loadFailedPushNotifications } from 'services/course/actions/failedpushnotifications';
 
 import {
-loadFailedEmailNotifications } from 'teach/src/services/course/actions/failedemailnotifications';
+loadFailedEmailNotifications } from 'services/course/actions/failedemailnotifications';
 
 import {
-loadLogs } from 'teach/src/services/course/actions/logforteach';
+loadLogs } from 'services/course/actions/logforteach';
 
 import App from './App';
-import reducer from 'teach/src/services/course/reducers';
+import reducer from 'services/course/reducers';
 import thunk from 'redux-thunk';
 import Modal from 'react-modal';
 import dotenv from 'dotenv';

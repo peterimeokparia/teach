@@ -1,10 +1,10 @@
 import {
 addNewGrade,
 ADD_NEW_GRADE_BEGIN,
-ADD_NEW_GRADE_SUCCESS } from 'teach/src/services/course/actions/grades';
+ADD_NEW_GRADE_SUCCESS } from 'services/course/actions/grades';
 
 import {
-calculateGrade } from 'teach/src/services/course/pages/GradesPage/components/AddStudentGrade/helpers';
+calculateGrade } from 'services/course/pages/GradesPage/components/AddStudentGrade/helpers';
 
 jest.mock('../../../Api');
 

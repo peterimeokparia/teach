@@ -8,9 +8,9 @@ import {
 applyMiddleware } from 'redux'; 
 
 import { 
-mockStoreObject } from 'teach/src/services/course/api';
+mockStoreObject } from 'services/course/api';
 
-import PasswordReset  from 'teach/src/services/course/pages/LoginPage/components/PasswordReset';
+import PasswordReset  from 'services/course/pages/LoginPage/components/PasswordReset';
 import renderer from 'react-test-renderer';
 import thunk from "redux-thunk"; 
 import * as reactRedux from 'react-redux';

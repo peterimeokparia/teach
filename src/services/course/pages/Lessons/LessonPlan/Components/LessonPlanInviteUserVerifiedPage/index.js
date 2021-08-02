@@ -3,20 +3,20 @@ import {
   
   import { 
   toggleTeachBoardOrEditor, 
-  setLessonInProgressStatus } from 'teach/src/services/course/actions/lessons';
+  setLessonInProgressStatus } from 'services/course/actions/lessons';
   
   import {
   loadMeetings, 
-  saveMeeting } from 'teach/src/services/course/actions/meetings';
+  saveMeeting } from 'services/course/actions/meetings';
   
   import {
   updateUserInvitationUrl,   
-  inviteStudentsToLearningSession } from 'teach/src/services/course/actions/users';
+  inviteStudentsToLearningSession } from 'services/course/actions/users';
   
   import { 
   getOperatorFromOperatorBusinessName, 
   getUsersByOperatorId,
-  getCoursesByOperatorId } from 'teach/src/services/course/selectors';
+  getCoursesByOperatorId } from 'services/course/selectors';
   
   import { 
   Redirect } from '@reach/router';

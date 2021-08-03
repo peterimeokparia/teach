@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import classRoomSchema from '../Schema/classRoomSchema.js';
+import classRoomSchema from '../schema/classRoomSchema.js';
 
 
 const classRoomModel = mongoose.model('classrooms', classRoomSchema);

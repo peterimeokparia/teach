@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import gradeSchema from '../Schema/gradeSchema.js';
+import gradeSchema from '../schema/gradeSchema.js';
 
 
 const gradeModel = mongoose.model('grades', gradeSchema);

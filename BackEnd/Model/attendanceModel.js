@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import attendanceSchema from '../Schema/attendanceSchema.js';
+import attendanceSchema from '../schema/attendanceSchema.js';
 
 
 const attendance = mongoose.model('attendances', attendanceSchema);

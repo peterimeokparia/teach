@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import calendarSchema from '../Schema/calendarSchema.js';
+import calendarSchema from '../schema/calendarSchema.js';
 
 const calendarModel = mongoose.model('calendar', calendarSchema);
 

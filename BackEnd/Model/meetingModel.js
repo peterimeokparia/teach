@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import meetingSchema from '../Schema/meetingSchema.js';
+import meetingSchema from '../schema/meetingSchema.js';
 
 
 const meetingModel = mongoose.model('meetings', meetingSchema);

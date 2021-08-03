@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import operatorSchema from '../Schema/operatorSchema.js';
+import operatorSchema from '../schema/operatorSchema.js';
 
 
 const operatorModel = mongoose.model('operators', operatorSchema);

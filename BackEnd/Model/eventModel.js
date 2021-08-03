@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import eventSchema from '../Schema/eventSchema.js';
+import eventSchema from '../schema/eventSchema.js';
 
 const eventModel = mongoose.model('event', eventSchema);
 

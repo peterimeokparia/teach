@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import onlineQuestionSchema from '../Schema/onlineQuestionSchema.js';
+import onlineQuestionSchema from '../schema/onlineQuestionSchema.js';
 
 const onlineQuestionModel = mongoose.model('onlinequestions', onlineQuestionSchema);
 

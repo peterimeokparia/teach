@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import assignmentSchema from '../Schema/assignmentSchema.js';
+import assignmentSchema from '../schema/assignmentSchema.js';
 
 
 const assignmentModel = mongoose.model('assignments', assignmentSchema);

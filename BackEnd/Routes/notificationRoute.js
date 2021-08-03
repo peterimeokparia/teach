@@ -5,7 +5,7 @@ vapidKeys } from '../helpers/storageHelper.js';
 
 import express from 'express';
 import webpush  from 'web-push';
-import notificationModel from '../Model/notificationModel.js';
+import notificationModel from '../model/notificationModel.js';
 
 import {
 NOTIFICATIONROUTE,

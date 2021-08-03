@@ -74,7 +74,7 @@ export function updateFrequencyCollection( freq, setFreqCollectionData ) {
         let eventFreq = freqObject?.find(item => item?.id === 'Select');
 
         if ( eventFreq ) {
-            [ 'name', '_id', 'id' ].forEach(element => {
+            [ 'name', '_id', 'id' ]?.forEach(element => {
                 eventFreq[ element ] = freq;
             });
         }   
@@ -384,7 +384,7 @@ function getElapsedTime(config, frequencyType ){
 function getTimeLineGroups( timeLines, calendars, users ) {
     let timeLineGroup = ( timeLines?.groups ) ? timeLines?.groups : [];
 
-    calendars.forEach(calendar => {
+    calendars?.forEach(calendar => {
         let existingTimeLineGroup = ( timeLines?.groups?.find(timeline => timeline?.id === calendar?._id ) );
 
         if ( ! existingTimeLineGroup ) {

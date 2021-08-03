@@ -74,7 +74,7 @@ import {
                 };
             };
     
-            selectedTutors.forEach(element => {
+            selectedTutors?.forEach(element => {
                 let user = users?.find( usr => usr?._id === element?.value?._id);
     
                 addCalendar( calendarConfig(user) );

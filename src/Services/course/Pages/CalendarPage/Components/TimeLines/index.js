@@ -48,7 +48,7 @@ import {
     
         let timeLineItems = [];
   
-        this.props.events.map( event => event.timeLineItems ).forEach(element => {
+        this.props.events.map( event => event.timeLineItems )?.forEach(element => {
             if ( element.length > 0 ) {
                 timeLineItems = [ ...timeLineItems, ...element ];
             };

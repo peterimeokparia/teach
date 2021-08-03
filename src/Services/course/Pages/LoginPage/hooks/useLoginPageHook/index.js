@@ -66,7 +66,6 @@ function useLoginPageHook( loginPageProps ){
     }
 
     if ( user?.userIsValidated ) {
-        // dispatch(loadUsers());
         if ( user?.role === role.Tutor ) {
             return <Redirect to={`/${operatorBusinessName}/users`} noThrow />;
         }
@@ -83,7 +82,7 @@ function setSignUpOrLoginInPreferenceValue () {
 
 return {
     signUpOrLoginPreference, 
-    setSignUpOrLoginInPreferenceValue:() => setSignUpOrLoginInPreferenceValue()
+    setSignUpOrLoginInPreferenceValue:setSignUpOrLoginInPreferenceValue
 }};
 
 export default useLoginPageHook;

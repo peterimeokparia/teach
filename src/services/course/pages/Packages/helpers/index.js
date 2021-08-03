@@ -40,7 +40,7 @@ export function checkIfPackageIsSetToAutoRenew( currentUser,  sessions ){
     let expiredSessions = [];
 
     if (  currentUser?.role === "Student" ) {
-        sessions.forEach(session => {
+        sessions?.forEach(session => {
             if ( session?.typeOfSession === "Package" &&  session?.numberOfSessions === session?.totalNumberOfSessions ) {    
                 expiredSessions.push( session );
             };

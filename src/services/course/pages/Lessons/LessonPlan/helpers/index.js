@@ -11,7 +11,7 @@ export const getUrls = (currentUser, courseId, lessonId, lessonTitle) => {
       },
       canvas:{ 
         prod:`https://ravingfanstudents.com/whiteboard/?whiteboardid=${page}&username=${currentUser?.firstname}`, 
-        dev:`http://localhost:8080/?whiteboardid=${page}&username=${currentUser?.firstname}`},
+        dev:`http://localhost:9090/?whiteboardid=${page}&username=${currentUser?.firstname}`},
       recorder:{ 
         prod:`https://ravingfanstudents.com/LessonPlan/VideoModal/${courseId}/${lessonId}/${lessonTitle}`, 
         dev:`http://localhost:3000/LessonPlan/VideoModal/${courseId}/${lessonId}/${lessonTitle}`

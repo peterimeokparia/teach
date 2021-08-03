@@ -40,7 +40,7 @@ const getCurrentPageUrl = () => window.location.href;
 
 export const getLessonPlanUrls = ( operatorBusinessName, selectedUserId ) => {
     const lessonPlanUrl = `/${operatorBusinessName}/LessonPlan/classRoom/${selectedUserId}`;
-    let prefix = "http://localhost:3000";
+    let prefix = "http://localhost:5000";
 
     return {
         lessonPlanUrl,

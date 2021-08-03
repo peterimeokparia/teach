@@ -12,7 +12,7 @@ import {
         emailHeader: "Welcome to teach!",
     };
     
-    const routePrefix = "http://localhost:3000";
+    const routePrefix = "http://localhost:5000";
     
     export const handleCartOnPurchase = ( user, store ) => {
         if (!user || !store ) return;

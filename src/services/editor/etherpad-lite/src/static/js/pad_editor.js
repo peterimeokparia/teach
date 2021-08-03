@@ -49,6 +49,9 @@ const padeditor = (() => {
       });
       exports.focusOnLine(self.ace);
       self.ace.setProperty('wraps', true);
+      if (pad.getIsDebugEnabled()) {
+        self.ace.setProperty('dmesg', pad.dmesg);
+      }
       self.initViewOptions();
       self.setViewOptions(initialViewOptions);
       // view bar

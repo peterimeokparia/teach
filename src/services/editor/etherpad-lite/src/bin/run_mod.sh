@@ -1,4 +1,5 @@
 #!/bin/sh
+
 # Prepare the environment
 src/bin/installDeps.sh "$@" || exit 1
 

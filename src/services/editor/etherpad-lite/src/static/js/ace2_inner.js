@@ -26,6 +26,7 @@ const $ = require('./rjquery').$;
 const isNodeText = Ace2Common.isNodeText;
 const getAssoc = Ace2Common.getAssoc;
 const setAssoc = Ace2Common.setAssoc;
+const htmlPrettyEscape = Ace2Common.htmlPrettyEscape;
 const noop = Ace2Common.noop;
 const hooks = require('./pluginfw/hooks');
 
@@ -60,10 +61,11 @@ function Ace2Inner(editorInfo, cssManagers) {
     window.focus();
   };
 
-  const outerWin = window.parent;
-  const outerDoc = outerWin.document;
-  const sideDiv = outerDoc.getElementById('sidediv');
-  const lineMetricsDiv = outerDoc.getElementById('linemetricsdiv');
+  const iframe = window.frameElement;
+  const outerWin = iframe.ace_outerWin;
+  iframe.ace_outerWin = null; // prevent IE 6 memory leak
+  const sideDiv = iframe.nextSibling;
+  const lineMetricsDiv = sideDiv.nextSibling;
   let lineNumbersShown;
   let sideDivInner;
 
@@ -144,12 +146,20 @@ function Ace2Inner(editorInfo, cssManagers) {
     for (let i = 0; i < names.length; ++i) console[names[i]] = noop;
   }
 
+  // "dmesg" is for displaying messages in the in-page output pane
+  // visible when "?djs=1" is appended to the pad URL.  It generally
+  // remains a no-op unless djs is enabled, but we make a habit of
+  // only calling it in error cases or while debugging.
+  let dmesg = noop;
+  window.dmesg = noop;
+
   const scheduler = parent; // hack for opera required
 
   const performDocumentReplaceRange = (start, end, newText) => {
     if (start === undefined) start = rep.selStart;
     if (end === undefined) end = rep.selEnd;
 
+    // dmesg(String([start.toSource(),end.toSource(),newText.toSource()]));
     // start[0]: <--- start[1] --->CCCCCCCCCCC\n
     //           CCCCCCCCCCCCCCCCCCCC\n
     //           CCCC\n
@@ -364,6 +374,7 @@ function Ace2Inner(editorInfo, cssManagers) {
             error: e,
             time: +new Date(),
           });
+      dmesg(e.toString());
       throw e;
     } finally {
       const cs = currentCallStack;
@@ -535,6 +546,8 @@ function Ace2Inner(editorInfo, cssManagers) {
     idleWorkTimer.atMost(100);
 
     if (rep.alltext !== atext.text) {
+      dmesg(htmlPrettyEscape(rep.alltext));
+      dmesg(htmlPrettyEscape(atext.text));
       throw new Error('mismatch error setting raw text in setDocAText');
     }
   };
@@ -571,6 +584,25 @@ function Ace2Inner(editorInfo, cssManagers) {
 
   const setNotifyDirty = (handler) => {
     outsideNotifyDirty = handler;
+  };
+
+  const getFormattedCode = () => {
+    if (currentCallStack && !currentCallStack.domClean) {
+      inCallStackIfNecessary('getFormattedCode', incorporateUserChanges);
+    }
+    const buf = [];
+    if (rep.lines.length() > 0) {
+      // should be the case, even for empty file
+      let entry = rep.lines.atIndex(0);
+      while (entry) {
+        const domInfo = entry.domInfo;
+        buf.push((domInfo && domInfo.getInnerHTML()) ||
+            domline.processSpaces(domline.escapeHTML(entry.text), doesWrap) ||
+            '&nbsp;' /* empty line*/);
+        entry = rep.lines.next(entry);
+      }
+    }
+    return `<div class="syntax"><div>${buf.join('</div>\n<div>')}</div></div>`;
   };
 
   const CMDS = {
@@ -640,6 +672,7 @@ function Ace2Inner(editorInfo, cssManagers) {
         sideDiv.parentNode.classList.toggle('line-numbers-hidden', !hasLineNumbers);
         fixView();
       },
+      dmesg: () => { dmesg = window.dmesg = value; },
       userauthor: (value) => {
         thisAuthor = String(value);
         documentAttributeManager.author = thisAuthor;
@@ -3271,6 +3304,7 @@ function Ace2Inner(editorInfo, cssManagers) {
   editorInfo.ace_setOnKeyDown = setOnKeyDown;
   editorInfo.ace_setNotifyDirty = setNotifyDirty;
   editorInfo.ace_dispose = dispose;
+  editorInfo.ace_getFormattedCode = getFormattedCode;
   editorInfo.ace_setEditable = setEditable;
   editorInfo.ace_execCommand = execCommand;
   editorInfo.ace_replaceRange = replaceRange;

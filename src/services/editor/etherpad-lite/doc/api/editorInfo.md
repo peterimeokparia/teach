@@ -18,6 +18,7 @@ Returns the `rep` object.
 ## editorInfo.ace_setOnKeyDown(?)
 ## editorInfo.ace_setNotifyDirty(?)
 ## editorInfo.ace_dispose(?)
+## editorInfo.ace_getFormattedCode(?)
 ## editorInfo.ace_setEditable(bool)
 ## editorInfo.ace_execCommand(?)
 ## editorInfo.ace_callWithAce(fn, callStack, normalize)

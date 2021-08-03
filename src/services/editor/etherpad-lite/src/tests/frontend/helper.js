@@ -4,6 +4,19 @@ const helper = {};
 
 (() => {
   let $iframe;
+  const jsLibraries = {};
+
+  helper.init = async () => {
+    [
+      jsLibraries.jquery,
+      jsLibraries.sendkeys,
+    ] = await Promise.all([
+      $.get('../../static/js/vendors/jquery.js'),
+      $.get('lib/sendkeys.js'),
+    ]);
+    // make sure we don't override existing jquery
+    jsLibraries.jquery = `if (typeof $ === 'undefined') {\n${jsLibraries.jquery}\n}`;
+  };
 
   helper.randomString = (len) => {
     const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -15,31 +28,20 @@ const helper = {};
     return randomstring;
   };
 
-  helper.getFrameJQuery = async ($iframe, includeSendkeys = false) => {
+  const getFrameJQuery = ($iframe) => {
+    /*
+      I tried over 9001 ways to inject javascript into iframes.
+      This is the only way I found that worked in IE 7+8+9, FF and Chrome
+    */
     const win = $iframe[0].contentWindow;
     const doc = win.document;
 
-    const load = async (url) => {
-      const elem = doc.createElement('script');
-      elem.setAttribute('src', url);
-      const p = new Promise((resolve, reject) => {
-        const handler = (evt) => {
-          elem.removeEventListener('load', handler);
-          elem.removeEventListener('error', handler);
-          if (evt.type === 'error') return reject(new Error(`failed to load ${url}`));
-          resolve();
-        };
-        elem.addEventListener('load', handler);
-        elem.addEventListener('error', handler);
-      });
-      doc.head.appendChild(elem);
-      await p;
-    };
+    // IE 8+9 Hack to make eval appear
+    // https://stackoverflow.com/q/2720444
+    win.execScript && win.execScript('null');
 
-    if (!win.$) await load('../../static/js/vendors/jquery.js');
-    // sendkeys.js depends on jQuery, so it cannot be loaded until jQuery has finished loading. (In
-    // other words, do not load both jQuery and sendkeys inside a Promise.all() call.)
-    if (!win.bililiteRange && includeSendkeys) await load('../tests/frontend/lib/sendkeys.js');
+    win.eval(jsLibraries.jquery);
+    win.eval(jsLibraries.sendkeys);
 
     win.$.window = win;
     win.$.document = doc;
@@ -123,7 +125,7 @@ const helper = {};
     // set new iframe
     $('#iframe-container').append($iframe);
     await new Promise((resolve) => $iframe.one('load', resolve));
-    helper.padChrome$ = await helper.getFrameJQuery($('#iframe-container iframe'), true);
+    helper.padChrome$ = getFrameJQuery($('#iframe-container iframe'));
     helper.padChrome$.padeditor =
         helper.padChrome$.window.require('ep_etherpad-lite/static/js/pad_editor').padeditor;
     if (opts.clearCookies) {
@@ -139,10 +141,8 @@ const helper = {};
       if (opts._retry++ >= 4) throw new Error('Pad never loaded');
       return await helper.aNewPad(opts);
     }
-    helper.padOuter$ =
-        await helper.getFrameJQuery(helper.padChrome$('iframe[name="ace_outer"]'), false);
-    helper.padInner$ =
-        await helper.getFrameJQuery(helper.padOuter$('iframe[name="ace_inner"]'), true);
+    helper.padOuter$ = getFrameJQuery(helper.padChrome$('iframe[name="ace_outer"]'));
+    helper.padInner$ = getFrameJQuery(helper.padOuter$('iframe[name="ace_inner"]'));
 
     // disable all animations, this makes tests faster and easier
     helper.padChrome$.fx.off = true;
@@ -184,8 +184,8 @@ const helper = {};
     $('#iframe-container iframe').remove();
     // set new iframe
     $('#iframe-container').append($iframe);
-    $iframe.one('load', async () => {
-      helper.admin$ = await helper.getFrameJQuery($('#iframe-container iframe'), false);
+    $iframe.one('load', () => {
+      helper.admin$ = getFrameJQuery($('#iframe-container iframe'));
     });
   };
 

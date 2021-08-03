@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import lessonSchema from '../Schema/lessonSchema.js';
+import lessonSchema from '../schema/lessonSchema.js';
 
 
 const lessonModel = mongoose.model('lessons', lessonSchema);

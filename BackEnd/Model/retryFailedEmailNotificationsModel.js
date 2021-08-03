@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import retryFailedNotificationsSchema from '../Schema/retryFailedNotificationsSchema.js';
+import retryFailedNotificationsSchema from '../schema/retryFailedNotificationsSchema.js';
 
 const retryFailedEmailNotificationsModel = mongoose.model('retryfailedonlinequestionsemailnotificationsqueue', retryFailedNotificationsSchema);
 

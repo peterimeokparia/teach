@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import emailSchema from '../Schema/emailSchema.js';
+import emailSchema from '../schema/emailSchema.js';
 
 
 const emailModel = mongoose.model('emails', emailSchema);

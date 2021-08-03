@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import courseSchema from './../Schema/courseSchema.js';
+import courseSchema from './../schema/courseSchema.js';
 
 
 const courseModel = mongoose.model('courses', courseSchema);

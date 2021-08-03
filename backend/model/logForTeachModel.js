@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import logForTeachSchema from '../Schema/logForTeachSchema.js';
+import logForTeachSchema from '../schema/logForTeachSchema.js';
 
 const logForTeachModel = mongoose.model('logforteach', logForTeachSchema);
 

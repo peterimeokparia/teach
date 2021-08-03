@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import formFieldSchema from '../Schema/formFieldSchema.js';
+import formFieldSchema from '../schema/formFieldSchema.js';
 
 const formFieldModel = mongoose.model('formfields', formFieldSchema);
 

@@ -107,8 +107,8 @@ const LessonPlan = ({
   
   const urls = getUrls(currentUser, courseId, lesson?._id, lesson?.title); 
   const fullScreenSize = "1536px";
-  const editorUrl = urls.editor.dev;
-  const canvasUrl = urls.canvas.dev; 
+  const editorUrl = urls.editor?.prod;
+  const canvasUrl = urls.canvas?.prod; 
 
 const saveVideoRecording = ( element ) => {
   saveLesson( element );

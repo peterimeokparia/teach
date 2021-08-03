@@ -172,7 +172,7 @@ import {
                 <div className="ComponentUserList">
             <ul className={"component-seconday-ul"}>
                 {users.map(singleUser => 
-                    <li className={"component-seconday-list-body-users"} data-cy={`li_${singleUser?.firstname}`}> 
+                    <li className={"component-seconday-list-body-users"} data-cy={`li_${singleUser?.firstname}`} key={singleUser?._id}> 
                         <div className={ "user-list-items-users"}>
                             <div className="row">
                                 <div className="col-1"> 

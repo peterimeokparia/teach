@@ -124,7 +124,7 @@ import {
                 title:`${  event?.currentUser?.firstname } Modified Calendar Event!`, 
                 body:`Modified Calendar Event: ${   event?.calendarEvent?.title } Event StartTime: ${ (  event?.calendarEvent?.rrule) ?   event?.calendarEvent?.rrule?.dtstart :   event?.calendarEvent?.start }` 
             })); 
-            event?.emailAddresses.forEach(email => {
+            event?.emailAddresses?.forEach(email => {
                 sendEmail(
                     emailMessageConfig?.sendersEmailAddress, 
                     email, 

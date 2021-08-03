@@ -138,6 +138,7 @@ async function getCurrentUser( email, password ){
 
 return ( <div className="LoginPage"> 
 {
+  
   <LoginForm
       error={error}
       loading={loading}

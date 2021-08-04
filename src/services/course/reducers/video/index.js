@@ -13,6 +13,7 @@ const initialState = {
 
 const reducer = produce((draft, action) => {
     switch(action.type){
+        
         case RECORDING_STATUS_RECORDING_STARTED:
              draft.hasRecordingStarted = true;
         return;

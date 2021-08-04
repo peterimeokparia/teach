@@ -74,8 +74,8 @@ import {
                 operatorId: operator?._id,
                 firstName: tutor?.firstname,
                 color: getCalendarColor( calendars )
-            }
-        }
+            };
+        };
     
     const viewCurrentUsersCourseList = ( userId ) => {
         navigate(`/${operatorBusinessName}/coursestaught/${userId}`); 

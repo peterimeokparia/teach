@@ -1,6 +1,6 @@
 class CalendarEvent {
-    constructor( calendarEventConfig ) {
 
+    constructor( calendarEventConfig ) {
         const { 
             calendar, 
             calendarEventData, 
@@ -23,7 +23,7 @@ class CalendarEvent {
         this.consultation = calendarEventData?.consultation;
         this.calendarEventType = calendarEventType;
         this.operatorId = operatorId;
-        this.color = ( calendar?.color ) ? calendar?.color : color
+        this.color = ( calendar?.color ) ? calendar?.color : color;
         this.currentUser = user;
         this.pushNotificationUser = pushNotificationSubscribers?.filter(subscriber => testAdminUsers.includes( subscriber?.userId ) );  
         this.emailAddresses = emailAddresses;   
@@ -47,6 +47,7 @@ class CalendarEvent {
             }
         };
     }
+    
 };
 
 export default CalendarEvent;

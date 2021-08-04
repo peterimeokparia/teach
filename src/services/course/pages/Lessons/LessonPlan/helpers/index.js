@@ -2,12 +2,19 @@ export const getUrls = (currentUser, courseId, lessonId, lessonTitle) => {
   const page = `${courseId}_${lessonId}_${lessonTitle}`; 
 
   return {
-      meeting:{ prod: `https://joinmeet.today/${page}`, dev:`https://joinmeet.today/${page}`},
-      editor:{ prod:`https://padsconnect247.com/editor/p/${lessonTitle}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false`, dev:`http://localhost:9001/p/${lessonTitle}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false` },
-      canvas:{ prod:`https://padsconnect247.com/whiteboard/?whiteboardid=${page}&username=${currentUser?.firstname}`, dev:`http://localhost:8080/?whiteboardid=${page}&username=${currentUser?.firstname}`},
-      recorder:{ prod:`https://padsconnect247.com/LessonPlan/VideoModal/${courseId}/${lessonId}/${lessonTitle}`, dev:`http://localhost:3000/LessonPlan/VideoModal/${courseId}/${lessonId}/${lessonTitle}`}
+      meeting: `https://joinmeet.today/${page}`,
+      editor: getHostName()   ? `http://localhost:9001/p/${lessonTitle}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false`
+                              : `https://ravingfanstudents.com/editor/p/${lessonTitle}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false`,
+      canvas:  getHostName()  ? `http://localhost:9090/?whiteboardid=${page}&username=${currentUser?.firstname}`
+                              : `https://ravingfanstudents.com/whiteboard/?whiteboardid=${page}&username=${currentUser?.firstname}`,
+      recorder: getHostName() ? `http://localhost:3000/LessonPlan/VideoModal/${courseId}/${lessonId}/${lessonTitle}`
+                              : `https://ravingfanstudents.com/LessonPlan/VideoModal/${courseId}/${lessonId}/${lessonTitle}`
   };
 };
+
+function getHostName(){
+  return window.location.hostname === 'localhost';
+}
 
 export const meetingConfigSettings = (course, lessonTitle) => { 
     return { 

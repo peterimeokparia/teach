@@ -3,8 +3,7 @@ useState,
 useEffect } from 'react';
 
 import { 
-useDispatch,
-useSelector } from 'react-redux';
+useDispatch } from 'react-redux';
 
 import {
 loadSubscribedPushNotificationUserByUserId,
@@ -20,12 +19,9 @@ saveOnlineQuestion,
 loadOnlineQuestions } from 'services/course/actions/onlinequestions';
 
 function useOnlineQuestionsHook(onlineQuestionsConfig ){
-
     const dispatch = useDispatch();
 
     let {
-        currentCourseQuestions,
-        onlineQuestionId, 
         courseId, 
         failedOnlineQuestionNotifications, 
         currentUser, 
@@ -58,6 +54,6 @@ return {
     setContentChanged:(val) => setContentChanged( val ),
     saveRecording:(val) => saveRecording( val ),
     deleteQuestion:(val) => deleteQuestion( val )
-}};
+}; };
 
 export default useOnlineQuestionsHook;

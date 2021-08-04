@@ -1,6 +1,3 @@
-import {
-updateUser } from 'services/course/api';
-
 import { 
 navigate } from '@reach/router';
 
@@ -38,7 +35,6 @@ export async function enablePlatformForStudentRole( config, selectedUser ){
 };
 
 export function joinInProgressMeeting( user, currentMeeting, saveMeetingAction, updateCurrentUserTimerHandle ){
-
     let inviteeToUpdate = getMeetingInvitees( user, currentMeeting, updateCurrentUserTimerHandle);
 
     saveMeetingAction( inviteeToUpdate?.meetingId, { ...currentMeeting, usersWhoJoinedTheMeeting:[ ...currentMeeting?.usersWhoJoinedTheMeeting, user?._id ]});
@@ -62,7 +58,7 @@ export function getMeetingInvitees( user, currentMeeting, updateCurrentUserTimer
     }
     return {
         inviteeToUpdate,
-    }
+    };
 }
 
 export async function getMeetings( user, getMeetingByIdAction ) {

@@ -31,23 +31,23 @@ import PostAddIcon from '@material-ui/icons/PostAdd';
 import './style.css';
 
 const MyCoursesPage = ({
-operatorBusinessName,
-operator,
-user,
-courses,
-openNewCourseModal,
-closeNewCourseModal,
-isModalOpen }) => {
-if ( ! user?.userIsValidated ){
-    navigate(`/${operatorBusinessName}/login`);
-}
+    operatorBusinessName,
+    operator,
+    user,
+    courses,
+    openNewCourseModal,
+    closeNewCourseModal,
+    isModalOpen }) => {
+    if ( ! user?.userIsValidated ){
+        navigate(`/${operatorBusinessName}/login`);
+    }
 
-if ( ! user || user?.email === undefined ){
-   return <Redirect to={`/${operatorBusinessName}/login`} noThrow />;
-}
+    if ( ! user || user?.email === undefined ){
+    return <Redirect to={`/${operatorBusinessName}/login`} noThrow />;
+    }
 
-let navigationContent = navContent( user, operatorBusinessName )?.users;
-let myCourseList = courses?.filter(course => user?.courses?.includes(course?._id));
+    let navigationContent = navContent( user, operatorBusinessName )?.users;
+    let myCourseList = courses?.filter(course => user?.courses?.includes(course?._id));
 
 return (    
     <div className="MyCourses">

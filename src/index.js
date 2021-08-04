@@ -147,7 +147,7 @@ store.dispatch(loadGrades());
 store.dispatch(loadOperators());
 store.dispatch(loadUsers());
 store.dispatch(lastLoggedInUser());
-// store.dispatch( loadLessons());
+store.dispatch( loadLessons());
 store.dispatch(loadSessions());
 store.dispatch(loadClassRooms());
 store.dispatch(loadAllCalendars());

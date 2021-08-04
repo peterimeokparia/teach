@@ -27,7 +27,6 @@ const AccountVerificationForm = ({
   operatorBusinessName,
   userId,
   classRoomId }) => {
-
   useEffect(() =>{ 
     if ( ! users ) { 
       updateCurrentUser( { _id: userId } );

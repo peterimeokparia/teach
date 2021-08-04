@@ -35,5 +35,5 @@ export function getOnlineQuestion( questions, courseId, onlineQuestionId ){
             ? currentCourseQuestionCollection
             : currentCourseQuestionCollection?.filter(question => question?._id === onlineQuestionId);
 
-    return currentCourseQuestions
+    return currentCourseQuestions;
 };

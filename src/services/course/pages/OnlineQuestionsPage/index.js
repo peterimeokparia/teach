@@ -15,8 +15,8 @@ const OnlineQuestionsPage = ({
   onlineQuestionId, 
   courseId,
   onlineQuestions }) => {
- 
-let currentCourseQuestions = getOnlineQuestion( onlineQuestions, courseId, onlineQuestionId )
+let currentCourseQuestions = getOnlineQuestion( onlineQuestions, courseId, onlineQuestionId );
+
 return (
     <div className="stage" id="stage">
       <div className="" id=""> 

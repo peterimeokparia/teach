@@ -56,6 +56,7 @@ export async function uploadContent(url, formData, method = `POST`) {
   // headers.append('Content-Type', 'video/webm'); 
   // headers.append('Accept', 'video/webm');
   // headers.append('Content-Type', 'image/png'); 
+  
   headers.append('Authorization',  authToken ? `Bearer ${authToken}` : undefined);
   return fetch(url, {
     method,

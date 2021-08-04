@@ -162,6 +162,7 @@ const reducer = produce((draft, action) => {
         return; 
         case DELETE_USER_SUCCESS:
              delete draft.users[action.payload?._id];
+        return;     
         default:
         return;
         

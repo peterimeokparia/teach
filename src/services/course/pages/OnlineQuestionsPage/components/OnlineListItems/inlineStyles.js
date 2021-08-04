@@ -94,7 +94,7 @@ export const videoMeta = element  => {
     buttonClassName: `toggle-stage-btns${( true ) ? "-show" : "-hide"}`, 
     objectId: element?._id, 
     displaySavedRecording: true
-  }};
+  }; };
   
 
 

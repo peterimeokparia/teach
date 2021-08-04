@@ -21,7 +21,6 @@ import {
    import BuySessionPackageComponent from 'services/course/pages/SalesPage/components/BuySessionPackageComponent';
    
    function useSalesHook( salesConfig ){
-   
       let  {   
       currentUser, 
       courseId,
@@ -130,6 +129,6 @@ import {
       addToCartAndReturnToCourses:() => addToCartAndReturnToCourses(),
       setTotalNumberOfSessions:(val) => setTotalNumberOfSessions(val),
       setAutoRenewal:(val) => setAutoRenewal(val)
-   }};
+   }; };
    
    export default useSalesHook;

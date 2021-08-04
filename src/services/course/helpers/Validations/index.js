@@ -2,7 +2,6 @@ import {
 ToastContainer, 
 toast } from 'react-toastify';
 
-// import 'ReactToastify.css';
 import Swal from 'sweetalert2';
 
 export const Validations = {
@@ -31,11 +30,13 @@ export const Validations = {
 
         if ( !files ) {
             const msg = "No image(s) selected.";
+
             Swal.fire(msg);
             return false;
         }
         if (files?.length > 3){
             const msg = "Only 3 images can be uploaded at one time";
+
             Swal.fire(msg);
             event.target.value = null;
             console.log(msg);
@@ -48,6 +49,7 @@ export const Validations = {
 
         if ( !files ) {
             const msg = "No image(s) selected.";
+
             Swal.fire(msg);
             return false;
         }
@@ -67,6 +69,7 @@ export const Validations = {
 
         if ( !files ) {
             const msg = "No image(s) selected.";
+            
             Swal.fire(msg);
             return false;
         }

@@ -21,39 +21,8 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import ScreenShareIcon from '@material-ui/icons/ScreenShare';
 import './style.css';
 
-{/*
-Handle Styling:
---------------
-  this.props?.videoMeta?.videoCallIconMain,
-  this.props?.videoMeta?.deleteIconStyle,
-  this.props?.videoMeta?.exitVideoCallIcon,
-  this.props?.videoMeta?.videoCallIcon,
-  this.props?.videoMeta?.shareScreenIcon
-
-  Handle Saving:
-  -------------
-  this.props.displaySavedRecording,
-  this.props.saveRecording,
-  this.props?.videoMeta?.objectId,
-  this.props?.videoMeta?.videoMetaData,
-  this.props?.videoMeta?.videoName,
-  this.props?.videoMeta?.videoMetaDataExternalId,
-  this.props?.videoMeta?.videoNamePrefix
-  this.props?.videoMeta?.videoSectionClassNameRecording,
-  this.props?.videoMeta?.videoSectionClassNameRecordingStopped,
-  this.props?.videoMeta?.videoSectionCallOut
-
-  Operational Settings:
-  -----------------------
-  this.props.element : Platform specific object
-  this.props.setVideoModalMode(false);
-  this.props.recordingStatusRecordingStarted();
-  this.props.recordingStatusRecordingStopped();
-  this.props.resetAllStartSettings();
-  this.props.resetAllStopSettings();
-*/}
-
 class MaterialVideoPage extends PureComponent {
+
   constructor(props){
     super(props);
     this.state = {
@@ -72,22 +41,6 @@ class MaterialVideoPage extends PureComponent {
     this.startCapture = this.startCapture.bind(this);
     this.stopCapture = this.stopCapture.bind(this);
     this.handleSelectedElement =this.handleSelectedElement.bind(this);
-    // this.videoMain = this.videoMain?.bind(this);
-
-    // this.videoMain = this.props.videoMeta?.videoCallIconMain &&
-    //    this.props.videoMeta?.videoCallIconMain( this.state.capture , this.props.element?._id, this.state.selectedElement?._id  );
-
-    // this.deleteMain = 
-    //   this.props?.videoMeta?.deleteIconStyle(  this.state.capture, this.props.element?._id, this.state.selectedElement?._id );
-
-    // this.cancelIcon =  this.props?.videoMeta?.exitVideoCallIcon && 
-    //   this.props?.videoMeta?.exitVideoCallIcon( this.state.capture, this.props.element?._id, this.state.selectedElement?._id );
-
-    // this.videoCallIcon = this.props?.videoMeta?.videoCallIcon && 
-    //    this.props?.videoMeta?.videoCallIcon( this.state.capture, this.props.element?._id, this.state.selectedElement?._id  );
-
-    // this.screenShareIcon = this.props?.videoMeta?.shareScreenIcon && 
-    //   this.props?.videoMeta?.shareScreenIcon( this.state.capture, this.props.element?._id, this.state.selectedElement?._id );
   };
 
   theStream;
@@ -103,41 +56,14 @@ class MaterialVideoPage extends PureComponent {
   recordedChunks = [];
 
   componentDidMount = () => {
-    // this.videoMain = 
-    //   this.props.videoMeta?.videoCallIconMain( this.state.capture , this.props.element?._id, this.state.selectedElement?._id  );
-
-    // this.deleteMain = this.props?.videoMeta?.deleteIconStyle && 
-    //   this.props?.videoMeta?.deleteIconStyle(  this.state.capture, this.props.element?._id, this.state.selectedElement?._id );
-
-    // this.cancelIcon = 
-    //   this.props?.videoMeta?.exitVideoCallIcon( this.state.capture, this.props.element?._id, this.state.selectedElement?._id );
-
-    // this.videoCallIcon = this.props?.videoMeta?.videoCallIcon && 
-    //   this.props?.videoMeta?.videoCallIcon( this.state.capture, this.props.element?._id, this.state.selectedElement?._id  );
-
-    // this.screenShareIcon = this.props?.videoMeta?.shareScreenIcon && 
-    //   this.props?.videoMeta?.shareScreenIcon( this.state.capture, this.props.element?._id, this.state.selectedElement?._id );
   };
 
   componentDidUpdate = () => {
-    // this.videoMain = this.props.videoMeta?.videoCallIconMain && 
-    //   this.props.videoMeta?.videoCallIconMain( this.state.capture , this.props.element?._id, this.state.selectedElement?._id  );
-
-    // this.deleteMain = this.props?.videoMeta?.deleteIconStyle && 
-    //    this.props?.videoMeta?.deleteIconStyle(  this.state.capture, this.props.element?._id, this.state.selectedElement?._id );
-
     this.cancelIcon = this.props?.videoMeta?.exitVideoCallIcon && 
        this.props?.videoMeta?.exitVideoCallIcon( this.state.capture, this.props.element?._id, this.state.selectedElement?._id );
-
-    // this.videoCallIcon = this.props?.videoMeta?.videoCallIcon && 
-    //   this.props?.videoMeta?.videoCallIcon( this.state.capture, this.props.element?._id, this.state.selectedElement?._id  );
-
-    // this.screenShareIcon = this.props?.videoMeta?.shareScreenIcon && 
-    //   this.props?.videoMeta?.shareScreenIcon( this.state.capture, this.props.element?._id, this.state.selectedElement?._id );
   };
 
-  componentWillUnmount = () => {
-    
+  componentWillUnmount = () => { 
   };
 
   requestedMediaOptions = {
@@ -351,15 +277,6 @@ class MaterialVideoPage extends PureComponent {
     this.toggleRecordOnOff();
   };
 
-  // I need to create a spike to research this.
-  // --------------------------------------------
-  // Handle removing videos and files from the server
-  // Of concern is the document retention policy per State, Per Country and Per Jurisdiction.
-  // One needs to be mindfull of this.
-
-  // This also carries across to data storage. 
-  // Do we install on prem db servers or keep it all in the cloud and then let the schools administer them?
-  // Retention policy et al...?
   handleSelectedElementToDelete = ( selected ) => {
     this.saveRecording({ ...selected, videoUrl:''}); 
   };
@@ -430,7 +347,8 @@ class MaterialVideoPage extends PureComponent {
         </span>
         </>
         );
-      };     
+      }; 
+          
 }
 
 const mapDispatch = {

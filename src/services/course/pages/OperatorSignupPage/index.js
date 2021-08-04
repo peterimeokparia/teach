@@ -20,8 +20,8 @@ const OperatorSignUpPage = ({
   loading, 
   createOperator }) => {
   const handleCreateUser = (email, password, firstname, lastname, businessname, phone ) => {
-    
   let operatorUser = new Operator();
+  
     operatorUser.email = email;
     operatorUser.password = password;
     operatorUser.firstName = firstname;

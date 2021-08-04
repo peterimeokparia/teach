@@ -95,7 +95,7 @@
       "!node_modules/react-runtime"
     ]
   },
-  "proxy": "http://localhost:9005",
+  "proxy": "http://localhost:9001",
   "secure": false,
   "eslintConfig": {
     "extends": "react-app"

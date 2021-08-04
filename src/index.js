@@ -15,7 +15,6 @@ lastLoggedInUser } from 'services/course/actions/users';
 import {
 loadMeetings } from 'services/course/actions/meetings';
 
-
 import {
 loadAttendance } from 'services/course/actions/attendance';
 

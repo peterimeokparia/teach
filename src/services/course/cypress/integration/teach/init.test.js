@@ -1,7 +1,7 @@
 import axios from 'services/course/cypress/integration/teach/node_modules/axios';
 
 const userName = "peter.imeokparia@gmail.com";
-const PREFIX = "http://localhost:9005/api/v1";
+const PREFIX = "http://localhost:9001/api/v1";
 let userId = undefined;
 const firstName = "TeachUser001";
 

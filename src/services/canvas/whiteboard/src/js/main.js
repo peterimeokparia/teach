@@ -238,7 +238,7 @@ function initWhiteboard() {
         });
 
         //Load keybindings from keybinds.js to given functions
-        Object.entries(keybinds).forEach(([key, functionName]) => {
+        Object.entries(keybinds)?.forEach(([key, functionName]) => {
             const associatedShortcutFunction = shortcutFunctions[functionName];
             if (associatedShortcutFunction) {
                 keymage(key, associatedShortcutFunction, { preventDefault: true });

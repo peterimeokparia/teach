@@ -117,7 +117,7 @@ export const purchase = ( currentUser ) => {
     try {
         console.log("Mock implementation purchase");
         if( approvePayment(currentUser) ) {   
-            currentUser.cart.forEach(course  => {
+            currentUser.cart?.forEach(course  => {
             if ( ! currentUser.courses?.includes( course?.course?._id ) ) {
                 currentUser = { ...currentUser, courses: [ ...currentUser.courses, course?.course?._id ] };
             }

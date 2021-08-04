@@ -55,7 +55,7 @@ const reducer =  produce( (draft, action) => {
           case LOAD_EVENTS_SUCCESS:
                draft.isLoading = false;
                draft.onError = null;
-               action.payload.forEach(element => {
+               action.payload?.forEach(element => {
                     draft.events[element._id] = element;  
                });              
           return;

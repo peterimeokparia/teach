@@ -51,7 +51,7 @@ const reducer = produce((draft, action) => {
         return;
         case LOAD_OPERATORS_SUCCESS: 
             draft.loading = false;
-            action.payload.forEach(operator => {
+            action.payload?.forEach(operator => {
                 draft.operators[operator?._id] = operator; 
             });
         return;

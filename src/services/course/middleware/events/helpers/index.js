@@ -91,7 +91,7 @@ import {
                     body:`New Calendar Event: ${ calendarEvent?.calendarEventData?.event?.title } ${ calendarEvent?.calendarEventData?.event?.start }` 
                 })
             ); 
-            calendarEvent?.eventConfig?.emailAddresses.forEach(email => {
+            calendarEvent?.eventConfig?.emailAddresses?.forEach(email => {
                 sendEmail(
                     emailMessageConfig?.sendersEmailAddress, 
                     email, 

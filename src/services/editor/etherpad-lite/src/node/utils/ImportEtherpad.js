@@ -27,13 +27,13 @@ exports.setPadRaw = (padId, r) => {
   const records = JSON.parse(r);
 
   // get supported block Elements from plugins, we will use this later.
-  hooks.callAll('ccRegisterBlockElements').forEach((element) => {
+  hooks.callAll('ccRegisterBlockElements')?.forEach((element) => {
     supportedElems.add(element);
   });
 
   const unsupportedElements = new Set();
 
-  Object.keys(records).forEach(async (key) => {
+  Object.keys(records)?.forEach(async (key) => {
     let value = records[key];
 
     if (!value) {

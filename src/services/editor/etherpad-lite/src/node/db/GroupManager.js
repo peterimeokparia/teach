@@ -76,7 +76,7 @@ exports.deleteGroup = async (groupID) => {
 
   // regenerate group list
   const newGroups = {};
-  groups.forEach((group) => newGroups[group] = 1);
+  groups?.forEach((group) => newGroups[group] = 1);
   await db.set('groups', newGroups);
 };
 
@@ -101,7 +101,7 @@ exports.createGroup = async () => {
 
   // regenerate group list
   const newGroups = {};
-  groups.forEach((group) => newGroups[group] = 1);
+  groups?.forEach((group) => newGroups[group] = 1);
   await db.set('groups', newGroups);
 
   return {groupID};

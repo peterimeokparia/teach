@@ -50,7 +50,7 @@ const reducer = produce((draft, action) => {
         return;
         case LOAD_ONLINEANSWERS_SUCCESS:
              draft.onlineAnswersLoading = false;
-             action.payload.forEach( answer => {
+             action.payload?.forEach( answer => {
                 draft.onlineAnswers[ answer._id ] = answer;
               });  
         return;

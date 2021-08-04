@@ -31,7 +31,7 @@ export async function updateContent( url, data = {}  ){
 export function getPostData( req ) {
   let requestBodyParameters, requestBodyToPost = {};
   requestBodyParameters = Object.keys( req.body );
-  requestBodyParameters.forEach(element => {
+  requestBodyParameters?.forEach(element => {
     requestBodyToPost[ element ] = req.body[ element ];
   });
   return requestBodyToPost;
@@ -62,7 +62,7 @@ export async function saveUpdateUserOnLogin( req,  resp,  model, id ) {
     } else {
       try {
             let bodyData = Object.keys(req.body);
-            bodyData.forEach(element => { 
+            bodyData?.forEach(element => { 
             let arrg = ['_id', '__v'];
             if ( !arrg.includes( element )  ) {
                existingUser[element] = req.body[ element ] 
@@ -93,7 +93,7 @@ export async function saveUpdatedData( req, model, id ){
         }
 
         let bodyData = Object.keys(req.body);
-        bodyData.forEach(element => {
+        bodyData?.forEach(element => {
           let arrg = ['_id', '__v'];
            if ( !arrg.includes(element)  ) {
             // if ( !arrg.includes(element)  ) {
@@ -296,7 +296,7 @@ export async function updateFileData( req, model, id ){
   try {
         const documentObjectToUpdate = await model?.findById(mongoose.Types.ObjectId(id));
         let bodyData = Object.keys(req.body);
-        bodyData.forEach(element => { 
+        bodyData?.forEach(element => { 
         let arrg = ['_id', '__v'];
         if ( !arrg.includes(element)  ) {
             documentObjectToUpdate[element] = req.body[element] 
@@ -312,7 +312,7 @@ export async function updateFileData( req, model, id ){
 export async function updatedData( req, model, id ){
     let bodyData = Object.keys(req.body);
     let tempObject = {};
-    bodyData.forEach(element => {
+    bodyData?.forEach(element => {
     tempObject[element] = req.body[element] 
   });
   return await model.findOneAndUpdate( tempObject );
@@ -334,7 +334,7 @@ export const base64ToImageConverter = ( base64String, imageName, filePath ) => {
 async function getDocumentObjectToUpdate( requestBody, model, id ){
   let bodyData = Object.keys(requestBody);
   const documentObjectToUpdate = await model.findById(id);
-  bodyData.forEach(element => {
+  bodyData?.forEach(element => {
      documentObjectToUpdate[element] = req.body[element] 
   });
   return documentObjectToUpdate;

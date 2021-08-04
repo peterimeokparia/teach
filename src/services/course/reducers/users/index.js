@@ -89,7 +89,7 @@ const reducer = produce((draft, action) => {
         return;
         case LOAD_USERS_SUCCESS: 
             draft.loading = false;
-            action.payload.forEach(user => {
+            action.payload?.forEach(user => {
                 draft.users[user?._id] = user; 
             });
         return;

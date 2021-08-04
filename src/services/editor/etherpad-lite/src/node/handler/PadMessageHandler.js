@@ -441,7 +441,7 @@ const handleSuggestUserName = (socket, message) => {
   const padId = sessioninfos[socket.id].padId;
 
   // search the author and send him this message
-  _getRoomSockets(padId).forEach((socket) => {
+  _getRoomSockets(padId)?.forEach((socket) => {
     const session = sessioninfos[socket.id];
     if (session && session.author === message.data.payload.unnamedId) {
       socket.json.send(message);
@@ -597,7 +597,7 @@ const handleUserChanges = async (socket, message) => {
         // - can have attribs, but they are discarded and don't show up in the attribs -
         // but do show up in the  pool
 
-        op.attribs.split('*').forEach((attr) => {
+        op.attribs.split('*')?.forEach((attr) => {
           if (!attr) return;
 
           attr = wireApool.getAttrib(attr);
@@ -706,7 +706,7 @@ exports.updatePadClients = async (pad) => {
   // all requests to revisions will be fired
   // BEFORE first result will be landed to our cache object.
   // The solution is to replace parallel processing
-  // via async.forEach with sequential for() loop. There is no real
+  // via async?.forEach with sequential for() loop. There is no real
   // benefits of running this in parallel,
   // but benefit of reusing cached revision object is HUGE
   const revCache = {};
@@ -797,7 +797,7 @@ const _correctMarkersInPad = (atext, apool) => {
 
   const builder = Changeset.builder(text.length);
 
-  badMarkers.forEach((pos) => {
+  badMarkers?.forEach((pos) => {
     builder.keepText(text.substring(offset, pos));
     builder.remove(1);
     offset = pos + 1;
@@ -829,7 +829,7 @@ const handleSwitchToPad = async (socket, message, _authorID) => {
   if (sessioninfos[socket.id] !== currentSessionInfo) return;
 
   // clear the session and leave the room
-  _getRoomSockets(padId).forEach((socket) => {
+  _getRoomSockets(padId)?.forEach((socket) => {
     const sinfo = sessioninfos[socket.id];
     if (sinfo && sinfo.author === currentSessionInfo.author) {
       // fix user's counter, works on page refresh or if user closes browser window and then rejoins

@@ -401,7 +401,7 @@ const paduserlist = (() => {
         // Check we don't already have this author in our array
         let exists = false;
 
-        userList.forEach((user) => {
+        userList?.forEach((user) => {
           if (user.userId === userId) exists = true;
         });
 

@@ -14,7 +14,7 @@ function handleEmailNotifications( config ) {
 
     try {
           // add link to question detail 
-          notificationMessage.emailNotificationSubscribers.forEach(element => {
+          notificationMessage.emailNotificationSubscribers?.forEach(element => {
             config.store.dispatch(sendEmails(
                 TEACH_EMAIL_ADDRESS,
                 element?.email,

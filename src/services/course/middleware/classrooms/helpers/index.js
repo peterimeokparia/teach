@@ -47,7 +47,7 @@ import {
     LAST_LOGGEDIN_USER } from 'services/course/actions/users';
     
     export const addNewClassRoomIdToStudentsAndTutors = ( classRoom, store ) => {
-        classRoom?.classRoomUsers.forEach(classroomuser => {
+        classRoom?.classRoomUsers?.forEach(classroomuser => {
             let student = classroomuser?.value;
     
             updateUser( { ...student, classRooms: [ ...student?.classRooms, classRoom?.classroom?._id  ] });
@@ -148,7 +148,7 @@ import {
             meetingConfig = inviteUsersToLearningSessionConfig( sessions, currentUser, url?.lessonPageUrl, selectedLessonFromLessonPlanDropDown );   
         
             store.dispatch(updateUserInvitationUrl( currentUser, meetingConfig.inviteeSessionUrl, meetingConfig.nameOfLessonInProgress, meetingConfig.lessonInProgress ));
-                listOfStudents.forEach(( invitee ) => { 
+                listOfStudents?.forEach(( invitee ) => { 
                     let currentSession = inviteUsersToLearningSessionConfig( sessions, invitee, url?.lessonPageUrl, selectedLessonFromLessonPlanDropDown );    
         
                     if ( ! currentSession?.userHasExhaustedPackageSessions ) {
@@ -243,7 +243,7 @@ import {
             meetings: [ ...currentuser?.meetings, meeting?._id  ]
         });        
         if (  meeting?.invitees?.length > 0 ) {
-            meeting.invitees.forEach(user => {
+            meeting.invitees?.forEach(user => {
                 updateUser({
                     ...user, 
                     inviteeSessionUrl,
@@ -266,7 +266,7 @@ import {
     function sendEmailToMeetingInvitees( listOfStudents, url, store ){
         if ( listOfStudents?.length === 0 ) return;
     
-        listOfStudents.forEach( student => {
+        listOfStudents?.forEach( student => {
             let messageOptions = emailMessageOptions( student, url );
     
             store.dispatch(sendEmails(

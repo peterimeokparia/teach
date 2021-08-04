@@ -279,7 +279,7 @@ function Ace2Inner(editorInfo, cssManagers) {
     applyChangesToBase: 1,
   };
 
-  hooks.callAll('aceRegisterNonScrollableEditEvents').forEach((eventType) => {
+  hooks.callAll('aceRegisterNonScrollableEditEvents')?.forEach((eventType) => {
     _nonScrollableEditEvents[eventType] = 1;
   });
 
@@ -1120,7 +1120,7 @@ function Ace2Inner(editorInfo, cssManagers) {
           lineNodeInfos[k] = newEntry.domInfo;
         }
         domInsertsNeeded.push([nodeToAddAfter, lineNodeInfos]);
-        dirtyNodes.forEach((n) => {
+        dirtyNodes?.forEach((n) => {
           toDeleteAtEnd.push(n);
         });
         const spliceHints = {};
@@ -1140,17 +1140,17 @@ function Ace2Inner(editorInfo, cssManagers) {
     const domChanges = (splicesToDo.length > 0);
 
     // update the representation
-    splicesToDo.forEach((splice) => {
+    splicesToDo?.forEach((splice) => {
       doIncorpLineSplice(splice[0], splice[1], splice[2], splice[3], splice[4]);
     });
 
     // do DOM inserts
-    domInsertsNeeded.forEach((ins) => {
+    domInsertsNeeded?.forEach((ins) => {
       insertDomLines(ins[0], ins[1]);
     });
 
     // delete old dom nodes
-    toDeleteAtEnd.forEach((n) => {
+    toDeleteAtEnd?.forEach((n) => {
       // parent of n may not be "root" in IE due to non-tree-shaped DOM (wtf)
       if (n.parentNode) n.parentNode.removeChild(n);
     });
@@ -1238,7 +1238,7 @@ function Ace2Inner(editorInfo, cssManagers) {
     let lineStartOffset;
     if (infoStructs.length < 1) return;
 
-    infoStructs.forEach((info) => {
+    infoStructs?.forEach((info) => {
       const node = info.node;
       const key = uniqueId(node);
       let entry;
@@ -1435,7 +1435,7 @@ function Ace2Inner(editorInfo, cssManagers) {
 
       insertDomLines(nodeToAddAfter, lineEntries.map((entry) => entry.domInfo));
 
-      keysToDelete.forEach((k) => {
+      keysToDelete?.forEach((k) => {
         const n = doc.getElementById(k);
         n.parentNode.removeChild(n);
       });
@@ -1715,7 +1715,7 @@ function Ace2Inner(editorInfo, cssManagers) {
   // Change the abstract representation of the document to have a different set of lines.
   // Must be called after rep.alltext is set.
   const doRepLineSplice = (startLine, deleteCount, newLineEntries) => {
-    newLineEntries.forEach((entry) => {
+    newLineEntries?.forEach((entry) => {
       entry.width = entry.text.length + 1;
     });
 
@@ -2101,7 +2101,7 @@ function Ace2Inner(editorInfo, cssManagers) {
   const attribIsFormattingStyle = (attribName) => FORMATTING_STYLES.indexOf(attribName) !== -1;
 
   const selectFormattingButtonIfLineHasStyleApplied = (rep) => {
-    FORMATTING_STYLES.forEach((style) => {
+    FORMATTING_STYLES?.forEach((style) => {
       const hasStyleOnRepSelection =
           documentAttributeManager.hasAttributeOnSelectionOrCaretPosition(style);
       updateStyleButtonState(style, hasStyleOnRepSelection);
@@ -2122,7 +2122,7 @@ function Ace2Inner(editorInfo, cssManagers) {
     ul: 1,
   };
 
-  hooks.callAll('aceRegisterBlockElements').forEach((element) => {
+  hooks.callAll('aceRegisterBlockElements')?.forEach((element) => {
     _blockElems[element] = 1;
   });
 
@@ -2191,7 +2191,7 @@ function Ace2Inner(editorInfo, cssManagers) {
     const rangeForLine = (i) => {
       // returns index of cleanRange containing i, or -1 if none
       let answer = -1;
-      cleanRanges.forEach((r, idx) => {
+      cleanRanges?.forEach((r, idx) => {
         if (i >= r[1]) return false; // keep looking
         if (i < r[0]) return true; // not found, stop looking
         answer = idx;
@@ -2503,7 +2503,7 @@ function Ace2Inner(editorInfo, cssManagers) {
       }
     }
 
-    mods.forEach((mod) => {
+    mods?.forEach((mod) => {
       setLineListType(mod[0], mod[1]);
     });
     return true;
@@ -2751,8 +2751,8 @@ function Ace2Inner(editorInfo, cssManagers) {
             // Known authors info, both current and historical
             const padAuthors = parent.parent.pad.userList();
             let authorObj = {};
-            authors.forEach((authorId) => {
-              padAuthors.forEach((padAuthor) => {
+            authors?.forEach((authorId) => {
+              padAuthors?.forEach((padAuthor) => {
                 // If the person doing the lookup is the author..
                 if (padAuthor.userId === authorId) {
                   if (parent.parent.clientVars.userId === authorId) {
@@ -3386,7 +3386,7 @@ function Ace2Inner(editorInfo, cssManagers) {
 
   const _teardownActions = [];
 
-  const teardown = () => _teardownActions.forEach((a) => a());
+  const teardown = () => _teardownActions?.forEach((a) => a());
 
   let inInternationalComposition = null;
   editorInfo.ace_getInInternationalComposition = () => inInternationalComposition;
@@ -3627,7 +3627,7 @@ function Ace2Inner(editorInfo, cssManagers) {
       }
     }
 
-    mods.forEach((mod) => {
+    mods?.forEach((mod) => {
       setLineListType(mod[0], mod[1]);
     });
   };

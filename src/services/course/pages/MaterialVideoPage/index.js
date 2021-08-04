@@ -149,7 +149,7 @@ class MaterialVideoPage extends PureComponent {
   stopCapture = () => {
     if (this.state.capture && this.theRecorder && this.theStream){ 
         this.theRecorder.stop();
-        this.theStream.getTracks().forEach( track => track.stop() );
+        this.theStream.getTracks()?.forEach( track => track.stop() );
         this.blob = new Blob(this.recordedChunks, {type: "video/webm"});
         this.url =  (URL || window.webkitURL).createObjectURL(this.blob);
         
@@ -348,7 +348,7 @@ class MaterialVideoPage extends PureComponent {
         </>
         );
       }; 
-          
+
 }
 
 const mapDispatch = {

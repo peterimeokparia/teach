@@ -86,7 +86,7 @@ const runTests = () => {
   })();
 
   const applyMutations = (mu, arrayOfArrays) => {
-    arrayOfArrays.forEach((a) => {
+    arrayOfArrays?.forEach((a) => {
       const result = mu[a[0]].apply(mu, a.slice(1));
       if (a[0] === 'remove' && a[3]) {
         assertEqualStrings(a[3], result);
@@ -100,7 +100,7 @@ const runTests = () => {
     const bank = Changeset.stringAssembler();
     let oldPos = 0;
     let newLen = 0;
-    arrayOfArrays.forEach((a) => {
+    arrayOfArrays?.forEach((a) => {
       if (a[0] === 'skip') {
         op.opcode = '=';
         op.chars = a[1];
@@ -223,7 +223,7 @@ const runTests = () => {
     } else {
       // assume it's an array of attrib strings to be split and added
       const p = new AttributePool();
-      attribs.forEach((kv) => {
+      attribs?.forEach((kv) => {
         p.putAttrib(kv.split(','));
       });
       return p;

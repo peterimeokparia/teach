@@ -167,7 +167,7 @@ module.exports = class CachingMiddleware {
         // Update cache
         let buffer = '';
 
-        Object.keys(headers || {}).forEach((key) => {
+        Object.keys(headers || {})?.forEach((key) => {
           res.setHeader(key, headers[key]);
         });
         headers = _headers;

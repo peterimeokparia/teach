@@ -125,7 +125,7 @@ PadDiff.prototype._addAuthors = function (authors) {
   const self = this;
 
   // add to array if not in the array
-  authors.forEach((author) => {
+  authors?.forEach((author) => {
     if (self._authors.indexOf(author) === -1) {
       self._authors.push(author);
     }

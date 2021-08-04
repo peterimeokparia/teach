@@ -79,7 +79,7 @@ $(document).ready(() => {
   };
 
   const displayPluginList = (plugins, container, template) => {
-    plugins.forEach((plugin) => {
+    plugins?.forEach((plugin) => {
       const row = template.clone();
 
       for (const attr in plugin) {
@@ -204,7 +204,7 @@ $(document).ready(() => {
     installed.list = installed.list.filter((plugin) => plugin.name !== 'ep_etherpad-lite');
 
     // remove all installed plugins (leave plugins that are still being installed)
-    installed.list.forEach((plugin) => {
+    installed.list?.forEach((plugin) => {
       $(`#installed-plugins .${plugin.name}`).remove();
     });
 
@@ -217,7 +217,7 @@ $(document).ready(() => {
   });
 
   socket.on('results:updatable', (data) => {
-    data.updatable.forEach((pluginName) => {
+    data.updatable?.forEach((pluginName) => {
       const actions = $(`#installed-plugins > tr.${pluginName} .actions`);
       actions.find('.do-update').remove();
       actions.append(

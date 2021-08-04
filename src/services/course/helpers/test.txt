@@ -72,7 +72,7 @@ useEffect(( ) => {
 
 
 let timeLineItems = [];
-events.map( event => event.timeLineItems ).forEach(element => {
+events.map( event => event.timeLineItems )?.forEach(element => {
     if ( element.length > 0 ) {
         timeLineItems = [ ...timeLineItems, ...element ]
     }

@@ -66,7 +66,7 @@ useEffect(() => {}, [] );
       userId: messageOptions?.userId
     };
 
-    inputFields.forEach(element => (
+    inputFields?.forEach(element => (
       sendEmail( options?.from, element.value, options?.subject, options?.messageBody, options?.userId )
     ));
 

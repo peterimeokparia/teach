@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 export function handleAutoRenewPackageSessions( currentUser,  expiredPackages, autoRenewAction ) {
     if ( expiredPackages?.length === 0 )  return;
     try {      
-        expiredPackages.forEach(expiredPackage => {
+        expiredPackages?.forEach(expiredPackage => {
             handleExpiredPackages( currentUser, expiredPackage, autoRenewAction ); 
         });
     } catch (error) {

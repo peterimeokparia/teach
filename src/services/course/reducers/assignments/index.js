@@ -48,7 +48,7 @@ const reducer = produce((draft, action) => {
           return;
           case LOAD_ASSIGNMENTS_SUCCESS:
                draft.assignmentsLoading = false;
-               action.payload.forEach( assignment => {
+               action.payload?.forEach( assignment => {
                     draft.assignments[assignment._id] = assignment;
                });  
           return;

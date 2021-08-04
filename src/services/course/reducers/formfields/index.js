@@ -48,7 +48,7 @@ const reducer = produce((draft, action) => {
         return;
         case LOAD_FORMFIELDS_SUCCESS:
              draft.formFieldsLoading = false;
-             action.payload.forEach( field => {
+             action.payload?.forEach( field => {
                 draft.formFields[ field._id ] = field;
               });  
         return;
@@ -77,7 +77,7 @@ const reducer = produce((draft, action) => {
         return; 
        default:
     return;
-    
+
     }
 }, initialState);
 

@@ -101,7 +101,7 @@ fileRoute.get('/delete',  ( request, response) => {
 
 // function handleExistingFiles( existingFiles ){
 //       if ( existingFiles ) {              
-//          existingFiles.forEach( file => {
+//          existingFiles?.forEach( file => {
 //          files.push( file );
 //       });
 //    }

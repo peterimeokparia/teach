@@ -2,7 +2,7 @@ const path = require("path");
 
 const getArgs = function () {
     const args = {};
-    process.argv.slice(2, process.argv.length).forEach((arg) => {
+    process.argv.slice(2, process.argv.length)?.forEach((arg) => {
         // long arg
         if (arg.slice(0, 2) === "--") {
             const longArg = arg.split("=");
@@ -11,7 +11,7 @@ const getArgs = function () {
         // flags
         else if (arg[0] === "-") {
             const flags = arg.slice(1, arg.length).split("");
-            flags.forEach((flag) => {
+            flags?.forEach((flag) => {
                 args[flag] = true;
             });
         }

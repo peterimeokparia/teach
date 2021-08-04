@@ -51,7 +51,7 @@ const reducer =  produce( (draft, action) => {
             draft.sessionsLoading = true;
         return;
         case LOAD_SESSIONS_SUCCESS:
-            action.payload.forEach(session => {
+            action.payload?.forEach(session => {
                 draft.sessions[session?._id] = session;
             });
         return;    

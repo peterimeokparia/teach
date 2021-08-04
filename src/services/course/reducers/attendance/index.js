@@ -41,7 +41,7 @@ const reducer =  produce( (draft, action) => {
         case LOAD_ATTENDANCE_SUCCESS:
              draft.isLoading = false;
              draft.onError = null;
-             action.payload.forEach(element => {
+             action.payload?.forEach(element => {
                 draft.attendanceCollection[element._id] = element;  
              });      
         return;

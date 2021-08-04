@@ -16,7 +16,7 @@ import {
     
     export const handleCartOnPurchase = ( user, store ) => {
         if (!user || !store ) return;
-        user.cart.forEach(( course ) => {
+        user.cart?.forEach(( course ) => {
             add( courseConfig( course ), `/sessions`)
             .then(session => {
                 updateStudentsSession( user, store, session );

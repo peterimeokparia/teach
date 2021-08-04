@@ -8,7 +8,7 @@ import {
 tokenGenerator, 
 privateKey} from 'services/course/pages/LoginPage/components/Authentication';
 // const PREFIX = "/api/v1";
-const PREFIX = "http://localhost:9005/api/v1";
+const PREFIX = "http://localhost:9001/api/v1";
 
 export let apiAuthToken = undefined;
 

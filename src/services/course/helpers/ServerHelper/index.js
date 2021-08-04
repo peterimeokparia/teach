@@ -56,7 +56,7 @@ export async function uploadContent(url, formData, method = `POST`) {
   // headers.append('Content-Type', 'video/webm'); 
   // headers.append('Accept', 'video/webm');
   // headers.append('Content-Type', 'image/png'); 
-  
+
   headers.append('Authorization',  authToken ? `Bearer ${authToken}` : undefined);
   return fetch(url, {
     method,
@@ -76,8 +76,8 @@ export const forceReload = () => {
 
 export function routeUrl(){
   return{
-    DeleteFile: 'http://localhost:9005/api/v1/delete',
-    Uploads: 'http://localhost:9005/api/v1/uploads'
+    DeleteFile: 'http://localhost:9001/api/v1/delete',
+    Uploads: 'http://localhost:9001/api/v1/uploads'
   }; 
 }
 

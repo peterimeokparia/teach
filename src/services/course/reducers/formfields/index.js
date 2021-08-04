@@ -77,6 +77,7 @@ const reducer = produce((draft, action) => {
         return; 
        default:
     return;
+    
     }
 }, initialState);
 

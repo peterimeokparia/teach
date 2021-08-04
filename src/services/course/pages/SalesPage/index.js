@@ -29,7 +29,6 @@ const SalesPage = ({
     currentUser, 
     users,
     children }) => {
-
     let salesConfig =  {
         currentUser, 
         courseId,
@@ -43,7 +42,7 @@ const SalesPage = ({
         addToCartAndReturnToCourses,
         setTotalNumberOfSessions,
         setAutoRenewal
-    } = useSalesHook( salesConfig )
+    } = useSalesHook( salesConfig );
 
 
 return (

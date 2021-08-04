@@ -16,9 +16,7 @@ import {
 useDispatch } from 'react-redux';
 
 function useSessionHook( sessionProps ){
-    
     const dispatch = useDispatch();
-    
     let { session, onSubmit, user, users } = sessionProps;
 
     let numberOfSessionsInitialValue = session ? session?.numberOfSessions : '';
@@ -26,16 +24,14 @@ function useSessionHook( sessionProps ){
     const [ editing, setEditing ] = useState(false);
     const [ numberOfSessions, setNumberOfSessions ] = useState(numberOfSessionsInitialValue);
     const [ totalNumberOfSessions, setTotalNumberOfSessions ] = useState(totalNumberOfSessionsInitialValue);
-    const [ password, setPassword ] = useState('')  
+    const [ password, setPassword ] = useState('');  
     const inputRef = useRef();
 
     useEffect (() => {
         if ( editing ) {
             inputRef.current.focus();
         }
-
         dispatch(loadUsers()); 
-
     }, [ editing, loadUsers ]); 
     
 const reset = () => {
@@ -75,7 +71,7 @@ const cancelEdit = (e) => {
         
 const handleOnChange = (event) => {
     setPassword(event.target.value);
-}
+};
 
 const handleSubmit = (event) => {
     event.preventDefault();
@@ -84,9 +80,9 @@ const handleSubmit = (event) => {
         navigate('');
     }
     else {
-        return ( <div> Retry. Wrong password entered.</div>)
+        return ( <div> Retry. Wrong password entered.</div>);
     }
-}
+};
 
 return {
     inputRef,

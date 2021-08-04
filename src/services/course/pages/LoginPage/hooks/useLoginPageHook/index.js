@@ -45,8 +45,7 @@ function useLoginPageHook( loginPageProps ){
     useEffect(() => {
         if ( operator ) {
           setOperator( operator );
-        }
-       
+        } 
     }, [ loadUsers, loadSessions, loadMeetings, loadSubscribedPushNotificationUsers ]);
 
     if ( operatorBusinessName ) {
@@ -83,6 +82,6 @@ function setSignUpOrLoginInPreferenceValue () {
 return {
     signUpOrLoginPreference, 
     setSignUpOrLoginInPreferenceValue:setSignUpOrLoginInPreferenceValue
-}};
+}; };
 
 export default useLoginPageHook;

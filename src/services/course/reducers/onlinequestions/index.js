@@ -81,7 +81,8 @@ const reducer = produce((draft, action) => {
        return; 
        case ONLINE_QUESTION_COURSEID:
             draft.onlineQuestionCourseId = action.payload;
-       default:
+      return;  
+      default:
     return;
     
     }

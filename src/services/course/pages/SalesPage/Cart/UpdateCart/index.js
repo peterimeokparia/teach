@@ -7,7 +7,6 @@ getCoursesByCourseIdSelector  } from 'services/course/selectors';
 import useSalesHook from 'services/course/pages/SalesPage/hooks/useSalesHook';
 
 const UpdateCart = ({ course }) => {  
-
     let {
         removeFromCart,
         returnToCourseListPage,

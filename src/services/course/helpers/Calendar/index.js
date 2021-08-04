@@ -1,6 +1,6 @@
 class Calendar {
-    constructor( calendarConfig ) {
 
+    constructor( calendarConfig ) {
         const {  
             userId, 
             calendarEventType, 
@@ -23,8 +23,9 @@ class Calendar {
             operatorId: this.operatorId,
             firstName: this.users?.find( usr => usr?._id === this.userId )?.firstname,
             color: this.color   
-        }
-    }
+        };
+    };
+    
 };
 
 export default Calendar;

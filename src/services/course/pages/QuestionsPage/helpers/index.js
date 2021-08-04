@@ -9,6 +9,7 @@ export const labelValue = ( labelType, index ) => {
 
   try {      
       switch ( labelType ) {
+
         case "roman":
           selectedValue = roman[ index-1 ];    
         break;
@@ -18,6 +19,7 @@ export const labelValue = ( labelType, index ) => {
         default:
           selectedValue = alphabet[ index-1 ];
         break;
+        
       }
       return selectedValue;    
   } catch (error) {

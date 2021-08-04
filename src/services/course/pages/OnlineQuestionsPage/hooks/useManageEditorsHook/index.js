@@ -25,7 +25,6 @@ import {
 pageNavigationHelper } from 'services/course/pages/OnlineQuestionsPage/components/ManageEditors/helpers';
 
 function useManageEditorsHook( answers, question, currentUser, operatorBusinessName, courseId ){
-
     const dispatch = useDispatch();
 
     const [ contentChanged, setContentChanged ] = useState( undefined );

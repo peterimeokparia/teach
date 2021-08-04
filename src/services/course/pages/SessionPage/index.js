@@ -20,11 +20,10 @@ import {
         courseId, 
         saveSession,
         sessions }) => {
-    
     function onMatchListItem( match, listItem ) {
         if ( match ){
-            console.log(`Selected: ${listItem}`)
-        }
+            console.log(`Selected: ${listItem}`);
+        };
     } 
     return   (    
         <div>    

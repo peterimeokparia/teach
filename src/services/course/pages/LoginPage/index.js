@@ -41,7 +41,7 @@ directUserNavigation,
 validateUseCredentialsOnlogin,
 handleUserMeetingsOnLogin } from 'services/course/pages/LoginPage/helpers';
 
-import useLoginPageHook from 'services/course/pages/LoginPage/hooks/useLoginPageHook'
+import useLoginPageHook from 'services/course/pages/LoginPage/hooks/useLoginPageHook';
 import LoginForm from 'services/course/pages/LoginPage/components/LoginForm';
 import RegistrationForm from 'services/course/pages/SignUp/RegistrationForm';
 import CoursePackageRenewal from 'services/course/pages/Packages/CoursePackageRenewal';
@@ -76,7 +76,6 @@ const LoginPage = ({
   pushNotificationSubscribers,
   subscribePushNotificationUser,
   savePushNotificationUser }) => {
-
   let loginPageProps = {
     operatorBusinessName,
     operator,
@@ -123,7 +122,7 @@ function handleLoginUser( email, password ) {
           });
         }
       }).catch( error => {
-        throw Error(`There was a problem with your sign on attempt. Please contact support. ${ error }`)
+        throw Error(`There was a problem with your sign on attempt. Please contact support. ${ error }`);
   });
 }
 
@@ -156,7 +155,7 @@ return ( <div className="LoginPage">
 {
   ( error ) &&  <div> { error.message } {error} </div>
 }
-</div>)
+</div>);
 };
 
 const mapDispatch = { 

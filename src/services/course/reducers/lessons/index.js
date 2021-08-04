@@ -17,7 +17,6 @@ TOGGLE_BOARD_OR_EDITOR,
 SELECTED_LESSON_URL,
 LESSON_IN_PROGRESS,
 LESSONPLAN_DROPDOWN_LESSON,
-VIDEO_URL,
 SELECTED_LESSONPLAN_LESSON,
 LESSONPLAN_URL,
 LESSONPLAN_COURSE } from 'services/course/actions/lessons';
@@ -88,7 +87,7 @@ const reducer = produce((draft, action) => {
             draft.toggleTeachBoardOrEditor = !draft.toggleTeachBoardOrEditor;
        return;
        case SELECTED_LESSON_URL:
-            draft.currentVideoUrl[ action.payload.lesson?._id ] = action.payload.videoUrl
+            draft.currentVideoUrl[ action.payload.lesson?._id ] = action.payload.videoUrl;
       return;
       case  LESSON_IN_PROGRESS:
             draft.lessonStarted = !draft.lessonStarted;
@@ -101,7 +100,7 @@ const reducer = produce((draft, action) => {
       return;
       case LESSONPLAN_COURSE:
           draft.course = action.payload;
-     return
+     return;
      case LESSONPLAN_DROPDOWN_LESSON:
           draft.selectedLessonFromLessonPlanDropDown = action.payload;   
      return; 

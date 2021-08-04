@@ -40,20 +40,6 @@ const getOtherFormFields = () => {
     } 
 };
 
-const validateRegistrationCredentials = ( credentials ) =>{
-  
-  let { error, loading, email, password, firstName, role } = credentials;
-
-  if (( Validations.checkFormInputString("User Name", email  ) && 
-      Validations.checkFormInputString("Password", password) ) && 
-      Validations.checkFormInputString("Role", role) ) {
-
-      if (!email || !password || !role || !firstName) return;
-  }
-
-  return credentials;
-};
-
 return (    
           <div className="LoginPage"> 
               <form onSubmit={ e => handleSubmit(e)}>

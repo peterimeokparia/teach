@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import { 
+useEffect } from 'react';
 
 import { 
 connect  } from 'react-redux';
@@ -11,15 +12,14 @@ import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import './style.css';
 
 const OnlineQuestionsCourseListPage = ( {
-operatorBusinessName,
-operator,
-courses, 
-loginUser,
-currentUser,
-courseId,
-} ) => {
-useEffect(() => {
-}, []);
+  operatorBusinessName,
+  operator,
+  courses, 
+  loginUser,
+  currentUser,
+  courseId } ) => {
+  useEffect(() => {
+  }, []);
 
 return(
     <div className="OnlineQuestionsCourseListPage"> 

@@ -72,7 +72,6 @@ describe('NewCourse', () =>  {
     expect(mockDispatch.mock.calls[1][0].type).toEqual( SAVE_COURSE_SUCCESS );
     expect(mockDispatch.mock.calls[1][0].payload['testobject'].name).toEqual( updatedCourse?.name );
   });
-
  });
 
 

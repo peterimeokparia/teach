@@ -103,7 +103,7 @@ export const passwordFailedValidationMessages = {
     length: "Must be between 8 to 20 characters in length."
 };
 export function passwordValidator(password){
-    if ( password === "" ) { throw Error('Please enter a valid password.') }
+    if ( password === "" ) { throw Error('Please enter a valid password.'); }
 
     let result = {}, regexRequirement = [
         {regex: "[A-Z]", message: passwordFailedValidationMessages?.upperCase, points: 20}, 
@@ -117,7 +117,7 @@ export function passwordValidator(password){
     try {
         result = getValue( regexRequirement, password );
     } catch (error) {
-        Error(`Password Validation: ${error}`)
+        Error(`Password Validation: ${error}`);
     }
 
     return result;

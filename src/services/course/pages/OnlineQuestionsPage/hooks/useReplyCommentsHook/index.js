@@ -8,8 +8,7 @@ useDispatch } from 'react-redux';
 import {
 loadOnlineComments,
 addNewOnlineComment,
-deleteOnlineComment,
-saveOnlineComment } from 'services/course/actions/onlinecomments'; 
+deleteOnlineComment } from 'services/course/actions/onlinecomments'; 
 
 import {
 manageCommentsFieldCollection } from 'services/course/pages/QuestionsPage/helpers';
@@ -21,7 +20,6 @@ import {
 getCalendarColor } from 'services/course/pages/CalendarPage/helpers';
 
 function useReplyCommentsHook( commentsConfig ){
-
     let {
         question, 
         answer, 
@@ -36,16 +34,14 @@ function useReplyCommentsHook( commentsConfig ){
     let inputFieldOptions; 
 
     const [ contentChanged, setContentChanged ] = useState( false );
-  
-    useEffect(() => {
 
+    useEffect(() => {
       dispatch(loadOnlineComments());
 
       if ( contentChanged  ) {
         dispatch(loadOnlineComments());
         setContentChanged( false );
       }
-      
     }, [ loadOnlineComments, contentChanged ] );      
   
     let onlineComments = getSortedRecordsByDate( comments?.filter( comment => comment?.onlineQuestionAnswerId === answer?._id ), 'commentDateTime');
@@ -80,6 +76,6 @@ return {
     onlineComments,
     addNewComment:(val) => addNewComment( val ),
     onhandleSelected:(val) => onhandleSelected( val )
-}};
+}; };
 
 export default useReplyCommentsHook;

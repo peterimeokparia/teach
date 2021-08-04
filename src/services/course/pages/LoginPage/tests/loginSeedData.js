@@ -12,7 +12,6 @@ let newSiteUser = new SiteUser();
     
 export let userSeedData = [
     {
-        //...newSiteUser,
         firstname:"JabraTutor",
         email:"JabraTutor@gmail.com",
         role: role.Tutor,
@@ -26,7 +25,6 @@ export let userSeedData = [
         _id: "5fab4846c2a96278c56381c9"
     },
     {
-        //...newSiteUser,
         firstname:"UserToDelete",
         email:"UserToDelete@gmail.com",
         role: role.Tutor,

@@ -83,6 +83,7 @@ const reducer = produce((draft, action) => {
         return; 
         case ENABLE_TEACH_PLATFORM:
              draft.meeting = action.payload;
+          return;
         default:
         return;
 

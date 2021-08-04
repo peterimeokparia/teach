@@ -76,8 +76,8 @@ export const forceReload = () => {
 
 export function routeUrl(){
   return{
-    DeleteFile: 'http://localhost:9001/api/v1/delete',
-    Uploads: 'http://localhost:9001/api/v1/uploads'
+    DeleteFile: 'http://localhost:9005/api/v1/delete',
+    Uploads: 'http://localhost:9005/api/v1/uploads'
   }; 
 }
 

@@ -1,7 +1,7 @@
 import {
 elementMeta } from 'services/course/pages/QuestionsPage/helpers';
   
-export const upload_url = "http://localhost:9001/api/v1/fileUploads";
+export const upload_url = "http://localhost:9005/api/v1/fileUploads";
 
 export async function uploadImageUrl( file, imageBlock, question, saveAction ) { // this behavior may have changed in the new Dante editor
 await fetch( imageBlock?.img?.currentSrc )

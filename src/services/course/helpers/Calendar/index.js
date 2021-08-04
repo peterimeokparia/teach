@@ -25,7 +25,7 @@ class Calendar {
             color: this.color   
         };
     };
-    
+    ls
 };
 
 export default Calendar;

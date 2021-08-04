@@ -73,7 +73,7 @@ const sauceTestWorker = async.queue(async ({name, pfx, testSettings}) => {
     };
     while (true) {
       const consoleText = await driver.executeScript(remoteFn, logIndex);
-      (consoleText ? consoleText.split('\n') : []).forEach((line) => log(line, pfx));
+      (consoleText ? consoleText.split('\n') : [])?.forEach((line) => log(line, pfx));
       logIndex += consoleText.length;
       const [finished, nFailedStr] = consoleText.match(finishedRegex) || [];
       if (finished) {

@@ -48,7 +48,7 @@ const reducer = produce((draft, action) => {
         return;
         case LOAD_EXAMS_SUCCESS:
              draft.examsLoading = false;
-             action.payload.forEach( exam => {
+             action.payload?.forEach( exam => {
                 draft.exams[exam._id] = exam;
              });  
         return;

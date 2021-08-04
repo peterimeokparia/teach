@@ -454,7 +454,7 @@ Pad.prototype.removePadIfForceIsTrueAndAlreadyExist = async function (destinatio
 
 Pad.prototype.copyAuthorInfoToDestinationPad = function (destinationID) {
   // add the new sourcePad to all authors who contributed to the old one
-  this.getAllAuthors().forEach((authorID) => {
+  this.getAllAuthors()?.forEach((authorID) => {
     authorManager.addPad(authorID, destinationID);
   });
 };
@@ -554,7 +554,7 @@ Pad.prototype.remove = async function () {
   }));
 
   // remove pad from all authors who contributed
-  this.getAllAuthors().forEach((authorID) => {
+  this.getAllAuthors()?.forEach((authorID) => {
     p.push(authorManager.removePad(authorID, padID));
   });
 

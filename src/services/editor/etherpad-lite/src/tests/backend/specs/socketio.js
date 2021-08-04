@@ -37,10 +37,10 @@ const getSocketEvent = async (socket, event) => {
       if (args.length > 1) return resolve(args);
       resolve(args[0]);
     };
-    Object.entries(handlers).forEach(([event, handler]) => socket.on(event, handler));
+    Object.entries(handlers)?.forEach(([event, handler]) => socket.on(event, handler));
   }).finally(() => {
     clearTimeout(timeoutId);
-    Object.entries(handlers).forEach(([event, handler]) => socket.off(event, handler));
+    Object.entries(handlers)?.forEach(([event, handler]) => socket.off(event, handler));
   });
 };
 

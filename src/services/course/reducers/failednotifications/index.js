@@ -68,13 +68,13 @@ const reducer = produce((draft, action) => {
         return;
         case LOAD_FAILEDPUSHNOTIFICATIONS_SUCCESS: 
              draft.failedNotificationsLoading = false;
-             action.payload.forEach( push => {
+             action.payload?.forEach( push => {
                 draft.failedPushNotifications[ push._id ] = push;
               });  
         return;
         case LOAD_FAILEDEMAILNOTIFICATIONS_SUCCESS:     
              draft.failedNotificationsLoading = false;
-             action.payload.forEach( push => {
+             action.payload?.forEach( push => {
                 draft.failedEmailNotifications[ push._id ] = push;
               });  
         return;

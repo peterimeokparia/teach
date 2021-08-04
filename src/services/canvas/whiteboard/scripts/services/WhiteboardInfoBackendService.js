@@ -143,7 +143,7 @@ class WhiteboardInfoBackendService {
     start(io) {
         // auto clean infoByWhiteboard
         setInterval(() => {
-            this.#infoByWhiteboard.forEach((info, readOnlyWhiteboardId) => {
+            this.#infoByWhiteboard?.forEach((info, readOnlyWhiteboardId) => {
                 if (info.shouldSendInfo()) {
                     // broadcast to editable whiteboard
                     const wid = ReadOnlyBackendService.getIdFromReadOnlyId(readOnlyWhiteboardId);

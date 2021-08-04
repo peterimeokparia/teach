@@ -287,7 +287,7 @@ export const sendEmail = ( fromEmail, toEmail, subject, messageBody, userId ) =>
 export const purchase = ( currentUser ) => {
   try {
     if( approvePayment(currentUser) ) {   
-         currentUser.cart.forEach(course  => {
+         currentUser.cart?.forEach(course  => {
           if ( ! currentUser.courses?.includes( course?.course?._id ) ) {
             currentUser = { ...currentUser, courses: [ ...currentUser.courses, course?.course?._id ] };
           }

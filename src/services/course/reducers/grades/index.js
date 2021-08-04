@@ -41,7 +41,7 @@ const reducer =  produce( (draft, action) => {
         case LOAD_GRADES_SUCCESS:
              draft.isLoading = false;
              draft.onError = null;
-             action.payload.forEach(element => {
+             action.payload?.forEach(element => {
                 draft.grades[element._id] = element;  
              });            
         return;

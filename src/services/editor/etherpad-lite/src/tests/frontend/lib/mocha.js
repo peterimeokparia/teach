@@ -105,7 +105,7 @@ Mocha.Runner.immediately = function(callback) {
  * only receive the 'message' attribute of the Error.
  */
 mocha.throwError = function(err) {
-  uncaughtExceptionHandlers.forEach(function(fn) {
+  uncaughtExceptionHandlers?.forEach(function(fn) {
     fn(err);
   });
   throw err;
@@ -1525,7 +1525,7 @@ function Mocha(options) {
     'growl',
     'inlineDiffs',
     'invert'
-  ].forEach(function(opt) {
+  ]?.forEach(function(opt) {
     if (options[opt]) {
       this[opt]();
     }
@@ -1702,7 +1702,7 @@ Mocha.prototype.ui = function(ui) {
 Mocha.prototype.loadFiles = function(fn) {
   var self = this;
   var suite = this.suite;
-  this.files.forEach(function(file) {
+  this.files?.forEach(function(file) {
     file = path.resolve(file);
     suite.emit(EVENT_FILE_PRE_REQUIRE, global, file, self);
     suite.emit(EVENT_FILE_REQUIRE, require(file), file, self);
@@ -1782,7 +1782,7 @@ Mocha.unloadFile = function(file) {
  * @chainable
  */
 Mocha.prototype.unloadFiles = function() {
-  this.files.forEach(Mocha.unloadFile);
+  this.files?.forEach(Mocha.unloadFile);
   return this;
 };
 
@@ -2573,7 +2573,7 @@ var generateDiff = (exports.generateDiff = function(actual, expected) {
 exports.list = function(failures) {
   var multipleErr, multipleTest;
   Base.consoleLog();
-  failures.forEach(function(test, i) {
+  failures?.forEach(function(test, i) {
     // format
     var fmt =
       color('error title', '  %s) %s:\n') +
@@ -2632,7 +2632,7 @@ exports.list = function(failures) {
 
     // indented test title
     var testTitle = '';
-    test.titlePath().forEach(function(str, index) {
+    test.titlePath()?.forEach(function(str, index) {
       if (index !== 0) {
         testTitle += '\n     ';
       }
@@ -3702,7 +3702,7 @@ function cleanCycles(obj) {
  */
 function errorJSON(err) {
   var res = {};
-  Object.getOwnPropertyNames(err).forEach(function(key) {
+  Object.getOwnPropertyNames(err)?.forEach(function(key) {
     res[key] = err[key];
   }, err);
   return res;
@@ -3960,7 +3960,7 @@ function Markdown(runner, options) {
     var key = SUITE_PREFIX + suite.title;
 
     obj = obj[key] = obj[key] || {suite: suite};
-    suite.suites.forEach(function(suite) {
+    suite.suites?.forEach(function(suite) {
       mapTOC(suite, obj);
     });
 
@@ -4224,7 +4224,7 @@ NyanCat.prototype.appendRainbow = function() {
 NyanCat.prototype.drawRainbow = function() {
   var self = this;
 
-  this.trajectories.forEach(function(line) {
+  this.trajectories?.forEach(function(line) {
     write('\u001b[' + self.scoreboardWidth + 'C');
     write(line.join(''));
     write('\n');
@@ -4970,7 +4970,7 @@ function XUnit(runner, options) {
       )
     );
 
-    tests.forEach(function(t) {
+    tests?.forEach(function(t) {
       self.test(t);
     });
 
@@ -5972,10 +5972,10 @@ Runner.prototype.hook = function(name, fn) {
           hook.pending = false; // activates hook for next test
           return fn(new Error('abort hookDown'));
         } else if (name === HOOK_TYPE_BEFORE_ALL) {
-          suite.tests.forEach(function(test) {
+          suite.tests?.forEach(function(test) {
             test.pending = true;
           });
-          suite.suites.forEach(function(suite) {
+          suite.suites?.forEach(function(suite) {
             suite.pending = true;
           });
         } else {
@@ -7114,8 +7114,8 @@ Suite.prototype.total = function() {
  * @return {Suite}
  */
 Suite.prototype.eachTest = function(fn) {
-  this.tests.forEach(fn);
-  this.suites.forEach(function(suite) {
+  this.tests?.forEach(fn);
+  this.suites?.forEach(function(suite) {
     suite.eachTest(fn);
   });
   return this;
@@ -7161,7 +7161,7 @@ Suite.prototype.filterOnly = function filterOnly() {
   } else {
     // Otherwise, do not run any of the tests in this suite.
     this.tests = [];
-    this._onlySuites.forEach(function(onlySuite) {
+    this._onlySuites?.forEach(function(onlySuite) {
       // If there are other `only` tests/suites nested in the current `only` suite, then filter that `only` suite.
       // Otherwise, all of the tests on this `only` suite should be run, so don't filter it.
       if (onlySuite.hasOnly()) {
@@ -7830,7 +7830,7 @@ exports.canonicalize = function canonicalize(value, stack, typeHint) {
       withStack(value, function() {
         Object.keys(value)
           .sort()
-          .forEach(function(key) {
+          ?.forEach(function(key) {
             canonicalizedObj[key] = exports.canonicalize(value[key], stack);
           });
       });
@@ -7943,7 +7943,7 @@ exports.lookupFiles = function lookupFiles(filepath, extensions, recursive) {
   }
 
   // Handle directory
-  fs.readdirSync(filepath).forEach(function(dirent) {
+  fs.readdirSync(filepath)?.forEach(function(dirent) {
     var pathname = path.join(filepath, dirent);
     var stat;
 
@@ -10506,7 +10506,7 @@ function setup(env) {
   createDebug.enable = enable;
   createDebug.enabled = enabled;
   createDebug.humanize = require('ms');
-  Object.keys(env).forEach(function (key) {
+  Object.keys(env)?.forEach(function (key) {
     createDebug[key] = env[key];
   });
   /**
@@ -12349,7 +12349,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var oldLines = 0;
 	  var newLines = 0;
 
-	  lines.forEach(function (line) {
+	  lines?.forEach(function (line) {
 	    if (typeof line !== 'string') {
 	      var myCount = calcOldNewLineCount(line.mine);
 	      var theirCount = calcOldNewLineCount(line.theirs);
@@ -17719,7 +17719,7 @@ function stylizeNoColor(str, styleType) {
 function arrayToHash(array) {
   var hash = {};
 
-  array.forEach(function(val, idx) {
+  array?.forEach(function(val, idx) {
     hash[val] = true;
   });
 
@@ -17874,7 +17874,7 @@ function formatArray(ctx, value, recurseTimes, visibleKeys, keys) {
       output.push('');
     }
   }
-  keys.forEach(function(key) {
+  keys?.forEach(function(key) {
     if (!key.match(/^\d+$/)) {
       output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
           key, true));

@@ -450,7 +450,7 @@ describe(__filename, function () {
     const handlers = {};
 
     beforeEach(async function () {
-      failHookNames.forEach((hookName) => {
+      failHookNames?.forEach((hookName) => {
         const handler = new Handler(hookName);
         handlers[hookName] = handler;
         plugins.hooks[hookName] = [makeHook(hookName, handler.handle.bind(handler))];

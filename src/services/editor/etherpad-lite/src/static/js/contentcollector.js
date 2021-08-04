@@ -86,7 +86,7 @@ const makeContentCollector = (collectStyles, abrowser, apool, className2Author) 
     li: 1,
   };
 
-  hooks.callAll('ccRegisterBlockElements').forEach((element) => {
+  hooks.callAll('ccRegisterBlockElements')?.forEach((element) => {
     _blockElems[element] = 1;
     supportedElems.add(element);
   });

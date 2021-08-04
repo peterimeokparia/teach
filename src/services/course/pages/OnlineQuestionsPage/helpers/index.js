@@ -11,7 +11,7 @@ await fetch( imageBlock?.img?.currentSrc )
         .catch( error => { throw Error(`  ${error}`); });
         let inputFieldObject = JSON.parse( question )[ elementMeta.markDownContent ];
 
-        Object.values(inputFieldObject).forEach( block => {
+        Object.values(inputFieldObject)?.forEach( block => {
         if ( Object.keys( block ).length > 0 ) {
             block.find( obj => obj?.type === "image" && obj?.data?.url === imageBlock?.img?.currentSrc ).data.url = `http://localhost:3000/files/${ file?.name }`;
         } });

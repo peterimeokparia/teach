@@ -91,7 +91,7 @@ notificationRoute.put('/sendPushNotifications/user/:Id', ( request, response ) =
       try {
         sendSubscriptions( user, request, payload, response )
          .then( promiseResponse => {
-             promiseResponse.forEach( responseAsPromise => {
+             promiseResponse?.forEach( responseAsPromise => {
                 responseAsPromise
                  .then( notificationResponse => {
                      result.push( notificationResponse )
@@ -123,7 +123,7 @@ notificationRoute.put('/retryPushNotifications/user/:Id', ( request, response ) 
       try {
         sendSubscriptions( user, request, payload, response )
          .then( promiseResponse => {
-             promiseResponse.forEach( responseAsPromise => {
+             promiseResponse?.forEach( responseAsPromise => {
                 responseAsPromise
                  .then( notificationResponse => {
                      result.push(  notificationResponse  )

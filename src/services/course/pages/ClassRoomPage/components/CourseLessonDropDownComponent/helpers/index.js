@@ -8,7 +8,7 @@ import {
 toast } from 'react-toastify';
 
 export const sendEmailMessage = ( listOfStudents, url, sendEmailAction ) => {
-    listOfStudents.forEach( student => {
+    listOfStudents?.forEach( student => {
         let messageOptions = emailMessageOptions( student, url );
 
         sendEmailAction(

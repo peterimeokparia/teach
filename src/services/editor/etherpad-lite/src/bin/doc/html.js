@@ -69,7 +69,7 @@ const parseLists = (input) => {
   let depth = 0;
   const output = [];
   output.links = input.links;
-  input.forEach((tok) => {
+  input?.forEach((tok) => {
     if (state == null) {
       if (tok.type === 'heading') {
         state = 'AFTERHEADING';
@@ -143,7 +143,7 @@ const buildToc = (lexed, filename, cb) => {
     headerPrefix: `${filename}_`,
   });
 
-  lexed.forEach((tok) => {
+  lexed?.forEach((tok) => {
     if (tok.type !== 'heading') return;
     if (tok.depth - depth > 1) {
       return cb(new Error(`Inappropriate heading level\n${JSON.stringify(tok)}`));

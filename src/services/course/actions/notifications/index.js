@@ -86,7 +86,7 @@ export const deletePushNotificationUser = pushNotificationUser => {
 export const sendPushNotificationMessage = ( users, message ) => {
     return dispatch => {
         dispatch({ type: SEND_PUSH_NOTIFICATION_MESSAGE_BEGIN });
-        return users.forEach(user => {
+        return users?.forEach(user => {
             return update( { _id: user?._id,  user: user, message: message,  messages: user?.messages }, `/notifications/sendPushNotifications/user/` )
              .then( status => {
                 dispatch({ type: SEND_PUSH_NOTIFICATION_MESSAGE_SUCCESS, payload: status });
@@ -99,7 +99,7 @@ export const sendPushNotificationMessage = ( users, message ) => {
 export const retryPushNotificationMessage = ( users, message, failedNotification ) => {
     return dispatch => {
         dispatch({ type: RETRY_PUSH_NOTIFICATION_MESSAGE_BEGIN });
-        return users.forEach(user => {
+        return users?.forEach(user => {
             return update( { _id: user?._id,  user: user, message: message,  messages: user?.messages, failedNotification }, `/notifications/retryPushNotifications/user/` )
              .then( status => {
                 dispatch({ type: RETRY_PUSH_NOTIFICATION_MESSAGE_SUCCESS, payload: status });

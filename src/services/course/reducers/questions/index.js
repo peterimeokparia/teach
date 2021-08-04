@@ -54,7 +54,7 @@ const reducer = produce((draft, action) => {
         return;
         case LOAD_QUESTIONS_SUCCESS:
              draft.questionsLoading = false;
-             action.payload.forEach( question => {
+             action.payload?.forEach( question => {
                 draft.questions[ question._id ] = question;
               });  
         return;

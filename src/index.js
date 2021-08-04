@@ -28,8 +28,8 @@ loadOperators } from 'services/course/actions/operator';
 import {
 loadCourses } from 'services/course/actions/courses';
 
-import {
-loadLessons } from 'services/course/actions/lessons';
+// import {
+// loadLessons } from 'services/course/actions/lessons';
 
 import {
 loadSessions } from 'services/course/actions/sessions';
@@ -147,7 +147,7 @@ store.dispatch(loadGrades());
 store.dispatch(loadOperators());
 store.dispatch(loadUsers());
 store.dispatch(lastLoggedInUser());
-store.dispatch( loadLessons());
+//store.dispatch( loadLessons());
 store.dispatch(loadSessions());
 store.dispatch(loadClassRooms());
 store.dispatch(loadAllCalendars());

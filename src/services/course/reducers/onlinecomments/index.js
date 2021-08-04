@@ -52,7 +52,7 @@ const reducer = produce((draft, action) => {
         return;
         case LOAD_ONLINECOMMENTS_SUCCESS:
              draft.onlineCommentsLoading = false;
-             action.payload.forEach( comment => {
+             action.payload?.forEach( comment => {
                 draft.onlineComments[ comment._id ] = comment;
               }); 
         return;

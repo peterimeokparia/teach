@@ -34,7 +34,7 @@ let format = 'json';
 let template = null;
 let inputFile = null;
 
-args.forEach((arg) => {
+args?.forEach((arg) => {
   if (!arg.match(/^--/)) {
     inputFile = arg;
   } else if (arg.match(/^--format=/)) {
@@ -68,7 +68,7 @@ const processIncludes = (inputFile, input, cb) => {
   let incCount = includes.length;
   if (incCount === 0) cb(null, input);
 
-  includes.forEach((include) => {
+  includes?.forEach((include) => {
     let fname = include.replace(/^@include\s+/, '');
     if (!fname.match(/\.md$/)) fname += '.md';
 

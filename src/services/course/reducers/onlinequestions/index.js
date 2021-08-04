@@ -53,7 +53,7 @@ const reducer = produce((draft, action) => {
         return;
         case LOAD_ONLINEQUESTIONS_SUCCESS:
              draft.onlineQuestionsLoading = false;
-             action.payload.forEach( question => {
+             action.payload?.forEach( question => {
                 draft.onlineQuestions[ question._id ] = question;
               });  
         return;

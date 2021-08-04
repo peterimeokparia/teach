@@ -40,7 +40,7 @@ function useClassRoomComponentHook( operatorBusinessName, selectedUser ) {
         }
 
         if ( listOfStudents?.length > 0 ){
-            listOfStudents.forEach( student => { 
+            listOfStudents?.forEach( student => { 
                 dispatch( loadGrades( student ) ); 
             }); 
         } 

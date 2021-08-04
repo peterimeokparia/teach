@@ -47,7 +47,7 @@ const reducer = produce((draft, action) => {
         case LOAD_ONLINE_QUESTION_PUSH_SUBSCRIPTIONS_SUCCESS:
              draft.onlineQuestionsPushSubscriptionsLoading = false;
              draft.onOnlineQuestionsPushSubscriptionLoadingError = null;
-             action.payload.forEach( subscription => {
+             action.payload?.forEach( subscription => {
                 draft.onlineQuestionsPushSubscriptions[subscription._id] = subscription;
              });  
         return;

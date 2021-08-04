@@ -46,7 +46,7 @@ const reducer = produce((draft, action) => {
         case LOAD_LOGS_SUCCESS:
              draft.logsLoading = false;
              draft.onLogsLoadingError = null;
-             action.payload.forEach( log => {
+             action.payload?.forEach( log => {
                 draft.logs[log._id] = log;
              });  
         return;

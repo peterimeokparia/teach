@@ -36,7 +36,7 @@ process.on('unhandledRejection', (err) => { throw err; });
   console.log(`Found ${length} records, processing now.`);
   const p = [];
   let numWritten = 0;
-  dirty.forEach((key, value) => {
+  dirty?.forEach((key, value) => {
     let bcb, wcb;
     p.push(new Promise((resolve, reject) => {
       bcb = (err) => { if (err != null) return reject(err); };

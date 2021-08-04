@@ -64,7 +64,7 @@ const reducer = produce((draft, action) => {
         case LOAD_LESSONS_SUCCESS:
              draft.lessonsLoading = false;
              draft.onLessonsLoadingError = null;
-             action.payload.forEach( lesson => {
+             action.payload?.forEach( lesson => {
                 draft.lessons[lesson._id] = lesson;
              });  
         return;

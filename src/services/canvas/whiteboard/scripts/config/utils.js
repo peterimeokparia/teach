@@ -71,7 +71,7 @@ function getDefaultConfig() {
 function deepMergeConfigs(baseConfig, overrideConfig) {
     const out = {};
 
-    Object.entries(baseConfig).forEach(([key, val]) => {
+    Object.entries(baseConfig)?.forEach(([key, val]) => {
         out[key] = val;
         if (overrideConfig.hasOwnProperty(key)) {
             const overrideVal = overrideConfig[key];

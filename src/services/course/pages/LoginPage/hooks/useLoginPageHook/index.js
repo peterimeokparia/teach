@@ -45,8 +45,9 @@ function useLoginPageHook( loginPageProps ){
     useEffect(() => {
         if ( operator ) {
           setOperator( operator );
-        } 
-    }, [ loadUsers, loadSessions, loadMeetings, loadSubscribedPushNotificationUsers ]);
+        }
+    }, [ signUpOrLoginPreference, operator, setOperator  ]);     
+    // }, [ loadUsers, loadSessions, loadMeetings, loadSubscribedPushNotificationUsers, signUpOrLoginPreference, setSignUpOrLoginInPreference ]);
 
     if ( operatorBusinessName ) {
         dispatch(setOperatorBusinessName( operatorBusinessName ));
@@ -75,13 +76,9 @@ function useLoginPageHook( loginPageProps ){
         return <Redirect to={`/${operatorBusinessName}/login`} noThrow />;
     } 
 
-function setSignUpOrLoginInPreferenceValue () {  
-  setSignUpOrLoginInPreference( !signUpOrLoginPreference );
-}
-
 return {
     signUpOrLoginPreference, 
-    setSignUpOrLoginInPreferenceValue:setSignUpOrLoginInPreferenceValue
+    setSignUpOrLoginInPreference,
 }; };
 
 export default useLoginPageHook;

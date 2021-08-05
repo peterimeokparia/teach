@@ -47,7 +47,7 @@ const getTXTFromAtext = (pad, atext, authorColors) => {
   const anumMap = {};
   const css = '';
 
-  props?.forEach((propName, i) => {
+  props.forEach((propName, i) => {
     const propTrueNum = apool.putAttrib([propName, true], true);
     if (propTrueNum >= 0) {
       anumMap[propTrueNum] = i;

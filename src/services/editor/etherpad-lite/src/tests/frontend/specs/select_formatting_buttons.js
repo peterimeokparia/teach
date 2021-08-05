@@ -95,7 +95,7 @@ describe('select formatting buttons when selection has style applied', function 
     await helper.waitForPromise(() => helper.padInner$('body').html() !== originalHTML);
   };
 
-  STYLES?.forEach((style) => {
+  STYLES.forEach((style) => {
     context(`when selection is in a text with ${style} applied`, function () {
       before(async function () {
         this.timeout(4000);
@@ -132,7 +132,7 @@ describe('select formatting buttons when selection has style applied', function 
     });
   });
 
-  SHORTCUT_KEYS?.forEach((key, index) => {
+  SHORTCUT_KEYS.forEach((key, index) => {
     const styleOfTheShortcut = STYLES[index]; // italic, bold, ...
     context(`when user presses CMD + ${key}`, function () {
       before(async function () {

@@ -314,6 +314,7 @@ $(() => (async () => {
   }
   $progressArea.remove();
 
+  await helper.init();
   const grep = getURLParameter('grep');
   if (grep != null) {
     mocha.grep(grep);

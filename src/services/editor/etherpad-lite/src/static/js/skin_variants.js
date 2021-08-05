@@ -14,13 +14,13 @@ if (window.location.hash.toLowerCase() === '#skinvariantsbuilder') {
       $('iframe[name=ace_outer]').contents().find('html'),
       $('iframe[name=ace_outer]').contents().find('iframe[name=ace_inner]').contents().find('html'),
     ];
-    colors?.forEach((color) => {
-      containers?.forEach((container) => {
-        domsToUpdate?.forEach((el) => { el.removeClass(`${color}-${container}`); });
+    colors.forEach((color) => {
+      containers.forEach((container) => {
+        domsToUpdate.forEach((el) => { el.removeClass(`${color}-${container}`); });
       });
     });
 
-    domsToUpdate?.forEach((el) => { el.removeClass('full-width-editor'); });
+    domsToUpdate.forEach((el) => { el.removeClass('full-width-editor'); });
 
     const newClasses = [];
     $('select.skin-variant-color').each(function () {
@@ -28,14 +28,14 @@ if (window.location.hash.toLowerCase() === '#skinvariantsbuilder') {
     });
     if ($('#skin-variant-full-width').is(':checked')) newClasses.push('full-width-editor');
 
-    domsToUpdate?.forEach((el) => { el.addClass(newClasses.join(' ')); });
+    domsToUpdate.forEach((el) => { el.addClass(newClasses.join(' ')); });
 
     $('#skin-variants-result').val(`"skinVariants": "${newClasses.join(' ')}",`);
   };
 
   // run on init
   const updateCheckboxFromSkinClasses = () => {
-    $('html').attr('class').split(' ')?.forEach((classItem) => {
+    $('html').attr('class').split(' ').forEach((classItem) => {
       const container = classItem.substring(classItem.lastIndexOf('-') + 1, classItem.length);
       if (containers.indexOf(container) > -1) {
         const color = classItem.substring(0, classItem.lastIndexOf('-'));

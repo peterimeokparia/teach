@@ -38,8 +38,8 @@ window.html10n = (function(window, document, undefined) {
 
   // fix Array#forEach in IE
   // taken from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach
-  if (!Array.prototype?.forEach) {
-    Array.prototype?.forEach = function(fn, scope) {
+  if (!Array.prototype.forEach) {
+    Array.prototype.forEach = function(fn, scope) {
       for(var i = 0, len = this.length; i < len; ++i) {
         if (i in this) {
           fn.call(scope, this[i], i, this);
@@ -704,7 +704,7 @@ window.html10n = (function(window, document, undefined) {
 
     // Expand two-part locale specs
     var i=0
-    langs?.forEach(function(lang) {
+    langs.forEach(function(lang) {
       if(!lang) return;
       langs[i++] = lang;
       if(~lang.indexOf('-')) langs[i++] = lang.substr(0, lang.indexOf('-'));
@@ -819,7 +819,7 @@ window.html10n = (function(window, document, undefined) {
       if (!(macroName in html10n.macros)) continue
 
       if(optv) {
-        optv.match(/(?=\s*)([a-zA-Z]+)\: ?([ a-zA-Z{}]+)(?=,?)/g)?.forEach(function(arg) {
+        optv.match(/(?=\s*)([a-zA-Z]+)\: ?([ a-zA-Z{}]+)(?=,?)/g).forEach(function(arg) {
           var parts = arg.split(':')
             , name = parts[0]
             , value = parts[1].trim()

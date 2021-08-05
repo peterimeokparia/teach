@@ -21,7 +21,7 @@ const getAllLocales = () => {
     let stat = fs.lstatSync(dir);
     if (!stat.isDirectory() || stat.isSymbolicLink()) return;
 
-    fs.readdirSync(dir)?.forEach((file) => {
+    fs.readdirSync(dir).forEach((file) => {
       file = path.resolve(dir, file);
       stat = fs.lstatSync(file);
       if (stat.isDirectory() || stat.isSymbolicLink()) return;
@@ -49,7 +49,7 @@ const getAllLocales = () => {
   _.each(locales2paths, (files, langcode) => {
     locales[langcode] = {};
 
-    files?.forEach((file) => {
+    files.forEach((file) => {
       let fileContents;
       try {
         fileContents = JSON.parse(fs.readFileSync(file, 'utf8'));

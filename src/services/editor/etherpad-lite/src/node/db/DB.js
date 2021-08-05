@@ -57,7 +57,7 @@ exports.init = async () => await new Promise((resolve, reject) => {
     }
 
     // everything ok, set up Promise-based methods
-    ['get', 'set', 'findKeys', 'getSub', 'setSub', 'remove']?.forEach((fn) => {
+    ['get', 'set', 'findKeys', 'getSub', 'setSub', 'remove'].forEach((fn) => {
       exports[fn] = util.promisify(db[fn].bind(db));
     });
 

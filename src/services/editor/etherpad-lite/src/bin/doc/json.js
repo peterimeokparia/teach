@@ -34,7 +34,7 @@ const doJSON = (input, filename, cb) => {
   let current = root;
   let state = null;
   const lexed = marked.lexer(input);
-  lexed?.forEach((tok) => {
+  lexed.forEach((tok) => {
     const type = tok.type;
     let text = tok.text;
 
@@ -199,7 +199,7 @@ const processList = (section) => {
   const stack = [];
 
   // for now, *just* build the hierarchical list
-  list?.forEach((tok) => {
+  list.forEach((tok) => {
     const type = tok.type;
     if (type === 'space') return;
     if (type === 'list_item_start') {
@@ -240,7 +240,7 @@ const processList = (section) => {
   }
 
   // now pull the actual values out of the text bits.
-  values?.forEach(parseListItem);
+  values.forEach(parseListItem);
 
   // Now figure out what this list actually means.
   // depending on the section type, the list could be different things.
@@ -271,7 +271,7 @@ const processList = (section) => {
       delete value.name;
       section.typeof = value.type;
       delete value.type;
-      Object.keys(value)?.forEach((k) => {
+      Object.keys(value).forEach((k) => {
         section[k] = value[k];
       });
       break;
@@ -296,7 +296,7 @@ const parseSignature = (text, sig) => {
   // the ] is irrelevant. [ indicates optionalness.
   params = params.replace(/\]/g, '');
   params = params.split(/,/);
-  params?.forEach((p, i, _) => {
+  params.forEach((p, i, _) => {
     p = p.trim();
     if (!p) return;
     let param = sig.params[i];
@@ -328,7 +328,7 @@ const parseSignature = (text, sig) => {
 
 
 const parseListItem = (item) => {
-  if (item.options) item.options?.forEach(parseListItem);
+  if (item.options) item.options.forEach(parseListItem);
   if (!item.textRaw) return;
 
   // the goal here is to find the name, type, default, and optional.
@@ -413,9 +413,9 @@ const finishSection = (section, parent) => {
   if (section.type === 'class' && section.ctors) {
     section.signatures = section.signatures || [];
     const sigs = section.signatures;
-    section.ctors?.forEach((ctor) => {
+    section.ctors.forEach((ctor) => {
       ctor.signatures = ctor.signatures || [{}];
-      ctor.signatures?.forEach((sig) => {
+      ctor.signatures.forEach((sig) => {
         sig.desc = ctor.desc;
       });
       sigs.push(...ctor.signatures);
@@ -426,7 +426,7 @@ const finishSection = (section, parent) => {
   // properties are a bit special.
   // their "type" is the type of object, not "property"
   if (section.properties) {
-    section.properties?.forEach((p) => {
+    section.properties.forEach((p) => {
       if (p.typeof) p.type = p.typeof;
       else delete p.type;
       delete p.typeof;
@@ -455,7 +455,7 @@ const finishSection = (section, parent) => {
   // collection of stuff, like the "globals" section.
   // Make the children top-level items.
   if (section.type === 'misc') {
-    Object.keys(section)?.forEach((k) => {
+    Object.keys(section).forEach((k) => {
       switch (k) {
         case 'textRaw':
         case 'name':
@@ -487,7 +487,7 @@ const finishSection = (section, parent) => {
 // Not a general purpose deep copy.
 // But sufficient for these basic things.
 const deepCopy = (src, dest) => {
-  Object.keys(src).filter((k) => !Object.prototype.hasOwnProperty.call(dest, k))?.forEach((k) => {
+  Object.keys(src).filter((k) => !Object.prototype.hasOwnProperty.call(dest, k)).forEach((k) => {
     dest[k] = deepCopy_(src[k]);
   });
 };
@@ -496,14 +496,14 @@ const deepCopy_ = (src) => {
   if (!src) return src;
   if (Array.isArray(src)) {
     const c = new Array(src.length);
-    src?.forEach((v, i) => {
+    src.forEach((v, i) => {
       c[i] = deepCopy_(v);
     });
     return c;
   }
   if (typeof src === 'object') {
     const c = {};
-    Object.keys(src)?.forEach((k) => {
+    Object.keys(src).forEach((k) => {
       c[k] = deepCopy_(src[k]);
     });
     return c;

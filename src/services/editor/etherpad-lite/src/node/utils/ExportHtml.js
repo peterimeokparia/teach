@@ -48,7 +48,7 @@ const getHTMLFromAtext = async (pad, atext, authorColors) => {
   await Promise.all([
     // prepare tags stored as ['tag', true] to be exported
     hooks.aCallAll('exportHtmlAdditionalTags', pad).then((newProps) => {
-      newProps?.forEach((prop) => {
+      newProps.forEach((prop) => {
         tags.push(prop);
         props.push(prop);
       });
@@ -56,7 +56,7 @@ const getHTMLFromAtext = async (pad, atext, authorColors) => {
     // prepare tags stored as ['tag', 'value'] to be exported. This will generate HTML with tags
     // like <span data-tag="value">
     hooks.aCallAll('exportHtmlAdditionalTagsWithData', pad).then((newProps) => {
-      newProps?.forEach((prop) => {
+      newProps.forEach((prop) => {
         tags.push(`span data-${prop[0]}="${prop[1]}"`);
         props.push(prop);
       });
@@ -104,7 +104,7 @@ const getHTMLFromAtext = async (pad, atext, authorColors) => {
 
   // iterates over all props(h1,h2,strong,...), checks if it is used in
   // this pad, and if yes puts its attrib id->props value into anumMap
-  props?.forEach((propName, i) => {
+  props.forEach((propName, i) => {
     let attrib = [propName, true];
     if (Array.isArray(propName)) {
       // propName can be in the form of ['color', 'red'],
@@ -256,7 +256,7 @@ const getHTMLFromAtext = async (pad, atext, authorColors) => {
     };
     // end processNextChars
     if (urls) {
-      urls?.forEach((urlData) => {
+      urls.forEach((urlData) => {
         const startIndex = urlData[0];
         const url = urlData[1];
         const urlLength = url.length;
@@ -463,7 +463,7 @@ exports.getPadHTMLDocument = async (padId, revNum) => {
   // Include some Styles into the Head for Export
   let stylesForExportCSS = '';
   const stylesForExport = await hooks.aCallAll('stylesForExport', padId);
-  stylesForExport?.forEach((css) => {
+  stylesForExport.forEach((css) => {
     stylesForExportCSS += css;
   });
 

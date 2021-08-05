@@ -231,7 +231,7 @@ describe(__filename, function () {
 
   before(async function () { agent = await common.init(); });
 
-  Object.keys(testImports)?.forEach((testName) => {
+  Object.keys(testImports).forEach((testName) => {
     describe(testName, function () {
       const testPadId = makeid();
       const test = testImports[testName];

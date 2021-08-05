@@ -1,21 +1,5 @@
 'use strict';
 
-const getCookies =
-    () => helper.padChrome$.window.require('ep_etherpad-lite/static/js/pad_utils').Cookies;
-
-const setToken = (token) => getCookies().set('token', token);
-
-const getToken = () => getCookies().get('token');
-
-const startActingLike = (user) => {
-  helper.padChrome$ = user.padChrome$;
-  helper.padOuter$ = user.padOuter$;
-  helper.padInner$ = user.padInner$;
-  if (helper.padChrome$) setToken(user.token);
-};
-
-const clearToken = () => getCookies().remove('token');
-
 helper.multipleUsers = {
   _user0: null,
   _user1: null,
@@ -50,11 +34,18 @@ helper.multipleUsers = {
   },
 
   async _loadJQueryForUser1Frame() {
-    this._user1.padChrome$ = await helper.getFrameJQuery(this._user1.$frame, true);
+    const code = await $.get('/static/js/jquery.js');
+
+    // make sure we don't override existing jquery
+    const jQueryCode = `if(typeof $ === "undefined") {\n${code}\n}`;
+    const sendkeysCode = await $.get('/tests/frontend/lib/sendkeys.js');
+    const codesToLoad = [jQueryCode, sendkeysCode];
+
+    this._user1.padChrome$ = getFrameJQuery(codesToLoad, this._user1.$frame);
     this._user1.padOuter$ =
-        await helper.getFrameJQuery(this._user1.padChrome$('iframe[name="ace_outer"]'), false);
+        getFrameJQuery(codesToLoad, this._user1.padChrome$('iframe[name="ace_outer"]'));
     this._user1.padInner$ =
-        await helper.getFrameJQuery(this._user1.padOuter$('iframe[name="ace_inner"]'), true);
+        getFrameJQuery(codesToLoad, this._user1.padOuter$('iframe[name="ace_inner"]'));
 
     // update helper vars now that they are available
     helper.padChrome$ = this._user1.padChrome$;
@@ -63,11 +54,14 @@ helper.multipleUsers = {
   },
 
   async _createUser1Frame() {
-    this._user0.$frame.css({height: '50%'});
-    this._user1.$frame = $('<iframe>')
-        .attr({id: 'user1_pad', src: this._user0.$frame.attr('src')})
-        .css({height: '50%', top: '50%'})
-        .insertAfter(this._user0.$frame);
+    // create the iframe
+    const padUrl = this._user0.$frame.attr('src');
+    this._user1.$frame = $('<iframe>').attr('id', 'user1_pad').attr('src', padUrl);
+
+    // place one iframe (visually) below the other
+    this._user0.$frame.attr('style', 'height: 50%');
+    this._user1.$frame.attr('style', 'height: 50%; top: 50%');
+    this._user1.$frame.insertAfter(this._user0.$frame);
 
     // wait for user1 pad to load
     await new Promise((resolve) => this._user1.$frame.one('load', resolve));
@@ -91,3 +85,37 @@ helper.multipleUsers = {
     }
   },
 };
+
+// adapted form helper.js on Etherpad code
+const getFrameJQuery = (codesToLoad, $iframe) => {
+  const win = $iframe[0].contentWindow;
+  const doc = win.document;
+
+  for (let i = 0; i < codesToLoad.length; i++) {
+    win.eval(codesToLoad[i]);
+  }
+
+  win.$.window = win;
+  win.$.document = doc;
+
+  return win.$;
+};
+
+const getCookies =
+    () => helper.padChrome$.window.require('ep_etherpad-lite/static/js/pad_utils').Cookies;
+
+const setToken = (token) => getCookies().set('token', token);
+
+const getToken = () => getCookies().get('token');
+
+const startActingLike = (user) => {
+  // update helper references, so other methods will act as if the main frame
+  // was the one we're using from now on
+  helper.padChrome$ = user.padChrome$;
+  helper.padOuter$ = user.padOuter$;
+  helper.padInner$ = user.padInner$;
+
+  if (helper.padChrome$) setToken(user.token);
+};
+
+const clearToken = () => getCookies().remove('token');

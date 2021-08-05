@@ -20,7 +20,7 @@ const tsort = (edges) => {
   };
 
   // 1. build data structures
-  edges?.forEach((v) => {
+  edges.forEach((v) => {
     const from = v[0]; const
       to = v[1];
     if (!nodes[from]) nodes[from] = new Node(from);
@@ -41,7 +41,7 @@ const tsort = (edges) => {
 
     visited[idstr] = true;
 
-    node.afters?.forEach((afterID) => {
+    node.afters.forEach((afterID) => {
       // if already in ancestors, a closed chain exists.
       if (ancestors.indexOf(afterID) >= 0) throw new Error(`closed chain : ${afterID} is in ${id}`);
 
@@ -52,7 +52,7 @@ const tsort = (edges) => {
   };
 
   // 2. topological sort
-  Object.keys(nodes)?.forEach(visit);
+  Object.keys(nodes).forEach(visit);
 
   return sorted;
 };

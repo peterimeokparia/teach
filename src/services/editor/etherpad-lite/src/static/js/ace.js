@@ -110,6 +110,7 @@ const Ace2Editor = function () {
     'importAText',
     'focus',
     'setEditable',
+    'getFormattedCode',
     'setOnKeyPress',
     'setOnKeyDown',
     'setNotifyDirty',
@@ -197,9 +198,7 @@ const Ace2Editor = function () {
     //   - Chrome never fires any events on the frame or document. Eventually the document's
     //     readyState becomes 'complete' even though it never fires a readystatechange event.
     //   - Safari behaves like Chrome.
-    // srcdoc is avoided because Firefox's Content Security Policy engine does not properly handle
-    // 'self' with nested srcdoc iframes: https://bugzilla.mozilla.org/show_bug.cgi?id=1721296
-    outerFrame.src = '../static/empty.html';
+    outerFrame.srcdoc = '<!DOCTYPE html>';
     info.frame = outerFrame;
     document.getElementById(containerId).appendChild(outerFrame);
     const outerWindow = outerFrame.contentWindow;
@@ -242,7 +241,8 @@ const Ace2Editor = function () {
     innerFrame.allowTransparency = true; // for IE
     // The iframe MUST have a src or srcdoc property to avoid browser quirks. See the comment above
     // outerFrame.srcdoc.
-    innerFrame.src = 'empty.html';
+    innerFrame.srcdoc = '<!DOCTYPE html>';
+    innerFrame.ace_outerWin = outerWindow;
     outerDocument.body.insertBefore(innerFrame, outerDocument.body.firstChild);
     const innerWindow = innerFrame.contentWindow;
 

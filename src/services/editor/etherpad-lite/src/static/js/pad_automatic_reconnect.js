@@ -158,12 +158,12 @@ CountDownTimer.prototype.start = function () {
 
 CountDownTimer.prototype.tick = function (diff) {
   const obj = CountDownTimer.parse(diff);
-  this.onTickCallbacks?.forEach(function (callback) {
+  this.onTickCallbacks.forEach(function (callback) {
     callback.call(this, obj.minutes, obj.seconds);
   }, this);
 };
 CountDownTimer.prototype.expire = function () {
-  this.onExpireCallbacks?.forEach(function (callback) {
+  this.onExpireCallbacks.forEach(function (callback) {
     callback.call(this);
   }, this);
 };

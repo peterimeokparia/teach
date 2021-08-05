@@ -277,7 +277,7 @@ describe(__filename, function () {
                 };
                 if (!wantAsyncErr) resolve();
               });
-              events?.forEach((event) => process.on(event, tempListener));
+              events.forEach((event) => process.on(event, tempListener));
               const call = () => callHookFnSync(hook, {ret1: 'val1', ret2: 'val2'});
               if (step2.rejects) {
                 assert.throws(call, {message: 'val2'});

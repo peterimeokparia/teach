@@ -28,14 +28,9 @@
   font-size: 24px;
   text-align: center;
   text-transform: capitalize;
-
-  /* text-transform: uppercase;
-    letter-spacing: 0.5rem;
-    padding: 2rem 0;
-    font-weight: bold; */
 }
 .MyCourses header h2 {
-  background-color: #673ab7;
+  /* background-color: #673ab7; */
   margin: 0;
   font-size: 24px;
   text-align: center; 

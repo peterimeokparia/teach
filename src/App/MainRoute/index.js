@@ -41,11 +41,12 @@ import OnlineQuestionsSavedAnswersPage from 'services/course/pages/OnlineQuestio
 import OnlineQuestionsSavedAnswersDetailPage from 'services/course/pages/OnlineQuestionsPage/components/OnlineQuestionsSavedAnswersDetailPage';
 import OnlineQuestionsCourseListPage from 'services/course/pages/OnlineQuestionsPage/components/OnlineQuestionsCourseListPage';
 import MoreLessonContentPage from 'services/course/pages/Courses/CourseDetailPage/MoreLessonContentPage';
+import SiteEntryComponent from 'services/course/pages/components/SiteEntryComponent';
 
 const MainRoute = () => {
     return (
         <Router>
-             <Redirect noThrow from="/" to="/users" />
+                <Redirect noThrow from="/" to="/main" />
              <ClassRoomPage path="/:operatorBusinessName/classroomgroups/:groupId/:classRoomName"  />
 
              <ClassRoomPage path="/:operatorBusinessName/classroom/:selectedUserId" /> 
@@ -108,6 +109,7 @@ const MainRoute = () => {
              <OnlineQuestionPage path="/:operatorBusinessName/homework/askquestion/course/:courseId/question/:onlineQuestionId" />
              <OnlineQuestionsCourseListPage path="/:operatorBusinessName/homework/askquestion/course"/>
              <MoreLessonContentPage path="/lessons/:lessonId/more" />
+                <SiteEntryComponent path="/main"/>
         </Router>
 
     );

@@ -41,73 +41,75 @@ import OnlineQuestionsSavedAnswersPage from 'services/course/pages/OnlineQuestio
 import OnlineQuestionsSavedAnswersDetailPage from 'services/course/pages/OnlineQuestionsPage/components/OnlineQuestionsSavedAnswersDetailPage';
 import OnlineQuestionsCourseListPage from 'services/course/pages/OnlineQuestionsPage/components/OnlineQuestionsCourseListPage';
 import MoreLessonContentPage from 'services/course/pages/Courses/CourseDetailPage/MoreLessonContentPage';
+import SiteEntryComponent from 'services/course/pages/components/SiteEntryComponent';
 
 const MainRoute = () => {
     return (
         <Router>
-             <Redirect noThrow from="/" to="/users" />
-             <ClassRoomPage path="/:operatorBusinessName/classroomgroups/:groupId/:classRoomName"  />
+                <Redirect noThrow from="/" to="/main" />
+                <ClassRoomPage path="/:operatorBusinessName/classroomgroups/:groupId/:classRoomName"  />
 
-             <ClassRoomPage path="/:operatorBusinessName/classroom/:selectedUserId" /> 
-             <CourseListPage path="/:operatorBusinessName/courses"/>
-             
-             <CourseDetailPage path="/:operatorBusinessName/tutor/:selectedTutorId/courses/:courseId/">   
+                <ClassRoomPage path="/:operatorBusinessName/classroom/:selectedUserId" /> 
+                <CourseListPage path="/:operatorBusinessName/courses"/>
+                
+                <CourseDetailPage path="/:operatorBusinessName/tutor/:selectedTutorId/courses/:courseId/">   
                 <LessonPage path="lessons/:lessonId" /> 
-             </CourseDetailPage>
-             
-             <SalesPage  path="/:operatorBusinessName/courses/:courseId/buy">
+                </CourseDetailPage>
+                
+                <SalesPage  path="/:operatorBusinessName/courses/:courseId/buy">
                 <Cart path="/:operatorBusinessName/cart" />
                 <CourseRatingsPage path="course/:courseId/user/:userId/review" />
-              </SalesPage>
+                </SalesPage>
 
-              <StudentDetailPage path="/:operatorBusinessName/student/:studentId/course/:courseId/lessons/:lessonId" >
-                  <OnlineQuestionsSavedAnswersPage path="student/:studentId/savedanswers">
+                <StudentDetailPage path="/:operatorBusinessName/student/:studentId/course/:courseId/lessons/:lessonId" >
+                    <OnlineQuestionsSavedAnswersPage path="student/:studentId/savedanswers">
                     < OnlineQuestionsSavedAnswersDetailPage path="student/:studentId/course/:courseId"/> 
-                   </ OnlineQuestionsSavedAnswersPage>
-                   <SessionPage path="student/:studentId/sessions/courseId/:courseId"/>
-                   <GradesPage path="student/:studentId/grades"/>
-                   <AttendancePage path="student/:studentId/attendance"/>
-              </StudentDetailPage>
+                    </ OnlineQuestionsSavedAnswersPage>
+                    <SessionPage path="student/:studentId/sessions/courseId/:courseId"/>
+                    <GradesPage path="student/:studentId/grades"/>
+                    <AttendancePage path="student/:studentId/attendance"/>
+                </StudentDetailPage>
 
-              <StudentDetailPage path="/:operatorBusinessName/student/:studentId" >
-                   <OnlineQuestionsSavedAnswersPage path="student/:studentId/savedanswers">
+                <StudentDetailPage path="/:operatorBusinessName/student/:studentId" >
+                    <OnlineQuestionsSavedAnswersPage path="student/:studentId/savedanswers">
                     < OnlineQuestionsSavedAnswersDetailPage path="student/:studentId/course/:courseId"/> 
-                   </ OnlineQuestionsSavedAnswersPage>
-                   <SessionPage path="student/:studentId/sessions/courseId/:courseId"/>
-                   <GradesPage path="student/:studentId/grades"/>
-                   <AttendancePage path="student/:studentId/attendance"/>
-              </StudentDetailPage>
+                    </ OnlineQuestionsSavedAnswersPage>
+                    <SessionPage path="student/:studentId/sessions/courseId/:courseId"/>
+                    <GradesPage path="student/:studentId/grades"/>
+                    <AttendancePage path="student/:studentId/attendance"/>
+                </StudentDetailPage>
 
-             <PasswordReset path="/:operatorBusinessName/passwordreset/:userId"/>
-             <AccountVerificationForm path="/:operatorBusinessName/accountverification/:userId" />
-             <UpdateCart path="/:operatorBusinessName/updatecart/:courseId"/>
-             <LessonPlan path="/:operatorBusinessName/LessonPlan/classRoom/:classRoomId"/> 
-             <LessonPlan path="/:operatorBusinessName/LessonPlan/:classRoomGroupId/:classRoomGroupName/:classRoomId/:classRoomName"/>
-             <LessonPlan path="/LessonPlan/:courseId/:lessonId/:lessonTitle/:userId"/>
-             <LessonPlanInviteUserVerification path="/:operatorBusinessName/LessonPlan/invite/userverification/classRoom/:classRoomId"/> 
-             <LessonPlanInviteUserVerifiedPage path="/:operatorBusinessName/LessonPlan/invite/userverified/classRoom/:classRoomId"/> 
-             <LoginPage path="/:operatorBusinessName/login"/>
-             <OperatorSignUpPage path="/operator/signup" />
-             <ShowMeeting path="/meeting/:teach" /> 
-             <FileUpload path="/files" />
-             <Users path="/:operatorBusinessName/users"/>
-             <MyCoursesPage path="/:operatorBusinessName/mycourses"/>
-             <IndividualUsersCourseList path=":operatorBusinessName/coursestaught/:userId" />
-             <BioPage path=":operatorBusinessName/coursestaught/about/:userId" />
-             <CourseDetailCheckBoxComponent path="/students/:courseId" />
-             <StudyHall path="/:operatorBusinessName/LessonPlan/StudyHall/:userId" />
-             <NotFoundPage default />
-             <SendNotificationsPage path="/:operatorBusinessName/demo/sendnotifications" />
-             <CalendarPage path="/:operatorBusinessName/schedule/:calendarEventType/calendar/:calendarId/user/:userId"/>
-             <CalendarEventsDetailPage path="/:operatorBusinessName/:calendarEventType/calendar/:calendarId/:userId/:selectedCalendarEventId"/>
-             <CalendarEventsDetailPage path="/:operatorBusinessName/:calendarEventType/calendar/:calendarId/:userId"/>
-             <EventDetailPage path="/:operatorBusinessName/:calendarEventType/calendar/:calendarId/user/:userId/event/:eventId" />
-             <TimeLines path="/:operatorBusinessName/schedule/:calendarEventType/timeline/:userId"/>
-             <AddNewCalendar path="/:operatorBusinessName/add/calendar" />
-             <OnlineQuestionPage path="/:operatorBusinessName/homework/askquestion/course/:courseId" />
-             <OnlineQuestionPage path="/:operatorBusinessName/homework/askquestion/course/:courseId/question/:onlineQuestionId" />
-             <OnlineQuestionsCourseListPage path="/:operatorBusinessName/homework/askquestion/course"/>
-             <MoreLessonContentPage path="/lessons/:lessonId/more" />
+                <PasswordReset path="/:operatorBusinessName/passwordreset/:userId"/>
+                <AccountVerificationForm path="/:operatorBusinessName/accountverification/:userId" />
+                <UpdateCart path="/:operatorBusinessName/updatecart/:courseId"/>
+                <LessonPlan path="/:operatorBusinessName/LessonPlan/classRoom/:classRoomId"/> 
+                <LessonPlan path="/:operatorBusinessName/LessonPlan/:classRoomGroupId/:classRoomGroupName/:classRoomId/:classRoomName"/>
+                <LessonPlan path="/LessonPlan/:courseId/:lessonId/:lessonTitle/:userId"/>
+                <LessonPlanInviteUserVerification path="/:operatorBusinessName/LessonPlan/invite/userverification/classRoom/:classRoomId"/> 
+                <LessonPlanInviteUserVerifiedPage path="/:operatorBusinessName/LessonPlan/invite/userverified/classRoom/:classRoomId"/> 
+                <LoginPage path="/:operatorBusinessName/login"/>
+                <OperatorSignUpPage path="/operator/signup" />
+                <ShowMeeting path="/meeting/:teach" /> 
+                <FileUpload path="/files" />
+                <Users path="/:operatorBusinessName/users"/>
+                <MyCoursesPage path="/:operatorBusinessName/mycourses"/>
+                <IndividualUsersCourseList path=":operatorBusinessName/coursestaught/:userId" />
+                <BioPage path=":operatorBusinessName/coursestaught/about/:userId" />
+                <CourseDetailCheckBoxComponent path="/students/:courseId" />
+                <StudyHall path="/:operatorBusinessName/LessonPlan/StudyHall/:userId" />
+                <NotFoundPage default />
+                <SendNotificationsPage path="/:operatorBusinessName/demo/sendnotifications" />
+                <CalendarPage path="/:operatorBusinessName/schedule/:calendarEventType/calendar/:calendarId/user/:userId"/>
+                <CalendarEventsDetailPage path="/:operatorBusinessName/:calendarEventType/calendar/:calendarId/:userId/:selectedCalendarEventId"/>
+                <CalendarEventsDetailPage path="/:operatorBusinessName/:calendarEventType/calendar/:calendarId/:userId"/>
+                <EventDetailPage path="/:operatorBusinessName/:calendarEventType/calendar/:calendarId/user/:userId/event/:eventId" />
+                <TimeLines path="/:operatorBusinessName/schedule/:calendarEventType/timeline/:userId"/>
+                <AddNewCalendar path="/:operatorBusinessName/add/calendar" />
+                <OnlineQuestionPage path="/:operatorBusinessName/homework/askquestion/course/:courseId" />
+                <OnlineQuestionPage path="/:operatorBusinessName/homework/askquestion/course/:courseId/question/:onlineQuestionId" />
+                <OnlineQuestionsCourseListPage path="/:operatorBusinessName/homework/askquestion/course"/>
+                <MoreLessonContentPage path="/lessons/:lessonId/more" />
+                <SiteEntryComponent path="/main"/>
         </Router>
 
     );

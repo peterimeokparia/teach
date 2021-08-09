@@ -80,7 +80,7 @@
 .LoginPageRadioButton .left {
   padding-right: 10px;
 }
-.buttonTest {
+.signUp {
   background: #5d2faf;
   font-size: 8px;
   color: #fff;
@@ -92,7 +92,7 @@
   outline: none;
   margin-bottom: 10px;
 }
-.buttonTest  {
+.signUp  {
   opacity: 0.8;
   font-size: 14px;
   padding: 10px;

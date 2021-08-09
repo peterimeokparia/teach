@@ -23,6 +23,7 @@
 }
 .Users header h1 {
   background-color: #673ab7;
+  text-decoration: underline burlywood;
   margin: 0;
   font-size: 24px;
   text-align: center;

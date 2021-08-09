@@ -65,7 +65,7 @@ const CoursesComponent = ({
         if ( deleting ) {
             setDelete(false);
         }
-        //[ loadCourses, editing, courses, deleting ]);
+    //  }, [ loadCourses, editing, courses, deleting ]);
     }, [ editing, courses, deleting ]);
 
     if ( coursesLoading ) {

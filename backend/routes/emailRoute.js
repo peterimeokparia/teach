@@ -1,8 +1,5 @@
-import express from 'express';
-
-import emailModel from '../model/emailModel.js';
-
-import emailClient from '../emailclient/emailClient.js';
+import { 
+emailClient } from '../emailclient/emailClient.js';
 
 import {
 getPostData,    
@@ -11,6 +8,12 @@ saveUpdatedData } from '../helpers/storageHelper.js';
 import { 
 EMAILROUTE,
 handleBackEndLogs } from '../helpers/logHelper.js';
+
+import { 
+SENDGRID } from '../emailclient/providers/index.js';
+
+import express from 'express';
+import emailModel from '../model/emailModel.js';
 
 const emailRoute = express.Router();
 
@@ -35,8 +38,8 @@ let emailOptions = {
     text: req.body.messageBody
 };
 
-emailClient( emailOptions );
-
+// inject mail provider dependency
+emailClient( emailOptions, SENDGRID );
 let emailData = getPostData( req );
 
 let email = new emailModel(emailData);  

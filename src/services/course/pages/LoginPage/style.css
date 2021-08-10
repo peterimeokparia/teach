@@ -98,3 +98,15 @@
   padding: 10px;
   margin: initial 10px;
 }
+.signUp:hover {
+  cursor: pointer;
+}
+link:hover{
+  cursor: pointer;
+}
+button:hover{
+  cursor: pointer;
+}
+.MuiSvgIcon:hover{
+  cursor: pointer;
+}

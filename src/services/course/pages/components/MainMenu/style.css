@@ -15,7 +15,6 @@
                 cubic-bezier(0, .52, 0, 1);
     overflow: scroll;
     z-index: 1000;
-
   }
    
   #flyoutMenu.hide {
@@ -35,6 +34,7 @@
    
   #flyoutMenu h2 a:hover {
     text-decoration: underline;
+    cursor: pointer;
   }
   #flyoutMenu h2 a:active {
     text-decoration: line-through;
@@ -43,4 +43,7 @@
     list-style: none;
     padding-top: 10px;
     padding-bottom: 40px;
+  }
+  #flyoutMenu :hover {
+    cursor: pointer;
   }

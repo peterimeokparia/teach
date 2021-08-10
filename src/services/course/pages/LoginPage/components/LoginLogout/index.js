@@ -61,7 +61,7 @@ const userLogOut = ( usr ) => {
 };
 
 return (
-  <span>
+  <span className="lock-icon">
     <LockIcon onClick={e => performLoginLogOut(e)} />
     { Validations.setErrorMessageContainer() }
   </span>  

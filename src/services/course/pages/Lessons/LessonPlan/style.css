@@ -191,21 +191,25 @@
   {
   background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
   background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  cursor: pointer;
   }
   .lesson-plan-round-button-2:hover
   {
   background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
   background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  cursor: pointer;
   }
   .lesson-plan-round-button-3:hover
   {
   background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
   background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  cursor: pointer;
   }
   .lesson-plan-round-button-4:hover
   {
   background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
   background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  cursor: pointer;
   }
   .MeetingPlan .content .meeting-stage-hidden{
     visibility: hidden;
@@ -215,9 +219,7 @@
   }
   .sidebar-meeting{
     flex-basis: 200px;
-      /* background: #fbf9ff; */
       background: yellow;
-      /* border-right: 1px solid #bba0ea; */
   }
   @media only screen and (min-width: 638px) {
     .MeetingPlan .content {

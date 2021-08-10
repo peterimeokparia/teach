@@ -22,11 +22,8 @@
     background-color: #FFF;
   }
 
-
-
   .burgerMenuDiv, .divOne, .divTwo, .divThree,
   .divOneClose, .divTwoClose, .divThreeClose {
-      
     width: 2rem;
     height: 0.29rem;
     padding-bottom: 0.2rem;
@@ -36,6 +33,12 @@
     position: relative;
     transition: all .2s cubic-bezier(0, 1.26, .8, 1.28);
     transform-origin: 1px; 
+    cursor: pointer;
+    
+}
+.burgerMenuDiv, .divOne, .divTwo, .divThree,
+.divOneClose, .divTwoClose, .divThreeClose:hover {
+  cursor: pointer;
 }
 .divOne {
     transform: 'rotate(45deg)';

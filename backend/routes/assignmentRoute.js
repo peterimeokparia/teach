@@ -14,7 +14,7 @@ const assignmentRoute = express.Router();
 assignmentRoute.get('/', (req, res) => {
     assignmentModel.find({ })
         .then(data => {
-            console.log('Assignments Assignments', data)
+            console.log('Assignments', data)
             return  res.status(200).json(data);
         })
         .catch( error => {
@@ -27,7 +27,7 @@ assignmentRoute.get('/', (req, res) => {
 assignmentRoute.get('/', (req, res) => {
     examModel.find( { assignmentId: req.query.assignmentId } )
         .then(data => {
-            console.log('Assignments Assignments', data)
+            console.log('Assignments', data)
             return res.status(200).json(data);
         })
         .catch( error => {

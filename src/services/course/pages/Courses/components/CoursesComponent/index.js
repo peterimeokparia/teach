@@ -28,7 +28,6 @@ import NavLinks from 'services/course/pages/components/NavLinks';
 import Swal from 'sweetalert2';
 import testImage from './images/courses_books.jpeg';
 import MiniSideBarMenu from 'services/course/pages/components/SubscriptionComponent/MiniSideBarMenu';
-import SchoolIcon from '@material-ui/icons/School';
 import UnsubscribeIcon from '@material-ui/icons/Unsubscribe';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';

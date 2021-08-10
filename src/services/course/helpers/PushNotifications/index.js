@@ -1,3 +1,5 @@
+import {
+getHostName } from 'services/course/helpers/PageHelpers';
 
 const vapidKeys = {
     publicVapidKey: process.env.REACT_APP_PUBLIC_VAPID_KEY,
@@ -26,7 +28,7 @@ const register = await navigator.serviceWorker.register('/../../worker.js', { sc
   console.log(`Subscription details: ${ JSON.stringify(subscription) }`);
     // Send Push Notification
    console.log('Sending Push...');
-   await fetch('http://localhost:3000/api/v1/notifications/subscribe', {
+   await fetch(`${getUrl()}/api/v1/notifications/subscribe`, {
        headers: {'content-type' : 'application/json'},
        method: 'POST',
        body: JSON.stringify( subscription )
@@ -49,3 +51,7 @@ function urlBase64ToUint8Array(base64String) {
     }
     return outputArray;
 };
+
+function getUrl(){
+    return getHostName() ? 'http://localhost:3000' : 'https://ravingfanstudents.com/backend';
+}

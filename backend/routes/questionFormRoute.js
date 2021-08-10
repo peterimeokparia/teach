@@ -54,7 +54,7 @@ questionFormRoute.get('/question/user', (req, res) => {
 questionFormRoute.get('/videos', (req, res) => {
     questionFormModel.find({ _id: req.query._id })
         .then(data => {
-            console.log('QuestionForm QuestionForm', data)
+            console.log('QuestionForm', data)
             res.status(200).json(data);
         })
          .catch(error => console.log(error));
@@ -62,12 +62,12 @@ questionFormRoute.get('/videos', (req, res) => {
 
 questionFormRoute.post('/', (req, res) => {
     console.log( req );
-    console.log('in questionForm questionForm saved saved');
+    console.log('in questionForm saved');
     let questionData = getPostData( req );
     let questionForm = new questionFormModel(questionData);
     questionForm.save()
     .then(data => {
-        console.log('questionForm questionForm saved saved', data);
+        console.log('questionForm saved', data);
         return res.status(200).json(data);
     })
     .catch( error => {
@@ -83,7 +83,7 @@ questionFormRoute.put('/:questionId', (req, res) => {
     console.log(req.params.questionId);
     saveUpdatedData(req, questionFormModel, req.params.questionId)
     .then( data => {
-        console.log('questionFormRoute questionFormRoute questionFormRoute put')
+        console.log('questionFormRoute put')
         console.log(data);
         return res.status(200).json(data);
     })

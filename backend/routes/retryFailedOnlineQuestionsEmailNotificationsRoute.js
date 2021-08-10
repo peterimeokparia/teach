@@ -15,7 +15,6 @@ const retryFailedOnlineQuestionsEmailNotificationsRoute = express.Router();
 retryFailedOnlineQuestionsEmailNotificationsRoute.get('/email', (req, res) => {
     retryFailedEmailNotificationsModel.find({})
     .then(data => {
-        console.log('failedNotification failedNotification Debug', data);
         return res.status(200).json(data);
     })
     .catch( error => {
@@ -52,13 +51,10 @@ retryFailedOnlineQuestionsEmailNotificationsRoute.get('/email/user', (req, res) 
 })
 
 retryFailedOnlineQuestionsEmailNotificationsRoute.post('/email', (req, res) => {
-    console.log( req );
-    console.log('in failedNotification failedNotification saved saved');
     let notificationData = getPostData( req );
     let failedNotification = new retryFailedEmailNotificationsModel(notificationData);
     failedNotification.save()
     .then(data => {
-        console.log('failedNotification failedNotification saved saved', data);
         return res.status(200).json(data);
     })
     .catch( error => {
@@ -69,13 +65,8 @@ retryFailedOnlineQuestionsEmailNotificationsRoute.post('/email', (req, res) => {
 });
 
 retryFailedOnlineQuestionsEmailNotificationsRoute.put('/email/:notificationId', (req, res) => {
-    console.log('retryFailedOnlineQuestionsEmailNotificationsRoute.put(/:notificationId');
-    console.log(req.params);
-    console.log(req.params.notificationId);
     saveUpdatedData(req, retryFailedEmailNotificationsModel, req.params.notificationId)
     .then( data => {
-        console.log('retryFailedOnlineQuestionsEmailNotificationsRoute put')
-        console.log(data);
         return res.status(200).json(data);
     })
     .catch( error => {
@@ -86,9 +77,6 @@ retryFailedOnlineQuestionsEmailNotificationsRoute.put('/email/:notificationId', 
 });
 
 retryFailedOnlineQuestionsEmailNotificationsRoute.delete('/email/:notificationId', (req, res) => {
-    console.log('retryFailedOnlineQuestionsEmailNotificationsRoute.delete')
-    console.log(req)
-    console.log(req.params.notificationId)
     retryFailedEmailNotificationsModel.remove({ _id: req.params.notificationId }, ( error, result ) => {
         if ( error ) {
             console.log(error)

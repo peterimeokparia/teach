@@ -9,9 +9,9 @@ euphoricEffect } from 'services/course/pages/components/Euphoric';
 
 import DropDown from '../DropDown';
 
-const SiteEntryComponent = ({}) => {   
+const SiteEntryComponent = () => {   
     useEffect(() => {
-        introStyleEffects()
+        introStyleEffects();
     });
 
     let organizations = [
@@ -24,6 +24,7 @@ const SiteEntryComponent = ({}) => {
 
     function applyEffect( splitCharacterSet ) {
         let collection =[];
+
         splitCharacterSet.map((element, index)  => {
             if ( element ){
                 element = [ ...element, ' '];
@@ -47,7 +48,7 @@ const SiteEntryComponent = ({}) => {
                 }
             </span> 
         );
-    }
+    };
 
     const handleSelected = ( selectedOrganization ) => {
         navigate(`/${selectedOrganization}/login`);
@@ -73,6 +74,6 @@ const SiteEntryComponent = ({}) => {
             </div>
         </div>
         </>
-)}
+); };
     
 export default SiteEntryComponent;

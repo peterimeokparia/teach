@@ -26,7 +26,7 @@ lessonRoute.get('/', (req, res) => {
  });
 
 lessonRoute.get('/videos', (req, res) => {
-    console.log( 'req.query._id req.query._id req.query._id', req.query._id)
+    console.log( 'req.query._id', req.query._id)
     lessonModel.find({ _id: req.query._id })
     .then(data => {
         console.log('Lessons Lessons', data)

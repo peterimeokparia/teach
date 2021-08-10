@@ -171,42 +171,43 @@
  {
   background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
   background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  cursor: pointer;
 }
 .ComponentCourseListItem .user-list-items .round-button-2:hover  
  {
   background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
   background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
-  /* background: #777555; */
+  cursor: pointer;
 }
 .ComponentCourseListItem .user-list-items .round-button-3:hover, .round-button-4:hover
  {
   background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
   background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
-  /* background: #777555; */
+  cursor: pointer;
 }
 .ComponentCourseListItem .user-list-items .round-button-4:hover   
  {
   background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
   background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
-  /* background: #777555; */
+  cursor: pointer;
 }
 .ComponentCourseListItem .user-list-items .round-button-5:hover   
  {
   background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
   background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
-  /* background: #777555; */
+  cursor: pointer;
 }
 .ComponentCourseListItem .user-list-items .round-button-6:hover   
  {
   background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
   background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
-  /* background: #777555; */
+  cursor: pointer;
 }
 .ComponentCourseListItem .user-list-items .round-button-7:hover   
  {
   background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
   background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
-  /* background: #777555; */
+  cursor: pointer;
 }
 .ComponentCourseListItem .user-list-items .round-button-1 { 
     background: orange;

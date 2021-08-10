@@ -75,12 +75,12 @@ formFieldRoute.get('/videos', (req, res) => {
 
 formFieldRoute.post('/', (req, res) => {
     console.log( req );
-    console.log('in formField formField saved saved');
+    console.log('in formField saved');
     let formFieldData = getPostData( req );
     let formField = new formFieldModel(formFieldData);
     formField.save()
     .then(data => {
-        console.log('formField formField saved saved', data);
+        console.log('formField saved', data);
         return res.status(200).json(data);
     })
     .catch( error => {
@@ -95,7 +95,7 @@ formFieldRoute.put('/:formFieldId', (req, res) => {
     console.log(req.params.formFieldId);
     saveUpdatedData(req, formFieldModel, req.params.formFieldId)
     .then( data => {
-        console.log('formFieldRoute formFieldRoute formFieldRoute put')
+        console.log('formFieldRoute put')
         console.log(data);
         return res.status(200).json(data);
     })

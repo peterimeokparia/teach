@@ -84,11 +84,11 @@ sessions } from 'services/course/middleware/sessions';
 import {
 grades } from 'services/course/middleware/grades';
 
-import {
-loadFailedPushNotifications } from 'services/course/actions/failedpushnotifications';
+// import {
+// loadFailedPushNotifications } from 'services/course/actions/failedpushnotifications';
 
-import {
-loadFailedEmailNotifications } from 'services/course/actions/failedemailnotifications';
+// import {
+// loadFailedEmailNotifications } from 'services/course/actions/failedemailnotifications';
 
 import {
 loadLogs } from 'services/course/actions/logforteach';

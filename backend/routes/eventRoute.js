@@ -15,7 +15,7 @@ const eventRoute = express.Router();
 eventRoute.get('/', (req, res) => {
     eventModel.find({})
     .then(data => {
-        console.log('Event Event Debug', data);
+        console.log('Event', data);
         return res.status(200).json(data);
     })
     .catch( error => {
@@ -67,7 +67,7 @@ eventRoute.post('/', (req, res) => {
 });
 
 eventRoute.put('/:eventId', (req, res) => {
-    console.log('eventRoute eventRoute eventRoute put b4')
+    console.log('eventRoute')
     console.log(req?.params)
     saveUpdatedData(req, eventModel, req.params?.eventId)
     .then( data => {
@@ -84,7 +84,6 @@ eventRoute.put('/:eventId', (req, res) => {
 eventRoute.delete('/:eventId', (req, res) => {
     console.log('eventRoute.delete')
     console.log(req)
-    console.log(req.params.eventId)
     eventModel.remove({ _id: req.params.eventId }, ( error, result ) => {
         if ( error ) {
             console.log(error)

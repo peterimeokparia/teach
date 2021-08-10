@@ -59,31 +59,37 @@
  {
   background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
   background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  cursor: pointer;
 }
 .comment-round-button-2:hover
  {
   background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
   background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  cursor: pointer;
 }
 .comment-round-button-3:hover
  {
   background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
   background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  cursor: pointer;
 }
 .comment-round-button-4:hover
  {
   background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
   background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  cursor: pointer;
 }
 .comment-round-button-5:hover
  {
   background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
   background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  cursor: pointer;
 }
 .comment-round-button-6:hover
  {
   background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
   background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  cursor: pointer;
 }
 .hideDiv{
   visibility: hidden;

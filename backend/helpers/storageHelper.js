@@ -117,7 +117,6 @@ export const getVideoFileMeta = ( request ) => {
    let data = JSON.parse( request?.body?.data );
    let id = idData.id;
    let prefix = idData?.videoNamePrefix;
-  //  let externalId = idData?.externalId;
    let videoFileName = data?.videoFileName;
 
      switch (prefix) {
@@ -125,10 +124,8 @@ export const getVideoFileMeta = ( request ) => {
        requestData = { 
          id, 
          prefix, 
-        //  externalId, 
          backendServerRoute: `${url.BackeEndServerLessonPrefix}/lessons`, 
          videoFileName
-        //  videoFileName: `${prefix}_${Date.now()}_${externalId}_${id}_${Math.floor(Math.random() * Math.floor(9000))}.webm` 
        };  
        break;
  
@@ -136,11 +133,9 @@ export const getVideoFileMeta = ( request ) => {
        requestData = { 
          id, 
          prefix, 
-        //  externalId, 
          backendServerRoute: `${url.BackeEndServerLessonPrefix}/questions`, 
          questionInputMeta: data.metaData,
          videoFileName
-        //  videoFileName: `${prefix}_${Date.now()}_${externalId}_${id}_${Math.floor(Math.random() * Math.floor(9000))}.webm`, 
        };    
        break;
 
@@ -148,11 +143,9 @@ export const getVideoFileMeta = ( request ) => {
        requestData = { 
          id, 
          prefix, 
-        //  externalId, 
          backendServerRoute: `${url.BackeEndServerLessonPrefix}/questions`, 
          questionInputMeta: data.metaData,
          videoFileName
-        //  videoFileName: `${prefix}_${Date.now()}_${externalId}_${id}_${Math.floor(Math.random() * Math.floor(9000))}.webm`, 
        };    
        break;
 
@@ -160,11 +153,9 @@ export const getVideoFileMeta = ( request ) => {
         requestData = { 
           id, 
           prefix, 
-          // externalId, 
           backendServerRoute: `${url.BackeEndServerLessonPrefix}/onlinequestions`, 
           questionInputMeta: data.metaData,
-          videoFileName
-          // videoFileName: `${prefix}_${Date.now()}_${externalId}_${id}_${Math.floor(Math.random() * Math.floor(9000))}.webm`, 
+          videoFileName 
         };    
         break;
        
@@ -172,11 +163,9 @@ export const getVideoFileMeta = ( request ) => {
         requestData = { 
           id, 
           prefix, 
-          // externalId, 
           backendServerRoute: `${url.BackeEndServerLessonPrefix}/onlineanswers`, 
           questionInputMeta: data.metaData,
-          videoFileName
-          // videoFileName: `${prefix}_${Date.now()}_${externalId}_${id}_${Math.floor(Math.random() * Math.floor(9000))}.webm`, 
+          videoFileName 
         };    
         break;
 
@@ -184,11 +173,9 @@ export const getVideoFileMeta = ( request ) => {
           requestData = { 
             id: data?.metaData?.current?._id, 
             prefix, 
-            // externalId, 
             backendServerRoute: `${url.BackeEndServerLessonPrefix}/onlineanswers`, 
             questionInputMeta: data.metaData,
             videoFileName,
-            // videoFileName: `${prefix}_${Date.now()}_${externalId}_${id}_${Math.floor(Math.random() * Math.floor(9000))}.webm`, 
           };    
           break;
      
@@ -200,14 +187,6 @@ export const getVideoFileMeta = ( request ) => {
  
  export function sendResponseToStorage( response, meta, config ){ 
   let videoUrl, boardVideoUrl, markDownEditors, currentEditorId, currentFieldId;
-
-  console.log('@@@@@@@@---@@@@@-video url --- sending video url to the frontend db and updating object');
-  console.log('videoURL videoURL videoURL');
-  console.log(config.videoUrl)
-
-  console.log('LESSON OBJECT LESSON OBJECT');
-  console.log(response.data[0]);
-
 
   switch (meta.prefix) {
      case "LessonVideo": 
@@ -354,7 +333,6 @@ export async function sendSubscriptions( user, request, payload, response ){
           responseDataCollection.push( error );
          }
      });
-
      return responseDataCollection;
 }
 

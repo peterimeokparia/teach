@@ -15,7 +15,7 @@ const answerFormRoute = express.Router();
 answerFormRoute.get('/', (req, res) => {
     answerFormModel.find({})
     .then(data => {
-        console.log('answerForm answerForm Debug', data);
+        console.log('answerForm', data);
         return res.status(200).json(data);
     })
     .catch( error => {
@@ -67,7 +67,7 @@ answerFormRoute.get('/answer/user', (req, res) => {
 answerFormRoute.get('/videos', (req, res) => {
     answerFormModel.find({ _id: req.query._id })
         .then(data => {
-            console.log('answerForm answerForm', data)
+            console.log('answerForm', data)
             res.status(200).json(data);
         })
          .catch(error => console.log(error));
@@ -75,12 +75,12 @@ answerFormRoute.get('/videos', (req, res) => {
 
 answerFormRoute.post('/', (req, res) => {
     console.log( req );
-    console.log('in answerForm answerForm saved saved');
+    console.log('answerForm');
     let answerData = getPostData( req );
     let answerForm = new answerFormModel(answerData);
     answerForm.save()
     .then(data => {
-        console.log('answerForm answerForm saved saved', data);
+        console.log('answerForm ', data);
         return res.status(200).json(data);
     })
     .catch( error => {
@@ -91,12 +91,9 @@ answerFormRoute.post('/', (req, res) => {
 });
 
 answerFormRoute.put('/:answerId', (req, res) => {
-    console.log('answerFormRoute.put(/:answerId');
-    console.log(req.params);
-    console.log(req.params.answerId);
     saveUpdatedData(req, answerFormModel, req.params.answerId)
     .then( data => {
-        console.log('answerFormRoute answerFormRoute answerFormRoute put')
+        console.log('answerFormRoute put')
         console.log(data);
         return res.status(200).json(data);
     })

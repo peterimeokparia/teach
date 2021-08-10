@@ -15,7 +15,7 @@ const calendarRoute = express.Router();
 calendarRoute.get('/', (req, res) => {
     calendarModel.find({})
     .then(data => {
-        console.log('Calendar Calendar Debug', data);
+        console.log('Calendar', data);
         return res.status(200).json(data);
     })
     .catch( error => {
@@ -53,12 +53,12 @@ calendarRoute.get('/calendars/byUserId', (req, res) => {
 
 calendarRoute.post('/', (req, res) => {
     console.log( req );
-    console.log('in calendar calendar saved saved');
+    console.log('in calendar saved');
     let eventData = getPostData( req );
     let calendar = new calendarModel(eventData);
     calendar.save()
     .then(data => {
-        console.log('calendar calendar saved saved', data);
+        console.log('calendar saved', data);
         return res.status(200).json(data);
     })
     .catch( error => {
@@ -71,7 +71,7 @@ calendarRoute.post('/', (req, res) => {
 calendarRoute.put('/:calendarId', (req, res) => {
     saveUpdatedData(req, calendarModel, req.params.calendarId)
     .then( data => {
-        console.log('calendarRoute calendarRoute calendarRoute put')
+        console.log('calendarRoute put')
         console.log(data);
         return res.status(200).json(data);
     })

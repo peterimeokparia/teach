@@ -15,7 +15,7 @@ const onlineQuestionAnswersRoute = express.Router();
 onlineQuestionAnswersRoute.get('/', (req, res) => {
     onlineAnswerModel.find({})
     .then(data => {
-        console.log('onlineAnswer onlineAnswer Debug', data);
+        console.log('onlineAnswer Debug', data);
         return res.status(200).json(data);
     })
     .catch( error => {
@@ -54,7 +54,7 @@ onlineQuestionAnswersRoute.get('/answer/user', (req, res) => {
 onlineQuestionAnswersRoute.get('/videos', (req, res) => {
  onlineAnswerModel.find({ _id: req.query._id })
     .then(data => {
-        console.log('onlineAnswer onlineAnswer videos', data)
+        console.log('onlineAnswer videos', data)
         res.status(200).json(data);
     })
     .catch( error => {
@@ -74,14 +74,14 @@ onlineQuestionAnswersRoute.get('/videos', (req, res) => {
  });
 
 onlineQuestionAnswersRoute.post('/', (req, res) => {
-    console.log('in onlineAnswer onlineAnswer saved saved');
+    console.log('in onlineAnswer saved');
     let answerData = getPostData( req );
     console.log( 'answerData' )
     console.log( answerData )
     let onlineAnswer = new onlineAnswerModel(answerData);
     onlineAnswer.save()
     .then(data => {
-        console.log('onlineAnswer onlineAnswer saved saved', data);
+        console.log('onlineAnswer saved', data);
         return res.status(200).json(data);
     })
     .catch( error => {
@@ -94,7 +94,7 @@ onlineQuestionAnswersRoute.post('/', (req, res) => {
 onlineQuestionAnswersRoute.put('/:answerId', (req, res) => {
     saveUpdatedData(req, onlineAnswerModel, req.params.answerId)
     .then( data => {
-        console.log('onlineAnswersRoute onlineAnswersRoute onlineAnswersRoute put')
+        console.log('onlineAnswersRoute put')
         console.log(data);
         return res.status(200).json(data);
     })

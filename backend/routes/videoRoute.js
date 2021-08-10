@@ -34,16 +34,12 @@ const logs = getLogObject();
 
 
 const uploadVideo = multer({ storage });
-
  videoRoute.post('/', uploadVideo.single('video'), ( request, response, next ) => {
-   
    let responseWithDataToSend, videoConfigData;
 
    if ( ! request?.file ) { 
-      return next( new Error( 'pls upload a file' ) );
-      
+      return next( new Error( 'pls upload a file' ) );  
    } else {
-
      let videoConfig = videoObject( backeEndServerRoute, videoMeta, videoFileName );
       getContent( videoConfig.url )
        .then( resp  =>  {
@@ -53,7 +49,6 @@ const uploadVideo = multer({ storage });
        .catch( err => { console.log(err)}) 
    }  
    return response.send({data: responseWithDataToSend?.data[0], videoUrl: videoConfigData?.videoUrl })
-   // return response.end().send({data: responseWithDataToSend?.data[0], videoUrl: videoConfigData?.videoUrl })
 });
 
 export default videoRoute;

@@ -124,10 +124,6 @@ app.get('/', (req, res) => {
    res.send('hello and welcome to teach !!!');
 });
 
-// server.listen(localPort, () => {
-//  console.log('listening on', localPort);
-// });
-
 const serverObjects = {
    app,
    server

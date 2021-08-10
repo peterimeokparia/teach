@@ -15,7 +15,7 @@ const onlineQuestionAnswersCommentsRoute = express.Router();
 onlineQuestionAnswersCommentsRoute.get('/', (req, res) => {
     onlineCommentModel.find({})
     .then(data => {
-        console.log('onlineComment onlineComment Debug', data);
+        console.log('onlineComment', data);
         return res.status(200).json(data);
     })
     .catch( error => {
@@ -41,7 +41,7 @@ onlineQuestionAnswersCommentsRoute.get('/', (req, res) => {
 onlineQuestionAnswersCommentsRoute.get('/question', (req, res) => {
     onlineCommentModel.find({ onlineQuestionId: req.query.questionId })
     .then(data => {
-        console.log('onlineQuestionAnswersCommentsRoute onlineQuestionAnswersCommentsRoute', data);
+        console.log('onlineQuestionAnswersCommentsRoute', data);
         return res.status(200).json(data);
     })
     .catch( error => {
@@ -54,7 +54,7 @@ onlineQuestionAnswersCommentsRoute.get('/question', (req, res) => {
  onlineQuestionAnswersCommentsRoute.get('/answer', (req, res) => {
     onlineCommentModel.find({ onlineQuestionAnswerId: req.query.answerId })
     .then(data => {
-        console.log('onlineQuestionAnswersCommentsRoute onlineQuestionAnswersCommentsRoute', data);
+        console.log('onlineQuestionAnswersCommentsRoute', data);
         return res.status(200).json(data);
     })
     .catch( error => {
@@ -78,14 +78,14 @@ onlineQuestionAnswersCommentsRoute.get('/comment/user', (req, res) => {
 })
 
 onlineQuestionAnswersCommentsRoute.post('/', (req, res) => {
-    console.log('in onlineComment onlineComment saved saved');
+    console.log('in onlineComment saved');
     let answerData = getPostData( req );
     console.log( 'commentData' )
     console.log( answerData )
     let onlineComment = new onlineCommentModel(answerData);
     onlineComment.save()
     .then(data => {
-        console.log('onlineComment onlineComment saved saved', data);
+        console.log('onlineComment saved', data);
         return res.status(200).json(data);
     })
     .catch( error => {
@@ -98,7 +98,7 @@ onlineQuestionAnswersCommentsRoute.post('/', (req, res) => {
 onlineQuestionAnswersCommentsRoute.put('/:commentId', (req, res) => {
     saveUpdatedData(req, onlineCommentModel, req.params.commentId)
     .then( data => {
-        console.log('onlineCommentsRoute onlineCommentsRoute onlineCommentsRoute put')
+        console.log('onlineCommentsRoute put')
         console.log(data);
         return res.status(200).json(data);
     })
@@ -112,7 +112,6 @@ onlineQuestionAnswersCommentsRoute.put('/:commentId', (req, res) => {
 onlineQuestionAnswersCommentsRoute.delete('/:commentId', (req, res) => {
     console.log('onlineQuestionAnswersCommentsRoute.delete')
     console.log(req)
-    console.log(req.params.commentId)
     onlineCommentModel.remove({ _id: req.params.commentId }, ( error, result ) => {
         if ( error ) {
             console.log(error)

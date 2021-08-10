@@ -15,7 +15,7 @@ const onlineQuestionRoute = express.Router();
 onlineQuestionRoute.get('/', (req, res) => {
     onlineQuestionModel.find({})
     .then(data => {
-        console.log('onlineQuestion onlineQuestion Debug', data);
+        console.log('onlineQuestion Debug', data);
         return res.status(200).json(data);
     })
     .catch( error => {
@@ -80,7 +80,7 @@ onlineQuestionRoute.post('/', (req, res) => {
     let onlineQuestion = new onlineQuestionModel(questionData);
     onlineQuestion.save()
     .then(data => {
-        console.log('onlineQuestion onlineQuestion saved saved', data);
+        console.log('onlineQuestion saved', data);
         return res.status(200).json(data);
     })
     .catch( error => {
@@ -96,7 +96,7 @@ onlineQuestionRoute.put('/:questionId', (req, res) => {
     console.log(req.params.questionId);
     saveUpdatedData(req, onlineQuestionModel, req.params.questionId)
     .then( data => {
-        console.log('onlineQuestionRoute onlineQuestionRoute onlineQuestionRoute put')
+        console.log('onlineQuestionRoute put')
         console.log(data);
         return res.status(200).json(data);
     })

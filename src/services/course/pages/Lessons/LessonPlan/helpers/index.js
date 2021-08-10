@@ -1,8 +1,11 @@
+import {
+getHostName } from 'services/course/helpers/PageHelpers';
+
 export const getUrls = (currentUser, courseId, lessonId, lessonTitle) => {
   const page = `${courseId}_${lessonId}_${lessonTitle}`; 
 
   return {
-      meeting: `https://joinmeet.today/${page}`,
+      meeting: `https://joinmeet.today/${page}`, 
       editor: getHostName()   ? `http://localhost:9001/p/${lessonTitle}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false`
                               : `https://ravingfanstudents.com/editor/p/${lessonTitle}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false`,
       canvas:  getHostName()  ? `http://localhost:9090/?whiteboardid=${page}&username=${currentUser?.firstname}`
@@ -11,10 +14,6 @@ export const getUrls = (currentUser, courseId, lessonId, lessonTitle) => {
                               : `https://ravingfanstudents.com/LessonPlan/VideoModal/${courseId}/${lessonId}/${lessonTitle}`
   };
 };
-
-function getHostName(){
-  return window.location.hostname === 'localhost';
-}
 
 export const meetingConfigSettings = (course, lessonTitle) => { 
     return { 

@@ -11,6 +11,7 @@ export function euphoricEffect(letter, classname, query){
 
 function addEffectToElement( querySelector ){
     const elements = document.querySelectorAll(querySelector);
+    
     elements.forEach((element, idx) => {
         element.addEventListener('load', (e) => {
             e.target.classList.add('active');
@@ -25,6 +26,6 @@ function addEffectToElement( querySelector ){
         // Initial animation
         setTimeout(() => {
             element.classList.add('active');
-        }, 750 * (idx+1))
+        }, 750 * (idx+1));
     });
 }

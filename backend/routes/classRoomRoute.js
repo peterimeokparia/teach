@@ -15,7 +15,7 @@ const classRoomRoute = express.Router();
 classRoomRoute.get('/', (req, res) => {
     classRoomModel.find({ })
     .then(data => {
-        console.log('ClassRooms ClassRooms Test', data)
+        console.log('ClassRooms', data)
         return res.status(200).json(data); })
     .catch( error => {
         console.log( error );

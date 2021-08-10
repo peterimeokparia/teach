@@ -26,11 +26,8 @@ meetingModel.find({ })
 
 meetingRoute.get('/meeting', (req, res) => {
   let id = { _id: req.query.meetingId };
-  console.log(`get by meetingid @@@@@ @@@@@ iD: ${id}`)
   meetingModel.findById(id)   
     .then(data => {
-    console.log('get by meetingid @@@@@ @@@@@')
-    console.log(data)
     if ( data === null || data === undefined ) {
         Error('Object is null or undefined');
     }
@@ -49,7 +46,7 @@ meetingRoute.post('/', (req, res) => {
    
     user.save()
       .then(data => {
-        console.log( '@@@@@@ meeting data' )
+        console.log( 'meeting data' )
         console.log( JSON.stringify( data ) )
        return res.status(200).json(data)
       })

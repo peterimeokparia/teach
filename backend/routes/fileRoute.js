@@ -11,7 +11,7 @@ const fileStorage = multer.diskStorage({
       cb (null, '../../public/files/'); 
    }, 
    filename: function(req, file, cb){
-      console.log('file file file');
+      console.log('file file');
       console.log(file);
       fileNames = file.originalname;  
       console.log( fileNames )   

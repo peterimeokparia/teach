@@ -57,7 +57,6 @@ attendanceRoute.get('/', (req, res) => {
  });
 
 attendanceRoute.post('/', (req, res) => {
-  
     let attendanceData = getPostData( req );
 
     let attendance = new attendanceModel(attendanceData);

@@ -15,7 +15,6 @@ const sessionRoute = express.Router();
  sessionRoute.get('/', (req, res) => {
   sessionModel.find({ })
     .then(data => {
-        console.log('Sessions', data)
       return res.status(200).json(data);
     })
     .catch( error => {
@@ -30,7 +29,6 @@ sessionRoute.get('/:sessionId', (req, res) => {
  
   sessionModel.findById( sessionId )   
       .then(data => {
-          console.log('Sessions', data)
         return res.status(200).json(data);
       })
       .catch( error => {
@@ -45,7 +43,6 @@ sessionRoute.get('/:userId', (req, res) => {
  
   sessionModel.find(userId)   
       .then(data => {
-          console.log('Sessions', data)
           return res.status(200).json(data);
       })
       .catch( error => {
@@ -62,7 +59,6 @@ sessionRoute.post('/', (req, res) => {
 
    session.save()
       .then(data => {
-          console.log('...saving session', data);
           return res.status(200).json(data)
       })
       .catch( error => {
@@ -73,8 +69,6 @@ sessionRoute.post('/', (req, res) => {
 });
 
 sessionRoute.put('/:sessionId', (req, res) => {
-  console.log( 'sessionRoute.put(' );
-  console.log( req.params );
     saveUpdatedData(req, sessionModel, req.params.sessionId)
     .then( data => {
       console.log(data);
@@ -89,7 +83,6 @@ sessionRoute.put('/:sessionId', (req, res) => {
 });
 
 sessionRoute.delete('/:sessionId', (req, res) => {
-
   sessionModel.findByIdAndDelete(req.params.sessionId)
      .then(data => {
         console.log('data - doc', data);

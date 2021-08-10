@@ -16,7 +16,6 @@ const timeLineRoute = express.Router();
 timeLineRoute.get('/', (req, res) => {
    timeLineModel.find({ })
    .then(data => {
-      console.log('timeline', data)
       return res.status(200).json(data);
    })
    .catch( error => {
@@ -30,7 +29,6 @@ timeLineRoute.get('/timeLines/:timeLineId', (req, res) => {
    let timeLineId = { _id: req.query.timeLineId };  
    timeLineModel.findById( timeLineId )   
    .then(data => {
-      console.log('timeline', data)
       return res.status(200).json(data);
    })
    .catch( error => {
@@ -41,12 +39,10 @@ timeLineRoute.get('/timeLines/:timeLineId', (req, res) => {
 });
 
 timeLineRoute.post('/', (req, res) => {
-   console.log('in timeLineRoute timeLineRoute');
    let timeLineData = getPostData( req );
    let timelines = new timeLineModel( timeLineData );
    timelines.save()
    .then(data => {
-         console.log('saved timeLineRoute timeLineRoute', data);
       return res.status(200).json(data)
    })
    .catch( error => {

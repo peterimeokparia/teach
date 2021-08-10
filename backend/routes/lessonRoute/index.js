@@ -68,11 +68,9 @@ lessonRoute.post('/', (req, res) => {
 });
 
 lessonRoute.put('/:lessonId', (req, res) => {
-    console.log('@@@@@@@@@saving lesson object saving lesson object saving lesson object')
     console.log( req.params)
     saveUpdatedData(req, lessonModel, req.params.lessonId)
     .then( data => {
-        console.log('@@@@@@@@@saved lesson object saved lesson object saved lesson object')
         console.log(data);
         return res.status(200).json(data);
     })

@@ -15,7 +15,6 @@ const questionRoute = express.Router();
 questionRoute.get('/', (req, res) => {
 questionModel.find({ })
 .then(data => {
-    console.log('QuestionsNoID QuestionsNoID Comprende?', data)
     return res.status(200).json(data);
 })
 .catch( error => {
@@ -28,7 +27,6 @@ questionModel.find({ })
  questionRoute.get('/test', (req, res) => {
     questionModel.find({ _id: req.query.questionId })
     .then(data => {
-        console.log('testQuestions Questions', data)
         return res.status(200).json(data);
     })
     .catch( error => {
@@ -41,7 +39,6 @@ questionModel.find({ })
  questionRoute.get('/videos', (req, res) => {
    questionModel.find({ _id: req.query._id })
     .then(data => {
-        console.log('Questions Questions', data)
         return res.status(200).json(data);
        })
     .catch( error => {
@@ -54,7 +51,6 @@ questionModel.find({ })
  questionRoute.get('/files', (req, res) => {
    questionModel.find({ _id: req.query._id })
        .then(data => {
-           console.log('Questions Questions', data);
            return res.status(200).json(data);
        })
        .catch( error => {
@@ -71,7 +67,6 @@ questionModel.find({ })
 
     questions.save()
     .then(data => {
-     console.log('saved', data);
         return res.status(200).json(data)})
         .catch( error => {
         console.log( error );

@@ -51,13 +51,10 @@ retryFailedOnlineQuestionsPushNotificationsRoute.get('/push/user', (req, res) =>
 });
 
 retryFailedOnlineQuestionsPushNotificationsRoute.post('/push', (req, res) => {
-    console.log( req );
-    console.log('in failedNotification failedNotification saved saved');
     let notificationData = getPostData( req );
     let failedNotification = new retryFailedPushNotificationsModel(notificationData);
     failedNotification.save()
     .then(data => {
-        console.log('failedNotification failedNotification saved saved', data);
         return res.status(200).json(data);
     })
     .catch( error => {
@@ -68,13 +65,8 @@ retryFailedOnlineQuestionsPushNotificationsRoute.post('/push', (req, res) => {
 });
 
 retryFailedOnlineQuestionsPushNotificationsRoute.put('/push/:notificationId', (req, res) => {
-    console.log('retryFailedOnlineQuestionsPushNotificationsRoute.put(/:notificationId');
-    console.log(req.params);
-    console.log(req.params.notificationId);
     saveUpdatedData(req, retryFailedPushNotificationsModel, req.params.notificationId)
     .then( data => {
-        console.log('retryFailedOnlineQuestionsPushNotificationsRoute retryFailedOnlineQuestionsPushNotificationsRoute retryFailedOnlineQuestionsPushNotificationsRoute put')
-        console.log(data);
         return res.status(200).json(data);
     })
     .catch( error => {

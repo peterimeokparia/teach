@@ -11,7 +11,7 @@ const logForTeachRoute = express.Router();
 logForTeachRoute.get('/', (req, res) => {
     logForTeachModel.find({})
     .then(data => {
-        console.log('logs logForTeachRoute logForTeachRoute', data);
+        console.log('logForTeachRoute', data);
         return res.status(200).json(data);
     })
     .catch( error => {
@@ -24,7 +24,7 @@ logForTeachRoute.get('/', (req, res) => {
  logForTeachRoute.get('/byObjectName', (req, res) => {
     logForTeachModel.find({ objectName: req.query.objectName })
     .then(data => {
-        console.log('logs logForTeachRoute logForTeachRoute', data);
+        console.log('logForTeachRoute', data);
         return res.status(200).json(data);
     })
     .catch( error => {
@@ -34,12 +34,8 @@ logForTeachRoute.get('/', (req, res) => {
  });
 
  logForTeachRoute.post('/', (req, res) => {
-    console.log('logForTeachRoutelogForTeachRoutelogForTeachRoutelogForTeachRoutelogForTeachRoute@@@@@@@@@@@@@@')
      console.log( Object.values( req.body ) )
-
     let logForTeachData = getPostData( req );
-    console.log('logForTeachRoutelogForTeachRoutelogForTeachRoutelogForTeachRoutelogForTeachRoute@@@@@@@@@@@@@@')
-    console.log(logForTeachData)
     let logforteachobject = new logForTeachModel({
         objectName: req.body?.objectName,
         errorMessage: req.body?.errorMessage
@@ -57,8 +53,6 @@ logForTeachRoute.get('/', (req, res) => {
 });
 
 logForTeachRoute.put('/:logId', (req, res) => {
-    console.log('lSAVING OBJ SAVING OBJ')
-    console.log(req.params)
     saveUpdatedData(req, logForTeachModel, req.params.logId)
     .then( data => {
         console.log(data);

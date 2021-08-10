@@ -15,7 +15,7 @@ const examRoute = express.Router();
 examRoute.get('/', (req, res) => {
 examModel.find( { } )
 .then(data => {
-    console.log('Exams Exams', data)
+    console.log('Exams', data)
     return res.status(200).json(data);
 })
 .catch( error => {
@@ -28,7 +28,7 @@ examModel.find( { } )
 examRoute.get('/', (req, res) => {
 examModel.find( { examId: req.query.examId } )
 .then(data => {
-    console.log('Exams Exams', data)
+    console.log('Exams', data)
     return res.status(200).json(data);
 })
 .catch( error => {

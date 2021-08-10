@@ -119,7 +119,6 @@ export function passwordValidator(password){
     } catch (error) {
         Error(`Password Validation: ${error}`);
     }
-
     return result;
 };
 
@@ -141,4 +140,11 @@ function getValue(regexPatternRequirement, password){
         password
     };
 };
-       
+
+export function getServerUrl( port ){
+    return getHostName() ? `http://localhost:${port}` : 'https://ravingfanstudents.com';
+};
+
+export function getHostName(){
+    return (window.location.hostname === 'localhost');
+};

@@ -1,82 +1,58 @@
 import {
 SENDGRID,
-NODEMAILER } from '../emailclient/providers/index.js';
+NODEMAILER } from '../providers/index.js';
 
-export const emailClient = ( mailOptions, fromEmail  ) => {
-    if ( emailSentStatuses?.length > 0 ){
-        alert(`email was sent successfully`);
-        return;
-    }
+export function emailClient( mailOptions, emailProvider  ){
+    console.log(`@@@@@@ i am in the mock implementation emailClient email was sent successfully`);
     const fromEmail = "teachpadsconnect247@gmail.com";
-    let providers = [ SENDGRID, NODEMAILER ];
-    let emailSentStatuses = [];
-    let emailSentStatus = false;
+    let providers = [ SENDGRID, NODEMAILER  ];
+    let emailSentStatusCollection = [];
+    let emailSentStatus = {};
     try {
-        switch (key) {
+        switch (emailProvider) {
             case NODEMAILER:
-            emailSentStatus = nodeMailerEmailServiceProvider( mailOptions, process.env.fromEmail ); 
-            if ( emailSentStatus ){
-                emailSentStatuses = [ ...emailSentStatuses, emailSentStatus ];
-            }
+            emailSentStatus = nodeMailerEmailServiceProvider( { ...mailOptions, to: 'nodemailer@teach.com' }, fromEmail ); 
+                if ( emailSentStatus?.value ){
+                    emailSentStatusCollection = [ ...emailSentStatusCollection, emailSentStatus ];
+                }
                break;
             case SENDGRID:
-            emailSentStatus = sendGridEmailServiceProvider( mailOptions, process.env.fromEmail );  
-            if ( emailSentStatus ){
-                emailSentStatuses = [ ...emailSentStatuses, emailSentStatus ];
+            emailSentStatus = sendGridEmailServiceProvider( mailOptions, fromEmail );  
+            if ( emailSentStatus?.value ){
+                emailSentStatusCollection = [ ...emailSentStatusCollection, emailSentStatus ];
             }
                 break;
             default:
                 break;
         }
     } catch (error) {
-        console.warn( `Retrying with other email providers... ${ error }`);
-        
         providers?.filter( provider => provider !== emailProvider)
             .every( provider => {
-                if ( emailSentStatus || emailSentStatuses?.length > 0 ) {
+                if ( emailSentStatus?.value || emailSentStatusCollection?.length > 0 ) {
                     return false;
                 }
                 emailSentStatus =  emailClient( mailOptions, provider );
             return true;
-        });
-        
+        });   
     }
+    return emailSentStatus;
 };
-
 
 export const nodeMailerEmailServiceProvider = ( mailOptions, fromEmail  ) => {
-    return new Promise((resolve, reject) => {
-        process.nextTick(() => {
-            console.log("Mock implementation nodeMailerEmailServiceProvider");
-            console.log(mailOptions);
-            console.log(fromEmail); 
-            if ( mailOptions?.toEmail !== undefined )   {
-                console.log(".. in Mock implementation nodeMailerEmailServiceProvider");
-                resolve( mailOptions ); 
-                return true;
+    console.log("...in Mock implementation nodeMailerEmailServiceProvider");
+            if ( mailOptions?.to !== undefined )   {
+                return {value: true, provider:'nodemailer'};
             } else {
-                reject({ error: `NODEMAILEREMAILSERVICEPROVIDER: There was a problem sending the message`  })
-                return false;
+                throw Error(`NODEMAILEREMAILSERVICEPROVIDER: There was a problem sending the message`);
             }          
-        })
-    });
 };
 
-
 export const sendGridEmailServiceProvider = ( mailOptions, fromEmail  ) => {
-    return new Promise((resolve, reject) => {
-        process.nextTick(() => {
             console.log("Mock implementation sendGridEmailServiceProvider");
-            console.log(mailOptions);
-            console.log(fromEmail);
-            if ( mailOptions?.toEmail !== undefined )   {
-                console.log(".. in Mock implementation sendGridEmailServiceProvider");
-                resolve( mailOptions ); 
-                return true;
+            if ( mailOptions?.to !== undefined )   {
+                console.log("..in Mock implementation sendGridEmailServiceProvider");
+                return {value: true, provider:'sendgrid'};
             } else {
-                reject({ error: `SENDGRIDEMAILSERVICEPROVIDER: There was a problem sending the message`  })
-                return false;
-            }          
-        })
-    });
+                throw Error( `SENDGRIDEMAILSERVICEPROVIDER: There was a problem sending the message` );
+            }       
 };

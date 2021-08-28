@@ -20,7 +20,6 @@ logForTeachRoute.get('/', (req, res) => {
     });
  });
 
- 
  logForTeachRoute.get('/byObjectName', (req, res) => {
     logForTeachModel.find({ objectName: req.query.objectName })
     .then(data => {

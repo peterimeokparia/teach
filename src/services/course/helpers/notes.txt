@@ -110,3 +110,60 @@ Event After Render
                     month = new Date(event.start).getMonth();
                     day = new Date(event.start).getDate();
                     alert(year + ' ' + month + ' ' + day);
+
+  
+  Media Query Template
+  ------------------------
+  @media (min-width: 1281px) {
+  /* CSS */
+}
+/* 
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {  
+  /* CSS */
+}
+/* 
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+@media (min-width: 768px) and (max-width: 1024px) { 
+  /* CSS */ 
+}
+/* 
+  ##Device = Tablets, Ipads (landscape)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  /* CSS */  
+}
+/* 
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+  @@@ Gets mobile landscape
+*/
+@media (min-width: 480px) and (max-width: 767px)  {    
+  /* CSS */
+
+}
+@media  only screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation:landscape)  {    
+  /* CSS */
+}
+/* 
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+@media (min-width: 320px) and (max-width: 480px)  {
+  /* CSS */
+}
+
+Buffer
+------------------------------------
+// new Buffer(number) // Deprecated 
+// Buffer.alloc(number) // New
+
+// new Buffer(string) // Deprecated 
+// Buffer.from(string) // New

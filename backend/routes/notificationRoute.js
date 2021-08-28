@@ -11,7 +11,12 @@ import {
 NOTIFICATIONROUTE,
 handleBackEndLogs } from '../helpers/logHelper.js';
 
+import { 
+verifyRoute,
+logRouteInfo } from '../middleWare/index.js';
+
 const notificationRoute = express.Router();
+notificationRoute.use(logRouteInfo);
 
 webpush.setVapidDetails('mailto:peter.imeokparia@gmail.com', vapidKeys.publicVapidKey, vapidKeys.privateVapidKey);
 
@@ -19,13 +24,11 @@ webpush.setVapidDetails('mailto:peter.imeokparia@gmail.com', vapidKeys.publicVap
 notificationRoute.get('/', ( request, response ) => {
     notificationModel.find({ })
     .then(data => {
-        console.log(' notificationRoute notificationRoute notificationRouteUsers Users', data)
         return response.status(200).json(data);
     })
     .catch( error => {
-        console.log( error );
         handleBackEndLogs( NOTIFICATIONROUTE, error );
-        return res.status(400).json({ error })
+        return response.status(400).json({ error })
     });
 });
 
@@ -34,13 +37,11 @@ notificationRoute.get('/subscribedUser/byId', ( request, response ) => {
     let id = { _id: request.query.userId };
     notificationModel.findById( id )   
         .then(data => {
-            console.log('Users Users', data)
             return response.status(200).json(data);
         })
         .catch( error => {
-            console.log( error );
             handleBackEndLogs( NOTIFICATIONROUTE, error );
-            return res.status(400).json({ error })
+            return response.status(400).json({ error })
         });
 });
 
@@ -51,16 +52,13 @@ notificationRoute.post('/subscribe/user', ( request, response ) => {
         subscriptions: request.body?.subscriptions,
         operatorId: request.body?.operatorId
     }
-
     let usersSubscription = new notificationModel( usersSubscriptionData );  
     usersSubscription.save()
       .then(data => {
-        console.log('saved', data);
         response.status(200).json(data)})
         .catch( error => {
-            console.log( error );
             handleBackEndLogs( NOTIFICATIONROUTE, error );
-            return res.status(400).json({ error })
+            return response.status(400).json({ error })
         });  
 });
 
@@ -112,7 +110,6 @@ notificationRoute.put('/sendPushNotifications/user/:Id', ( request, response ) =
 
 //Route:  http:localhost:9007/api/v1/notifications/sendPushNotifications/user
 notificationRoute.put('/retryPushNotifications/user/:Id', ( request, response ) => {
-    console.log('retryPushNotifications')
     const user = request?.body?.user;
     const message = request?.body?.message;
     const failedNotification = JSON.stringify( request?.body?.failedNotification );
@@ -148,7 +145,6 @@ notificationRoute.put('/retryPushNotifications/user/:Id', ( request, response ) 
 notificationRoute.post('/subscribe',  ( request, response ) => {
    // Get pushSubscription object
    const subscription = request?.body;
-   console.log('get end point info for database', request.body);
    // Create payload with notification details
    const payload = JSON.stringify({ title: 'Welcome to Teach!!!', body: 'Notified' });
    // Pass users subscription send to info including device info etc 

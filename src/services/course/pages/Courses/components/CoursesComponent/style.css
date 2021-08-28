@@ -67,7 +67,7 @@
   } 
   .ComponentCourseListItem h1 {
     font-family: 'Bebas Neue', 'Helvetica Neue', arial,
-      sans-serif;
+    sans-serif;
     font-size: 60px;
     color: #43005a;
     margin-top: 0.2em;
@@ -85,12 +85,16 @@
   }
   .ComponentCourseListItem .component-seconday-list-body, .component-secondary-list-body-one {
     border-radius: 25px;
-    background: #673ab7;
+    /* background: #673ab7; */
+    background: whitesmoke;
+    text-decoration: underline burlywood;
     padding: 10px;
     padding-top: 25px;
     margin-top: 45px;
     height: 185px;
     box-shadow: 10px 10px;
+    box-shadow: 10px 10px;
+    box-shadow: 0 6px  rgba(255, 0, 0, 1), 0 9px  rgba(0, 255, 0, 1), 0 9px rgb(255, 174, 0); 
     vertical-align: middle;
     -webkit-transform: perspective(1px) translateZ(0);
     transform: perspective(1px) translateZ(0);
@@ -106,6 +110,8 @@
     -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
     transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
     box-shadow: 0px 0px;
+    background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+    color: black;
   }
   .ComponentCourseListItem li > a {
     margin-bottom: 20px;
@@ -121,6 +127,8 @@
   }
   .ComponentCourseListItem .price {
     opacity: 0.5;
+    color: black;
+    font-weight: bolder;
   }
   .ComponentCourseListItem .list-items {
     padding-top: 10px;

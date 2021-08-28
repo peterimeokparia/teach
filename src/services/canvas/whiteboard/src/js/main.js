@@ -171,7 +171,6 @@ function initWhiteboard() {
         // request whiteboard from server
         $.get(subdir + "/api/loadwhiteboard", { wid: whiteboardId, at: accessToken }).done(
             function (data) {
-                console.log(data);
                 whiteboard.loadData(data);
                 if (copyfromwid && data.length == 0) {
                     //Copy from witheboard if current is empty and get parameter is given
@@ -566,10 +565,12 @@ function initWhiteboard() {
 
         // load json to whiteboard
         $("#myFile").on("change", function () {
+            console.log('@@@@@getting json data from file@@@@@')
             var file = document.getElementById("myFile").files[0];
             var reader = new FileReader();
             reader.onload = function (e) {
                 try {
+                    console.log('@@@@@@loading JSON data from file...')
                     var j = JSON.parse(e.target.result);
                     whiteboard.loadJsonData(j);
                 } catch (e) {

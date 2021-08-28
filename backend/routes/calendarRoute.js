@@ -10,18 +10,21 @@ import {
 CALENDARROUTE,
 handleBackEndLogs } from '../helpers/logHelper.js';
 
+import { 
+verifyRoute,
+logRouteInfo } from '../middleWare/index.js'; 
+
 const calendarRoute = express.Router();
+calendarRoute.use(logRouteInfo);
 
 calendarRoute.get('/', (req, res) => {
     calendarModel.find({})
     .then(data => {
-        console.log('Calendar', data);
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log( error );
         handleBackEndLogs( CALENDARROUTE, error );
-        return res.status(400).json({ error })
+        return res.status(400).json({ error });
     });
  });
 
@@ -32,7 +35,6 @@ calendarRoute.get('/', (req, res) => {
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log( error );
         handleBackEndLogs( CALENDARROUTE, error );
         return res.status(400).json({ error });
     });
@@ -45,24 +47,19 @@ calendarRoute.get('/calendars/byUserId', (req, res) => {
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log( error );
         handleBackEndLogs( CALENDARROUTE, error );
         return res.status(400).json({ error });
     });
 })
 
 calendarRoute.post('/', (req, res) => {
-    console.log( req );
-    console.log('in calendar saved');
     let eventData = getPostData( req );
     let calendar = new calendarModel(eventData);
     calendar.save()
     .then(data => {
-        console.log('calendar saved', data);
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log( error );
         handleBackEndLogs( CALENDARROUTE, error );
         return res.status(400).json({ error });
     });
@@ -71,28 +68,21 @@ calendarRoute.post('/', (req, res) => {
 calendarRoute.put('/:calendarId', (req, res) => {
     saveUpdatedData(req, calendarModel, req.params.calendarId)
     .then( data => {
-        console.log('calendarRoute put')
-        console.log(data);
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log( error );
         handleBackEndLogs( CALENDARROUTE, error );
         return res.status(400).json({ error });
     });
 });
 
 calendarRoute.delete('/:calendarId', (req, res) => {
-    console.log('calendarRoute.delete')
-    console.log(req)
     calendarModel.remove({ _id: req.params.calendarId }, ( error, result ) => {
         if ( error ) {
-            console.log(error)
             handleBackEndLogs( CALENDARROUTE, error );
             return res.status(400).send(error);
         }
         else {
-            console.log(result)
             return res.status(200).json(result);
         }
     });

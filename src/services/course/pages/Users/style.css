@@ -22,10 +22,11 @@
   background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
 }
 .Users header h1 {
-  background-color: #673ab7;
+  /* background-color: #673ab7; */
   text-decoration: underline burlywood;
   margin: 0;
   font-size: 24px;
+  font-weight: bolder;
   text-align: center;
   text-transform: capitalize;
 }
@@ -145,7 +146,8 @@
   }
   .ComponentUserList .component-seconday-list-body-users, .component-secondary-list-body-one {
     border-radius: 25px;
-    background: #673ab7;
+    /* background: #673ab7; */
+    background: whitesmoke;
     padding: 10px;
     padding-top: 40px;
     margin-top: 35px;
@@ -168,6 +170,8 @@
     transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
     box-shadow: 0px 0px;
     cursor: pointer;
+    background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+    color: black;
   }
   .ComponentUserList li > a {
     margin-bottom: 20px;
@@ -181,8 +185,10 @@
     color: #222;
 
   }
-  .ComponentUserList .price {
+  .ComponentUserList .price h6{
     opacity: 0.5;
+    color: black;
+    font-weight: bolder;
   }
   .ComponentUserList .list-items {
     padding-top: 10px;
@@ -218,9 +224,33 @@
     -moz-background-clip: text;
     background-clip: text;
     color: transparent;
+    text-decoration: underline burlywood;
+    margin: 0;
+    font-size: 24px;
+    font-weight: bolder;
+    text-align: center;
+    text-transform: capitalize;
   }
-
-
+  .ComponentUserList .user-list-items-users .multicolortext:hover{
+    color: white;
+    /* background-color: #673ab7;
+    margin: 0;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.5rem;
+    font-weight: bold; 
+    background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-decoration: underline burlywood;
+    margin: 0;
+    font-size: 24px;
+    font-weight: bolder;
+    text-align: center;
+    text-transform: capitalize; */
+  }
   .ComponentUserList .user-list-items-users .round-button-1, .ComponentUserList .user-list-items-users .round-button-2, 
   .ComponentUserList .user-list-items-users .round-button-3, .ComponentUserList .user-list-items-users .round-button-4, 
   .ComponentUserList .user-list-items-users .round-button-5, .ComponentUserList .user-list-items-users .round-button-6, 

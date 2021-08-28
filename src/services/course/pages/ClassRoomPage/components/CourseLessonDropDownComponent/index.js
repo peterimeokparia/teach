@@ -78,7 +78,6 @@ return (
                 <span className="left">   
                 <DropDown
                     label={"Courses"}
-                    key={"_id"}
                     value={"name"}
                     optionCollection={getListOfCoursesForTheSelectedStudent( courses, currentUser, selectedUserId )}
                     setOptionSelectedValue={selectedCourse => setCourseFromDropDown(selectedCourse)} 
@@ -88,7 +87,6 @@ return (
                 <span className="right">
                     <DropDown
                         label={"Lessons"}
-                        key={"_id"}
                         value={"title"}
                         optionCollection={getListOfLessonsForTheSelectedStudent( currentUser, lessons, selectedCourseFromLessonPlanCourseDropDown )}
                         setOptionSelectedValue={selectedLesson => setLessonFromDropDown(selectedLesson)}             

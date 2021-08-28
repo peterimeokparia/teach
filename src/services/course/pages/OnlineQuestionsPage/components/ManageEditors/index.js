@@ -63,7 +63,7 @@ const ManageEditors = ({
                   style={plusOneIconStyle()}
                   className="comment-round-button-2"
                   onClick={() => addNewEditor()}
-                  />
+                />
               }
             </span>;  
   }; 

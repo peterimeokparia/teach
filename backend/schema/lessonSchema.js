@@ -36,8 +36,6 @@ const lessonSchema = new Schema ({
         required: false,
         default: Date.now  
     }
-    
 });
-
 
 export default lessonSchema;

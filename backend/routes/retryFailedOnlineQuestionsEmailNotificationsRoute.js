@@ -10,7 +10,13 @@ import {
 FAILEDEMAILNOTIFICATIONSROUTE,
 handleBackEndLogs } from '../helpers/logHelper.js';
 
+import { 
+verifyRoute,
+logRouteInfo } from '../middleWare/index.js';
+
 const retryFailedOnlineQuestionsEmailNotificationsRoute = express.Router();
+
+retryFailedOnlineQuestionsEmailNotificationsRoute.use(logRouteInfo);
 
 retryFailedOnlineQuestionsEmailNotificationsRoute.get('/email', (req, res) => {
     retryFailedEmailNotificationsModel.find({})
@@ -18,9 +24,8 @@ retryFailedOnlineQuestionsEmailNotificationsRoute.get('/email', (req, res) => {
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log( error );
-        handleBackEndLogs(FAILEDEMAILNOTIFICATIONSROUTE, error )
-        return res.status(400).json({ error })
+        handleBackEndLogs(FAILEDEMAILNOTIFICATIONSROUTE, error );
+        return res.status(400).json({ error });
     });
  });
 
@@ -31,9 +36,8 @@ retryFailedOnlineQuestionsEmailNotificationsRoute.get('/email', (req, res) => {
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log( error );
-        handleBackEndLogs(FAILEDEMAILNOTIFICATIONSROUTE, error )
-        return res.status(400).json({ error })
+        handleBackEndLogs(FAILEDEMAILNOTIFICATIONSROUTE, error );
+        return res.status(400).json({ error });
     });
 });
 
@@ -44,9 +48,8 @@ retryFailedOnlineQuestionsEmailNotificationsRoute.get('/email/user', (req, res) 
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log( error );
-        handleBackEndLogs(FAILEDEMAILNOTIFICATIONSROUTE, error )
-        return res.status(400).json({ error })
+        handleBackEndLogs(FAILEDEMAILNOTIFICATIONSROUTE, error );
+        return res.status(400).json({ error });
     });
 })
 
@@ -58,9 +61,8 @@ retryFailedOnlineQuestionsEmailNotificationsRoute.post('/email', (req, res) => {
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log( error );
-        handleBackEndLogs(FAILEDEMAILNOTIFICATIONSROUTE, error )
-        return res.status(400).json({ error })
+        handleBackEndLogs(FAILEDEMAILNOTIFICATIONSROUTE, error );
+        return res.status(400).json({ error });
     });
 });
 
@@ -70,22 +72,18 @@ retryFailedOnlineQuestionsEmailNotificationsRoute.put('/email/:notificationId', 
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log( error );
-        handleBackEndLogs(FAILEDEMAILNOTIFICATIONSROUTE, error )
-        return res.status(400).json({ error })
+        handleBackEndLogs(FAILEDEMAILNOTIFICATIONSROUTE, error );
+        return res.status(400).json({ error });
     });
 });
 
 retryFailedOnlineQuestionsEmailNotificationsRoute.delete('/email/:notificationId', (req, res) => {
     retryFailedEmailNotificationsModel.remove({ _id: req.params.notificationId }, ( error, result ) => {
-        if ( error ) {
-            console.log(error)
-            return res.status(400).send(error);
-        }
-        else {
-            console.log(result)
-            return res.status(200).json(result);
-        }
+    if ( error ) {
+        return res.status(400).send(error);
+    }else {
+        return res.status(200).json(result);
+    }
     });
 });
 

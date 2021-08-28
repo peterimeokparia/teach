@@ -1,4 +1,7 @@
 .dropdownComponents{
+  margin-left: 20%;
+} 
+.dropdownComponents ul > li{
     margin-top: 30px;
     margin-left: 25%;
 }
@@ -52,7 +55,7 @@
   
   @media (min-width: 481px) and (max-width: 767px) { 
     .dropdownComponents{
-        margin-left: -30%;
+        margin-left: -42%;
     }   
   }
   /* 

@@ -18,7 +18,7 @@ return (
             <label>Upload file(s). </label>
             <input type="file" name="file" class="form-control" multiple onChange={onChangeHandler}></input> 
             </div> 
-            <button type="submit" class="button uploadBtn" value="upload" />    
+            {/* <button type="submit" class="button uploadBtn" value="upload" />     */}
         </form>  
         </div>
         {Validations.setErrorMessageContainer() }

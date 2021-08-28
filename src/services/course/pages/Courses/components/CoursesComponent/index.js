@@ -196,20 +196,19 @@ return  editing
         </div>) 
     : ( <div className="ComponentCourseListItem">
             <ul>
-            {courses?.map(course => (        
+            {courses?.map(course => (    
+             <NavLinks to={`/${operatorBusinessName}/tutor/${ course?.createdBy }/courses/${ course?._id }`}>   
                 <li 
-                key={course?._id}
-                className={"component-seconday-list-body"}
+                    key={course?._id}
+                    className={"component-seconday-list-body"}
                 >             
                 <div className={"user-list-items"}>
                 <div className="row">
                     <div className="col-1"> 
-                        <img alt='' src={testImage} width="80" height="80"/>
+                        {/* <img alt='' src={testImage} width="80" height="80"/> */}
                     </div>
                     <div className="col-10">
-                    <NavLinks to={`/${operatorBusinessName}/tutor/${ course?.createdBy }/courses/${ course?._id }`}>
-                        <span className="multicolortext"> {course?.name}</span>
-                    </NavLinks>
+                       <h3> <span className="multicolortext"> {course?.name}</span></h3>
                     <div className="price"> { course?.description }   </div> 
                     {/* <span className="price"> ${ course?.price.toFixed(2) }   </span>  */}
                         {<span>
@@ -217,13 +216,13 @@ return  editing
                         <span>
                         <EditIcon 
                             id="EditIcon"
-                            // data-cy={`${(singleUser?.firstname)?.toLowerCase()}EditIcon`}
+                            data-cy={`${(course?.createdBy)?.toLowerCase()}EditIcon`}
                             className="round-button-1"
                             onClick={() => beginEditing(course)}
                         />
                         <DeleteIcon 
                             id="DeleteIcon"
-                            // data-cy={`${(singleUser?.firstname)?.toLowerCase()}DeleteIcon`}
+                            data-cy={`${(course?.createdBy)?.toLowerCase()}DeleteIcon`}
                             className="round-button-3"
                             onClick={() => performDelete(course)}
                         />
@@ -246,7 +245,7 @@ return  editing
                                  <NotificationsIcon 
                                     id="NotificationsIcon"
                                     key={ key }
-                                    // data-cy={`${(singleUser?.firstname)?.toLowerCase()}NotificationsIcon`}
+                                    data-cy={`${(course?.createdBy)?.toLowerCase()}NotificationsIcon`}
                                     className="round-button-2"
                                     mouseDown={ handleMouseDown }
                                     onClick={handleMouseDown }
@@ -260,7 +259,7 @@ return  editing
                         <span>
                         <UnsubscribeIcon 
                             id="UnsubscribeIcon"
-                            // data-cy={`${(singleUser?.firstname)?.toLowerCase()}UnsubscribeIcon`}
+                            data-cy={`${(course?.createdBy)?.toLowerCase()}UnsubscribeIcon`}
                             className="round-button-5"
                             onClick={() => updateSubscription(course)}
                         />
@@ -272,7 +271,7 @@ return  editing
                     </div> 
                     </div>
                 </li>
-                
+                </NavLinks>
                 ))}
             </ul>
     </div>

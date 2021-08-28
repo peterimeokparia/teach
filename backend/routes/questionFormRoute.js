@@ -10,18 +10,22 @@ import {
 QUESTIONFORMROUTE,
 handleBackEndLogs } from '../helpers/logHelper.js';
 
+import { 
+verifyRoute,
+logRouteInfo } from '../middleWare/index.js';
+
 const questionFormRoute = express.Router();
+
+questionFormRoute.use(logRouteInfo);
 
 questionFormRoute.get('/', (req, res) => {
     questionFormModel.find({})
     .then(data => {
-        console.log('questionForm questionForm Debug', data);
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log( error );
-        handleBackEndLogs(QUESTIONFORMROUTE, error )
-        return res.status(400).json({ error })
+        handleBackEndLogs(QUESTIONFORMROUTE, error );
+        return res.status(400).json({ error });
     });
  });
 
@@ -32,9 +36,8 @@ questionFormRoute.get('/question', (req, res) => {
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log( error );
-        handleBackEndLogs(QUESTIONFORMROUTE, error )
-        return res.status(400).json({ error })
+        handleBackEndLogs(QUESTIONFORMROUTE, error );
+        return res.status(400).json({ error });
     });
 });
 
@@ -45,68 +48,52 @@ questionFormRoute.get('/question/user', (req, res) => {
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log( error );
-        handleBackEndLogs(QUESTIONFORMROUTE, error )
-        return res.status(400).json({ error })
+        handleBackEndLogs(QUESTIONFORMROUTE, error );
+        return res.status(400).json({ error });
     });
 });
 
 questionFormRoute.get('/videos', (req, res) => {
     questionFormModel.find({ _id: req.query._id })
-        .then(data => {
-            console.log('QuestionForm', data)
-            res.status(200).json(data);
-        })
-         .catch(error => console.log(error));
+    .then(data => {
+        return res.status(200).json(data);
+    })
+    .catch(error => { 
+        return res.status(400).json({ error });
+    });
  });
 
 questionFormRoute.post('/', (req, res) => {
-    console.log( req );
-    console.log('in questionForm saved');
     let questionData = getPostData( req );
     let questionForm = new questionFormModel(questionData);
     questionForm.save()
     .then(data => {
-        console.log('questionForm saved', data);
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log( error );
-        handleBackEndLogs(QUESTIONFORMROUTE, error )
-        return res.status(400).json({ error })
+        handleBackEndLogs(QUESTIONFORMROUTE, error );
+        return res.status(400).json({ error });
     });
 });
 
 questionFormRoute.put('/:questionId', (req, res) => {
-    console.log('questionFormRoute.put(/:questionId');
-    console.log(req.params);
-    console.log(req.params.questionId);
     saveUpdatedData(req, questionFormModel, req.params.questionId)
     .then( data => {
-        console.log('questionFormRoute put')
-        console.log(data);
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log( error );
-        handleBackEndLogs(QUESTIONFORMROUTE, error )
-        return res.status(400).json({ error })
+        handleBackEndLogs(QUESTIONFORMROUTE, error );
+        return res.status(400).json({ error });
     });
 });
 
 questionFormRoute.delete('/:questionId', (req, res) => {
-    console.log('questionFormRoute.delete')
-    console.log(req)
-    console.log(req.params.questionId)
     questionFormModel.remove({ _id: req.params.questionId }, ( error, result ) => {
-        if ( error ) {
-            console.log(error)
-            return res.status(400).send(error);
-        }
-        else {
-            console.log(result)
-            return res.status(200).json(result);
-        }
+    if ( error ) {
+        return res.status(400).send(error);
+    }else {
+        return res.status(200).json(result);
+    }
     });
 });
 

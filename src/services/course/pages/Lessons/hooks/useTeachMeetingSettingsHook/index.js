@@ -29,7 +29,7 @@ loadUsers } from 'services/course/actions/users';
 import { 
 Validations } from 'services/course/helpers/Validations';
     
-function useTeachMeetingSettingsHook( users, currentUser, addNewMeeting, classRoomId, operatorBusinessName ) {
+function useTeachMeetingSettingsHook( users, currentUser, classRoomId, operatorBusinessName) {
     const [ hideMeetingStage, setHideMeetingStage ] = useState(false);
     const [ fullMeetingStage, setFullMeetingStage ] = useState(false);
     const [ videoModalModeOn,  setVideoModalMode ] = useState(false);
@@ -144,6 +144,7 @@ return {
     hideMeetingStage,
     fullMeetingStage,
     videoModalModeOn,
+    setHideMeetingStage: ( value ) => setHideMeetingStage( value ),
     setVideoModalMode: ( value ) => setVideoModalMode( value ),
     session,
     roomSize,

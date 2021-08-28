@@ -6,6 +6,10 @@ export const setToken = token => {
   authToken = token;
 };
 
+export function getRequest(url = ``, data = {}){
+  return fetchWithHeaders( url);
+}
+
 export function postData(url = ``, data = {}) {
     return fetchWithData( url, data, 'POST');
 }
@@ -56,7 +60,6 @@ export async function uploadContent(url, formData, method = `POST`) {
   // headers.append('Content-Type', 'video/webm'); 
   // headers.append('Accept', 'video/webm');
   // headers.append('Content-Type', 'image/png'); 
-
   headers.append('Authorization',  authToken ? `Bearer ${authToken}` : undefined);
   return fetch(url, {
     method,
@@ -81,6 +84,16 @@ export function routeUrl(){
   }; 
 }
 
+async function fetchWithHeaders( url =``) {
+  return await fetch(url, {
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': authToken ? `Bearer ${authToken}` : undefined,
+      }
+    } 
+  );
+};
+
 async function fetchWithData( url =``, data = {}, method = 'POST') {
     let responseData = null;
 
@@ -89,7 +102,7 @@ async function fetchWithData( url =``, data = {}, method = 'POST') {
           method,
           headers: {
           'Content-Type': 'application/json',
-          Authorization: authToken ? `Bearer ${authToken}` : undefined
+          'Authorization': authToken ? `Bearer ${authToken}` : undefined,
         },
           body: JSON?.stringify(data)
           // cache: "reload",
@@ -121,7 +134,6 @@ async function fetchWithData( url =``, data = {}, method = 'POST') {
     }
     return responseData?.json();
 }
-
 
 export const paymentStatus = { Approved: "approved", Denied: "denied"  };
 

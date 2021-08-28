@@ -12,8 +12,6 @@
   margin: 0;
 }
 .ClassRoomDetail form label {
-  /* display: flex;
-  flex-direction: column; */
   margin-bottom: 1em;
   font-weight: bold; 
 }
@@ -105,13 +103,9 @@
   letter-spacing: 0.5rem;
   font-weight: bold;
   background-image: linear-gradient(to left, black, blue );
-  /* background-image: linear-gradient(to left, white, green, yellow, orange, black, blue ); */
-  /* background-image: linear-gradient(to left, black, blue ); */
   -webkit-background-clip: text;
   -moz-background-clip: text;
   background-clip: text;
-  /* color: transparent; */
-  /* background-color: white; */
 }
 .ClassRoomDetail .content {
   display: flex;
@@ -140,9 +134,6 @@
   text-transform: uppercase;
   letter-spacing: 0.2rem;
   font-weight: bold;
-  /* background-image: linear-gradient(to left, white, green, yellow, orange, black, blue ); */
-  /* background-image: linear-gradient(to left, blue, brown, purple, black, white, black, green, yellow, blue ); */
-  /* background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red); */
   background-image: linear-gradient(to left, blue);
   -webkit-background-clip: text;
   -moz-background-clip: text;
@@ -275,15 +266,6 @@
   -moz-background-clip: text;
   background-clip: text;
   color: transparent;
-}
-.dropdownComponents {
-  /* display: flex;  */
-}
-.dropdownComponents .left {
-  /* flex: 1; */
-}
-.dropdownComponents .right {
-  /* flex: 1; */
 }
 .viewGradesLink, .checkBoxViewGradesLink {
   color: blue;

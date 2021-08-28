@@ -1,4 +1,5 @@
 import { 
+getRequest,
 postData, 
 putData, 
 deleteData,   
@@ -11,7 +12,7 @@ privateKey} from 'services/course/pages/LoginPage/components/Authentication';
 import {
 getHostName } from 'services/course/helpers/PageHelpers';
 
-const PREFIX = `${getHostName() ? '' : '/backend'}/api/v1`;
+export const PREFIX = `${getHostName() ? '' : '/backend'}/api/v1`;
 
 export let apiAuthToken = undefined;
 
@@ -59,6 +60,19 @@ function updatedSession (session) {
     autoRenewDates: [ ...session?.autoRenewDates, Date.now() ], 
     numberOfSessions: 0
   };
+};
+
+export const addEncrypted = (config) => {
+  return postData(PREFIX + '/configs/encrypt',{
+    ...config
+  });
+};
+
+export const getDecrypted = (config) => {
+  return fetch(PREFIX + `/configs/decrypt?id=${config?._id}`) 
+  .then(handleErrors)
+  .then(response => response.json())
+  .catch(error => { console.log(error); });
 };
 
 export const purchaseHistory = (currentUser) => {
@@ -127,19 +141,36 @@ export const add = (data, route, prefix=PREFIX) => {
   });
 };
 
+
+// change
 export const get = ( route, prefix=PREFIX ) => {
-  return fetch(prefix + route)
+  return getRequest(prefix + route)
    .then(handleErrors)
     .then(response => response?.json() )
     .catch(error => { console.log(error); });
 };
 
 export const getById = ( id, routePlusId, prefix=PREFIX ) => {
-  return fetch(prefix + routePlusId + `${id}`) 
+  return getRequest(prefix + routePlusId + `${id}`) 
     .then(handleErrors)
     .then(response => response.json())
     .catch(error => { console.log(error); });
 };
+
+// change
+// export const get = ( route, prefix=PREFIX ) => {
+//   return fetch(prefix + route)
+//    .then(handleErrors)
+//     .then(response => response?.json() )
+//     .catch(error => { console.log(error); });
+// };
+
+// export const getById = ( id, routePlusId, prefix=PREFIX ) => {
+//   return fetch(prefix + routePlusId + `${id}`) 
+//     .then(handleErrors)
+//     .then(response => response.json())
+//     .catch(error => { console.log(error); });
+// };
 
 export const update = (data, route, prefix=PREFIX) => {
   return putData(prefix + route + `${ data?._id }`, 
@@ -337,7 +368,8 @@ export const mockStoreObject = {
   events: { events: {}},
   questions: { questions: {}},
   calendarEventType: { calendar: {}},
-  onlineQuestions: { onlineQuestionCourseId: { onlineQuestionCourseId: "Test Course" }  },
+  // onlineQuestions: { onlineQuestionCourseId: { onlineQuestionCourseId: "Test Course" }  },
+  onlineQuestions: {onlineQuestions: { onlineQuestionCourseId: { onlineQuestionCourseId: "Test Course" } }  },
   hasRecordingStarted: { hasRecordingStarted: false  },
   onlineAnswers: { onlineAnswers: []  },
   // onlineQuestions: { onlineQuestions: []  },

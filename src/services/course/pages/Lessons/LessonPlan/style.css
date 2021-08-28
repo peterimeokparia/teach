@@ -20,7 +20,6 @@
     background-color: #673ab7;
     margin: 0;
     font-size: 24px;
-  
     text-transform: uppercase;
       letter-spacing: 0.5rem;
       font-weight: bold;
@@ -215,11 +214,22 @@
     visibility: hidden;
   }
   .MeetingPlan .content .meeting-stage-visible{
+    /* margin-left: -2000px; */
     visibility: visible;
   }
   .sidebar-meeting{
     flex-basis: 200px;
-      background: yellow;
+    background: yellow;
+  }
+  .MeetingPlan .whiteBoardSideBar {
+    padding-right: 0px;
+    padding-left: 0px;
+    /* display: flex; */
+  }
+  .MeetingPlan .whiteBoardSideBar .savedBoards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
   @media only screen and (min-width: 638px) {
     .MeetingPlan .content {
@@ -234,6 +244,37 @@
     .MeetingPlan .lesson {
       flex: 1;
     }
+    .MeetingPlan .whiteBoardSideBar {
+      flex-basis: 100px;
+      background: transparent;
+      margin-left: -100px;
+      max-height: 900px;
+      overflow: scroll;
+    }
+    .MeetingPlan .whiteBoardSideBar .savedBoards {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .MeetingPlan .whiteBoardSideBar .savedBoards .savedBoards-items {
+      margin-bottom: 5px;
+      top: 50%;
+      left: 50%;
+      margin-right: 0%;
+      padding-bottom: 15px;
+      padding-left: 0.5rem;
+    }
+    .MeetingPlan .whiteBoardSideBar .savedBoards .savedBoards-items:hover {
+      margin-bottom: 5px;
+      border-style: solid;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      margin-right: 0%;
+      padding-bottom: 15px;
+      padding-left: 0.5rem;
+      cursor: pointer;
+    }
   }
   @media only screen and (max-width: 637px) {
     .MeetingPlan .content {
@@ -246,6 +287,10 @@
     }
     .MeetingPlan .lesson {
       flex: 1;
+    }
+    .MeetingPlan .whiteBoardSideBar {
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
     }
   }
   
@@ -267,6 +312,11 @@
     }
     .MeetingPlan .lesson {
       flex: 1;
+    }
+    .MeetingPlan .whiteBoardSideBar {
+      /* flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea; */
     }
     
   }
@@ -290,6 +340,11 @@
     .MeetingPlan .lesson {
       flex: 1;
     }
+    .MeetingPlan .whiteBoardSideBar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
     
   }
   
@@ -312,7 +367,11 @@
     .MeetingPlan .lesson {
       flex: 1;
     }
-    
+    .MeetingPlan .whiteBoardSideBar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
   }
   
   /* 
@@ -334,7 +393,11 @@
     .MeetingPlan .lesson {
       flex: 1;
     }
-    
+    .MeetingPlan .whiteBoardSideBar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
   }
   
   
@@ -352,7 +415,11 @@
     .MeetingPlan .lesson {
       flex: 1;
     }
-    
+    .MeetingPlan .whiteBoardSideBar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
   }
   
   
@@ -376,6 +443,11 @@
     .MeetingPlan .lesson {
       flex: 1;
     } 
+    .MeetingPlan .whiteBoardSideBar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
   }
   /* 
     ##Device = Most of the Smartphones Mobiles (Portrait)
@@ -404,9 +476,12 @@
     .MeetingPlan .lesson {
       flex: 1;
     }  
+    .MeetingPlan .whiteBoardSideBar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
   }
-  
-  
   .flexible-modal {
     position: absolute;
     z-index: 1;

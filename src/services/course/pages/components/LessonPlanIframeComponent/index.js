@@ -1,15 +1,15 @@
 import ReactIframe from 'services/course/pages/components/ReactIframe';
 
 const LessonPlanIframeComponent = ({
-className,
-id, 
-name, 
-source, 
-width,  
-height, 
-allow, 
-scrolling, 
-frameBorder }) => {
+     className,
+     id, 
+     name, 
+     source, 
+     width,  
+     height, 
+     allow, 
+     scrolling, 
+     frameBorder }) => {
 return(( source ) 
      ? <div id={id}>
           <ReactIframe

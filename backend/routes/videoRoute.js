@@ -14,7 +14,12 @@ import {
 getLogObject,
 handleBackEndLogs } from '../helpers/logHelper.js';
 
+import { 
+verifyRoute,
+logRouteInfo } from '../middleWare/index.js'; 
+
 const videoRoute = express.Router();
+videoRoute.use(logRouteInfo);
 const logs = getLogObject();
 
   let backeEndServerRoute, videoFileName, videoMeta;
@@ -32,7 +37,6 @@ const logs = getLogObject();
    }
 });
 
-
 const uploadVideo = multer({ storage });
  videoRoute.post('/', uploadVideo.single('video'), ( request, response, next ) => {
    let responseWithDataToSend, videoConfigData;
@@ -46,9 +50,11 @@ const uploadVideo = multer({ storage });
             sendResponseToStorage( resp, videoMeta, videoConfig ); 
             responseWithDataToSend =  resp, videoConfigData = videoConfig;    
        })
-       .catch( err => { console.log(err)}) 
+       .catch( err => { 
+          console.log( err );
+      }) 
    }  
-   return response.send({data: responseWithDataToSend?.data[0], videoUrl: videoConfigData?.videoUrl })
+   return response.send({data: responseWithDataToSend?.data[0], videoUrl: videoConfigData?.videoUrl });
 });
 
 export default videoRoute;

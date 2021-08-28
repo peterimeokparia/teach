@@ -2,6 +2,8 @@ import {
 serviceWorkerSupported,
 send } from '../PushNotifications';
 
+import randomColor from 'randomcolor';
+
 export const newSiteUser = {
     firstname:"", 
     email:"",
@@ -147,4 +149,24 @@ export function getServerUrl( port ){
 
 export function getHostName(){
     return (window.location.hostname === 'localhost');
+};
+
+export const getItemColor = ( items ) => {
+    let color = null;
+    let existingColor = null;
+    
+    color = generateRandomColor();
+
+    do {
+        existingColor = items?.find( item => item?.color === color );
+        
+        if ( !existingColor ) {
+            break;
+        }
+    } while ( existingColor );
+    return color;
+};
+
+export const generateRandomColor = () => {
+  return randomColor({ luminosity: 'light',  hue: 'random' });
 };

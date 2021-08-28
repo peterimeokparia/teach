@@ -27,6 +27,10 @@ import {
 setOperator,
 setOperatorBusinessName } from 'services/course/actions/operator';
 
+import {
+encryptData,
+decryptData } from 'services/course/actions/config';
+
 import { 
 getOperatorFromOperatorBusinessName, 
 getUsersByOperatorId,
@@ -52,6 +56,8 @@ import './style.css';
 const LoginPage = ({
   operatorBusinessName,
   operator,
+  encryptData,
+  decryptData,
   setOperator,
   setOperatorBusinessName,
   error, 
@@ -166,6 +172,8 @@ return ( <div className="LoginPage">
 const mapDispatch = { 
   setOperator,
   setOperatorBusinessName,
+  encryptData,
+  decryptData,
   loginUser, 
   createUser, 
   loadUsers,

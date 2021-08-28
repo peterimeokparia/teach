@@ -64,7 +64,7 @@ import {
                       ulClassName={"lessons"}
                       liClassName={"lesson-item"}
                       altLinkPath={"student"}
-                      collection={links( selectedStudents, selectedCourseFromLessonPlanCourseDropDown?._id )}
+                      collection={() => links( selectedStudents, selectedCourseFromLessonPlanCourseDropDown?._id )}
                       onMatchListItem={onMatchListItem}
                       path={undefined}
                    >

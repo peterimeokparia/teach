@@ -12,18 +12,17 @@ const getParsedUserId = ( state, props ) => props?.currentUser?._id;
 const getUserId = ( state, props ) => props?.userId;
 const getQuestionId = ( state, props ) => props?.questionId;
 const getCourseId = ( state, props ) => props?.courseId;
-// const getCurrentOperatorId = ( state, props ) => props?.operatorId;
 const getCalendarEventType = ( state, props ) => props?.calendarEventType;
-const getCourses = state => state?.courses?.courses;
+const getCourses = state =>   Object.values(state?.courses?.courses);
 const getClassRoomGroups = state => state?.classrooms?.classrooms;
 const getPushNotificationUsers = state => state?.notifications?.pushNotificationSubscribers;
-const getOperators = state => state?.operators?.operators;
+const getOperators = state =>   Object.values(state?.operators?.operators);
 const getOperatorBusinessName = ( state, props ) => props?.operatorBusinessName;
 const getTimeLines = state => state?.timeLines?.timeLines;
 const getOnlineAnswers = state => state?.onlineAnswers?.onlineAnswers;
 const getFailedPushNotifications = state => state?.failedNotifications.failedPushNotifications;
 const getFailedEmailNotifications = state => state?.failedNotifications.failedEmailNotifications;
-
+// const getCurrentOperatorId = ( state, props ) => props?.operatorId;
 // const parseCourseId = (state, props) => props.courseId;
 // const getCurrentUser = state => state.users.user;
 // const getParsedCourseId = ( state, props ) => parseInt( props.courseId, 10 );
@@ -136,7 +135,7 @@ export const getCoursesByOperatorId = createSelector(
     getOperatorBusinessName,
     getCourses,
     (operators , operatorBusinessName, courses) => 
-         Object.values(courses)?.filter(usr => usr?.operatorId === Object.values(operators).find(operator =>  operator.businessName === operatorBusinessName)?._id)       
+       courses?.filter(usr => usr?.operatorId === operators.find(operator =>  operator.businessName === operatorBusinessName)?._id)       
 );
 
 export const getClassRoomGroupsByOperatorId = createSelector( 
@@ -167,6 +166,7 @@ export const getCalendarEventsByUserIdSelector = createSelector(
     getUserId,
     getCalendarEventType,
     (calendars , userId, calendarEventType) => 
+           // Object.values(calendars)?.find( calendar => calendar?.calendarEventType === calendarEventType )
         Object.values(calendars)?.find(calendar =>  calendar?.userId === userId && calendar?.calendarEventType === calendarEventType)      
 );
 

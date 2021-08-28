@@ -1,0 +1,43 @@
+.event-details {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'Courier New', Courier, monospace;
+    background-image: url(../../../../images/geometry2.png);
+}
+.event-details header {
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 900px;
+    /* padding: 10px 900px; */
+    /* padding: 10px 1000px; */
+    background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  }
+.event-details .events-body {
+    width: 100vh;
+    display: flex;
+    margin-right: 50%;
+    margin-left: 50%;
+    align-items: center;
+    flex-direction: column;
+    background-color: whitesmoke;
+}
+.event-details > ul > li {
+    display: flex;
+    align-items: center;
+}
+.event-details h2 {
+    text-decoration: underline;
+ }
+.event-details h3, h4, h5 {
+   padding-top: 20px;
+   text-decoration: underline;
+}
+.event-details form {
+    background-color: whitesmoke;
+ }
+

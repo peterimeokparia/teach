@@ -83,10 +83,10 @@ export const validationBeforeEnablingTeachPlatform = (currentCourse, currentUser
         toast.error("Please select a course before joining your lesson.");
         return;
     }
-    if ( currentUser?.role === role.Tutor && listOfStudents?.length === 0 ) {
-        toast.error("Please invite a student.");
-        return;  
-    }
+    // if ( currentUser?.role === role.Tutor && listOfStudents?.length === 0 ) {
+    //     toast.error("Please invite a student.");
+    //     return;  
+    // }
     if ( currentUser?.role === role.Tutor && !( currentCourse ) ) {
         toast.error("Please select a course.");
         return;  

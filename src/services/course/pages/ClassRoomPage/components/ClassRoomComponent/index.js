@@ -88,7 +88,7 @@ const ClassRoomComponent = ({
         setDropDownDisplayOption,
         dropDownDisplayOption, 
         listOfStudents,
-    } = useClassRoomComponentHook(operatorBusinessName, selectedUser );
+    } = useClassRoomComponentHook(operatorBusinessName, selectedUser, operator );
 
     const pushNotificationUsers = pushNotificationSubscribers?.filter(pushuser => listOfStudents?.find(student => student?._id === pushuser?.userId));
     

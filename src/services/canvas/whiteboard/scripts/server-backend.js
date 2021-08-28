@@ -96,8 +96,6 @@ function startBackendServer(port) {
             const widForData = ReadOnlyBackendService.isReadOnly(wid)
                 ? ReadOnlyBackendService.getIdFromReadOnlyId(wid)
                 : wid;
-            
-            // const testWid = "undefinedundefinedundefined";
             const ret = s_whiteboard.clearWhiteBoard(widForData);
             res.send(ret);
             res.end();
@@ -152,19 +150,21 @@ function startBackendServer(port) {
      */
     app.post("/api/updateWhiteboardJsonDataFromTeachDb", function (req, res) {
         console.log('saving json data saving json data ');
-        console.log(JSON.stringify( req.body ));
+        console.log(req.body );
+        let requestBody = req.body;
     
         let query = escapeAllContentStrings(req["query"]);
         const wid = query["wid"];
         const at = query["at"]; //accesstoken
+        const widForData = requestBody?.wid
         if (accessToken === "" || accessToken == at) {
-            const widForData = ReadOnlyBackendService.isReadOnly(wid)
-                ? ReadOnlyBackendService.getIdFromReadOnlyId(wid)
-                : wid;
-
-            const testWid = "undefinedundefinedundefined";
-            s_whiteboard.saveJsonData(testWid, req.body);
-            const ret = s_whiteboard.loadStoredData(testWid);
+            // const widForData = ReadOnlyBackendService.isReadOnly(wid)
+            //     ? ReadOnlyBackendService.getIdFromReadOnlyId(wid)
+            //     : wid;
+            console.log('getting wid wid ')
+            console.log( widForData );
+            s_whiteboard.saveJsonData(widForData, JSON.parse( requestBody?.jsonData ));
+            const ret = s_whiteboard.loadStoredData(widForData);
             res.send(ret);
             res.end();
         } else {

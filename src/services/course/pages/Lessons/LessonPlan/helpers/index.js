@@ -1,23 +1,22 @@
 import {
 getHostName } from 'services/course/helpers/PageHelpers';
 
-export const getUrls = (currentUser, courseId, lessonId) => {
-  const page = `${courseId}_${lessonId}`; 
-
-  //http://localhost:9090/?whiteboardid=undefinedundefinedundefined
+export const getUrls = (currentUser, courseId, lessonId, classRoomId) => {
+  const page = `${courseId}_${lessonId}_${classRoomId}`; 
+  const editorPage = `${lessonId}_${classRoomId}`;
 
   return {
       meeting: `https://joinmeet.today/${page}`, 
-      editor: getHostName()   ? `http://localhost:9001/p/${page}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false`
-                              : `https://ravingfanstudents.com/editor/p/${page}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false`,
+      editor: getHostName()   ? `http://localhost:9001/p/${editorPage}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false`
+                              : `https://ravingfanstudents.com/editor/p/${editorPage}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false`,
       canvas:  getHostName()  ? `http://localhost:9090/?whiteboardid=${page}&username=${currentUser?.firstname}`
                               : `https://ravingfanstudents.com/whiteboard/?whiteboardid=${page}&username=${currentUser?.firstname}`,
       recorder: getHostName() ? `http://localhost:3000/LessonPlan/VideoModal/${courseId}/${lessonId}`
                               : `https://ravingfanstudents.com/LessonPlan/VideoModal/${courseId}/${lessonId}`,
-      privateEditor: getHostName()  ? `http://localhost:9001/p/${page}_${currentUser?._id}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false`
-                                    : `https://ravingfanstudents.com/editor/p/${page}_${currentUser?._id}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false`,
-      privateCanvas: getHostName()  ? `http://localhost:9090/?whiteboardid=${page}_${currentUser?._id}&username=${currentUser?.firstname}`
-                                    : `https://ravingfanstudents.com/whiteboard/?whiteboardid=${page}_${currentUser?._id}&username=${currentUser?.firstname}`,
+      privateEditor: getHostName()  ? `http://localhost:9001/p/${editorPage}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false`
+                                    : `https://ravingfanstudents.com/editor/p/${editorPage}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false`,
+      privateCanvas: getHostName()  ? `http://localhost:9090/?whiteboardid=${page}&username=${currentUser?.firstname}`
+                                    : `https://ravingfanstudents.com/whiteboard/?whiteboardid=${page}&username=${currentUser?.firstname}`,
    };
 };
 

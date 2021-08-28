@@ -70,11 +70,7 @@ const handleSubmit = e => {
 
     if ( saveInProgress ) {
         return <div>...loading</div>;
-} 
-
-// if ( onSaveError ) {
-//     return <div> { onSaveError.message } </div>;
-// }      
+    } 
 
 return (
     <div className="NewCourse">
@@ -130,7 +126,6 @@ const mapState = (state, ownProps ) => ({
     saveInProgress: state.courses.saveInProgress,
     onSaveError: state.courses.onSaveError,
     onCoursesError: state.courses.onCoursesError,
-    operator: getOperatorFromOperatorBusinessName(state, ownProps),
 });
 
 export default connect(mapState)(NewCoursePage);

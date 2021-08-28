@@ -18,6 +18,10 @@ adjustRoomSize } from 'services/course/pages/Lessons/LessonPlan/helpers';
 import { 
 Validations } from 'services/course/helpers/Validations';
 
+import { 
+setItemInSessionStorage,
+getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
+
 import {
 videoCallIcon,
 adjustRoomIcon,
@@ -44,7 +48,17 @@ const LessonPlan = ({
   saveLesson,
   users,
   currentUser,
+  selectedCourseFromLessonPlanCourseDropDown,
   selectedLessonFromLessonPlanDropDown }) => {
+
+  const selectedCourse = (selectedCourseFromLessonPlanCourseDropDown?._id === undefined) 
+                            ? getItemFromSessionStorage('selectedCourse') 
+                            : selectedCourseFromLessonPlanCourseDropDown;
+
+  const selectedLesson = (selectedLessonFromLessonPlanDropDown?._id === undefined) 
+                            ? getItemFromSessionStorage('selectedLesson') 
+                            : selectedLessonFromLessonPlanDropDown;
+
   let {
     hideMeetingStage,
     videoModalModeOn,
@@ -57,13 +71,11 @@ const LessonPlan = ({
     resetAllStartSettings,
     resetAllStopSettings,
     hidePopUpWindow
-  } = useTeachMeetingSettingsHook( users, currentUser, classRoomId, operatorBusinessName );
+  } = useTeachMeetingSettingsHook( users, currentUser, classRoomId, selectedCourse, selectedLesson );
 
-  let lesson = ( ! selectedLessonFromLessonPlanDropDown?._id ) ? currentLesson : selectedLessonFromLessonPlanDropDown;
-  
-const saveVideoRecording = ( element ) => {
-  saveLesson( element );
-};
+  const saveVideoRecording = ( element ) => {
+    saveLesson( element );
+  };
 
 function toggleCurrentMeetingSession(){ 
   toggleTeach();
@@ -81,7 +93,7 @@ return (
         <VideoCallIcon 
             style={ videoCallIcon() }
             className={ ( session ) ? "lesson-plan-round-button-3" : "lesson-plan-round-button-2" }
-            onClick={() => toggleCurrentMeetingSession( lesson )} 
+            onClick={() => toggleCurrentMeetingSession( selectedLesson )} 
         />
         <AdjustIcon
             style={ adjustRoomIcon( session ) }
@@ -90,8 +102,8 @@ return (
         />
         < MaterialUiVideoComponent 
             className={""} 
-            element={ lesson } 
-            videoMeta={videoMeta( lesson )}
+            element={ selectedLesson } 
+            videoMeta={videoMeta( selectedLesson )}
             resetAllStartSettings={resetAllStartSettings}
             resetAllStopSettings={resetAllStopSettings}
             setVideoModalMode={(stage) => setVideoModalMode(stage)}
@@ -103,7 +115,13 @@ return (
       </header>
         <div>
           <div className="content">  
-            <BoardEditorComponent saveIconVisible={true}/>  
+            <BoardEditorComponent 
+              saveIconVisible={true}
+              courseId={selectedCourse?._id }
+              lessonId={selectedLesson?._id}
+              classRoomId={classRoomId}
+              operatorBusinessName={operatorBusinessName}
+            />  
             <div>
               <div className={adjustRoomSize( roomSize ).containerStyle}>   
                 <div className={`meeting-stage-${(hideMeetingStage) ? 'hidden' : 'visible'}`}>
@@ -145,6 +163,7 @@ const mapState = ( state, ownProps )   => {
     invitees: state.users.invitees,
     onSessionRenewal: state.sessions.autoRenewedPackageSuccess,
     allSessions: Object.values(state?.sessions?.sessions),
+    selectedCourseFromLessonPlanCourseDropDown: state.courses.selectedCourseFromLessonPlanCourseDropDown,
     selectedLessonFromLessonPlanDropDown: state.lessons.selectedLessonFromLessonPlanDropDown
   };
 };

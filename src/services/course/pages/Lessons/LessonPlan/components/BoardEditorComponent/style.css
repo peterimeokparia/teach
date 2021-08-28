@@ -1,0 +1,163 @@
+.whiteBoardSideBar .savedBoards {
+    list-style: none;
+    margin:  0;
+    padding:  0;
+}
+.whiteBoardSideBar .save-icon-visible {
+    visibility: visible;
+}
+.whiteBoardSideBar .save-icon-hidden {
+    visibility: hidden;
+}
+@media only screen and (min-width: 638px) {
+    .whiteBoardSideBar {
+        flex-basis: 100px;
+        background: transparent;
+        margin-left: -100px;
+        max-height: 900px;
+        overflow: scroll;
+    }
+    .whiteBoardSideBar .savedBoards {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .whiteBoardSideBar .save-icon-visible {
+        visibility: visible;
+    }
+    .whiteBoardSideBar .save-icon-hidden {
+        visibility: hidden;
+    }
+    .whiteBoardSideBar .savedBoards .savedBoards-items {
+        margin-bottom: 5px;
+        top: 50%;
+        left: 50%;
+        margin-right: 0%;
+        padding-bottom: 15px;
+        padding-left: 0.5rem;
+    }
+    .whiteBoardSideBar .savedBoards .savedBoards-items:hover {
+        margin-bottom: 5px;
+        border-style: solid;
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        margin-right: 0%;
+        padding-bottom: 15px;
+        padding-left: 0.5rem;
+        cursor: pointer;
+    }
+}
+@media only screen and (max-width: 637px) {
+    .whiteBoardSideBar {
+        background: #fbf9ff;
+        border-right: 1px solid #bba0ea;
+    }
+    .whiteBoardSideBar .save-icon-visible {
+        visibility: visible;
+    }
+    .whiteBoardSideBar .save-icon-hidden {
+        visibility: hidden;
+    }
+}
+/* 
+##Device = Desktops
+##Screen = 1281px to higher resolution desktops
+*/
+@media (min-width: 1281px) {
+    .whiteBoardSideBar {
+        /* flex-basis: 300px;
+        background: #fbf9ff;
+        border-right: 1px solid #bba0ea; */
+    }
+    .whiteBoardSideBar .save-icon-visible {
+        visibility: visible;
+    }
+    .whiteBoardSideBar .save-icon-hidden {
+        visibility: hidden;
+    }
+}
+
+/* 
+##Device = Laptops, Desktops
+##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+    .whiteBoardSideBar {
+        flex-basis: 300px;
+        background: #fbf9ff;
+        border-right: 1px solid #bba0ea;
+    }
+    .whiteBoardSideBar .save-icon-visible {
+        visibility: visible;
+    }
+    .whiteBoardSideBar .save-icon-hidden {
+        visibility: hidden;
+    }
+}
+/* 
+##Device = Tablets, Ipads (portrait)
+##Screen = B/w 768px to 1024px
+*/
+@media (min-width: 768px) and (max-width: 1024px) {
+    .whiteBoardSideBar {
+        flex-basis: 300px;
+        background: #fbf9ff;
+        border-right: 1px solid #bba0ea;
+    }
+    .whiteBoardSideBar .save-icon-visible {
+        visibility: visible;
+    }
+    .whiteBoardSideBar .save-icon-hidden {
+        visibility: hidden;
+    }
+}
+/* 
+##Device = Tablets, Ipads (landscape)
+##Screen = B/w 768px to 1024px
+*/
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .whiteBoardSideBar {
+        flex-basis: 300px;
+        background: #fbf9ff;
+        border-right: 1px solid #bba0ea;
+    }
+    .whiteBoardSideBar .save-icon-visible {
+        visibility: visible;
+    }
+    .whiteBoardSideBar .save-icon-hidden {
+        visibility: hidden;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .whiteBoardSideBar {
+        flex-basis: 300px;
+        background: #fbf9ff;
+        border-right: 1px solid #bba0ea;
+    }
+    .whiteBoardSideBar .save-icon-visible {
+        visibility: visible;
+    }
+    .whiteBoardSideBar .save-icon-hidden {
+        visibility: hidden;
+    }
+}
+/* 
+##Device = Low Resolution Tablets, Mobiles (Landscape)
+##Screen = B/w 481px to 767px
+*/
+@media (min-width: 481px) and (max-width: 767px) { 
+    .whiteBoardSideBar {
+        flex-basis: 300px;
+        background: #fbf9ff;
+        border-right: 1px solid #bba0ea;
+    }
+    .whiteBoardSideBar .save-icon-visible {
+        visibility: visible;
+    }
+    .whiteBoardSideBar .save-icon-hidden {
+        visibility: hidden;
+    }
+}

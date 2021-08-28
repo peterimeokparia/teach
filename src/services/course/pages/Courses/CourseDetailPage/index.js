@@ -102,10 +102,11 @@ return (
     <div>    
         {Validations.setErrorMessageContainer()} 
         <CourseDisplayViewComponent
-                courseId={courseId} 
-                lessonId={lessonId}
-                selectedTutorId={selectedTutorId}
-                courseDetailChildren={children}
+            operatorBusinessName={operatorBusinessName}
+            courseId={courseId} 
+            lessonId={lessonId}
+            selectedTutorId={selectedTutorId}
+            courseDetailChildren={children}
         />     
     </div>   
     

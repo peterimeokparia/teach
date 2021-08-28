@@ -1,6 +1,10 @@
 import { 
 createSelector}  from 'reselect';
 
+import { 
+setItemInSessionStorage,
+getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
+
 const getUsers = state => state.users.users;
 const getCurrentUser = state => state.users.user;
 const getLessons = state => state.lessons.lessons;
@@ -118,8 +122,17 @@ export const getCoursesByCreatedByIdSelector = createSelector(
 export const getOperatorFromOperatorBusinessName = createSelector( 
     getOperators,
     getOperatorBusinessName,
-    (operators , operatorBusinessName) => 
-        Object.values(operators)?.find(operator =>  operator?.businessName === operatorBusinessName)       
+    (operators , operatorBusinessName) => {
+        let operator = Object.values(operators)?.find(operator =>  operator?.businessName === operatorBusinessName);
+        if ( operator ) {
+            setItemInSessionStorage('operator', operator);
+        }
+
+        if ( operatorBusinessName ) {
+            setItemInSessionStorage('operatorBusinessName', operatorBusinessName);
+        }
+        return operator;
+    }        
 );
 
 export const getUsersByOperatorId = createSelector( 
@@ -166,7 +179,6 @@ export const getCalendarEventsByUserIdSelector = createSelector(
     getUserId,
     getCalendarEventType,
     (calendars , userId, calendarEventType) => 
-           // Object.values(calendars)?.find( calendar => calendar?.calendarEventType === calendarEventType )
         Object.values(calendars)?.find(calendar =>  calendar?.userId === userId && calendar?.calendarEventType === calendarEventType)      
 );
 

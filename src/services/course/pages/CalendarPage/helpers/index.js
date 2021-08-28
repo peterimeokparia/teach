@@ -1,11 +1,11 @@
 import { 
-role } from 'services/course/helpers/PageHelpers';
+role,
+generateRandomColor } from 'services/course/helpers/PageHelpers';
 
 import {
 getTimeZoneDateTime } from 'services/course/helpers/ServerHelper';
 
 import moment from "moment";
-import randomColor from 'randomcolor';
 
 export const getCalendarColor = ( calendars ) => {
     let color = null;
@@ -23,10 +23,6 @@ export const getCalendarColor = ( calendars ) => {
     return color;
 };
 
-export const generateRandomColor = () => {
-  return randomColor({ luminosity: 'light',  hue: 'random' });
-};
-
 export const getCalendarPageHeading = ( calendarEventType ) => {
     let calendarHeading = null;
 
@@ -36,6 +32,9 @@ export const getCalendarPageHeading = ( calendarEventType ) => {
         calendarHeading = 'New Consultation'; 
         break;
         case eventEnum.SessionScheduling:
+        calendarHeading = 'Schedule Session'; 
+        break;
+        case eventEnum.TutorCalendar:
         calendarHeading = 'Schedule Session'; 
         break;
         default:
@@ -146,7 +145,9 @@ export const eventEnum = {
     DayGridMonth: "dayGridMonth",
     TimeGridDay: "timeGridDay",
     isRecurring: "isRecurring",
-    isAllDay: "isAllDay"
+    isAllDay: "isAllDay",
+    TutorCalendar: "tutorcalendar",
+    Available: "Available"
 };
 
 let calendarTypes = [eventEnum?.ConsultationForm, eventEnum?.SessionScheduling ]; 
@@ -435,6 +436,16 @@ export function updatedCurrentEvent(currentEvent, updatedEvent){
             }
         },
         location: updatedEvent?.location,
-        schedulingData: updatedEvent?.schedulingData
+        schedulingData: updatedEvent?.schedulingData,
+        consultation: updatedEvent?.consultation
     };
 }
+
+export function userCanAddOrEditEvent( info, user ){
+    if ( info?.event?.title === eventEnum.Available || 
+        info?.event?._def?.extendedProps?.userId === user?._id || 
+            user?.role === role.Tutor ) {
+
+        return true;
+    }
+};

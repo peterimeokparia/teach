@@ -10,18 +10,22 @@ import {
 MEETINGROUTE,
 handleBackEndLogs } from '../helpers/logHelper.js';
 
+import { 
+verifyRoute,
+logRouteInfo } from '../middleWare/index.js';
+
 const meetingRoute = express.Router();
+meetingRoute.use(logRouteInfo);
 
 meetingRoute.get('/', (req, res) => {
-meetingModel.find({ })
-.then(data => {
-    return res.status(200).json(data);
-})
-.catch( error => {
-    console.log( error );
-    handleBackEndLogs( MEETINGROUTE, error );
-    return res.status(400).json({ error })
-});
+    meetingModel.find({ })
+    .then(data => {
+        return res.status(200).json(data);
+    })
+    .catch( error => {
+        handleBackEndLogs( MEETINGROUTE, error );
+        return res.status(400).json({ error });
+    });
 });
 
 meetingRoute.get('/meeting', (req, res) => {
@@ -31,29 +35,24 @@ meetingRoute.get('/meeting', (req, res) => {
     if ( data === null || data === undefined ) {
         Error('Object is null or undefined');
     }
-    return res.status(200).json(data);
+        return res.status(200).json(data);
     })
     .catch( error => {
-    console.log( error );
-    handleBackEndLogs( MEETINGROUTE, error );
-    return res.status(400).json({ error })
+        handleBackEndLogs( MEETINGROUTE, error );
+        return res.status(400).json({ error });
     });
 });
 
 meetingRoute.post('/', (req, res) => {
    let meetingData = getPostData( req );
    let user = new meetingModel(meetingData);  
-   
     user.save()
-      .then(data => {
-        console.log( 'meeting data' )
-        console.log( JSON.stringify( data ) )
-       return res.status(200).json(data)
-      })
-      .catch( error => {
-        console.log( error );
+    .then(data => {
+       return res.status(200).json(data);
+    })
+    .catch( error => {
         handleBackEndLogs( MEETINGROUTE, error );
-        return res.status(400).json({ error })
+        return res.status(400).json({ error });
     });
 });
 
@@ -63,21 +62,19 @@ meetingRoute.put('/:meetingId', (req, res) => {
         return res.status(200).json(data)
     })
     .catch( error => {
-        console.log( error );
         handleBackEndLogs( MEETINGROUTE, error );
-        return res.status(400).json({ error })
+        return res.status(400).json({ error });
     });
 });
 
 meetingRoute.delete('/:meetingId', (req, res) => {
     meetingModel.findByIdAndDelete(req.params.meetingId)
      .then(data => {
-        return res.status(200).json(data)
+        return res.status(200).json(data);
      })
      .catch( error => {
-        console.log( error );
         handleBackEndLogs( MEETINGROUTE, error );
-        return res.status(400).json({ error })
+        return res.status(400).json({ error });
     });
 });
 

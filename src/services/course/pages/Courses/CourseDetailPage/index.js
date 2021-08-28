@@ -100,7 +100,7 @@ function userOwnsCourse(user, courseTutor,  courseId){
 
 return ( 
     <div>    
-         {Validations.setErrorMessageContainer()} 
+        {Validations.setErrorMessageContainer()} 
         <CourseDisplayViewComponent
                 courseId={courseId} 
                 lessonId={lessonId}

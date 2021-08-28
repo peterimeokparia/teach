@@ -2,7 +2,7 @@ export const helpIconStyle = () => {
   return {
     fontSize: 70,
     position: "fixed",
-    "z-index": 1, 
+    "zIndex": 1, 
     left: "50%",
     top: "-3%",
   };
@@ -37,7 +37,7 @@ export const editorSaveIconStyle = () => {
 
 export const plusOneIconStyle = () => {
   return {
-    fontSize: 60,
+    fontSize: 45,
     "margin-left": "2%"
   };
 };
@@ -45,8 +45,8 @@ export const plusOneIconStyle = () => {
 export const iconStyleMain = () => {
   return {
     fontSize: 45,
-    'margin-left': '0px',
-    'margin-right': '-30px'
+    // 'margin-left': '0px',
+    // 'margin-right': '-30px'
   };
 };
 
@@ -68,10 +68,9 @@ export const onlineAnswerVideoDeleteIconStyle = ( recording, id, selectedId ) =>
   };
 };
 
-export const saveIconStyle = ( id, selectedId ) => {
+export const saveIconStyle = () => {
   return {
-    fontSize: 70,
-    visibility: ( id === selectedId ) ? "visible" : "hidden"
+    fontSize: 45
   };
 };
 
@@ -87,11 +86,15 @@ export const videoCallIcon = ( ) => {
   return {
     fontSize: 45,
     'margin-left': '0px',
-    // 'margin-right': '-30px'
   };
-  //   fontSize: 55,
-  //   position: "relative",
-  //   "visibility": ( capturingVideo ) ? "visible" : "hidden",
+};
+
+export const savedBoardIcon = ( color) => {
+  return {
+    fontSize: 45,
+    'margin-left': '0px',
+     color:color
+  };
 };
 
 export const shareScreenIcon = ( capturingVideo ) => {

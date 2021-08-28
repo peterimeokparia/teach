@@ -28,7 +28,7 @@
   text-transform: capitalize;
 }
 .MyCourses header h2 {
-  background-color: #673ab7;
+  /* background-color: #673ab7; */
   text-decoration: underline burlywood;
   margin: 0;
   font-size: 24px;
@@ -36,11 +36,12 @@
   color: white;
   padding-right: 0px;
   text-transform: capitalize;
+  font-size: 24px;
+  font-weight: bolder;
+  text-align: center;
+  text-transform: capitalize;
 
-  /* text-transform: uppercase;
-    letter-spacing: 0.5rem;
-    padding: 2rem 0;
-    font-weight: bold; */
+
 }
 .MyCourses header h3 {
   background-color: #673ab7;

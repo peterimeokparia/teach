@@ -21,7 +21,7 @@
     right: 0;
     height: 56px;
     content: "";
-    background-image: url(../../images/fileUpload.png);
+    /* background-image: url(../../images/fileUpload.png); */
     display: block;
     margin: 0 auto;
     background-size: 100%;
@@ -79,4 +79,40 @@
 }
 .image-crapper{
 margin-right: 10%;  
+}
+.lessonFileUploadFilelist ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-left: 10px;
+}
+.lessonFileUploadFilelist span:nth-child(odd){
+    background-color: lightsalmon;
+}
+.lessonFileUploadFilelist span:nth-child(even){
+    background-color: lightseagreen;
+}
+.lessonFileUploadFilelist span:nth-child(odd):hover{
+    background-color: white;
+    cursor: pointer;
+}
+.lessonFileUploadFilelist span:nth-child(even):hover{
+    background-color: white;
+    cursor: pointer;
+}
+.lessonFileUploadFilelist span {
+    margin-right: -80%;
+    margin-top: 20px ;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    margin-right: 50%;
+    border-style: solid;
+    border-radius: 30px; 
+    font-weight: bolder;
+    /* transform: translate(-50%, -50%) */
+}
+.lessonFileUploadFilelist a {
+    margin-left: 250px;
+    font: black;
 }

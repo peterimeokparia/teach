@@ -1,7 +1,7 @@
 export const replyIconStyle = (   ) => {
     return {
       fontSize: 55,
-      "z-index": 1, 
+      "zIndex": 1, 
       "margin-left": "17%",
       "margin-right": "12%",
       top: "-3%",
@@ -11,7 +11,7 @@ export const replyIconStyle = (   ) => {
   export const saveIconStyle = (   ) => {
     return {
       fontSize: 55,
-      "z-index": 1, 
+      "zIndex": 1, 
       "margin-left": "17%",
       "margin-right": "12%",
       top: "-3%",
@@ -21,7 +21,7 @@ export const replyIconStyle = (   ) => {
   export const deleteIconStyle = (   ) => {
     return {
       fontSize: 55,
-      "z-index": 1, 
+      "zIndex": 1, 
       "margin-right": "10%",
       "margin-left": "15%",
       top: "-3%",

@@ -1,4 +1,8 @@
 //This file is only for saving the whiteboard.
+
+// const notatest = require("../../../course/api");
+// const PREFIXT = 'http://localhost:9005/api/v1';
+
 const fs = require("fs");
 const config = require("./config/config");
 const { getSafeFilePath } = require("./utils");
@@ -28,7 +32,7 @@ function fileDatabasePath(wid) {
 
 module.exports = {
     handleEventsAndData: function (content) {
-        var tool = content["t"]; //Tool witch is used
+        var tool = content["t"]; //Tool which is used
         var wid = content["wid"]; //whiteboard ID
         var username = content["username"];
         if (tool === "clear") {
@@ -131,6 +135,10 @@ module.exports = {
                 setTimeout(function () {
                     saveDelay[wid] = false;
                     if (savedBoards[wid]) {
+                        // do something here
+                        console.log('@@@wid wid wid wid@@@');
+                        console.log(JSON.stringify(wid));
+
                         fs.writeFile(
                             fileDatabasePath(wid),
                             JSON.stringify(savedBoards[wid]),
@@ -145,6 +153,25 @@ module.exports = {
             }
         }
     },
+    saveJsonData: function (wid, jsonData) {
+        savedBoards[wid] = [];
+        if (config.backend.enableFileDatabase) {
+            //save to file
+            fs.writeFile(
+                fileDatabasePath(wid),
+                JSON.stringify(jsonData),
+                (err) => {
+                    if (err) {
+                        return console.log(err);
+                    }
+                }
+            );
+
+            savedBoards[wid] = jsonData
+        }
+
+        return savedBoards[wid];
+    },
     // Load saved whiteboard
     loadStoredData: function (wid) {
         if (wid in savedBoards) {
@@ -153,19 +180,29 @@ module.exports = {
 
         savedBoards[wid] = [];
 
-        // try to load from DB
+        //read saved board from file
         if (config.backend.enableFileDatabase) {
-            //read saved board from file
             var filePath = fileDatabasePath(wid);
             if (fs.existsSync(filePath)) {
                 var data = fs.readFileSync(filePath);
                 if (data) {
+                    console.log('@@@reading from file source');
                     savedBoards[wid] = JSON.parse(data);
                 }
             }
         }
 
         return savedBoards[wid];
+    },
+    clearWhiteBoard: function (wid) {
+        delete savedBoards[wid];
+        delete savedUndos[wid];
+        // delete the corresponding file too
+        fs.unlink(fileDatabasePath(wid), function (err) {
+            if (err) {
+                return console.log(err);
+            }
+        });
     },
     copyStoredData: function (sourceWid, targetWid) {
         const sourceData = this.loadStoredData(sourceWid);

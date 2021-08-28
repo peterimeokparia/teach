@@ -1,4 +1,5 @@
 import FileUpload from 'services/course/pages/components/FileUpload';
+import './style.css';
 
 export function LessonFileUpload({
 previewMode,
@@ -16,8 +17,21 @@ const onChangeHandler = event => {
     saveAction({ ...currentLesson, files });
 };
 
+const getFileName = ( link ) => {
+    return link.split('files/')[1]
+};
+
+const openFile = (file) => {
+    window.open(`${file}`);
+};
+
+const deleteFile = ( fileToDelete ) => {
+    if( window.confirm(`Are you sure you want to delete ${fileToDelete}`) ){
+        setFilesToRemove( fileToDelete );
+    }
+};
 return (
-    <div>                                
+    <div className="lessonFileUploadFilelist">                                
         {( previewMode )  
         ?   ( 
             <div> 
@@ -27,27 +41,27 @@ return (
                 />
             <div> 
             {currentLesson?.files?.length > 0 && (
-                <ul>
-            {currentLesson?.files?.map( (file, index) =>  ( 
-                <li key={index}> 
-                    <a  href={file} target="_blank" rel="noopener noreferrer"> {file}  </a> 
-                    <button onClick={() => setFilesToRemove(file)}> x </button>  
-                </li> 
-            ))}
-                </ul> 
+            <div>
+                {currentLesson?.files?.map( (file, index) =>  ( 
+                     <span onClick={() => deleteFile(file)}>
+                      {getFileName( file )}
+                      {/* <a  href={file} target="_blank" rel="noopener noreferrer"> {getFileName( file )}  </a>  */}
+                    </span>
+                ))}
+            </div> 
             )}
             </div>
             </div> 
             )
         :   ( <div>
                 {currentLesson?.files?.length > 0 && (
-                    <ul>
-                        {currentLesson?.files?.map( (file, index)  =>  ( 
-                            <li key={index}> 
-                                <a  href={file} target="_blank" rel="noopener noreferrer"> {file}  </a> 
-                            </li>))
-                        }
-                    </ul> 
+                <div>
+                    {currentLesson?.files?.map( (file, index)  =>  ( 
+                        <span onClick={() => openFile(file)}>
+                            {getFileName( file )}
+                        </span>
+                    ))}
+                </div> 
                 )}
             </div> ) 
         }

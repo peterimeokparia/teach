@@ -43,6 +43,7 @@ const EditCalendarEvents = ({
     timeLines,
     children }) => {
     let useEditCalendarEventHookProp = {
+        currentUser,
         currentEvent, 
         eventEnum,
         calendarEventType,
@@ -118,7 +119,7 @@ const cancelEdit = (e) => {
 };
  
 return editing ? (
-        <> 
+    <div className="events-main">       
         <span className="events"> 
             {(calendarEventType === eventEnum.SessionScheduling) &&  
                 <SessionScheduling 
@@ -340,8 +341,8 @@ return editing ? (
                     </span>         
                 </form>
                 </span>
-                   {error && <div>{error.message}</div>}
-           </>
+                   {error && <div>{error.message}</div>} 
+            </div> 
             ) : ( 
                  children(beginEditing, performDelete, performDeleteAll)
                 );                         

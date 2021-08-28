@@ -8,12 +8,6 @@ Redirect } from '@reach/router';
 import { 
 useDispatch } from 'react-redux';
     
-import { 
-loadMeetings } from 'services/course/actions/meetings';
-
-import {
-loadSubscribedPushNotificationUsers } from 'services/course/actions/notifications';
-
 import {
 setOperator,
 setOperatorBusinessName } from 'services/course/actions/operator';
@@ -42,22 +36,18 @@ function useLoginPageHook( loginPageProps ){
 
     const [ signUpOrLoginPreference, setSignUpOrLoginInPreference ] = useState(false);
 
-    useEffect(() => {
-        if ( operator ) {
-          setOperator( operator );
-        }
-    }, [ signUpOrLoginPreference, operator, setOperator  ]);     
-    // }, [ loadUsers, loadSessions, loadMeetings, loadSubscribedPushNotificationUsers, signUpOrLoginPreference, setSignUpOrLoginInPreference ]);
-
-    if ( operatorBusinessName ) {
-        dispatch(setOperatorBusinessName( operatorBusinessName ));
-    }    
-
     if ( ! operator || ! operatorBusinessName  ) {
         return <NotFoundPage />;
     }
 
     if ( loading ) {
+        if ( operator ) {
+            setOperator( operator );
+        }
+  
+        if ( operatorBusinessName ) {
+            dispatch(setOperatorBusinessName( operatorBusinessName ));
+        }   
         return <Loading />;
     }
 

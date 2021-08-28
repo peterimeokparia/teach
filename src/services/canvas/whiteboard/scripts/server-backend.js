@@ -1,5 +1,6 @@
 const path = require("path");
 
+//https://www.newline.co/@AoX04/axios-js-and-nodejs-a-match-made-in-heaven-for-api-consumption--bf0618b1
 const config = require("./config/config");
 const ReadOnlyBackendService = require("./services/ReadOnlyBackendService");
 const WhiteboardInfoBackendService = require("./services/WhiteboardInfoBackendService");
@@ -9,6 +10,9 @@ function startBackendServer(port) {
     var fs = require("fs-extra");
     var express = require("express");
     var formidable = require("formidable"); //form upload processing
+    const bodyParser = require('body-parser');
+    const cors = require('cors');
+
 
     const createDOMPurify = require("dompurify"); //Prevent xss
     const { JSDOM } = require("jsdom");
@@ -20,6 +24,9 @@ function startBackendServer(port) {
     var s_whiteboard = require("./s_whiteboard.js");
 
     var app = express();
+    app.use(bodyParser.json({limit: '20mb', extended: true}))
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(cors());
 
     var server = require("http").Server(app);
     server.listen(port);
@@ -67,6 +74,40 @@ function startBackendServer(port) {
     });
 
     /**
+     * @api {get} /api/clearwhiteboardData Get Whiteboard Data
+     * @apiDescription This returns all the Available Data ever drawn to this Whiteboard
+     * @apiName clearwhiteboardData
+     * @apiGroup WhiteboardAPI
+     *
+     * @apiParam {Number} wid WhiteboardId you find in the Whiteboard URL
+     * @apiParam {Number} [at] Accesstoken (Only if activated for this server)
+     *
+     * @apiSuccess {String} body returns the data as JSON String
+     * @apiError {Number} 401 Unauthorized
+     *
+     * @apiExample {curl} Example usage:
+     *     curl -i http://[rootUrl]/api/clearwhiteboardData?wid=[MyWhiteboardId]
+     */
+    app.get("/api/clearwhiteboardData", function (req, res) {
+        let query = escapeAllContentStrings(req["query"]);
+        const wid = query["wid"];
+        const at = query["at"]; //accesstoken
+        if (accessToken === "" || accessToken == at) {
+            const widForData = ReadOnlyBackendService.isReadOnly(wid)
+                ? ReadOnlyBackendService.getIdFromReadOnlyId(wid)
+                : wid;
+            
+            // const testWid = "undefinedundefinedundefined";
+            const ret = s_whiteboard.clearWhiteBoard(widForData);
+            res.send(ret);
+            res.end();
+        } else {
+            res.status(401); //Unauthorized
+            res.end();
+        }
+    });
+
+    /**
      * @api {get} /api/getReadOnlyWid Get the readOnlyWhiteboardId
      * @apiDescription This returns the readOnlyWhiteboardId for a given WhiteboardId
      * @apiName getReadOnlyWid
@@ -87,6 +128,44 @@ function startBackendServer(port) {
         const at = query["at"]; //accesstoken
         if (accessToken === "" || accessToken == at) {
             res.send(ReadOnlyBackendService.getReadOnlyId(wid));
+            res.end();
+        } else {
+            res.status(401); //Unauthorized
+            res.end();
+        }
+    });
+
+     /**
+     * @api {get} /api/updateWhiteboardJsonData Get Whiteboard Data
+     * @apiDescription This returns specific data drawn to the whiteboard
+     * @apiName updateWhiteboardJsonData
+     * @apiGroup WhiteboardAPI
+     *
+     * @apiParam {Number} wid WhiteboardId you find in the Whiteboard URL
+     * @apiParam {Number} [at] Accesstoken (Only if activated for this server)
+     *
+     * @apiSuccess {String} body returns the data as JSON String
+     * @apiError {Number} 401 Unauthorized
+     *
+     * @apiExample {curl} Example usage:
+     *     curl -i http://[rootUrl]/api/updateWhiteboardJsonData?wid=[MyWhiteboardId]
+     */
+    app.post("/api/updateWhiteboardJsonDataFromTeachDb", function (req, res) {
+        console.log('saving json data saving json data ');
+        console.log(JSON.stringify( req.body ));
+    
+        let query = escapeAllContentStrings(req["query"]);
+        const wid = query["wid"];
+        const at = query["at"]; //accesstoken
+        if (accessToken === "" || accessToken == at) {
+            const widForData = ReadOnlyBackendService.isReadOnly(wid)
+                ? ReadOnlyBackendService.getIdFromReadOnlyId(wid)
+                : wid;
+
+            const testWid = "undefinedundefinedundefined";
+            s_whiteboard.saveJsonData(testWid, req.body);
+            const ret = s_whiteboard.loadStoredData(testWid);
+            res.send(ret);
             res.end();
         } else {
             res.status(401); //Unauthorized

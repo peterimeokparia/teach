@@ -1,5 +1,5 @@
 import { 
-emailClient } from '../emailclient/emailClient.js';
+emailClient } from '../emailClient/index.js';
 
 import {
 getPostData,    
@@ -12,19 +12,22 @@ handleBackEndLogs } from '../helpers/logHelper.js';
 import { 
 SENDGRID } from '../emailclient/providers/index.js';
 
+import { 
+verifyRoute,
+logRouteInfo } from '../middleWare/index.js'; 
+
 import express from 'express';
 import emailModel from '../model/emailModel.js';
 
 const emailRoute = express.Router();
+emailRoute.use(logRouteInfo);
 
 emailRoute.get('/', (req, res) => {
 emailModel.find({ })
     .then(data => {
-        console.log('Emails Emails', data)
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log( error );
         handleBackEndLogs( EMAILROUTE, error );
         return res.status(400).json({ error })
     });
@@ -37,33 +40,26 @@ let emailOptions = {
     subject: req.body.subject,
     text: req.body.messageBody
 };
-
 // inject mail provider dependency
 emailClient( emailOptions, SENDGRID );
-let emailData = getPostData( req );
-
-let email = new emailModel(emailData);  
-
-email.save()
+    let emailData = getPostData( req );
+    let email = new emailModel(emailData);  
+    email.save()
     .then(data => {
-        console.log('Emails Emails', data)
         return res.status(200).json(data);
     })
     .catch( error => {
-        console.log( error );
         handleBackEndLogs( EMAILROUTE, error );
         return res.status(400).json({ error })
     });
 });
 
- emailRoute.put('/:userId', (req, res) => {
-saveUpdatedData(req, emailModel, req.params.userId)
+emailRoute.put('/:userId', (req, res) => {
+    saveUpdatedData(req, emailModel, req.params.userId)
     .then( data => {
-      console.log(data);
       return res.status(200).json(data);
     })
     .catch( error => {
-        console.log( error );
         handleBackEndLogs( EMAILROUTE, error );
         return res.status(400).json({ error })
     });
@@ -72,11 +68,9 @@ saveUpdatedData(req, emailModel, req.params.userId)
 emailRoute.delete('/:emailId', (req, res) => {
     emailModel.findByIdAndDelete(req.params.emailId)
      .then(data => {
-        console.log('data - doc', data);
         return res.status(200).json(data);
      })
      .catch( error => {
-        console.log( error );
         handleBackEndLogs( EMAILROUTE, error );
         return res.status(400).json({ error })
     });

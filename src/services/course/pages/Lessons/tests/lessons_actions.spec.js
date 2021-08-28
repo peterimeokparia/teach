@@ -1,7 +1,7 @@
 import {
 loadLessons,
 addNewLesson,
-saveLesson
+saveLesson,
 ADD_NEW_LESSON_BEGIN,
 ADD_NEW_LESSON_SUCCESS,
 SAVE_LESSON_BEGIN,

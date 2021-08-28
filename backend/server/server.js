@@ -36,6 +36,12 @@ import logForTeachRoute from '../routes/logForTeachRoute.js';
 import questionFormRoute from '../routes/questionFormRoute.js'; 
 import answerFormRoute from '../routes/answerFormRoute.js';
 import formFieldRoute from '../routes/formFieldRoute.js';
+import configRoute from '../routes/configRoute.js';
+import whiteBoardRoute from '../routes/whiteBoardRoute.js';
+import dotenv from 'dotenv';
+dotenv.config({ path: '../../backend/.env' });
+
+console.log( process.env.SENDGRIDAPIKEY);
 
 const app = express();
 const server = http.createServer(app);
@@ -106,6 +112,10 @@ app.use('/api/v1/questionforms', questionFormRoute);
 app.use('/api/v1/answerforms', answerFormRoute);
 
 app.use('/api/v1/formfields', formFieldRoute); 
+
+app.use('/api/v1/configs', configRoute); 
+
+app.use('/api/v1/whiteboards', whiteBoardRoute);
 
 mongoose.connect('mongodb+srv://dbuser:dbuser2020@cluster0.8heal.mongodb.net/teach?retryWrites=true&w=majority', {
    useNewUrlParser: true, 

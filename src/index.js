@@ -27,8 +27,8 @@ loadOperators } from 'services/course/actions/operator';
 import {
 loadCourses } from 'services/course/actions/courses';
 
-// import {
-// loadLessons } from 'services/course/actions/lessons';
+import {
+loadLessons } from 'services/course/actions/lessons';
 
 import {
 loadSessions } from 'services/course/actions/sessions';
@@ -84,6 +84,9 @@ sessions } from 'services/course/middleware/sessions';
 import {
 grades } from 'services/course/middleware/grades';
 
+import {
+loadWhiteBoardData } from "services/course/actions/whiteBoards";
+
 // import {
 // loadFailedPushNotifications } from 'services/course/actions/failedpushnotifications';
 
@@ -131,6 +134,7 @@ export const store = createStore(
 
 //store.dispatch(loadFailedPushNotifications());
 //store.dispatch(loadFailedEmailNotifications());
+store?.dispatch(loadWhiteBoardData());
 store?.dispatch(loadCourses());
 store.dispatch(loadOnlineComments());
 store.dispatch(loadLogs());
@@ -146,7 +150,7 @@ store.dispatch(loadGrades());
 store.dispatch(loadOperators());
 store.dispatch(loadUsers());
 store.dispatch(lastLoggedInUser());
-//store.dispatch( loadLessons());
+store.dispatch(loadLessons());
 store.dispatch(loadSessions());
 store.dispatch(loadClassRooms());
 store.dispatch(loadAllCalendars());

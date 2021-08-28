@@ -7,10 +7,9 @@ options,
 scheduledStudents,
 children }) => {
 return (
-    <> 
+    <div className="events">
      <h2>{`Schedule Session`}</h2> 
         <br></br>
-        <div className="events">
             <form>  
                 <Select
                     placeholder={`Add Student(s)`}
@@ -21,9 +20,8 @@ return (
                 />
             </form>
             <br></br>
-            {children}
-        </div>
-    </>    
+            {children}    
+    </div>
 ); };
 
 export default SessionScheduling;

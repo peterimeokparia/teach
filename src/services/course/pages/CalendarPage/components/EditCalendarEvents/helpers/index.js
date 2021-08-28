@@ -11,6 +11,7 @@ export const initializeEventForm = currentEvent => {
         frequency : currentEvent ? currentEvent?.event?.rrule?.freq : '',
         interval : currentEvent ? currentEvent?.event?.rrule?.interval : 1,
         duration : currentEvent ? currentEvent?.event?.duration : 1,
-        schedulingData : ( currentEvent?.schedulingData?.length > 0 ) ? currentEvent?.schedulingData : []
+        schedulingData : ( currentEvent?.schedulingData?.length > 0 ) ? currentEvent?.schedulingData : [],
+        consultation: ( currentEvent?.consultation ) ? currentEvent?.consultation : { coursesInterestedIn: [] }
     };
 };

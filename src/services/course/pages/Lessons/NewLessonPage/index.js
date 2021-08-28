@@ -98,7 +98,7 @@ return editing ? (
                 value={ title }
                 onChange={ e => setTitle( e.target.value) }
                 onBlur={ reset }
-                disabled={saveLessonInProgress}
+                //disabled={saveLessonInProgress}
                 placeholder="add your new lesson"
             />
             </form>

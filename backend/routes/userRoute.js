@@ -3,8 +3,7 @@ getPostData,
 saveUpdatedData,
 saveUpdateUserOnLogin,
 verifyUser,
-resetUserPassword   
-} from '../helpers/storageHelper.js';
+resetUserPassword } from '../helpers/storageHelper.js';
 
 import { 
 USERROUTE,
@@ -14,14 +13,19 @@ import express from 'express';
 import bcrypt from 'bcrypt';
 import userModel from '../model/userModel.js';
 
+import { 
+verifyRoute,
+logRouteInfo } from '../middleWare/index.js';
+
 const userRoute = express.Router();
-  userRoute.get('/', (req, res) => {
-    userModel.find({ })
+userRoute.use(logRouteInfo);
+
+userRoute.get('/', (req, res) => {
+  userModel.find({ })
     .then(data => {
       return res.status(200).json(data);;
     })
     .catch( error => {
-      console.log( error );
       handleBackEndLogs(USERROUTE, error );
       return res.status(400).json({ error });
     });
@@ -34,7 +38,6 @@ userRoute.get('/user', (req, res) => {
     return res.status(200).json(data);
   })
   .catch( error => {
-    console.log( error );
     handleBackEndLogs(USERROUTE, error );
     return res.status(400).json({ error });
   });
@@ -51,11 +54,10 @@ userRoute.get('/user/byEmail', (req, res) => {
     }
       return res.status(200).json(data);
     })
-    .catch( error => {
-      console.log( error );
-      handleBackEndLogs(USERROUTE, error );
-      return res.status(400).json({ error });
-    });
+  .catch( error => {
+    handleBackEndLogs(USERROUTE, error );
+    return res.status(400).json({ error });
+  });
 })
 
 userRoute.get('/files', (req, res) => {
@@ -64,12 +66,12 @@ userRoute.get('/files', (req, res) => {
     return res.status(200).json(data);
   })
   .catch( error => {
-    console.log( error );
     handleBackEndLogs(USERROUTE, error );
     return res.status(400).json({ error });
   });
 });
 
+//userRoute.use(verifyRoute);
 userRoute.post('/', (req, res) => {
   let userData = getPostData( req ); 
   let user = new userModel(userData);  
@@ -85,7 +87,7 @@ userRoute.post('/', (req, res) => {
 });
 
 userRoute.post('/register', async (req, res) => {
-let userData = getPostData( req ); 
+  let userData = getPostData( req ); 
 
   if( ! userData || !userData?.password || !userData?.email ){ return res.status(400).json({msg: "Please provide a valid email address & password."});}
 
@@ -107,7 +109,6 @@ let userData = getPostData( req );
         return res.status(400).json({ msg: err.message });
       }
     })
-
     try {
       let user = new userModel(userData);  
       let savedUserData =  await user.save();
@@ -126,7 +127,6 @@ userRoute.put('/reset/:userId', async (req, res) => {
       return res.status(200).json(data);
     })
     .catch( error => {
-      console.log( error );
       handleBackEndLogs(USERROUTE, error );
       return res.status(400).json({ error })
     });
@@ -138,7 +138,6 @@ userRoute.put('/login/:userId', async (req, res) => {
       return res.status(200).json(data);
     })
     .catch( error => {
-      console.log( error );
       handleBackEndLogs(USERROUTE, error );
       return res.status(400).json({ error });
     });
@@ -147,13 +146,11 @@ userRoute.put('/login/:userId', async (req, res) => {
 userRoute.put('/:userId', (req, res) => {
   saveUpdatedData(req, userModel, req.params.userId)
   .then( data => {
-    console.log(data);
     return res.status(200).json(data);
   })
   .catch( error => {
-    console.log( error );
     handleBackEndLogs(USERROUTE, error );
-    return res.status(400).json({ error })
+    return res.status(400).json({ error });
   });
 });
 
@@ -163,9 +160,8 @@ userRoute.delete('/:userId', (req, res) => {
       return res.status(200).json(data);
     })
     .catch( error => {
-      console.log( error );
       handleBackEndLogs(USERROUTE, error );
-      return res.status(400).json({ error })
+      return res.status(400).json({ error });
     }); 
 });
 

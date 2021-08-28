@@ -20,7 +20,7 @@ function useSchedulingHook(
     schedulingData, 
     slotInfo
 ){
-    const [ title, setEventTitle ] = useState('');
+    const [ title, setEventTitle ] = useState('Available');
     const [ location, setEventLocation ] = useState('');
     const [ start, setEventStartTime ] = useState(undefined);
     const [ end, setEventEndTime ] = useState(undefined);

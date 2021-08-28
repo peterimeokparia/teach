@@ -1,12 +1,12 @@
 
 import {
 jabraTutorTestPassword,
-testToken } from 'services/course/pages/SignUp/tests/node_modules/services/course/api/__mocks__/token.js.js';
+testToken } from 'services/course/api/__mocks__/token.js';
 
 import {
-role } from 'services/course/pages/SignUp/tests/node_modules/services/course/helpers/PageHelpers';
+role } from 'services/course/helpers/PageHelpers';
 
-import SiteUser from 'services/course/pages/SignUp/tests/node_modules/services/course/helpers/SiteUser';
+import SiteUser from 'services/course/helpers/SiteUser';
 
 let newSiteUser = new SiteUser();
 

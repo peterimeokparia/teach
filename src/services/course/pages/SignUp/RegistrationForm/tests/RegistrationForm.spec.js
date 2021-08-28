@@ -1,6 +1,6 @@
-import React from 'services/course/pages/SignUp/RegistrationForm/tests/node_modules/react';
+import React from 'react';
 import RegistrationForm  from 'services/course/pages/SignUp/RegistrationForm';
-import renderer from 'services/course/pages/SignUp/RegistrationForm/tests/node_modules/react-test-renderer';
+import renderer from 'react-test-renderer';
 
 describe('RegistrationForm', () =>  {  
 

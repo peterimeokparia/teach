@@ -111,7 +111,6 @@ const MainRoute = () => {
                 <MoreLessonContentPage path="/lessons/:lessonId/more" />
                 <SiteEntryComponent path="/main"/>
         </Router>
-
     );
 };
 

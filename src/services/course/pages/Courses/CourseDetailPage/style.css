@@ -4,7 +4,6 @@
   flex-direction: column;
   font-family: 'Courier New', Courier, monospace;
 }
-
 .CourseDetail form {
   display: flex;
   flex-direction: column;
@@ -146,14 +145,20 @@
   height: 110vh;
 }
 .CourseDetail .content .lesson-content {
-  margin-top: 1%;
-  margin-left: 20%;
+  margin-top: -1%;
+  margin-left: 5%;
   width: 50vh; 
 } 
+.CourseDetail .content .lesson-content .lesson2 h5 {
+   margin-left: 200px;
+   width: 50vh; 
+}
 .CourseDetail .content .lesson-content .lesson2 {
-  /* height: 110vh;  */
   margin-left: 95px;
   width: 50vh; 
+} 
+.CourseDetail .content .lesson-content .lesson2 .lessonPage {
+  text-align: left;
 } 
 .lessons .lesson-item {
   margin-bottom: 5px;
@@ -169,6 +174,11 @@
   font-family: 'Courier New', Courier, monospace;
   font-weight: bold; 
 }
+.CourseDetail .content .lesson-content .content{
+  /* margin-top: -1%;
+  margin-left: 5%; */
+  margin-left: -3%;
+} 
 .toggle-stage-btns-show,
 .plan-lesson-btn,
 .current-lesson-button,
@@ -268,15 +278,6 @@
   background-clip: text;
   color: transparent;
 }
-.dropdownComponents {
-  /* display: flex;  */
-}
-.dropdownComponents .left {
-  /* flex: 1; */
-}
-.dropdownComponents .right {
-  /* flex: 1; */
-}
 .viewGradesLink, .checkBoxViewGradesLink {
   color: blue;
   cursor: pointer;
@@ -313,7 +314,6 @@ a:hover {
 } */ 
 
 .invite-btn-animation {
-
   opacity: 1;
   border: 2px;
   font-size: 10px;

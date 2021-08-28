@@ -20,8 +20,11 @@ import {
     
     import { 
     loadCourses } from "services/course/actions/courses";
+
+    import {
+    role } from 'services/course/helpers/PageHelpers';
     
-    function useBuildEventDataHook( calendarEventType, events, calendarId ) {
+    function useBuildEventDataHook( calendarEventType, events, calendarId, user ) {
         const [ isModalOpen, setModalOpen] = useState(false);
         const [ component, setComponent] = useState(eventEnum);
         const [ calendarSlotInfo, setCalendarSlotInfo ] = useState(undefined);
@@ -92,6 +95,13 @@ import {
                 setCalendarSlotInfo( slotInfo );
                 setModalOpen( true );
                 return;
+            case eventEnum.TutorCalendar:
+                if ( user?.role === role.Tutor ) {
+                 setComponent( eventEnum.TutorCalendar );
+                 setCalendarSlotInfo( slotInfo );
+                 setModalOpen( true );
+                }
+                return;  
             case eventEnum.SessionScheduling:
                 setComponent( eventEnum.SessionScheduling );
                 setCalendarSlotInfo( slotInfo );

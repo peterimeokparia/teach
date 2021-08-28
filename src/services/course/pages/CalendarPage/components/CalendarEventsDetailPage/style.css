@@ -1,10 +1,10 @@
-
-    .ComponentEventList {
+  .CalendarComponentEventList {
       display: flex;
       flex-direction: column;
       text-align: center;
+      background-image: url(../../../../images/geometry2.png);
     }
-    .ComponentEventList header {
+    .CalendarComponentEventList header {
       background-color: #673ab7;
       color: #fff;
       display: flex;
@@ -12,14 +12,14 @@
       align-items: center;
       justify-content: space-between;
     } 
-    .ComponentEventList h1 {
+    .CalendarComponentEventList h1 {
       font-family: 'Bebas Neue', 'Helvetica Neue', arial,
         sans-serif;
       font-size: 60px;
       color: #43005a;
       margin-top: 0.2em;
     }
-    .ComponentEventList h2 {
+    .CalendarComponentEventList h2 {
       font-family: 'Bebas Neue', 'Helvetica Neue', arial, sans-serif;
       font-size: 30px;
       color: black;
@@ -29,25 +29,25 @@
       text-decoration: underline;
       text-decoration-style: solid;
     }
-    .ComponentEventList h3 {
+    .CalendarComponentEventList h3 {
         font-family: 'Bebas Neue', 'Helvetica Neue', arial, sans-serif;
         font-size: 25px;
         color: #43005a;
         margin-top: 0.2em;
         text-align: center;
       }
-    .ComponentEventList ul {
+    .CalendarComponentEventList ul {
       list-style: none;
       padding: 0;
     }
-    .ComponentEventList .component-list-body {
+    .CalendarComponentEventList .component-list-body {
       border-radius: 25px;
       background:white;
       padding: 20px;
       max-width: 2000px;
       max-height: 2000px;
     }
-    .ComponentEventList .mainBodyText {
+    .CalendarComponentEventList .mainBodyText {
       color: black;
       border-radius: 3px;
       font-size: 18px;
@@ -57,17 +57,17 @@
       text-decoration-style: solid;
       margin-bottom: 10px;
     }
-    .ComponentEventList .subBodyText {
+    .CalendarComponentEventList .subBodyText {
       color: #007bff;
       border-radius: 3px;
       font-size: 18px;
       text-align: end;
       margin-bottom: 10px;
     }
-    .ComponentEventList .component-seconday-event-list-body-others, .component-secondary-list-body-one-others {
+    .CalendarComponentEventList .component-seconday-event-list-body-others, .component-secondary-list-body-one-others {
       display: none;
     }
-    .ComponentEventList .component-seconday-event-list-body-edit {
+    .CalendarComponentEventList .component-seconday-event-list-body-edit {
       border-radius: 25px;
       background: #fffadf;
       padding: 100px;
@@ -79,7 +79,7 @@
       box-shadow: 10px 10px black, 10px 10px #007bff;
 
     }
-    .ComponentEventList .component-seconday-event-list-body, .component-secondary-list-body-one {
+    .CalendarComponentEventList .component-seconday-event-list-body, .component-secondary-list-body-one {
       border-radius: 25px;
       background: #fffadf;
       padding: 100px;
@@ -90,7 +90,7 @@
       height: 500px;
       box-shadow: 10px 10px black, 10px 10px #007bff;
     }
-    .ComponentEventList .component-seconday-event-list-body-recurring, .component-secondary-list-body-one-recurring, .component-seconday-event-list-body-edit-recurring {
+    .CalendarComponentEventList .component-seconday-event-list-body-recurring, .component-secondary-list-body-one-recurring, .component-seconday-event-list-body-edit-recurring {
       border-radius: 25px;
       background: #fffadf;
       padding: 100px;
@@ -104,7 +104,7 @@
     .component-secondary-list-body-one {
       background: #9c27b0;
     }
-    .ComponentEventList li > a {
+    .CalendarComponentEventList li > a {
       margin-bottom: 20px;
       line-height: 1.5;
       font-weight: 600;
@@ -115,17 +115,17 @@
       text-decoration: none;
       color: #222;
     }
-    .ComponentEventList .price {
+    .CalendarComponentEventList .price {
       opacity: 0.5;
     }
-    .ComponentEventList .list-items {
+    .CalendarComponentEventList .list-items {
       padding-top: 10px;
       /* margin-bottom: 5px; */
       border-style: outset;
       border-radius: 3px;
       font-size: 20px; 
     }
-    .ComponentEventList .event-list-items {
+    .CalendarComponentEventList .event-list-items {
       padding-top: 10px;
       color: blueviolet;
       border-radius: 3px;
@@ -133,17 +133,17 @@
       /* text-transform: uppercase; */
       font-weight: bold;
     }
-    .ComponentEventList .event-list-items img {
+    .CalendarComponentEventList .event-list-items img {
       border-radius: 5px;
     }
-    .ComponentEventList .event-list-items .multicolortext {
+    .CalendarComponentEventList .event-list-items .multicolortext {
       background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
       -webkit-background-clip: text;
       -moz-background-clip: text;
       background-clip: text;
       color: transparent;
     }
-    .ComponentEventList .event-list-items img:hover, .ComponentEventList .event-list-items img:focus, .ComponentEventList .event-list-items img:active {
+    .CalendarComponentEventList .event-list-items img:hover, .CalendarComponentEventList .event-list-items img:focus, .CalendarComponentEventList .event-list-items img:active {
       position:relative;
       background-color:green;
       -webkit-animation: backandforth 2s ease 0s;
@@ -151,19 +151,19 @@
       animation: backandforth 2s ease 0s;
       animation-iteration-count:infinite;
     }
-    .ComponentEventList .component-list-items {
+    .CalendarComponentEventList .component-list-items {
       padding-top: 10px;
       font-size: 10px; 
       color: white;
       text-align: center;
     }
-    .ComponentEventList .component-text-items { 
+    .CalendarComponentEventList .component-text-items { 
       padding-top: 10px;
       font-size: 10px; 
       color: white;
       padding-left: 40px;
     }
-    .ComponentEventList .user-event-btn {
+    .CalendarComponentEventList .user-event-btn {
       align-self: flex-end;
       color: #fff;
       font-size: 16px;
@@ -175,10 +175,10 @@
       border-radius: 1px;
       box-shadow: 10px 10px black;
     }
-    .ComponentEventList .event-buttons {
+    .CalendarComponentEventList .event-buttons {
       align-self: flex-start;
     }
-    .ComponentEventList .new-event-btn {
+    .CalendarComponentEventList .new-event-btn {
       align-self: flex-end;
       color: #fff;
       font-size: 16px;
@@ -190,12 +190,12 @@
       border-radius: 1px;
       box-shadow: 10px 10px;
     }
-    .ComponentEventList .new-event-btn:focus {
+    .CalendarComponentEventList .new-event-btn:focus {
       outline: none;
       box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5),
         0 0 5px 2px #9c27b0;
     }
-    .ComponentEventList .new-event-btn:active {
+    .CalendarComponentEventList .new-event-btn:active {
       background-color: purple;
     }
     .delete-event-btn,

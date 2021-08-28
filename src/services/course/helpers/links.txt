@@ -388,3 +388,32 @@ Password - Regex
 ------------------
 https://www.geeksforgeeks.org/how-to-validate-a-password-using-regular-expressions-in-java/
 https://www.aspsnippets.com/Articles/Password-Strength-validation-example-using-JavaScript-and-jQuery.aspx#:~:text=The%20Password%20strength%20validation%20in%20JavaScript%20and%20jQuery,event%20handler%20which%20calls%20the%20CheckPasswordStrength%20JavaScript%20function.
+
+Securing Data JOSE - Encode/Decode
+------------------------------------
+https://codeburst.io/securing-tokens-with-help-from-jose-33d8c31835a1
+https://stackoverflow.com/questions/57063659/deprecationwarning-buffer-is-deprecated-due-to-security-and-usability-issues
+https://stackoverflow.com/questions/34048889/why-are-buffer-and-new-bufferbuffer-tostring-not-always-byte-for-byte-eq
+https://www.digitalocean.com/community/tutorials/using-buffers-in-node-js
+
+Env
+----
+https://github.com/motdotla/dotenv#path
+
+Secure API
+-----------
+https://restfulapi.net/security-essentials/
+https://www.toptal.com/nodejs/secure-rest-api-in-nodejs
+https://auth0.com/blog/node-js-and-express-tutorial-building-and-securing-restful-apis/
+
+Start-up
+----------
+https://code.tutsplus.com/tutorials/building-your-startup-securing-an-api--cms-27867
+
+Express-Middleware
+--------------------
+https://expressjs.com/en/guide/writing-middleware.html
+
+Dictionary Implementation
+--------------------------
+https://medium.com/weekly-webtips/how-to-create-dictionaries-in-javascript-21628f958a9e

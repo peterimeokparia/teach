@@ -121,7 +121,9 @@ exports[`ClassRoomComponent renders as expected 1`] = `
         Join
       </button>
     </span>
-    <span>
+    <span
+      className="lock-icon"
+    >
       <svg
         aria-hidden={true}
         className="MuiSvgIcon-root"

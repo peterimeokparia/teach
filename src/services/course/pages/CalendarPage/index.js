@@ -1,10 +1,6 @@
 import { 
 connect } from 'react-redux';
 
-import {
-eventEnum, 
-getCalendarColor } from 'services/course/pages/CalendarPage/helpers';
-
 import { 
 navigate } from '@reach/router';
 
@@ -40,8 +36,15 @@ getCalendarsByOperatorId,
 getTimeLinesByOperatorId } from 'services/course/selectors';
 
 import {
+eventEnum,
+getCalendarColor, 
 studentsOption,
-getCalendarPageHeading } from 'services/course/pages/CalendarPage/helpers';
+getCalendarPageHeading,
+userCanAddOrEditEvent } from 'services/course/pages/CalendarPage/helpers';
+
+import {
+role } from 'services/course/helpers/PageHelpers';
+
 // import { 
 // momentLocalizer } from "react-big-calendar";
 // const localizer = momentLocalizer(moment);
@@ -62,6 +65,7 @@ import Scheduling from 'services/course/pages/CalendarPage/components/Scheduling
 import useBuildEventDataHook from "services/course/pages/CalendarPage/hooks/useBuildEventDataHook";
 import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/list/main.css";
+import "./style.css";
 
 moment.locale("en-GB");
 
@@ -104,7 +108,7 @@ const CalendarPage = ({
         handleSelect,
         setModalOpen,
         setScheduledStudents,
-    } = useBuildEventDataHook( calendarEventType, events, calendarId );
+    } = useBuildEventDataHook( calendarEventType, events, calendarId, user );
     
 function addNewCalendarEvent( calendarEventData ) {
     setModalOpen(false); // Need to set up groups and group management.
@@ -122,7 +126,10 @@ const openModal = () => {
 };
 
 const handleEventClick = (info) => {
-    navigate( `/${operatorBusinessName}/${calendarEventType}/calendar/${calendarId}/${user._id}/${info?.event?.id}`);
+    if ( userCanAddOrEditEvent( info, user ) ) {
+        navigate( `/${operatorBusinessName}/${calendarEventType}/calendar/${calendarId}/${user._id}/${info?.event?.id}`);
+        return;
+    }
 };
 
 function saveEventData(calendar, calendarEventData, testAdminUsers, calendarEventType, operatorId){
@@ -191,6 +198,29 @@ function renderSwitch( param ) {
                             />  
                         </ SessionScheduling>
                     </Modal>;
+            case eventEnum.TutorCalendar:
+                return <Modal isOpen={isModalOpen} onRequestClose={closeModal}> 
+                            <SessionScheduling 
+                                scheduledStudents={scheduledStudents}
+                                onChange={setScheduledStudents}
+                                options={studentsOption(users)}
+                            > 
+                            {(user.role === role.Student ) && 
+                                <ConsultationForm 
+                                    user={user}
+                                    slotInfo={calendarSlotInfo}
+                                    courses={courses}
+                                    handleSubmit={addNewCalendarEvent}
+                                />  
+                            } 
+                                <Scheduling
+                                    slotInfo={calendarSlotInfo}
+                                    schedulingData={scheduledStudents}
+                                    submitEventButtonText={"Schedule Session"}
+                                    handleSubmit={addNewCalendarEvent} 
+                                />  
+                            </ SessionScheduling>
+                        </Modal>;
             case eventEnum.OnlineTutoringRequest:
             return <Modal isOpen={isModalOpen} onRequestClose={closeModal}> 
                         <OnlineTutoringRequestForm 
@@ -232,13 +262,13 @@ function renderSwitch( param ) {
     }
 }
 return (    
-<div>
-<h2>{ `Hello ${user?.firstname}` }</h2>
-<h2>{ getCalendarPageHeading( calendarEventType ) }</h2>
-    {
-        renderSwitch( component )
-    }
-<button onClick={openModal}>Back</button> 
+<div className="calendar">
+    <h2>{ `Hello ${user?.firstname}` }</h2>
+    <h2>{ getCalendarPageHeading( calendarEventType ) }</h2>
+        {
+            renderSwitch( component )
+        }
+    <button onClick={openModal}>Back</button> 
 </div>
 ); };
 

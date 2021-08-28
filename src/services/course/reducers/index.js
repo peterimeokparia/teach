@@ -28,6 +28,7 @@ import onlineQuestionsPushSubscriptions from './onlinequestionspushsubscription'
 import failedNotifications from './failednotifications'; 
 import logs from './logforteach';
 import formFields from './formfields';
+import whiteBoardData from './whiteboards';
 
 let reducers = { 
     courses, 
@@ -59,6 +60,7 @@ let reducers = {
     failedNotifications,
     logs,
     formFields,
+    whiteBoardData
 };
 
 export default combineReducers( reducers );

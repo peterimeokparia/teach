@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import { 
+useEffect } from 'react';
 
 import { 
 connect } from 'react-redux';
@@ -29,11 +30,13 @@ role } from 'services/course/helpers/PageHelpers';
 import {
 eventEnum } from 'services/course/pages/CalendarPage/helpers';
 
+import moment from "moment";
 import Roles from 'services/course/pages/components/Roles';
 import ListItem from 'services/course/pages/components/ListItem';
 import EditCalendarEvents from 'services/course/pages/CalendarPage/components/EditCalendarEvents';
 import ToggleButton from 'services/course/pages/components/ToggleButton';
 import Select from 'react-select';
+import './style.css';
 
 const EventDetailPage = ({ 
     operatorBusinessName,
@@ -117,8 +120,7 @@ function getEventDetails(){
                                         <div className="gradesHeader"> Student  </div>
                                         <div className="gradesHeader"> Email  </div>
                                     </div>
-                                    {/* /:operatorBusinessName/:calendarEventType/calendar/:calendarId/event */}
-                                    {/* <Link to={`calendar/${ calendarId }/event/${selectedEvent?._id}`}> <span title={selectedEvent?._id} >{ selectedEvent?.title } </span> </Link>  */}
+
                                     <div className="col-10">
                                         <div className="grades"> { selectedEvent?.id } </div>
                                         <div className="grades"> { selectedEvent?.allDay?.toString() } </div>
@@ -176,19 +178,78 @@ let emailAddresses = Object.values(currentUsers).filter(user => testAdminUsers.i
 let event = events.find(event => event?._id === eventId);
 
 return (
-    <div>
+    <div className="event-details">
+        <header>
+        <h2> { 'Client Management '} </h2>
+        </header>
+        <div className="events-body">
+         <h3> { 'Consultee Information '} </h3>
         <div>
             {event?.event?.title}
         </div>
         <div>
-            {event?.event?.start}
+            { moment( event?.event?.start )?.local().format('YYYY-MM-DD hh:mm:ss') }
         </div>
         <div>
-            {event?.event?.end}
+            { moment( event?.event?.end )?.local().format('YYYY-MM-DD hh:mm:ss') }
         </div>
         <div>
             {event?.event?.allDay}
         </div>
+        {( calendarEventType === eventEnum?.TutorCalendar) && 
+            <div>
+                <div> {event?.consultation?.firstName} </div>
+                <div> {event?.consultation?.lastName} </div>
+                <div> {event?.consultation?.studentsName} </div>
+                <div> {event?.consultation?.email} </div>
+                <div> {event?.consultation?.phone} </div>
+                <h4>{'Courses Interested In'}</h4> 
+                <div>
+                    <ul>
+                        {event?.consultation?.coursesInterestedIn?.map(course => (
+                            <li> { course?.label } </li>
+                        ))} 
+                    </ul> 
+                </div>
+                <div className='events'> 
+                    <form>
+                        <h5>{'Contacted Client?'}</h5>
+                        <ToggleButton
+                            isChecked={"config?.recurringEvent"}
+                            isDisabled={"config?.saveInProgress"}
+                            value={'isRecurring'}
+                            onChange={"config?.handleRecurringEvent"} 
+                        />
+                        <h5>{'Contact Date & Time'}</h5>
+                        <input
+                            type={'date'}
+                        />
+                        <input
+                            type={'time'}
+                        />
+                <div> 
+                    <h5>{'Notes'}</h5>
+                    <input
+                       type={'textarea'}
+                    />
+                </div>
+                <div> 
+                    <h5>{'Contacted by'}</h5>
+                    <Select
+                        placeholder={`User`}
+                        isMulti
+                        value={'coursesInterestedIn'}
+                        onChange={'setCoursesInterestedIn'}
+                        options={'userOption( users )'} 
+                    />    
+                </div>
+                        
+                    </form>
+                    
+                </div>
+              
+            </div>
+        }
         {( calendarEventType === eventEnum?.ConsultationForm) && 
             <div>
                 <div> { 'Consultee Information '} </div>
@@ -202,7 +263,6 @@ return (
                     <div> { course?.label } </div>
                 ))} 
                 </div>
-
                 <div className='events'> 
                     <form>
                         <h4> { 'Client Management '}  </h4>
@@ -238,7 +298,7 @@ return (
                     />    
                 </div>
                         
-                    </form>
+                </form>
                     
                 </div>
               
@@ -247,6 +307,7 @@ return (
         {
             getEventDetails()
         }
+        </div>
     </div>
 ); };
 

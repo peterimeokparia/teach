@@ -37,7 +37,7 @@ return <div className="lessonPage">
   <NavLinks to={`/lessons/${lessonId}/more`}>
     <span className="multicolortext"> {`${lesson?.title}`} </span><span>>></span>
   </NavLinks>
-  { (previewMode) && <div>  
+  { (previewMode) && <div className="textBoxItem">  
       <p> Write a brief introduction about this lesson.<br/> Set expectations and takeaways. </p>
       <textarea id="txtid" type={"textarea"} name="txtname" rows="7" cols="50" maxlength="200" onChange={handleTextAreaInput} value={textAreaValue} />
     </div>

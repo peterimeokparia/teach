@@ -14,7 +14,7 @@ function useConsultationFormHook(){
 
 useEffect (() => {
     if ( inputRef ) {
-        inputRef.current.focus();
+        inputRef?.current?.focus();
     }
 }, []); 
 

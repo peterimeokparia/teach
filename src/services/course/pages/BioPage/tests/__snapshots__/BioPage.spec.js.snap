@@ -16,7 +16,9 @@ exports[`BioPage renders as expected 1`] = `
          
       </h1>
       <div>
-        <span>
+        <span
+          className="lock-icon"
+        >
           <svg
             aria-hidden={true}
             className="MuiSvgIcon-root"
@@ -36,7 +38,9 @@ exports[`BioPage renders as expected 1`] = `
             </div>
           </div>
         </span>
-        <span />
+        <span
+          className="cart"
+        />
       </div>
     </header>
     <br />
@@ -46,7 +50,9 @@ exports[`BioPage renders as expected 1`] = `
       <div
         className="col"
       >
-        <h1>
+        <h1
+          className="editorName"
+        >
             
           undefined 
            

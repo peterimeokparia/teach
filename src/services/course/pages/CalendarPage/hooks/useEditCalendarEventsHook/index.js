@@ -39,6 +39,7 @@ function useEditCalendarEventsHook( config ){
     const [ startTimeDateTime, setStartTimeDateTime ] = useState((start) ? getCurrentTimeInUsersLocale( start )?.format('HH:mm:ss') : new Date()?.toLocaleTimeString('en-US'));
     const [ endTimeDateTime, setEndTimeDateTime ] = useState((end) ? getCurrentTimeInUsersLocale( end )?.format('HH:mm:ss') : new Date()?.toLocaleTimeString('en-US'));
     const [ schedulingData, setSchedulingData ] = useState((calendarEventType === eventEnum.SessionScheduling && initialValue?.schedulingData?.length > 0) ? initialValue?.schedulingData : []);
+    const [ consultation, setConsultation ] = useState((initialValue?.consultation !== undefined ) ? initialValue?.consultation : { coursesInterestedIn: [] });
     const [ editing, setEditing ] = useState(false);
     const inputRef = useRef();
 
@@ -69,6 +70,7 @@ const submit = (e) => {
         frequency, 
         interval,
         duration,
+        consultation,
         schedulingData,
         location
     }).then(reset)
@@ -134,6 +136,7 @@ function setValues () {
     setFrequency(initialValue?.frequency);
     setInterval(initializeEventForm?.interval);
     setDuration(initializeEventForm?.duration);
+    setConsultation((initialValue?.consultation !== undefined ) ? initialValue?.consultation : { coursesInterestedIn: [] });
     setSchedulingData((calendarEventType === eventEnum.SessionScheduling && initialValue?.schedulingData?.length > 0) ? initialValue?.schedulingData : []);
     setStartDateDateTime((start) ? getCurrentTimeInUsersLocale( start )?.format('YYYY-MM-DD') : new Date()?.toLocaleDateString('en-US'));
     setEndDateDateTime((end) ? getCurrentTimeInUsersLocale( end )?.format('YYYY-MM-DD') : new Date()?.toLocaleDateString('en-US'));
@@ -177,6 +180,7 @@ return {
     setEndDateDateTime: (val) => setEndDateDateTime( val ),
     setStartTimeDateTime: (val) => setStartTimeDateTime( val ),
     setEndTimeDateTime: (val) => setEndTimeDateTime( val ),
+    setConsultation: (val) => setConsultation( val ),
     setSchedulingData: (val) => setSchedulingData( val ),
     setEditing: (val) => setEditing( val ),
     reset,

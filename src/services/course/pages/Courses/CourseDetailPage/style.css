@@ -149,6 +149,28 @@
   margin-left: 5%;
   width: 50vh; 
 } 
+.CourseDetail .content .lesson-content .content {
+  margin-left: -85px;
+}
+.CourseDetail .content .lesson-content .content .whiteBoardSideBar {
+  flex-basis: 100px;
+  background: transparent;
+  margin-left: -100px;
+  max-height: 900px;
+  overflow: scroll;
+}
+.CourseDetail .content .lesson-content .content .whiteBoardSideBar .savedBoards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.CourseDetail .content .lesson-content .content .whiteBoardSideBar .save-icon-visible {
+  visibility: visible;
+}
+.CourseDetail .content .lesson-content .content .whiteBoardSideBar .save-icon-hidden {
+  visibility: hidden;
+  margin-top: -90px;
+}
 .CourseDetail .content .lesson-content .lesson2 h5 {
    margin-left: 200px;
    width: 50vh; 
@@ -174,10 +196,10 @@
   font-family: 'Courier New', Courier, monospace;
   font-weight: bold; 
 }
-.CourseDetail .content .lesson-content .content{
+.CourseDetail .content .lesson-content .lesson2 .content{
   /* margin-top: -1%;
   margin-left: 5%; */
-  margin-left: -3%;
+  margin-left: -35%;
 } 
 .toggle-stage-btns-show,
 .plan-lesson-btn,

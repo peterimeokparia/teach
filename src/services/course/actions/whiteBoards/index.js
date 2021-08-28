@@ -53,7 +53,7 @@ export const selectSavedWhiteBoard = ( whiteBoardData ) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: whiteBoardData,
+        body: JSON.stringify({ wid: whiteBoardData?.wid,   jsonData: whiteBoardData?.jsonData }),
       })
       .then(response => response.json() )
         .then( data => {

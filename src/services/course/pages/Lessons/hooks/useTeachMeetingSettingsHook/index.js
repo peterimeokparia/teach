@@ -28,8 +28,12 @@ loadUsers } from 'services/course/actions/users';
     
 import { 
 Validations } from 'services/course/helpers/Validations';
+
+import { 
+setItemInSessionStorage,
+getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
     
-function useTeachMeetingSettingsHook( users, currentUser, classRoomId, operatorBusinessName) {
+function useTeachMeetingSettingsHook( users, currentUser, classRoomId, selectedCourse, selectedLesson ) {
     const [ hideMeetingStage, setHideMeetingStage ] = useState(false);
     const [ fullMeetingStage, setFullMeetingStage ] = useState(false);
     const [ videoModalModeOn,  setVideoModalMode ] = useState(false);
@@ -45,6 +49,7 @@ function useTeachMeetingSettingsHook( users, currentUser, classRoomId, operatorB
     let paidSessions = useSelector( state => Object.values(state?.sessions?.sessions) );
     let sessions = paidSessions?.filter( usersession => usersession?.courseId === currentCourse?._id);
     let meetingUrl = `http://localhost:3000/boomingllc/LessonPlan/classRoom/${currentUser?._id}`;
+    let operatorBusinessName = getItemFromSessionStorage('operatorBusinessName');
 
     let  meetingProps = {
       userId: currentUser?._id,
@@ -62,6 +67,14 @@ function useTeachMeetingSettingsHook( users, currentUser, classRoomId, operatorB
   }; 
   
   useEffect(() => {
+      if ( selectedCourse ) {
+        setItemInSessionStorage('selectedCourse', selectedCourse );
+      }
+
+      if ( selectedLesson ) {
+        setItemInSessionStorage('selectedLesson', selectedLesson );
+      }
+
       dispatch( loadUsers() );
       dispatch( loadMeetings() );
       dispatch( loadCourses() );

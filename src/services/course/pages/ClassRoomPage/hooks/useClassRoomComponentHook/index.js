@@ -9,9 +9,15 @@ useEffect } from "react";
 import { 
 role } from 'services/course/helpers/PageHelpers';
 
+import { 
+getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
+
 import {
 loadMeetings,   
 saveMeeting } from 'services/course/actions/meetings';
+
+import { 
+setOperator  } from 'services/course/actions/operator';
 
 import { 
 loadUsers  } from 'services/course/actions/users';
@@ -25,7 +31,7 @@ loadLessons  } from 'services/course/actions/lessons';
 import {
 showJoinMeetingPopupAfterTheTutorStartsTheMeeting } from 'services/course/pages/Meeting/helpers';
 
-function useClassRoomComponentHook( operatorBusinessName, selectedUser ) {
+function useClassRoomComponentHook( operatorBusinessName, selectedUser, operator ) {
     const [ dropDownDisplayOption, setDropDownDisplayOption ] = useState( "" );
     const [ listOfStudents, setListOfStudents ] = useState([]);
     const dispatch = useDispatch();
@@ -35,6 +41,10 @@ function useClassRoomComponentHook( operatorBusinessName, selectedUser ) {
     let meetings= useSelector(state => Object.values( state.meetings.meetings ) );
     
     useEffect(() => {    
+        if ( !operator ) {
+            dispatch(setOperator(getItemFromSessionStorage('operator')));
+        }
+
         if ( selectedCourseFromLessonPlanCourseDropDown ) {
             dispatch(loadLessons( selectedCourseFromLessonPlanCourseDropDown?._id ));
         }

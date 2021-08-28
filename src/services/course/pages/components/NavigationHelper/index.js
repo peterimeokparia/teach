@@ -1,4 +1,8 @@
+import { 
+getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
+
 export const navContent = ( user, operatorBusinessName, currentRole, role ) => { 
+   operatorBusinessName = ( !operatorBusinessName ) ? getItemFromSessionStorage('operatorBusinessName') : operatorBusinessName;
    return { 
       users: [
                { id: 0, hrefValue: `/${operatorBusinessName}/LessonPlan/StudyHall/${user?._id}` , item: 'Study Hall' }, 

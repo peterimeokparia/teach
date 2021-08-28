@@ -21,6 +21,9 @@ getListOfCoursesForTheSelectedStudent,
 getListOfLessonsForTheSelectedStudent,
 navigateToStudentDetailPage } from  './helpers';
 
+import { 
+setItemInSessionStorage } from 'services/course/helpers/ServerHelper';
+
 import {  
 getOperatorFromOperatorBusinessName,
 getCoursesByCourseIdSelector,
@@ -54,6 +57,7 @@ const setCourseFromDropDown = ( selectedCourseId ) => {
             let course = courses?.find( crs => crs._id === selectedCourseId );
 
             selectCourseFromLessonPlanCourseDropDown( course );
+            setItemInSessionStorage('selectedCourse', course );
         } catch (error) {
             throw Error('setCourseFromDropDown' + error);
         }
@@ -66,6 +70,7 @@ const setLessonFromDropDown = ( selectedLessonId ) => {
             let lesson = lessons?.find( lsn => lsn._id === selectedLessonId );
 
             selectLessonFromLessonPlanDropDown( lesson );
+            setItemInSessionStorage('selectedLesson', lesson );
         } catch (error) {
             throw Error('setLessonFromDropDown' + error);
         }

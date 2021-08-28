@@ -71,7 +71,7 @@ import {
         let users = Object.values( store?.getState()?.users?.users )?.filter( users => users?.operatorId === meeting?.operator?._id );
         let selectedUser = (  selectedUserId === currentUser?._id) ? currentUser : getSelectedUser( users, selectedUserId );
         let url = getLessonPlanUrls( operatorBusinessName, selectedUserId );
-    
+
         let enablePlatformProps = {
             selectedUserId, 
             currentUser,

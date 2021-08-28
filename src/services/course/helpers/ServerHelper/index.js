@@ -146,3 +146,11 @@ export const getTimeZoneDateTime = ( dateTime ) => {
 
  return moment( dateTime )?.tz( currentTimeZone );
 };
+
+export const setItemInSessionStorage = (key, item) => {
+  sessionStorage.setItem(key, JSON.stringify(item));
+};
+
+export const getItemFromSessionStorage = (key) => {
+  return JSON.parse( sessionStorage.getItem(key) );
+}

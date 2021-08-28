@@ -68,7 +68,7 @@ function useLoginPageHook( loginPageProps ){
 
 return {
     signUpOrLoginPreference, 
-    setSignUpOrLoginInPreference,
+    setSignUpOrLoginInPreference: val => setSignUpOrLoginInPreference( val ),
 }; };
 
 export default useLoginPageHook;

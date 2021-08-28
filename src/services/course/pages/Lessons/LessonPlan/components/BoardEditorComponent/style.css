@@ -1,7 +1,7 @@
 .whiteBoardSideBar .savedBoards {
     list-style: none;
-    margin: 0;
-    padding: 0;
+    margin:  0;
+    padding:  0;
 }
 .whiteBoardSideBar .save-icon-visible {
     visibility: visible;

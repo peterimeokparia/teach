@@ -11,7 +11,8 @@ import {
 Validations } from  'services/course/helpers/Validations';
 
 import { 
-forceReload } from 'services/course/helpers/ServerHelper';
+forceReload, 
+getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
 
 import { 
 getOperatorFromOperatorBusinessName } from 'services/course/selectors';
@@ -25,7 +26,9 @@ const LoginLogout = ({
   operator, 
   user,  
   logOut }) => {
-const logInPage = `/${operatorBusinessName}/login`;
+
+
+const logInPage = `/${(!operatorBusinessName) ? getItemFromSessionStorage('operatorBusinessName') : operatorBusinessName}/login`;
 const performLoginLogOut = (e) => {
   e.preventDefault();
     

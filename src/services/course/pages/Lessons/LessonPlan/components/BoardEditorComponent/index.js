@@ -30,6 +30,9 @@ addWhiteBoardData } from 'services/course/actions/whiteBoards';
 import {
 getItemColor } from 'services/course/helpers/PageHelpers';
 
+import { 
+getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
+
 import useTeachMeetingSettingsHook  from 'services/course/pages/Lessons/hooks/useTeachMeetingSettingsHook';
 import LessonPlanIframeComponent  from 'services/course/pages/components/LessonPlanIframeComponent';
 import NotesIcon from '@material-ui/icons/Notes';
@@ -39,46 +42,53 @@ import './style.css';
 
 const BoardEditorComponent = ({ 
   operatorBusinessName,
-  operator,  
-  courseId,
   saveIconVisible,
+  courseId,
+  lessonId,
   classRoomId, 
   users,
+  operators,
   currentUser,
+  lessons,
   boardOrEditor,
   toggleTeachBoardOrEditor,
-  selectedLessonFromLessonPlanDropDown,
   addWhiteBoardData,
   selectSavedWhiteBoard,
   whiteBoardData }) => {
   let {
     hideMeetingStage,
     fullMeetingStage,
-    currentLesson,
-  } = useTeachMeetingSettingsHook( users, currentUser, classRoomId, operatorBusinessName );
+  } = useTeachMeetingSettingsHook( users, currentUser, classRoomId, undefined, undefined  );
 
-  let lesson = ( ! selectedLessonFromLessonPlanDropDown?._id ) ? currentLesson : selectedLessonFromLessonPlanDropDown;
-  
-  const urls = getUrls(currentUser, courseId, lesson?._id, lesson?.title); 
+  const urls = getUrls(currentUser, courseId, lessonId, classRoomId); 
   const fullScreenSize = "1536px";
   const editorUrl = urls?.editor;
   const canvasUrl = urls.canvas; 
-  
+  const whiteBoardId = `${courseId}${lessonId}${classRoomId}`;
+  const whiteBoard = Object.values( whiteBoardData ).filter( board => board?.wid === whiteBoardId );
+  const businessName = (operatorBusinessName === "") ? getItemFromSessionStorage('operatorBusinessName') :  operatorBusinessName;
+  const lesson = lessons.find( lesson => lesson?._id === lessonId);
+  const operator = Object.values( operators )?.find( operator => operator?.businessName === businessName) 
+                  ? Object.values( operators )?.find( operator => operator?.businessName === businessName )
+                  : getItemFromSessionStorage('operator');
+
 function saveWhiteBoardData(){
   addWhiteBoardData({ 
-    wid: "undefinedundefinedundefined",
+    wid: whiteBoardId,
     operatorId: operator?._id,
-    color: getItemColor( Object.values( whiteBoardData ) )
+    color: getItemColor(whiteBoard)
   }) .then( response => {
     toggleTeachBoardOrEditor();
     toggleTeachBoardOrEditor();
  })
- .catch( error => { console.log( error )});
+ .catch( error => { 
+   console.log( error )}
+  );
 };
 
 function selectWhiteBoardData( item, index ){
   if( whiteBoardData ){
-    selectSavedWhiteBoard(item?.whiteBoardJasonData)
+    selectSavedWhiteBoard( { wid: whiteBoardId,  jsonData: item?.whiteBoardJasonData} )
      .then( response => {
       toggleTeachBoardOrEditor();
       toggleTeachBoardOrEditor();
@@ -139,7 +149,7 @@ return (
               </div>
             </div>
             <div className='savedBoards'>
-              { Object.values( whiteBoardData ).map(( item, index) => (
+              { whiteBoard.map(( item, index) => (
                     <div className='savedBoards-items'> 
                       <NotesIcon 
                           style={savedBoardIcon(item?.color)}
@@ -167,6 +177,8 @@ const mapDispatch = {
 
 const mapState = ( state, ownProps )   => {
   return {
+    operators: state.operators.operators,
+    operatorBusinessName: state.operators.operatorBusinessName,
     whiteBoardData: state.whiteBoardData.whiteBoardData,
     whiteBoardDataLoading: state.whiteBoardData.whiteBoardDataLoading,
     saveInProgress: state.whiteBoardData.saveInProgress,

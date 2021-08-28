@@ -24,10 +24,4 @@
     margin-left: 250px;
     font: black;
 }
-.whiteBoardSideBar .save-icon-visible {
-    visibility: visible;
-}
-.whiteBoardSideBar .save-icon-hidden {
-    visibility: hidden;
-    margin-top: -90px;
-}
+

@@ -1,5 +1,4 @@
-import { 
-    useEffect,
+    import { 
     useState } from 'react';
     
     import { 
@@ -41,8 +40,7 @@ import {
     getCoursesByCreatedByIdSelector } from 'services/course/selectors';
 
     import { 
-    setItemInSessionStorage,
-    getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
+    setItemInSessionStorage } from 'services/course/helpers/ServerHelper';
     
     import { 
     toast } from 'react-toastify';
@@ -90,9 +88,6 @@ import {
         const fileUploadUrl =  "/api/v1/fileUploads";
         const [ fileToRemove, setFileToRemove ] = useState( undefined );
     
-        useEffect(() => {
-        });
-    
     function onMatchListItem( match, listItem ) {
         if( match ){
             setCurrentLesson( listItem );
@@ -101,6 +96,7 @@ import {
 
             if ( previewMode && (currentUser?.role === role.Tutor) && (!listItem?.introduction || listItem?.introduction === "") ) {
                 const msg = "Please enter a lesson introduction.";
+                
                 Swal.fire(msg);
                 return false;
             }

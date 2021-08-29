@@ -99,6 +99,7 @@ const LoginPage = ({
     setSignUpOrLoginInPreference,
   } = useLoginPageHook( loginPageProps );
 
+
 const handleCreateUser = ( newSiteUser ) => {
   createUser( setUpNewUser({ ...newSiteUser, operator, siteUser: new SiteUser() }) )
   .then( resp => {

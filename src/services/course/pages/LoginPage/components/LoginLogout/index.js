@@ -26,8 +26,6 @@ const LoginLogout = ({
   operator, 
   user,  
   logOut }) => {
-
-
 const logInPage = `/${(!operatorBusinessName) ? getItemFromSessionStorage('operatorBusinessName') : operatorBusinessName}/login`;
 const performLoginLogOut = (e) => {
   e.preventDefault();
@@ -37,7 +35,6 @@ const performLoginLogOut = (e) => {
         Swal.fire({
           title: 'Courses you are interested in.',
           icon: 'warning',
-          // html: user.cart.map((item, index) => '<ul><li key=' + `${index}` + '>' + `${item?.name}` + '</li></ul') + "Do you still want to log out?",
           html: user.cart.map((item, index) => `<ul><li key=${index}> ${item?.name} </li></ul`) + "Do you still want to log out?",
           showCancelButton: true,
           confirmButtonText: 'Get course(s)',

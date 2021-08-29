@@ -41,6 +41,7 @@ function applyEffect( splitCharacterSet ) {
                 }
             }
         } 
+        return collection;
     });
     return collection;
 }

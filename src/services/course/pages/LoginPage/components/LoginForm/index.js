@@ -22,9 +22,10 @@ return   (
             id="email"
             name="email"
             type="email"
-            value={email}
+            // value={email}
             onChange={ e => setEmail( e.target.value ) }
             placeholder="email"
+            autoComplete="username"
           >
           </input>
         </label>
@@ -35,9 +36,10 @@ return   (
             id="password"
             name="password"
             type="password"
-            value={password}
+            // value={password}
             onChange={ e => setPassword( e.target.value ) }
             placeholder="password"
+            autoComplete="current-password"
           >
           </input>
         </label>

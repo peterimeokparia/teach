@@ -115,7 +115,7 @@ const goToSchedulingCalendar = ( user ) => {
             })
             .catch( error => console.log( error ));
     }
-}
+};
 
 const gotToConsultationCalendar = ( user ) => {
     let consultingCalendar = calendars?.find( cal => cal?.calendarEventType === eventEnum?.ConsultationForm && cal?.userId === user?._id);

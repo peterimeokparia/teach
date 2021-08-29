@@ -77,23 +77,26 @@ function saveWhiteBoardData(){
     wid: whiteBoardId,
     operatorId: operator?._id,
     color: getItemColor(whiteBoard)
-  }) .then( response => {
+  }) 
+  .then( response => {
     toggleTeachBoardOrEditor();
     toggleTeachBoardOrEditor();
  })
  .catch( error => { 
-   console.log( error )}
-  );
+   console.log( error );
+  });
 };
 
 function selectWhiteBoardData( item, index ){
   if( whiteBoardData ){
     selectSavedWhiteBoard( { wid: whiteBoardId,  jsonData: item?.whiteBoardJasonData} )
-     .then( response => {
+    .then( response => {
       toggleTeachBoardOrEditor();
       toggleTeachBoardOrEditor();
      })
-     .catch( error => { console.log( error )});
+    .catch( error => { 
+       console.log( error );
+    });
   }
 };
 

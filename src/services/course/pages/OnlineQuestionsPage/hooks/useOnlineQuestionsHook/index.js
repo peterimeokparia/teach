@@ -6,8 +6,7 @@ import {
 useDispatch } from 'react-redux';
 
 import {
-loadSubscribedPushNotificationUserByUserId,
-failedOnlineQuestionNotifications,  
+loadSubscribedPushNotificationUserByUserId, 
 retryPushNotificationMessage,
 subscribePushNotificationUser,
 savePushNotificationUser } from 'services/course/actions/notifications';

@@ -17,7 +17,7 @@ useDispatch } from 'react-redux';
 
 function useSessionHook( sessionProps ){
     const dispatch = useDispatch();
-    let { session, onSubmit, user, users } = sessionProps;
+    let { session, onSubmit, users } = sessionProps;
 
     let numberOfSessionsInitialValue = session ? session?.numberOfSessions : '';
     let totalNumberOfSessionsInitialValue = session ? session?.totalNumberOfSessions : '';

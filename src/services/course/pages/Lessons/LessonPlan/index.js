@@ -18,8 +18,7 @@ adjustRoomSize } from 'services/course/pages/Lessons/LessonPlan/helpers';
 import { 
 Validations } from 'services/course/helpers/Validations';
 
-import { 
-setItemInSessionStorage,
+import {
 getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
 
 import {
@@ -50,7 +49,6 @@ const LessonPlan = ({
   currentUser,
   selectedCourseFromLessonPlanCourseDropDown,
   selectedLessonFromLessonPlanDropDown }) => {
-
   const selectedCourse = (selectedCourseFromLessonPlanCourseDropDown?._id === undefined) 
                             ? getItemFromSessionStorage('selectedCourse') 
                             : selectedCourseFromLessonPlanCourseDropDown;
@@ -62,7 +60,6 @@ const LessonPlan = ({
   let {
     hideMeetingStage,
     videoModalModeOn,
-    currentLesson,
     session,
     roomSize, 
     setVideoModalMode,

@@ -109,7 +109,7 @@ return (
                   </label>  
                  </span>                                              
                   </span>
-                {/* <label>
+                <label>
                   Business Name   
                   <input
                       name="businessName"
@@ -119,7 +119,7 @@ return (
                       placeholder="business name"
                   >
                   </input>
-                  </label> */}
+                  </label>
                   <label>
                     Phone
                     <input

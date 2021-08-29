@@ -35,14 +35,16 @@ export const addWhiteBoardData = ( whiteBoardData ) => {
                      .then( resp => { 
                          console.log( resp );
                          return response;
-                    })      
+                    });      
                 })
                 .catch( error => {
                     dispatch({ type: ADD_WHITEBOARD_JSONDATA_ERROR , error });
             });
         })
-       .catch( error => { console.log( error )});
-    }
+        .catch( error => { 
+            console.log( error ); 
+        });
+    };
 };
 
 export const selectSavedWhiteBoard = ( whiteBoardData ) => {
@@ -61,10 +63,11 @@ export const selectSavedWhiteBoard = ( whiteBoardData ) => {
             dispatch({ type: LOAD_LATEST_WHITEBOARD_JSONDATA_SUCCESS, payload: data });  
             return data;
         })
-       .catch( error => { console.log( error )
+       .catch( error => { 
+           console.log( error );
             return error;
         });
-    }
+    };
 };
 
 export const saveWhiteBoardData = ( whiteBoardData ) => {

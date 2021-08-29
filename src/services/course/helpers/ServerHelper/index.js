@@ -60,13 +60,13 @@ export async function uploadContent(url, formData, method = `POST`) {
   // headers.append('Content-Type', 'video/webm'); 
   // headers.append('Accept', 'video/webm');
   // headers.append('Content-Type', 'image/png'); 
+
   headers.append('Authorization',  authToken ? `Bearer ${authToken}` : undefined);
   return fetch(url, {
     method,
     headers,
     body: formData
   }).then(resp => {
-    console.log('resp', resp);
     return resp;
   }).catch(err => { console.log(err);
     return err.message; 
@@ -153,4 +153,4 @@ export const setItemInSessionStorage = (key, item) => {
 
 export const getItemFromSessionStorage = (key) => {
   return JSON.parse( sessionStorage.getItem(key) );
-}
+};

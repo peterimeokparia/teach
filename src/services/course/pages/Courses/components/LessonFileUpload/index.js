@@ -18,7 +18,7 @@ const onChangeHandler = event => {
 };
 
 const getFileName = ( link ) => {
-    return link.split('files/')[1]
+    return link.split('files/')[1];
 };
 
 const openFile = (file) => {
@@ -30,6 +30,7 @@ const deleteFile = ( fileToDelete ) => {
         setFilesToRemove( fileToDelete );
     }
 };
+
 return (
     <div className="lessonFileUploadFilelist">                                
         {( previewMode )  

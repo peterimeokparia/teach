@@ -10,9 +10,6 @@ import {
 addNewCourse } from 'services/course/actions/courses';
 
 import { 
-getOperatorFromOperatorBusinessName } from 'services/course/selectors';
-
-import { 
 Validations } from  'services/course/helpers/Validations';
 
 import { 

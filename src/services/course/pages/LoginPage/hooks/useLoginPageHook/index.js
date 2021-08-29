@@ -1,12 +1,8 @@
 import { 
-useState, 
-useEffect } from 'react';
+useState } from 'react';
 
 import { 
 Redirect } from '@reach/router';
-
-import { 
-useDispatch } from 'react-redux';
     
 import {
 setOperator,
@@ -20,8 +16,6 @@ import NotFoundPage from 'services/course/pages/components/NotFoundPage';
 import CoursePackageRenewal from 'services/course/pages/Packages/CoursePackageRenewal';
 
 function useLoginPageHook( loginPageProps ){
-    const dispatch = useDispatch();
-
     let {
         operatorBusinessName,
         operator,
@@ -46,7 +40,7 @@ function useLoginPageHook( loginPageProps ){
         }
   
         if ( operatorBusinessName ) {
-            dispatch(setOperatorBusinessName( operatorBusinessName ));
+            setOperatorBusinessName( operatorBusinessName );
         }   
         return <Loading />;
     }

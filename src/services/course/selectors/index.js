@@ -2,8 +2,7 @@ import {
 createSelector}  from 'reselect';
 
 import { 
-setItemInSessionStorage,
-getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
+setItemInSessionStorage } from 'services/course/helpers/ServerHelper';
 
 const getUsers = state => state.users.users;
 const getCurrentUser = state => state.users.user;
@@ -31,30 +30,6 @@ const getFailedEmailNotifications = state => state?.failedNotifications.failedEm
 // const getCurrentUser = state => state.users.user;
 // const getParsedCourseId = ( state, props ) => parseInt( props.courseId, 10 );
 // const parseCourseId = (state, props) => parseInt(props.courseId, 10);
-
-
-// export const userOwnsCourse = createSelector(
-//     getCurrentUser,
-//     parseCourseId,
-
-//     (user, courseId) => {
-
-//         if ( ! user ) {
-
-//             return false;
-//         }
-
-//         if ( user.role === 'admin' ) {
-    
-//             return true;
-//         }
-    
-//         console.log('user', user);
-
-//         return user.courses.includes(parseInt(courseId));
-//     }
-
-// );
 
 export const failedOnlineQuestionNotificationQueueHasMessages = createSelector(
     getCurrentUser,
@@ -124,6 +99,7 @@ export const getOperatorFromOperatorBusinessName = createSelector(
     getOperatorBusinessName,
     (operators , operatorBusinessName) => {
         let operator = Object.values(operators)?.find(operator =>  operator?.businessName === operatorBusinessName);
+        
         if ( operator ) {
             setItemInSessionStorage('operator', operator);
         }
@@ -241,12 +217,10 @@ export const getSelectedOnlineAnswersByCourseId = createSelector(
 
 export const getFailedPushNotificationQueue = createSelector(
     getFailedPushNotifications,
-    (failedPushNotifications) => 
-         Object.values(failedPushNotifications)
-    // getCurrentUser,
-    // getFailedPushNotifications,
-    // ( user, failedPushNotifications ) => 
-    //      Object.values(failedPushNotifications).filter(failedSentPush => failedSentPush?.userId === user?._id)       
+    getCurrentUser,
+    getFailedPushNotifications,
+    ( user, failedPushNotifications ) => 
+         Object.values(failedPushNotifications).filter(failedSentPush => failedSentPush?.userId === user?._id)       
 );
 
 export const getFailedEmailNotificationQueue = createSelector(

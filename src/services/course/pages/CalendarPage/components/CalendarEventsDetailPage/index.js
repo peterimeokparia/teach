@@ -98,6 +98,7 @@ function getEventsForSelectedUser() {
 function handleNewCalendarConsultation(){
     if ( selectedCalendarEventId ) {
         let newEvent = events?.find( _event =>  _event?._id === selectedCalendarEventId );
+        
         if ( selectedCalendarEventId && 
                     newEvent && 
                     newEvent?.event?.title === eventEnum.Available && 

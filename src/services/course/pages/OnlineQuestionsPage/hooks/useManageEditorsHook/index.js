@@ -7,7 +7,6 @@ useDispatch } from 'react-redux';
     
 import { 
 addNewOnlineAnswer,
-saveOnlineAnswer,
 loadOnlineAnswers,
 deleteOnlineAnswer } from 'services/course/actions/onlineanswers';
 

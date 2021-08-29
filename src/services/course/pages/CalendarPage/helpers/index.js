@@ -445,7 +445,6 @@ export function userCanAddOrEditEvent( info, user ){
     if ( info?.event?.title === eventEnum.Available || 
         info?.event?._def?.extendedProps?.userId === user?._id || 
             user?.role === role.Tutor ) {
-
         return true;
     }
 };

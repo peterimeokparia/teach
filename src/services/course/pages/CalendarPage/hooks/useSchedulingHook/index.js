@@ -45,7 +45,7 @@ function useSchedulingHook(
             inputRef.current.focus();
         }
         if ( start === undefined ) {
-            const [ start, end, startStr, endStr, allDay ] = Object.entries(slotInfo);
+            const [ start, end, , , allDay ] = Object.entries(slotInfo);
             const [ calendarViewType ] = Object.entries(slotInfo?.view);
             let dateTimeString = transformDateTime( start[1], end[1], calendarViewType, allDay[1] );
 
@@ -103,7 +103,7 @@ if ( recurringEvent && ! handleFormValidation('Frequency', frequency, 'Select') 
     return;
 }
 
-const [ start, end, startStr, endStr, allDay ] = Object.entries(slotInfo);
+const [ start, end, , , allDay ] = Object.entries(slotInfo);
 const [ calendarViewType ] = Object.entries(slotInfo?.view);
 
 let event = {}, dateTimeString = transformDateTime( start[1], end[1], calendarViewType, allDay[1] );

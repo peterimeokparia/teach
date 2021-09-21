@@ -6,9 +6,9 @@ Redirect,
 navigate} from '@reach/router';
 
 import {
-euphoricEffect } from 'services/course/pages/components/Euphoric';
+euphoricEffect } from './node_modules/services/course/pages/components/Euphoric';
 
-import NavLinks from 'services/course/pages/components/NavLinks';
+import NavLinks from './node_modules/services/course/pages/components/NavLinks';
 import DropDown from '../DropDown';
 
 const SiteEntryComponent = ({

@@ -45,6 +45,7 @@ import MoreLessonContentPage from 'services/course/pages/Courses/CourseDetailPag
 import SiteEntryComponent from 'services/course/pages/components/SiteEntryComponent';
 import SplitViewComponentTest from 'services/course/pages/components/SplitViewComponent/SplitViewComponentTest';
 import VerifyMeetingAttendees from 'services/course/pages/Lessons/LessonPlan/components/VerifyMeetingAttendees';
+import Booming from 'services/course/pages/Booming';
 
 const MainRoute = () => {
     return (
@@ -117,10 +118,13 @@ const MainRoute = () => {
              <OnlineQuestionPage path="/:operatorBusinessName/homework/askquestion/course/:courseId/question/:onlineQuestionId" />
              <OnlineQuestionsCourseListPage path="/:operatorBusinessName/homework/askquestion/course"/>
              <MoreLessonContentPage path="/lessons/:lessonId/more" />
+             <SiteEntryComponent path="/main"/>
+             <SiteEntryComponent path="/:operatorBusinessName"/>
              <SiteEntryComponent path="/main/:operatorBusinessName"/>
              <SplitViewComponentTest path="/splitviewtest"/>
              <VerifyMeetingAttendees path="/:operatorBusinessName/verifyattendees/:selectedTutorId/meeting/:meetingId"/>
              <Students path="/:operatorBusinessName/students"/>
+             <Booming path="/boomingllc" />
         </Router>
 
     );

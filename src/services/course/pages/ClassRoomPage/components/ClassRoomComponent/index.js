@@ -31,7 +31,7 @@ getSortedRecordsByDate } from 'services/course/selectors';
 
 import { 
 getLessonPlanUrls,
-getSelectedUser, 
+getselectedTutor, 
 getStudentsSubscribedToCoursesByThisTutor, 
 toggleBetweenAttendanceGradeDisplay,
 emailInputOptions, 
@@ -78,7 +78,7 @@ const ClassRoomComponent = ({
     isModalOpen,
     openNewCourseModal,
     closeNewCourseModal }) => {
-    const selectedUser = getSelectedUser( users, selectedUserId );
+    const selectedUser = getselectedTutor( users, selectedUserId );
     const currentGrades = grades?.filter(grd => grd?.courseId === selectedCourseFromLessonPlanCourseDropDown?._id);
     const url = getLessonPlanUrls( operatorBusinessName, selectedUserId );
     const sessions = allSessions?.filter( usersession => usersession?.courseId === selectedCourseFromLessonPlanCourseDropDown?._id);
@@ -105,11 +105,11 @@ const ClassRoomComponent = ({
               if ( response?.value ) {
                   return;
               } else { 
-                  enableTeachPlatform({ listOfStudents, selectedUserId, operatorBusinessName, sessions, operator } );
+                  enableTeachPlatform({ listOfStudents, selectedTutorId: selectedUserId, operatorBusinessName, sessions, operator } );
               }
             }); 
     } else {
-        enableTeachPlatform({ listOfStudents, selectedUserId, operatorBusinessName, sessions, operator });
+        enableTeachPlatform({ listOfStudents, selectedTutorId: selectedUserId, operatorBusinessName, sessions, operator });
     }
 };
 

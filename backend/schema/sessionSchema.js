@@ -3,6 +3,10 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema; 
 
 const sessionSchema = new Schema ({
+        operatorId: { 
+            type: String, 
+            required: false  
+        },
         courseId: { 
             type: String, 
             required: false  

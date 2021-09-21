@@ -126,7 +126,7 @@ const beginEditing = ( selectedItem ) => {
 };
 
 function setValues () {
-    setEventTitle(initialValue?.title);
+    setEventTitle((initialValue?.title === 'Available') ? '' : initialValue?.title );
     setEventLocation(initialValue?.location);
     setEventStartTime(initialValue?.startTime);
     setEventEndTime(initialValue?.endTime);

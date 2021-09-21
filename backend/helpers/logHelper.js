@@ -33,6 +33,7 @@ export const SESSIONROUTE = "sessionModel";
 export const TIMELINEROUTE = "timeLineModel";
 export const USERROUTE = "userModel";
 export const WHITEBOARDROUTE = "whiteBoardModel";
+export const MEETINGNOTESROUTE = "meetingNotesModel";
 
 export const getLogObject = () => {
 }
@@ -50,13 +51,6 @@ export async function handleBackEndLogs( modelName, errormessage ){
          let [ errorMessage ] = logs;
          if ( logs && errorMessage ) {
             const {  _id, objectName } = errorMessage;
-            // console.log(JSON.stringify(errorMessage?.errorMessage))
-            // console.log('errorMessage')
-            // console.log('_id')
-            // console.log('objectName')
-            // console.log(JSON.stringify( errorMessage ))
-            // console.log(_id)
-            // console.log(objectName)
             if ( objectName && _id ) {
                 console.log('.SAVING')
                return handleFetch(`${url.BackeEndServerLessonPrefix}/logforteach/${_id}`, 'PUT', { ...logs, errorMessage: [...errorMessage?.errorMessage, { message, time: Date.now() } ]  });  

@@ -35,6 +35,8 @@ import './style.css';
 
 const EditorComponent = ({
 id, 
+width,
+height,
 name,
 content,
 className,
@@ -51,6 +53,8 @@ return (
          id={id}
          name={name}
          className={className}
+         width={width}
+         height={height}
         > 
         <Dante
               onUpdate={handleChange}  

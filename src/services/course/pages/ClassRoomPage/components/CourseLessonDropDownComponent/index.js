@@ -129,7 +129,7 @@ return (
                     >
                         <div className="StudentDetailPageLink">
                         {( selectedCourseFromLessonPlanCourseDropDown) && 
-                            <a  href onClick={() => navigateToStudentDetailPage(`/${operatorBusinessName}/student/${currentUser?._id}/course/${selectedCourseFromLessonPlanCourseDropDown?._id}/lessons/${selectedLessonFromLessonPlanDropDown?._id}`, userNavigationHistory)}> <span className="viewGradesLink"> View grades, attendance and package information. </span> </a> 
+                            <a  href onClick={() => navigateToStudentDetailPage(`/${operatorBusinessName}/student/${currentUser?._id}/course/${selectedCourseFromLessonPlanCourseDropDown?._id}}`, userNavigationHistory)}> <span className="viewGradesLink"> View grades, attendance and package information. </span> </a> 
                         } 
                         </div> 
                     </Roles>        

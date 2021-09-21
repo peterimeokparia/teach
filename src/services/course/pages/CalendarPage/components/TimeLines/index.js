@@ -22,11 +22,15 @@ import {
   
   import { 
   loadAllEvents } from "services/course/actions/event";
+
+  import { 
+  role } from "services/course/helpers/PageHelpers";
   
   import Timeline from 'react-calendar-timeline';
   import moment from 'moment';
   import 'react-calendar-timeline/lib/Timeline.css';
   import './style.css';
+
   
     let keys = {
         groupIdKey: "id",
@@ -47,8 +51,10 @@ import {
         super(props);
     
         let timeLineItems = [];
+
+        let user = this.props?.users?.filter(user => user?._id === this.props?.userId)
   
-        this.props.events.map( event => event.timeLineItems )?.forEach(element => {
+        this.props?.events.map( event => event.timeLineItems )?.forEach(element => {
             if ( element.length > 0 ) {
                 timeLineItems = [ ...timeLineItems, ...element ];
             };
@@ -70,14 +76,24 @@ import {
                 : false,
             color: tevent?.color
         } ));
-  
-        let groups = this.props.calendars.map( cal =>  cal.timeLineGroup );
+
+        
+        let allStudentsCalendar = this.props?.calendars?.filter( cal => this.props.allStudents.includes( cal?.userId) );
+        
+        let allTutorsCalendar =  this.props?.calendars?.filter( cal => this.props.allTutors.includes( cal?.userId) ); 
+        
+        let individualTutorsCalendar = this.props?.calendars?.filter( cal => cal?.userId ===  this.props?.userId );
+
+        let allGroups = ( this.props?.user?.role === role.Student ) ? allStudentsCalendar.map( cal =>  cal.timeLineGroup ) : allTutorsCalendar.map( cal =>  cal.timeLineGroup );
+
+        let individualGroups = individualTutorsCalendar.map( cal =>  cal.timeLineGroup );
   
         const defaultTimeStart = moment().add(-12, 'hour');
         const defaultTimeEnd = moment().add(12, 'hour');
             
         this.state = {
-            groups,
+            allGroups,
+            individualGroups,
             items,
             defaultTimeStart,
             defaultTimeEnd
@@ -166,11 +182,12 @@ import {
       };
   
       render() {
-        const { groups, items, defaultTimeStart, defaultTimeEnd } = this.state;
+        const { allGroups, individualGroups, items, defaultTimeStart, defaultTimeEnd } = this.state;
   
         return (
+          <>
         <Timeline
-            groups={groups}
+            groups={individualGroups}
             items={items}
             keys={keys}
             itemTouchSendsClick={true}
@@ -185,6 +202,24 @@ import {
             onItemMove={this.handleItemMove}
             onItemResize={this.handleItemResize}
         />
+
+        <Timeline
+            groups={allGroups}
+            items={items}
+            keys={keys}
+            itemTouchSendsClick={true}
+            stackItems
+            itemHeightRatio={0.75}
+            showCursorLine
+            canMove={true}
+            canResize={true}
+            defaultTimeStart={defaultTimeStart}
+            defaultTimeEnd={defaultTimeEnd}
+            itemRenderer={this.itemRenderer}
+            onItemMove={this.handleItemMove}
+            onItemResize={this.handleItemResize}
+        />
+        </>
         );
     };
     
@@ -200,6 +235,8 @@ import {
   const mapState = ( state, ownProps )  => ({
       operator: getOperatorFromOperatorBusinessName(state, ownProps),
       users: getUsersByOperatorId(state, ownProps),
+      allStudents: getUsersByOperatorId(state, ownProps)?.filter( user => user?.role === role.Student )?.map( user => user?._id ),
+      allTutors: getUsersByOperatorId(state, ownProps)?.filter( user => user?.role === role.Tutor )?.map( user => user?._id ),
       user: state?.users?.user,
       calendar: getCalendarEventsByUserIdSelector(state, ownProps),
       calendars: getCalendarsByOperatorId(state, ownProps),

@@ -19,7 +19,8 @@ export const SIGN_UP_BEGINS = "SIGN UP BEGINS";
 export const SIGN_UP_SUCCESSS = "SIGN UP SUCCESSS";
 export const SIGN_UP_ERRORS = "SIGN UP ERRORS";
 export const LOAD_USERS_BEGIN  = "LOAD USERS BEGIN";
-export const LOAD_USERS_SUCCESS = "LOAD USERS SUCCESS"; 
+export const LOAD_USERS_SUCCESS = "LOAD USERS SUCCESS";
+export const LOAD_USER_SUCCESS = "LOAD USER SUCCESS";  
 export const LOAD_USERS_ERROR = "LOAD USERS ERROR";
 export const LOAD_LOGGEDIN_USERS_BEGIN = "LOAD LOGGEDIN USERS BEGIN";
 export const LOAD_LOGGEDIN_USERS_SUCCESS = "LOAD LOGGEDIN USERS SUCCESS";
@@ -49,6 +50,7 @@ export const RESET_PASSWORD_ERROR = "RESET PASSWORD ERROR";
 export const USER_UPDATED = "USER UPDATED";
 export const DELETE_USER_SUCCESS = "DELETE USER SUCCESS";
 export const DELETE_USER_ERROR = "DELETE USER ERROR";
+export const LOAD_MEETING_USER_SUCCESS = "LOAD MEETING USER SUCCESS";
 
 export const loginUser = (newUser) => {
    return dispatch => {
@@ -222,7 +224,8 @@ export const getCurrentUserById = ( currentUser ) => {
     return dispatch => {
         return getById( currentUser?._id, '/users/user?id=' )
          .then( user => {
-             dispatch({ type: LOAD_USERS_SUCCESS, payload: user} );
+             dispatch({ type: LOAD_USER_SUCCESS, payload: user} );
+             dispatch({ type: LOAD_MEETING_USER_SUCCESS, payload: user} );
          })
           .catch( error => {
               dispatch({ type: LOAD_USERS_ERROR, payload: error } );
@@ -230,11 +233,14 @@ export const getCurrentUserById = ( currentUser ) => {
     };
 };
 
+
 export const updateCurrentUser = ( currentUser ) => {
     return dispatch => {
-        return getById( currentUser?._id, '/users/user?id=' )
+        //
+        return update( currentUser, '/users/' )
          .then( user => {
-             dispatch({ type: LAST_LOGGEDIN_USER, payload: user} );
+            dispatch({ type: LOAD_USER_SUCCESS, payload: user} );
+            dispatch({ type: LAST_LOGGEDIN_USER, payload: user} );
          })
           .catch( error => {
               dispatch({ type: LAST_LOGGEDIN_USER_ERROR, payload: error } );
@@ -297,11 +303,11 @@ export const inviteStudentsToLearningSession = ( invitees ) => {
     };
 };
 
-export const updateUserInvitationUrl = (user, inviteeSessionUrl, nameOfLessonInProgress, lessonInProgress, meetingId) => {
+export const updateUserInvitationUrl = (user) => {
     return dispatch  => {
       try{
-        updateInvitationUrl( user?._id, {...user, inviteeSessionUrl, nameOfLessonInProgress,  lessonInProgress, meetingId} );
-        dispatch({ type: UPDATE_INVITEE_SESSION_URL, payload: { ...user, inviteeSessionUrl, nameOfLessonInProgress, lessonInProgress, meetingId} });
+        updateInvitationUrl( user?._id, user );
+        dispatch({ type: UPDATE_INVITEE_SESSION_URL, payload: { ...user } });
         } catch (error) {
         dispatch({ type: FAILED_INVITATION, error });
       };

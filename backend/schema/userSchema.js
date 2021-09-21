@@ -66,6 +66,14 @@ const userSchema = new Schema ({
         type: String,
         required: false
     },
+    lesson: { 
+        type: String, 
+        required: false  
+    },
+    course: { 
+        type: String, 
+        required: false  
+    },
     loginCount: {
         type: Number,
         required: true

@@ -15,8 +15,9 @@ body {
 #whiteboardContainer {
     height: calc(var(--vh, 1vh) * 100);
     width: 100%;
+    resize: both;
+    overflow: auto;
 }
-
 .btn-group button {
     background: transparent;
     border: 2px solid #636060;

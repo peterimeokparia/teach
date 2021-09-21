@@ -41,7 +41,7 @@ import {
   } 
   
   let links = courses.map(( course, index ) => {
-   return { id: course?._id, title: course?.name, path:`student/${studentId}/course/${ course?._id }`, _id: course?._id }; 
+    return { id: course?._id, title: course?.name, path:`student/${studentId}/course/${ course?._id }`, _id: course?._id }; 
   });
   
   return (
@@ -53,33 +53,32 @@ import {
       className="content" 
       id="content"
     > 
-      {
-        <div>
-            <span className="sidebar"> 
-              <span>
-              <ListItemComponent
-                ulClassName={"savedAnswersList"}
-                liClassName={"savedAnswers-item"}
-                id={studentId}
-                altLinkPath={"student"}
-                collection={links}
-                onMatchListItem={onMatchListItem}
-                path={undefined}
-              >
-                  {( selectedPage ) => (
-                    <span>      
-                      <div>
-                      <Link to={selectedPage?.path}> <span title={selectedPage?.title} > { selectedPage?.title } </span> </Link> 
-                        <br></br>
-                      </div>                            
-                    </span>                    
-                  )}
-              </ListItemComponent>
-              </span>
-                <div className="sideBarSavedCourses">
-                  { children }
-                </div>      
-            </span>       
+      { <div>
+          <span className="sidebar"> 
+            <span>
+            <ListItemComponent
+              ulClassName={"savedAnswersList"}
+              liClassName={"savedAnswers-item"}
+              id={studentId}
+              altLinkPath={"student"}
+              collection={links}
+              onMatchListItem={onMatchListItem}
+              path={undefined}
+            >
+                {( selectedPage ) => (
+                  <span>      
+                    <div>
+                    <Link to={selectedPage?.path}> <span title={selectedPage?.title} > { selectedPage?.title } </span> </Link> 
+                      <br></br>
+                    </div>                            
+                  </span>                    
+                )}
+            </ListItemComponent>
+            </span>
+              <div className="sideBarSavedCourses">
+                { children }
+              </div>      
+          </span>       
         </div> 
       }   
     </div>      

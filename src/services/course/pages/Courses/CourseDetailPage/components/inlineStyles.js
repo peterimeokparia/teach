@@ -20,6 +20,32 @@ export const deleteQuestionIconStyle = () => {
   };
 };
 
+export const sideBarEditIconStyle = () => {
+  return {
+    fontSize: 25,
+    "marginTop": "1%",
+    // "top": "10%",
+  };
+};
+
+export const sideBarDeleteIconStyle = () => {
+  return {
+    fontSize: 25,
+    "marginTop": "1%",
+    "marginLeft": "-15%"
+    // "top": "10%",
+  };
+};
+
+export const swapHorizIconStyle = () => {
+  return {
+    fontSize: 25,
+    "marginTop": "1%",
+    "marginLeft": "-15%"
+    // "top": "10%",
+  };
+};
+
 export const saveQuestionIconStyle = () => {
   return {
     fontSize: 60,

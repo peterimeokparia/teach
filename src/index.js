@@ -87,6 +87,9 @@ grades } from 'services/course/middleware/grades';
 import {
 loadWhiteBoardData } from "services/course/actions/whiteBoards";
 
+import {
+loadMeetingNotes } from "services/course/actions/meetingNotes";
+
 // import {
 // loadFailedPushNotifications } from 'services/course/actions/failedpushnotifications';
 
@@ -134,6 +137,7 @@ export const store = createStore(
 
 //store.dispatch(loadFailedPushNotifications());
 //store.dispatch(loadFailedEmailNotifications());
+store?.dispatch(loadMeetingNotes());
 store?.dispatch(loadWhiteBoardData());
 store?.dispatch(loadCourses());
 store.dispatch(loadOnlineComments());

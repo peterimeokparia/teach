@@ -96,6 +96,10 @@ const eventSchema = new Schema ({
             required: false
         }
     },
+    meetingId: {
+        type: String, 
+        required: false 
+    },
     location: {
         type: String, 
         required: false 

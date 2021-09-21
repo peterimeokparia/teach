@@ -104,7 +104,7 @@ return (
                     }
 
                   </div>
-                    <EditorComponent
+                  <EditorComponent
                     className={"answerEditor"}
                     id={ element?._id }
                     name={ element?.name } 

@@ -37,9 +37,8 @@ function useSchedulingHook(
     const [ endDateDateTime, setEndDateDateTime ] = useState( new Date()?.toLocaleDateString('en-US') );
     const [ startTimeDateTime, setStartTimeDateTime ] = useState( new Date()?.toLocaleTimeString('en-US') );
     const [ endTimeDateTime, setEndTimeDateTime ] = useState(  startTimeDateTime );
-    // const [ freqCollectionData, setFreqCollectionData ] = useState(frequencyCollection); 
+    const [ freqCollectionData, setFreqCollectionData ] = useState(frequencyCollection); 
     const inputRef = useRef();
-
     useEffect (() => {
         if ( inputRef ) {
             inputRef.current.focus();
@@ -143,7 +142,7 @@ if ( recurringEvent && ! allDay[1] ) {
         duration: ( new Date( dateTimeString?.resEndStr ) - new Date( dateTimeString?.resStartStr ) )
     };
 }
-    handleSubmit( newCalendarEventData(event, location, schedulingData, undefined ) );
+    handleSubmit( newCalendarEventData(event, location, schedulingData, undefined, undefined ) );
 };
 
 function handleFormValidation(fieldname, value, option){
@@ -166,7 +165,6 @@ function setStartEndTimesOnAllDaySelection( allDayChanged ) {
         setEventEndTime( endPrev );
     } 
 }
-
 return {
     inputRef, 
     duration, 
@@ -178,7 +176,7 @@ return {
     endTimeDateTime, 
     allDay, 
     recurringEvent, 
-    // freqCollectionData,
+    freqCollectionData,
     frequencyCollection,
     interval,
     weekDays,

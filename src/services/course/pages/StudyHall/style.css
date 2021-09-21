@@ -21,9 +21,10 @@
   background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
 }
 .MyCourses header h1 {
-  background-color: #673ab7;
+  /* background-color: #673ab7; */
   margin: 0;
   font-size: 24px;
+  font-weight: bolder;
   text-align: center;
   text-transform: capitalize;
 }

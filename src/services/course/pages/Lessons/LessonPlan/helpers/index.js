@@ -1,9 +1,11 @@
 import {
 getHostName } from 'services/course/helpers/PageHelpers';
 
-export const getUrls = (currentUser, courseId, lessonId, classRoomId) => {
-  const page = `${courseId}_${lessonId}_${classRoomId}`; 
-  const editorPage = `${lessonId}_${classRoomId}`;
+export const getUrls = (currentUser, courseId, lessonId, classRoomId, meetingId) => {
+  //const page = `${courseId}_${lessonId}_${classRoomId}`; 
+  // const editorPage = `${lessonId}_${classRoomId}`;
+  const page = `${meetingId}_${currentUser?._id}`;
+  const editorPage = `${meetingId}_${currentUser?._id}`;
 
   return {
       meeting: `https://joinmeet.today/${page}`, 

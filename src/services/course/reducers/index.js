@@ -29,6 +29,7 @@ import failedNotifications from './failednotifications';
 import logs from './logforteach';
 import formFields from './formfields';
 import whiteBoardData from './whiteboards';
+import meetingNotes from './meetingNotes';
 
 let reducers = { 
     courses, 
@@ -60,7 +61,8 @@ let reducers = {
     failedNotifications,
     logs,
     formFields,
-    whiteBoardData
+    whiteBoardData,
+    meetingNotes
 };
 
 export default combineReducers( reducers );

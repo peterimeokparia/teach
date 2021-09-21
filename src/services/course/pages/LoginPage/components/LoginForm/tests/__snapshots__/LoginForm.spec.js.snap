@@ -10,25 +10,25 @@ exports[`LoginForm renders as expected 1`] = `
     <label>
       Email
       <input
+        autoComplete="username"
         data-cy="email"
         id="email"
         name="email"
         onChange={[Function]}
         placeholder="email"
         type="email"
-        value=""
       />
     </label>
     <label>
       Password
       <input
+        autoComplete="current-password"
         data-cy="password"
         id="password"
         name="password"
         onChange={[Function]}
         placeholder="password"
         type="password"
-        value=""
       />
     </label>
     <div />

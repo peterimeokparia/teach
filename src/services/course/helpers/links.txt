@@ -417,3 +417,8 @@ https://expressjs.com/en/guide/writing-middleware.html
 Dictionary Implementation
 --------------------------
 https://medium.com/weekly-webtips/how-to-create-dictionaries-in-javascript-21628f958a9e
+
+
+React-Split-pane
+------------------
+https://github.com/tomkp/react-split-pane

@@ -38,6 +38,7 @@ import answerFormRoute from '../routes/answerFormRoute.js';
 import formFieldRoute from '../routes/formFieldRoute.js';
 import configRoute from '../routes/configRoute.js';
 import whiteBoardRoute from '../routes/whiteBoardRoute.js';
+import meetingNotesRoute from '../routes/meetingNotesRoute.js';
 import dotenv from 'dotenv';
 dotenv.config({ path: '../../backend/.env' });
 
@@ -116,6 +117,8 @@ app.use('/api/v1/formfields', formFieldRoute);
 app.use('/api/v1/configs', configRoute); 
 
 app.use('/api/v1/whiteboards', whiteBoardRoute);
+
+app.use('/api/v1/meetingnotes', meetingNotesRoute);
 
 mongoose.connect('mongodb+srv://dbuser:dbuser2020@cluster0.8heal.mongodb.net/teach?retryWrites=true&w=majority', {
    useNewUrlParser: true, 

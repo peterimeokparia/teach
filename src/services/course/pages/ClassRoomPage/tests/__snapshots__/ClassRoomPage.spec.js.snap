@@ -44,23 +44,6 @@ exports[`ClassRoomComponent renders as expected 1`] = `
               className="navlinkItem"
             >
               <a
-                href="/boomingllc/LessonPlan/StudyHall/undefined"
-                onClick={[Function]}
-                style={
-                  Object {
-                    "color": "white",
-                  }
-                }
-              >
-                 
-                Study Hall
-                 
-              </a>
-            </li>
-            <li
-              className="navlinkItem"
-            >
-              <a
                 href="/boomingllc/mycourses"
                 onClick={[Function]}
                 style={

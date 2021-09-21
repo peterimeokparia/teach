@@ -2,21 +2,31 @@ import {
 useState, 
 useEffect } from 'react';
 
-function Meeting({ roomName, width, height, containerWidth, containerHeight, userName }) {
+function Meeting({ 
+  roomName, 
+  width, 
+  height, 
+  containerWidth, 
+  containerHeight, 
+  userName, 
+  resizedHeight,
+  resizedWidth }) {
+
   const [loading, setLoading] = useState(true);
   const containerStyle = {
       width: containerWidth,
       height: containerHeight
   };
   //   defaults
-  //   width: ( containerWidth === "100%" ) ? 365 : 720,
+  //   width: ( containerWidth === "100%" ) ? 365 : 720,  665
   //  height: ( containerHeight === "100%" ) ? 200 : 720, 
+  // height: ( containerHeight === "100%" ) ? 875 : 720, 
   //   optimal range for video conf is b/w 720 to 920 px
   const jitsiContainerStyle = {
     display: (loading ? 'none' : 'block'),
-    width: ( containerWidth === "100%" ) ? 365 : 720, 
-    height: ( containerHeight === "100%" ) ? 875 : 720, 
-   
+    width: ( containerWidth === "100%" ) ? resizedWidth : 720,
+    height: ( containerHeight === "100%" ) ? resizedHeight : 720,  
+    // height: ( containerHeight === "100%" ) ? 475 : 720, 
   };
  const smallScreenWidth = 200;
  

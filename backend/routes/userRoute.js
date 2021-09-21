@@ -144,6 +144,7 @@ userRoute.put('/login/:userId', async (req, res) => {
 });
 
 userRoute.put('/:userId', (req, res) => {
+  console.log(req?.body);
   saveUpdatedData(req, userModel, req.params.userId)
   .then( data => {
     return res.status(200).json(data);

@@ -2,24 +2,32 @@ import {
 useEffect } from 'react';
 
 import { 
-navigate } from '@reach/router';
+navigate} from '@reach/router';
 
 import {
 euphoricEffect } from 'services/course/pages/components/Euphoric';
 
+import NavLinks from 'services/course/pages/components/NavLinks';
 import DropDown from '../DropDown';
 
-const SiteEntryComponent = () => {   
-    useEffect(() => {
-        introStyleEffects();
-    });
+const SiteEntryComponent = ({
+    operatorBusinessName } ) => {   
 
     let organizations = [
         {_id:'teach', id:'teach',   name:'teach'},
         {_id:'boomingllc',id:'boomingllc',   name:'boomingllc'}
     ];
 
-    let characterSet = "RAVING FAN STUDENTS!";
+     let business = organizations?.find( org => org?.name === operatorBusinessName );
+    if ( !business ) {
+    return <div>{`${operatorBusinessName} was not found.`}</div>;
+    }
+
+    useEffect(() => {
+        introStyleEffects();
+    });
+
+    let characterSet = (operatorBusinessName === "boomingllc") ? "BOOMING LLC!" : "RAVING FAN STUDENTS!";
     let splitCharacterSet = characterSet?.split(' ');
 
 function applyEffect( splitCharacterSet ) {
@@ -37,7 +45,7 @@ function applyEffect( splitCharacterSet ) {
                 }
 
                 if( splitCharacterSet?.length-1 === index && i === splitCharacterSet[index]?.length ){
-                    collection?.splice(19, 1, euphoricEffect(element[i-1], `euphoric_last`, '.euphoric span' ) );
+                    collection?.splice((characterSet?.length-1), 1, euphoricEffect(element[i-1], `euphoric_last`, '.euphoric span' ) );
                 }
             }
         } 
@@ -65,8 +73,11 @@ return (
     { introStyleEffects() }
     <div className='euphoric'> 
         <div className="orgSelector">
-        <label>Organization</label>
-        <span className="euphoric_dropdown">
+        <NavLinks to={`/${operatorBusinessName}/login`}> 
+             <label className="navLink">{business?.name}</label>
+        </NavLinks> 
+        {/* <label>Organization</label> */}
+        {/* <span className="euphoric_dropdown">
             <DropDown 
                 label={""}
                 key={"_id"}
@@ -74,7 +85,7 @@ return (
                 optionCollection={organizations}
                 setOptionSelectedValue={organization => handleSelected( organization )} 
             />
-        </span>
+        </span> */}
         </div>
     </div>
 </>

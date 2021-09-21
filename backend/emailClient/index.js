@@ -1,6 +1,6 @@
 import {
 SENDGRID,
-NODEMAILER } from '../emailClient/providers/index.js';
+NODEMAILER } from '../emailclient/providers/index.js';
 import NodeMailer from 'nodemailer';
 import sgMail from '@sendgrid/mail';
 

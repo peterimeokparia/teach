@@ -16,14 +16,17 @@ loadSessions } from 'services/course/actions/sessions';
 import {  
 loadLessons} from 'services/course/actions/lessons';
 
+import { 
+getOperatorFromOperatorBusinessName } from 'services/course/selectors';
+
 import StudentDisplayViewComponent from '../components/StudentDisplayViewComponent';
 import 'react-toastify/dist/ReactToastify.css';
 
 const StudentDetailPage = ({
     operatorBusinessName,
+    operator,
     studentId,
     courseId,
-    lessonId,
     users,
     children }) => {
     useEffect(() => {
@@ -38,13 +41,13 @@ const StudentDetailPage = ({
     
     let props = {
         operatorBusinessName,
+        operator,
+        courseId,
         selectedStudents: users?.find(usr => usr?._id === studentId),
         childrenProps: children
     };
 
-return (     
-    <StudentDisplayViewComponent props={props}/>             
-    );
+return ( <StudentDisplayViewComponent props={props}/>  );
 };
 
 const mapDispatch = {
@@ -56,6 +59,7 @@ const mapDispatch = {
 
 const mapState = (state, ownProps) => {
     return {
+        operator: getOperatorFromOperatorBusinessName(state, ownProps),
         courseTutor: state.courses.courseTutor,
         users: Object.values(state?.users?.users),
     };

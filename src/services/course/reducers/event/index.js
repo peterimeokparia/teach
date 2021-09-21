@@ -6,6 +6,7 @@ ADD_EVENT_SUCCESS,
 ADD_EVENT_ERROR,
 SAVE_EVENT_BEGIN,
 SAVE_EVENT_SUCCESS,
+SAVE_TIMELINE_EVENTS,
 SAVE_EVENT_ERROR,
 LOAD_EVENTS_BEGIN,
 LOAD_EVENTS_SUCCESS,
@@ -36,6 +37,7 @@ const reducer =  produce( (draft, action) => {
           return;
           case ADD_EVENT_SUCCESS: 
           case SAVE_EVENT_SUCCESS:
+          case SAVE_TIMELINE_EVENTS:
                draft.isAdding = false;
                draft.isSaving = false;
                draft.onError = null;  

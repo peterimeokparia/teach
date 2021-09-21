@@ -42,6 +42,7 @@ const reducer = produce((draft, action) => {
         return;
         case LOAD_WHITEBOARD_JSONDATA_BEGIN:
              draft.whiteBoardDataLoading = true;
+             draft.onWhiteBoardDataLoadingError = null;
         return;
         case LOAD_WHITEBOARD_JSONDATA_SUCCESS:
              draft.whiteBoardDataLoading = false;

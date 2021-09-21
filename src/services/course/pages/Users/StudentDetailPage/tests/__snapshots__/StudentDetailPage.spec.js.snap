@@ -40,12 +40,139 @@ exports[`StudentDetailPage renders as expected 1`] = `
     <div
       className="sidebar"
     >
-      <div />
+      <div>
+        <ul
+          className="lessons"
+        >
+          <li
+            className="lesson-item"
+          >
+            <div>
+              <div>
+                <a
+                  href="/student/undefined/savedanswers"
+                  onClick={[Function]}
+                >
+                   
+                  <span
+                    title="Saved Answers"
+                  >
+                     
+                    Saved Answers
+                     
+                  </span>
+                   
+                </a>
+                <br />
+                <div />
+              </div>
+            </div>
+          </li>
+          <li
+            className="lesson-item"
+          >
+            <div>
+              <div>
+                <a
+                  href="/student/undefined/grades"
+                  onClick={[Function]}
+                >
+                   
+                  <span
+                    title="Grades"
+                  >
+                     
+                    Grades
+                     
+                  </span>
+                   
+                </a>
+                <br />
+                <div />
+              </div>
+            </div>
+          </li>
+          <li
+            className="lesson-item"
+          >
+            <div>
+              <div>
+                <a
+                  href="/student/undefined/attendance"
+                  onClick={[Function]}
+                >
+                   
+                  <span
+                    title="Attendance"
+                  >
+                     
+                    Attendance
+                     
+                  </span>
+                   
+                </a>
+                <br />
+                <div />
+              </div>
+            </div>
+          </li>
+          <li
+            className="lesson-item"
+          >
+            <div>
+              <div>
+                <a
+                  href="/student/undefined/sessions/courseId/undefined"
+                  onClick={[Function]}
+                >
+                   
+                  <span
+                    title="Session"
+                  >
+                     
+                    Session
+                     
+                  </span>
+                   
+                </a>
+                <br />
+                <div />
+              </div>
+            </div>
+          </li>
+          <li
+            className="lesson-item"
+          >
+            <div>
+              <div>
+                <a
+                  href="/student/undefined/logins"
+                  onClick={[Function]}
+                >
+                   
+                  <span
+                    title="Logins"
+                  >
+                     
+                    Logins
+                     
+                  </span>
+                   
+                </a>
+                <br />
+                <div />
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
     <div
       className="lesson"
     >
-      <div />
+      <div
+        className="children"
+      />
     </div>
     <div
       className="sidebar"

@@ -16,6 +16,11 @@
   font-family: 'Roboto', sans-serif;
   text-decoration: underline burlywood;
   margin-top: -15%;
+  cursor: pointer;
+}
+.euphoric .orgSelector .navLink:hover{
+  cursor: pointer;
+  text-decoration: underline burlywood;
 }
 .euphoric span {
     font-family: 'Anton', sans-serif;

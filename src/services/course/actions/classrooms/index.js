@@ -25,6 +25,7 @@ export const UPDATE_CURRENT_CLASSROOM_LESSON_PLAN = "UPDATE CURRENT CLASSROOM LE
 export const TOGGLE_SIDEBAR_DROPDOWN_MENU = "TOGGLE SIDEBAR DROPDOWN MENU";
 export const LAST_LOGGEDIN_USER = "LAST LOGGEDIN USER";
 export const ENABLE_TEACH_PLATFORM = "ENABLE TEACH PLATFORM";
+export const ADD_MEETING_EVENT_TO_CALENDAR = "ADD MEETING EVENT TO CALENDAR";
 
 export const loadClassRooms = () => {
     return dispatch => {
@@ -99,6 +100,12 @@ export const updateCurrentTutor = ( currentTutor ) => {
 export const updateCurrentClassRoomLessonPlan = ( lessonPlan ) => {
     return dispatch => {
        dispatch({ type: UPDATE_CURRENT_CLASSROOM_LESSON_PLAN, payload: lessonPlan });
+    };
+};
+
+export const addMeetingEventToUsersCalendar = ( meeting ) => {
+    return dispatch => {
+       dispatch({ type: ADD_MEETING_EVENT_TO_CALENDAR, payload: meeting });
     };
 };
 

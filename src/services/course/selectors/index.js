@@ -16,12 +16,14 @@ const getUserId = ( state, props ) => props?.userId;
 const getQuestionId = ( state, props ) => props?.questionId;
 const getCourseId = ( state, props ) => props?.courseId;
 const getCalendarEventType = ( state, props ) => props?.calendarEventType;
-const getCourses = state =>   Object.values(state?.courses?.courses);
+const getCourses = state =>   state?.courses?.courses;
+const getMeetings = state =>   state?.meetings?.meetings;
 const getClassRoomGroups = state => state?.classrooms?.classrooms;
 const getPushNotificationUsers = state => state?.notifications?.pushNotificationSubscribers;
-const getOperators = state =>   Object.values(state?.operators?.operators);
+const getOperators = state =>   state?.operators?.operators;
 const getOperatorBusinessName = ( state, props ) => props?.operatorBusinessName;
 const getTimeLines = state => state?.timeLines?.timeLines;
+const getSessions = state => state?.sessions?.sessions;
 const getOnlineAnswers = state => state?.onlineAnswers?.onlineAnswers;
 const getFailedPushNotifications = state => state?.failedNotifications.failedPushNotifications;
 const getFailedEmailNotifications = state => state?.failedNotifications.failedEmailNotifications;
@@ -124,7 +126,27 @@ export const getCoursesByOperatorId = createSelector(
     getOperatorBusinessName,
     getCourses,
     (operators , operatorBusinessName, courses) => 
-       courses?.filter(usr => usr?.operatorId === operators.find(operator =>  operator.businessName === operatorBusinessName)?._id)       
+       Object.values(courses)?.filter(usr => usr?.operatorId === Object.values(operators).find(operator =>  operator.businessName === operatorBusinessName)?._id)       
+);
+
+export const getMeetingsByOperatorId = createSelector( 
+    getOperators,
+    getOperatorBusinessName,
+    getMeetings,
+    (operators , operatorBusinessName, meetings) => 
+       Object.values(meetings)?.filter(meeting => meeting?.operatorId === Object.values(operators).find(operator =>  operator.businessName === operatorBusinessName)?._id)       
+);
+
+export const getSessionsByOperatorId = createSelector( 
+    getOperators,
+    getOperatorBusinessName,
+    getSessions,
+    (operators , operatorBusinessName, sessions) => 
+    {
+        if ( sessions ) {
+            return Object.values(sessions)?.filter(session => session?.operatorId === Object.values(operators).find(operator =>  operator.businessName === operatorBusinessName)?._id)  
+        }
+    }       
 );
 
 export const getClassRoomGroupsByOperatorId = createSelector( 

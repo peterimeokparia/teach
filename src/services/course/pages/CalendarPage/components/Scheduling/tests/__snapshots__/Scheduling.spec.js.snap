@@ -17,7 +17,7 @@ exports[`Scheduling renders as expected 1`] = `
           onChange={[Function]}
           placeholder="Event Title"
           type="text"
-          value=""
+          value="Available"
         />
       </span>
       <span

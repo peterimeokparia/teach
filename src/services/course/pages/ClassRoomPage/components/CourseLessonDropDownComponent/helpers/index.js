@@ -53,7 +53,7 @@ export function navigateToStudentDetailPage( futureLink, userNavigationHistoryAc
     navigate(futureLink);
 };
 
-export const getSelectedUser = ( users, selectedUserId ) => {
+export const getselectedTutor = ( users, selectedUserId ) => {
     return users?.find(user => user?._id === selectedUserId);
 };
 
@@ -94,9 +94,10 @@ export const validationBeforeEnablingTeachPlatform = (currentCourse, currentUser
 };
 
 function listOfCourses( courseList, user, seletedTutorId ){
-    return ( user?.role === role.Tutor ) 
-            ? coursesCreatedByTheSelectedTutor( courseList, seletedTutorId )?.filter(course => course) 
-            : coursesStudentIsEnrolledIn( courseList, user )?.filter( course => course);
+    return coursesCreatedByTheSelectedTutor( courseList, seletedTutorId )?.filter(course => course);
+    // return ( user?.role === role.Tutor ) 
+    //         ? coursesCreatedByTheSelectedTutor( courseList, seletedTutorId )?.filter(course => course) 
+    //         : coursesStudentIsEnrolledIn( courseList, user )?.filter( course => course);
 };
 
 function coursesCreatedByTheSelectedTutor( courseList, userId ){
@@ -120,7 +121,7 @@ export function inviteUsersToLearningSessionConfig( currentSessions, invitee, le
         inviteeSessionUrl: lessonPageUrl, 
         nameOfLessonInProgress: courseLesson?.title, 
         lessonInProgress: true,    
-        user: { ...invitee, inviteeSessionUrl: lessonPageUrl, nameOfLessonInProgress: courseLesson?.title, lessonInProgress: true  }
+        user: { ...invitee, inviteeSessionUrl: lessonPageUrl, nameOfLessonInProgress: courseLesson?.title, lessonInProgress: true, lesson: courseLesson?._id  }
     };
 };
 

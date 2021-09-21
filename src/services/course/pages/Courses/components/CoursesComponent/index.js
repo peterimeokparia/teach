@@ -13,7 +13,13 @@ loadCourses,
 unSubscribeFromCourse } from 'services/course/actions/courses';
 
 import { 
+setCurrentLesson } from 'services/course/actions/lessons';
+
+import { 
 getUsersByOperatorId } from 'services/course/selectors';
+
+import {
+role } from 'services/course/helpers/PageHelpers';
 
 import {
 handleAddPushNotificationSubscriptionToEntity,
@@ -23,6 +29,7 @@ handleSavingEntityAction } from 'services/course/pages/components/SubscriptionCo
 import { 
 forceReload } from 'services/course/helpers/ServerHelper';
 
+import Roles from 'services/course/pages/components/Roles';
 import Loading from 'services/course/pages/components/Loading';
 import NavLinks from 'services/course/pages/components/NavLinks';
 import Swal from 'sweetalert2';
@@ -45,6 +52,8 @@ const CoursesComponent = ({
     saveCourse,
     deleteCourse,
     unSubscribeFromCourse,
+    selectedLessonPlanLesson,
+    setCurrentLesson,
     sessions }) => {
     const inputRef = useRef();
     const [ editing, setEditing ] = useState(false);
@@ -63,7 +72,9 @@ const CoursesComponent = ({
         if ( deleting ) {
             setDelete(false);
         }
-    //  }, [ loadCourses, editing, courses, deleting ]);
+        if ( selectedLessonPlanLesson?._id ) {
+            setCurrentLesson({});
+        }
     }, [ editing, courses, deleting ]);
 
     if ( coursesLoading ) {
@@ -213,18 +224,22 @@ return  editing
                         {<span>
                         {user?._id ===  course?.createdBy && (
                         <span>
+                        <Roles role={user?.role === role.Tutor && course?.createdBy === user?._id }>
                         <EditIcon 
                             id="EditIcon"
                             data-cy={`${(course?.createdBy)?.toLowerCase()}EditIcon`}
                             className="round-button-1"
                             onClick={() => beginEditing(course)}
                         />
+                        </Roles>
+                        <Roles role={user?.role === role.Tutor && course?.createdBy === user?._id }>
                         <DeleteIcon 
                             id="DeleteIcon"
                             data-cy={`${(course?.createdBy)?.toLowerCase()}DeleteIcon`}
                             className="round-button-3"
                             onClick={() => performDelete(course)}
                         />
+                        </Roles>
                         </span>
                         )}
                         {<span>
@@ -279,10 +294,11 @@ return  editing
 const mapState = ( state, ownProps) => ({
     user: state?.users?.user,
     users: getUsersByOperatorId(state, ownProps),
+    selectedLessonPlanLesson: state.lessons.selectedLessonPlanLesson,
     coursesLoading: state.courses.coursesLoading,
     onCoursesError: state.courses.onCoursesError,
     lessons: Object.values(state.lessons.lessons),
     sessions: Object.values(state.sessions.sessions)
 });
 
-export default connect(mapState, { saveCourse, deleteCourse, loadCourses, unSubscribeFromCourse })(CoursesComponent);
+export default connect(mapState, { saveCourse, deleteCourse, loadCourses, unSubscribeFromCourse, setCurrentLesson })(CoursesComponent);

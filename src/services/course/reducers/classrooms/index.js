@@ -15,6 +15,7 @@ SAVE_CLASSROOM_ERROR,
 DELETE_CLASSROOM_SUCCESS,
 RESET_CLASSROOM_USER_ERROR,
 UPDATE_CURRENT_CLASSROOM_LESSON_PLAN,
+UPDATE_CURRENT_CLASSROOM_TUTOR,
 TOGGLE_SIDEBAR_DROPDOWN_MENU,
 ENABLE_TEACH_PLATFORM } from '../../actions/classrooms';
 
@@ -22,6 +23,7 @@ const initialState = {
     classrooms: {},
     classRoomLessonPlan: {},
     meeting: {},
+    currentTutor: {},
     displaySideBarDropDown: false,
     saveInProgress: false,
     onSaveError: null,
@@ -83,6 +85,9 @@ const reducer = produce((draft, action) => {
         return; 
         case ENABLE_TEACH_PLATFORM:
              draft.meeting = action.payload;
+         return;
+         case UPDATE_CURRENT_CLASSROOM_TUTOR:
+              draft.currentTutor = action.payload;
           return;
         default:
         return;

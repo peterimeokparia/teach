@@ -45,12 +45,13 @@ export const plusOneIconStyle = () => {
 export const iconStyleMain = () => {
   return {
     fontSize: 45,
-    // 'margin-left': '0px',
-    // 'margin-right': '-30px'
   };
 };
 
+let globalTest = false;
 export const videoCallIconMain = ( capturingVideo ) => {
+  // alert('test')
+  globalTest = true;
   return {
     fontSize: 45,
     position: "relative",
@@ -76,7 +77,7 @@ export const saveIconStyle = () => {
 
 export const exitVideoCallIcon = (capturingVideo ) => {
   return {
-    fontSize: 60,
+    fontSize: 45,
     position: "relative",
     "visibility": ( capturingVideo ) ? "visible" : "hidden",
   };
@@ -99,7 +100,7 @@ export const savedBoardIcon = ( color) => {
 
 export const shareScreenIcon = ( capturingVideo ) => {
   return {
-    fontSize: 55,
+    fontSize: 45,
     position: "relative",
     "visibility": ( capturingVideo ) ? "visible" : "hidden",
   };
@@ -129,14 +130,15 @@ export const videoMeta = (element) =>  {
   videoSectionClassNameNoRecording: "mainVideoSection-recordingStopped", 
   videoClassName: ( element?.videoUrl === ""  ) ? "videoPlayer" : "",
   exitVideoCallIconPageName: "OnlineListItems",
-  videoSectionCallOut: "videoSectionCallOut",
+  videoSectionCallOut: `${globalTest ? 'videoSectionCallOut-selected' : 'videoSectionCallOut'}`,
   videoMetaData: {element},
   // videoMetaData: { inputFieldId: element?._id, currentQuestion: element, name: element?._id?.toString() },
   videoName: `${element?._id}_${element?._id}_${element?._id}_${element?.type}`,
   videoMetaDataExternalId:"courseId",
   buttonClassName: `toggle-stage-btns${( true ) ? "-show" : "-hide"}`, 
   objectId: element?._id,
-  displaySavedRecording: true
+  displaySavedRecording: false,
+  displayVideoPlayer: false
  }; 
 };
 

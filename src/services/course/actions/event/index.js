@@ -11,6 +11,7 @@ export const ADD_EVENT_SUCCESS = "ADD EVENT SUCCESS";
 export const ADD_EVENT_ERROR = "ADD EVENT ERROR";
 export const SAVE_EVENT_BEGIN = "SAVE EVENT BEGIN";
 export const SAVE_EVENT_SUCCESS = "SAVE EVENT SUCCESS";
+export const SAVE_TIMELINE_EVENTS = "SAVE TIMELINE EVENTS";
 export const SAVE_EVENT_ERROR = "SAVE EVENT ERROR";
 export const LOAD_EVENTS = "LOAD EVENTS";
 export const LOAD_EVENTS_BEGIN = "LOAD EVENTS BEGIN";
@@ -53,6 +54,20 @@ export const saveEvent = ( calendarEvent, currentUser, pushNotificationUser, ema
                  return error;
             });  
     };
+ };
+
+ export const saveTimeLineEvents = ( calendarEvent, currentUser, pushNotificationUser, emailAddresses ) => {
+    return dispatch => {
+        return update( calendarEvent, `/event/` )
+        .then( calendarEventData => {  
+            dispatch({ type: SAVE_TIMELINE_EVENTS, payload: { calendarEventData, calendarEvent, currentUser, pushNotificationUser, emailAddresses } });
+            return calendarEventData; 
+        })
+        .catch( error => {
+            dispatch({ type: SAVE_EVENT_ERROR , error });
+            return error;
+        });  
+    }
  };
 
  export const deleteEvent = ( event, currentUser, pushNotificationUser ) => {

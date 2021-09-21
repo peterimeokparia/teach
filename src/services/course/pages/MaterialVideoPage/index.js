@@ -308,7 +308,7 @@ class MaterialVideoPage extends PureComponent {
                   <div 
                   className={ ( this.state.capture ) ? this.props?.videoMeta?.videoSectionClassNameRecording : this.props?.videoMeta?.videoSectionClassNameRecordingStopped  }
                 >
-                  {( this.state.capture ) && 
+                  {( this.state.capture && this.props?.videoMeta?.displayVideoPlayer ) && 
                         <video
                           controls 
                           autoPlay="true"

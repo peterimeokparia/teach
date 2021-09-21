@@ -15,6 +15,9 @@ const getPath = ( item ) => { return ( path ) ? `${ path }/${ item?._id }`  : `$
 
 return (
       <div>
+        { collection?.length === 0 && (
+          <div> <h2>{'No items to display.'}</h2> </div>
+        )}
         { collection?.length > 0 && ( 
             <ul className={ulClassName}>
               { collection.map(item => 

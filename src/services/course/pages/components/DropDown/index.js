@@ -62,7 +62,7 @@ class DropDown extends Component {
                         inputProps={{ 'aria-label': 'Without label' }}
                         className={'space-between-select'}
                       >
-                        {( this.props.optionCollection.length > 0 ) &&
+                        {( this.props.optionCollection?.length > 0 ) &&
                           this.props.optionCollection?.map(( optionValue, index ) => (
                             <MenuItem 
                               key={optionValue['_id']} 

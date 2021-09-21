@@ -54,7 +54,7 @@ const submitForm = () => {
         duration: ( new Date( dateTimeString?.resEndStr ) - new Date( dateTimeString?.resStartStr ) )
     };
 
-handleSubmit( newCalendarEventData(event, undefined, undefined, { firstName, lastName, studentsName, email, phone, coursesInterestedIn } ) );  
+handleSubmit( newCalendarEventData(event, undefined, undefined, { firstName, lastName, studentsName, email, phone, coursesInterestedIn }, undefined ) );  
 };
 
 return (

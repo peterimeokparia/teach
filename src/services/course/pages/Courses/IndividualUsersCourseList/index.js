@@ -46,7 +46,7 @@ const IndividualUsersCourseList = ({
 
     tutor = users?.filter(thisUser => thisUser._id === userId)[0];
 
-    firstName = user?.firstname;
+    firstName = tutor?.firstname;
 
     let navigationContent = navContent( user, operatorBusinessName, user?.role,  "Student" ).users;
 
@@ -55,7 +55,7 @@ return ( <div className="MyCourses">
                 <MainMenu 
                     navContent={navigationContent}
                 />  
-                <h1>  {`You are viewing courses created by ${firstName}.`} </h1>
+                <h1>  {`Courses created by ${firstName}.`} </h1>
                 <div>  
                 <LoginLogout
                     operatorBusinessName={operatorBusinessName}

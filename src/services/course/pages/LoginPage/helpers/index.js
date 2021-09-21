@@ -38,7 +38,7 @@ export function directUserNavigation ( loggedInUser, operatorBusinessName ) {
     if ( loggedInUser?.role === role.Tutor ) {
         navigate(`/${operatorBusinessName}/users`);                              
     } else {
-        navigate(`/${operatorBusinessName}/users`); 
+        navigate(`/${operatorBusinessName}/students`); 
     }
 };
 
@@ -57,7 +57,7 @@ export function handleUserMeetingsOnLogin( currentUser, operatorBusinessName, lo
               }).then( (response) => {
                   if ( response?.value ) {
                       joinInProgressMeeting( currentUser, currentMeeting, saveMeeting, undefined );
-                      navigate(currentUser?.inviteeSessionUrl);
+                      navigate( `${currentUser?.inviteeSessionUrl}/${currentMeeting?._id}` );
                   } else { 
                       directUserNavigation( currentUser, operatorBusinessName ); 
                   }
@@ -77,7 +77,7 @@ export function handleUserMeetingsOnLogin( currentUser, operatorBusinessName, lo
     }
 };
 
-export function validateUseCredentialsOnlogin( currentUser, operatorBusinessName, email, password ){
+export function validateUseCredentialsOnlogin( currentUser, operatorBusinessName, email, password  ){
     try {
         sessionStorage.clear();
         Validations.checkFormInputString("User Name", email );

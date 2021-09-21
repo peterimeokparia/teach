@@ -3,6 +3,10 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema; 
 
 const meetingSchema = new Schema ({
+    operatorId: { 
+        type: String, 
+        required: false  
+    },
     userId: { 
         type: String, 
         required: false  

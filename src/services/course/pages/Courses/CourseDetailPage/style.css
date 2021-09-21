@@ -173,7 +173,13 @@
 }
 .CourseDetail .content .lesson-content .lesson2 h5 {
    margin-left: 200px;
-   width: 50vh; 
+   /* width: 50vh;  */
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 1000px;
+   max-width: 1000px; 
+   margin-left: 0px; 
 }
 .CourseDetail .content .lesson-content .lesson2 {
   margin-left: 95px;
@@ -182,6 +188,12 @@
 .CourseDetail .content .lesson-content .lesson2 .lessonPage {
   text-align: left;
 } 
+.CourseDetail .content .lesson-content .toggleItems {
+  margin-left: 130px;
+} 
+.CourseDetail .content .lesson-content .toggleItems .boardEditorDisplay {
+  margin-left: -130px;
+}
 .lessons .lesson-item {
   margin-bottom: 5px;
   border-style: solid;

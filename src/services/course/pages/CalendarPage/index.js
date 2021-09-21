@@ -37,13 +37,15 @@ getTimeLinesByOperatorId } from 'services/course/selectors';
 
 import {
 eventEnum,
-getCalendarColor, 
 studentsOption,
 getCalendarPageHeading,
 userCanAddOrEditEvent } from 'services/course/pages/CalendarPage/helpers';
 
 import {
 role } from 'services/course/helpers/PageHelpers';
+
+import { 
+saveEventData  } from "services/course/pages/CalendarPage/helpers/events";
 
 // import { 
 // momentLocalizer } from "react-big-calendar";
@@ -112,9 +114,24 @@ const CalendarPage = ({
     
 function addNewCalendarEvent( calendarEventData ) {
     setModalOpen(false); // Need to set up groups and group management.
+    
     let testAdminUsers =  [ userId, '603d37814967c605df1bb450', '6039cdc8560b6e1314d7bccc' ]; // refactor
 
-    saveEventData(calendar, calendarEventData, testAdminUsers, calendarEventType, operator?._id);
+    let saveEventProps = {
+        addEvent,
+        addCalendar,
+        calendar, 
+        calendarEventData, 
+        testAdminUsers, 
+        calendarEventType, 
+        operatorId: operator?._id,
+        pushNotificationSubscribers, 
+        user, 
+        users,
+        userId
+    };
+
+    saveEventData( saveEventProps );
 };
 
 const closeModal = () => {
@@ -125,44 +142,18 @@ const openModal = () => {
     setModalOpen(true);
 };
 
-const handleEventClick = (info) => {
-    if ( userCanAddOrEditEvent( info, user ) ) {
-        navigate( `/${operatorBusinessName}/${calendarEventType}/calendar/${calendarId}/${user._id}/${info?.event?.id}`);
+const handleEventClick = ( info ) => {
+    if ( calendarEventType === eventEnum.NewEvent ) {
+        // navigate(`/${operatorBusinessName}/personal/${eventEnum.NewEvent}/calendar/${personalCalendar._id}/user/${user._id}`);
+        // navigate( `/${operatorBusinessName}/${calendarEventType}/calendar/${calendarId}/${user._id}/${info?.event?.id}`);
         return;
+    } else {
+        if ( userCanAddOrEditEvent( info, user ) ) {
+            navigate( `/${operatorBusinessName}/${calendarEventType}/calendar/${calendarId}/${user._id}/${info?.event?.id}`);
+            return;
+        }
     }
 };
-
-function saveEventData(calendar, calendarEventData, testAdminUsers, calendarEventType, operatorId){
-    let color = getCalendarColor( calendars );
-
-    let calendarEventConfig = { 
-        calendar, 
-        calendarEventData, 
-        testAdminUsers, 
-        calendarEventType, 
-        operatorId, 
-        pushNotificationSubscribers, 
-        user, 
-        users,
-        userId,
-        color 
-    };
-
-    try {
-        if ( calendar  ) {  
-            addEvent( new CalendarEvent( calendarEventConfig )?.eventDataObject() );
-        } else {
-            let calendarConfig = {
-                calendar: new Calendar( calendarEventConfig )?.calendar(),
-                event: new CalendarEvent( calendarEventConfig )?.eventDataObject()
-            };
-            
-            addCalendar( calendarConfig );
-        }
-    } catch (error) {
-        throw Error(`CalendarPage: saveEventData: ${error}`);   
-    }
-}
 
 function renderSwitch( param ) {
     switch ( param ) {

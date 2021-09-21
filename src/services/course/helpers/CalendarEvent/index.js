@@ -13,7 +13,7 @@ class CalendarEvent {
             color
          } = calendarEventConfig;
 
-        let emailAddresses = Object.values(users).filter(user => testAdminUsers.includes(user?._id))?.map(user => user?.email);
+        let emailAddresses = Object.values(users)?.filter(user => testAdminUsers.includes(user?._id))?.map(user => user?.email);
 
         this.calendarId = calendar?._id;
         this.userId = user?._id;

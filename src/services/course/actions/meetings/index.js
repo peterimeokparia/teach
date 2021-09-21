@@ -21,6 +21,7 @@ export const UPDATE_INVITEE_LIST = "UPDATE INVITEE LIST";
 export const LAST_LOGGEDIN_USER = "LAST_LOGGEDIN_USER";
 export const LOAD_SINGLE_MEETING_SUCCESS = "LOAD SINGLE MEETING SUCCESS";
 export const START_NEW_MEETING = "START NEW MEETING";
+export const WAIT_FOR_MEETING_TO_START = "WAIT FOR MEETING TO START";
 export const END_MEETING = "END MEETING";
 
 export const addNewMeeting = ( meetingConfig ) => {
@@ -76,6 +77,12 @@ export const loadMeetingsByMeetingId = ( meetingId ) => {
 export const startMeeting = ( meeting ) => { 
     return dispatch => {
         dispatch({ type: START_NEW_MEETING, payload: meeting });
+    };
+};
+
+export const waitForMeetingToStartBeforeJoining = ( meeting ) => {
+    return dispatch => {
+        dispatch({ type: WAIT_FOR_MEETING_TO_START, payload: meeting });
     };
 };
 

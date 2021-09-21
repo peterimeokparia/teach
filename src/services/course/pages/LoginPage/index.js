@@ -2,6 +2,10 @@ import {
 connect } from 'react-redux';
 
 import { 
+navigate,
+Redirect } from '@reach/router';
+
+import { 
 loginUser, 
 createUser, 
 loadUsers,
@@ -34,6 +38,7 @@ decryptData } from 'services/course/actions/config';
 import { 
 getOperatorFromOperatorBusinessName, 
 getUsersByOperatorId,
+getCoursesByOperatorId,
 getPushNotificationUsersByOperatorId } from 'services/course/selectors';
 
 import {
@@ -56,6 +61,7 @@ import './style.css';
 const LoginPage = ({
   operatorBusinessName,
   operator,
+  operators,
   encryptData,
   decryptData,
   setOperator,
@@ -78,6 +84,9 @@ const LoginPage = ({
   autoRenewSessionPackages,
   loginPageError,
   sessions,
+  lessons,
+  courses,
+  lessonsLoading,
   meetings,
   pushNotificationSubscribers,
   subscribePushNotificationUser,
@@ -89,6 +98,9 @@ const LoginPage = ({
     error,
     user,
     sessions,
+    lessonsLoading,
+    lessons,
+    courses,
     autoRenewSessionPackages, 
     loadSessions, 
     loadUsers
@@ -98,7 +110,6 @@ const LoginPage = ({
     signUpOrLoginPreference, 
     setSignUpOrLoginInPreference,
   } = useLoginPageHook( loginPageProps );
-
 
 const handleCreateUser = ( newSiteUser ) => {
   createUser( setUpNewUser({ ...newSiteUser, operator, siteUser: new SiteUser() }) )
@@ -115,8 +126,16 @@ function handleLoginUser( email, password ) {
     .then( currentUser => 
       {
         validateUseCredentialsOnlogin( currentUser, operatorBusinessName, email, password );
+        let operator = operators?.find( operator => operator?._id === currentUser?.operatorId );
+
+        if ( operator?.businessName !== operatorBusinessName ){
+          Swal.fire({title: `Redirecting to ${operator?.businessName}.`, icon: 'info', text: `Please wait...` });
+            navigate(`/${operator?.businessName}/login`);
+            return;
+        }
+
         if ( currentUser?.userIsVerified ) {
-          loginUser( { ...currentUser, unHarshedPassword: password, operatorId: operator?._id } )
+          loginUser( { ...currentUser, unHarshedPassword: password } )
             .then( response => {
               if ( response?.userIsValidated ) {
                 handlePushNotificationSubscription(pushNotificationSubscribers, currentUser, subscribePushNotificationUser, savePushNotificationUser ); 
@@ -194,8 +213,12 @@ const mapDispatch = {
 const mapState = ( state, ownProps )   => {
   return {
     user: state?.users?.user,
+    operators: Object.values( state.operators?.operators ),
     operator: getOperatorFromOperatorBusinessName(state, ownProps),
     users: getUsersByOperatorId(state, ownProps),
+    courses: getCoursesByOperatorId(state, ownProps),
+    lessonsLoading: state.lessons.lessonsLoading,
+    lessons: Object.values(state.lessons.lessons),
     lessonStarted: state?.lessons?.lessonStarted,
     error: state?.users?.error,
     loading: state?.users?.loading,

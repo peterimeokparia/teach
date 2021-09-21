@@ -135,7 +135,7 @@ return editing ? (
                     ref={inputRef}
                     type="text" 
                     disabled={saveInProgress} 
-                    value={title} 
+                    value={title}
                     onChange={(e) => setEventTitle(e.target.value)}
                     placeholder="Event Title"
                 />

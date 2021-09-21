@@ -25,6 +25,7 @@ import StudyHall from 'services/course/pages/StudyHall';
 import ClassRoomPage from 'services/course/pages/ClassRoomPage';
 import OperatorSignUpPage from 'services/course/pages/OperatorSignupPage';
 import StudentDetailPage from 'services/course/pages/Users/StudentDetailPage';
+import Students from 'services/course/pages/Users/Students';
 import SessionPage from 'services/course/pages/SessionPage';
 import GradesPage from 'services/course/pages/GradesPage';
 import AttendancePage from 'services/course/pages/AttendancePage';
@@ -42,6 +43,8 @@ import OnlineQuestionsSavedAnswersDetailPage from 'services/course/pages/OnlineQ
 import OnlineQuestionsCourseListPage from 'services/course/pages/OnlineQuestionsPage/components/OnlineQuestionsCourseListPage';
 import MoreLessonContentPage from 'services/course/pages/Courses/CourseDetailPage/MoreLessonContentPage';
 import SiteEntryComponent from 'services/course/pages/components/SiteEntryComponent';
+import SplitViewComponentTest from 'services/course/pages/components/SplitViewComponent/SplitViewComponentTest';
+import VerifyMeetingAttendees from 'services/course/pages/Lessons/LessonPlan/components/VerifyMeetingAttendees';
 
 const MainRoute = () => {
     return (
@@ -61,13 +64,14 @@ const MainRoute = () => {
                 <CourseRatingsPage path="course/:courseId/user/:userId/review" />
               </SalesPage>
 
-              <StudentDetailPage path="/:operatorBusinessName/student/:studentId/course/:courseId/lessons/:lessonId" >
-                  <OnlineQuestionsSavedAnswersPage path="student/:studentId/savedanswers">
-                    < OnlineQuestionsSavedAnswersDetailPage path="student/:studentId/course/:courseId"/> 
-                   </ OnlineQuestionsSavedAnswersPage>
-                   <SessionPage path="student/:studentId/sessions/courseId/:courseId"/>
-                   <GradesPage path="student/:studentId/grades"/>
-                   <AttendancePage path="student/:studentId/attendance"/>
+              <StudentDetailPage path="/:operatorBusinessName/student/:studentId/course/:courseId" >
+                    <OnlineQuestionsSavedAnswersPage path="student/:studentId/savedanswers">
+                        <OnlineQuestionsSavedAnswersDetailPage path="student/:studentId/course/:courseId"/> 
+                    </OnlineQuestionsSavedAnswersPage>
+                    <SessionPage path="student/:studentId/sessions/courseId/:courseId"/>
+                    <GradesPage path="student/:studentId/grades"/> 
+                    <AttendancePage path="student/:studentId/attendance"/>
+                    {/* <Logins path="student/:studentId//logins"/> */}
               </StudentDetailPage>
 
               <StudentDetailPage path="/:operatorBusinessName/student/:studentId" >
@@ -77,12 +81,16 @@ const MainRoute = () => {
                    <SessionPage path="student/:studentId/sessions/courseId/:courseId"/>
                    <GradesPage path="student/:studentId/grades"/>
                    <AttendancePage path="student/:studentId/attendance"/>
+                   {/* <Logins path="student/:studentId//logins"/> */}
               </StudentDetailPage>
 
              <PasswordReset path="/:operatorBusinessName/passwordreset/:userId"/>
              <AccountVerificationForm path="/:operatorBusinessName/accountverification/:userId" />
              <UpdateCart path="/:operatorBusinessName/updatecart/:courseId"/>
              <LessonPlan path="/:operatorBusinessName/LessonPlan/classRoom/:classRoomId"/> 
+             <LessonPlan path="/:operatorBusinessName/LessonPlan/classRoom/:classRoomId/:meetingId"/> 
+             <LessonPlan path="/:operatorBusinessName/LessonPlan/classRoom/:classRoomId/:meetingEndingPromo"/> 
+             <LessonPlan path="/:operatorBusinessName/LessonPlan/classRoom/:classRoomId/:meetingId/:meetingEndingPromo"/>
              <LessonPlan path="/:operatorBusinessName/LessonPlan/:classRoomGroupId/:classRoomGroupName/:classRoomId/:classRoomName"/>
              <LessonPlan path="/LessonPlan/:courseId/:lessonId/:lessonTitle/:userId"/>
              <LessonPlanInviteUserVerification path="/:operatorBusinessName/LessonPlan/invite/userverification/classRoom/:classRoomId"/> 
@@ -109,7 +117,10 @@ const MainRoute = () => {
              <OnlineQuestionPage path="/:operatorBusinessName/homework/askquestion/course/:courseId/question/:onlineQuestionId" />
              <OnlineQuestionsCourseListPage path="/:operatorBusinessName/homework/askquestion/course"/>
              <MoreLessonContentPage path="/lessons/:lessonId/more" />
-                <SiteEntryComponent path="/main"/>
+             <SiteEntryComponent path="/main/:operatorBusinessName"/>
+             <SplitViewComponentTest path="/splitviewtest"/>
+             <VerifyMeetingAttendees path="/:operatorBusinessName/verifyattendees/:selectedTutorId/meeting/:meetingId"/>
+             <Students path="/:operatorBusinessName/students"/>
         </Router>
 
     );

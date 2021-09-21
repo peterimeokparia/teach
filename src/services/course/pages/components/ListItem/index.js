@@ -12,8 +12,11 @@ children,
 const getPath = ( item ) => { return ( path ) ? `${ path }/${ item?._id }`  : `${ altLinkPath }/${ id }`; };
 
 return (
-        <div className="listItem">
-        { collection?.length > 0 && (  
+      <div className="listItem">
+        { collection?.length === 0 && (
+          <div> <h1>{'No items to display.'}</h1> </div>
+        )}
+        { collection?.length > 0 && ( 
             <ul className={'lessons'}>
               { collection.map(item => 
                 (

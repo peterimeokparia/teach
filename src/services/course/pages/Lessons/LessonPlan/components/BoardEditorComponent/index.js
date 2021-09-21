@@ -40,9 +40,14 @@ import SaveIcon from '@material-ui/icons/Save';
 import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
 import './style.css';
 
+//https://www.uuidgenerator.net/dev-corner/javascript
 const BoardEditorComponent = ({ 
+  setMarkDown,
+  meetingNotes,
+  saveMeetingNote,
   operatorBusinessName,
   saveIconVisible,
+  meetingId,
   courseId,
   lessonId,
   classRoomId, 
@@ -64,17 +69,19 @@ const BoardEditorComponent = ({
   const fullScreenSize = "1536px";
   const editorUrl = urls?.editor;
   const canvasUrl = urls.canvas; 
-  const whiteBoardId = `${courseId}${lessonId}${classRoomId}`;
+  // const whiteBoardId = `${courseId}${lessonId}${classRoomId}`;
+  const whiteBoardId = `${meetingId}_${currentUser?._id}`;
   const whiteBoard = Object.values( whiteBoardData ).filter( board => board?.wid === whiteBoardId );
   const businessName = (operatorBusinessName === "") ? getItemFromSessionStorage('operatorBusinessName') :  operatorBusinessName;
   const lesson = lessons.find( lesson => lesson?._id === lessonId);
   const operator = Object.values( operators )?.find( operator => operator?.businessName === businessName) 
                   ? Object.values( operators )?.find( operator => operator?.businessName === businessName )
                   : getItemFromSessionStorage('operator');
-
+ 
 function saveWhiteBoardData(){
   addWhiteBoardData({ 
     wid: whiteBoardId,
+    meetingId,
     operatorId: operator?._id,
     color: getItemColor(whiteBoard)
   }) 
@@ -89,7 +96,7 @@ function saveWhiteBoardData(){
 
 function selectWhiteBoardData( item, index ){
   if( whiteBoardData ){
-    selectSavedWhiteBoard( { wid: whiteBoardId,  jsonData: item?.whiteBoardJasonData} )
+    selectSavedWhiteBoard( { wid: whiteBoardId, meetingId,   jsonData: item?.whiteBoardJasonData} )
     .then( response => {
       toggleTeachBoardOrEditor();
       toggleTeachBoardOrEditor();
@@ -195,7 +202,8 @@ const mapState = ( state, ownProps )   => {
     invitees: state.users.invitees,
     onSessionRenewal: state.sessions.autoRenewedPackageSuccess,
     allSessions: Object.values(state?.sessions?.sessions),
-    selectedLessonFromLessonPlanDropDown: state.lessons.selectedLessonFromLessonPlanDropDown
+    selectedLessonFromLessonPlanDropDown: state.lessons.selectedLessonFromLessonPlanDropDown,
+    meetingNotes: state?.meetingNotes?.meetingNotes 
   };
 };
 

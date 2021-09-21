@@ -91,6 +91,16 @@ exports[`OperatorRegistrationForm renders as expected 1`] = `
       </span>
     </span>
     <label>
+      Business Name
+      <input
+        name="businessName"
+        onChange={[Function]}
+        placeholder="business name"
+        type="text"
+        value=""
+      />
+    </label>
+    <label>
       Phone
       <input
         name="phone"

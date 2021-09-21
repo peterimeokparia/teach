@@ -56,12 +56,13 @@ export let frequencyCollection = [
     {_id:'secondly', id:'secondly', name:'secondly'}
 ];
 
-export const newCalendarEventData = ( event, location, schedulingData, consultation ) => {
+export const newCalendarEventData = ( event, location, schedulingData, consultation, meetingId ) => {
     return {
         event: ( event ) ? event : {},
         location: ( location ) ? location : '',
         schedulingData: ( schedulingData?.length > 0 ) ? schedulingData : [],
-        consultation: ( consultation ) ? consultation : {} 
+        consultation: ( consultation ) ? consultation : {},
+        meetingId 
     };
 };
 

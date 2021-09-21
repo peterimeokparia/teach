@@ -7,6 +7,10 @@ const whiteBoardSchema = new Schema ({
         type: String, 
         required: false,
     },
+    meetingId: { 
+        type: String, 
+        required: false,
+    },
     whiteBoardJasonData: { 
         type: String, 
         required: false,

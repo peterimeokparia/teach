@@ -49,10 +49,16 @@
     Markup } from 'interweave';
     
     import { 
-    deleteQuestionIconStyle } from '../inlineStyles';
+    deleteQuestionIconStyle,
+    sideBarEditIconStyle,
+    sideBarDeleteIconStyle,
+    swapHorizIconStyle } from '../inlineStyles';
     
     import BoardEditorComponent from 'services/course/pages/Lessons/LessonPlan/components/BoardEditorComponent';
     import EditIcon from '@material-ui/icons/Edit';
+    import DeleteIcon from '@material-ui/icons/Delete';
+    import HelpIcon from '@material-ui/icons/Help';
+    import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
     import MainMenu from 'services/course/pages/components/MainMenu';
     import NewLessonPage from 'services/course/pages/Lessons/NewLessonPage';
     import LoginLogout from 'services/course/pages/LoginPage/components/LoginLogout';
@@ -87,6 +93,7 @@
         const invitationUrl = `http://localhost:3000/${operatorBusinessName}/LessonPlan/invite/userverification/classRoom/${course?.createdBy}`;
         const fileUploadUrl =  "/api/v1/fileUploads";
         const [ fileToRemove, setFileToRemove ] = useState( undefined );
+        const [ lessonItem, setLessonItem  ] = useState( 0 )
     
     function onMatchListItem( match, listItem ) {
         if( match ){
@@ -102,7 +109,7 @@
             }
         }
     }; 
-    
+
     const setPreviewEditMode = () => {
         if ( ! selectedLessonPlanLesson ) {
             toast.error("Please click on the lesson link.");
@@ -121,6 +128,46 @@
     let selectedCourse =  courses?.find(course => course?._id === courseId );
     let lessonsByCourseId = lessons?.filter( lesson => lesson?.courseId === courseId && lesson?.userId === selectedTutorId );
     
+    const incrementDisplayedItemCount = () => {
+        if ( lessonItem === 2 ) {
+            setLessonItem( 0 );
+            return;
+        }
+        setLessonItem( lessonItem + 1 )
+    };
+
+    function toggleDisplayedItems( key, selectedlesson ){
+        switch (key) {
+            case 1:
+            return <div className="boardEditorDisplay"><BoardEditorComponent 
+                        courseId={courseId}
+                        lessonId={selectedlesson?._id}
+                        classRoomId={selectedTutorId}
+                        operatorBusinessName={operatorBusinessName}
+                    /></div>
+            case 2:
+            return < LessonFileUpload
+                        previewMode={previewMode}
+                        currentLesson={selectedlesson}
+                        typeOfUpload={'userlessonfiles'}
+                        fileUploadUrl={fileUploadUrl}
+                        setFilesToRemove={setFileToRemove}
+                        msg={"Please click on the lesson link before uploading files."}
+                        saveAction={saveLesson}
+                    /> 
+            default:
+            return < LessonPlanIframeComponent
+                        name="embed_readwrite" 
+                        source={selectedlesson?.videoUrl}
+                        width="700px"
+                        height="400px"
+                        allow="camera;microphone"
+                        scrolling="auto"
+                        frameBorder="10" 
+                        className={"iframe"}
+                    />;
+        }
+    }
     return (
         <div className="CourseDetail"> 
             <header>
@@ -170,32 +217,42 @@
                                 <Roles
                                     role={ currentUser?.role === role.Tutor }
                                 >
-                                    <button 
-                                        className="edit-lesson-btn"
-                                        onClick={() => { edit(lesson.title); } }                                          
-                                    > 
-                                        Edit
-                                    </button>
+                                    <EditIcon 
+                                        onClick={() => { edit(lesson.title); } }
+                                        color="action"
+                                        className="comment-round-button-1"
+                                        style={ sideBarEditIconStyle() }
+                                    />
                                 </Roles>
                                 <Roles
                                     role={currentUser?.role === role.Tutor }
                                 >
-                                    <button
-                                        className="delete-lesson-btn"
-                                        onClick={remove} 
-                                    >
-                                        Delete
-                                    </button>
+                                    <DeleteIcon 
+                                        onClick={remove}
+                                        color="action"
+                                        className="comment-round-button-3"
+                                        style={ sideBarDeleteIconStyle() }
+                                    />
                                 </Roles>
                                 <Roles
                                     role={currentUser?.role === role.Tutor  ||  currentUser?.role === role.Student}
                                 >
-                                    <button
-                                        className="delete-lesson-btn"
-                                        onClick={() => { questions(lesson?._id); }} 
-                                    >
-                                        Questions
-                                    </button>
+                                    <HelpIcon 
+                                        onClick={() => { questions(lesson?._id); } }
+                                        color="action"
+                                        className="comment-round-button-2"
+                                        style={ sideBarDeleteIconStyle() }
+                                    />
+                                </Roles>
+                                <Roles
+                                    role={currentUser?.role === role.Tutor  ||  currentUser?.role === role.Student}
+                                > 
+                                    <SwapHorizIcon 
+                                        onClick={incrementDisplayedItemCount }
+                                        color="action"
+                                        className="comment-round-button-6"
+                                        style={ swapHorizIconStyle() }
+                                    />
                                 </Roles>
                                 </div>  
                              </div>
@@ -228,20 +285,10 @@
                     {/*SIDE BAR 1 */}
                     </div>
                     <div className="lesson-content"> 
-                        < LessonPlanIframeComponent
-                            name="embed_readwrite" 
-                            source={selectedLessonPlanLesson?.videoUrl}
-                            width="700px"
-                            height="400px"
-                            allow="camera;microphone"
-                            scrolling="auto"
-                            frameBorder="10" 
-                            className={"iframe"}
-                        />
                         <div className="lesson2">   
     
                         { courseDetailChildren }
-    
+
                         {
                             <div> 
                                 <h5>
@@ -250,21 +297,11 @@
                             </div>
                         }
                         </div> 
-                            <BoardEditorComponent 
-                                courseId={courseId}
-                                lessonId={selectedLessonPlanLesson?._id}
-                                classRoomId={selectedTutorId}
-                                operatorBusinessName={operatorBusinessName}
-                            />
-                            < LessonFileUpload
-                                previewMode={previewMode}
-                                currentLesson={selectedLessonPlanLesson}
-                                typeOfUpload={'userlessonfiles'}
-                                fileUploadUrl={fileUploadUrl}
-                                setFilesToRemove={setFileToRemove}
-                                msg={"Please click on the lesson link before uploading files."}
-                                saveAction={saveLesson}
-                            /> 
+                        <div className="toggleItems"> 
+                            {
+                                toggleDisplayedItems( lessonItem, selectedLessonPlanLesson )  
+                            }
+                        </div> 
                     </div>           
                     <Roles
                         role={currentUser?.role === role.Student }

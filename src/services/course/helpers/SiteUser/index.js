@@ -18,6 +18,7 @@ class SiteUser {
     this.userIsValidated = false;
     this.userIsVerified = false;
     this.nameOfLessonInProgress = "";
+    this.lesson = "";
     this.loginCount = 0;
     this.meetingId = "";
     this.meetings = [];

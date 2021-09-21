@@ -8,6 +8,7 @@ SIGN_UP_BEGINS,
 SIGN_UP_SUCCESSS,
 SIGN_UP_ERRORS, 
 LOAD_USERS_BEGIN, 
+LOAD_USER_SUCCESS,
 LOAD_USERS_SUCCESS,  
 LOAD_USERS_ERROR,
 LOAD_LOGGEDIN_USERS_BEGIN, 
@@ -86,6 +87,10 @@ const reducer = produce((draft, action) => {
         case LOAD_LOGGEDIN_USERS_BEGIN:    
             draft.loading = true;
             draft.error = null;
+        return;
+        case LOAD_USER_SUCCESS: 
+        draft.loading = false;
+        draft.users[action.payload?._id] = action.payload;   
         return;
         case LOAD_USERS_SUCCESS: 
             draft.loading = false;

@@ -158,7 +158,7 @@ return (
                  <div className="class"> 
                 {( courses?.filter( course => course?.createdBy === selectedUserId)?.length === 0 && ( currentUser?.role === role.Tutor ) ) 
                     ? <div> 
-                        { ( currentUser?.role === role.Tutor ) && 
+                        { ( currentUser?.role === role.Tutor ) && ( !isModalOpen ) &&
                             <PostAddIcon 
                                 style={helpIconStyle()}
                                 className="comment-round-button-5"

@@ -3,7 +3,7 @@
     height: 35vh;
     background-color: white;
     border: 5px solid #673ab7;
-    position: fixed;
+    /* position: fixed; */
     left: 0;
     text-transform: uppercase;
     letter-spacing: 0.5rem;
@@ -15,27 +15,22 @@
     overflow: scroll;
     z-index: 1000;
     margin-top: 15px;
-
   }
-   
   #sideFlyoutMenu.hide {
     transform: translate3d(-15vw, 0, 0);
   }
-   
   #sideFlyoutMenu.show {
-    position: absolute;
+    /* position: fixed; */
     transform: translate3d(0vw, 0, 0);
     overflow: hidden;
     width: 20vw;
     /* padding: 2rem 2rem; */
   }
-   
   #sideFlyoutMenu h2 a {
     color: #333;
     margin-left: 15px;
     text-decoration: none;
   }
-   
   #sideFlyoutMenu h2 a:hover {
     /* text-decoration: underline; */
   }
@@ -52,10 +47,9 @@
    padding-bottom: 100px;
   }
   @media (min-width: 1281px) {
-  
     /* CSS */
     #sideFlyoutMenu.show {
-      position: absolute;
+      /* position: absolute; */
       transform: translate3d(0vw, 0, 0);
       overflow: hidden;
       width: 30vw;
@@ -72,7 +66,7 @@
     /* CSS */
     
     #sideFlyoutMenu.show {
-      position: absolute;
+      /* position: absolute; */
       transform: translate3d(0vw, 0, 0);
       overflow: hidden;
       width: 80vw;
@@ -88,7 +82,7 @@
     
     /* CSS */
     #sideFlyoutMenu.show {
-      position: absolute;
+      /* position: absolute; */
       transform: translate3d(0vw, 0, 0);
       overflow: hidden;
       width: 80vw;
@@ -105,7 +99,7 @@
     
     /* CSS */
     #sideFlyoutMenu.show {
-      position: absolute;
+      /* position: absolute; */
       transform: translate3d(0vw, 0, 0);
       overflow: hidden;
       width: 80vw;
@@ -122,7 +116,7 @@
     
     /* CSS */
     #sideFlyoutMenu.show {
-      position: absolute;
+      /* position: absolute; */
       transform: translate3d(0vw, 0, 0);
       overflow: hidden;
       width: 80vw;
@@ -139,7 +133,7 @@
     /* CSS */
 
     #sideFlyoutMenu.show {
-      position: absolute;
+      /* position: absolute; */
       transform: translate3d(0vw, 0, 0);
       overflow: hidden;
       width: 80vw;

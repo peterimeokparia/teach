@@ -48,7 +48,7 @@ function useLoginPageHook( loginPageProps ){
 
     useEffect(() => {
 
-        if ( user[0]?.lessonInProgress  ) {
+        if ( user?.length > 0 && user[0]?.lessonInProgress  ) {
 
             if ( user[0]?.course  ) {
                 dispatch( loadLessons( user[0]?.course ) );
@@ -62,7 +62,8 @@ function useLoginPageHook( loginPageProps ){
                 setItemInSessionStorage('selectedCourse', course );
             }
         }
-    }, [ user[0], dispatch, loadLessons, lessons ]);
+    }, [ user?.length > 0, dispatch, loadLessons, lessons ]);
+    // }, [ user[0], dispatch, loadLessons, lessons ]);
 
     if ( ! operator || ! operatorBusinessName  ) {
         return <NotFoundPage />;

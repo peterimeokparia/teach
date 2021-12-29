@@ -18,6 +18,7 @@ verifyRoute,
 logRouteInfo } from '../middleWare/index.js';
 
 const userRoute = express.Router();
+
 userRoute.use(logRouteInfo);
 
 userRoute.get('/', (req, res) => {

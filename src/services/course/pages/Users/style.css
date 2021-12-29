@@ -10,8 +10,8 @@
 .Users .items{
   align-items: center;
 }
-.Users .boomingllc header {
-  background-color: #673ab7;
+.Users header {
+  /* background-color: #673ab7; */
   color: #fff;
   display: flex;
   flex-direction: row;
@@ -19,7 +19,7 @@
   justify-content: space-between;
   padding: 10px 20px;
   text-align: center;
-  /* background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red); */
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red); 
 }
 .Users .others header {
   background-color: #673ab7;
@@ -200,7 +200,7 @@
     padding: 10px;
     padding-top: 40px;
     margin-top: 35px;
-    height: 150px;
+    height: 175px;
     box-shadow: 10px 10px;
     box-shadow: 0 6px  rgba(255, 0, 0, 1), 0 9px  rgba(0, 255, 0, 1), 0 9px rgb(255, 174, 0);  
     vertical-align: middle;
@@ -307,6 +307,7 @@
     font-weight: bolder;
     text-align: center;
     text-transform: capitalize;
+    text-shadow: 2px 2px black;
   }
   .ComponentUserList .user-list-items-users .multicolortext:hover{
     color: white;

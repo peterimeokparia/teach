@@ -14,7 +14,8 @@ export const navContent = ( user, operatorBusinessName, currentRole, role, permi
          :  [ 
                { id: 1, hrefValue: `/${operatorBusinessName}/mycourses` , item: 'My Courses' },
                { id: 2, hrefValue: `/${operatorBusinessName}/courses` , item: 'All Courses' },
-               { id: 3, hrefValue:  (currentRole === role ) ? `/${operatorBusinessName}/users` : "" , item: (currentRole === role ) ? `My Tutors` : ""}
+               { id: 3, hrefValue:  (currentRole === role ) ? `/${operatorBusinessName}/users` : "" , item: (currentRole === role ) ? `My Tutors` : "Tutors"},
+               { id: 4, hrefValue: `/${operatorBusinessName}/students` , item: 'Students' },
             ]
    };
 };

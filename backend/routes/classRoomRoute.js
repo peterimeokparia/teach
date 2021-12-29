@@ -2,65 +2,33 @@ import express from 'express';
 
 import classRoomModel from '../model/classRoomModel.js';
 
-import {
-getPostData,    
-saveUpdatedData } from '../helpers/storageHelper.js';
-
-import { 
-CLASSROOMROUTE,
-handleBackEndLogs } from '../helpers/logHelper.js';
-
 import { 
 verifyRoute,
+getRoute,
+getByIdRoute,
+postRoute,
+putRoute,
+deleteRoute,
 logRouteInfo } from '../middleWare/index.js'; 
 
 const classRoomRoute = express.Router();
+
 classRoomRoute.use(logRouteInfo);
 
-classRoomRoute.get('/', (req, res) => {
-    classRoomModel.find({ })
-    .then(data => {
-        return res.status(200).json(data); 
-    })
-    .catch( error => {
-        handleBackEndLogs( CLASSROOMROUTE, error );
-        return res.status(400).json({ error });
-    });
-})
-
-classRoomRoute.post('/', (req, res) => {
-    let classRoomData = getPostData( req );
-    let classRooms = new classRoomModel(classRoomData);  
-    classRooms.save()
-    .then(data => {
-        return res.status(200).json(data);
-    })
-    .catch( error => {
-        handleBackEndLogs( CLASSROOMROUTE, error );
-        return res.status(400).json({ error });
-    });
+classRoomRoute.get('/', getRoute( classRoomModel ), (req, res) => {
+    return res.status(200).json(res?.newResult);
 });
 
-classRoomRoute.put('/:classRoomId', (req, res) => {
-    saveUpdatedData(req, classRoomModel, req.params.classRoomId)
-    .then( data => {
-        return res.status(200).json(data);
-    })
-    .catch( error => {
-        handleBackEndLogs( CLASSROOMROUTE, error );
-        return res.status(400).json({ error });
-    });
+classRoomRoute.post('/', postRoute( classRoomModel ), (req, res) => {
+    return res.status(200).json(res?.newResult);
 });
 
-classRoomRoute.delete('/:classRoomId', (req, res) => {
-    classRoomModel.findByIdAndDelete(req.params.classRoomId)
-     .then(data => {
-        return res.status(200).json(data);
-     })
-     .catch( error => {
-        handleBackEndLogs( CLASSROOMROUTE, error );
-        return res.status(400).json({ error });
-    });
+classRoomRoute.put('/:classRoomId', putRoute( classRoomModel, 'classRoomId' ), (req, res) => {
+    return res.status(200).json(res?.savedResult);
+});
+
+classRoomRoute.delete('/:classRoomId', deleteRoute(classRoomModel, 'classRoomId'), (req, res) => {
+    return res.status(200).json(res?.newResult);
 });
 
 export default classRoomRoute;

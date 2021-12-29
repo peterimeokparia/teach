@@ -1,0 +1,11 @@
+.formbuilder text {
+    color: red;
+}
+.formbuilder ul {
+ list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.formbuilder .user-item {
+    cursor: pointer;
+}

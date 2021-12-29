@@ -28,7 +28,8 @@ getCoursesByOperatorId } from 'services/course/selectors';
 
 import {
 permission,
-SiteFunctionalityGroup }from 'services/course/pages/components/SiteFunctionalityGroup';
+SiteFunctionalityGroup,
+Organization }from 'services/course/pages/components/SiteFunctionalityGroup';
 
 import{
 enableTeachPlatform } from 'services/course/actions/classrooms';
@@ -39,6 +40,12 @@ studentOption } from 'services/course/pages/Users/helpers'
 
 import { 
 role } from 'services/course/helpers/PageHelpers';
+
+import {
+v4 as uuidv4 } from 'uuid';
+
+import { 
+formTypes } from 'services/course/pages/FormBuilder/helpers';
 
 import NotFoundPage from 'services/course/pages/components/NotFoundPage';
 import Loading from '../components/Loading';
@@ -52,8 +59,10 @@ import TimelineIcon from '@material-ui/icons/Timeline';
 import BookIcon from '@material-ui/icons/Book';
 import ForumIcon from '@material-ui/icons/Forum';
 import VideoCallIcon from '@material-ui/icons/VideoCall';
+import PollIcon from '@mui/icons-material/Poll';
 import Calendar from 'services/course/helpers/Calendar';
 import Select from 'react-select';
+import TabPanel from 'services/course/pages/components/FloatingActionButtonZoom';
 import './style.css';
 
 const Users = ({
@@ -94,6 +103,11 @@ const Users = ({
     const [ usersAttendingMeeting, setUsersAttendingMeeting ] = useState( [] );
     const sessions = allSessions?.filter( usersession => usersession?.operatorId === operator?._id); 
 
+    const generateUuid = () => {
+        const uuid = uuidv4();
+        return uuid;
+    };
+
     let calendarConfig = ( tutor, calendarType ) => 
         { return {
             users: users,
@@ -113,51 +127,80 @@ const gotToLessonPlan = ( user ) => {
     navigate(`/${operatorBusinessName}/classroom/${user._id}`);
 };
 
+const goToOnlineSurvey = () => {
+    let uuid = generateUuid();
+
+    let userId = user?._id, 
+        formUuId = uuid,
+        formName = `dailysurvey_${uuid}`,  // drop down to select report type
+        //formName = `academicprogress_${uuid}`, 
+        formType = formTypes?.report
+
+    navigate(`/${operatorBusinessName}/${formType}/${formName}/${formUuId}/${userId}`);
+};
+
 const gotToPersonalCalendar = ( user ) => {
+
     let personalCalendar = calendars?.find( cal => cal?.calendarEventType === eventEnum.NewEvent && cal?.userId === user?._id);
 
     if ( personalCalendar ) {
+
         navigate(`/${operatorBusinessName}/schedule/${eventEnum.NewEvent}/calendar/${personalCalendar._id}/user/${user._id}`);
+
     } else {
+
         addCalendar( { calendar: new Calendar( calendarConfig( user, eventEnum?.NewEvent ) ).calendar()} )
-            .then(calendar => {
-                if ( calendar ) {
-                    navigateUserAfterGeneratingNewCalendar( user, eventEnum.NewEvent );
-                }
-            })
-            .catch( error => console.log( error ));
+        .then(calendar => {
+
+            if ( calendar ) {
+                navigateUserAfterGeneratingNewCalendar( user, eventEnum.NewEvent );
+            }
+
+        })
+        .catch( error => console.log( error ));
     }
 };
 
 const gotToCalendar = ( user ) => {
+
     let schedulingCalendar = calendars?.find( cal => cal?.calendarEventType === eventEnum.SessionScheduling && cal?.userId === user?._id);
 
     if ( schedulingCalendar ) {
+
         navigate(`/${operatorBusinessName}/schedule/${eventEnum.SessionScheduling}/calendar/${schedulingCalendar._id}/user/${user._id}`);
+
     } else {
+
         addCalendar( { calendar: new Calendar( calendarConfig( user, eventEnum?.SessionScheduling ) ).calendar()} )
-            .then(calendar => {
-                if ( calendar ) {
-                    navigateUserAfterGeneratingNewCalendar( user, eventEnum.SessionScheduling );
-                }
-            })
-            .catch( error => console.log( error ));
+        .then(calendar => {
+
+            if ( calendar ) {
+                navigateUserAfterGeneratingNewCalendar( user, eventEnum.SessionScheduling );
+            }
+        })
+        .catch( error => console.log( error ));
     }
 };
 
 const goToSchedulingCalendar = ( user ) => {
+
     let schedulingCalendar = calendars?.find( cal => cal?.calendarEventType === eventEnum.TutorCalendar && cal?.userId === user?._id);
 
     if ( schedulingCalendar ) {
+
         navigate(`/${operatorBusinessName}/schedule/${eventEnum.TutorCalendar}/calendar/${schedulingCalendar._id}/user/${user._id}`);
+
     } else {
+
         addCalendar( { calendar: new Calendar( calendarConfig( user, eventEnum?.TutorCalendar ) ).calendar()} )
-            .then(calendar => {
-                if ( calendar ) {
-                    navigateUserAfterGeneratingNewCalendar( user, eventEnum.TutorCalendar );
-                }
-            })
-            .catch( error => console.log( error ));
+        .then(calendar => {
+
+            if ( calendar ) {
+                navigateUserAfterGeneratingNewCalendar( user, eventEnum.TutorCalendar );
+            }
+
+        })
+        .catch( error => console.log( error ));
     }
 };
 
@@ -165,31 +208,41 @@ const gotToConsultationCalendar = ( user ) => {
     let consultingCalendar = calendars?.find( cal => cal?.calendarEventType === eventEnum?.ConsultationForm && cal?.userId === user?._id);
 
     if ( consultingCalendar ) {
+
         navigate(`/${operatorBusinessName}/schedule/${eventEnum?.ConsultationForm}/calendar/${consultingCalendar._id}/user/${user._id}`);
+
     } else {
+
         addCalendar( addNewUserCalendar( user, eventEnum?.ConsultationForm ) )
-            .then(calendar => {
-                if ( calendar ) {
-                    navigateUserAfterGeneratingNewCalendar( user, eventEnum.ConsultationForm );
-                }
-            })
-            .catch( error => console.log( error ));
+        .then(calendar => {
+            if ( calendar ) {
+                navigateUserAfterGeneratingNewCalendar( user, eventEnum.ConsultationForm );
+            }
+
+        })
+        .catch( error => console.log( error ));
     } 
 };
 
 const goToOnlineTutoringRequest = ( user ) => {
+
     let onlineTutoringCalendar = calendars?.find( cal => cal?.calendarEventType === eventEnum.OnlineTutoringRequest && cal?.userId === user?._id);
 
     if ( onlineTutoringCalendar ) {
+
         navigate(`/${operatorBusinessName}/schedule/${eventEnum.OnlineTutoringRequest}/calendar/${onlineTutoringCalendar._id}/user/${user._id}`);
+
     } else {
+
         addCalendar( addNewUserCalendar( user, eventEnum?.OnlineTutoringRequest ) )
-            .then(calendar => {
-                if ( calendar ) {
-                    navigateUserAfterGeneratingNewCalendar( user, eventEnum.OnlineTutoringRequest );
-                }
-            })
-            .catch( error => console.log( error ));
+        .then(calendar => {
+
+            if ( calendar ) {
+                navigateUserAfterGeneratingNewCalendar( user, eventEnum.OnlineTutoringRequest );
+
+            }
+        })
+        .catch( error => console.log( error ));
     }
 };
 
@@ -202,7 +255,6 @@ const addStudentsToMeeting = ( selectedUser, currentUser ) => {
     setSelectedUser( selectedUser );
 
     if ( currentUser?.role === role.Tutor ) {
-
         let meetingProps = {
             setAddUsers,
             listOfStudents:[], 
@@ -211,12 +263,14 @@ const addStudentsToMeeting = ( selectedUser, currentUser ) => {
             sessions, 
             operator
         };
-    
+
         if ( addUsersToMeeting( meetingProps, enableTeachPlatform ) ) {
             enableTeachPlatform({ listOfStudents: [], selectedTutorId: selectedUser._id, operatorBusinessName, sessions, operator } );
             navigate(`/${operatorBusinessName}/LessonPlan/classRoom/${selectedUser._id}`);
         }     
+
     } else {
+
         navigate(`/${operatorBusinessName}/LessonPlan/classRoom/${selectedUser._id}`);
     }
 };
@@ -247,6 +301,10 @@ function getCoursesCreatedByUser( tutor ){
         filter( course => course?.createdBy === tutor?._id );
 };
 
+function getCoursesSubscribedTo( tutor ){
+    return tutor?.courses;
+};
+
 const PageObject = {
     Users_Course_Count: 'Users_Course_Count',
     Users_SchoolIcon: 'Users_SchoolIcon',
@@ -256,22 +314,24 @@ const PageObject = {
     Users_ForumIcon: 'Users_ForumIcon',
     Users_TimelineIcon: 'Users_TimelineIcon',
     Users_VideoCallIcon: 'Users_VideoCallIcon',
-    Users_SideBarNavigation: 'Users_SideBarNavigation'
+    Users_SideBarNavigation: 'Users_SideBarNavigation',
+    Users_PollIcon: 'Users_PollIcon'
 };
 
 let testGroup = [
     {   page: 'Users',
-        operatorBusinessName,
+        operatorBusinessName: [ Organization.Teach, Organization.Boomingllc ],
         pageObject: [ 
-            { name: PageObject.Users_SideBarNavigation, value: false }, 
-            { name: PageObject.Users_Course_Count, value: false },
-            { name: PageObject.Users_SchoolIcon, value: false },
-            { name: PageObject.Users_BookIcon, value: false },
-            { name: PageObject.Users_ScheduleIcon, value: true },
-            { name: PageObject.Users_CalendarTodayIcon, value: true },
-            { name: PageObject.Users_ForumIcon, value: false },
-            { name: PageObject.Users_TimelineIcon, value: true }, 
-            { name: PageObject.Users_VideoCallIcon, value: true }, 
+            { name: PageObject.Users_SideBarNavigation, allowed:[ Organization.Teach ] }, 
+            { name: PageObject.Users_Course_Count, allowed:[ Organization.Teach ] },
+            { name: PageObject.Users_SchoolIcon, allowed:[ Organization.Teach ]},
+            { name: PageObject.Users_BookIcon, allowed:[ Organization.Teach ] },
+            { name: PageObject.Users_ScheduleIcon, allowed:[ Organization.Teach, Organization.Boomingllc ] },
+            { name: PageObject.Users_CalendarTodayIcon, allowed:[ Organization.Teach, Organization.Boomingllc ] },
+            { name: PageObject.Users_ForumIcon, allowed:[ Organization.Teach ]},
+            { name: PageObject.Users_TimelineIcon, allowed:[ Organization.Teach, Organization.Boomingllc ]}, 
+            { name: PageObject.Users_VideoCallIcon, allowed:[ Organization.Teach, Organization.Boomingllc ]}, 
+            { name: PageObject.Users_PollIcon, allowed:[ Organization.Teach, Organization.Boomingllc ]}, 
         ]  
     }
 ];
@@ -281,10 +341,9 @@ return (
         <div className={operatorBusinessName}>
             <header> 
                 <MainMenu 
-                    navContent={navContent( user, operatorBusinessName, user?.role,  "Student", ['boomingllc'] ).users}
+                    navContent={navContent( user, operatorBusinessName, user?.role,  "Student", [Organization.Boomingllc] ).users}
                 />   
                 <h1>  {`Welcome ${user?.firstname}! `} </h1>
-
                 <div id="logout">
                     <LoginLogout
                         id="LoginLogout"
@@ -315,7 +374,7 @@ return (
                     </label>        
                 : <ul className={"component-seconday-ul"}>
                 {users.map(singleUser => 
-                    <li className={`component-seconday-list-body-users${operatorBusinessName === 'boomingllc' ? '-boomingllc' : ''}`} data-cy={`li_${singleUser?.firstname}`} key={singleUser?._id}> 
+                    <li className={`component-seconday-list-body-users${operatorBusinessName === Organization.Boomingllc ? '-boomingllc' : ''}`} data-cy={`li_${singleUser?.firstname}`} key={singleUser?._id}> 
                         <div className={ "user-list-items-users"}>
                             <div className="row">
                                 <div className="col-1"> 
@@ -326,7 +385,8 @@ return (
                                     <div>
                                         <span id={`multicolortext`} className="multicolortext" data-cy={`multicolortext_${singleUser?.firstname}`}>  {singleUser?.firstname} </span> 
                                         <SiteFunctionalityGroup group={ permission( testGroup, operatorBusinessName, PageObject.Users_Course_Count )}>
-                                            <span className="price" name={PageObject.Users_Course_Count}> <h6>{getCoursesCreatedByUser(singleUser)?.length} {getCoursesCreatedByUser(singleUser)?.length === 1  ? "Course.": "Courses."}  </h6></span>
+                                            <span className="price" name={PageObject.Users_Course_Count}> <h6>{getCoursesCreatedByUser(singleUser)?.length} {getCoursesCreatedByUser(singleUser)?.length === 1  ? "Course.": "Courses"}  </h6></span>
+                                            <span className="price" name={PageObject.Users_Course_Count}> <h6>{getCoursesSubscribedTo(singleUser)?.length} {getCoursesSubscribedTo(singleUser)?.length === 1  ? "Subscribed Course.": "Subscribed Courses."}  </h6></span>
                                         </SiteFunctionalityGroup> 
                                     </div> 
                                 </NavLinks>  
@@ -365,7 +425,7 @@ return (
                                         name={PageObject.Users_ScheduleIcon}
                                         data-cy={`${(singleUser?.firstname)?.toLowerCase()}_ScheduleIcon`}
                                         className="round-button-1"
-                                        onClick={() => goToSchedulingCalendar(singleUser)}
+                                        onClick={() => gotToPersonalCalendar(singleUser)}
                                         disabled={singleUser?.courses?.length === 0}  
                                     />
                                     </SiteFunctionalityGroup>
@@ -390,6 +450,15 @@ return (
                                         onClick={() => goToOnlineTutoringRequest(singleUser)}
                                         disabled={singleUser?.courses?.length === 0} 
                                     />
+                                    </SiteFunctionalityGroup>
+                                    <SiteFunctionalityGroup group={ permission( testGroup, operatorBusinessName, PageObject.Users_VideoCallIcon )}> 
+                                    <PollIcon 
+                                        id="PollIcon"
+                                        name={PageObject.Users_PollIcon}
+                                        data-cy={`${(singleUser?.firstname)?.toLowerCase()}_PollIcon`}
+                                        className="round-button-3"
+                                        onClick={() => goToOnlineSurvey()}
+                                    /> 
                                     </SiteFunctionalityGroup>
                                     <SiteFunctionalityGroup group={ permission( testGroup, operatorBusinessName, PageObject.Users_TimelineIcon )}>
                                     <TimelineIcon 

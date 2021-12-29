@@ -363,6 +363,47 @@ return new Promise(( resolve, reject ) => {
 });
 };
 
+export const getPagedData = ( route ) => {
+    console.log('in mock implementation');
+    console.log('route');
+    console.log( route );
+    console.log( JSON.stringify( route.split('&') ))
+    let splitRoute = route.split('&');
+    let page = parseInt(splitRoute[1].split('=')[1]);
+    let limit = parseInt(splitRoute[2].split('=')[1]);
+    console.log('page');
+    console.log(page);
+    console.log('limit');
+    console.log(limit);
+    let testLimit = limit;
+    let testPage = page;
+    return new Promise(( resolve, reject ) => {
+        process.nextTick(() => {
+            let data = seedData['paginationSeedData'];
+            let limit = testLimit;
+            let page = testPage;
+            let startIndex = (( page - 1 ) * limit );
+            let endIndex = ( page * limit );
+            const result = {};
+
+            if ( endIndex < data.length ) {
+                result.next = { page: ( page + 1 ), limit };
+            }
+
+            if ( startIndex > 1 ) {
+                result.previous = { page: ( page - 1 ), limit };
+            }
+
+            result.total = data.length;
+            result.page = page;
+            result.pages = Math.ceil( data.length / limit);
+            result.resultTest = data;
+            result.results = data.slice(startIndex, endIndex);
+            resolve( result );
+        })
+    });
+};
+
 let paymentGatewayProvider = {provider: "xyz", approvalStatus: "approved"}
 // paymentgateway integration and logic - this is a stub
 const handlePayment = (curentUser, gatewayProvider = paymentGatewayProvider) => {

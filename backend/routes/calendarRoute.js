@@ -2,90 +2,42 @@ import express from 'express';
 
 import calendarModel from '../model/calendarModel.js';
 
-import {
-getPostData,    
-saveUpdatedData } from '../helpers/storageHelper.js';
-
-import { 
-CALENDARROUTE,
-handleBackEndLogs } from '../helpers/logHelper.js';
-
 import { 
 verifyRoute,
+getRoute,
+getByIdRoute,
+getByObjectIdRoute,
+postRoute,
+putRoute,
+deleteRoute,
 logRouteInfo } from '../middleWare/index.js'; 
 
 const calendarRoute = express.Router();
+
 calendarRoute.use(logRouteInfo);
 
-calendarRoute.get('/', (req, res) => {
-    calendarModel.find({})
-    .then(data => {
-        return res.status(200).json(data);
-    })
-    .catch( error => {
-        handleBackEndLogs( CALENDARROUTE, error );
-        return res.status(400).json({ error });
-    });
- });
-
-calendarRoute.get('/', (req, res) => {
-    let id = { _id: req.query.calendarId };
-    calendarModel.findById( id )   
-    .then(data => {
-        return res.status(200).json(data);
-    })
-    .catch( error => {
-        handleBackEndLogs( CALENDARROUTE, error );
-        return res.status(400).json({ error });
-    });
-});
-  
-calendarRoute.get('/calendars/byUserId', (req, res) => {
-    let userId = { userId: req?.query?.userId };
-    calendarModel.find(userId)   
-    .then(data => {
-        return res.status(200).json(data);
-    })
-    .catch( error => {
-        handleBackEndLogs( CALENDARROUTE, error );
-        return res.status(400).json({ error });
-    });
-})
-
-calendarRoute.post('/', (req, res) => {
-    let eventData = getPostData( req );
-    let calendar = new calendarModel(eventData);
-    calendar.save()
-    .then(data => {
-        return res.status(200).json(data);
-    })
-    .catch( error => {
-        handleBackEndLogs( CALENDARROUTE, error );
-        return res.status(400).json({ error });
-    });
+calendarRoute.get('/', getRoute( calendarModel ), (req, res) => {
+    return res.status(200).json(res?.newResult);
 });
 
-calendarRoute.put('/:calendarId', (req, res) => {
-    saveUpdatedData(req, calendarModel, req.params.calendarId)
-    .then( data => {
-        return res.status(200).json(data);
-    })
-    .catch( error => {
-        handleBackEndLogs( CALENDARROUTE, error );
-        return res.status(400).json({ error });
-    });
+calendarRoute.get('/', getByObjectIdRoute( calendarModel, 'calendarId' ),  (req, res) => {
+    return res.status(200).json(res?.newResult);
 });
 
-calendarRoute.delete('/:calendarId', (req, res) => {
-    calendarModel.remove({ _id: req.params.calendarId }, ( error, result ) => {
-        if ( error ) {
-            handleBackEndLogs( CALENDARROUTE, error );
-            return res.status(400).send(error);
-        }
-        else {
-            return res.status(200).json(result);
-        }
-    });
+calendarRoute.get('/calendars/byUserId', getByIdRoute( calendarModel, 'userId' ),  (req, res) => {
+    return res.status(200).json(res?.newResult);
+});
+
+calendarRoute.post('/', postRoute( calendarModel ), (req, res) => {
+    return res.status(200).json(res?.newResult);
+});
+
+calendarRoute.put('/:calendarId', putRoute( calendarModel, 'calendarId' ), (req, res) => {
+    return res.status(200).json(res?.savedResult);
+});
+
+calendarRoute.delete('/:calendarId', deleteRoute(calendarModel, 'calendarId'), (req, res) => {
+    return res.status(200).json(res?.newResult);
 });
 
 export default calendarRoute;

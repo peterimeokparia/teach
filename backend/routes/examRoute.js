@@ -2,76 +2,37 @@ import express from 'express';
 
 import examModel from '../model/examModel.js';
 
-import {
-getPostData,    
-saveUpdatedData } from '../helpers/storageHelper.js';
-
-import { 
-EXAMROUTE,
-handleBackEndLogs } from '../helpers/logHelper.js';
-
 import { 
 verifyRoute,
+getRoute,
+getByIdRoute,
+postRoute,
+putRoute,
+deleteRoute,
 logRouteInfo } from '../middleWare/index.js'; 
 
 const examRoute = express.Router();
+
 examRoute.use(logRouteInfo);
 
-examRoute.get('/', (req, res) => {
-    examModel.find( { } )
-    .then(data => {
-        return res.status(200).json(data);
-    })
-    .catch( error => {
-        handleBackEndLogs( EXAMROUTE, error );
-        return res.status(400).json({ error })
-    });
+examRoute.get('/', getRoute( examModel ), (req, res) => {
+    return res.status(200).json(res?.newResult);
 });
 
-examRoute.get('/', (req, res) => {
-    examModel.find( { examId: req.query.examId } )
-    .then(data => {
-        return res.status(200).json(data);
-    })
-    .catch( error => {
-        handleBackEndLogs( EXAMROUTE, error );
-        return res.status(400).json({ error });
-    });
+examRoute.get('/', getByIdRoute( examModel, 'examId' ),  (req, res) => {
+    return res.status(200).json(res?.newResult);
 });
 
-examRoute.post('/', (req, res) => {
-    let examData = getPostData( req );
-    let exams = new examModel(examData);  
-    exams.save()
-    .then(data => {
-        return res.status(200).json(data)
-    })
-    .catch( error => {
-        handleBackEndLogs( EXAMROUTE, error );
-        return res.status(400).json({ error })
-    });
+examRoute.post('/', postRoute( examModel ), (req, res) => {
+    return res.status(200).json(res?.newResult);
 });
 
-examRoute.put('/:examId', (req, res) => {
-    saveUpdatedData(req, examModel, req.params.examId)
-    .then( data => {
-        return res.status(200).json(data);
-    })
-    .catch( error => {
-        handleBackEndLogs( EXAMROUTE, error );
-        return res.status(400).json({ error })
-    });
+examRoute.put('/:examId', putRoute( examModel, 'examId' ), (req, res) => {
+    return res.status(200).json(res?.savedResult);
 });
 
-examRoute.delete('/:examId', (req, res) => {
-    examModel.findByIdAndDelete(req.params.examId)
-    .then(data => {
-        return res.status(200).json(data);
-    })
-    .catch( error => {
-        handleBackEndLogs( EXAMROUTE, error );
-        return res.status(400).json({ error })
-    });
+examRoute.delete('/:examId', deleteRoute(examModel, 'examId'), (req, res) => {
+    return res.status(200).json(res?.newResult);
 });
 
 export default examRoute;

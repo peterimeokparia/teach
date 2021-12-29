@@ -3,7 +3,8 @@ connect } from 'react-redux';
 
 import{
 saveLesson,
-setLessonInProgressStatus } from 'services/course/actions/lessons';
+setLessonInProgressStatus,
+toggleTeachBoardOrEditor } from 'services/course/actions/lessons';
 
 import{
 inviteStudentsToLearningSession } from 'services/course/actions/users';
@@ -26,7 +27,8 @@ getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
 
 import {
 permission,
-SiteFunctionalityGroup }from 'services/course/pages/components/SiteFunctionalityGroup';
+SiteFunctionalityGroup,
+Organization }from 'services/course/pages/components/SiteFunctionalityGroup';
 
 import { 
 role } from 'services/course/helpers/PageHelpers';
@@ -38,7 +40,7 @@ videoCallIcon,
 videoMeta } from 'services/course/pages/Lessons/LessonPlan/inlineStyles.js';
 
 import Roles from 'services/course/pages/components/Roles';
-import SplitViewComponentTest from 'services/course/pages/components/SplitViewComponent/SplitViewComponentTest';
+import LessonPlanSplitViewComponent from 'services/course/pages/Lessons/LessonPlan/LessonPlanSplitViewComponent';
 import useTeachMeetingSettingsHook  from 'services/course/pages/Lessons/hooks/useTeachMeetingSettingsHook';
 import useEndMeetingHook  from 'services/course/pages/Lessons/hooks/useEndMeetingHook';
 import MaterialUiVideoComponent from 'services/course/pages/components/MaterialUiVideoComponent';
@@ -64,7 +66,8 @@ const LessonPlan = ({
   currentUser,
   selectedCourseFromLessonPlanCourseDropDown,
   selectedLessonFromLessonPlanDropDown,
-  loadMeetingsByMeetingId }) => {
+  loadMeetingsByMeetingId,
+  toggleTeachBoardOrEditor }) => {
 
   const selectedCourse = (selectedCourseFromLessonPlanCourseDropDown?._id === undefined) 
                             ? getItemFromSessionStorage('selectedCourse') 
@@ -96,7 +99,7 @@ const LessonPlan = ({
     toggleRoomSize,
     resetAllStartSettings,
     resetAllStopSettings, 
-    hidePopUpWindow
+    hidePopUpWindow,
   } = useTeachMeetingSettingsHook( useTeachMeetingProps );
 
   useEndMeetingHook( meetingEndingPromo, classRoomId );
@@ -126,10 +129,10 @@ const PageObject = {
 
 let testGroup = [
   {   page: 'Users',
-      operatorBusinessName,
+      operatorBusinessName: [Organization.Teach, Organization.Boomingllc ],
       pageObject: [ 
-          { name: PageObject?.LessonPlan_MaterialUiVideoComponent, value: false },
-          { name: PageObject?.LessonPlan_VideoCallIcon, value: true },
+          { name: PageObject?.LessonPlan_MaterialUiVideoComponent, allowed: [ Organization.Teach ]},
+          { name: PageObject?.LessonPlan_VideoCallIcon, allowed: [ Organization.Teach, Organization.Boomingllc ]},
       ]  
   }
 ];
@@ -150,6 +153,7 @@ return (
             name={PageObject?.LessonPlan_MaterialUiVideoComponent}
             className={"MaterialUiVideoComponent"} 
             element={ selectedLesson } 
+            hasRights={true}
             videoMeta={videoMeta( selectedLesson )}
             resetAllStartSettings={resetAllStartSettings}
             resetAllStopSettings={resetAllStopSettings}
@@ -175,7 +179,7 @@ return (
      </div>
         <div>
         <div className="content">
-          <SplitViewComponentTest 
+          <LessonPlanSplitViewComponent 
             session={session}
             currentUser={currentUser}
             classRoomId={classRoomId} 
@@ -194,7 +198,8 @@ const mapDispatch = {
   setLessonInProgressStatus,  
   inviteStudentsToLearningSession,
   saveLesson,
-  loadMeetingsByMeetingId
+  loadMeetingsByMeetingId,
+  toggleTeachBoardOrEditor
 };
 
 const mapState = ( state, ownProps )   => {

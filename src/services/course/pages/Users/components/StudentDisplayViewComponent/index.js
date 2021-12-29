@@ -33,12 +33,21 @@ import NavLinks from '../../../components/NavLinks';
 const StudentDisplayViewComponent = ({
   props,
   currentUser,
+  users,
   selectedCourseFromLessonPlanCourseDropDown,
   selectedLessonFromLessonPlanDropDown,
   lessons,
   navigationHistory }) => {
 
-  let { operatorBusinessName, selectedStudents, childrenProps, operator, courseId } = props;
+  let { 
+    operatorBusinessName, 
+    selectedStudents, 
+    childrenProps, 
+    operator, 
+    courseId,
+    studentId } = props;
+
+  let selectedUser = users?.find(usr => usr?._id === studentId)
 
 function onMatchListItem( match, listItem ) {
   if ( match ){
@@ -93,7 +102,7 @@ return (
                 </div>
                 <div className="sidebar"> 
                 <Roles
-                  role={currentUser?.role === role.Student }
+                  role={selectedUser?.role === role.Student }
                 >                         
                   <MultiInputEmailComponent
                     setLesson={lessons && Object.values(lessons)?.find(lesson => lesson?._id === selectedLessonFromLessonPlanDropDown?._id)}

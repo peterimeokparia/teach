@@ -12,77 +12,113 @@ handleBackEndLogs } from '../helpers/logHelper.js';
 
 import { 
 verifyRoute,
+getRoute,
+getByIdRoute,
+getByObjectIdRoute,
+postRoute,
+putRoute,
+deleteRoute,
 logRouteInfo } from '../middleWare/index.js'; 
 
 const whiteBoardRoute = express.Router();
 
 whiteBoardRoute.use(logRouteInfo);
 
-whiteBoardRoute.get('/', (req, res) => {
-    whiteBoardModel.find( { } )
-    .then(data => {
-        return res.status(200).json(data);
-    })
-    .catch( error => {
-        handleBackEndLogs( WHITEBOARDROUTE, error );
-        return res.status(400).json({ error });
-    });
+whiteBoardRoute.get('/', getRoute( whiteBoardModel ), (req, res) => {
+    return res.status(200).json(res?.newResult);
 });
 
-whiteBoardRoute.get('/byId', (req, res) => {
-    whiteBoardModel.find( { _id: req.query.id } )
-    .then(data => {
-        return res.status(200).json(data);
-    })
-    .catch( error => {
-        handleBackEndLogs( WHITEBOARDROUTE, error );
-        return res.status(400).json({ error });
-    });
+whiteBoardRoute.get('/byId', getByObjectIdRoute( whiteBoardModel, 'id' ),  (req, res) => {
+    return res.status(200).json(res?.newResult);
 });
 
-whiteBoardRoute.get('/byWid', (req, res) => {
-    whiteBoardModel.find( { wid: req.query.wid } )
-    .then(data => {
-        return res.status(200).json(data);
-    })
-    .catch( error => {
-        handleBackEndLogs( WHITEBOARDROUTE, error );
-        return res.status(400).json({ error });
-    });
+whiteBoardRoute.get('/byWid', getByIdRoute( whiteBoardModel, 'wid' ),  (req, res) => {
+    return res.status(200).json(res?.newResult);
 });
 
-whiteBoardRoute.post('/', (req, res) => {
-    let whiteBoardData = getPostData( req );
-    let whiteBoard = new whiteBoardModel(whiteBoardData);  
-    whiteBoard.save()
-    .then(data => {
-        return res.status(200).json(data)
-    })
-    .catch( error => {
-        handleBackEndLogs( WHITEBOARDROUTE, error );
-        return res.status(400).json({ error });
-    });
+whiteBoardRoute.post('/', postRoute( whiteBoardModel ), (req, res) => {
+    return res.status(200).json(res?.newResult);
 });
 
-whiteBoardRoute.put('/:id', (req, res) => {
-    saveUpdatedData(req, whiteBoardModel, req.params.id)
-    .then( data => {
-        return res.status(200).json(data)
-    })
-    .catch( error => {
-        handleBackEndLogs( WHITEBOARDROUTE, error );
-        return res.status(400).json({ error })
-    });
+whiteBoardRoute.put('/:id', putRoute( whiteBoardModel, 'id' ), (req, res) => {
+    return res.status(200).json(res?.savedResult);
 });
 
-whiteBoardRoute.delete('/:id', (req, res) => {
-    whiteBoardModel.remove({ _id: req.params.id }, ( error, result ) => {
-        if ( error ) {
-            return res.status(400).send(error);
-        }else {
-            return res.status(200).json(result);
-        }
-    });
+whiteBoardRoute.delete('/:id', deleteRoute(whiteBoardModel, 'id'), (req, res) => {
+    return res.status(200).json(res?.newResult);
 });
 
 export default whiteBoardRoute;
+
+
+
+
+
+
+
+// whiteBoardRoute.get('/', (req, res) => {
+//     whiteBoardModel.find( { } )
+//     .then(data => {
+//         return res.status(200).json(data);
+//     })
+//     .catch( error => {
+//         handleBackEndLogs( WHITEBOARDROUTE, error );
+//         return res.status(400).json({ error });
+//     });
+// });
+
+// whiteBoardRoute.get('/byId', (req, res) => {
+//     whiteBoardModel.find( { _id: req.query.id } )
+//     .then(data => {
+//         return res.status(200).json(data);
+//     })
+//     .catch( error => {
+//         handleBackEndLogs( WHITEBOARDROUTE, error );
+//         return res.status(400).json({ error });
+//     });
+// });
+
+// whiteBoardRoute.get('/byWid', (req, res) => {
+//     whiteBoardModel.find( { wid: req.query.wid } )
+//     .then(data => {
+//         return res.status(200).json(data);
+//     })
+//     .catch( error => {
+//         handleBackEndLogs( WHITEBOARDROUTE, error );
+//         return res.status(400).json({ error });
+//     });
+// });
+
+// whiteBoardRoute.post('/', (req, res) => {
+//     let whiteBoardData = getPostData( req );
+//     let whiteBoard = new whiteBoardModel(whiteBoardData);  
+//     whiteBoard.save()
+//     .then(data => {
+//         return res.status(200).json(data)
+//     })
+//     .catch( error => {
+//         handleBackEndLogs( WHITEBOARDROUTE, error );
+//         return res.status(400).json({ error });
+//     });
+// });
+
+// whiteBoardRoute.put('/:id', (req, res) => {
+//     saveUpdatedData(req, whiteBoardModel, req.params.id)
+//     .then( data => {
+//         return res.status(200).json(data)
+//     })
+//     .catch( error => {
+//         handleBackEndLogs( WHITEBOARDROUTE, error );
+//         return res.status(400).json({ error })
+//     });
+// });
+
+// whiteBoardRoute.delete('/:id', (req, res) => {
+//     whiteBoardModel.remove({ _id: req.params.id }, ( error, result ) => {
+//         if ( error ) {
+//             return res.status(400).send(error);
+//         }else {
+//             return res.status(200).json(result);
+//         }
+//     });
+// });

@@ -160,9 +160,9 @@ return (
                                 <div className="col-1"> 
                                   <div className="onlineQuestionCalendarIcon">
                                   <CalendarTodayIcon
-                                      style={ iconStyleMain() }
-                                      className="round-button-3"
-                                      //onClick={() => gotToCalendar(singleUser)}
+                                    style={ iconStyleMain() }
+                                    className="round-button-3"
+                                    //onClick={() => gotToCalendar(singleUser)}
                                   />
                                   </div>                    
                                 </div>

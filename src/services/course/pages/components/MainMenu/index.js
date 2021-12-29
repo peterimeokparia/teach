@@ -35,11 +35,11 @@ return (
             className={menuVisible ? "show" : "hide"}
             onMouseUp={handleMouseDown}
         >
-            {sortedNavContent.map(element => (
+            {sortedNavContent?.map(element => (
                 <li key={element?.id}
                     className="navlinkItem"
                 >
-                    <NavLinks to={element?.hrefValue}> { element?.item} </NavLinks>
+                    <NavLinks to={element?.hrefValue} color={"black"}> { element?.item} </NavLinks>
                 </li>
                 
                 ))

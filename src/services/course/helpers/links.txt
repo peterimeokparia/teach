@@ -422,3 +422,37 @@ https://medium.com/weekly-webtips/how-to-create-dictionaries-in-javascript-21628
 React-Split-pane
 ------------------
 https://github.com/tomkp/react-split-pane
+
+
+Handling Browser & Tab Close Events
+-------------------------------------
+https://stackoverflow.com/questions/3888902/detect-browser-or-tab-closing/3888938
+https://www.npmjs.com/package/react-beforeunload
+
+Add External Styling content
+------------------------------
+https://www.npmjs.com/package/react-countdown
+https://stackoverflow.com/questions/33649957/how-to-set-the-font-family-like-a-digital-clock-css
+https://stackoverflow.com/questions/51060111/how-to-import-a-stylesheet-from-external-source-in-react
+https://www.1001fonts.com/digital+clock-fonts.html
+
+Guard Clauses
+----------------
+https://betterprogramming.pub/refactoring-guard-clauses-2ceeaa1a9da
+
+React-Math-Latex
+------------------------------
+https://github.com/SamyPesse/react-mathjax/blob/master/example/main.js
+https://www.npmjs.com/package/react-mathjax
+https://www.npmjs.com/package/react-formula-beautifier
+
+Maintainiing Selected Rows in Mui tables
+------------------------------------------
+https://ramblings.mcpher.com/reactreduxredisfirebase/maintaining-the-selected-row-in-a-material-ui-table/
+
+Ios Jiggle effect
+-------------------
+https://www.kirupa.com/html5/creating_the_ios_icon_jiggle_wobble_effect_in_css.htm
+
+https://www.youtube.com/watch?v=gRs5brImLH8
+

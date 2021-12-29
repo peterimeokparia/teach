@@ -102,11 +102,11 @@ export const getOperatorFromOperatorBusinessName = createSelector(
     (operators , operatorBusinessName) => {
         let operator = Object.values(operators)?.find(operator =>  operator?.businessName === operatorBusinessName);
         
-        if ( operator ) {
+        if ( operator && operator !== null && operator !== "" && operator !== undefined  ) {
             setItemInSessionStorage('operator', operator);
         }
 
-        if ( operatorBusinessName ) {
+        if ( operatorBusinessName && operatorBusinessName !== null && operatorBusinessName !== "" && operatorBusinessName !== undefined  ) {
             setItemInSessionStorage('operatorBusinessName', operatorBusinessName);
         }
         return operator;

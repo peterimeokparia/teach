@@ -28,8 +28,14 @@ import onlineQuestionsPushSubscriptions from './onlinequestionspushsubscription'
 import failedNotifications from './failednotifications'; 
 import logs from './logforteach';
 import formFields from './formfields';
+import formFieldAnswers from './formfieldanswers';
 import whiteBoardData from './whiteboards';
 import meetingNotes from './meetingNotes';
+import logins from './logins';
+import onlineSurveys from './onlinesurveys';
+import formFieldPoints from './formquestionpoints';
+import timers from './countdowntimer';
+import formBuilders from './formbuilders';
 
 let reducers = { 
     courses, 
@@ -62,7 +68,13 @@ let reducers = {
     logs,
     formFields,
     whiteBoardData,
-    meetingNotes
+    meetingNotes,
+    logins,
+    onlineSurveys,
+    formFieldAnswers,
+    formFieldPoints,
+    timers,
+    formBuilders
 };
 
 export default combineReducers( reducers );

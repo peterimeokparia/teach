@@ -82,12 +82,14 @@ export const elementMeta = {
   commentsCollection: 'commentsCollection',
   questionPushNotificationSubscribers: 'questionPushNotificationSubscribers',
   questionEmailNotificationSubscribers: 'questionEmailNotificationSubscribers',
-  savedQuestions: 'savedQuestions' 
+  savedQuestions: 'savedQuestions', 
+  status: { Editing: 'editing', NotEditing: 'notediting' }
 };
 
 export const inputType = {
   CheckBox: "checkbox",
-  RadioButton: "radiobutton",
+  RadioButton: "radio",
+  TextLabel: "textlabel",
   Text: "text",
   TextArea: "textarea",
   Video: "video",
@@ -95,7 +97,9 @@ export const inputType = {
   Number: "number",
   Phone: "phone", 
   Date: "date",
-  DateTime: "datetime"
+  DateTime: "datetime",
+  DropDown: "dropdown",
+  Explanation: "explanation"
 };
 
 export const labelType = {
@@ -198,12 +202,19 @@ export function markDownEditorFieldCollection(config){
 };
 
 export function onlineMarkDownEditorFieldCollection(config){
-  return  {   
+  return  { 
     type: config?.inputFieldOptions?.type,  
     placeHolderText: config?.inputFieldOptions?.askHomeWorkQuestionPlaceHolder,
     questionCreatedOnDateTime: Date.now(),
     markDownContent: JSON.stringify(config?.placeHolder),
+    answerExplanationMarkDownContent: JSON.stringify(config?.explanationPlaceHolder),
+    pointsAssigned: config?.pointsAssigned,
+    pointsReceived: config?.pointsReceived,
+    formId: config?.formId, 
+    formType: config?.formType,
+    formName: config?.formName,
     courseId: config?.courseId,
+    formUuId: config?.formUuId, 
     onlineQuestionId: config?.onlineQuestionId,
     userId: config?.userId,
     files: [],
@@ -213,7 +224,14 @@ export function onlineMarkDownEditorFieldCollection(config){
     questionDifficultyLevel: config?.questionDifficultyLevel,
     questionCreatedBy: config?.questionCreatedBy,
     operatorId: config?.operatorId,
-    videoUrl: config?.videoUrl
+    videoUrl: config?.videoUrl,
+    xAxisformQuestionPosition: config?.xAxisformQuestionPosition,
+    yAxisformQuestionPosition: config?.yAxisformQuestionPosition,
+    xAxisColumnPosition: config?.xAxisColumnPosition,
+    yAxisColumnPosition: config?.yAxisColumnPosition,
+    columnMinWidth: config?.columnMinWidth,
+    columnMinHeight: config?.columnMinHeight,
+    columnAlign: config?.columnAlign
   };   
 };
 

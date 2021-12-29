@@ -19,6 +19,9 @@ courseSeedData } from 'services/course/Pages/Courses/tests/courseSeedData.js'
 import { 
 onlineQuestionsSeedData } from 'services/course/Pages/OnlineQuestionsPage/tests/onlineQuestionsSeedData.js';
 
+import {
+paginationSeedData } from 'services/course/pages/components/Pagination/tests/paginationSeedData.js';
+
 export let seedData = {
     '/courses': courseSeedData,
     '/courses/':courseSeedData,
@@ -33,5 +36,6 @@ export let seedData = {
     '/attendance': attendanceSeedData,
     '/meetings' : meetingSeedData,
     '/onlinequestions': onlineQuestionsSeedData, 
-    '/onlinequestions/': onlineQuestionsSeedData,  
+    '/onlinequestions/': onlineQuestionsSeedData, 
+    'paginationSeedData': paginationSeedData
 };

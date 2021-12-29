@@ -21,6 +21,7 @@ export const SAVE_FORMFIELDS_ERROR = "SAVE FORMFIELDS ERROR";
 export const SAVE_FORMFIELDS_SUCCESS = "SAVE FORMFIELDS SUCCESS";
 export const SET_FORMFIELDS_MARKDOWN = "SET FORMFIELDS MARKDOWN";
 export const SET_EXPLANATION_ANSWER_MARKDOWN = "SET EXPLANATION ANSWER MARKDOWN";
+export const SAVE_FORMFIELDS_SUCCESS_MW = "SAVE FORMFIELDS SUCCESS MW";
 
 export const addNewFormField = newFormField => {
     return dispatch => {
@@ -39,12 +40,18 @@ export const saveFormField = ( formfields ) => {
         dispatch({ type: SAVE_FORMFIELDS_BEGIN });
         return update( formfields, `/formfields/` )
             .then( formfields => {  
-             dispatch({ type: SAVE_FORMFIELDS_SUCCESS, payload: formfields }); 
+            dispatch({ type: SAVE_FORMFIELDS_SUCCESS, payload: formfields }); 
             }).catch( error => {
             dispatch({ type: SAVE_FORMFIELDS_ERROR , error });
         });  
     };
  };
+
+export const saveFormFieldNoCallback = formfieldvalues => ({
+    type: SAVE_FORMFIELDS_SUCCESS_MW,
+    payload: formfieldvalues
+});
+
 
 export const loadFormFields = ( ) => {
     return dispatch => {
@@ -103,7 +110,7 @@ return dispatch => {
     dispatch({ type: DELETE_FORMFIELDS_BEGIN });
         return remove( formfield, `/formfields/` )
         .then( (response ) => {
-            dispatch({ type: DELETE_FORMFIELDS_SUCCESS, payload: response });
+            dispatch({ type: DELETE_FORMFIELDS_SUCCESS, payload: formfield });
         }).catch( error => {
         dispatch({ type: DELETE_FORMFIELDS_ERROR , error });
     });

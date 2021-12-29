@@ -1,4 +1,7 @@
 import { 
+setItemInSessionStorage } from 'services/course/helpers/ServerHelper';
+
+import { 
 BUY_COURSE_SUCCESS,     
 LOGIN_SUCCESS, 
 LOGOUT_SUCCESS, 
@@ -10,10 +13,15 @@ SIGN_UP_SUCCESSS } from 'services/course/actions/users';
 import {
 OPERATOR_SIGN_UP_SUCCESSS } from 'services/course/actions/operator';
 
+import { 
+ADD_NEW_LOGIN_SUCCESS } from 'services/course/actions/logins';
+
 import {
 handleCartOnPurchase,
 handleOperatorSignUpSuccess,
-handleSignUpSuccess } from 'services/course/middleware/users/helpers';
+handleSignUpSuccess,
+handleFormBuilderTimer,
+logLogOutTime } from 'services/course/middleware/users/helpers';
 
 import { 
 setToken } from 'services/course/helpers/ServerHelper';
@@ -45,24 +53,31 @@ export const users = store => next =>  action => {
                setToken(action.payload?.token); 
                setAuthToken(action.payload?.token);
                sessionStorage.removeItem('lastState');
-               sessionStorage.setItem('currentuser', JSON.stringify(action.payload));
-               sessionStorage.setItem('lastState', JSON.stringify(action.payload));
-               sessionStorage.setItem('timeZone', timeZone?.name());
+               setItemInSessionStorage('currentuser', action.payload);
+               setItemInSessionStorage('lastState', action.payload);
+               setItemInSessionStorage('timeZone', timeZone?.name());
                next(action);
           return;
           case UPDATE_USER:
                sessionStorage.clear();
-               sessionStorage.setItem('currentuser', JSON.stringify(action.payload[0]));
-               sessionStorage.setItem('lastState', JSON.stringify(action.payload[0]));
+               setItemInSessionStorage('currentuser', action.payload[0]);
+               setItemInSessionStorage('lastState', action.payload[0]);
                next(action); 
           return;
           case RESET_USERS_CART:  
-               sessionStorage.setItem('lastState', JSON.stringify(action.payload));
+               setItemInSessionStorage('lastState', action.payload);
+               next(action);
+          return;
+          case ADD_NEW_LOGIN_SUCCESS:  
+               setItemInSessionStorage('currentlogins', action.payload);
                next(action);
           return;
           case LOGOUT_SUCCESS:
                setToken(null);
+               logLogOutTime( JSON.parse( sessionStorage?.getItem('currentlogins')), store );
                sessionStorage.removeItem('currentuser');
+               sessionStorage.removeItem('currentlogins');
+               handleFormBuilderTimer(store)
                next(action);
           return; 
           default:

@@ -19,12 +19,14 @@ verifyRoute,
 logRouteInfo } from '../middleWare/index.js'; 
 
 const videoRoute = express.Router();
+
 videoRoute.use(logRouteInfo);
+
 const logs = getLogObject();
 
-  let backeEndServerRoute, videoFileName, videoMeta;
+let backeEndServerRoute, videoFileName, videoMeta;
 
-  const storage = multer.diskStorage({ 
+const storage = multer.diskStorage({ 
    destination: function(req, file, cb){ 
       cb (null, '../../public/videos/');     
    }, 

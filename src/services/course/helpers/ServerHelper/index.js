@@ -148,6 +148,7 @@ export const getTimeZoneDateTime = ( dateTime ) => {
 };
 
 export const setItemInSessionStorage = (key, item) => {
+  if ( item === null || item === "" ) return;
   sessionStorage.setItem(key, JSON.stringify(item));
 };
 

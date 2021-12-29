@@ -74,7 +74,6 @@ export const handlePushNotificationSubscription = ( subscribedUsers, user,  newS
     let subscription = undefined;
 
     if ( serviceWorkerSupported() ) {
-        // change messge text: todo
         subscription = send();
     }
 

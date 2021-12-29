@@ -1,0 +1,165 @@
+.session{
+    position: absolute;
+    background: white;
+  }
+  .session .content .sidebar {
+    flex-basis: 300px;
+    background: white;
+    border-right: 0px solid #bba0ea;
+    padding-left: 0px; 
+  }
+  .session .content .studentSessions .header{
+    /* background-color:whitesmoke; */
+    color: blue;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 30px 5px 5px;
+    text-align: center;
+    text-transform: capitalize;
+    margin-bottom: 25px;
+    border-style: solid;
+    border-radius: 3px;
+    border-color: black;
+  }
+  .session .content .studentSessions .loginTime{ 
+   margin-left: 150px;
+  }
+  .session .content .studentSessions .sessionHeader{ 
+    margin-left: 75px;
+   }
+   .session .content .studentSessions .sessions{ 
+    margin-left: 75px;
+   }
+   .session .content .studentSessions .totalsessions{ 
+    margin-left: 155px;
+   }
+   .session .content .studentSessions .startdate{ 
+    margin-left: 75px;
+   }
+   .session .content .studentSessions .enddate{ 
+    margin-left: 15px;
+   }
+   .session .content .studentSessions .autorenew{ 
+    margin-left: 25px;
+   }
+  .savedAnswersList{
+    list-style: none;
+    margin-top:  -10px;
+    margin-left:  -320px;
+    overflow: auto;
+    height: 500px;
+    width: 360px;
+  }
+  .session-item{
+    text-transform: capitalize;
+    padding-bottom: 20px;
+    margin-bottom: 5px;
+    margin-left: 30px;
+    background: white;
+  }
+  .navlink-text {
+    text-align: block;
+    color: blue;
+    padding-bottom: 20px;
+  }
+  .studentSessions{
+    position: absolute;
+    background: white;
+    text-transform: capitalize;
+    margin-left: -650px;
+    width: 1000px;
+    overflow: auto;
+  }
+  @media (min-width: 1281px) {
+    
+    /* CSS */
+    
+  }
+  
+  /* 
+    ##Device = Laptops, Desktops
+    ##Screen = B/w 1025px to 1280px
+  */
+  
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    
+    /* CSS */
+    
+  }
+  
+  /* 
+    ##Device = Tablets, Ipads (portrait)
+    ##Screen = B/w 768px to 1024px
+  */
+  
+  @media (min-width: 768px) and (max-width: 1024px) {
+    
+    /* CSS */
+    
+  }
+  
+  /* 
+    ##Device = Tablets, Ipads (landscape)
+    ##Screen = B/w 768px to 1024px
+  */
+  
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    
+    /* CSS */  
+  }
+  
+  /* 
+    ##Device = Low Resolution Tablets, Mobiles (Landscape)
+    ##Screen = B/w 481px to 767px
+  */
+  
+  @media (min-width: 481px) and (max-width: 767px) {    
+    /* CSS */
+    .studentSessions{
+      position: absolute;
+      background: white;
+      text-transform: capitalize;
+      margin-left: 10px;
+      width: 320px;
+      overflow: auto;
+    }
+  }
+  /* 
+    ##Device = Most of the Smartphones Mobiles (Portrait)
+    ##Screen = B/w 320px to 479px
+  */
+  @media (min-width: 320px) and (max-width: 480px) {
+    /* CSS */
+    .session{
+      /* position: relative; */
+      background: white;
+    }
+    .session header {
+      width: 20px;
+    }
+    .session .content .sidebar {
+      flex-basis: 300px;
+      background: white;
+      border-right: 0px solid #bba0ea;
+      padding-left: 0px; 
+    }
+    .savedAnswersList{
+    list-style: none;
+    margin-top:  -10px;
+    margin-left:  -350px;
+    overflow: auto;
+    height: 300px;
+    width: 220px;
+  }
+  .studentSessions{
+    /* position: absolute; */
+    /* position: relative; */
+    background: white;
+    text-transform: capitalize;
+    margin-left: -80px;
+    width: 250px;
+    overflow: auto;
+  }
+  }

@@ -20,6 +20,7 @@ role } from 'services/course/helpers/PageHelpers';
 import Roles from 'services/course/pages/components/Roles';
 import ListItem from 'services/course/pages/components/ListItem';
 import EditSessionComponent from './component/EditSessionComponent';
+import './style.css';
 
 const SessionPage = ({ 
     studentId,
@@ -39,7 +40,7 @@ function onMatchListItem( match, listItem ) {
     };
 } 
 return (    
-    <div>    
+    <div className="session">    
         {( sessions ) && <ListItem
                             // collection={Object.values(sessions?.filter(session => session?.userId === studentId && session?.courseId === courseId))}
                             collection={sessions?.filter(session => session?.userId === studentId && session?.courseId === courseId)}
@@ -54,24 +55,23 @@ return (
                                 onSubmit={(session) => saveSession({...selectedSession, numberOfSessions: session?.numberOfSessions, totalNumberOfSessions: session?.totalNumberOfSessions  })}
                             >
                             { (edit, remove ) => (
-                            <div>      
-                                <div>
-                                        <div>
-                                            <span> Sessions </span>
+                            <div className="content">      
+                                <div className="studentSessions">
+                                        <div className="header">
+                                            {/* <span> Sessions </span> */}
                                             <span className="sessionHeader"> Type of Session </span>
-                                            <span className="sessionHeader"> Number of Sessions </span>
+                                            <span className="sessionHeader"> Number of Sessions</span>
                                             <span className="sessionHeader"> Total Number of Sessions </span>
                                             <span className="sessionHeader"> Start Date </span>
                                             <span className="sessionHeader"> End Date </span>
                                             <span className="sessionHeader"> Auto Renew </span>
                                         </div>
                                         <Link to={`student/${ studentId }/sessions/${selectedSession?._id}/courseId/${courseId}`}> <span title={selectedSession?._id} >{ selectedSession?.typeOfSession } </span> </Link> 
-                                        <span className="sessions"> { selectedSession?.typeOfSession } </span>
                                         <span className="sessions"> { selectedSession?.numberOfSessions } </span>
-                                        <span className="sessions"> { selectedSession?.totalNumberOfSessions } </span>
-                                        <span className="sessions"> { selectedSession?.startDate } </span>
-                                        <span className="sessions"> { selectedSession?.endDate } </span>
-                                        <span className="sessions"> { selectedSession?.autoRenew } </span>
+                                        <span className="totalsessions"> { selectedSession?.totalNumberOfSessions } </span>
+                                        <span className="startdate"> { new Date( selectedSession?.startDate )?.toLocaleDateString('en-US') } </span>
+                                        <span className="enddate"> { new Date( selectedSession?.endDate )?.toLocaleDateString('en-US') } </span>
+                                        <span className="autorenew"> { selectedSession?.autoRenew.toString() } </span>
                                         <br></br>
                                         <div> 
                                 <Roles

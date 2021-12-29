@@ -69,7 +69,7 @@ const reducer = produce((draft, action) => {
              draft.onSaveError = null;
        return; 
        case DELETE_FORMFIELDS_SUCCESS:
-            delete draft.formFields[action.payload?._id];
+            delete draft.formFields[action.payload?._id];  
        return; 
        case DELETE_FORMFIELDS_ERROR:
              draft.onFormFieldsLoadingError = action.error;

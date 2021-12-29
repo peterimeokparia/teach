@@ -22,7 +22,12 @@ const whiteBoardSchema = new Schema ({
     color: { 
         type: String, 
         required: true  
-    }
+    },
+    timeSaved: { 
+        type: Date, 
+        required: false,
+        default: Date.now  
+    },
 });
 
 export default whiteBoardSchema;

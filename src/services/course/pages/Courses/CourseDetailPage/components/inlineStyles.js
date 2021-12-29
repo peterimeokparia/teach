@@ -1,3 +1,6 @@
+import {
+role } from 'services/course/helpers/PageHelpers';
+
 export const onlineQuestionVideoDeleteIconStyle = ( recording, id, selectedId ) => {
   return {
     fontSize: 60,
@@ -23,25 +26,35 @@ export const deleteQuestionIconStyle = () => {
 export const sideBarEditIconStyle = () => {
   return {
     fontSize: 25,
-    "marginTop": "1%",
-    // "top": "10%",
+    "marginLeft": "-4%"
   };
 };
 
 export const sideBarDeleteIconStyle = () => {
   return {
     fontSize: 25,
-    "marginTop": "1%",
     "marginLeft": "-15%"
-    // "top": "10%",
+  };
+};
+
+export const sideBarHelpIconStyle = ( currentUser ) => {
+  return {
+    fontSize: 25,
+    "marginLeft": currentUser?.role === role.Student ? "-4%" : "-15%"
+  };
+};
+
+export const sideBarHomeWorkIconStyle = () => {
+  return {
+    fontSize: 25,
+    "marginLeft": "-14%"
   };
 };
 
 export const swapHorizIconStyle = () => {
   return {
     fontSize: 25,
-    "marginTop": "1%",
-    "marginLeft": "-15%"
+    "marginLeft": "-37px"
     // "top": "10%",
   };
 };
@@ -49,7 +62,6 @@ export const swapHorizIconStyle = () => {
 export const saveQuestionIconStyle = () => {
   return {
     fontSize: 60,
-    "top": "-100%",
     "marginLeft": "95%",
     "marginBottom": "1%",
   };

@@ -45,9 +45,11 @@ getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
 import {
 loadWhiteBoardData } from 'services/course/actions/whiteBoards';
 
-function useTeachMeetingSettingsHook( teachMeetingProps ) {
+import moment from 'moment';
 
-  let { currentMeetingId, 
+function useTeachMeetingSettingsHook( teachMeetingProps ) {
+  let { 
+        currentMeetingId, 
         currentUser, 
         classRoomId, 
         selectedCourse, 
@@ -62,7 +64,7 @@ function useTeachMeetingSettingsHook( teachMeetingProps ) {
   let [ roomSize, setRoomSize ] = useState(1);  
 
   const dispatch = useDispatch();
-  let tutor = Object.values( useSelector( state => state.users.users ) )?.find( usr => usr?._id === classRoomId );
+  let tutor = getCurrentTutor();
   let meetings = useSelector( state => state.meetings.meetings );
   let meeting = Object.values( meetings )?.find( meeting => meeting?._id === tutor?.meetingId );
   let meetingId = meeting?._id;
@@ -70,8 +72,8 @@ function useTeachMeetingSettingsHook( teachMeetingProps ) {
   let currentLesson = Object.values( useSelector( state => state?.lessons?.lessons ) )?.find( lesson => lesson?._id === meeting?.lessonId );
   let paidSessions = useSelector( state => Object.values(state?.sessions?.sessions) );
   let sessions = paidSessions?.filter( usersession => usersession?.courseId === currentCourse?._id);
-  let meetingUrl = `http://localhost:3000/boomingllc/LessonPlan/classRoom/${tutor?._id}`;
   let operatorBusinessName = getItemFromSessionStorage('operatorBusinessName');
+  let meetingUrl = `/${operatorBusinessName}/LessonPlan/classRoom/${tutor?._id}`;
   
   let  meetingProps = {
     userId: currentUser?._id,
@@ -83,8 +85,6 @@ function useTeachMeetingSettingsHook( teachMeetingProps ) {
     courseTitle: currentCourse?.name,
     lessonTitle: currentLesson?.title,
     meetingUrl,
-    timeStarted: Date.now(),
-    timeEnded: Date.now(),
     usersWhoJoinedTheMeeting:[]
   }; 
 
@@ -148,6 +148,13 @@ function useTeachMeetingSettingsHook( teachMeetingProps ) {
     
   }, [  ( tutor?.meetingId === "" ), loadUsers ]);
 
+function getCurrentTutor(){
+  let tutor = Object.values( useSelector( state => state.users.users ) )?.find( usr => usr?._id === classRoomId );
+  if ( tutor && tutor?._id === undefined ){
+     return tutor[0];
+  }
+  return tutor;
+}
 function toggleTeach(){
   if ( session ) {
       if ( videoModalModeOn ){
@@ -162,7 +169,7 @@ function toggleTeach(){
       dispatch( endMeeting({ tutor, currentUser, loadMeetingsByMeetingId, operatorBusinessName }) ); 
       dispatch( loadUsers() );
       dispatch( loadMeetings() );
-      navigate(`http://localhost:3000/${operatorBusinessName}/LessonPlan/classRoom/${tutor?._id}/thankyou`)
+      navigate(`/${operatorBusinessName}/LessonPlan/classRoom/${tutor?._id}/thankyou`)
   } else {
       setSession(true);
       setHideMeetingStage(false);
@@ -231,8 +238,9 @@ function waitingForTheCurrentMeetingToStart(){
   return ( currentUser?.role === role.Student 
     && ( tutor?.meetingId === "" ));
 };
+
 return {
-  currentMeetingId,
+  currentMeetingId: ( meetingId !== undefined || meetingId !== ""  ) ? meetingId : currentMeetingId,
   hideMeetingStage,
   fullMeetingStage,
   videoModalModeOn,

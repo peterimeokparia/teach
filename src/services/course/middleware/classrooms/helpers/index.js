@@ -23,6 +23,7 @@ getCurrentUserById,
 updateCurrentUser } from 'services/course/actions/users';
 
 import{ 
+ADD_MEETING_EVENT_TO_CALENDAR,
 updateCurrentTutor } from 'services/course/actions/classrooms';
 
 import {
@@ -85,19 +86,32 @@ export const addNewClassRoomIdToStudentsAndTutors = ( classRoom, store ) => {
     store?.dispatch({ type: LAST_LOGGEDIN_USER, payload: tutor }); 
 }; 
 
+let listOfStudents = undefined;;
+let sessions = undefined;
+let operatorBusinessName = undefined;
+let operator = undefined;
+let selectedTutorId = undefined;
+let selectedLessonFromLessonPlanDropDown = undefined;
+let selectedCourseFromLessonPlanCourseDropDown = undefined;
+let pushNotificationSubscribers = undefined;
+let currentUser = undefined;
+let users = undefined;
+let selectedTutor = undefined;
+let url = undefined;
+
 export const enableTeachPlatform = ( meeting, store  ) => {
-    let listOfStudents = meeting?.listOfStudents;
-    let sessions = meeting?.sessions;
-    let operatorBusinessName = meeting?.operatorBusinessName;
-    let operator = Object.values( store?.getState()?.operators?.operators )?.find(ops => ops?.businessName === operatorBusinessName );
-    let selectedTutorId = meeting?.selectedTutorId;
-    let selectedLessonFromLessonPlanDropDown = store?.getState().lessons.selectedLessonFromLessonPlanDropDown;
-    let selectedCourseFromLessonPlanCourseDropDown = store?.getState().courses.selectedCourseFromLessonPlanCourseDropDown;
-    let pushNotificationSubscribers = Object.values( store?.getState()?.notifications?.pushNotificationSubscribers )?.filter( subscriber => subscriber?.operatorId === meeting?.operator?._id );
-    let currentUser = store?.getState()?.users?.user;
-    let users = Object.values( store?.getState()?.users?.users )?.filter( users => users?.operatorId === meeting?.operator?._id );
-    let selectedTutor = (  selectedTutorId === currentUser?._id) ? currentUser : getselectedTutor( users, selectedTutorId );
-    let url = getLessonPlanUrls( operatorBusinessName, selectedTutorId );
+     listOfStudents = meeting?.listOfStudents;
+     sessions = meeting?.sessions;
+     operatorBusinessName = meeting?.operatorBusinessName;
+     operator = Object.values( store?.getState()?.operators?.operators )?.find(ops => ops?.businessName === operatorBusinessName );
+     selectedTutorId = meeting?.selectedTutorId;
+     selectedLessonFromLessonPlanDropDown = store?.getState().lessons.selectedLessonFromLessonPlanDropDown;
+     selectedCourseFromLessonPlanCourseDropDown = store?.getState().courses.selectedCourseFromLessonPlanCourseDropDown;
+     pushNotificationSubscribers = Object.values( store?.getState()?.notifications?.pushNotificationSubscribers )?.filter( subscriber => subscriber?.operatorId === meeting?.operator?._id );
+     currentUser = store?.getState()?.users?.user;
+     users = Object.values( store?.getState()?.users?.users )?.filter( users => users?.operatorId === meeting?.operator?._id );
+     selectedTutor = (  selectedTutorId === currentUser?._id) ? currentUser : getselectedTutor( users, selectedTutorId );
+     url = getLessonPlanUrls( operatorBusinessName, selectedTutorId );
 
     let enablePlatformProps = {
         selectedTutorId, 
@@ -120,8 +134,6 @@ export const enableTeachPlatform = ( meeting, store  ) => {
         courseTitle: selectedCourseFromLessonPlanCourseDropDown?.name,
         lessonTitle: selectedLessonFromLessonPlanDropDown?.title,
         meetingUrl: url?.lessonPlanUrl,
-        timeStarted: Date.now(),
-        timeEnded: Date.now(),
         usersWhoJoinedTheMeeting:[],
     }; 
 
@@ -133,18 +145,7 @@ export const enableTeachPlatform = ( meeting, store  ) => {
                 case role.Tutor:    
                 store.dispatch(setLessonInProgressStatus());
                 let meeting = inviteUsersToLearningSession( enablePlatformProps, store ); 
-
-                store?.dispatch(addNewMeeting( { ...meetingProps, invitees: meeting?.invitees, currentUser: meeting?.tutor, operatorId: operator?._id }))
-                    .then( meeting => {
-                        handleMeeting( meeting, selectedTutor, url?.lessonPlanUrl, selectedLessonFromLessonPlanDropDown?.title, true, selectedLessonFromLessonPlanDropDown, selectedCourseFromLessonPlanCourseDropDown );
-                        store.dispatch(updateCurrentUser( { ...selectedTutor, meetingId: meeting?._id, lesson:selectedLessonFromLessonPlanDropDown?._id, course: selectedCourseFromLessonPlanCourseDropDown?._id } ));
-                        store.dispatch(getSelectedPushNotificationUsers( listOfStudents, pushNotificationSubscribers ));
-                        store.dispatch(updateCurrentTutor( { ...selectedTutor, meetingId: meeting?._id, lesson:selectedLessonFromLessonPlanDropDown?._id, course: selectedCourseFromLessonPlanCourseDropDown?._id } ));
-                        store.dispatch(lastLoggedInUser( { ...selectedTutor, meetingId: meeting?._id, lesson:selectedLessonFromLessonPlanDropDown?._id, course: selectedCourseFromLessonPlanCourseDropDown?._id } ));
-                        sendEmailToMeetingInvitees( listOfStudents, url?.lessonPageUrl, store );
-                        navigate( url?.lessonPlanUrl ); 
-                    }) 
-                    .catch(error => console.error( error ));  
+                store?.dispatch(addNewMeeting( { ...meetingProps, invitees: meeting?.invitees, currentUser: meeting?.tutor, operatorId: operator?._id }));  
                 return;
                 case role.Student:
                 enablePlatformForStudentRole( enablePlatformProps  );
@@ -263,7 +264,7 @@ function waitingForMeetingToStartBeforeJoining( props ){
         selectedTutor,
         store } = props;
 
-    let url = getLessonPlanUrls( operatorBusinessName, selectedTutorId );
+    let url = getLessonPlanUrls( getItemFromSessionStorage('operatorBusinessName'), selectedTutorId );
     let timeOutPeriod = 15000; 
     
     if ( getItemFromSessionStorage( 'newMeetingTimerHandle' )) {
@@ -370,41 +371,38 @@ function goToMeetingWithPromoMessage ( lessonUrl, meetingId ) {
         confirmButtonText: ( meetingId !== "" ) ? 'Please join meeting.' : 'Please wait.',
         confirmButtonColor:  ( meetingId !== "" ) ? '#20c997' : '#ff0000',
         }).then( (response) => {
-        if ( response?.value ) {
+        if ( response?.value & ( meetingId !== "" ) ) {
             navigate(`${lessonUrl}/${meetingId}`);
-        } 
+        } else {
+            return;
+        }
     });  
 };
 
 export function addNewMeetingEventToCalendar( meetingEvent, store ){
-    
-    let selectedTutor = store?.getState()?.classrooms?.currentTutor;
+    let selectedTutor = getselectedTutor( Object.values(store?.getState()?.users?.users), store?.getState()?.classrooms?.currentTutor?._id );
     let currentMeeting = Object.values( store?.getState()?.meetings?.meetings )?.find( meeting => meeting?._id === selectedTutor?.meetingId );
     let meeting = ( meetingEvent?._id ) ? meetingEvent : currentMeeting;
     let currentUser = meetingEvent?.currentUser;
     let userId = currentUser?._id;
-    let operatorBusinessName = meeting?.operatorBusinessName;
+    let operatorBusinessName = (meetingEvent?.operatorBusinessName) ? meetingEvent?.operatorBusinessName : getItemFromSessionStorage('operatorBusinessName');
     let selectedTutorId = selectedTutor?._id;
     let operator = Object.values( store.getState()?.operators?.operators)?.find(operator => operator?.businessName === operatorBusinessName );
-    let operatorId = operator?._id;
+    let operatorId = (operator?._id) ? operator?._id : currentUser?.operatorId ;
     let users = Object.values( store?.getState()?.users?.users )?.filter( users => users?.operatorId === currentUser?.operatorId );
-    let meetingId = meeting?._id;
-    let meetingStartTime = meetingEvent?.timeStarted;
+    let meetingId = ( meeting?._id ) ? meeting?._id : selectedTutor?.meetingId;
+    let meetingStartTime = meetingEvent?.timeStarted; 
     let courseTitle = meetingEvent?.courseTitle;
     let lessonTitle = meetingEvent?.lessonTitle;
-    let calendars = store?.getState()?.calendars?.calendars && Object.values( store?.getState()?.calendars?.calendars )?.filter( calendar => calendar?.operatorId === currentUser?.operatorId );
-    let title =  ( courseTitle && lessonTitle )
-                    ? `${courseTitle}_${lessonTitle}_${meetingId}_${selectedTutor?.firstname}`
-                    : `${meetingId}_${selectedTutor?.firstname}`;
-
+    let calendars = Object.values( store?.getState()?.calendar?.calendars )?.filter( calendar => calendar?.operatorId === currentUser?.operatorId );
+    let title =  ( courseTitle && lessonTitle ) ? `${courseTitle}_${lessonTitle}_${meetingId}_${selectedTutor?.firstname}` : `${selectedTutor?.firstname}_${meetingId}`;
     let location = `${selectedTutor?.firstname} classroom`;
     let recurringEvent = false;
     let allDay = false;
-    let startDateTime = moment( meetingStartTime );
+    let startDateTime = moment(meetingStartTime)?.local(true);
     let durationHrs = 1;
     let testAdminUsers =  [ userId, '603d37814967c605df1bb450', '6039cdc8560b6e1314d7bccc' ]; // refactor
     let pushNotificationSubscribers = Object.values( store?.getState()?.notifications?.pushNotificationSubscribers )?.filter( subscriber => subscriber?.operatorId === meeting?.operator?._id );
-
     let event = {
         title,
         location,
@@ -412,7 +410,6 @@ export function addNewMeetingEventToCalendar( meetingEvent, store ){
         allDay,
         startDateTime,
     };
-
     let notesConfig = {
         meetingId,
         userId, 
@@ -421,14 +418,11 @@ export function addNewMeetingEventToCalendar( meetingEvent, store ){
         notesUrl: "",
         videoUrl: ""
     };
-
     let newCalendarEventData = automateEventCreation( event, meetingId, durationHrs );
-
     let  eventProps = {
         calendarEventData: newCalendarEventData, 
         testAdminUsers, 
         calendarEventType: eventEnum.NewEvent,
-        operatorId,
         calendars,
         user: currentUser,
         users,
@@ -438,7 +432,7 @@ export function addNewMeetingEventToCalendar( meetingEvent, store ){
     };
 
     if ( currentUser?.role === role.Tutor && selectedTutor?._id === currentUser?._id ) {
-        let tutorsCalendar = calendars?.find( calendar => calendar?.userId === selectedTutor?._id );
+        let tutorsCalendar = calendars?.find( calendar => calendar?.userId === selectedTutor?._id && calendar?.calendarEventType === eventEnum.NewEvent);
 
         saveEventData({
             ...eventProps,
@@ -447,14 +441,26 @@ export function addNewMeetingEventToCalendar( meetingEvent, store ){
             addCalendar,
             addEvent
         }, store);
-
         store.dispatch( addNewMeetingNote( notesConfig ) );
+        if ( meetingEvent?.invitees?.length > 0 ) {
+            meetingEvent?.invitees.forEach(student => {
+                let studentsCalendar = calendars?.find( calendar => calendar?.userId === student?._id );
+        
+                saveEventData({
+                    ...eventProps,
+                    calendar: studentsCalendar,
+                    calendarEventData: newCalendarEventData,
+                    addCalendar,
+                    addEvent
+                }, store);
+                store.dispatch( addNewMeetingNote( notesConfig ) );       
+            });
+        }
     }
 
     if ( currentUser?.role === role.Student ) {
-        let studentsCalendar = calendars?.find( calendar => calendar?.userId === ( users?.find( user => user?.role === role?.Student 
-            && user?._id === currentUser?._id )) );
-
+        let studentsCalendar = calendars?.find( calendar => calendar?.userId === currentUser?._id );
+  
         saveEventData({
             ...eventProps,
             calendar: studentsCalendar,
@@ -462,8 +468,20 @@ export function addNewMeetingEventToCalendar( meetingEvent, store ){
             addCalendar,
             addEvent
         }, store);
-
         store.dispatch( addNewMeetingNote( notesConfig ) );
     }
+};
+
+export function handleAddingNewMeeting( meeting, store ){
+    try {
+        handleMeeting( meeting, selectedTutor, url?.lessonPlanUrl, selectedLessonFromLessonPlanDropDown?.title, true, selectedLessonFromLessonPlanDropDown, selectedCourseFromLessonPlanCourseDropDown );
+        store.dispatch(getSelectedPushNotificationUsers( listOfStudents, pushNotificationSubscribers ));
+        store.dispatch(updateCurrentTutor( { ...selectedTutor, meetingId: meeting?._id, lesson:selectedLessonFromLessonPlanDropDown?._id, course: selectedCourseFromLessonPlanCourseDropDown?._id } ));
+        sendEmailToMeetingInvitees( listOfStudents, url?.lessonPageUrl, store );
+        store.dispatch({ type: ADD_MEETING_EVENT_TO_CALENDAR, payload: { ...meeting, currentUser: { ...currentUser, meetingId: meeting?._id }, operatorBusinessName } });
+        navigate( url?.lessonPlanUrl );   
+    } catch (error) {
+        console.warn( error );
+    } 
 };
 

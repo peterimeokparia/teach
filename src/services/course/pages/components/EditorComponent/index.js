@@ -57,8 +57,8 @@ return (
          height={height}
         > 
         <Dante
-              onUpdate={handleChange}  
-              content= { content }
+            onUpdate={handleChange}  
+            content= { content }
               //body_placeholder={"Write text here."}
             // onUpdate={ onChange }           
             //  onChange={onChange} 
@@ -71,7 +71,7 @@ return (
             //      },
             //    }),
             //]}
-           read_only={readOnly} 
+            readOnly={readOnly}
            //read_only={readOnly} 
          />   
        </div>      

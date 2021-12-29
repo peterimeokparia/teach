@@ -157,20 +157,13 @@ export const getById = ( id, routePlusId, prefix=PREFIX ) => {
     .catch(error => { console.log(error); });
 };
 
-// change
-// export const get = ( route, prefix=PREFIX ) => {
-//   return fetch(prefix + route)
-//    .then(handleErrors)
-//     .then(response => response?.json() )
-//     .catch(error => { console.log(error); });
-// };
+export const getPagedData = ( routePlusPageLimit, prefix=PREFIX ) => {
+  return getRequest(prefix + routePlusPageLimit ) 
+    .then(handleErrors)
+    .then(response => response.json())
+    .catch(error => { console.log(error); });
+};
 
-// export const getById = ( id, routePlusId, prefix=PREFIX ) => {
-//   return fetch(prefix + routePlusId + `${id}`) 
-//     .then(handleErrors)
-//     .then(response => response.json())
-//     .catch(error => { console.log(error); });
-// };
 
 export const update = (data, route, prefix=PREFIX) => {
   return putData(prefix + route + `${ data?._id }`, 
@@ -178,6 +171,13 @@ export const update = (data, route, prefix=PREFIX) => {
     ...data
   });      
 };
+
+export const updateWithId = (data, route, id, prefix=PREFIX) => {
+  return putData(prefix + route + `${ data[id] }`, 
+  {
+    ...data
+  });      
+}
 
 export const remove = (data, route, prefix=PREFIX) => {
   return deleteData(prefix + route +`${ data?._id }`);

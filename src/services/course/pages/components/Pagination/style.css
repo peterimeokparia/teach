@@ -1,0 +1,372 @@
+.pagination label {
+  margin-bottom: 1em;
+  font-weight: bold; 
+}
+.pagination input {
+  padding: 8px 6px 8px 8px 9px;
+  border: 1px solid #aaa;
+  border-radius: 2px;
+}
+.pagination input:focus {
+  outline: none;
+  border: 1px solid #5d2faf;
+}
+.pagination button {
+  /* background: #5d2faf; */
+  background: #fbf9ff;
+  font-size: 14px;
+  /* color: #fff; */
+  color: black;
+  padding: 10px;
+  border: none;
+  border-radius: 70%;
+  /* border-radius: 3px; */
+  box-shadow: 0 1px 2px #5d2faf;
+  transition: box-shadow, background-color 0.12s;
+  outline: none;
+  margin-bottom: 10px;
+}
+.pagination button + button {
+  opacity: 0.8;
+  font-size: 14px;
+  padding: 7px;
+  color: #fff;
+  margin: initial 10px;
+}
+.pagination button:hover {
+  background-color: #dacdf0;
+  cursor: pointer;
+}
+.pagination button[disabled] {
+  opacity: 0.4;
+}
+.pagination button:focus {
+  box-shadow: 0 1px 8px #5d2faf;
+}
+.pagination button:active {
+  transform: scale(0.98);
+}
+.pagination .page {
+  /* background: #5d2faf; */
+  background: #fbf9ff;
+  font-size: 14px;
+  /* color: #fff; */
+  color: black;
+  padding: 10px;
+  border: none;
+  border-radius: 70%;
+  /* border-radius: 3px; */
+  box-shadow: 0 1px 2px #5d2faf;
+  transition: box-shadow, background-color 0.12s;
+  outline: none;
+  margin-bottom: 10px;
+}
+.pagination .multiColor{
+  background-color: #673ab7;
+  margin: 0;
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.5rem;
+  font-weight: bold;
+  /* background-image: linear-gradient(to left, white, green, yellow, orange, black, blue ); */
+  background-image: linear-gradient(to left, black, blue );
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  box-shadow: 10px 10px black;
+} 
+.elipsis1,
+.plan-lesson-btn,
+.current-lesson-button,
+.delete-lesson-btn,
+.edit-lesson-btn {
+  opacity: 0;
+  border: none;
+  font-size: 10px;
+  cursor: pointer;
+}
+.elipsis1 {
+  visibility: visible;
+  margin-left: 5px;
+}
+.plan-lesson-btn {
+  margin-left: 5px;
+}
+.edit-lesson-btn {
+  margin-right: 5px;
+}
+.delete-lesson-btn {
+  margin-right: 5px;
+}
+.toggle-stage-btns-hide {
+  visibility: hidden;
+} 
+.pagination:hover .elipsis1,
+.elipsis1:focus,
+.lesson-item:hover .plan-lesson-btn,
+.plan-lesson-btn:focus,
+.lesson-item:hover .current-lesson-button,
+.current-lesson-button:focus,
+.lesson-item:hover .delete-lesson-btn,
+.delete-lesson-btn:focus,
+.lesson-item:hover .edit-lesson-btn,
+.edit-lesson-btn:focus {
+  opacity: 1;
+}
+
+.pagination .elipsis {
+  margin: 10px;
+  background-color: #fff;
+  color: #555;
+  font-size: 14px;
+  border: none;
+  border-radius: 2px;  
+}
+.pagination .elipsis:active {
+  background-color: #f7f2ff;
+}
+.span-btns {
+  padding-left: 50px;
+  padding-top: 0px;
+}
+.multiColor{
+  background-color: #673ab7;
+  margin: 0;
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.5rem;
+  font-weight: bold;
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.viewGradesLink, .checkBoxViewGradesLink {
+  color: blue;
+  cursor: pointer;
+}
+.viewGradesLink, .checkBoxViewGradesLink:hover {
+  color: #673ab7;
+}
+.checkBoxViewGradesLink {
+  color: white;
+  cursor: pointer;
+}
+.checkBoxViewGradesLink:hover {
+  color: greenyellow;
+}
+
+/* unvisited link */
+ a:link {
+  color: blue;
+}
+
+/* visited link */
+ /* a:visited {
+  color: green;
+}  */
+
+/* mouse over link */
+a:hover {
+  color: #673ab7;
+}
+
+/* selected link */
+/* a:active {
+  color: blue;
+} */ 
+
+.invite-btn-animation {
+  opacity: 1;
+  border: 2px;
+  font-size: 10px;
+  cursor: pointer;
+  padding-left: 30px;
+  margin-top: 15px;
+  padding-right: 30px;
+  margin-left: 25px;
+  box-shadow: 10px 10px;
+  background-color: #20c997; 
+  position: relative;
+  animation-name: example;
+  animation-duration: 4s;
+  animation-iteration-count: 2;
+}
+
+/* .elipsis1 {
+  visibility: visible;
+}
+.toggle-stage-btns-hide {
+  visibility: hidden;
+} */
+
+@media only screen and (min-width: 638px) {
+  .pagination .content {
+    flex-direction: row;
+    height: 100%;
+  }
+  .pagination .sidebar {
+    flex-basis: 300px;
+    /* background: #fbf9ff; */
+    background: transparent;
+    /* border-right: 1px solid #bba0ea; */
+    border-right: 1px solid transparent;
+  }
+  .pagination .lesson {
+    flex: 1;
+  }
+}
+@media only screen and (max-width: 637px) {
+  .pagination .content {
+    flex-direction: column;
+  }
+  .pagination .sidebar {
+    background: #fbf9ff;
+    border-bottom: 1px solid #bba0ea;
+    min-height: 50px;
+  }
+  .pagination .lesson {
+    flex: 1;
+  }
+}
+.pagination .gradesHeader{
+  padding-left: 80px;
+}
+.pagination .grades{
+  padding-left: 165px;
+}
+
+.flexible-modal {
+  position: absolute;
+  z-index: 1;
+  border: 1px solid #ccc;
+  background: white;
+  /* padding-left: 1%; */
+}
+.flexible-modal-mask {
+  position: fixed;
+  height: 0%;
+  background: rgba(55, 55, 55, 0.6);
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+}
+.flexible-modal-resizer {
+  position:absolute;
+  right:0;
+  bottom:0;
+  cursor:se-resize;
+  margin:5px;
+  border-bottom: solid 2px #333;
+  border-right: solid 2px #333;
+}
+.flexible-modal-drag-area{
+  background: rgba(22, 22, 333, 0.2);
+  height: 50px;
+  position:absolute;
+  right:0;
+  top:0;
+  cursor:move;
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+
+@keyframes example {
+  0%   {background-color:red; left:0px; top:0px;}
+  25%  {background-color:yellow; left:200px; top:0px;}
+  50%  {background-color:blue; left:200px; top:200px;}
+  75%  {background-color:green; left:0px; top:200px;}
+  100% {background-color:red; left:0px; top:0px;}
+}
+@media (min-width: 1281px) {
+  /* CSS */
+}
+
+/* 
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+  
+  /* CSS */
+  
+}
+
+/* 
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  
+  /* CSS */
+  
+}
+
+/* 
+  ##Device = Tablets, Ipads (landscape)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  
+  /* CSS */  
+}
+
+/* 
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+
+@media (min-width: 481px) and (max-width: 767px) {    
+  /* CSS */
+  .lesson,
+  .lesson > div,
+  .lesson-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    margin-left: 5%;
+  }
+}
+/* 
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+@media (min-width: 320px) and (max-width: 480px) {
+  /* CSS */
+  .lesson,
+  .lesson > div,
+  .lesson-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    margin-left: 5%;
+  }
+}

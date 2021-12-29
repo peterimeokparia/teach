@@ -21,6 +21,12 @@ role } from 'services/course/helpers/PageHelpers';
 import { 
 helpIconStyle } from './inlineStyles';
 
+import { 
+useUserVerificationHook } from 'services/course/helpers/Hooks/useUserVerificationHook';
+
+import { 
+useOnLoadingHook } from 'services/course/helpers/Hooks/useOnLoadingHook';
+
 import Loading from 'services/course/pages/components/Loading';
 import LoginLogout from 'services/course/pages/LoginPage/components/LoginLogout';
 import CoursesComponent from 'services/course/pages/Courses/components/CoursesComponent';
@@ -40,17 +46,10 @@ const CourseListPage = ({
     openNewCourseModal,
     closeNewCourseModal,
     isModalOpen }) => {
-    if ( ! user && !user?.userIsValidated ){
-        return <Redirect to={`/${operatorBusinessName}/login`} noThrow />;
-    }
 
-    if ( coursesLoading) {
-        return <Loading />;
-    } 
+    useUserVerificationHook( user, operatorBusinessName );
 
-    if ( onCoursesError ) {
-        return <div> { onCoursesError.message } </div> ;
-    }
+    useOnLoadingHook( coursesLoading , onCoursesError );
     
 return (
     <div className="MyCourses">

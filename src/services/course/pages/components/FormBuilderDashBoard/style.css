@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css?family=Orbitron');
+.clock {
+    position: fixed;
+    z-index: 1;
+    margin-left: 15%;
+    top: 50px;
+    width: 356px;
+    height: 100px;
+}
+.clock .digital {
+    font-family: 'Orbitron';
+    color: green;
+    font-size: 100px;
+    top: 130px;
+    margin-left: 0%; 
+}
+.clock .digital .publish {
+    cursor: pointer;
+}

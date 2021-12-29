@@ -43,14 +43,17 @@ import OnlineQuestionsSavedAnswersDetailPage from 'services/course/pages/OnlineQ
 import OnlineQuestionsCourseListPage from 'services/course/pages/OnlineQuestionsPage/components/OnlineQuestionsCourseListPage';
 import MoreLessonContentPage from 'services/course/pages/Courses/CourseDetailPage/MoreLessonContentPage';
 import SiteEntryComponent from 'services/course/pages/components/SiteEntryComponent';
-import SplitViewComponentTest from 'services/course/pages/components/SplitViewComponent/SplitViewComponentTest';
 import VerifyMeetingAttendees from 'services/course/pages/Lessons/LessonPlan/components/VerifyMeetingAttendees';
 import Booming from 'services/course/pages/Booming';
+import Logins from 'services/course/pages/LoginPage/components/Logins';
+import LessonPlanSplitViewComponent from 'services/course/pages/Lessons/LessonPlan/LessonPlanSplitViewComponent';
+import FormQuestions from 'services/course/pages/FormBuilder/FormQuestions';
+import FormBuilder from 'services/course/pages/FormBuilder';
 
 const MainRoute = () => {
     return (
         <Router>
-                <Redirect noThrow from="/" to="/main" />
+            <Redirect noThrow from="/" to="/main" />
              <ClassRoomPage path="/:operatorBusinessName/classroomgroups/:groupId/:classRoomName"  />
 
              <ClassRoomPage path="/:operatorBusinessName/classroom/:selectedUserId" /> 
@@ -72,7 +75,7 @@ const MainRoute = () => {
                     <SessionPage path="student/:studentId/sessions/courseId/:courseId"/>
                     <GradesPage path="student/:studentId/grades"/> 
                     <AttendancePage path="student/:studentId/attendance"/>
-                    {/* <Logins path="student/:studentId//logins"/> */}
+                    <Logins path="student/:studentId/logins"/>
               </StudentDetailPage>
 
               <StudentDetailPage path="/:operatorBusinessName/student/:studentId" >
@@ -82,7 +85,7 @@ const MainRoute = () => {
                    <SessionPage path="student/:studentId/sessions/courseId/:courseId"/>
                    <GradesPage path="student/:studentId/grades"/>
                    <AttendancePage path="student/:studentId/attendance"/>
-                   {/* <Logins path="student/:studentId//logins"/> */}
+                   <Logins path="student/:studentId/logins"/>
               </StudentDetailPage>
 
              <PasswordReset path="/:operatorBusinessName/passwordreset/:userId"/>
@@ -121,10 +124,17 @@ const MainRoute = () => {
              <SiteEntryComponent path="/main"/>
              <SiteEntryComponent path="/:operatorBusinessName"/>
              <SiteEntryComponent path="/main/:operatorBusinessName"/>
-             <SplitViewComponentTest path="/splitviewtest"/>
              <VerifyMeetingAttendees path="/:operatorBusinessName/verifyattendees/:selectedTutorId/meeting/:meetingId"/>
              <Students path="/:operatorBusinessName/students"/>
              <Booming path="/boomingllc" />
+             <Logins path="/:operatorBusinessName/logins/student/:studentId" />
+             <LessonPlanSplitViewComponent path="/:operatorBusinessName/:calendarEventType/boardeditor/:calendarId/:userId/:meetingId"/>
+             <FormQuestions path="/:operatorBusinessName/formBuilder/:formType/:formName/:formId/:formUuId/:userId/:formBuilderStatus"/>
+             <FormQuestions path="/:operatorBusinessName/formBuilder/:formType/:formName/:lessonId/:formUuId/:userId/:formBuilderStatus"/>
+             <FormQuestions path="/:operatorBusinessName/formBuilder/:formType/:formName/:formUuId/:userId/:formBuilderStatus"/>  
+             {/* Survey - Routes */}
+             <FormBuilder path="/:operatorBusinessName/:formType/:formName/:formUuId/:userId"/>        
+             <FormBuilder path="/:operatorBusinessName/:formType/:formName/:formId/:formUuId/:userId"/>
         </Router>
 
     );

@@ -1,0 +1,5 @@
+  // let imageObject = {};
+  // imageObject['fileName'] = file?.name;
+  // imageObject['imageBlobUrl'] = imageBlock?.img?.currentSrc; 
+  // imageObject['currentOuterHtml'] = imageBlock?.img?.outerHTML;
+  // imageObject['newFileUrl'] = `http://localhost:3000/files/${ file?.name }`;

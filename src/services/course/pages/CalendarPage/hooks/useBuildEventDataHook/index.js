@@ -28,8 +28,7 @@ import {
         const [ isModalOpen, setModalOpen] = useState(false);
         const [ component, setComponent] = useState(eventEnum);
         const [ calendarSlotInfo, setCalendarSlotInfo ] = useState(undefined);
-        const [ scheduledStudents, setScheduledStudents ] = useState([]);
-    
+        const [ scheduledStudents, setScheduledStudents ] = useState([]);    
         const dispatch = useDispatch();
     
         useEffect(( ) => {
@@ -38,14 +37,17 @@ import {
             dispatch( loadAllEvents() );
             dispatch( loadSubscribedPushNotificationUsers() );
             dispatch( setCalendarEventType( calendarEventType ) );
-        },[  calendarEventType, dispatch ]);
-        // },[ loadAllCalendars, loadSubscribedPushNotificationUsers, loadAllEvents, loadCourses, calendarEventType, dispatch ]);
+        },[ loadAllCalendars, loadSubscribedPushNotificationUsers, loadAllEvents, loadCourses, calendarEventType, dispatch ]);
     
         let eventDataObj = null;
     
         if ( events?.length > 0  ) {
-            eventDataObj = events?.filter(evnt => evnt?.calendarEventType === calendarEventType && 
-                evnt?.calendarId === calendarId )?.map(eventData => (  getEventData( eventData )  ));
+            let filteredEvents = events?.filter(evnt => evnt?.calendarEventType === calendarEventType && 
+                evnt?.calendarId === calendarId );
+
+                if ( filteredEvents ) {
+                    eventDataObj = filteredEvents?.map(eventData => (  getEventData( eventData )  ));
+                }
         };
     
     function getEventData( eventData ) {
@@ -85,10 +87,13 @@ import {
     };
     
     const handleSelect = ( slotInfo ) => {
+
         switch ( calendarEventType ) {
     
             case eventEnum.NewEvent:
+                setComponent( eventEnum.NewEvent );
                 setCalendarSlotInfo( slotInfo );  
+                setModalOpen( true );
                 return;
             case eventEnum.ConsultationForm:
                 setComponent( eventEnum.ConsultationForm );

@@ -10,12 +10,35 @@ import {
 RESET_USERS_CART,
 LAST_LOGGEDIN_USER } from 'services/course/actions/users';
 
+import {
+addNewLoginSession,
+saveLoginSession } from 'services/course/actions/logins';
+
+import {
+getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
+
+import { 
+addTime,
+saveTime } from 'services/course/actions/countdowntimer';
+
 const emailMessageConfig = {
     sendersEmailAddress: "teachpadsconnect247@gmail.com",
     emailHeader: "Welcome to teach!",
 };
 
 const routePrefix = getHostName() ? "http://localhost:3000" : `https://ravingfanstudents.com`;
+
+export const logLogOutTime = ( loginSession, store ) => {
+
+    let currentLoginSession = loginSession;
+
+    let loginConfig = { 
+        ...currentLoginSession,
+        logOutTime: Date.now()
+     };
+
+    store?.dispatch( saveLoginSession( currentLoginSession?._id, loginConfig ) ); 
+};
 
 export const handleCartOnPurchase = ( user, store ) => {
     if (!user || !store ) return;
@@ -28,7 +51,7 @@ export const handleCartOnPurchase = ( user, store ) => {
         .catch(error => {  
             console.log( error );
         });
-        });
+    });
 };
 
 export const handleSignUpSuccess = ( user, store ) => {
@@ -105,3 +128,22 @@ function courseConfig( course ) {
         autoRenew: course.autoRenew
     };
 };  
+
+export const handleFormBuilderTimer = (store) => {
+    alert('handleFormBuilderTimer')
+    let timer = getItemFromSessionStorage('formbuildertimer');
+
+    if ( !timer ) {
+        return Error('no form builder timer set');
+    }
+
+    if ( timer && timer?._id ){
+        alert('...saving')
+        store?.dispatch( saveTime( timer  ) );
+        return;
+    } 
+
+    alert('...adding')
+    store?.dispatch( addTime( { formType: timer?.formType, formName: timer?.formName, formUuId: timer?.formUuId, userId: timer?.userId, testTime: timer?.testTime, role: timer?.role } ) );
+}
+

@@ -16,6 +16,7 @@ verifyRoute,
 logRouteInfo } from '../middleWare/index.js';
 
 const notificationRoute = express.Router();
+
 notificationRoute.use(logRouteInfo);
 
 webpush.setVapidDetails('mailto:peter.imeokparia@gmail.com', vapidKeys.publicVapidKey, vapidKeys.privateVapidKey);

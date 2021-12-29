@@ -1,7 +1,7 @@
 import { 
 useState, 
 useEffect } from 'react';
-// import './CourseDetailPage.css';
+
 const MultiInputComponent = ( { inputFieldOptions, animateInvitationButton } ) => {
   const [ inputValue, setInputValue ] = useState( "" );
   const [ inputName, setInputName ] = useState( "" );

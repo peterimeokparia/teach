@@ -13,7 +13,7 @@ navigate } from '@reach/router';
 function useEndMeetingHook( meetingEndingPromo, classRoomId ) {
     let tutor = Object.values( useSelector( state => state.users.users ) )?.find( usr => usr?._id === classRoomId );   
     let operatorBusinessName = getItemFromSessionStorage('operatorBusinessName');
-    let meetingUrl = `http://localhost:3000/${operatorBusinessName}/LessonPlan/classRoom/${tutor?._id}/${meetingEndingPromo}`;
+    let meetingUrl = `/${operatorBusinessName}/LessonPlan/classRoom/${tutor?._id}/${meetingEndingPromo}`;
     
     useEffect(() => {
         if ( meetingEndingPromo && ( meetingEndingPromo === "thankyou" ) ) {

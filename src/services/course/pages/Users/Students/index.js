@@ -30,7 +30,8 @@ getSessionsByOperatorId } from 'services/course/selectors';
 
 import {
 permission,
-SiteFunctionalityGroup }from 'services/course/pages/components/SiteFunctionalityGroup';
+SiteFunctionalityGroup,
+Organization }from 'services/course/pages/components/SiteFunctionalityGroup';
 
 import{
 enableTeachPlatform } from 'services/course/actions/classrooms';
@@ -55,8 +56,6 @@ import VideoCallIcon from '@material-ui/icons/VideoCall';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Calendar from 'services/course/helpers/Calendar';
 import Roles from 'services/course/pages/components/Roles';
-import Select from 'react-select';
-// import './style.css';
 
 const Students = ({
     enableTeachPlatform,
@@ -220,19 +219,19 @@ const PageObject = {
 
 let testGroup = [
     {   page: 'Users',
-        operatorBusinessName,
+        operatorBusinessName: [Organization.Boomingllc, Organization.Teach],
         pageObject: [ 
-            { name: PageObject.Users_SideBarNavigation, value: false }, 
-            { name: PageObject.Users_Course_Count, value: false },
-            { name: PageObject.Users_SchoolIcon, value: false },
-            { name: PageObject.Users_BookIcon, value: true },
-            { name: PageObject.Users_ScheduleIcon, value: true },
-            { name: PageObject.Users_CalendarTodayIcon, value: true },
-            { name: PageObject.Users_ForumIcon, value: false },
-            { name: PageObject.Users_TimelineIcon, value: true }, 
-            { name: PageObject.Users_VideoCallIcon, value: true }, 
-            { name: PageObject.Users_ViewTutorsIcon, value: true }, 
-            { name: PageObject.Users_AddSessionIcon, value: true }
+            { name: PageObject.Users_SideBarNavigation, allowed: [Organization.Teach] }, 
+            { name: PageObject.Users_Course_Count, allowed: [Organization.Teach] },
+            { name: PageObject.Users_SchoolIcon, allowed: [Organization.Teach] },
+            { name: PageObject.Users_BookIcon, allowed: [Organization.Boomingllc, Organization.Teach] },
+            { name: PageObject.Users_ScheduleIcon, allowed: [Organization.Boomingllc, Organization.Teach] },
+            { name: PageObject.Users_CalendarTodayIcon, allowed: [Organization.Boomingllc, Organization.Teach] },
+            { name: PageObject.Users_ForumIcon, allowed: [Organization.Teach]},
+            { name: PageObject.Users_TimelineIcon, allowed: [Organization.Boomingllc, Organization.Teach] }, 
+            { name: PageObject.Users_VideoCallIcon, allowed: [Organization.Boomingllc, Organization.Teach]}, 
+            { name: PageObject.Users_ViewTutorsIcon, allowed: [Organization.Boomingllc, Organization.Teach]}, 
+            { name: PageObject.Users_AddSessionIcon, allowed: [Organization.Boomingllc, Organization.Teach] }
         ]  
     }
 ];
@@ -242,7 +241,7 @@ return (
         <div className={operatorBusinessName}>
         <header> 
             <MainMenu 
-                navContent={navContent( user, operatorBusinessName, user?.role,  "Student", ['boomingllc'] ).users}
+                navContent={navContent( user, operatorBusinessName, user?.role,  "Student", [Organization.Boomingllc] ).users}
             />   
             <h1>  {`Welcome ${user?.firstname}! `} </h1>
 
@@ -259,7 +258,7 @@ return (
             <div className="ComponentUserList">
             { <ul className={"component-seconday-ul"}>
                 {getUsers( users, user ).map(singleUser => 
-                    <li className={`component-seconday-list-body-users${operatorBusinessName === 'boomingllc' ? '-boomingllc' : ''}`} data-cy={`li_${singleUser?.firstname}`} key={singleUser?._id}> 
+                    <li className={`component-seconday-list-body-users${operatorBusinessName === Organization.Boomingllc ? '-boomingllc' : ''}`} data-cy={`li_${singleUser?.firstname}`} key={singleUser?._id}> 
                         <div className={ "user-list-items-users"}>
                             <div className="row">
                                 <div className="col-1"> 

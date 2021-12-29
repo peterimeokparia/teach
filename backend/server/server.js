@@ -36,9 +36,17 @@ import logForTeachRoute from '../routes/logForTeachRoute.js';
 import questionFormRoute from '../routes/questionFormRoute.js'; 
 import answerFormRoute from '../routes/answerFormRoute.js';
 import formFieldRoute from '../routes/formFieldRoute.js';
+import formFieldAnswersRoute from '../routes/formFieldAnswersRoute.js';
 import configRoute from '../routes/configRoute.js';
 import whiteBoardRoute from '../routes/whiteBoardRoute.js';
 import meetingNotesRoute from '../routes/meetingNotesRoute.js';
+import loginRoute from '../routes/loginRoute.js';
+import onlineSurveyRoute from '../routes/onlineSurveyRoute.js';
+import formQuestionPointsRoute from '../routes/formQuestionPointsRoute.js';
+import countDownTimerFormRoute from '../routes/countDownTimerFormRoute.js';
+import formBuilderRoute from '../routes/formBuilderRoute.js';
+import reportFieldRoute from '../routes/reportFieldRoute.js';
+
 import dotenv from 'dotenv';
 dotenv.config({ path: '../../backend/.env' });
 
@@ -114,11 +122,25 @@ app.use('/api/v1/answerforms', answerFormRoute);
 
 app.use('/api/v1/formfields', formFieldRoute); 
 
+app.use('/api/v1/formfieldanswers', formFieldAnswersRoute); 
+
 app.use('/api/v1/configs', configRoute); 
 
 app.use('/api/v1/whiteboards', whiteBoardRoute);
 
 app.use('/api/v1/meetingnotes', meetingNotesRoute);
+
+app.use('/api/v1/logins', loginRoute);
+
+app.use('/api/v1/onlinesurveys', onlineSurveyRoute);
+
+app.use('/api/v1/formquestionpoints', formQuestionPointsRoute); 
+
+app.use('/api/v1/testtimers', countDownTimerFormRoute);  
+
+app.use('/api/v1/formbuilder', formBuilderRoute);
+
+app.use('/api/v1/reportfield', reportFieldRoute);
 
 mongoose.connect('mongodb+srv://dbuser:dbuser2020@cluster0.8heal.mongodb.net/teach?retryWrites=true&w=majority', {
    useNewUrlParser: true, 
@@ -134,7 +156,7 @@ db.once("open", function() {
 });
 
 app.get('/', (req, res) => {
-   res.send('hello and welcome to teach !!!');
+   res.send('Hello and welcome to teach !!! A place where learning is fun, easy and simple and you can always ask for help!!!');
 });
 
 const serverObjects = {

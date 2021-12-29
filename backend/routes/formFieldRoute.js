@@ -2,111 +2,49 @@ import express from 'express';
 
 import formFieldModel from '../model/formFieldModel.js';
 
-import {
-getPostData,    
-saveUpdatedData } from '../helpers/storageHelper.js';
-
-import { 
-FORMFIELDROUTE,
-handleBackEndLogs } from '../helpers/logHelper.js';
-
 import { 
 verifyRoute,
-logRouteInfo } from '../middleWare/index.js'; 
+getRoute,
+getByIdRoute,
+postRoute,
+putRoute,
+deleteRoute,
+logRouteInfo  } from '../middleWare/index.js'; 
 
 const formFieldRoute = express.Router();
+
 formFieldRoute.use(logRouteInfo);
 
-formFieldRoute.get('/', (req, res) => {
-    formFieldModel.find({})
-    .then(data => {
-        return res.status(200).json(data);
-    })
-    .catch( error => {
-        handleBackEndLogs(FORMFIELDROUTE, error );
-        return res.status(400).json({ error });
-    });
- });
-
- formFieldRoute.get('/question', (req, res) => {
-    let id = { questionId: req.query.questionId };
-    formFieldModel.findById( id )   
-    .then(data => {
-        return res.status(200).json(data);
-    })
-    .catch( error => {
-        handleBackEndLogs(FORMFIELDROUTE, error );
-        return res.status(400).json({ error });
-    });
+formFieldRoute.get('/', getRoute( formFieldModel ), (req, res) => {
+    return res.status(200).json(res?.newResult);
 });
 
-formFieldRoute.get('/formfield', (req, res) => {
-    let id = { _id: req.query.formFieldId };
-    formFieldModel.findById( id )   
-    .then(data => {
-        return res.status(200).json(data);
-    })
-    .catch( error => {
-        handleBackEndLogs(FORMFIELDROUTE, error );
-        return res.status(400).json({ error });
-    });
+formFieldRoute.get('/question', getByIdRoute( formFieldModel, 'questionId' ),  (req, res) => {
+    return res.status(200).json(res?.newResult);
 });
 
-formFieldRoute.get('/formfield/user', (req, res) => {
-    let userId = { userId: req?.query?.userId };
-    formFieldModel.find(userId)   
-    .then(data => {
-        return res.status(200).json(data);
-    })
-    .catch( error => {
-        handleBackEndLogs(FORMFIELDROUTE, error );
-        return res.status(400).json({ error });
-    });
+formFieldRoute.get('/formfield', getByIdRoute( formFieldModel, 'formFieldId' ),  (req, res) => {
+    return res.status(200).json(res?.newResult);
 });
 
-formFieldRoute.get('/videos', (req, res) => {
-    formFieldModel.find({ _id: req.query._id })
-    .then(data => {
-        return res.status(200).json(data);
-    })
-    .catch(error => {
-        handleBackEndLogs(FORMFIELDROUTE, error );
-        return res.status(400).json({ error });
-    });
- });
-
-formFieldRoute.post('/', (req, res) => {
-    let formFieldData = getPostData( req );
-    let formField = new formFieldModel(formFieldData);
-    formField.save()
-    .then(data => {
-        return res.status(200).json(data);
-    })
-    .catch( error => {
-        handleBackEndLogs(FORMFIELDROUTE, error );
-        return res.status(400).json({ error });
-    });
+formFieldRoute.get('/formfield/user', getByIdRoute( formFieldModel, 'userId' ),  (req, res) => {
+    return res.status(200).json(res?.newResult);
 });
 
-formFieldRoute.put('/:formFieldId', (req, res) => {
-    saveUpdatedData(req, formFieldModel, req.params.formFieldId)
-    .then( data => {
-        return res.status(200).json(data);
-    })
-    .catch( error => {
-        handleBackEndLogs(FORMFIELDROUTE, error );
-        return res.status(400).json({ error });
-    });
+formFieldRoute.get('/videos', getByIdRoute( formFieldModel, '_id' ),  (req, res) => {
+    return res.status(200).json(res?.newResult);
 });
 
-formFieldRoute.delete('/:formFieldId', (req, res) => {
-    formFieldModel.remove({ _id: req.params.formFieldId }, ( error, result ) => {
-    if ( error ) {
-        return res.status(400).send(error);
-    }else {
-        return res.status(200).json(result);
-    }
-    });
+formFieldRoute.post('/', postRoute( formFieldModel ), (req, res) => {
+    return res.status(200).json(res?.newResult);
+});
+
+formFieldRoute.put('/:formFieldId', putRoute( formFieldModel, 'formFieldId' ), (req, res) => {
+    return res.status(200).json(res?.savedResult);
+});
+
+formFieldRoute.delete('/:formFieldId', deleteRoute(formFieldModel, 'formFieldId'), (req, res) => {
+    return res.status(200).json(res?.newResult);
 });
 
 export default formFieldRoute;

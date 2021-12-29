@@ -117,7 +117,7 @@ return (
                         <NewDetailedLessonPage
                             className="add-new-lesson"
                             selectedCourse={selectedCourseFromLessonPlanCourseDropDown}
-                            selectedLesson={selectedLessonFromLessonPlanDropDown}
+                            selectedLesson={selectedLessonFromLessonPlanDropDown} 
                             onSubmit={newlesson => addNewLesson( newlesson.title, newlesson.title, newlesson.courseId, newlesson.lessonDate, currentUser?._id  ) }
                         />
                     </Roles>

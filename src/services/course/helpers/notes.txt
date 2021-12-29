@@ -167,3 +167,45 @@ Buffer
 
 // new Buffer(string) // Deprecated 
 // Buffer.from(string) // New
+
+
+Browser & Tab Close Events
+----------------------------
+window.onbeforeunload = function () {
+    return "Do you really want to close?";
+};
+
+
+3
+
+FullCalendar alert on event date
+When you create your calendar object/function you need to create a eventAfterRender function. This only fires when you have a function that has been placed on the calendar. Then you can read the date and compare it to ones birthday and display popup. I hope that is what your were looking for. I gave a little example.
+
+    $(document).ready(function () {
+            $('#calendar').fullCalendar({
+                height: 600,
+                width: 700,
+                header: {
+                    right: 'prev,next today',
+                    center: 'title',
+                    left: 'month,agendaWeek,agendaDay'
+                },
+                eventAfterRender: function (event, element, view) {
+                    birthday = new Date('<somedate>');
+                    year = new Date(event.start).getFullYear();
+                    month = new Date(event.start).getMonth();
+                    day = new Date(event.start).getDate();
+                    alert(year + ' ' + month + ' ' + day);
+    //do some if statement to see if the year matches then if the month, then the day. 
+//if so then go to another function or just put the code here for the pop 
+
+                }
+            });
+        });
+
+External Css Content - Font
+-----------------------------
+/* @font-face{
+    font-family:'digital-clock-font';
+    src: url()
+} */

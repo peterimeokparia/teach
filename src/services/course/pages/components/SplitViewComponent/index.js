@@ -28,7 +28,7 @@ const SplitViewComponent = ({
     return () => {
       document?.removeEventListener( 'mousemove', onMouseMove );
       document.removeEventListener( 'touchmove', onTouchMove );
-      document?.addEventListener( 'mouseup', onMouseUp );
+      document?.removeEventListener( 'mouseup', onMouseUp );
     };
   });
 

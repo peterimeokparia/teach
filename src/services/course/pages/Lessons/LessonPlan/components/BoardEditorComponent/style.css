@@ -66,9 +66,7 @@
 */
 @media (min-width: 1281px) {
     .whiteBoardSideBar {
-        /* flex-basis: 300px;
-        background: #fbf9ff;
-        border-right: 1px solid #bba0ea; */
+        border-right: 0px solid #bba0ea;
     }
     .whiteBoardSideBar .save-icon-visible {
         visibility: visible;

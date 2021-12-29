@@ -45,6 +45,8 @@ getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
 import {
 loadWhiteBoardData } from 'services/course/actions/whiteBoards';
 
+import moment from 'moment';
+
 function useUsersHook( currentMeetingId, currentUser, classRoomId, selectedCourse, selectedLesson ) {
     const [ hideMeetingStage, setHideMeetingStage ] = useState(false);
     const [ fullMeetingStage, setFullMeetingStage ] = useState(false);
@@ -62,8 +64,9 @@ function useUsersHook( currentMeetingId, currentUser, classRoomId, selectedCours
     let currentLesson = Object.values( useSelector( state => state?.lessons?.lessons ) )?.find( lesson => lesson?._id === meeting?.lessonId );
     let paidSessions = useSelector( state => Object.values(state?.sessions?.sessions) );
     let sessions = paidSessions?.filter( usersession => usersession?.courseId === currentCourse?._id);
-    let meetingUrl = `http://localhost:3000/boomingllc/LessonPlan/classRoom/${tutor?._id}`;
     let operatorBusinessName = getItemFromSessionStorage('operatorBusinessName');
+    let meetingUrl = `/${operatorBusinessName}/LessonPlan/classRoom/${tutor?._id}`;
+
     
     let  meetingProps = {
     userId: currentUser?._id,
@@ -75,8 +78,6 @@ function useUsersHook( currentMeetingId, currentUser, classRoomId, selectedCours
     courseTitle: currentCourse?.name,
     lessonTitle: currentLesson?.title,
     meetingUrl,
-    timeStarted: Date.now(),
-    timeEnded: Date.now(),
     usersWhoJoinedTheMeeting:[]
     }; 
 
@@ -154,7 +155,7 @@ function toggleTeach(){
         dispatch( endMeeting({ tutor, currentUser }) ); 
         dispatch( loadUsers() );
         dispatch( loadMeetings() );
-        navigate(`http://localhost:3000/${operatorBusinessName}/LessonPlan/classRoom/${tutor?._id}/thankyou`)
+        navigate(`/${operatorBusinessName}/LessonPlan/classRoom/${tutor?._id}/thankyou`)
     } else {
         setSession(true);
         setHideMeetingStage(false);

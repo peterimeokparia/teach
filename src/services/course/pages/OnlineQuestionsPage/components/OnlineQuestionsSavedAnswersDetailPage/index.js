@@ -27,6 +27,7 @@ const OnlineQuestionsSavedAnswersDetailPage = ({
   courses,
   courseId, 
   children }) => {
+    
   useEffect(() => {
     loadOnlineQuestions();
     loadCourses();
@@ -38,20 +39,20 @@ return (
   <div className="stage" id="stage">
     <div> 
     { savedQuestions?.map(( question  ) => (
-               <div 
-                 className={"savedQuestions"} 
-               >  
-                <NavLinks to={`/${operatorBusinessName}/homework/askquestion/course/${ courseId }/question/${ question?._id }`}>
-                    <div className="navlink-text"> 
-                      { 
-                        <Markup content={ question?.markDownContent } />     
-                      } 
-                    </div>
-                </NavLinks>
-               </div>
-          ))
-        }
-      </div> 
+        <div 
+          className={"savedQuestions"} 
+        >  
+          <NavLinks to={`/${operatorBusinessName}/homework/askquestion/course/${ courseId }/question/${ question?._id }`}>
+              <div className="navlink-text"> 
+                { 
+                  <Markup content={ question?.markDownContent } />     
+                } 
+              </div>
+          </NavLinks>
+        </div>
+      ))
+    }
+  </div> 
 </div>  
 ); };
 

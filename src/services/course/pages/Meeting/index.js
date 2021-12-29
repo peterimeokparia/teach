@@ -30,6 +30,53 @@ function Meeting({
   };
  const smallScreenWidth = 200;
  
+ const domain = `joinmeet.today`;
+ const options = {
+ roomName,
+ parentNode: document.getElementById('mycontainer'),
+ interfaceConfigOverwrite: {
+ filmStripOnly: false,
+ DEFAULT_REMOTE_DISPLAY_NAME: 'Teach',
+ SHOW_JITSI_WATERMARK: false,
+ APP_NAME: 'Teach',
+ NATIVE_APP_NAME: 'Teach',
+ PROVIDER_NAME: 'Teach',
+ SHOW_BRAND_WATERMARK: false,
+ BRAND_WATERMARK_LINK: '',
+ SHOW_POWERED_BY: false,
+ SHOW_DEEP_LINKING_IMAGE: false,
+ GENERATE_ROOMNAMES_ON_WELCOME_PAGE: false,
+ DISPLAY_WELCOME_PAGE_CONTENT: false,
+ DISPLAY_WELCOME_PAGE_TOOLBAR_ADDITIONAL_CONTENT: false,
+ ENABLE_FEEDBACK_ANIMATION: true,
+ INVITATION_POWERED_BY: true,
+ SETTINGS_SECTIONS: [ 'devices', 'language', 'moderator', 'profile', 'calendar' ],
+ TOOLBAR_ALWAYS_VISIBLE: true,
+ TOOLBAR_BUTTONS:[
+   'microphone', 'camera', 'closedcaptions', 'desktop', 'embedmeeting', 'fullscreen',
+   'fodeviceselection', 'hangup', 'profile', 'chat', 'recording', 'localrecording',
+   'livestreaming', 'etherpad', 'sharedvideo', 'settings', 'raisehand',
+   'videoquality', 'filmstrip',  'feedback', 'stats', 'shortcuts',
+   'tileview', 'videobackgroundblur', 'download', 'help', 'mute-everyone', 'security'
+ ],
+ TOOLBAR_TIMEOUT: 500,
+ VIDEO_QUALITY_LABEL_DISABLED: true
+ },
+ configOverwrite: {
+   enableWelcomePage: false,
+   enableClosePage: true,
+   disableSimulcast: false,
+ localRecording: {
+    enabled: false,
+    format: 'ogg'  
+  },
+  maxFullResolutionParticipants: -1,
+  enableAutomaticUrlCopy: true,
+  enableNoisyMicDetection: ( width === smallScreenWidth  ) ? true : false
+ },
+};
+
+
  function startConference() {
   try {
     const domain = `joinmeet.today`;
@@ -53,7 +100,7 @@ function Meeting({
     ENABLE_FEEDBACK_ANIMATION: true,
     INVITATION_POWERED_BY: true,
     SETTINGS_SECTIONS: [ 'devices', 'language', 'moderator', 'profile', 'calendar' ],
-    TOOLBAR_ALWAYS_VISIBLE: false,
+    TOOLBAR_ALWAYS_VISIBLE: true,
     TOOLBAR_BUTTONS:[
       'microphone', 'camera', 'closedcaptions', 'desktop', 'embedmeeting', 'fullscreen',
       'fodeviceselection', 'hangup', 'profile', 'chat', 'recording', 'localrecording',
@@ -84,6 +131,7 @@ function Meeting({
     console.log('Local User Joined');
     setLoading(false);
     api.executeCommand('displayName', userName);
+    // api.executeCommand('toggleShareScreen');
    });
 
    api.addEventListener('videoConferenceLeft', () => {
@@ -101,6 +149,12 @@ function Meeting({
   }
  }
 
+ const testsScreenShare =  ( domain, options)  => {
+  const api = new window.JitsiMeetExternalAPI(domain, options);
+
+  api.executeCommand('toggleShareScreen');
+ }
+
  useEffect(() => {
   // verify the JitsiMeetExternalAPI constructor is added to the global..
   if ( window.JitsiMeetExternalAPI ) 
@@ -114,6 +168,7 @@ function Meeting({
   <div style={containerStyle}
   >
     {loading }
+    {/* <button onClick={() => testsScreenShare( `joinmeet.today`, options)}>{"Test"}</button> */}
    <div id="mycontainer" style={jitsiContainerStyle}/>
   </div>
  );

@@ -84,11 +84,29 @@ sessions } from 'services/course/middleware/sessions';
 import {
 grades } from 'services/course/middleware/grades';
 
+import { 
+builder } from 'services/course/middleware/builder';
+
 import {
 loadWhiteBoardData } from "services/course/actions/whiteBoards";
 
 import {
 loadMeetingNotes } from "services/course/actions/meetingNotes";
+
+import {
+loadLoginSessions } from "services/course/actions/logins";
+
+import {
+loadFormFields } from "services/course/actions/formfields";
+
+import {
+loadFormFieldAnswers } from "services/course/actions/formfieldanswers";
+
+import {
+loadFormFieldPoints } from "services/course/actions/formquestionpoints";
+
+import { 
+loadTestTimers } from 'services/course/actions/countdowntimer';
 
 // import {
 // loadFailedPushNotifications } from 'services/course/actions/failedpushnotifications';
@@ -97,7 +115,10 @@ loadMeetingNotes } from "services/course/actions/meetingNotes";
 // loadFailedEmailNotifications } from 'services/course/actions/failedemailnotifications';
 
 import {
-loadLogs } from 'services/course/actions/logforteach';
+loadLogs } from 'services/course/actions/lessons/logforteach';
+
+import {
+loadFormBuilders } from 'services/course/actions/formbuilders';
 
 import App from './App';
 import reducer from 'services/course/reducers';
@@ -126,7 +147,8 @@ export const enhancer = composeEnhancers(
     courses,
     events,
     sessions,
-    grades ),
+    grades,
+    builder ),
   // other store enhancers if any
 );
 
@@ -136,7 +158,13 @@ export const store = createStore(
 );
 
 //store.dispatch(loadFailedPushNotifications());
-//store.dispatch(loadFailedEmailNotifications());
+//store.dispatch(loadFailedEmailNotifications()); 
+store?.dispatch(loadFormBuilders());
+store?.dispatch(loadTestTimers());
+store?.dispatch(loadFormFieldPoints());
+store?.dispatch(loadFormFieldAnswers());
+store?.dispatch(loadFormFields());
+store?.dispatch(loadLoginSessions());
 store?.dispatch(loadMeetingNotes());
 store?.dispatch(loadWhiteBoardData());
 store?.dispatch(loadCourses());

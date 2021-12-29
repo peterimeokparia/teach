@@ -88,7 +88,24 @@ exports[`ClassRoomComponent renders as expected 1`] = `
                 }
               >
                  
-                
+                Tutors
+                 
+              </a>
+            </li>
+            <li
+              className="navlinkItem"
+            >
+              <a
+                href="/boomingllc/students"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "color": "white",
+                  }
+                }
+              >
+                 
+                Students
                  
               </a>
             </li>

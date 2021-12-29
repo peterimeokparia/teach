@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { 
 connect } from 'react-redux';
 
@@ -48,14 +50,23 @@ import {
 setUpNewUser,
 directUserNavigation,
 validateUseCredentialsOnlogin,
-handleUserMeetingsOnLogin } from 'services/course/pages/LoginPage/helpers';
+handleUserMeetingsOnLogin,
+logUserSignInTime } from 'services/course/pages/LoginPage/helpers';
 
+import {
+addNewLoginSession } from 'services/course/actions/logins';
+  
 import useLoginPageHook from 'services/course/pages/LoginPage/hooks/useLoginPageHook';
 import LoginForm from 'services/course/pages/LoginPage/components/LoginForm';
 import RegistrationForm from 'services/course/pages/SignUp/RegistrationForm';
 import CoursePackageRenewal from 'services/course/pages/Packages/CoursePackageRenewal';
 import SiteUser from 'services/course/helpers/SiteUser';
 import Swal from 'sweetalert2';
+
+import { 
+  Rnd } from 'react-rnd';
+  
+  
 import './style.css';
 
 const LoginPage = ({
@@ -90,7 +101,8 @@ const LoginPage = ({
   meetings,
   pushNotificationSubscribers,
   subscribePushNotificationUser,
-  savePushNotificationUser }) => {
+  savePushNotificationUser,
+  addNewLoginSession }) => {
   let loginPageProps = {
     operatorBusinessName,
     operator,
@@ -138,6 +150,7 @@ function handleLoginUser( email, password ) {
           loginUser( { ...currentUser, unHarshedPassword: password } )
             .then( response => {
               if ( response?.userIsValidated ) {
+                logUserSignInTime( addNewLoginSession, currentUser );
                 handlePushNotificationSubscription(pushNotificationSubscribers, currentUser, subscribePushNotificationUser, savePushNotificationUser ); 
                 handleUserMeetingsOnLogin( currentUser, operatorBusinessName, loadMeetingsByMeetingId, saveMeeting, lastLoggedInUser );
                 CoursePackageRenewal( currentUser, sessions, autoRenewSessionPackages, loadSessions, loadUsers );
@@ -207,7 +220,8 @@ const mapDispatch = {
   loginPageError, 
   loadSubscribedPushNotificationUsers,
   subscribePushNotificationUser,
-  savePushNotificationUser
+  savePushNotificationUser,
+  addNewLoginSession
 };
 
 const mapState = ( state, ownProps )   => {

@@ -70,7 +70,7 @@ return (
     { introStyleEffects() }
     <div className='euphoric'> 
         <div className="orgSelector">
-        <NavLinks to={`/${operatorBusinessName}/login`}> 
+        <NavLinks to={`/${business?.name}/login`}> 
              <label className="navLink">{business?.name}</label>
         </NavLinks>  
         {/* <label>Organization</label>

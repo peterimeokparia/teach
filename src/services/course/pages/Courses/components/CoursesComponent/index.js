@@ -65,16 +65,21 @@ const CoursesComponent = ({
     const [ deleting, setDelete ] = useState(false);
 
     useEffect(() => {
+
         loadCourses();
+
         if ( editing ) {
             inputRef.current.focus();
         }
+
         if ( deleting ) {
             setDelete(false);
         }
+
         if ( selectedLessonPlanLesson?._id ) {
             setCurrentLesson({});
         }
+        
     }, [ editing, courses, deleting ]);
 
     if ( coursesLoading ) {

@@ -30,11 +30,37 @@ export function Linkssss( selectedStudents, courseId ){
       ];
 };
 
-export function getOnlineQuestion( questions, courseId, onlineQuestionId ){
-    let currentCourseQuestionCollection = questions?.filter( question => question?.courseId === courseId );
-    let currentCourseQuestions = ( onlineQuestionId === undefined || !onlineQuestionId ) 
-            ? currentCourseQuestionCollection
-            : currentCourseQuestionCollection?.filter(question => question?._id === onlineQuestionId);
+export function getOnlineQuestion( onlineQuestionsConfig ){
 
+  let {
+    formType, 
+    formName,
+    formUuId,
+    courseId, 
+    onlineQuestionId,
+    onlineQuestions,
+  } = onlineQuestionsConfig;
+
+  let currentCourseQuestionCollection = onlineQuestions?.filter( question => question?.courseId === courseId 
+                                          && question?.formType === formType 
+                                            && question?.formName === formName );
+                                              // && question?.formUuId === formUuId  );
+
+  let currentCourseQuestions = ( onlineQuestionId === undefined || !onlineQuestionId ) 
+          ? currentCourseQuestionCollection
+          : currentCourseQuestionCollection?.filter(question => question?._id === onlineQuestionId);
     return currentCourseQuestions;
 };
+
+export function handleChange( editor, element, storeName, actionMarkDown, saveQuestion, setMarkDown ){
+    let duration = 2000;  
+    
+    setMarkDown(
+      element, 
+      editor.getHTML(), 
+      { propNameOne: storeName,  propNameTwo: storeName }, 
+      actionMarkDown, 
+      saveQuestion, 
+      duration
+    );
+  };

@@ -143,15 +143,29 @@ const openModal = () => {
 };
 
 const handleEventClick = ( info ) => {
-    if ( calendarEventType === eventEnum.NewEvent ) {
-        // navigate(`/${operatorBusinessName}/personal/${eventEnum.NewEvent}/calendar/${personalCalendar._id}/user/${user._id}`);
-        // navigate( `/${operatorBusinessName}/${calendarEventType}/calendar/${calendarId}/${user._id}/${info?.event?.id}`);
-        return;
-    } else {
-        if ( userCanAddOrEditEvent( info, user ) ) {
-            navigate( `/${operatorBusinessName}/${calendarEventType}/calendar/${calendarId}/${user._id}/${info?.event?.id}`);
+
+    switch ( calendarEventType ) {
+        case eventEnum.NewEvent: 
+          navigateToPersonalCalendarEventDetailsPage( info );
             return;
-        }
+        case eventEnum.ConsultationForm:  
+        case eventEnum.SessionScheduling:
+        case eventEnum.TutorCalendar:
+          navigateToSchedulingEventDetailsPage( info );
+            return;
+        default:
+            break;
+    }
+};
+
+function navigateToPersonalCalendarEventDetailsPage( info ){
+    let meetingId = info?.event?.title?.split('_')[1];
+    navigate( `/${operatorBusinessName}/${calendarEventType}/boardeditor/${calendarId}/${user?._id}/${meetingId}`); 
+};
+
+function navigateToSchedulingEventDetailsPage( info ){
+    if ( userCanAddOrEditEvent( info, user ) ) {
+        navigate( `/${operatorBusinessName}/${calendarEventType}/calendar/${calendarId}/${user._id}/${info?.event?.id}`);
     }
 };
 
@@ -159,12 +173,13 @@ function renderSwitch( param ) {
     switch ( param ) {
 
         case eventEnum.NewEvent:
-            return <Scheduling
+            return <Modal isOpen={isModalOpen} onRequestClose={closeModal}> <Scheduling
                         slotInfo={calendarSlotInfo}
                         schedulingData
                         submitEventButtonText={"Add New Event"}
                         handleSubmit={addNewCalendarEvent} 
-                    />; 
+                    />
+                    </Modal>;
         case eventEnum.ConsultationForm:
             return <Modal isOpen={isModalOpen} onRequestClose={closeModal}> 
                         <ConsultationForm 

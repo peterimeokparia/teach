@@ -37,6 +37,7 @@ updateUserInvitationUrl } from 'services/course/actions/users';
 function useVerifyMeetingAttendeesHook( meetingProps ) {
 
     let {
+        operatorBusinessName,
         currentUser, 
         meetingId, 
         selectedUserId,
@@ -50,7 +51,7 @@ function useVerifyMeetingAttendeesHook( meetingProps ) {
     let users = useSelector( state => state.users.users );
     let tutor = ( currentUser?.role === role.Tutor ) ? currentUser : getselectedTutor( users, selectedUserId );
     let meetings = useSelector( state => state.meetings.meetings );
-    let meetingUrl = `http://localhost:3000/boomingllc/LessonPlan/classRoom/${tutor?._id}`;
+    let meetingUrl = `/${operatorBusinessName}/LessonPlan/classRoom/${tutor?._id}`;
     let lessonUrl = currentUser?.inviteeSessionUrl;
     let meetingAttendeesId = meetingAttendees?.map( meetingUser => { return meetingUser?._id });
     let usersWhoAttendedMeeting = meeting?.invitees?.filter( meetingUser => meetingAttendeesId.includes( meetingUser?._id ));

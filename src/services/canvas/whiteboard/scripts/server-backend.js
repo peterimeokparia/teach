@@ -90,15 +90,30 @@ function startBackendServer(port) {
      */
     app.get("/api/clearwhiteboardData", function (req, res) {
         let query = escapeAllContentStrings(req["query"]);
+        query["t"] = "clear";
         const wid = query["wid"];
         const at = query["at"]; //accesstoken
         if (accessToken === "" || accessToken == at) {
+
             const widForData = ReadOnlyBackendService.isReadOnly(wid)
-                ? ReadOnlyBackendService.getIdFromReadOnlyId(wid)
-                : wid;
-            const ret = s_whiteboard.clearWhiteBoard(widForData);
-            res.send(ret);
-            res.end();
+            ? ReadOnlyBackendService.getIdFromReadOnlyId(wid)
+            : wid;
+            // const ret = s_whiteboard.clearWhiteBoard(widForData);
+            const broadcastTo = (wid) => io.compress(false).to(wid).emit("drawToWhiteboard", query);
+            // broadcast to current whiteboard
+            broadcastTo(widForData);
+            // broadcast the same query to the associated read-only whiteboard
+            const readOnlyId = ReadOnlyBackendService.getReadOnlyId(widForData);
+            broadcastTo(readOnlyId);
+            s_whiteboard.handleEventsAndData(query); //save whiteboardchanges on the server
+            res.send("done");
+
+            // const widForData = ReadOnlyBackendService.isReadOnly(wid)
+            //     ? ReadOnlyBackendService.getIdFromReadOnlyId(wid)
+            //     : wid;
+            // const ret = s_whiteboard.clearWhiteBoard(widForData);
+            // res.send(ret);
+            // res.end();
         } else {
             res.status(401); //Unauthorized
             res.end();

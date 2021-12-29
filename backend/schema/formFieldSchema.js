@@ -2,10 +2,14 @@ import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema; 
 
-//Build new exam from existing set of questions
+// To DO: Shared amongs tutors: Build new exam(s) & quizzes from existing set of questions
 const formFieldSchema = new Schema ({
    
     formId:{
+        type: String,
+        required: false,
+    },
+    fieldId:{
         type: String,
         required: false,
     },
@@ -13,11 +17,27 @@ const formFieldSchema = new Schema ({
         type: String,
         required: false,
     },
+    formFieldGroupId:{
+        type: String,
+        required: false,
+    },
     formType:{
         type: String,
         required: false,
     },
+    formName:{
+        type: String,
+        required: false,
+    },
+    formUuId:{
+        type: String,
+        required: false,
+    },
     enableFormFieldGroup:{
+        type: Boolean,
+        required: false,
+    },
+    selected: {
         type: Boolean,
         required: false,
     },
@@ -27,6 +47,10 @@ const formFieldSchema = new Schema ({
     },
     inputValue:{
         type: String,
+        required: false,
+    },
+    dropDownOptions: { 
+        type: Array, 
         required: false,
     },
     labelType:{
@@ -42,12 +66,33 @@ const formFieldSchema = new Schema ({
         required: false,
         default: Date.now  
     },
+    formFieldSavedOnDateTime: { 
+        type: Date, 
+        required: false,
+        default: Date.now  
+    },
     formFieldCreatedBy: { 
         type: String, 
         required: false,
     },
     markDownContent: { 
         type: String, 
+        required: false,
+    },
+    answer: { 
+        type: String, 
+        required: false,
+    },
+    answerKey: { 
+        type: String, 
+        required: false,
+    },
+    pointsRecived: { 
+        type: Number, 
+        required: false,
+    },
+    points: { 
+        type: Number, 
         required: false,
     },
     xAxisformFieldPosition: {
@@ -64,6 +109,14 @@ const formFieldSchema = new Schema ({
     },
     videoUrl: { 
         type: String, 
+        required: false,
+    },
+    questionId:{
+        type: String,
+        required: false,
+    },
+    userId:{
+        type: String,
         required: false,
     },
 });

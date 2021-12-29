@@ -1,10 +1,10 @@
-.builder2{
+.builder3{
     height: 100vh;
     display: flex;
     flex-direction: column;
     font-family: 'Courier New', Courier, monospace;
 }
-.builder2 header{
+.builder3 header{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -18,30 +18,30 @@
     position: fixed; */
     text-align: center;
 }
-.builder2 .content {
+.builder3 .content {
     flex-direction: row;
     height: 100%;
     display: flex;
 }
-.builder2 .content .sidebar ul {
+.builder3 .content .sidebar ul {
     list-style: none;
 }
-.builder2 .content .sidebar .sidebar-cards {
+.builder3 .content .sidebar .sidebar-cards {
     width: 100px;
     z-index: 1;
     position: fixed;
     width: 200px;
 }
-.builder2 .content .sidebar .sidebar-cards2 {
+.builder3 .content .sidebar .sidebar-cards2 {
     width: 100px;
     z-index: 1;
     position: fixed;
     margin-top: 50px;
 }
-.builder2 .content .onlinequestion-list-items .OnlineListItems .lesson-content {
+.builder3 .content .onlinequestion-list-items .OnlineListItems .lesson-content {
     margin-left: 30%;
 }
-.builder2 .content .onlinequestion-list-items .OnlineListItems .lesson2 {
+.builder3 .content .onlinequestion-list-items .OnlineListItems .lesson2 {
     margin-top: 5%;
     margin-left: 25%;
  }
@@ -52,7 +52,7 @@
     width: 1000px;
     max-width: 1000px;
 } */
-.builder2 .multicolortext{
+.builder3 .multicolortext{
     background-color: #673ab7;
     margin: 0;
     font-size: 50px;

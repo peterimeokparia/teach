@@ -48,7 +48,7 @@ return <div className="lessonPage">
 const mapState = (state, ownProps)   => {
   return {
     previewMode: state.app.previewMode,
-    lesson: state.lessons.lessons[ownProps.lessonId], 
+    lesson: state.lessons.lessons[ownProps?.lessonId], 
     currentUser: state.users.user
   };
 };

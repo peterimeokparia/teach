@@ -8,7 +8,7 @@ const NavLinks = props => {
                 getProps={({ isCurrent }) => {
                 return {
                     style: {
-                    color: "white"
+                    color: props?.color
                     }
                 };
             }}

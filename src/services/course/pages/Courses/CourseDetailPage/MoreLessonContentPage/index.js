@@ -65,7 +65,7 @@ function handleChange( editor, element ){
 
 let lesson = lessons.find(lsn => lsn?._id === lessonId );
 
-return <div className="builder2"> 
+return <div className="builder3"> 
         <header>
         {
             <div className="multicolortext">

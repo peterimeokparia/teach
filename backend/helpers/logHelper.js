@@ -22,11 +22,13 @@ export const NOTIFICATIONROUTE = "notificationModel";
 export const ONLINEANSWERSROUTE = "onlineAnswerModel";
 export const ONLINECOMMENTSROUTE = "onlineCommentModel";
 export const ONLINEQUESTIONSROUTE = "onlineQuestionModel";
+export const ONLINESURVEYROUTE = "onlineSurveyModel";
 export const OPERATORROUTE = "operatorModel";
 export const QUESTIONROUTE = "questionModel";
 export const QUESTIONFORMROUTE = "questionFormModel";
 export const ANSWERFORMROUTE = "answerFormModel";
 export const FORMFIELDROUTE = "formFieldModel";
+export const FORMFIELDANSWERSROUTE = "formFieldModel";
 export const FAILEDEMAILNOTIFICATIONSROUTE = "retryFailedEmailNotificationsModel";
 export const FAILEDPUSHNOTIFICATIONSROUTE = "retryFailedPushNotificationsModel";
 export const SESSIONROUTE = "sessionModel";
@@ -34,6 +36,9 @@ export const TIMELINEROUTE = "timeLineModel";
 export const USERROUTE = "userModel";
 export const WHITEBOARDROUTE = "whiteBoardModel";
 export const MEETINGNOTESROUTE = "meetingNotesModel";
+export const LOGINROUTE = "loginModel";
+export const FORMQUESTIONPOINTSROUTE = "formQuestionPointsModel";
+export const COUNTDOWNTIMERFORMROUTE = "countDownTimerFormModel";
 
 export const getLogObject = () => {
 }
@@ -46,9 +51,8 @@ export async function handleBackEndLogs( modelName, errormessage ){
     return fetchData(`${url.BackeEndServerLessonPrefix}/logforteach/byObjectName?objectName=${modelName}`)
      .then(resp =>  { return resp.json() })
      .then( logs => {
-        // console.log('OBJECT OBJECT')
-        //  console.log(JSON.stringify(logs))
          let [ errorMessage ] = logs;
+         
          if ( logs && errorMessage ) {
             const {  _id, objectName } = errorMessage;
             if ( objectName && _id ) {

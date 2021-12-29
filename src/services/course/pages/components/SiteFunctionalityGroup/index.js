@@ -1,6 +1,6 @@
 export const permission = ( group, operatorBusinessName, pageObject ) => {
-    return group?.find(grp => grp?.operatorBusinessName === operatorBusinessName)?.pageObject
-                    .find( pageObj => pageObj?.name === pageObject )?.value;
+    return group?.find(grp => grp?.operatorBusinessName.includes( operatorBusinessName ))?.pageObject
+                    .find( pageObj => pageObj?.name === pageObject )?.allowed.includes( operatorBusinessName );
 };
 
 export const SiteFunctionalityGroup = ({
@@ -10,4 +10,9 @@ children }) => {
         group  &&  children      
     );
 };
+
+export const Organization = {
+    Teach: 'teach',
+    Boomingllc: 'boomingllc'
+}
 

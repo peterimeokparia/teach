@@ -13,6 +13,7 @@ export const LOAD_ONLINEQUESTIONS_BEGIN = "LOAD QUESTIONS BEGIN";
 export const LOAD_ONLINEQUESTIONS_SUCCESS = "LOAD QUESTIONS SUCCESS";
 export const LOAD_LATEST_ONLINEQUESTION_SUCCESS = "LOAD LATEST ONLINEQUESTION SUCCESS";
 export const LOAD_ONLINEQUESTIONS_ERROR = "LOAD QUESTIONS ERROR";
+export const DELETE_ONLINEQUESTION_BEGIN = "DELETE ONLINEQUESTION BEGIN";
 export const DELETE_ONLINEQUESTION_SUCCESS = "DELETE ONLINEQUESTION SUCCESS";
 export const DELETE_ONLINEQUESTION_ERROR = "DELETE ONLINEQUESTION ERROR"; // fix in reducer
 export const RESET_ONLINEQUESTION_ERROR = "RESET ONLINEQUESTION ERROR";
@@ -22,6 +23,8 @@ export const SAVE_ONLINEQUESTION_SUCCESS = "SAVE ONLINEQUESTION SUCCESS";
 export const SET_EXPLANATION_ANSWER_MARKDOWN = "SET EXPLANATION ANSWER MARKDOWN";
 export const QUESTION_META = "QUESTION META";
 export const ONLINE_QUESTION_COURSEID = "ONLINE_QUESTION_COURSEID";
+export const TOGGLE_CONTENT_CHANGED = "TOGGLE CONTENT CHANGED";
+export const DELETE_QUESTION_SUCCESS = "DELETE QUESTION SUCCESS";
 
 export const addNewOnlineQuestion = ( question ) => {
     return dispatch => {
@@ -89,9 +92,10 @@ export const loadOnlineQuestionsByUserId = ( userId ) => {
 
 export const deleteOnlineQuestion = question => {
     return dispatch => {
+        dispatch({ type: DELETE_ONLINEQUESTION_BEGIN });
          return remove( question, `/onlinequestions/` )
-         .then( () => {
-             dispatch({ type: DELETE_ONLINEQUESTION_SUCCESS, payload: question });
+         .then( res => {
+            dispatch({ type: DELETE_QUESTION_SUCCESS, payload: question });
          }).catch( error => {
             dispatch({ type: DELETE_ONLINEQUESTION_ERROR , error });
         });
@@ -106,6 +110,10 @@ export const questionMeta = questionMeta => ({
 export const onlineQuestionCourseId = courseId => ({
      type: ONLINE_QUESTION_COURSEID,
      payload: courseId
+});
+
+export const toggleContentChanged = () => ({
+    type: TOGGLE_CONTENT_CHANGED
 });
 
 let timerHandle = null;

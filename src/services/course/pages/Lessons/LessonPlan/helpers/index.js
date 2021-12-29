@@ -1,11 +1,9 @@
 import {
 getHostName } from 'services/course/helpers/PageHelpers';
 
-export const getUrls = (currentUser, courseId, lessonId, classRoomId, meetingId) => {
-  //const page = `${courseId}_${lessonId}_${classRoomId}`; 
-  // const editorPage = `${lessonId}_${classRoomId}`;
-  const page = `${meetingId}_${currentUser?._id}`;
-  const editorPage = `${meetingId}_${currentUser?._id}`;
+export const getUrls = (meetingId, currentUser) => {
+  const page = `${meetingId}`;
+  const editorPage =`${meetingId}`;
 
   return {
       meeting: `https://joinmeet.today/${page}`, 
@@ -13,8 +11,8 @@ export const getUrls = (currentUser, courseId, lessonId, classRoomId, meetingId)
                               : `https://ravingfanstudents.com/editor/p/${editorPage}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false`,
       canvas:  getHostName()  ? `http://localhost:9090/?whiteboardid=${page}&username=${currentUser?.firstname}`
                               : `https://ravingfanstudents.com/whiteboard/?whiteboardid=${page}&username=${currentUser?.firstname}`,
-      recorder: getHostName() ? `http://localhost:3000/LessonPlan/VideoModal/${courseId}/${lessonId}`
-                              : `https://ravingfanstudents.com/LessonPlan/VideoModal/${courseId}/${lessonId}`,
+      recorder: getHostName() ? `http://localhost:3000/LessonPlan/VideoModal/${page}/${page}`
+                              : `https://ravingfanstudents.com/LessonPlan/VideoModal/${page}/${page}`,
       privateEditor: getHostName()  ? `http://localhost:9001/p/${editorPage}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false`
                                     : `https://ravingfanstudents.com/editor/p/${editorPage}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false`,
       privateCanvas: getHostName()  ? `http://localhost:9090/?whiteboardid=${page}&username=${currentUser?.firstname}`
@@ -68,12 +66,6 @@ export function getCurrentStudentsPaidSessions(usersPaidSessions, student, tutor
                          currentSession?.courseId === selectedCourseId );  
 };
 
-export function urls() {
-  return { 
-    // fix
-  };
-};
-
 export function adjustRoomSize( roomsize ) {
   let settings = {}, roomSizeSettings = { 
     settings: ( containerStyle, meetingRoomHeight, meetingRoomWidth ) => { return {
@@ -105,4 +97,14 @@ export function adjustRoomSize( roomsize ) {
       
   }
   return settings;
+};
+
+export function getBoardEditorId(lessonId, meetingId, classRoomId){
+  if ( (meetingId === undefined || meetingId === "") && lessonId !== undefined ){
+    return lessonId;
+  } else if ( meetingId !== undefined && lessonId === undefined ){
+    return meetingId;
+  } else {
+    return classRoomId;
+  }
 };

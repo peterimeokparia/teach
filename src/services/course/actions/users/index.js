@@ -1,3 +1,6 @@
+import { 
+setItemInSessionStorage } from 'services/course/helpers/ServerHelper';
+
 import {
 update,
 get,
@@ -176,8 +179,8 @@ export const lastLoggedInUser = ( currentUser ) => {
         try{
             if ( currentUser ) {
                 sessionStorage.clear();
-                sessionStorage.setItem('currentuser', JSON.stringify(currentUser));
-                sessionStorage.setItem('lastState', JSON.stringify(currentUser));
+                setItemInSessionStorage('currentuser', currentUser);
+                setItemInSessionStorage('lastState', currentUser);
                 dispatch({ type: LAST_LOGGEDIN_USER, payload: currentUser });
             } else {
                 if ( user ) {

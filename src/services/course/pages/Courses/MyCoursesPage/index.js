@@ -65,7 +65,7 @@ return (
             
     {( user?.courses?.length === 0 ) && (<div> 
         <div>
-            <h3>You are not subscribed to any  <span><Link to={"/courses"}> courses. </Link></span></h3>
+            <h3>You are not subscribed to any  <span><Link to={`/${operatorBusinessName}/courses`}> courses. </Link></span></h3>
         </div>
         <div>   
             {(user?.role === "Tutor" ) &&   

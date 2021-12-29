@@ -20,6 +20,7 @@ import express from 'express';
 import emailModel from '../model/emailModel.js';
 
 const emailRoute = express.Router();
+
 emailRoute.use(logRouteInfo);
 
 emailRoute.get('/', (req, res) => {

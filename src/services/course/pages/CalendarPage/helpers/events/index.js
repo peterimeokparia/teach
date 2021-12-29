@@ -22,8 +22,8 @@ export const automateEventCreation = ( event, meetingId, durationHrs ) => {
     let { title, location, startDateTime, recurringEvent, allDay  } = event;
 
     let endDateTime = startDateTime;
-    let start = startDateTime.format('YYYY-MM-DDThh:mm:ss');
-    let end = endDateTime?.add(1, 'hours').format('YYYY-MM-DDThh:mm:ss');
+    let start = startDateTime.format('YYYY-MM-DDTHH:mm:ss');
+    let end = endDateTime?.add(1, 'hours').format('YYYY-MM-DDTHH:mm:ss');
     let duration = moment( new Date() ).add(durationHrs, 'hours').diff( moment( new Date() ) )
 
     let newEvent = {
@@ -74,7 +74,7 @@ export function saveEventData( eventProps, store ){
 
     switch (arguments?.length) {
         case 2:
-            saveEventDataWithStoreDispatchingAction( {...props, store } )
+            saveEventDataWithStoreDispatchingAction( { ...props, store } )
             break;
         default:
             saveEventDataWithoutStoreDispatchingAction( props );
@@ -84,11 +84,12 @@ export function saveEventData( eventProps, store ){
 
 function saveEventDataWithoutStoreDispatchingAction( props ){
     
-    let { addEvent, 
+    let { 
+        addEvent, 
         addCalendar, 
         calendarEventConfig, 
         calendar,
-     } = props;
+    } = props;
 
     try {
         

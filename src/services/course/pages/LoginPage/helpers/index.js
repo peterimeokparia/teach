@@ -96,3 +96,12 @@ export function validateUseCredentialsOnlogin( currentUser, operatorBusinessName
         throw Error(`There was a problem with your login attempt ${ error }`);
     }   
 };
+
+export const logUserSignInTime = ( loginAction, user ) => {
+    let loginConfig = { 
+        userId: user?._id,
+        logInTime: Date.now()
+      };
+      
+      loginAction( loginConfig );
+};

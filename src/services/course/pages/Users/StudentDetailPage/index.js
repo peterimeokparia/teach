@@ -17,6 +17,9 @@ import {
 loadLessons} from 'services/course/actions/lessons';
 
 import { 
+loadLoginSessions } from 'services/course/actions/logins';
+
+import { 
 getOperatorFromOperatorBusinessName } from 'services/course/selectors';
 
 import StudentDisplayViewComponent from '../components/StudentDisplayViewComponent';
@@ -33,6 +36,7 @@ const StudentDetailPage = ({
     loadGrades( studentId );
     loadSessions();
     loadAttendance();
+    loadLoginSessions();
 
         if ( courseId ) {
             loadLessons( courseId );
@@ -43,6 +47,7 @@ const StudentDetailPage = ({
         operatorBusinessName,
         operator,
         courseId,
+        studentId,
         selectedStudents: users?.find(usr => usr?._id === studentId),
         childrenProps: children
     };
@@ -54,7 +59,8 @@ const mapDispatch = {
     loadGrades,
     loadAttendance,
     loadSessions,
-    loadLessons 
+    loadLessons,
+    loadLoginSessions 
 };
 
 const mapState = (state, ownProps) => {

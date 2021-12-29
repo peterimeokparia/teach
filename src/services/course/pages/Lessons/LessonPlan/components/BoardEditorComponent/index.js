@@ -13,6 +13,7 @@ getOperatorFromOperatorBusinessName,
 getUsersByOperatorId} from 'services/course/selectors';
 
 import { 
+getBoardEditorId,
 getUrls } from 'services/course/pages/Lessons/LessonPlan/helpers';
 
 import { 
@@ -24,6 +25,8 @@ saveIconStyle,
 savedBoardIcon } from 'services/course/pages/Lessons/LessonPlan/inlineStyles.js';
 
 import {
+loadWhiteBoardData,
+loadWhiteBoardDataByWid,
 selectSavedWhiteBoard,
 addWhiteBoardData } from 'services/course/actions/whiteBoards';
 
@@ -33,11 +36,18 @@ getItemColor } from 'services/course/helpers/PageHelpers';
 import { 
 getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
 
-import useTeachMeetingSettingsHook  from 'services/course/pages/Lessons/hooks/useTeachMeetingSettingsHook';
+import { 
+getSortedRecordsByDate } from 'services/course/selectors';
+
+import useWhiteBoardHook  from 'services/course/pages/Lessons/hooks/useWhiteBoardHook';
+import MenuItem from '@mui/material/MenuItem';
+import MaxWidthDialog from 'services/course/pages/components/MaxWidthDialog';
 import LessonPlanIframeComponent  from 'services/course/pages/components/LessonPlanIframeComponent';
 import NotesIcon from '@material-ui/icons/Notes';
 import SaveIcon from '@material-ui/icons/Save';
 import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
+import HistoryIcon from '@mui/icons-material/History';
+import moment from "moment";
 import './style.css';
 
 //https://www.uuidgenerator.net/dev-corner/javascript
@@ -57,54 +67,74 @@ const BoardEditorComponent = ({
   lessons,
   boardOrEditor,
   toggleTeachBoardOrEditor,
+  loadWhiteBoardData,
+  loadWhiteBoardDataByWid,
   addWhiteBoardData,
   selectSavedWhiteBoard,
-  whiteBoardData }) => {
-  let {
-    hideMeetingStage,
-    fullMeetingStage,
-  } = useTeachMeetingSettingsHook( users, currentUser, classRoomId, undefined, undefined  );
+  whiteBoardData,
+  isModalOpen }) => {
 
-  const urls = getUrls(currentUser, courseId, lessonId, classRoomId); 
+  let hideMeetingStage = false, fullMeetingStage = false;
+  let Id = getBoardEditorId(lessonId, meetingId, classRoomId);
+  const urls = getUrls(Id, currentUser);
   const fullScreenSize = "1536px";
   const editorUrl = urls?.editor;
   const canvasUrl = urls.canvas; 
-  // const whiteBoardId = `${courseId}${lessonId}${classRoomId}`;
-  const whiteBoardId = `${meetingId}_${currentUser?._id}`;
-  const whiteBoard = Object.values( whiteBoardData ).filter( board => board?.wid === whiteBoardId );
+  const whiteBoardId = Id;
+  const whiteBoard = getSortedRecordsByDate(Object.values( whiteBoardData ).filter( board => board?.wid === whiteBoardId ), 'timeSaved');
   const businessName = (operatorBusinessName === "") ? getItemFromSessionStorage('operatorBusinessName') :  operatorBusinessName;
   const lesson = lessons.find( lesson => lesson?._id === lessonId);
   const operator = Object.values( operators )?.find( operator => operator?.businessName === businessName) 
                   ? Object.values( operators )?.find( operator => operator?.businessName === businessName )
                   : getItemFromSessionStorage('operator');
+
+  let {
+    isOpen,
+    setIsOpen,
+    handleClose,
+    getSavedBoards,
+  } = useWhiteBoardHook( { whiteBoardId, toggleTeachBoardOrEditor, loadWhiteBoardDataByWid });
  
 function saveWhiteBoardData(){
-  addWhiteBoardData({ 
-    wid: whiteBoardId,
-    meetingId,
-    operatorId: operator?._id,
-    color: getItemColor(whiteBoard)
-  }) 
-  .then( response => {
-    toggleTeachBoardOrEditor();
-    toggleTeachBoardOrEditor();
- })
- .catch( error => { 
-   console.log( error );
-  });
+  if ( whiteBoardId ) {
+      addWhiteBoardData({ 
+        wid: whiteBoardId,
+        meetingId,
+        operatorId: operator?._id,
+        color: getItemColor(whiteBoard)
+      }) 
+      .then( response => {
+        toggleTeachBoardOrEditor();
+        toggleTeachBoardOrEditor();
+    })
+    .catch( error => { 
+      console.log( error );
+    });
+  }
 };
 
-function selectWhiteBoardData( item, index ){
+function selectWhiteBoardData( item ){
   if( whiteBoardData ){
-    selectSavedWhiteBoard( { wid: whiteBoardId, meetingId,   jsonData: item?.whiteBoardJasonData} )
+    loadWhiteBoardDataByWid(whiteBoardId);
+    selectSavedWhiteBoard( { wid: whiteBoardId, meetingId, jsonData: item?.whiteBoardJasonData } )
     .then( response => {
       toggleTeachBoardOrEditor();
       toggleTeachBoardOrEditor();
+      setIsOpen( false );
      })
     .catch( error => { 
-       console.log( error );
+      console.log( error );
     });
   }
+};
+
+let modalProps =  {
+  isOpen, 
+  handleClose,
+  collection: whiteBoard,
+  dialogTitle:'Saved Boards',
+  InputLabel: 'versioned',
+  selectEventChangeHandler: selectWhiteBoardData           
 };
 
 return (
@@ -135,6 +165,13 @@ return (
                     frameBorder="0"
                     allowFullScreen
                   />
+                  <MaxWidthDialog modalProps={modalProps}>
+                    {
+                      ( item ) => {
+                         return <MenuItem value={item}>{`version: ${ moment(item?.timeSaved)?.local().format('YYYY-MM-DD hh:mm:ss') }`}</MenuItem>
+                      }
+                    }
+                    </MaxWidthDialog>
               </div>                          
             } 
             </div>
@@ -145,31 +182,26 @@ return (
                 <SwapHorizIcon
                   style={ iconStyleMain() }
                   className="lesson-plan-round-button-1"
-                  onClick={() => toggleTeachBoardOrEditor( lesson )} 
+                  onClick={ () => toggleTeachBoardOrEditor() } 
                 />
               }
               <div className={`save-icon-${(saveIconVisible) ? 'visible' : 'hidden' }`}>
               {
                 <SaveIcon 
-                  style={saveIconStyle()}
+                  style={ saveIconStyle() }
                   className="lesson-plan-round-button-2"
-                  onClick={() => saveWhiteBoardData()}
+                  onClick={ () => saveWhiteBoardData() }
+                />
+              }  
+              {
+                <HistoryIcon 
+                  style={ saveIconStyle() }
+                  className="lesson-plan-round-button-4"
+                  onClick={ () => getSavedBoards() }
                 />
               }  
               </div>
             </div>
-            <div className='savedBoards'>
-              { whiteBoard.map(( item, index) => (
-                    <div className='savedBoards-items'> 
-                      <NotesIcon 
-                          style={savedBoardIcon(item?.color)}
-                          className="lesson-plan-round-button-2"
-                          onClick={() => selectWhiteBoardData( item, index)}
-                      />
-                    </div>
-                ))
-              }
-            </div> 
           </div>    
           </div> 
         { Validations.setErrorMessageContainer() }
@@ -183,6 +215,8 @@ const mapDispatch = {
   inviteStudentsToLearningSession, 
   addWhiteBoardData,
   selectSavedWhiteBoard,
+  loadWhiteBoardData,
+  loadWhiteBoardDataByWid
 };
 
 const mapState = ( state, ownProps )   => {
@@ -203,7 +237,8 @@ const mapState = ( state, ownProps )   => {
     onSessionRenewal: state.sessions.autoRenewedPackageSuccess,
     allSessions: Object.values(state?.sessions?.sessions),
     selectedLessonFromLessonPlanDropDown: state.lessons.selectedLessonFromLessonPlanDropDown,
-    meetingNotes: state?.meetingNotes?.meetingNotes 
+    meetingNotes: state?.meetingNotes?.meetingNotes,
+    isModalOpen: state?.courses?.isModalOpen
   };
 };
 

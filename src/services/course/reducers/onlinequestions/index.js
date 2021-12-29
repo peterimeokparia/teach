@@ -12,10 +12,14 @@ SAVE_ONLINEQUESTION_SUCCESS,
 SAVE_ONLINEQUESTION_BEGIN, 
 SAVE_ONLINEQUESTION_ERROR, 
 RESET_ONLINEQUESTION_ERROR, 
+DELETE_ONLINEQUESTION_BEGIN,
 DELETE_ONLINEQUESTION_SUCCESS, 
+DELETE_QUESTION_SUCCESS,
 SET_ONLINEQUESTION_MARKDOWN,
+SET_EXPLANATION_ANSWER_MARKDOWN,
 QUESTION_META, 
-ONLINE_QUESTION_COURSEID} from '../../actions/onlinequestions';
+ONLINE_QUESTION_COURSEID,
+TOGGLE_CONTENT_CHANGED } from '../../actions/onlinequestions';
 
 const initialState = {
     onlineQuestions: {},
@@ -28,6 +32,7 @@ const initialState = {
     onlineQuestionsLoading: false,
     onQuestionsLoadingError: null,
     togglePreviewMode: false,
+    contentUpdated: false
 };
 
 const reducer = produce((draft, action) => {
@@ -35,6 +40,7 @@ const reducer = produce((draft, action) => {
 
         case ADD_ONLINEQUESTION_BEGIN:
         case SAVE_ONLINEQUESTION_BEGIN:
+        case DELETE_ONLINEQUESTION_BEGIN:
              draft.saveInProgress = true;
              draft.onSaveError = null;
         return;
@@ -70,19 +76,31 @@ const reducer = produce((draft, action) => {
                 draft.onlineQuestions[action.payload.teachObject?._id].markDownContent = action.payload.markDown; 
              }    
         return;
+        case SET_EXPLANATION_ANSWER_MARKDOWN:
+             if ( draft.onlineQuestions[action.payload.teachObject?._id] ) {
+                draft.onlineQuestions[action.payload.teachObject?._id].answerExplanationMarkDownContent = action.payload.markDown; 
+             }    
+        return;
+        case DELETE_QUESTION_SUCCESS:
+             delete draft.onlineQuestions[action?.payload?._id];
+             draft.saveInProgress = false;
+       return;
         case RESET_ONLINEQUESTION_ERROR:
              draft.onSaveError = null;
        return; 
        case DELETE_ONLINEQUESTION_SUCCESS:
             delete draft.onlineQuestions[action.payload?._id];
+            draft.saveInProgress = false;
        return; 
        case QUESTION_META:
             draft.questionMeta = action.payload;    // onlineQuestionId, seletedCourseId
        return; 
        case ONLINE_QUESTION_COURSEID:
             draft.onlineQuestionCourseId = action.payload;
-      return;  
-      default:
+       return;
+       case TOGGLE_CONTENT_CHANGED:
+             draft.contentUpdated = !draft.contentUpdated;      
+       default:
     return;
     
     }

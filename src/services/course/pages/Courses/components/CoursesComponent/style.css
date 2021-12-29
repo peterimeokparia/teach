@@ -160,6 +160,7 @@
     -moz-background-clip: text;
     background-clip: text;
     color: transparent;
+    text-shadow: 2px 2px black;
   }
   .ComponentCourseListItem .user-list-items .round-button-1, .ComponentCourseListItem .user-list-items .round-button-2, 
   .ComponentCourseListItem .user-list-items .round-button-3, .ComponentCourseListItem .user-list-items .round-button-4, 

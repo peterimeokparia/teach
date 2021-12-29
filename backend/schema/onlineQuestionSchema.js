@@ -3,6 +3,22 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema; 
 
 const onlineQuestionSchema = new Schema ({
+    formId: { 
+        type: String, 
+        required: false,
+    },
+    formType: { 
+        type: String, 
+        required: false,
+    },
+    formName:{
+        type: String,
+        required: false,
+    },
+    formUuId:{
+        type: String,
+        required: false,
+    },
     type: { 
         type: String, 
         required: false,
@@ -20,8 +36,24 @@ const onlineQuestionSchema = new Schema ({
         type: String, 
         required: false,
     },
+    answerExplanationMarkDownContent: { 
+        type: String, 
+        required: false,
+    },
     courseId: { 
         type: String, 
+        required: false,
+    },
+    answerKey: { 
+        type: String, 
+        required: false,
+    },
+    pointsAssigned: { 
+        type: Number, 
+        required: false,
+    },
+    pointsReceived: { 
+        type: Number, 
         required: false,
     },
     onlineQuestionId: { 
@@ -63,8 +95,35 @@ const onlineQuestionSchema = new Schema ({
     videoUrl: { 
         type: String, 
         required: false  
-    }
+    },  
+    xAxisformQuestionPosition: {
+        type: Number,
+        required: false
+    },
+    yAxisformQuestionPosition: {
+        type: Number,
+        required: false
+    },
+    xAxisColumnPosition: {
+        type: Number,
+        required: false
+    },
+    yAxisColumnPosition: {
+        type: Number,
+        required: false
+    },
+    columnMinWidth: {
+        type: Number,
+        required: false
+    },
+    columnMinHeight: {
+        type: Number,
+        required: false
+    },
+    columnAlign: { 
+        type: String, 
+        required: false  
+    },  
 });
 
 export default onlineQuestionSchema;
-

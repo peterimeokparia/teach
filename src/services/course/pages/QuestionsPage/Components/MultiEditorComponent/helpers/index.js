@@ -1,5 +1,5 @@
 import {
-elementMeta  } from 'Services/course/Pages/QuestionsPage/helpers';
+elementMeta  } from 'services/course/pages/QuestionsPage/components/MultiEditorComponent/helpers/node_modules/Services/course/Pages/QuestionsPage/helpers';
 
 const upload_url = "http://localhost:9005/api/v1/fileUploads";
 

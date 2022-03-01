@@ -1,32 +1,32 @@
 import { 
 useState, 
-useEffect } from 'react';
+useEffect } from 'services/course/pages/QuestionsPage/components/MultiEditorComponent/node_modules/react';
 
 import { 
-connect } from 'react-redux';
+connect } from 'services/course/pages/QuestionsPage/components/MultiEditorComponent/node_modules/react-redux';
 
 import { 
 addNewQuestion,
 saveQuestion,
 loadQuestions,
-setMarkDownEditor } from 'Services/course/Actions/Questions';
+setMarkDownEditor } from 'services/course/pages/QuestionsPage/components/MultiEditorComponent/node_modules/Services/course/Actions/Questions';
 
 import { 
-togglePreviewMode } from 'Services/course/Actions/App';
+togglePreviewMode } from 'services/course/pages/QuestionsPage/components/MultiEditorComponent/node_modules/Services/course/Actions/App';
 
 import {
 savedQuestionsExist } from './helpers';
 
 import { 
-addNewGrade } from 'Services/course/Actions/Grades';
+addNewGrade } from 'services/course/pages/QuestionsPage/components/MultiEditorComponent/node_modules/Services/course/Actions/Grades';
 
 import {
 elementMeta,
 points,
-markDownEditorFieldCollection } from 'Services/course/Pages/QuestionsPage/helpers';
+markDownEditorFieldCollection } from 'services/course/pages/QuestionsPage/components/MultiEditorComponent/node_modules/Services/course/Pages/QuestionsPage/helpers';
 
 import {
-placeHolder } from 'Services/course/helpers/EditorHelpers';
+placeHolder } from 'services/course/pages/QuestionsPage/components/MultiEditorComponent/node_modules/Services/course/helpers/EditorHelpers';
 
 import PointsDistribution from '../PointsDistribution';
 import DropDown from '../../../Components/DropDown';
@@ -114,10 +114,11 @@ const togglePreview = () => {
 const handleSubmit = () => {
   setMarkDownEditor( markDownEditors );
   if ( savedQuestionsExist( currentLessonQuestions?.questions ) ) {
-    alert('in save')
-    alert(JSON.stringify( markDownEditors ))
+
       saveQuestion( {...currentLessonQuestions, questions: markDownEditors } );
+      
   } else {
+
     let newQuestion = {
         lessonId, 
         questions:markDownEditors,
@@ -127,8 +128,9 @@ const handleSubmit = () => {
         lessonsCovered:null, 
         examId:null, 
         assignmentId:null, 
+
     };
-    addNewQuestion( newQuestion ); // lessons 
+    addNewQuestion( newQuestion ); 
   } 
 };
 

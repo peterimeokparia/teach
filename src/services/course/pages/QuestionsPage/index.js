@@ -1,7 +1,7 @@
 import { 
 useEffect } from 'react';
 
-import MultiEditorComponent from './Components/MultiEditorComponent';
+import MultiEditorComponent from './components/MultiEditorComponent';
 
 const QuestionPage = ({ lessonId }) => {
   useEffect(() => {}, []);

@@ -1,13 +1,13 @@
 import { 
-useEffect } from 'react';
+useEffect } from 'services/course/pages/QuestionsPage/components/VideoComponent/node_modules/react';
 
 import { 
-connect } from 'react-redux';
+connect } from 'services/course/pages/QuestionsPage/components/VideoComponent/node_modules/react-redux';
 
 import {
-videoComponentMeta } from 'Services/course/Actions/Video';
+videoComponentMeta } from 'services/course/pages/QuestionsPage/components/VideoComponent/node_modules/Services/course/Actions/Video';
    
-import MaterialVideoPage from 'Services/course/Pages/MaterialVideoPage';
+import MaterialVideoPage from 'services/course/pages/QuestionsPage/components/VideoComponent/node_modules/Services/course/Pages/MaterialVideoPage';
 import './style.css';
 
 const VideoComponent = ({

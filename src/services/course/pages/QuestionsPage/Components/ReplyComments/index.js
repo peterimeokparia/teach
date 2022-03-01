@@ -1,22 +1,22 @@
 import { 
 useState,
-useEffect } from 'react';
+useEffect } from 'services/course/pages/QuestionsPage/components/ReplyComments/node_modules/react';
 
 import { 
-connect } from 'react-redux';
+connect } from 'services/course/pages/QuestionsPage/components/ReplyComments/node_modules/react-redux';
 
 import { 
 getOperatorFromOperatorBusinessName,
-getSortedRecordsByDate } from 'Services/course/Selectors';
+getSortedRecordsByDate } from 'services/course/pages/QuestionsPage/components/ReplyComments/node_modules/Services/course/Selectors';
 
 import {
 loadOnlineComments,
 addNewOnlineComment,
 deleteOnlineComment,
-saveOnlineComment } from 'Services/course/Actions/OnlineComments'; 
+saveOnlineComment } from 'services/course/pages/QuestionsPage/components/ReplyComments/node_modules/Services/course/Actions/OnlineComments'; 
 
 import {
-SET_ONLINECOMMENTS_MARKDOWN } from 'Services/course/Actions/OnlineComments'; 
+SET_ONLINECOMMENTS_MARKDOWN } from 'services/course/pages/QuestionsPage/components/ReplyComments/node_modules/Services/course/Actions/OnlineComments'; 
 
 import {
 getCommentIdCollection } from './helpers';
@@ -24,7 +24,7 @@ getCommentIdCollection } from './helpers';
 import { 
 Accordion, 
 AccordionSummary
-} from '@material-ui/core';
+} from 'services/course/pages/QuestionsPage/components/ReplyComments/node_modules/@material-ui/core';
 
 import { 
 styleObj, 
@@ -32,13 +32,13 @@ replyIconStyle,
 deleteIconStyle, 
 iconStyle } from './inlineStyles';
 
-import useReplyCommentsHook from 'Services/course/Pages/QuestionsPage/hooks/useReplyCommentsHook';
-import moment from "moment";
+import useReplyCommentsHook from 'services/course/pages/QuestionsPage/components/ReplyComments/node_modules/Services/course/Pages/QuestionsPage/hooks/useReplyCommentsHook';
+import moment from "services/course/pages/QuestionsPage/components/ReplyComments/node_modules/moment";
 import EditorComponent  from '../../../Components/EditorComponent';
-import ReplyIcon from '@material-ui/icons/Reply';
-import DeleteIcon from '@material-ui/icons/Delete';
-import AddCommentOutlinedIcon from '@material-ui/icons/AddCommentOutlined';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ReplyIcon from 'services/course/pages/QuestionsPage/components/ReplyComments/node_modules/@material-ui/icons/Reply';
+import DeleteIcon from 'services/course/pages/QuestionsPage/components/ReplyComments/node_modules/@material-ui/icons/Delete';
+import AddCommentOutlinedIcon from 'services/course/pages/QuestionsPage/components/ReplyComments/node_modules/@material-ui/icons/AddCommentOutlined';
+import ExpandMoreIcon from 'services/course/pages/QuestionsPage/components/ReplyComments/node_modules/@material-ui/icons/ExpandMore';
 import './style.css';
 
 const ReplyComments = ({ 

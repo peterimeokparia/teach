@@ -29,11 +29,13 @@ require('./vendors/jquery');
 const Cookies = require('./pad_utils').Cookies;
 const randomString = require('./pad_utils').randomString;
 const hooks = require('./pluginfw/hooks');
+const padutils = require('./pad_utils').padutils;
 const socketio = require('./socketio');
 
 let token, padId, exportLinks, socket, changesetLoader, BroadcastSlider;
 
 const init = () => {
+  padutils.setupGlobalExceptionHandler();
   $(document).ready(() => {
     // start the custom js
     if (typeof customStart === 'function') customStart(); // eslint-disable-line no-undef
@@ -100,7 +102,6 @@ const sendSocketMsg = (type, data) => {
     padId,
     token,
     sessionID: Cookies.get('sessionID'),
-    protocolVersion: 2,
   });
 };
 
@@ -109,6 +110,12 @@ const fireWhenAllScriptsAreLoaded = [];
 const handleClientVars = (message) => {
   // save the client Vars
   window.clientVars = message.data;
+
+  if (window.clientVars.sessionRefreshInterval) {
+    const ping =
+        () => $.ajax('../../_extendExpressSessionLifetime', {method: 'PUT'}).catch(() => {});
+    setInterval(ping, window.clientVars.sessionRefreshInterval);
+  }
 
   // load all script that doesn't work without the clientVars
   BroadcastSlider = require('./broadcast_slider')

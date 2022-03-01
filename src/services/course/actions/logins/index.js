@@ -58,7 +58,6 @@ export const loadLoginSessions = () => {
 };
 
 export const loadPagedLoginSessions = ( userId, page, limit ) => { 
-    // alert( 'loadPagedLoginSessions' )
     return dispatch => {
         return getPagedData( `/logins/pagedRoute?id=${userId}&page=${page}&limit=${limit}`)
         .then( login => {

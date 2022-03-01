@@ -12,9 +12,9 @@ import {
 saveOnlineQuestion } from 'services/course/actions/onlinequestions';
 
 import { 
-handleChangedValue } from '../RadioButton/helpers';
+handleChangedValue } from 'services/course/pages/FormBuilder/FormFields/helpers';
 
-import FormFieldPanel from 'services/course/pages/FormBuilder/FormFields/Components/FormFieldPanel';
+import FormFieldPanel from 'services/course/pages/FormBuilder/FormFields/components/FormFieldPanel';
 import useAssignPointsHook from 'services/course/pages/FormBuilder/hooks/useAssignPointsHook';
 
 

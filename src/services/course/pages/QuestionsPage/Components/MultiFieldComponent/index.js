@@ -1,23 +1,23 @@
 import { 
 useState, 
-useEffect } from 'react';
+useEffect } from 'services/course/pages/QuestionsPage/components/MultiFieldComponent/node_modules/react';
 
 import {
-connect } from 'react-redux';
+connect } from 'services/course/pages/QuestionsPage/components/MultiFieldComponent/node_modules/react-redux';
 
 import {
-role } from 'Services/course/helpers/PageHelpers';
+role } from 'services/course/pages/QuestionsPage/components/MultiFieldComponent/node_modules/Services/course/helpers/PageHelpers';
 
 import { 
-placeHolder } from 'Services/course/helpers/EditorHelpers';
+placeHolder } from 'services/course/pages/QuestionsPage/components/MultiFieldComponent/node_modules/Services/course/helpers/EditorHelpers';
 
 import {
 loadQuestions,
 saveQuestion,
-setMarkDownEditor } from 'Services/course/Actions/Questions';
+setMarkDownEditor } from 'services/course/pages/QuestionsPage/components/MultiFieldComponent/node_modules/Services/course/Actions/Questions';
 
 import {
-toggleRecordingStatus } from 'Services/course/Actions/Video';
+toggleRecordingStatus } from 'services/course/pages/QuestionsPage/components/MultiFieldComponent/node_modules/Services/course/Actions/Video';
 
 import {
 elementMeta,
@@ -30,12 +30,12 @@ setMultipleChoiceValue,
 calculatePointsReceived,
 handleMultiFieldFormEvents,
 contentType, 
-setFieldCollection} from 'Services/course/Pages/QuestionsPage/helpers';
+setFieldCollection} from 'services/course/pages/QuestionsPage/components/MultiFieldComponent/node_modules/Services/course/Pages/QuestionsPage/helpers';
 
-import EditorComponent from 'Services/course/Pages/Components/EditorComponent';
-import VideoComponent from 'Services/course/Pages/QuestionsPage/Components/VideoComponent';
-import LessonPlanIframeComponent from 'Services/course/Pages/Lessons/LessonPlan/Components/LessonPlanIframeComponent';
-import DropDown from 'Services/course/Pages/Components/DropDown';
+import EditorComponent from 'services/course/pages/QuestionsPage/components/MultiFieldComponent/node_modules/Services/course/Pages/Components/EditorComponent';
+import VideoComponent from 'services/course/pages/QuestionsPage/components/VideoComponent';
+import LessonPlanIframeComponent from 'services/course/pages/QuestionsPage/components/MultiFieldComponent/node_modules/Services/course/Pages/Lessons/LessonPlan/Components/LessonPlanIframeComponent';
+import DropDown from 'services/course/pages/QuestionsPage/components/MultiFieldComponent/node_modules/Services/course/Pages/Components/DropDown';
 import './style.css';
 // upload files to do
 

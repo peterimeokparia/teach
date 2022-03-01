@@ -29,23 +29,29 @@ getCoursesByOperatorId } from 'services/course/selectors';
 import {
 permission,
 SiteFunctionalityGroup,
-Organization }from 'services/course/pages/components/SiteFunctionalityGroup';
+Organization }from 'services/course/pages/components/SiteFunctionalityGroup';   // use this for permissions
 
 import{
 enableTeachPlatform } from 'services/course/actions/classrooms';
 
 import {
-addUsersToMeeting,
-studentOption } from 'services/course/pages/Users/helpers'
+studentOption,
+goToCalendar,
+goToTimeLine,
+viewCurrentUsersCourseList,
+gotToLessonPlan,
+getCoursesSubscribedTo,
+getCoursesCreatedByUser,
+goToMeeting,
+goToOnlineSurvey,
+addStudentsToMeeting } from 'services/course/pages/Users/helpers';
+
+import {
+PageObject,
+group } from 'services/course/pages/Users/helpers/permissions';
 
 import { 
 role } from 'services/course/helpers/PageHelpers';
-
-import {
-v4 as uuidv4 } from 'uuid';
-
-import { 
-formTypes } from 'services/course/pages/FormBuilder/helpers';
 
 import NotFoundPage from 'services/course/pages/components/NotFoundPage';
 import Loading from '../components/Loading';
@@ -53,15 +59,15 @@ import LoginLogout from '../LoginPage/components/LoginLogout';
 import MainMenu from 'services/course/pages/components/MainMenu';
 import NavLinks from 'services/course/pages/components/NavLinks';
 import SchoolIcon from '@material-ui/icons/School';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import BookIcon from '@material-ui/icons/Book';
 import ForumIcon from '@material-ui/icons/Forum';
 import VideoCallIcon from '@material-ui/icons/VideoCall';
 import PollIcon from '@mui/icons-material/Poll';
-import Calendar from 'services/course/helpers/Calendar';
 import Select from 'react-select';
+import Calendar from 'services/course/helpers/Calendar';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import TabPanel from 'services/course/pages/components/FloatingActionButtonZoom';
 import './style.css';
 
@@ -82,6 +88,7 @@ const Users = ({
     user,
     users,
     courses }) => {
+
     if ( ! operator || ! operatorBusinessName  ) {
         return <NotFoundPage />;
     }
@@ -103,238 +110,32 @@ const Users = ({
     const [ usersAttendingMeeting, setUsersAttendingMeeting ] = useState( [] );
     const sessions = allSessions?.filter( usersession => usersession?.operatorId === operator?._id); 
 
-    const generateUuid = () => {
-        const uuid = uuidv4();
-        return uuid;
+    const calendarProps = {
+        users,
+        calendars,
+        calendar,
+        addCalendar,
+        operatorBusinessName,
+        operator
     };
 
-    let calendarConfig = ( tutor, calendarType ) => 
-        { return {
-            users: users,
-            userId: tutor?._id,
-            calendarEventType: calendarType,
-            operatorId: operator?._id,
-            firstName: tutor?.firstname,
-            color: getCalendarColor( calendars )
-        };
+    const goToMeetingProps = {
+        enableTeachPlatform,
+        usersAttendingMeeting,
+        operatorBusinessName, 
+        sessions, 
+        operator
     };
 
-const viewCurrentUsersCourseList = ( userId ) => {
-    navigate(`/${operatorBusinessName}/coursestaught/${userId}`); 
-};
-
-const gotToLessonPlan = ( user ) => { 
-    navigate(`/${operatorBusinessName}/classroom/${user._id}`);
-};
-
-const goToOnlineSurvey = () => {
-    let uuid = generateUuid();
-
-    let userId = user?._id, 
-        formUuId = uuid,
-        formName = `dailysurvey_${uuid}`,  // drop down to select report type
-        //formName = `academicprogress_${uuid}`, 
-        formType = formTypes?.report
-
-    navigate(`/${operatorBusinessName}/${formType}/${formName}/${formUuId}/${userId}`);
-};
-
-const gotToPersonalCalendar = ( user ) => {
-
-    let personalCalendar = calendars?.find( cal => cal?.calendarEventType === eventEnum.NewEvent && cal?.userId === user?._id);
-
-    if ( personalCalendar ) {
-
-        navigate(`/${operatorBusinessName}/schedule/${eventEnum.NewEvent}/calendar/${personalCalendar._id}/user/${user._id}`);
-
-    } else {
-
-        addCalendar( { calendar: new Calendar( calendarConfig( user, eventEnum?.NewEvent ) ).calendar()} )
-        .then(calendar => {
-
-            if ( calendar ) {
-                navigateUserAfterGeneratingNewCalendar( user, eventEnum.NewEvent );
-            }
-
-        })
-        .catch( error => console.log( error ));
-    }
-};
-
-const gotToCalendar = ( user ) => {
-
-    let schedulingCalendar = calendars?.find( cal => cal?.calendarEventType === eventEnum.SessionScheduling && cal?.userId === user?._id);
-
-    if ( schedulingCalendar ) {
-
-        navigate(`/${operatorBusinessName}/schedule/${eventEnum.SessionScheduling}/calendar/${schedulingCalendar._id}/user/${user._id}`);
-
-    } else {
-
-        addCalendar( { calendar: new Calendar( calendarConfig( user, eventEnum?.SessionScheduling ) ).calendar()} )
-        .then(calendar => {
-
-            if ( calendar ) {
-                navigateUserAfterGeneratingNewCalendar( user, eventEnum.SessionScheduling );
-            }
-        })
-        .catch( error => console.log( error ));
-    }
-};
-
-const goToSchedulingCalendar = ( user ) => {
-
-    let schedulingCalendar = calendars?.find( cal => cal?.calendarEventType === eventEnum.TutorCalendar && cal?.userId === user?._id);
-
-    if ( schedulingCalendar ) {
-
-        navigate(`/${operatorBusinessName}/schedule/${eventEnum.TutorCalendar}/calendar/${schedulingCalendar._id}/user/${user._id}`);
-
-    } else {
-
-        addCalendar( { calendar: new Calendar( calendarConfig( user, eventEnum?.TutorCalendar ) ).calendar()} )
-        .then(calendar => {
-
-            if ( calendar ) {
-                navigateUserAfterGeneratingNewCalendar( user, eventEnum.TutorCalendar );
-            }
-
-        })
-        .catch( error => console.log( error ));
-    }
-};
-
-const gotToConsultationCalendar = ( user ) => {
-    let consultingCalendar = calendars?.find( cal => cal?.calendarEventType === eventEnum?.ConsultationForm && cal?.userId === user?._id);
-
-    if ( consultingCalendar ) {
-
-        navigate(`/${operatorBusinessName}/schedule/${eventEnum?.ConsultationForm}/calendar/${consultingCalendar._id}/user/${user._id}`);
-
-    } else {
-
-        addCalendar( addNewUserCalendar( user, eventEnum?.ConsultationForm ) )
-        .then(calendar => {
-            if ( calendar ) {
-                navigateUserAfterGeneratingNewCalendar( user, eventEnum.ConsultationForm );
-            }
-
-        })
-        .catch( error => console.log( error ));
-    } 
-};
-
-const goToOnlineTutoringRequest = ( user ) => {
-
-    let onlineTutoringCalendar = calendars?.find( cal => cal?.calendarEventType === eventEnum.OnlineTutoringRequest && cal?.userId === user?._id);
-
-    if ( onlineTutoringCalendar ) {
-
-        navigate(`/${operatorBusinessName}/schedule/${eventEnum.OnlineTutoringRequest}/calendar/${onlineTutoringCalendar._id}/user/${user._id}`);
-
-    } else {
-
-        addCalendar( addNewUserCalendar( user, eventEnum?.OnlineTutoringRequest ) )
-        .then(calendar => {
-
-            if ( calendar ) {
-                navigateUserAfterGeneratingNewCalendar( user, eventEnum.OnlineTutoringRequest );
-
-            }
-        })
-        .catch( error => console.log( error ));
-    }
-};
-
-const goToTimeLine = ( user ) => {
-    navigate(`/${operatorBusinessName}/schedule/sessionscheduling/timeline/${user._id}`);
-};
-
-const addStudentsToMeeting = ( selectedUser, currentUser ) => {
-
-    setSelectedUser( selectedUser );
-
-    if ( currentUser?.role === role.Tutor ) {
-        let meetingProps = {
-            setAddUsers,
-            listOfStudents:[], 
-            selectedTutorId: selectedUser._id , 
-            operatorBusinessName, 
-            sessions, 
-            operator
-        };
-
-        if ( addUsersToMeeting( meetingProps, enableTeachPlatform ) ) {
-            enableTeachPlatform({ listOfStudents: [], selectedTutorId: selectedUser._id, operatorBusinessName, sessions, operator } );
-            navigate(`/${operatorBusinessName}/LessonPlan/classRoom/${selectedUser._id}`);
-        }     
-
-    } else {
-
-        navigate(`/${operatorBusinessName}/LessonPlan/classRoom/${selectedUser._id}`);
-    }
-};
-
-const goToMeeting = ( user ) => {
-    enableTeachPlatform({ listOfStudents: usersAttendingMeeting, selectedTutorId: user._id , operatorBusinessName, sessions, operator } )
-    navigate(`/${operatorBusinessName}/LessonPlan/classRoom/${user._id}`);
-};
-
-function navigateUserAfterGeneratingNewCalendar(user, calendarEventType){ 
-    navigate(`/${operatorBusinessName}/schedule/${calendarEventType}/calendar/${calendar._id}/user/${user._id}`);
-};
-
-function addNewUserCalendar( tutor, calendarType ){
-    return {
-        calendar: {
-            userId: tutor?._id,
-            calendarEventType: calendarType,
-            operatorId: operator?._id,
-            firstName: tutor?.firstname,
-            color: getCalendarColor( calendars )
-        }
+    const addStudentsToMeetingProps = {
+        enableTeachPlatform,
+        setSelectedUser,
+        setAddUsers,
+        listOfStudents:[], 
+        operatorBusinessName, 
+        sessions, 
+        operator
     };
-};
-
-function getCoursesCreatedByUser( tutor ){
-    return courses?.
-        filter( course => course?.createdBy === tutor?._id );
-};
-
-function getCoursesSubscribedTo( tutor ){
-    return tutor?.courses;
-};
-
-const PageObject = {
-    Users_Course_Count: 'Users_Course_Count',
-    Users_SchoolIcon: 'Users_SchoolIcon',
-    Users_BookIcon: 'Users_BookIcon',
-    Users_ScheduleIcon: 'Users_ScheduleIcon',
-    Users_CalendarTodayIcon: 'Users_CalendarTodayIcon',
-    Users_ForumIcon: 'Users_ForumIcon',
-    Users_TimelineIcon: 'Users_TimelineIcon',
-    Users_VideoCallIcon: 'Users_VideoCallIcon',
-    Users_SideBarNavigation: 'Users_SideBarNavigation',
-    Users_PollIcon: 'Users_PollIcon'
-};
-
-let testGroup = [
-    {   page: 'Users',
-        operatorBusinessName: [ Organization.Teach, Organization.Boomingllc ],
-        pageObject: [ 
-            { name: PageObject.Users_SideBarNavigation, allowed:[ Organization.Teach ] }, 
-            { name: PageObject.Users_Course_Count, allowed:[ Organization.Teach ] },
-            { name: PageObject.Users_SchoolIcon, allowed:[ Organization.Teach ]},
-            { name: PageObject.Users_BookIcon, allowed:[ Organization.Teach ] },
-            { name: PageObject.Users_ScheduleIcon, allowed:[ Organization.Teach, Organization.Boomingllc ] },
-            { name: PageObject.Users_CalendarTodayIcon, allowed:[ Organization.Teach, Organization.Boomingllc ] },
-            { name: PageObject.Users_ForumIcon, allowed:[ Organization.Teach ]},
-            { name: PageObject.Users_TimelineIcon, allowed:[ Organization.Teach, Organization.Boomingllc ]}, 
-            { name: PageObject.Users_VideoCallIcon, allowed:[ Organization.Teach, Organization.Boomingllc ]}, 
-            { name: PageObject.Users_PollIcon, allowed:[ Organization.Teach, Organization.Boomingllc ]}, 
-        ]  
-    }
-];
 
 return (
     <div className="Users">
@@ -367,7 +168,7 @@ return (
                     <div>
                         <button
                             className="addStudentsToMeeting" 
-                            onClick={() => goToMeeting( selectedUser )}>
+                            onClick={() => goToMeeting( goToMeetingProps, selectedUser )}>
                             { "Continue"}
                         </button>
                     </div>
@@ -384,89 +185,90 @@ return (
                                  <NavLinks to={`/${operatorBusinessName}/coursestaught/about/${singleUser?._id}`}> 
                                     <div>
                                         <span id={`multicolortext`} className="multicolortext" data-cy={`multicolortext_${singleUser?.firstname}`}>  {singleUser?.firstname} </span> 
-                                        <SiteFunctionalityGroup group={ permission( testGroup, operatorBusinessName, PageObject.Users_Course_Count )}>
-                                            <span className="price" name={PageObject.Users_Course_Count}> <h6>{getCoursesCreatedByUser(singleUser)?.length} {getCoursesCreatedByUser(singleUser)?.length === 1  ? "Course.": "Courses"}  </h6></span>
+                                        <SiteFunctionalityGroup group={ permission( group, operatorBusinessName, PageObject.Users_Course_Count )}>
+                                            <span className="price" name={PageObject.Users_Course_Count}> <h6>{getCoursesCreatedByUser( courses, singleUser )?.length} {getCoursesCreatedByUser( courses, singleUser )?.length === 1  ? "Course.": "Courses"}  </h6></span>
                                             <span className="price" name={PageObject.Users_Course_Count}> <h6>{getCoursesSubscribedTo(singleUser)?.length} {getCoursesSubscribedTo(singleUser)?.length === 1  ? "Subscribed Course.": "Subscribed Courses."}  </h6></span>
                                         </SiteFunctionalityGroup> 
                                     </div> 
                                 </NavLinks>  
-                                <SiteFunctionalityGroup group={ permission( testGroup, operatorBusinessName, PageObject.Users_VideoCallIcon )}> 
+                                <SiteFunctionalityGroup group={ permission( group, operatorBusinessName, PageObject.Users_VideoCallIcon )}> 
                                 <VideoCallIcon 
                                     id="VideoCallIcon"
                                     name={PageObject.Users_VideoCallIcon}
                                     data-cy={`${(singleUser?.firstname)?.toLowerCase()}_VideoCallIcon`}
                                     className="round-button-3"
-                                    onClick={() => addStudentsToMeeting(singleUser, user)}
+                                    onClick={() => addStudentsToMeeting( addStudentsToMeetingProps, singleUser, user )}
                                 /> 
                                 </SiteFunctionalityGroup>
-                                <SiteFunctionalityGroup group={ permission( testGroup, operatorBusinessName, PageObject.Users_SchoolIcon )}>
+                                <SiteFunctionalityGroup group={ permission( group, operatorBusinessName, PageObject.Users_SchoolIcon )}>
                                 <SchoolIcon 
                                         id="SchoolIcon"
                                         name={PageObject.Users_SchoolIcon}
                                         data-cy={`${(singleUser?.firstname)?.toLowerCase()}_SchoolIcon`}
                                         className="round-button-1"
-                                        onClick={() => viewCurrentUsersCourseList(singleUser?._id)}
+                                        onClick={() => viewCurrentUsersCourseList(operatorBusinessName, singleUser?._id)}
                                         disabled={singleUser?.courses?.length === 0} 
                                     />
                                 </SiteFunctionalityGroup>
-                                <SiteFunctionalityGroup group={ permission( testGroup, operatorBusinessName, PageObject.Users_BookIcon )}>  
+                                <SiteFunctionalityGroup group={ permission( group, operatorBusinessName, PageObject.Users_BookIcon )}>  
                                     <BookIcon 
                                         id="BookIcon"
                                         name={PageObject.Users_BookIcon}
                                         data-cy={`${(singleUser?.firstname)?.toLowerCase()}_BookIcon`}
                                         className="round-button-2"
-                                        onClick={() => gotToLessonPlan(singleUser)}
+                                        onClick={() => gotToLessonPlan( operatorBusinessName, singleUser)}
                                         disabled={singleUser?.courses?.length === 0} 
                                     />
                                     </SiteFunctionalityGroup>
-                                    <SiteFunctionalityGroup group={ permission( testGroup, operatorBusinessName, PageObject.Users_ScheduleIcon )}>
+                                    <SiteFunctionalityGroup group={ permission( group, operatorBusinessName, PageObject.Users_ScheduleIcon )}>
                                     <ScheduleIcon
                                         id="ScheduleIcon"
                                         name={PageObject.Users_ScheduleIcon}
                                         data-cy={`${(singleUser?.firstname)?.toLowerCase()}_ScheduleIcon`}
                                         className="round-button-1"
-                                        onClick={() => gotToPersonalCalendar(singleUser)}
+                                        onClick={() => goToCalendar( calendarProps, singleUser, eventEnum.NewEvent )}
                                         disabled={singleUser?.courses?.length === 0}  
                                     />
                                     </SiteFunctionalityGroup>
                                     {/*
-                                    <SiteFunctionalityGroup group={ permission( testGroup, operatorBusinessName, PageObject.Users_CalendarTodayIcon )}>
+                                    <SiteFunctionalityGroup group={ permission( group, operatorBusinessName, PageObject.Users_CalendarTodayIcon )}>
                                      <CalendarTodayIcon 
                                         id="CalendarTodayIcon"
                                         name={PageObject.Users_CalendarTodayIcon}
                                         data-cy={`${(singleUser?.firstname)?.toLowerCase()}_CalendarTodayIcon`}
                                         className="round-button-5"
-                                        onClick={() => gotToConsultationCalendar(singleUser)}
+                                        onClick={() => goToCalendar(calendarProps, singleUser, eventEnum?.ConsultationForm)}
                                         disabled={singleUser?.courses?.length === 0} 
                                     /> 
                                     </SiteFunctionalityGroup>
                                     */}
-                                    <SiteFunctionalityGroup group={ permission( testGroup, operatorBusinessName, PageObject.Users_ForumIcon )}>
+                                    <SiteFunctionalityGroup group={ permission( group, operatorBusinessName, PageObject.Users_ForumIcon )}>
                                     <ForumIcon 
                                         id="ForumIcon"
                                         name={PageObject.Users_ForumIcon}
                                         data-cy={`${(singleUser?.firstname)?.toLowerCase()}_ForumIcon`}
                                         className="round-button-6"
-                                        onClick={() => goToOnlineTutoringRequest(singleUser)}
+                                        onClick={() => goToCalendar(calendarProps, singleUser, eventEnum?.OnlineTutoringRequest)}
                                         disabled={singleUser?.courses?.length === 0} 
                                     />
                                     </SiteFunctionalityGroup>
-                                    <SiteFunctionalityGroup group={ permission( testGroup, operatorBusinessName, PageObject.Users_VideoCallIcon )}> 
+                                    <SiteFunctionalityGroup group={ permission( group, operatorBusinessName, PageObject.Users_VideoCallIcon )}> 
                                     <PollIcon 
                                         id="PollIcon"
                                         name={PageObject.Users_PollIcon}
                                         data-cy={`${(singleUser?.firstname)?.toLowerCase()}_PollIcon`}
                                         className="round-button-3"
-                                        onClick={() => goToOnlineSurvey()}
+                                        onClick={() => goToCalendar( calendarProps, singleUser, eventEnum?.ReportForms )}
+                                        // onClick={() => goToOnlineSurvey( operatorBusinessName, user )}
                                     /> 
                                     </SiteFunctionalityGroup>
-                                    <SiteFunctionalityGroup group={ permission( testGroup, operatorBusinessName, PageObject.Users_TimelineIcon )}>
+                                    <SiteFunctionalityGroup group={ permission( group, operatorBusinessName, PageObject.Users_TimelineIcon )}>
                                     <TimelineIcon 
                                         id="TimelineIcon"
                                         name={PageObject.Users_TimelineIcon}
                                         data-cy={`${(singleUser?.firstname)?.toLowerCase()}_TimelineIcon`}
                                         className="round-button-7"
-                                        onClick={() => goToTimeLine(singleUser)}
+                                        onClick={() => goToTimeLine(operatorBusinessName, eventEnum.SessionScheduling, singleUser)}
                                         disabled={singleUser?.courses?.length === 0} 
                                     />
                                     </SiteFunctionalityGroup>

@@ -1,24 +1,24 @@
 import { 
-connect } from 'react-redux';
+connect } from 'services/course/pages/QuestionsPage/components/ManageEditors/node_modules/react-redux';
 
 import { 
 addNewOnlineAnswer,
 saveOnlineAnswer,
 loadOnlineAnswers,
-deleteOnlineAnswer } from 'Services/course/Actions/OnlineAnswers';
+deleteOnlineAnswer } from 'services/course/pages/QuestionsPage/components/ManageEditors/node_modules/Services/course/Actions/OnlineAnswers';
 
 import { 
-setMarkDown } from 'Services/course/helpers/EditorHelpers'; 
+setMarkDown } from 'services/course/pages/QuestionsPage/components/ManageEditors/node_modules/Services/course/helpers/EditorHelpers'; 
   
 import {
-SET_ONLINEANSWERS_MARKDOWN } from 'Services/course/Actions/OnlineAnswers';
+SET_ONLINEANSWERS_MARKDOWN } from 'services/course/pages/QuestionsPage/components/ManageEditors/node_modules/Services/course/Actions/OnlineAnswers';
 
 import {
 upload_url, 
-uploadImageUrl } from 'Services/course/Pages/OnlineQuestionsPage/helpers';
+uploadImageUrl } from 'services/course/pages/QuestionsPage/components/ManageEditors/node_modules/Services/course/Pages/OnlineQuestionsPage/helpers';
 
 import { 
-getSelectedOnlineAnswersByCourseId } from 'Services/course/Selectors';
+getSelectedOnlineAnswersByCourseId } from 'services/course/pages/QuestionsPage/components/ManageEditors/node_modules/Services/course/Selectors';
 
 import {
 videoMeta,
@@ -26,15 +26,15 @@ plusOneIconStyle,
 iconStyleMain,
 iconStyle } from './inlineStyles';
 
-import useManageEditorsHook from 'Services/course/Pages/QuestionsPage/hooks/useManageEditorsHook'
-import MaterialUiVideoComponent from 'Services/course/Pages/Components/MaterialUiVideoComponent';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import EditorComponent from 'Services/course/Pages/Components/EditorComponent';
-import PlusOneIcon from '@material-ui/icons/PlusOne';
-import DeleteIcon from '@material-ui/icons/Delete';
-import NotesIcon from '@material-ui/icons/Notes';
-import NoteAddTwoToneIcon from '@material-ui/icons/NoteAddTwoTone';
-import moment from "moment";
+import useManageEditorsHook from 'services/course/pages/QuestionsPage/components/ManageEditors/node_modules/Services/course/Pages/QuestionsPage/hooks/useManageEditorsHook'
+import MaterialUiVideoComponent from 'services/course/pages/QuestionsPage/components/ManageEditors/node_modules/Services/course/Pages/Components/MaterialUiVideoComponent';
+import CalendarTodayIcon from 'services/course/pages/QuestionsPage/components/ManageEditors/node_modules/@material-ui/icons/CalendarToday';
+import EditorComponent from 'services/course/pages/QuestionsPage/components/ManageEditors/node_modules/Services/course/Pages/Components/EditorComponent';
+import PlusOneIcon from 'services/course/pages/QuestionsPage/components/ManageEditors/node_modules/@material-ui/icons/PlusOne';
+import DeleteIcon from 'services/course/pages/QuestionsPage/components/ManageEditors/node_modules/@material-ui/icons/Delete';
+import NotesIcon from 'services/course/pages/QuestionsPage/components/ManageEditors/node_modules/@material-ui/icons/Notes';
+import NoteAddTwoToneIcon from 'services/course/pages/QuestionsPage/components/ManageEditors/node_modules/@material-ui/icons/NoteAddTwoTone';
+import moment from "services/course/pages/QuestionsPage/components/ManageEditors/node_modules/moment";
 import './style.css';
 
 const ManageEditors = ({ 

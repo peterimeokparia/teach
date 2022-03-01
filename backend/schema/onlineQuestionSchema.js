@@ -23,6 +23,10 @@ const onlineQuestionSchema = new Schema ({
         type: String, 
         required: false,
     },
+    inputType: { 
+        type: String, 
+        required: false,
+    },
     placeHolderText: { 
         type: String, 
         required: false,
@@ -123,7 +127,11 @@ const onlineQuestionSchema = new Schema ({
     columnAlign: { 
         type: String, 
         required: false  
-    },  
+    },
+    position: { 
+        type: Number, 
+        required: false,
+    } 
 });
 
 export default onlineQuestionSchema;

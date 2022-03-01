@@ -15,7 +15,8 @@ import userModel from '../model/userModel.js';
 
 import { 
 verifyRoute,
-logRouteInfo } from '../middleWare/index.js';
+logRouteInfo,
+paginatedResults } from '../middleWare/index.js';
 
 const userRoute = express.Router();
 
@@ -120,6 +121,10 @@ userRoute.post('/register', async (req, res) => {
         handleBackEndLogs(USERROUTE, error );
         return res.status(400).json({ msg: error.message });
     }
+});
+
+userRoute.get('/pagedRoute', paginatedResults( userModel, 'userId' ), (req, res) => {
+  res.json(res?.paginatedResults);
 });
 
 userRoute.put('/reset/:userId', async (req, res) => {

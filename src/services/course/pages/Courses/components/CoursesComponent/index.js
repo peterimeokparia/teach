@@ -16,7 +16,13 @@ import {
 setCurrentLesson } from 'services/course/actions/lessons';
 
 import { 
-getUsersByOperatorId } from 'services/course/selectors';
+getUsersByOperatorId,
+getCalendarsByOperatorId,
+getCalendarEventsByUserIdSelector,
+getOperatorFromOperatorBusinessName } from 'services/course/selectors';
+
+import { 
+addCalendar } from 'services/course/actions/calendar';
 
 import {
 role } from 'services/course/helpers/PageHelpers';
@@ -29,6 +35,16 @@ handleSavingEntityAction } from 'services/course/pages/components/SubscriptionCo
 import { 
 forceReload } from 'services/course/helpers/ServerHelper';
 
+import {
+eventEnum,
+getCalendarColor } from 'services/course/pages/CalendarPage/helpers';
+
+import {
+goToCalendar,
+goToTimeLine,
+gotToLessonPlan } from 'services/course/pages/Users/helpers';
+
+import HelpIcon from '@material-ui/icons/Help';
 import Roles from 'services/course/pages/components/Roles';
 import Loading from 'services/course/pages/components/Loading';
 import NavLinks from 'services/course/pages/components/NavLinks';
@@ -45,9 +61,13 @@ const CoursesComponent = ({
     selectedTutorId,
     user,
     users, 
+    operator,
     courses,
+    calendars,
+    calendar,
     coursesLoading,
     onCoursesError,
+    addCalendar,
     lessons,
     saveCourse,
     deleteCourse,
@@ -183,6 +203,15 @@ function performCourseValidation( title, icon, htmlTitle, course ) {
     });
 }
 
+const calendarProps = {
+    users,
+    calendars,
+    calendar,
+    addCalendar,
+    operatorBusinessName,
+    operator
+};
+
 return  editing 
     ? ( <div>
             <form
@@ -212,7 +241,7 @@ return  editing
     : ( <div className="ComponentCourseListItem">
             <ul>
             {courses?.map(course => (    
-             <NavLinks to={`/${operatorBusinessName}/tutor/${ course?.createdBy }/courses/${ course?._id }`}>   
+            //  <NavLinks to={`/${operatorBusinessName}/tutor/${ course?.createdBy }/courses/${ course?._id }`}>   
                 <li 
                     key={course?._id}
                     className={"component-seconday-list-body"}
@@ -284,13 +313,23 @@ return  editing
                         />
                         </span>     
                         )}       
+                        {((user?.courses?.find(mycourseId => mycourseId === course?._id)) &&  
+                        <span>
+                        <HelpIcon 
+                            id="QuizzIcon"
+                            data-cy={`${(course?.createdBy)?.toLowerCase()}QuizzIcon`}
+                            className="round-button-2"
+                            onClick={() => goToCalendar( calendarProps, user, eventEnum?.QuizzForms )}
+                        />
+                        </span>     
+                        )}       
                         </span>     
                         }
                     </div>
                     </div> 
                     </div>
                 </li>
-                </NavLinks>
+                // </NavLinks>
                 ))}
             </ul>
     </div>
@@ -298,7 +337,10 @@ return  editing
 
 const mapState = ( state, ownProps) => ({
     user: state?.users?.user,
+    operator: getOperatorFromOperatorBusinessName(state, ownProps),
     users: getUsersByOperatorId(state, ownProps),
+    calendar: getCalendarEventsByUserIdSelector(state, ownProps),
+    calendars: getCalendarsByOperatorId(state, ownProps),
     selectedLessonPlanLesson: state.lessons.selectedLessonPlanLesson,
     coursesLoading: state.courses.coursesLoading,
     onCoursesError: state.courses.onCoursesError,
@@ -306,4 +348,4 @@ const mapState = ( state, ownProps) => ({
     sessions: Object.values(state.sessions.sessions)
 });
 
-export default connect(mapState, { saveCourse, deleteCourse, loadCourses, unSubscribeFromCourse, setCurrentLesson })(CoursesComponent);
+export default connect(mapState, { addCalendar, saveCourse, deleteCourse, loadCourses, unSubscribeFromCourse, setCurrentLesson })(CoursesComponent);

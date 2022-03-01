@@ -49,6 +49,9 @@ import Logins from 'services/course/pages/LoginPage/components/Logins';
 import LessonPlanSplitViewComponent from 'services/course/pages/Lessons/LessonPlan/LessonPlanSplitViewComponent';
 import FormQuestions from 'services/course/pages/FormBuilder/FormQuestions';
 import FormBuilder from 'services/course/pages/FormBuilder';
+import FormTables from 'services/course/pages/FormBuilder/FormTables';
+import FormListPage from 'services/course/pages/Forms/FormListPage';
+import Charts from 'services/course/pages/Charts';
 
 const MainRoute = () => {
     return (
@@ -112,6 +115,7 @@ const MainRoute = () => {
              <NotFoundPage default />
              <SendNotificationsPage path="/:operatorBusinessName/demo/sendnotifications" />
              <CalendarPage path="/:operatorBusinessName/schedule/:calendarEventType/calendar/:calendarId/user/:userId"/>
+             <CalendarPage path="/:operatorBusinessName/schedule/:calendarEventType/calendar/:calendarId/user/:userId/:formType"/>
              <CalendarEventsDetailPage path="/:operatorBusinessName/:calendarEventType/calendar/:calendarId/:userId/:selectedCalendarEventId"/>
              <CalendarEventsDetailPage path="/:operatorBusinessName/:calendarEventType/calendar/:calendarId/:userId"/>
              <EventDetailPage path="/:operatorBusinessName/:calendarEventType/calendar/:calendarId/user/:userId/event/:eventId" />
@@ -130,13 +134,21 @@ const MainRoute = () => {
              <Logins path="/:operatorBusinessName/logins/student/:studentId" />
              <LessonPlanSplitViewComponent path="/:operatorBusinessName/:calendarEventType/boardeditor/:calendarId/:userId/:meetingId"/>
              <FormQuestions path="/:operatorBusinessName/formBuilder/:formType/:formName/:formId/:formUuId/:userId/:formBuilderStatus"/>
-             <FormQuestions path="/:operatorBusinessName/formBuilder/:formType/:formName/:lessonId/:formUuId/:userId/:formBuilderStatus"/>
-             <FormQuestions path="/:operatorBusinessName/formBuilder/:formType/:formName/:formUuId/:userId/:formBuilderStatus"/>  
+             <FormQuestions path="/:operatorBusinessName/formBuilder/:formType/:formName/:courseId/:formUuId/:userId/:formBuilderStatus/:eventId"/>
+             <FormQuestions path="/:operatorBusinessName/formBuilder/:formType/:formName/:courseId/:lessonId/:formUuId/:userId/:formBuilderStatus/:eventId"/>
+             <FormQuestions path="/:operatorBusinessName/formBuilder/:formType/:formName/:formUuId/:userId/:formBuilderStatus"/> 
+             <FormQuestions path="/:operatorBusinessName/formEventBuilder/:formType/:formName/:formUuId/:userId/:formBuilderStatus/:eventId"/> 
              {/* Survey - Routes */}
              <FormBuilder path="/:operatorBusinessName/:formType/:formName/:formUuId/:userId"/>        
              <FormBuilder path="/:operatorBusinessName/:formType/:formName/:formId/:formUuId/:userId"/>
+             <FormBuilder path="/:operatorBusinessName/formEvent/:formType/:formName/:formUuId/:userId/:eventId"/> 
+             {/* <FormBuilder path="/:operatorBusinessName/:formType/:formName/:formId/:formUuId/:userId/:eventId"/> */}
+             <FormTables path="/:operatorBusinessName/:formName" />
+             <FormListPage path="/:operatorBusinessName/forms"/>
+             <FormListPage path="/:operatorBusinessName/forms/:formType"/>
+             <Charts path="/:operatorBusinessName/charts"/>
         </Router>
-
+  //navigate(`/${operatorBusinessName}/${formType}/${formName}/${formUuId}/${userId}/${eventId}`);
     );
 };
 

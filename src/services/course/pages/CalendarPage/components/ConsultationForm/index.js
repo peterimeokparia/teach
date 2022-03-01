@@ -4,6 +4,7 @@ newCalendarEventData,
 transformDateTime } from 'services/course/pages/CalendarPage/helpers';
 
 import useConsultationFormHook from 'services/course/pages/CalendarPage/hooks/useConsultationFormHook';
+import useSimpleEventHook from 'services/course/pages/CalendarPage/hooks/useSimpleEventHook';
 import Select from 'react-select';
 
 const ConsultationForm = ({
@@ -12,6 +13,7 @@ const ConsultationForm = ({
     onSaveError,
     courses,
     slotInfo }) => {
+
     let {
         firstName, 
         setFirstName,
@@ -26,9 +28,14 @@ const ConsultationForm = ({
         coursesInterestedIn, 
         setCoursesInterestedIn,
         inputRef
-
     } = useConsultationFormHook();
-    
+
+    let {
+        start,
+        end,
+        duration
+    } = useSimpleEventHook(slotInfo);
+
     if ( saveInProgress ) {
         return <div>...loading</div>;
     };
@@ -41,20 +48,18 @@ const onSubmit = (e) => {
 };
 
 const submitForm = () => {
-    const [ start, end, allDay ] = Object.entries(slotInfo);
-    const [ calendarViewType ] = Object.entries(slotInfo?.view);
-    let event = {}, dateTimeString = transformDateTime( start[1], end[1], calendarViewType, allDay[1] );
+    let event = {};
 
     event = {
         title: `Consultation with ${firstName} ${lastName}`,
         recurringEvent:false,
         allDay: false,
-        start: dateTimeString?.resStartStr,
-        end: dateTimeString?.resEndStr,
-        duration: ( new Date( dateTimeString?.resEndStr ) - new Date( dateTimeString?.resStartStr ) )
+        start,
+        end,
+        duration
     };
 
-handleSubmit( newCalendarEventData(event, undefined, undefined, { firstName, lastName, studentsName, email, phone, coursesInterestedIn }, undefined ) );  
+    handleSubmit( newCalendarEventData(event, undefined, undefined, { firstName, lastName, studentsName, email, phone, coursesInterestedIn }, undefined ) );  
 };
 
 return (

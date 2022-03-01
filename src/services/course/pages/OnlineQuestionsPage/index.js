@@ -1,16 +1,9 @@
 import { 
-useState,
-useEffect } from 'react'
-
-import { 
 connect } from 'react-redux';
 
 import {
 getOperatorFromOperatorBusinessName,
 getPushNotificationUsersByOperatorId } from 'services/course/selectors';
-
-import {
-getOnlineQuestion } from 'services/course/pages/OnlineQuestionsPage/helpers';
 
 import AnswerComponent from 'services/course/pages/OnlineQuestionsPage/components/AnswerComponent';
 import OnlineQuestionsMultiEditorComponent from 'services/course/pages/OnlineQuestionsPage/components/OnlineQuestionsMultiEditorComponent';

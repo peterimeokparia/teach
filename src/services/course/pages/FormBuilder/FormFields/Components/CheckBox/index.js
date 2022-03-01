@@ -9,15 +9,15 @@ import {
 saveFormField } from 'services/course/actions/formfields';
 
 import { 
-handleChangedValue } from './helpers';
+handleChangedValue } from 'services/course/pages/FormBuilder/FormFields/helpers';
 
 import {
 saveOnlineQuestion } from 'services/course/actions/onlinequestions';
 
-import { 
-role } from 'services/course/helpers/PageHelpers';
+import {
+elementMeta, inputType } from 'services/course/pages/QuestionsPage/helpers';
 
-import FormFieldPanel from 'services/course/pages/FormBuilder/FormFields/Components/FormFieldPanel';
+import FormFieldPanel from 'services/course/pages/FormBuilder/FormFields/components/FormFieldPanel';
 import useAssignPointsHook from 'services/course/pages/FormBuilder/hooks/useAssignPointsHook';
 
 const CheckBox = ( { 
@@ -26,7 +26,7 @@ const CheckBox = ( {
     currentUser,
     formFieldElement,
     elememtFormFields,
-    formfields,
+    formFields,
     setSelected,
     studentsAnswer,
     formFieldAnswers,
@@ -35,27 +35,34 @@ const CheckBox = ( {
     saveFormField } ) => {
     
     const [ inputValue, setInputValue ] = useState('');
-
+    const checkBoxGroup = formFields?.filter( field => field?.parentComponentId === formFieldElement?.parentComponentId && field?.inputType === inputType.CheckBox );
+    
     let {
+      formBuilderStatus,
       handleSelectorFormFieldAnswers,
     } = fieldProps;
+
+    const [checkedRadioButton, setCheckedRadioButton ] = useState( ( formBuilderStatus === elementMeta?.state.Manage ) ? { id: formFieldElement?._id, isChecked: formFieldElement['selected'] } : {} );
 
     let {
         addFieldPoints,
         handleTogglingModal,
-    } = useAssignPointsHook( {...fieldProps, formFieldElement, elememtFormFields, saveOnlineQuestion, saveFormField }  );
+    } = useAssignPointsHook( {...fieldProps, formFieldElement, elememtFormFields, saveOnlineQuestion, saveFormField, previewMode, fieldGroup: checkBoxGroup }  );
 
     const handleCheckBoxSelection = ( e ) => {
 
-        if ( e?.target?.checked && e?.target?.value ) {
-            handleSelectorFormFieldAnswers( formFieldElement, e?.target?.value,  e?.target?.value,  e?.target?.checked  );
-        } else {
-            handleSelectorFormFieldAnswers( formFieldElement, e?.target?.value, "", false  );
-        }
+        setCheckedRadioButton( { id: formFieldElement?._id, isChecked: e?.target.checked } );
 
-        // if ( ( formFieldElement && formFieldElement['selected'] ) && !e?.target?.checked ) {
-        //     handleSelectorFormFieldAnswers( formFieldElement, e?.target?.value, "", false  );
-        // }
+        if ( e?.target?.checked && e?.target?.value ) {
+
+             handleSelectorFormFieldAnswers( formFieldElement, e?.target?.value,  e?.target?.value,  e?.target?.checked,  formFieldElement['points'] );
+
+        } else {
+
+            const currentField = formFields?.find( field => field?._id === formFieldElement?._id );
+
+            handleSelectorFormFieldAnswers( formFieldElement, e?.target?.value, "", false, 0 );
+        }
     };
 
 return(
@@ -66,8 +73,8 @@ return(
         <input
             type={"text"}
             value={inputValue}
-            onChange={e => handleChangedValue( e.target.value, setInputValue, formFieldElement, saveFormField )}
-            placeholder={formFieldElement?.inputValue} 
+            onChange={e => handleChangedValue( e.target.value, setInputValue, { ...formFieldElement, inputValue: e.target.value }, saveFormField )}
+            placeholder={ formFieldElement?.inputValue } 
           />
        </div>
       }
@@ -78,10 +85,10 @@ return(
             <input
               type={"checkbox"}
               id={ formFieldElement?._id }
-              value={formFieldElement?.inputValue}
+              value={ formFieldElement?.inputValue }
               onChange={e => handleCheckBoxSelection( e )}
               name={ formFieldElement?._id }
-              checked={ ( studentsAnswer ) ? studentsAnswer['selected'] : formFieldElement?.inputValue }
+              checked={ (  studentsAnswer && formBuilderStatus === elementMeta?.state.Taking  ) ? studentsAnswer['selected']  : ( formBuilderStatus === elementMeta?.state.Manage && checkedRadioButton?.id === formFieldElement?._id ) && checkedRadioButton?.isChecked }
             /> 
         }
         </span>
@@ -100,7 +107,7 @@ return(
       currentUser: state.users.user,
       currentUsers: Object.values( state.users.users ),
       elememtFormFields: Object.values( state?.formFields?.formFields ).filter( field => field?.questionId === ownProps?.formFieldElement?.questionId ),
-      formfields: Object.values( state?.formFields?.formFields ).filter( field => field?.questionId === ownProps?.fieldProps?.question?._id ),
+      formFields: Object.values( state?.formFields?.formFields ).filter( field => field?.questionId === ownProps?.fieldProps?.question?._id ),
       formFieldsLoading: state?.formFields?.formFieldsLoading,
       onFormFieldsLoadingError: state?.formFields?.onFormFieldsLoadingError,
       formFieldAnswers: Object.values( state?.formFieldAnswers?.formFieldAnswers ).filter( field => field?.questionId === ownProps?.formFieldElement?.questionId ),

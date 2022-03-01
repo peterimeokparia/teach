@@ -50,7 +50,6 @@ export const iconStyleMain = () => {
 
 let globalTest = false;
 export const videoCallIconMain = ( capturingVideo ) => {
-  // alert('test')
   globalTest = true;
   return {
     fontSize: 45,

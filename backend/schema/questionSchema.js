@@ -10,6 +10,10 @@ const questionSchema = new Schema ({
         type: Array,
         required: false,
     },
+    inputType: { 
+        type: String, 
+        required: false,
+    },
     lessonId: { 
         type: String, 
         required: false,

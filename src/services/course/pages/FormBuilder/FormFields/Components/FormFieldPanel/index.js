@@ -1,4 +1,3 @@
-import Roles from 'services/course/pages/components/Roles';
 import PlusOneIcon from '@material-ui/icons/PlusOne';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MiniSideBarMenu from 'services/course/pages/components/SubscriptionComponent/MiniSideBarMenu';
@@ -16,7 +15,9 @@ const FormFieldPanel = ({ props }) => {
         addGroupedFormFields,
         onhandleSelected,
         addFieldPoints,
-        formType
+        formType,
+        moveInputField,
+        setMoveInputField
     } = props;
 
 return(
@@ -28,8 +29,7 @@ return(
                 mouseDown={ handleMouseDown }
                 navMenuVisible={ menuVisible } 
             />
-          <Modal 
-            isOpen={menuVisible} onRequestClose={ ( e ) => handleTogglingModal(e,  handleMouseDown) }
+          <Modal isOpen={menuVisible} onRequestClose={ ( e ) => handleTogglingModal(e,  handleMouseDown) }
             style={{
                 overlay: {
                 backgroundColor: 'skyblue',
@@ -42,51 +42,49 @@ return(
                 "marginLeft": "37%",
                 }
               }}
-          > 
+            > 
             {  <div className="modal-content">
-                {   // {(previewMode && formFieldElement?.questionId === previewMode?.question?._id) && previewMode?.isPreviewMode && 
-                    // <Roles role={ currentUser?.role === role.Tutor } >
+                {   
                     <span className="">
                         <PlusOneIcon 
-                        // style={plusOneIconStyle()}
-                        className="comment-round-button-2"
-                        onClick={() => addGroupedFormFields( formFieldElement, currentUser )}
+                            className="comment-round-button-2"
+                            onClick={() => addGroupedFormFields( formFieldElement )}
                         />
                         <DeleteIcon 
-                        // style={iconStyle()}
-                        className="comment-round-button-3"
-                        onClick={() => onhandleSelected( formFieldElement )}
+                            className="comment-round-button-3"
+                            onClick={() => onhandleSelected( formFieldElement )}
                         />
-                    </span>
-                    // </ Roles>       
-                    }
-                    { ( previewMode ) && 
-                        <div className="points-title">
-                            <div>
-                                <input
-                                    className="points-input"
-                                    type="number" 
-                                    value={ formFieldElement?.points }
-                                    onChange={ e => addFieldPoints( e?.target?.value ) }
-                                    // style={plusOneIconStyleHeader()}    
-                                />
-                            </div>
-                        </div> 
+                    </span>  
+                }
+                { ( previewMode ) && 
+                    <div className="points-title">
+                        <div>
+                            <input
+                                className="points-input"
+                                type="number" 
+                                value={ formFieldElement?.points }
+                                onChange={ e => addFieldPoints( e?.target?.value ) } 
+                            />
+                        </div>
+                    </div> 
                 }
                 { (formFieldElement?.answerKey !== null) &&
                     <div className="answer-title">
                         <label>
-                            {`Answer: ${formFieldElement?.answerKey}` }
+                            {`Answer: ${ formFieldElement?.answerKey }` }
                         </label>
                     </div>
                 }
                     </div>
-                }
-         
+            }
           </Modal>
-            </>
+        </>
         )}
         </MiniSideBarMenu>
+        <span className={'on-top-right'}>
+        <button  className={moveInputField ? 'button-handle' : 'button-handle-move'} 
+            onClick={ () => setMoveInputField( !moveInputField ) } /> 
+        </span> 
     </>
     )
 };

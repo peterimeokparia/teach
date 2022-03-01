@@ -6,33 +6,21 @@ import {
 connect } from 'react-redux';
 
 import {
-loadFormFieldsByFormFieldId,
-saveFormFieldNoCallback,
 saveFormField } from 'services/course/actions/formfields';
 
 import {
 saveOnlineQuestion } from 'services/course/actions/onlinequestions';
 
-import { 
-role } from 'services/course/helpers/PageHelpers';
-
-import {
-elementMeta } from 'services/course/pages/QuestionsPage/helpers';
-
-import FormFieldPanel from 'services/course/pages/FormBuilder/FormFields/Components/FormFieldPanel';
+import FormFieldPanel from 'services/course/pages/FormBuilder/FormFields/components/FormFieldPanel';
 import useAssignPointsHook from 'services/course/pages/FormBuilder/hooks/useAssignPointsHook';
 import './style.css';
 
 const DropDown = ( { 
     fieldProps,
     previewMode, 
-    handleRadioButtonChangeCallBack,
     formFieldElement,
-    saveFormFieldNoCallback,
     saveFormField,
-    loadFormFieldsByFormFieldId,
     saveOnlineQuestion,
-    formFieldAnswers,
     elememtFormFields,
     studentsAnswer,
     dropDownValues,
@@ -41,29 +29,39 @@ const DropDown = ( {
 
     const [ input, setInput ] = useState("");
     const [ dropDownOptions,  setDropDownOptions ] = useState(['Select']);
-    const [ inputValue,  setInputValue ] = useState("");
-    const [ answer, setStudentsAnswer ] = useState( null )
+    const [ inputValue,  setInputValue ] = useState( null );
+    const [ answer, setStudentsAnswer ] = useState( null );
 
     let {
-        formBuilderStatus,
         handleFormFieldAnswers,
       } = fieldProps;
 
       // Disable field if the user viewing the submitted form isn't the one submitting the form.
     useEffect(() => { 
+
         if ( studentsAnswer?.answer && ( studentsAnswer?.answer !== null || studentsAnswer?.answer !== "" ) ) {
+            
             setStudentsAnswer( studentsAnswer['answer'] );
         }
+
     }, [ studentsAnswer ]);
 
     useEffect(() => {
+
         if ( dropDownOptions?.length === dropDownValues?.length ) {
-            return;      
+
+            return;     
+
         } else if ( dropDownValues?.length > dropDownOptions?.length ) {
+
             saveFormField({ ...formFieldElement, dropDownOptions: dropDownValues });
+
         } else {
+
             saveFormField({ ...formFieldElement, dropDownOptions });
+
         }
+
     }, [ dropDownOptions?.length > dropDownValues?.length ]);
 
     let {
@@ -74,9 +72,21 @@ const DropDown = ( {
     const addOptionValue = () => {
         
         if ( input !== "" ) {
+
             let dropDownValues = [ ...dropDownOptions, input ];
 
             setDropDownOptions( dropDownValues );  
+
+            saveFormField({ ...formFieldElement, dropDownOptions: dropDownValues });
+        } 
+    };
+
+    const deleteOptionValue = () => {
+        
+        if ( input !== "" ) {
+
+            let dropDownValues = dropDownOptions?.filter( option => option?.id !== inputValue?.id );
+
             saveFormField({ ...formFieldElement, dropDownOptions: dropDownValues });
         } 
     };
@@ -84,47 +94,43 @@ const DropDown = ( {
     const handleDropDownSelection = ( value ) => {
 
        if ( !currentUser?._id ) return;
+
+       let points = (  studentsAnswer?.answer !== formFieldElement?.answerKey ) ? 0 : formFieldElement['points'];
+       
             setInputValue( value );
 
-        if ( value && currentUser?.role === role?.Tutor && formBuilderStatus === elementMeta.status.Editing  ) {
-            saveFormField( { ...formFieldElement, answerKey: value, inputValue: value} );
-        }
+            handleFormFieldAnswers( formFieldElement, value, points );
 
-        if ( value && formBuilderStatus === elementMeta.status.NotEditing ) {
-            handleFormFieldAnswers( formFieldElement, value );
+        if ( !previewMode ) {
+            // handleFormFieldAnswers( formFieldElement, JSON.stringify( value ), formFieldElement?.points );
         }
     };
 
 return(
     <>
     { ( previewMode ) &&
-    <div className={"on-top"}>
-        <FormFieldPanel props={ { ...fieldProps, handleTogglingModal, addFieldPoints, formFieldElement } } />
-        <input  
-            type={'text'}
-            value={input}
-            onChange={e => setInput( e.target.value )}
-        />
-        <button onClick={addOptionValue}>
-            {"+"}
-        </button>
-    </div>
+        <div className={"on-top"}>
+            <FormFieldPanel props={ { ...fieldProps, handleTogglingModal, addFieldPoints, formFieldElement } } />
+            <input  
+                type={'text'}
+                value={input}
+                onChange={e => setInput( e.target.value )}
+            />
+            <button onClick={addOptionValue}>{"+"}</button>
+            { inputValue && <button onClick={deleteOptionValue}>{"-"}</button> }
+        </div>
     }
     { ( dropDownValues?.length > 0 ) &&  
-        <div>
-         <span>
-            <select 
-                name={"select"}
-                value={(answer !== "" || answer !== null ) ? answer : inputValue}
-                onChange={(e)=> handleDropDownSelection( e.target.value )}
-            >
-                { dropDownValues?.map( value  => (
-                    <option value={value}> { (value) ? value : 'Select'   }</option>
-                    ))
-                }
-            </select> 
-        </span>
-        </div>
+        <select 
+            name={"select"}
+            value={ formFieldElement?.inputValue ? formFieldElement?.inputValue : (( answer !== "" || answer !== null ) ? answer : inputValue) }
+            onChange={(e)=> handleDropDownSelection( e.target.value  )}
+        >
+            { dropDownValues?.map( value  => (
+                <option value={value}> { (value) ? value : 'Select'   }</option>
+                ))
+            }
+        </select> 
     }
     </>
     );
@@ -134,8 +140,6 @@ const mapState = ( state, ownProps ) => {
     return {
         currentUser: state.users.user,
         elememtFormFields: Object.values( state?.formFields?.formFields ).filter( field => field?.questionId === ownProps?.formFieldElement?.questionId ),
-        formFieldAnswers: Object.values( state?.formFieldAnswers?.formFieldAnswers ).filter( field => field?.questionId === ownProps?.formFieldElement?.questionId && field?.formName === ownProps?.formFieldElement?.formName ),
-        formFieldAnswersError: state?.formFieldAnswers?.onSaveError,
         studentsAnswer: Object.values( state?.formFieldAnswers?.formFieldAnswers ).filter( field => field?.questionId === ownProps?.formFieldElement?.questionId ).find( field => field?.fieldId === ownProps?.formFieldElement?._id  && field?.formName === ownProps?.formFieldElement?.formName && field?.formUuId === ownProps?.fieldProps?.formUuId && field?.userId === (ownProps?.fieldProps?.userId ? ownProps?.fieldProps?.userId : ownProps?.currentUser?._id)),
         saveLessonInProgress: state.lessons.saveLessonInProgress,
         onlineQuestions: Object.values(state.onlineQuestions.onlineQuestions),
@@ -143,4 +147,4 @@ const mapState = ( state, ownProps ) => {
     };
 };
 
-export default connect( mapState, { saveFormField, saveFormFieldNoCallback, saveOnlineQuestion, loadFormFieldsByFormFieldId } )(DropDown);
+export default connect( mapState, { saveFormField, saveOnlineQuestion } )(DropDown);

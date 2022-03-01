@@ -20,7 +20,8 @@ export const setAuthToken = token => {
   apiAuthToken = token;
 };
 
-export const deleteLessonFileByFileName = ( fileName ) => {
+export const deleteFileByFileName = ( fileName ) => {
+
   return fetch(PREFIX + `/fileUploads/delete?fileName=${fileName}`) 
     .then(handleErrors)
     .then(response => response.json())

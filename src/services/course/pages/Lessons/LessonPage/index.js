@@ -34,14 +34,24 @@ const LessonPage = ({
   };
 
 return <div className="lessonPage">
-  <NavLinks to={`/lessons/${lessonId}/more`}>
-    <span className="multicolortext"> {`${lesson?.title}`} </span><span>>></span>
-  </NavLinks>
-  { (previewMode) && <div className="textBoxItem">  
-      <p> Write a brief introduction about this lesson.<br/> Set expectations and takeaways. </p>
-      <textarea id="txtid" type={"textarea"} name="txtname" rows="7" cols="50" maxlength="200" onChange={handleTextAreaInput} value={textAreaValue} />
+  <div className="title">
+    <NavLinks to={`/lessons/${lessonId}/more`}>
+      <span className="multicolortext"> {`${lesson?.title}`} </span>
+    </NavLinks>
+    { (previewMode) && <div className="textBoxItem">  
+      <textarea 
+        id="txtid" 
+        type={"textarea"} 
+        name="txtname" 
+        rows="7" cols="50" 
+        maxlength="200" 
+        onChange={handleTextAreaInput} 
+        value={textAreaValue}
+        placeholder="Introduce lesson content, expectations and takeaways." 
+      />
     </div>
   }
+  </div>
 </div>;
 };
 

@@ -1,6 +1,12 @@
 import {
 role } from 'services/course/helpers/PageHelpers';
 
+import {
+inputType } from 'services/course/pages/QuestionsPage/helpers';
+
+import {
+elementMeta as styleMeta } from 'services/course/pages/QuestionsPage/helpers';
+
 export const labelValue = ( labelType, index ) => {
   let alphabet = [ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" ];  
   let roman = [ "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix", "x" ];
@@ -81,19 +87,6 @@ export const elementMeta = {
   questionPushNotificationSubscribers: 'questionPushNotificationSubscribers',
   questionEmailNotificationSubscribers: 'questionEmailNotificationSubscribers',
   savedQuestions: 'savedQuestions' 
-};
-
-export const inputType = {
-  CheckBox: "checkbox",
-  RadioButton: "radiobutton",
-  Text: "text",
-  TextArea: "textarea",
-  Video: "video",
-  Email: "email",
-  Number: "number",
-  Phone: "phone", 
-  Date: "date",
-  DateTime: "datetime"
 };
 
 export const labelType = {
@@ -202,10 +195,29 @@ export const formTypes = {
   basic: "basic",
 };
 
+export const formTypeCollection = [ 
+  formTypes.report, 
+  formTypes.lesson,
+  formTypes.homework,
+  formTypes.quizzwithpoints,
+  formTypes.examwithpoints,
+  formTypes.onlinequestions,
+  formTypes.survey,
+  formTypes.livesurvey,
+  formTypes.announcements,
+  formTypes.singlepageweb,
+  formTypes.multipageweb,
+  formTypes.templatedpageweb,
+  formTypes.report,
+  formTypes.basic
+];
+
 export function getStyles(formtype){
   switch (formtype) {
     case formTypes?.report:
-      return { builder:'reportBuilder', content: 'content3' };
+      return { builder: 'reportBuilder', content: 'content3' };
+    case formTypes?.quizzwithpoints:
+      return { builder: 'quizzWithPointsBuilder', content: 'content3' };  
     default:
      return { builder:'builder2', content: 'content2' };
   }

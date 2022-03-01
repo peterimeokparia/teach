@@ -19,7 +19,8 @@ const register = await navigator.serviceWorker.register('/../../worker.js', { sc
   console.log('Service worker registered...');
     // Register Push
   console.log('Registering Push...');
-  const subscription = await register.pushManager.subscribe({
+
+  const subscription = await register?.pushManager?.subscribe({
       userVisibleOnly: true, 
       applicationServerKey: urlBase64ToUint8Array( vapidKeys.publicVapidKey )
   });

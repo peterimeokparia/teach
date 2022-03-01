@@ -36,6 +36,8 @@ import onlineSurveys from './onlinesurveys';
 import formFieldPoints from './formquestionpoints';
 import timers from './countdowntimer';
 import formBuilders from './formbuilders';
+import institutions from './institutions';
+import classGrades from './classgrades';
 
 let reducers = { 
     courses, 
@@ -74,7 +76,9 @@ let reducers = {
     formFieldAnswers,
     formFieldPoints,
     timers,
-    formBuilders
+    formBuilders,
+    institutions,
+    classGrades
 };
 
 export default combineReducers( reducers );

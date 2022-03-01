@@ -33,7 +33,7 @@ const CountDownTimer = ({
  
 return (
     <div className="clock">
-        <span className="digital"> 
+        <div className="digital"> 
         { countDown() }
         {
           <> 
@@ -68,7 +68,7 @@ return (
           }
           </>
         }
-        </span> 
+        </div> 
     </div>
 ); };
 

@@ -56,12 +56,18 @@ export const role = {
     Admin: "Admin",
 };
 
+export const roleTypeCollection = [
+    role.Tutor, role.Student,
+    role.School, role.Organization,
+    role.Individual, role.Admin
+];
+
 export const cleanUrl = ( urlValue ) => {
     return urlValue?.replace(/\s+/g, "%20");
 };
 
 export const handlePushNotificationSubscription = ( subscribedUsers, user,  newSubscriptionAction, addDeviceToExistingSubscriptionAction ) => {
-    let subscribedUser = undefined;
+    let subscribedUser = undefined, subscription = undefined;
 
     subscribedUsers.every(element => {
         if ( element?.userId === user?._id ) {
@@ -71,27 +77,30 @@ export const handlePushNotificationSubscription = ( subscribedUsers, user,  newS
         return true;
     });
 
-    let subscription = undefined;
-
     if ( serviceWorkerSupported() ) {
         subscription = send();
     }
 
-    subscription
-    .then(
-        response => {
-            let endpointExists = subscribedUser?.subscriptions?.find( subscription => subscription?.endpoint === response?.endpoint );
-            
-            if  ( subscribedUser && (! endpointExists ) ) {
-                addDeviceToExistingSubscriptionAction( { ...subscribedUser, subscriptions: [ ...subscribedUser?.subscriptions,  response ] } );
-            } 
-            
-            if ( !subscribedUser ) {
-                newSubscriptionAction( { userId: user?._id,  subscriptions: [ response ],  operatorId: user?.operatorId } );
-            }
-        }
+    if ( subscription ) {
 
-    ).catch( error => console.error( error ));   
+        subscription
+        .then(
+            response => {
+                let endpointExists = subscribedUser?.subscriptions?.find( subscription => subscription?.endpoint === response?.endpoint );
+                
+                if  ( subscribedUser && (! endpointExists ) ) {
+                    addDeviceToExistingSubscriptionAction( { ...subscribedUser, subscriptions: [ ...subscribedUser?.subscriptions,  response ] } );
+                } 
+                
+                if ( !subscribedUser ) {
+                    newSubscriptionAction( { userId: user?._id,  subscriptions: [ response ],  operatorId: user?.operatorId } );
+                }
+            }
+
+        ).catch( error => console.error( error ));   
+
+    }
+
 };
 
 export const validateOperatorBusinessName = () => <div>{"Please verify the url"}</div> ;

@@ -74,7 +74,6 @@ const MultiInputComponent = ( { inputFieldOptions, animateInvitationButton } ) =
                       name={element?.name}
                       type={element?.type}
                       value={ ( element?.name === inputName ) ? inputValue : inputFields?.find( obj => obj.name === element?.name)[ 'value' ] }
-                      // value={ inputFields?.find( obj => obj.name === element?.name)[ 'value' ]}
                       onChange={handleChange}
                       placeholder={element?.placeHolderText}
                   /> 
@@ -90,9 +89,7 @@ const MultiInputComponent = ( { inputFieldOptions, animateInvitationButton } ) =
       </form>  
       <div>                         
   </div>  
-          
-
-    </>
+  </>
 
   )
 }

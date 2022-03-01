@@ -7,6 +7,8 @@ assignees: ''
 
 ---
 
+<!-- IMPORTANT: Please disable plugins prior to posting a bug report.  If you have a problem with a plugin please post on the plugin repository.  Thanks! -->
+
 **Describe the bug**
 A clear and concise description of what the bug is.
 
@@ -28,6 +30,7 @@ If applicable, add screenshots to help explain your problem.
  - OS: [e.g., Ubuntu 20.04]
  - Node.js version (`node --version`):
  - npm version (`npm --version`):
+ - Is the server free of plugins: 
 
 **Desktop (please complete the following information):**
  - OS: [e.g. iOS]

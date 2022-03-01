@@ -3,7 +3,7 @@ export const helpIconStyle = () => {
     fontSize: 70,
     position: "fixed",
     "zIndex": 1, 
-    left: "50%",
+    left: "47%",
     top: "-3%",
   };
 };

@@ -1,8 +1,4 @@
 import {
-useState,
-useEffect } from 'react';
-
-import {
 connect } from 'react-redux';
 
 import {
@@ -19,106 +15,62 @@ loadTestTimers } from 'services/course/actions/countdowntimer';
 import { 
 role } from 'services/course/helpers/PageHelpers';
 
+import { 
+getSortedRecordsByDate } from 'services/course/selectors';
+
+import useSetFormBuilderHook from './hooks/useSetFormBuilderHook';
 import Modal from 'react-modal';
 import FloatingActionButtonZoom from 'services/course/pages/components/FloatingActionButtonZoom';
 import 'services/course/pages/FormBuilder/formStyles/quizz/style.css';
 import 'services/course/pages/FormBuilder/formStyles/report/style.css';
+import 'services/course/pages/FormBuilder/formStyles/quizzWithPoints/style.css';
+import './style.css';
 
-// Save Test( Course ) / Quizz( Lessons )
-// Continue Test / Quizz
-// Test Conclusion / Quizz Conclusion
-const FormBuilder = ({
+const FormBuilder = ({  
     operatorBusinessName,
-    currentUser,
-    formBuilders,
     formType,
     formName,
+    formId,
     formUuId,
     userId,
+    eventId, 
     courseId,
     lessonId,
-    formId,
+    currentUser,
+    users,
+    formBuilders,
     addNewFormBuilder,
     saveFormBuilder,
     loadFormBuilders,
     loadPagedFormBuilders,
     addTime,
     saveTime,
-    formBuilders2,
-    eraBuilder,
     loadTestTimers, 
     timer,
     currentUserTimer,
-    allTimers }) => {
+    allTimers,
+    onlineQuestions,
+    formFieldAnswers,
+    reportFormFieldAnswers }) => {
 
-    const [ isOpen, setIsOpen ] = useState( true ); 
-    const [ pendingFormsInBuildState, setPendingFormsInBuildState ] = useState([]);
-    const [ publishedFormsInBuildState, setPublishedFormsInBuildState ] = useState([]);
-    const [ inProgressFormsInTakingState, setInProgressFormsInTakingState ] = useState([]);
-    const [ submittedFormsInTakingState, setSubmittedFormsInTakingState ] = useState([]); 
-    const [ allSubmittedFormsInTakingState, setAllSubmittedFormsInTakingState ] = useState([]);
-    const [ formsInBuildState, setFormsInBuildState ] = useState([]); 
-    const [ formsInUse, setFormsInUse ] = useState([]); 
-
-    // If there are submitted tests we can't modify the form. Create copy...
-    useEffect(() => { // filter by user Id appropriately
-
-      loadFormBuilders();
-
-      loadTestTimers();
-
-      let formBuildersInBuildState = formBuilders?.filter(form => form?.formType === formType &&  form?.state === "Manage" && form?.status === "Pending");
-
-      if ( formBuildersInBuildState ) {
-        setPendingFormsInBuildState( formBuildersInBuildState );
-      }
-
-      let formsInPublisedState = formBuilders?.filter(form => form?.formType === formType &&  form?.state === "Manage" && form?.status === "Published");
-
-      if ( formsInPublisedState ) {
-        setPublishedFormsInBuildState( formsInPublisedState );
-      }
-
-      let formBuildersInPendingState =  formBuilders.filter(form => form?.formType === formType && form?.state === "Taking" && form?.status === "InProgress" && form?.userId === currentUser?._id );
-
-      if ( formBuildersInPendingState ) {
-        setInProgressFormsInTakingState( formBuildersInPendingState );
-      }
-
-      let submittedForms = formBuilders?.filter(form => form?.formType === formType &&  form?.state === "Taking" && form?.status === "Submitted" && form?.userId === currentUser?._id);
-
-      if ( submittedForms ) {
-        setSubmittedFormsInTakingState( submittedForms );
-      }
-
-      let allSubmittedForms = formBuilders?.filter(form => form?.formType === formType &&  form?.state === "Taking" && form?.status === "Submitted" && form?.createdBy === currentUser?._id);
-
-      if ( allSubmittedForms ) {
-        setAllSubmittedFormsInTakingState( allSubmittedForms )
-      }
-
-      let currentFormsToUse = formBuilders.filter(form => form?.formType === formType && form?.state === "Manage" && ![ "Pending", "Published" ]?.includes( form?.status ));
-
-      if ( currentFormsToUse ) {
-        setFormsInBuildState( currentFormsToUse );
-      }
-
-      let formsInUse = formBuilders.filter(form => form?.formType === formType && form?.state === "Started");
-
-      if ( formsInUse ) {
-        setFormsInUse( formsInUse );
-      }
-
-    }, []);
+    let { 
+      pendingFormsInBuildState,
+      publishedFormsInBuildState,
+      inProgressFormsInTakingState,
+      submittedFormsInTakingState,  
+      allSubmittedFormsInTakingState,
+      formsInBuildState,
+      formsInUse
+    } = useSetFormBuilderHook( formType, currentUser, loadFormBuilders, loadTestTimers, formBuilders );
 
     let props = {
       operatorBusinessName,
       currentUser,
+      users,
       loadPagedFormBuilders,
       formBuilders,
       formsInBuildState,
       formsInUse,
-      pendingFormsInBuildState,
       pendingFormsInBuildState,
       publishedFormsInBuildState,
       inProgressFormsInTakingState,
@@ -132,53 +84,50 @@ const FormBuilder = ({
       courseId,
       lessonId,
       addNewFormBuilder,
+      loadFormBuilders,
       saveFormBuilder,
       addTime,
       saveTime,
       loadTestTimers,
       timer,
       currentUserTimer,
-      allTimers
+      allTimers,
+      onlineQuestions,
+      formFieldAnswers,
+      reportFormFieldAnswers,
+      eventId
     };
 
-  function handleTogglingModal(  ){
-    setIsOpen( !isOpen );
-  };
-
-  return <Modal 
-    isOpen={isOpen}
-    style={{
-      overlay: {
-      backgroundColor: 'skyblue',
-      opacity: 0.95
-      },
-      content: {
-      width: '96%',
-      height: '95%',
-      overflow: 'hidden',
-      // "marginLeft": "1%",
-      }
-    }}
-    >
-    {
-      <div className="modal-header"><h2>{`${ props?.formType?.toUpperCase()}`}</h2></div>
-    }
-    {  
-      <div className="modal-content">
-        <FloatingActionButtonZoom props={props}/>    
-      </div>
-    }    
-    </Modal>
+    return <> 
+    <div className="formbuilder-action-toolbars">
+      <h2>{`${ props?.formType?.toUpperCase()}`}</h2>
+      <FloatingActionButtonZoom props={props}/> 
+    </div>
+    </>
 };
+
+function getFormBuilder( builder, formName, formType ){
+
+  if ( formName ) {
+
+    return builder?.formName === formName;
+
+  }
+
+  return  builder?.formType === formType;
+}
 
 const mapState = ( state, ownProps ) => {
   return {
     currentUser: state.users.user,
-    formBuilders: Object.values( state.formBuilders?.formBuilders ),
-    formBuilders2: state.formBuilders?.formBuilders,
-    eraBuilder: state.formBuilders?.builders,
+    users: Object.values( state.users.users ),
+    onlineQuestions: Object.values(state.onlineQuestions.onlineQuestions)?.filter( question => question?.formName === ownProps.formName ),
+    formFieldAnswers: Object.values( state?.formFieldAnswers?.formFieldAnswers )?.filter( answer => answer?.formName === ownProps.formName ),
+    formBuilders: getSortedRecordsByDate(Object.values( state.formBuilders?.formBuilders ), 'createDateTime' ),
     timer: Object?.values( state?.timers?.timers )?.find( timer => timer?.formName === ownProps?.formName && timer?.role === role?.Tutor ),
     allTimers: Object?.values( state?.timers?.timers ),
+    reportFormFieldAnswers: Object.values( state?.formFieldAnswers?.formFieldAnswers )?.filter( answer => answer?.formName === ownProps.formName &&
+                              answer?.formType === 'report'  && answer?.eventId === ownProps?.eventId ),
   };
 };
 

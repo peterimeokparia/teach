@@ -32,6 +32,10 @@ https://dev.to/metamodal/add-jitsi-meet-to-your-react-app-33j9
 https://github.com/jitsi/jitsi-meet/blob/master/config.js
 https://jitsi.github.io/handbook/docs/dev-guide/dev-guide-iframe
 
+Jitsi - Install - Latest Updates
+https://community.jitsi.org/t/rejoining-for-more-than-one-participent/20917/3
+https://www.digitalocean.com/community/tutorials/how-to-install-jitsi-meet-on-ubuntu-20-04
+
 Server
 https://dev.to/pacheco/my-fullstack-setup-node-js-react-js-and-mongodb-2a4k
 https://medium.com/@ABiasedHypocrite/simplest-and-fastest-react-express-app-setup-8497ed8db0d1
@@ -456,3 +460,36 @@ https://www.kirupa.com/html5/creating_the_ios_icon_jiggle_wobble_effect_in_css.h
 
 https://www.youtube.com/watch?v=gRs5brImLH8
 
+Handling errors gracefully
+----------------------------
+https://alligator.io/react/
+https://www.digitalocean.com/community/tutorials/react-error-boundaries
+
+Drag & Drop 
+--------------
+https://www.freecodecamp.org/news/how-to-add-drag-and-drop-in-react-with-react-beautiful-dnd/
+
+Css Centering Items
+---------------------
+https://www.w3.org/Style/Examples/007/center.en.html
+
+Custom Toggle 
+----------------
+https://www.w3schools.com/howto/howto_css_switch.asp
+
+D3
+---
+https://www.geeksforgeeks.org/d3-js-d3-scaleband-function/?ref=lbp
+https://blog.griddynamics.com/using-d3-js-with-react-js-an-8-step-comprehensive-manual/
+https://codesandbox.io/s/d3react-multiline-chart-version-1-simple-5nxwo?file=/src/App.js:496-511
+
+School System Rankings
+----------------------
+https://www.usnews.com/education/best-high-schools/virginia/districts/fairfax-county-public-schools/thomas-jefferson-high-school-for-science-and-technology-20461
+https://www.usnews.com/education/best-high-schools/national-rankings
+https://pages.crimsoneducation.org/usnews.html?utm_source=ref_org&utm_medium=aff_direct&utm_campaign=US_core_2020-08-06_usn&utm_content=text-link-promo&utm_term=usn-widget
+
+https://www.usnews.com/education/best-high-schools/district-of-columbia/districts/district-of-columbia-public-schools/school-without-walls-high-school-4648
+
+
+https://mui.com/components/text-fields/

@@ -4,7 +4,10 @@ createSelector}  from 'reselect';
 import { 
 setItemInSessionStorage } from 'services/course/helpers/ServerHelper';
 
-const getUsers = state => state.users.users;
+import { 
+elementMeta } from "services/course/pages/QuestionsPage/helpers";
+
+const getUsers = state => state?.users?.users;
 const getCurrentUser = state => state.users.user;
 const getLessons = state => state.lessons.lessons;
 const getCalendars = state => state?.calendar?.calendars;
@@ -14,6 +17,11 @@ const getParsedCourseId = ( state, props ) => props?.courseId;
 const getParsedUserId = ( state, props ) => props?.currentUser?._id;
 const getUserId = ( state, props ) => props?.userId;
 const getQuestionId = ( state, props ) => props?.questionId;
+const getFormFieldElementQuestionId = ( state, props ) => props?.formFieldElement?.questionId;
+const getFormFieldElementId = ( state, props ) => props?.formFieldElement?._id;
+const getFormFieldElementFormName = ( state, props ) => props?.formFieldElement?.formName;
+const getFormFieldElementFieldPropsFormUuId = ( state, props ) => props?.fieldProps?.formUuId;
+const getFormFieldElementFieldPropsUserId = ( state, props ) => props?.fieldProps?.userId;
 const getCourseId = ( state, props ) => props?.courseId;
 const getCalendarEventType = ( state, props ) => props?.calendarEventType;
 const getCourses = state =>   state?.courses?.courses;
@@ -27,6 +35,8 @@ const getSessions = state => state?.sessions?.sessions;
 const getOnlineAnswers = state => state?.onlineAnswers?.onlineAnswers;
 const getFailedPushNotifications = state => state?.failedNotifications.failedPushNotifications;
 const getFailedEmailNotifications = state => state?.failedNotifications.failedEmailNotifications;
+const getFormFieldAnswers = state =>  state?.formFieldAnswers?.formFieldAnswers;
+const getFormBuilders = state =>  state?.formBuilders?.formBuilders;
 // const getCurrentOperatorId = ( state, props ) => props?.operatorId;
 // const parseCourseId = (state, props) => props.courseId;
 // const getCurrentUser = state => state.users.user;
@@ -45,6 +55,20 @@ export const failedOnlineQuestionNotificationQueueHasMessages = createSelector(
         return Object.values( failedPushNotifications )?.filter(notifications => notifications?.userId === user?._id )?.length > 0;
     }
 );
+
+export const getSortedRecords = (collection, itemKey) => {
+    return collection?.sort((a, b) => {
+        if( (b[itemKey] > a[itemKey]) ){
+            return  -1;
+        }
+        else if( (b[itemKey] < a[itemKey]) ){
+            return 1;
+        }
+        else{
+            return 0;
+        } 
+    });
+};
 
 export const getSortedRecordsByDate = (collection, date) => {
     return collection?.sort((a, b) => {
@@ -126,7 +150,7 @@ export const getCoursesByOperatorId = createSelector(
     getOperatorBusinessName,
     getCourses,
     (operators , operatorBusinessName, courses) => 
-       Object.values(courses)?.filter(usr => usr?.operatorId === Object.values(operators).find(operator =>  operator.businessName === operatorBusinessName)?._id)       
+       Object?.values(courses)?.filter(usr => usr?.operatorId === Object?.values(operators)?.find(operator =>  operator?.businessName === operatorBusinessName)?._id)       
 );
 
 export const getMeetingsByOperatorId = createSelector( 
@@ -230,6 +254,20 @@ export const getSelectedOnlineAnswersByQuestionId = createSelector(
           && answer?.questionId === questionId)       
 );
 
+export const getFormFieldAnswersByQuestionId = createSelector(
+    getFormFieldAnswers,
+    getFormFieldElementQuestionId,
+    getFormFieldElementId,
+    getFormFieldElementFormName,
+    getFormFieldElementFieldPropsFormUuId,
+    getFormFieldElementFieldPropsUserId,
+    getParsedUserId,
+    ( formFieldElementAnswers, fieldElementQuestionId, fieldElementId, fieldElementFormName, fieldPropsFormUuid, fieldPropsFormUserId, userId ) => 
+         Object.values(formFieldElementAnswers).filter( answer => answer?.questionId === fieldElementQuestionId ).
+          find( field =>  field?.fieldId ===  fieldElementId && field?.formName === fieldElementFormName && 
+            field?.formUuId === fieldPropsFormUuid && field?.userId === (fieldPropsFormUserId ? fieldPropsFormUserId : userId ))       
+);
+
 export const getSelectedOnlineAnswersByCourseId = createSelector(
     getCourseId,
     getOnlineAnswers,
@@ -250,4 +288,11 @@ export const getFailedEmailNotificationQueue = createSelector(
     getFailedEmailNotifications,
     (userId, failedEmailNotifications) => 
          Object.values(failedEmailNotifications).filter(failedSentEmail => failedSentEmail?.userId === userId)       
+);
+
+export const getPublishedForms = createSelector(
+    getCurrentUser,
+    getFormBuilders,
+    (user, formBuilders) => 
+         Object.values(formBuilders).filter(form => form?.state === elementMeta.state.Manage && form?.status === elementMeta.status.Published || form?.status === elementMeta.status.Pending && form?.role === "" || form?.role === user?.role )   
 );

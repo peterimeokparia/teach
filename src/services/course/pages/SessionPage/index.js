@@ -112,7 +112,8 @@ const mapState = (state, ownProps)  => {
     return {
     currentUser: state?.users?.user,
     sessions: getSessionsByOperatorId(state, ownProps),
-    lesson: state?.lessons?.lessons[ownProps.lessonId]
+    lesson: state?.lessons?.lessons[ownProps?.courseId]
+    // lesson: state?.lessons?.lessons[ownProps.lessonId]
     };
 };
 

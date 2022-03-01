@@ -11,7 +11,6 @@ export const ADD_FORMBUILDER_SUCCESS = "ADD FORMBUILDER SUCCESS";
 export const ADD_FORMBUILDER_ERROR = "ADD FORMBUILDER ERROR";
 export const LOAD_FORMBUILDER_BEGIN = "LOAD FORMBUILDER BEGIN";
 export const LOAD_FORMBUILDER_SUCCESS = "LOAD FORMBUILDER SUCCESS";
-export const LOAD_FORMBUILDER_SUCCESSS = "LOAD FORMBUILDER SUCCESSS"
 export const LOAD_FORMBUILDER_ERROR = "LOAD FORMBUILDER ERROR";
 export const DELETE_FORMBUILDER_BEGIN = "DELETE FORMBUILDER BEGIN";
 export const DELETE_FORMBUILDER_ERROR = "DELETE FORMBUILDER ERROR";
@@ -19,7 +18,7 @@ export const DELETE_FORMBUILDER_SUCCESS = "DELETE FORMBUILDER SUCCESS";
 export const SAVE_FORMBUILDER_BEGIN = "SAVE FORMBUILDER BEGIN";
 export const SAVE_FORMBUILDER_ERROR = "SAVE FORMBUILDER ERROR";
 export const SAVE_FORMBUILDER_SUCCESS = "SAVE FORMBUILDER SUCCESS";
-
+   
 export const addNewFormBuilder = formBuiler => {
     return dispatch => {
         dispatch({ type: ADD_FORMBUILDER_BEGIN });
@@ -81,15 +80,10 @@ export const loadFormBuilderByUserId = ( userId ) => {
 };
 
 export const loadPagedFormBuilders = ( formType, page, limit ) => { 
-    // alert('loadpagedbuilder')
     return dispatch => {
         return getPagedData( `/formbuilder/pagedRoute?id=${formType}&page=${page}&limit=${limit}`)
         .then( form => {
-            // alert('loadpagedbuilder')
-            // alert( JSON.stringify(form) )
-            dispatch({ type: LOAD_FORMBUILDER_SUCCESSS, payload: form });
-            // alert('loadpagedbuilder')
-            // alert( JSON.stringify(form) )
+            dispatch({ type: LOAD_FORMBUILDER_SUCCESS, payload: form });
             return form;
         }).catch( error => {
             dispatch({ type: LOAD_FORMBUILDER_ERROR , error });
@@ -99,13 +93,14 @@ export const loadPagedFormBuilders = ( formType, page, limit ) => {
 };
 
 export const deleteFormBuilder = formbuilder => {
-return dispatch => {
-    dispatch({ type: DELETE_FORMBUILDER_BEGIN });
-        return remove( formbuilder, `/formbuilder/` )
-        .then( (response ) => {
-            dispatch({ type: DELETE_FORMBUILDER_SUCCESS, payload: formbuilder });
-        }).catch( error => {
-        dispatch({ type: DELETE_FORMBUILDER_ERROR , error });
-    });
-};
+    alert( JSON.stringify(formbuilder))
+    return dispatch => {
+        dispatch({ type: DELETE_FORMBUILDER_BEGIN });
+            return remove( formbuilder, `/formbuilder/` )
+            .then( (response ) => {
+                dispatch({ type: DELETE_FORMBUILDER_SUCCESS, payload: formbuilder });
+            }).catch( error => {
+            dispatch({ type: DELETE_FORMBUILDER_ERROR , error });
+        });
+    };
 };

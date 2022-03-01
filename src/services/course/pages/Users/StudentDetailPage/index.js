@@ -41,6 +41,7 @@ const StudentDetailPage = ({
         if ( courseId ) {
             loadLessons( courseId );
         }
+        
     }, [  courseId, studentId, loadLessons ]); 
     
     let props = {

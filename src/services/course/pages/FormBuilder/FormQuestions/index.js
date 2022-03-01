@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { 
 connect } from 'react-redux';
 
@@ -7,6 +9,9 @@ getPushNotificationUsersByOperatorId } from 'services/course/selectors';
 
 import { 
 saveOnlineQuestion } from 'services/course/actions/onlinequestions';
+
+import {
+addNewFormField } from 'services/course/actions/formfields';
 
 import {
 loadFormFieldAnswers } from 'services/course/actions/formfieldanswers';
@@ -24,6 +29,21 @@ useOnLoadingHook } from 'services/course/helpers/Hooks/useOnLoadingHook';
 import { 
 role } from 'services/course/helpers/PageHelpers';
 
+import {
+formFieldInputCollection,
+manageFormFieldCollection } from 'services/course/pages/FormBuilder/helpers/formFieldHelpers';
+
+import {
+addFormFieldConfig } from 'services/course/pages/FormBuilder/FormFields/helpers';
+
+import { 
+formTypes } from '../helpers';
+
+import {
+elementMeta } from 'services/course/pages/QuestionsPage/helpers';
+
+import useloadQuestionsOnUpdatedQuestionContentHook from 'services/course/pages/OnlineQuestionsPage/hooks/useloadQuestionsOnUpdatedQuestionContentHook';
+import useInputTypeSelectorMaxDialogHook from 'services/course/pages/FormBuilder/hooks/useInputTypeSelectorMaxDialogHook';
 import useFormFieldQuestionsHook from '../hooks/useFormFieldQuestionsHook';
 import Tooltip from '@mui/material/Tooltip';
 import PlusOneIcon from '@material-ui/icons/PlusOne';
@@ -37,9 +57,15 @@ import CountDownTimer from 'services/course/pages/components/CountDownTimer';
 import FormBuilderDashBoard from 'services/course/pages/components/FormBuilderDashBoard';
 import './style.css';
 
-// use case - find a way to build new exams / quizz from existing question banks/
 const FormQuestions = ({ 
+  contentUpdated,
   operatorBusinessName, 
+  formType,
+  formName,
+  formUuId,
+  userId,
+  formBuilderStatus,
+  eventId,
   onlineQuestionId, 
   formId,
   courseId,   
@@ -48,18 +74,16 @@ const FormQuestions = ({
   onQuestionsLoadingError,
   saveOnlineQuestion,
   loadFormFieldAnswers,
-  formFieldAnswers,
+  addNewFormField,
   currentUser,
-  userId,
   timer,
-  formType,
-  formName,
-  formUuId,
   studentsTotalPointsReceived,
   studentsTotalPointsReceivedFromPersistence,
-  formBuilderStatus }) => {
+  formBuilders,
+  orderedFormBuilderQuestions }) => {
 
   useUserVerificationHook( currentUser, operatorBusinessName );
+
   useOnLoadingHook( onlineQuestionsLoading , onQuestionsLoadingError );
  
   let questionProps = {
@@ -68,6 +92,8 @@ const FormQuestions = ({
       formType,
       formName,
       formUuId,
+      formBuilderStatus,
+      eventId,
       onlineQuestionId, 
       saveOnlineQuestion, 
       loadFormFieldAnswers,
@@ -75,28 +101,38 @@ const FormQuestions = ({
       studentsTotalPointsReceivedFromPersistence,
       timer,
       currentUser,
-      formBuilderStatus,
+      formBuilders,
+      orderedFormBuilderQuestions,
       operatorBusinessName,
-      currentCourseQuestions: currentQuestions,
       displayVideoComponent: false,
       formId,
       userId,
   };
 
   let {
-    handleMaxDialog,
     previewMode,
-    currentQuestions,
     enableAddPointsToQuestionInputField,
     selectedQuestion,
     studentsCummulativePointsReceived,
     editing,
-    toggleFormFieldSelector,
+    setSelectedQuestion,
     toggleSetPreviewMode,
     addPoints,
     toggleQuestionPointField
   } = useFormFieldQuestionsHook( questionProps ); 
-    
+
+  let { 
+    modalProps,
+    toggleFormFieldSelector,
+  } = useInputTypeSelectorMaxDialogHook({ setSelectedQuestion, addNewFormInputField, collection: formFieldInputCollection });
+
+  useloadQuestionsOnUpdatedQuestionContentHook( contentUpdated );
+
+  function addNewFormInputField( typeOfInput, uuid ){
+    let props = { typeOfInput, question: previewMode?.question, uuid, currentUser, formId };
+    addNewFormField( manageFormFieldCollection( addFormFieldConfig( props ) ) )
+  }
+ 
 return (
     <div className="stage" id="stage">
         <div className="" id=""> 
@@ -107,11 +143,13 @@ return (
               formUuId = { formUuId }
               previewMode = { previewMode?.isPreviewMode }
             >
-              <div className="points-label">
-              <label className="points-label">{'Points'}</label>
-              </div>
-                <DigitalClock digits={ studentsCummulativePointsReceived } />
-              <div>
+              { formType !== formTypes.report &&
+                 <div className="points-label">
+                   <label className="points-label">{'Points'}</label>
+                   <DigitalClock digits={ studentsCummulativePointsReceived } /> 
+                 </div>
+              }
+              <div className="countdown-timer">
                 { 
                   <CountDownTimer props={ { ...questionProps, previewMode, editing, timer, studentsCummulativePointsReceived } } />
                 }
@@ -119,11 +157,12 @@ return (
             </FormBuilderDashBoard>
           </>
         }
-        <OnlineQuestionsMultiEditorComponent onlineQuestionProps={{...questionProps, previewMode, handleMaxDialog, toggleFormFieldSelector }}>
+        <OnlineQuestionsMultiEditorComponent onlineQuestionProps={{ ...questionProps, previewMode, selectedQuestion }}>
         {( element, courseId ) => {
               return <> 
               { 
-                <Roles role={ currentUser?.role ===  role.Tutor } >
+               <Roles role={ currentUser?.role ===  role.Tutor && formBuilderStatus === elementMeta.state.Manage }>
+               
                   <Tooltip title="Toggle Preview Mode" arrow>
                     <SwapHorizIcon
                       style={ toggleIconStyleHeader() }
@@ -163,13 +202,13 @@ return (
                       /> 
                     </div>
                   }
+  
                   </Roles> 
                 }
                   <FormFields 
-                    form={ { formType, formName, formUuId, formId, question: element, formBuilderStatus, userId } }
+                    form={ { formType, formName, formUuId, formId, question: element, formBuilderStatus, userId, eventId } }
                     previewMode={ previewMode }
-                    handleMaxDialog={ handleMaxDialog }
-                    toggleFormFieldSelector={ toggleFormFieldSelector }
+                    modalProps={ modalProps }
                   />
               </>
             }
@@ -185,6 +224,7 @@ const mapState = ( state, ownProps ) => {
   return {
     operator: getOperatorFromOperatorBusinessName(state, ownProps),
     currentUser: state?.users?.user,
+    formBuilders: Object?.values( state?.formBuilders?.formBuilders ),
     onlineQuestions: Object.values(state?.onlineQuestions?.onlineQuestions),
     onlineQuestionsLoading: state?.onlineQuestions?.onlineQuestionsLoading,
     onQuestionsLoadingError: state?.onlineQuestions?.onQuestionsLoadingError,
@@ -193,8 +233,9 @@ const mapState = ( state, ownProps ) => {
     failedOnlineQuestionNotifications: Object.values( state?.failedNotifications.failedPushNotifications ),
     studentsTotalPointsReceived: Object?.values( state?.formFieldAnswers?.studentsCummulativePointsRecieved )?.find( field => field?.formName === ownProps?.formName && field?.formUuId === ownProps?.formUuId && field?.userId === ownProps?.userId ),
     studentsTotalPointsReceivedFromPersistence: Object?.values( state?.formFieldPoints?.studentsCummulativePointsRecieved )?.find( field => field?.formName === ownProps?.formName && field?.formUuId === ownProps?.formUuId && field?.userId === ownProps?.userId ),
-    timer: Object?.values( state?.timers?.timers )?.find( timer => timer?.formName === ownProps?.formName )
+    timer: Object?.values( state?.timers?.timers )?.find( timer => timer?.formName === ownProps?.formName ),
+    contentUpdated: state?.onlineQuestions?.contentUpdated
   };
 };
 
-export default connect(mapState, { saveOnlineQuestion, loadFormFieldAnswers } )( FormQuestions );
+export default connect(mapState, { saveOnlineQuestion, loadFormFieldAnswers, addNewFormField } )( FormQuestions );

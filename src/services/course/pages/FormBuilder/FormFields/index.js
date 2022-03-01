@@ -37,28 +37,34 @@ useUserVerificationHook } from 'services/course/helpers/Hooks/useUserVerificatio
 import { 
 useOnLoadingHook } from 'services/course/helpers/Hooks/useOnLoadingHook';
 
-import { 
-getStyles,
-formTypes } from 'services/course/pages/FormBuilder/helpers';
+import {
+getStyles } from 'services/course/pages/FormBuilder/helpers';
+
+import {
+manageFormFieldCollection } from 'services/course/pages/FormBuilder/helpers/formFieldHelpers';
+
+import {
+addGroupedFormFieldsConfig  } from 'services/course/pages/FormBuilder/FormFields/helpers';
 
 import useFormFieldHook from '../hooks/useFormFieldHook';
-import CheckBox from 'services/course/pages/FormBuilder/FormFields/Components/CheckBox';
-import RadioButton from 'services/course/pages/FormBuilder/FormFields/Components/RadioButton';
-import DropDown from 'services/course/pages/FormBuilder/FormFields/Components/DropDown';
-import TextField from 'services/course/pages/FormBuilder/FormFields/Components/TextField';
-import TextLabel from 'services/course/pages/FormBuilder/FormFields/Components/TextLabel';
-import MaterialUiVideoComponent from 'services/course/pages/components/MaterialUiVideoComponent';
-import EditorComponent from 'services/course/pages/components/EditorComponent';
+import CheckBox from 'services/course/pages/FormBuilder/FormFields/components/CheckBox';
+import RadioButton from 'services/course/pages/FormBuilder/FormFields/components/RadioButton';
+import DropDown from 'services/course/pages/FormBuilder/FormFields/components/DropDown';
+import DataObjectSelector from 'services/course/pages/FormBuilder/FormFields/components/DataObjectSelector';
+import TextField from 'services/course/pages/FormBuilder/FormFields/components/TextField';
+import TextLabel from 'services/course/pages/FormBuilder/FormFields/components/TextLabel';
 import MaxWidthDialog from 'services/course/pages/components/MaxWidthDialog';
 import MenuItem from '@mui/material/MenuItem';
+import Date from 'services/course/pages/FormBuilder/FormFields/components/Date';
+import Numbers from 'services/course/pages/FormBuilder/FormFields/components/Numbers';
+import NumberPosition from 'services/course/pages/FormBuilder/FormFields/components/NumberPosition';
+import Time from 'services/course/pages/FormBuilder/FormFields/components/Time';
+import Toggle from 'services/course/pages/FormBuilder/FormFields/components/Toggle';
+import DateTime from 'services/course/pages/FormBuilder/FormFields/components/DateTime';
+import NumberPercentage from 'services/course/pages/FormBuilder/FormFields/components/NumberPercentage';
+import FileUploadField from 'services/course/pages/FormBuilder/FormFields/components/FileUploadField'; 
 import 'services/course/pages/FormBuilder/formStyles/quizz/style.css';
 import 'services/course/pages/FormBuilder/formStyles/report/style.css';
-// import './style.css';
-// I need a toggle field
-// I need a digital signature type field
-// Report form field answers can be weighted 
-//- we would report on this - as well as chart these 
-// - profiling response and creating weighted response for review
 
 const FormFields = ({ 
   operatorBusinessName,
@@ -89,11 +95,10 @@ const FormFields = ({
   formFieldAnswersLoading,
   onFormFieldAnswersLoadingError,
   form,
-  handleMaxDialog,
   setMarkDown,
-  toggleFormFieldSelector,
   saveStudentsAnswerPoints,
   setUpdatePoints,
+  modalProps,
   children }) => {
 
   let {
@@ -103,7 +108,8 @@ const FormFields = ({
     question,
     formType,
     formName,
-    formBuilderStatus
+    formBuilderStatus,
+    eventId
   } = form; 
 
   let fieldProps = { 
@@ -131,47 +137,51 @@ const FormFields = ({
     formBuilderStatus,
     userId,
     currentUser,
-    handleMaxDialog, 
     setMarkDown,
     fields,
     formFieldAnswers,
     formQuestionPoints,
-    toggleFormFieldSelector,
     saveStudentsAnswerPoints,
     setUpdatePoints,
     previewMode,
-    question };
+    question,
+    eventId };
 
   let {
-    modalProps, 
-    formAnswers,
     boundryRef, 
     formFields,
+    moveInputField, 
+    setMoveInputField,
     isPreviewMode,
     handleRndPostioning,
-    dropDownValueCallBack,
     onhandleSelected,
-    addGroupedFormFields,
     handleFormFieldAnswers,
     handleSelectorFormFieldAnswers,
-    setFormType,
     handleEditor
   } = useFormFieldHook( fieldProps );  
 
   useUserVerificationHook( currentUser, operatorBusinessName );
+
   useOnLoadingHook( formFieldsLoading, onFormFieldsLoadingError );
+
   useOnLoadingHook( formFieldAnswersLoading, onFormFieldAnswersLoadingError );
 
-  fieldProps = { 
+  let formFieldProps = { 
     ...fieldProps, 
-    dropDownValueCallBack,
-    handleFormFieldAnswers,
-    handleSelectorFormFieldAnswers,
-    addGroupedFormFields,
-    onhandleSelected,  
+    moveInputField,
+    setMoveInputField,
+    handleFormFieldAnswers, 
+    handleSelectorFormFieldAnswers, 
+    addGroupedFormFields, 
+    onhandleSelected 
   };
+
+  function addGroupedFormFields( element ){ 
+    addNewFormField( manageFormFieldCollection( addGroupedFormFieldsConfig( element, formUuId, currentUser ) ) );
+  }
+   
 return (
-    <div className={getStyles(formType)?.builder} ref={ boundryRef }> 
+    <div className={getStyles( formType )?.builder} ref={ boundryRef }> 
       <div className="headerboundry">
       </div>
       <div className="answerEditorBuilder">
@@ -190,16 +200,16 @@ return (
                   width: 250,
                   height: 50,
                 }}
-                  onDragStart={() => {  if ( !isPreviewMode( element )  ) return; }}
+                  onDragStart={ !moveInputField }
                   onDragStop={(e, d) => handleRndPostioning(d.x, d.y, element) }
                   minWidth={250}
                   minHeight={50}
                   bounds="parent"
-                  allowAnyClick={ isPreviewMode( element ) }
-                  disableDragging={ !isPreviewMode( element ) }
-                  onResize={() => {  if ( !isPreviewMode( element )  ) return; }}
+                  allowAnyClick={ false }
+                  disableDragging={ !moveInputField }
+                  onResize={ false }
               >
-              <div className={getStyles(formType)?.content}>
+              <div className={getStyles( formType )?.content}>
                 <div className="onlinequestion-list-items">
                 <div className=""> 
                 <div className="">
@@ -207,18 +217,18 @@ return (
                 <div>
                 <div className="question-card-top-right" /> 
                 <div className="" />
-                 { (element?.inputType === inputType.Explanation) && 
-                 <div className="explanation-answer">
-                   { 'Explanation answer'}
-                   { handleEditor( element ) }
-                </div>
+                { (element?.inputType === inputType.Explanation) && 
+                  <div className="explanation-answer">
+                    { 'Explanation answer'}
+                    { handleEditor( element ) }
+                  </div>
                 }
                 { (element?.inputType === inputType.Text) &&
-                  <div className="radio">,
+                  <div className="radio">
                     <label>  
                     { !isPreviewMode( element ) &&  <span className="textfield">  { element?.inputValue } </span> }  
                       <TextField 
-                        fieldProps={fieldProps}
+                        fieldProps={formFieldProps}
                         previewMode={ isPreviewMode( element ) } 
                         formFieldElement={element} 
                       />
@@ -230,7 +240,7 @@ return (
                     <label>  
                     { !isPreviewMode( element ) &&  <span className="textfield">  { element?.inputValue } </span> }  
                       <TextLabel 
-                        fieldProps={fieldProps}
+                        fieldProps={formFieldProps}
                         previewMode={ isPreviewMode( element ) } 
                         formFieldElement={element} 
                       />
@@ -240,10 +250,9 @@ return (
                 { (element?.inputType === inputType.RadioButton ) &&  
                     <div className="radio">
                       <label> 
-                        {/* radio answer key issue */}
-                      { !isPreviewMode( element ) &&  <span>   { element?.inputValue } </span> } 
+                  { !isPreviewMode( element ) &&  <span> { element?.inputValue } </span> } 
                         <RadioButton 
-                          fieldProps={fieldProps}
+                          fieldProps={formFieldProps}
                           previewMode={ isPreviewMode( element ) } 
                           formFieldElement={ element } 
                         />
@@ -253,20 +262,20 @@ return (
                 { (element?.inputType === inputType.CheckBox) &&
                     <div className="radio">     
                       <label>
-                      { !isPreviewMode( element ) &&  <span>   { element?.inputValue } </span> } 
-                      <CheckBox 
-                        fieldProps={fieldProps}
-                        previewMode={ isPreviewMode( element ) } 
-                        formFieldElement={element} 
-                      />
+                      { !isPreviewMode( element ) &&  <span>   {  element?.inputValue } </span> } 
+                        <CheckBox 
+                          fieldProps={formFieldProps}
+                          previewMode={ isPreviewMode( element ) } 
+                          formFieldElement={element} 
+                        />
                       </label>  
                     </div>
                 }
-                { (element?.inputType === inputType.DropDown ) && 
+                { (element?.inputType === inputType.DropDown ) &&  
                     <div className="radio">  
                       <label> 
                       <DropDown 
-                        fieldProps={fieldProps}
+                        fieldProps={formFieldProps}
                         previewMode={ isPreviewMode( element ) }
                         formFieldElement={element} 
                         dropDownValues={ element?.dropDownOptions }
@@ -274,6 +283,105 @@ return (
                       </label>
                     </div>
                 } 
+                { (element?.inputType === inputType?.FileUpload ) &&  
+                    <div className="radio">  
+                      <label> 
+                      <FileUploadField 
+                        fieldProps={formFieldProps}
+                        previewMode={ isPreviewMode( element ) }
+                        formFieldElement={element} 
+                      />
+                      </label>
+                    </div>
+                } 
+                { (element?.inputType === inputType?.DataObjectSelector ) &&  
+                    <div className="radio">  
+                      <label> 
+                      <DataObjectSelector 
+                        fieldProps={formFieldProps}
+                        previewMode={ isPreviewMode( element ) }
+                        formFieldElement={element} 
+                        dropDownValues={ element?.dropDownOptions }
+                      />
+                      </label>
+                    </div>
+                } 
+                { (element?.inputType === inputType.Number) &&
+                    <div className="radio">     
+                      { isPreviewMode( element ) &&  <span> { element?.inputValue } </span> } 
+                        <Numbers 
+                          fieldProps={formFieldProps}
+                          previewMode={ isPreviewMode( element ) } 
+                          formFieldElement={element} 
+                        />
+                    </div>
+                }
+                 { (element?.inputType === inputType.NumberPercentage) &&
+                    <div className="radio">     
+                      { isPreviewMode( element ) &&  <span> { element?.inputValue } </span> } 
+                        <NumberPercentage 
+                          fieldProps={formFieldProps}
+                          previewMode={ isPreviewMode( element ) } 
+                          formFieldElement={element} 
+                        />
+                    </div>
+                }
+                { (element?.inputType === inputType.NumberPosition) &&
+                    <div className="radio">     
+                      { isPreviewMode( element ) &&  <span> { element?.inputValue } </span> } 
+                        <NumberPosition 
+                          fieldProps={formFieldProps}
+                          previewMode={ isPreviewMode( element ) } 
+                          formFieldElement={element} 
+                        />
+                    </div>
+                }
+                { (element?.inputType === inputType.Date) &&
+                    <div className="radio">     
+                      <label>
+                        <Date 
+                          fieldProps={formFieldProps}
+                          previewMode={ isPreviewMode( element ) } 
+                          formFieldElement={element} 
+                        />
+                      </label>  
+                    </div>
+                }
+                { (element?.inputType === inputType.Time) &&
+                  <div className="radio">     
+                    <label>
+                    { !isPreviewMode( element ) &&  <span> { element?.inputValue } </span> } 
+                      <Time 
+                        fieldProps={formFieldProps}
+                        previewMode={ isPreviewMode( element ) } 
+                        formFieldElement={element} 
+                      />
+                    </label>  
+                  </div>
+               }
+               { (element?.inputType === inputType.DateTime) &&
+                <div className="radio">     
+                  <label>
+                  { !isPreviewMode( element ) &&  <span> { element?.inputValue } </span> } 
+                    <DateTime 
+                      fieldProps={formFieldProps}
+                      previewMode={ isPreviewMode( element ) } 
+                      formFieldElement={element} 
+                    />
+                  </label>  
+                </div>
+              }
+              { (element?.inputType === inputType.Toggle) &&
+                <div className="radio">     
+                  <>
+                    <Toggle 
+                      fieldProps={formFieldProps}
+                      previewMode={ isPreviewMode( element ) } 
+                      formFieldElement={element} 
+                    />
+                  </>  
+                </div>
+              }
                 </div>
                 </div>
                 </div>  

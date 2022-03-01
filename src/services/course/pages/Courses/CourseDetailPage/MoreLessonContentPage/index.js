@@ -77,13 +77,16 @@ return <div className="builder3">
         <div className="onlinequestion-list-items">  
             <div className="OnlineListItems">
             <div className="lesson-content"> 
-                    < MaterialUiVideoComponent 
-                        className={"onlineQuestionVideoComponent"} 
-                        element={ lesson } 
-                        //  videoMeta={videoMeta( lessonTest )}
-                        // saveRecording={saveRecording}
-                        extendedMeetingSettings={false} 
-                    />
+            <div className="video-component">
+            < MaterialUiVideoComponent 
+                className={"onlineQuestionVideoComponent"} 
+                element={ lesson } 
+                //  videoMeta={videoMeta( lessonTest )}
+                // saveRecording={saveRecording}
+                extendedMeetingSettings={false} 
+            />
+            </div>
+                   
                 </div>   
                 <div className="lesson2">        
                     { 

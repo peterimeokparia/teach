@@ -1,5 +1,5 @@
 import { 
-getSortedRecordsByDate } from 'Services/course/Selectors';
+getSortedRecordsByDate } from 'services/course/pages/QuestionsPage/components/ReplyComments/helpers/node_modules/Services/course/Selectors';
 
 export const getCommentIdCollection = ( onlineComments ) => {
     let commentObjects = {}, children = [];

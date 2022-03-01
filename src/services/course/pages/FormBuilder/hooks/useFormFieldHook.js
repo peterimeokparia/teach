@@ -16,17 +16,8 @@ import {
 SET_FORMFIELDS_MARKDOWN } from 'services/course/actions/formfields';
 
 import {
-addFormFieldConfig,
-addGroupedFormFieldsConfig  } from 'services/course/pages/FormBuilder/FormFields/helpers';
-
-import {
-inputType,
-elementMeta,  
-editorContentType } from 'services/course/pages/QuestionsPage/helpers';
+elementMeta } from 'services/course/pages/QuestionsPage/helpers';
       
-import {
-manageFormFieldCollection } from 'services/course/pages/FormBuilder/helpers/formFieldHelpers';
-  
 import {
 upload_url,
 uploadImageUrl,
@@ -34,12 +25,12 @@ handleChange } from 'services/course/pages/OnlineQuestionsPage/helpers';
   
 import {
 getById } from 'services/course/api';
-    
+
 import {
-v4 as uuidv4 } from 'uuid';
-
+getMarkDownAsText } from 'services/course/pages/FormBuilder/FormTables/helpers';
+    
 import EditorComponent from 'services/course/pages/components/EditorComponent';
-
+import Form from 'services/course/pages/FormBuilder/FormFields/helpers/Form';
 import Swal from 'sweetalert2';
 
 function useFormFieldHook( fieldProps ) {
@@ -59,9 +50,7 @@ function useFormFieldHook( fieldProps ) {
     lessonId,
     formId,
     formUuId,
-    handleMaxDialog, 
     previewMode,
-    toggleFormFieldSelector,
     question,
     fields,
     formFieldAnswers,
@@ -69,10 +58,12 @@ function useFormFieldHook( fieldProps ) {
     currentUser,
     setMarkDown,
     saveStudentsAnswerPoints,
-    setUpdatePoints
+    setUpdatePoints,
+    eventId
   } =  fieldProps;
 
   const [ contentChanged, setContentChanged ] = useState( undefined );
+  const [ moveInputField, setMoveInputField ] = useState(false)
   const boundryRef = useRef(null);
   
   let formFields = fields?.filter( field => field?.formId === formId
@@ -87,11 +78,10 @@ function useFormFieldHook( fieldProps ) {
            
   // come back to this...        
   useEffect(() => {
-   buildTestForCurrentStudent( formFields, formAnswers  );
+   //buildTestForCurrentStudent( formFields, formAnswers  );
   }, []);
 
   useEffect(() => { 
-
     if ( contentChanged ) {
         loadFormFields();
         loadFormFieldAnswers();
@@ -102,31 +92,8 @@ function useFormFieldHook( fieldProps ) {
         loadFormFields();
         loadFormFieldAnswers();
     }
- 
-  }, [ fields?.length, loadFormFields, formAnswers?.length, loadFormFieldAnswers, contentChanged, setContentChanged, previewMode, saveStudentsAnswerPoints ] );   
 
-function setFormType(){
-  switch (currentUser?.role) {
-    case role.Student:
-      return formAnswers;
-    case role.Tutor:
-      return formFields;
-    default:
-      break;
-  }
-};
-
-function addFormField( typeOfInput ){
-  const uuid = uuidv4();
-  let props = { typeOfInput, question, uuid, currentUser, formId };
-  addNewFormField( manageFormFieldCollection( addFormFieldConfig( props ) ) );
-  setContentChanged( true );
-};
-
-function addGroupedFormFields( element, currentUser ){ 
-  addNewFormField( manageFormFieldCollection( addGroupedFormFieldsConfig( element, formUuId, currentUser ) ) );
-  setContentChanged( true );
-};
+  }, [ fields?.length, loadFormFields, formAnswers?.length, loadFormFieldAnswers, contentChanged, setContentChanged, previewMode, saveStudentsAnswerPoints, moveInputField ] );   
 
 function onhandleSelected( selected ) {
   Swal.fire({
@@ -151,41 +118,63 @@ function onhandleSelected( selected ) {
     });
 };
   
-function handleFormFieldAnswers( element, inputValue ){
+function handleFormFieldAnswers( element, inputValue, prevPoints ){
   let existingAnswer = formAnswers?.find( answer => answer?.fieldId === element?._id  );
 
-  if ( existingAnswer ) {   
-    saveFormFieldAnswer( { ...existingAnswer, answer: inputValue  } );    
-  } else {
-    let formFieldAnswer = { ...getFormFieldAnswers( element, question, currentUser, formUuId), inputValue, answer: inputValue }; 
-    addNewFormFieldAnswer( formFieldAnswer );
+  let props = {
+    element,
+    value: inputValue,
+    existingAnswer,
+    answer: null,
+    prevPoints,
+    formStatus: formBuilderStatus,
+    addNewFormFieldAnswer,
+    saveFormFieldAnswer,
+    getFormFieldAnswers,
+    saveFormField,
+    selected: null,
+    question,
+    currentUser,
+    formUuId,
+    eventId
   }
 
-  if ( currentUser?.role === role.Tutor && formBuilderStatus === elementMeta.status.Editing ) {
-    saveFormField({ ...element, answerKey: (inputValue === null ? null : inputValue), inputValue });  
+  const form = new Form( props );
+
+  form.handleFormInputFieldInManageState();
+
+  form.handleFormInputFieldInTakingState();
+
+}
+
+function handleSelectorFormFieldAnswers( element, inputValue, answer, selected, prevPoints ){
+
+  let existingAnswer = formAnswers?.find( answer => answer?.fieldId === element?._id );
+
+  let props = {
+    element,
+    value: inputValue,
+    existingAnswer,
+    answer,
+    prevPoints,
+    formStatus: formBuilderStatus,
+    addNewFormFieldAnswer,
+    saveFormFieldAnswer,
+    getFormFieldAnswers,
+    saveFormField,
+    selected,
+    question,
+    currentUser,
+    formUuId,
+    eventId
   }
-};
 
-function handleSelectorFormFieldAnswers( element, inputValue, answer, selected ){
-  if ( formBuilderStatus === elementMeta.status.NotEditing  ) {
-    let existingAnswer = formAnswers?.find( answer => answer?.fieldId === element?._id );
+  const form = new Form( props );
 
-    if ( existingAnswer ) {    
-      saveFormFieldAnswer( { ...existingAnswer, answer: answer, inputValue, selected  } );
-    } else {
-      let formFieldAnswer = { ...getFormFieldAnswers( element, question, currentUser, formUuId), answer: answer, inputValue, selected  }; 
+  form.handleFormSelectInputFieldInManageState();
 
-      addNewFormFieldAnswer(   formFieldAnswer  );
-    }
-  }
+  form.handleFormSelectInputFieldInTakingState();
 
-  if ( currentUser?.role === role.Tutor && formBuilderStatus === elementMeta.status.Editing ) {
-      if ( selected ) {
-        saveFormField({ ...element, answerKey: (inputValue === null ? null : inputValue), inputValue, selected: false  });  
-      } else {
-        saveFormField({ ...element, answerKey: null, inputValue, selected: false  });  
-      }
-  }
 };
 
 function handleRndPostioning( xaxis, yaxis, element ){
@@ -193,16 +182,6 @@ function handleRndPostioning( xaxis, yaxis, element ){
   setContentChanged( true );
 };
 
-let modalProps =  {
-  isOpen: handleMaxDialog?.isMaxDialogOpen, 
-  collection: [ inputType.Text, inputType.TextLabel, inputType.RadioButton, inputType.DropDown, inputType.Explanation, inputType.CheckBox ],
-  dialogTitle:'Select input type',
-  InputLabel: 'type',
-  question,
-  addNewFormField,
-  selectEventChangeHandler: addFormField,
-  handleClose: () => toggleFormFieldSelector( handleMaxDialog?.question ),        
-};
 
 function isPreviewMode( element ){
   return ( element?.questionId === previewMode?.question?._id && 
@@ -210,16 +189,18 @@ function isPreviewMode( element ){
 };
 
 function handleMarkDownEditorChange( editor, element ){
+  
   switch ( currentUser?.role ) {
     case role.Student:
-      handleChange(editor, element, "formFieldAnswers", SET_FORMFIELDANSWERS_MARKDOWN, saveFormFieldAnswer, setMarkDown);
+      handleChange( editor, element, "formFieldAnswers", SET_FORMFIELDANSWERS_MARKDOWN, saveFormFieldAnswer, setMarkDown );
+      handleFormFieldAnswers( element, getMarkDownAsText( element?.markDownContent ) );    
     break;
     case role.Tutor:
-      if ( formBuilderStatus === elementMeta.status.Editing ) {
-        handleChange(editor,  element, "formFields", SET_FORMFIELDS_MARKDOWN, saveFormField, setMarkDown);
+      if ( formBuilderStatus === elementMeta.state.Manage ) {
+        handleChange( editor, element, "formFields", SET_FORMFIELDS_MARKDOWN, saveFormField, setMarkDown );
         setContentChanged( true ); 
       } else {
-        handleChange(editor, element, "formFieldAnswers", SET_FORMFIELDANSWERS_MARKDOWN, saveFormFieldAnswer, setMarkDown);
+        handleChange( editor, element, "formFieldAnswers", SET_FORMFIELDANSWERS_MARKDOWN, saveFormFieldAnswer, setMarkDown );       
       }
     break;
     default:
@@ -228,13 +209,12 @@ function handleMarkDownEditorChange( editor, element ){
 };
 
 async function buildTestForCurrentStudent( formField, answers ){
-  alert( formBuilderStatus )
   let explanationFormField = formField?.filter( field => field?.inputType === 'explanation'); 
   let answerExplanationFormField = answers?.filter( field => field?.inputType === 'explanation');
   
   if ( ( currentUser?.role === role.Student ) && ( explanationFormField?.length === answerExplanationFormField?.length ) ) return;
 
-  if ( ( currentUser?.role === role.Student || currentUser?.role === role.Tutor && formBuilderStatus === elementMeta.status.NotEditing ) && ( explanationFormField?.length > 0 )  
+  if ( ( currentUser?.role === role.Student || currentUser?.role === role.Tutor && formBuilderStatus === elementMeta.state.Taking ) && ( explanationFormField?.length > 0 )  
             && ( explanationFormField?.length > answerExplanationFormField?.length ) ) {
 
     explanationFormField.forEach( element => {
@@ -242,7 +222,16 @@ async function buildTestForCurrentStudent( formField, answers ){
         .then( resp => {
           if ( resp.length === 0 ) {
             if ( !answerExplanationFormField?.map( ans => ans?._id )?.find( elem => elem?._id === element?._id )?._id ) {
-              addNewFormFieldAnswer( getFormFieldAnswers( element, question, currentUser, formUuId ) );
+
+              let answerProps = {
+                element, 
+                question, 
+                currentUser, 
+                formUuId, 
+                eventId  
+              };
+
+              addNewFormFieldAnswer( getFormFieldAnswers( answerProps ) );
             }
           }
         }) 
@@ -253,11 +242,10 @@ async function buildTestForCurrentStudent( formField, answers ){
 };
 
 function handleEditor( element ){
-  
   let formExplanationAnswers = formAnswers?.filter( val => val?.fieldId === element?._id );
 
-  if ( formBuilderStatus === elementMeta.status.Editing ) {
-    <EditorComponent
+  if ( formBuilderStatus === elementMeta.state.Manage ) {
+    return <EditorComponent
       id={element?._id}
       name={element?.name}
       handleChange={(editor) => handleMarkDownEditorChange( editor, element )}
@@ -267,32 +255,32 @@ function handleEditor( element ){
       readOnly={(element?.questionCreatedBy === currentUser?._id) ? false : true}
       readOnly={false}
     /> 
-  } else {
-     return formExplanationAnswers?.map(element => {
-            return <EditorComponent
-                    id={element?._id}
-                    name={element?.name}
-                    handleChange={(editor) => handleMarkDownEditorChange( editor, element )}
-                    content={ element?.markDownContent }
-                    upload_url={upload_url}
-                    upload_handler={( file, imageBlock ) => uploadImageUrl( file, imageBlock, element, saveFormField ) }
-                    readOnly={(element?.questionCreatedBy === currentUser?._id) ? false : true}
-                  /> 
-     });
   }
+
+  return formExplanationAnswers?.map(element => {
+    return <EditorComponent
+         id={element?._id}
+         name={element?.name}
+         handleChange={(editor) => handleMarkDownEditorChange( editor, element )}
+         content={ element?.markDownContent }
+         upload_url={upload_url}
+         upload_handler={( file, imageBlock ) => uploadImageUrl( file, imageBlock, element, saveFormField ) }
+        //  readOnly={(element?.questionCreatedBy === currentUser?._id) ? false : true}
+        readOnly={false}
+       /> 
+  });
 };
 
 return {
     formFields,
     boundryRef,
-    modalProps,  
     formAnswers,
-    setFormType,
+    moveInputField, 
+    setMoveInputField,
     isPreviewMode,
     handleChange,
     handleRndPostioning,
     onhandleSelected,
-    addGroupedFormFields,
     handleFormFieldAnswers,
     handleSelectorFormFieldAnswers,
     handleMarkDownEditorChange,

@@ -130,7 +130,6 @@ function courseConfig( course ) {
 };  
 
 export const handleFormBuilderTimer = (store) => {
-    alert('handleFormBuilderTimer')
     let timer = getItemFromSessionStorage('formbuildertimer');
 
     if ( !timer ) {
@@ -138,12 +137,11 @@ export const handleFormBuilderTimer = (store) => {
     }
 
     if ( timer && timer?._id ){
-        alert('...saving')
+       
         store?.dispatch( saveTime( timer  ) );
         return;
     } 
 
-    alert('...adding')
     store?.dispatch( addTime( { formType: timer?.formType, formName: timer?.formName, formUuId: timer?.formUuId, userId: timer?.userId, testTime: timer?.testTime, role: timer?.role } ) );
 }
 

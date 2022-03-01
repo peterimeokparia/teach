@@ -1,5 +1,6 @@
 import { 
-useState } from 'react';
+useState, 
+useEffect } from 'react';
 
 import { 
 connect } from 'react-redux';
@@ -27,10 +28,13 @@ emailInputOptions,
 emailMessageOptions } from  'services/course/pages/Courses/helpers';
 
 import { 
-deleteLessonFileByFileName } from 'services/course/api';
+deleteFileByFileName } from 'services/course/api';
 
 import {
-LessonFileUpload } from 'services/course/pages/Courses/components/LessonFileUpload';
+FormFileUpload } from 'services/course/pages/components/FormFileUpload';
+
+import {
+lessonFileViewer } from 'services/course/pages/Courses/helpers';
 
 import { 
 navContent } from 'services/course/pages/components/NavigationHelper';
@@ -102,7 +106,6 @@ const CourseDisplayViewComponent = ({
     const fileUploadUrl =  "/api/v1/fileUploads";
     const [ fileToRemove, setFileToRemove ] = useState( undefined );
     const [ lessonItem, setLessonItem  ] = useState( 0 )
-
     const onMatchListItem = ( match, listItem ) => {
         if( match ){
             setCurrentLesson( listItem );
@@ -129,7 +132,7 @@ const CourseDisplayViewComponent = ({
     if ( fileToRemove ) {
         selectedLessonPlanLesson.files = selectedLessonPlanLesson?.files?.filter( files => files !== fileToRemove );
         saveLesson( selectedLessonPlanLesson );
-        deleteLessonFileByFileName( fileToRemove?.split('/files/')[1]);       
+        deleteFileByFileName( fileToRemove?.split('/files/')[1]);       
     }
 
     let navigationContent = navContent( currentUser, operatorBusinessName, currentUser?.role,  "Student" ).users;  
@@ -155,15 +158,16 @@ const CourseDisplayViewComponent = ({
                         saveIconVisible={true}
                     /></div>
             case 2:
-            return < LessonFileUpload
+            return < FormFileUpload
                         previewMode={previewMode}
-                        currentLesson={selectedlesson}
+                        currentObject={selectedlesson}
                         typeOfUpload={'userlessonfiles'}
                         fileUploadUrl={fileUploadUrl}
                         setFilesToRemove={setFileToRemove}
                         msg={"Please click on the lesson link before uploading files."}
                         saveAction={saveLesson}
-                    /> 
+                        fileViewer={lessonFileViewer}
+                    />
             default:
             return < LessonPlanIframeComponent
                         name="embed_readwrite" 
@@ -177,6 +181,7 @@ const CourseDisplayViewComponent = ({
                     />;
         }
     }
+
 return (
     <div className="CourseDetail"> 
         <header>

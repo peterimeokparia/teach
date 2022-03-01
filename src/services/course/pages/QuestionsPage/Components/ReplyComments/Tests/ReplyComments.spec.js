@@ -1,20 +1,20 @@
-import React from 'react';
+import React from 'services/course/pages/QuestionsPage/components/ReplyComments/Tests/node_modules/react';
 
 import { 
 Provider, 
-useSelector } from "react-redux";
+useSelector } from "services/course/pages/QuestionsPage/components/ReplyComments/Tests/node_modules/react-redux";
 
 import { 
-applyMiddleware } from 'redux'; 
+applyMiddleware } from 'services/course/pages/QuestionsPage/components/ReplyComments/Tests/node_modules/redux'; 
 
 import { 
-mockStoreObject } from 'Services/course/Api';
+mockStoreObject } from 'services/course/pages/QuestionsPage/components/ReplyComments/Tests/node_modules/Services/course/Api';
 
-import ReplyComments  from 'Services/course/Pages/QuestionsPage/Components/ReplyComments';
-import renderer from 'react-test-renderer';
-import thunk from "redux-thunk"; 
-import * as reactRedux from 'react-redux';
-import configureStore from 'redux-mock-store';
+import ReplyComments  from 'services/course/pages/QuestionsPage/components/ReplyComments';
+import renderer from 'services/course/pages/QuestionsPage/components/ReplyComments/Tests/node_modules/react-test-renderer';
+import thunk from "services/course/pages/QuestionsPage/components/ReplyComments/Tests/node_modules/redux-thunk"; 
+import * as reactRedux from 'services/course/pages/QuestionsPage/components/ReplyComments/Tests/node_modules/react-redux';
+import configureStore from 'services/course/pages/QuestionsPage/components/ReplyComments/Tests/node_modules/redux-mock-store';
 
 
   const mockStore = configureStore([]);

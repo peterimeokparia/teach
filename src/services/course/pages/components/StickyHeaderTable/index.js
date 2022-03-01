@@ -2,8 +2,7 @@ import * as React from 'react';
 import * as Redux from 'react-redux';
 
 import { 
-withStyles, 
-makeStyles } from '@material-ui/core/styles';
+withStyles } from '@material-ui/core/styles';
 
 import { 
 Rnd } from 'react-rnd';
@@ -19,12 +18,12 @@ import TableRow from '@mui/material/TableRow';
 import Divider from '@mui/material/Divider';
 import './style.css';
 
-const StickyHeaderTable = ({ columns,  rows, onRowSelectedHandler }) =>  {
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    const [movementData, setMovementData] = React.useState({ x: 100, y: -4});
+const StickyHeaderTable = ({ columns, rows, onRowSelectedHandler }) =>  {
+    const [ page, setPage ] = React.useState(0);
+    const [ rowsPerPage, setRowsPerPage ] = React.useState(10);
+    const [ movementData, setMovementData ] = React.useState({ x: 100, y: -4});
     const [ removedColumnInfo, setRemovedColumnInfo ]  = React.useState(null);
-    const [startColumnIndex, setStartColumnIndex] = React.useState(null);
+    const [ startColumnIndex, setStartColumnIndex ] = React.useState(null);
     const [ destinationColumnIndex, setDestinationColumnIndex ]  = React.useState(null);
     const [ changeLabelClassName, setChangeLabelClassName ]  = React.useState(false);
     const [ selectedColumn, setSelectedColumn ]  = React.useState(null);
@@ -70,7 +69,6 @@ const StickyHeaderTable = ({ columns,  rows, onRowSelectedHandler }) =>  {
   }
 
   function handlePostioning( xaxis, yaxis, column, index  ){
-    //setSelectedColumn(column?.id);
     let removed = null, tempColumnsArray = [ ...columns ];
 
     if ( startColumnIndex === null && destinationColumnIndex === null ) {
@@ -80,14 +78,13 @@ const StickyHeaderTable = ({ columns,  rows, onRowSelectedHandler }) =>  {
       setMovementData({x: 10, y: 10, column, id: column?.id });
     }
 
-    if (   startColumnIndex !== null && destinationColumnIndex === null ) {
+    if ( startColumnIndex !== null && destinationColumnIndex === null ) {
       setDestinationColumnIndex( columns?.findIndex(col => col?.id === column?.id) );  
-      setNewColumns([] )
-      
+      setNewColumns([]);
       let lastRemoved = columns.splice(columns?.findIndex(col => col?.id === column?.id), 1, {...removedColumnInfo, x: 100, y:-4 });
     
       columns.splice(startColumnIndex, 1, { ...lastRemoved[0],  x: 100, y:-4 } );
-      setNewColumns( columns )
+      setNewColumns( columns );
       setIsDragging( true );
       removed=null;
       lastRemoved = null;
@@ -101,19 +98,18 @@ const StickyHeaderTable = ({ columns,  rows, onRowSelectedHandler }) =>  {
   function setLabelClassName( value ){
     setChangeLabelClassName( value );
   }
+  
   return (
     <>
-      <TableContainer sx={{ maxHeight: 540, maxWidth: 6000 }}>
-        <Table stickyHeader aria-label="sticky table" sx={{ maxWidth: 6000 }}>
-          <TableHead sx={{ maxWidth: 6000, maxHeight: 5540 }}>
-            <TableRow sx={{ maxWidth: 6000 }}>
+      <TableContainer sx={{ maxHeight: 540, maxWidth: 9000 }}>
+        <Table stickyHeader aria-label="sticky table" sx={{ maxWidth: 9000 }}>
+          <TableHead sx={{ maxWidth: 8000, maxHeight: 5540 }}>
+            <TableRow sx={{ maxWidth: 8000 }}>
               {newColumns?.map((column, index) => (
               <TableCell
                 key={column?.id}
                 align={column?.align}
-                // style={{ minWidth: (changeLabelClassName && column?.id === selectedColumn ? 10 : column?.minWidth), minHeight: (changeLabelClassName && column?.id === selectedColumn ? 10 : column?.minHeight)  }}
-                // sx={{ minWidth: (changeLabelClassName &&  column?.id === selectedColumn ? 50 : column?.minWidth), minHeight: (changeLabelClassName && column?.id === selectedColumn ? 5 : column?.minHeight)  }}
-                sx={{ minWidth: 50, minHeight: 255 }}
+                sx={{ minWidth: column?.minWidth, minHeight: column?.minHeight }}
               >
                 <Divider orientation="vertical" flexItem />
             <Rnd
@@ -129,7 +125,6 @@ const StickyHeaderTable = ({ columns,  rows, onRowSelectedHandler }) =>  {
                 allowAnyClick={ true }
                 disableDragging={ false }
                 onResize={true}
-                // className={ changeLabelClassName && column?.id === selectedColumn ? "hvr-pulse" : "column-label"}
             >
             {  
               <div className={ changeLabelClassName && column?.id === selectedColumn ? "hvr-pulse" : "column-label"} > 
@@ -144,19 +139,18 @@ const StickyHeaderTable = ({ columns,  rows, onRowSelectedHandler }) =>  {
           </TableRow>
           </TableHead>
           <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            { rows?.slice( page * rowsPerPage, page * rowsPerPage + rowsPerPage )
               .map((row) => {
                 return (
                   <StyledTableRow hover role="checkbox" 
-                    tabIndex={-1} key={row.code} 
+                    tabIndex={-1} key={row?.code} 
                      sx={{ maxWidth: 5000 }, { cursor: 'pointer' }} onClick={() => onRowSelectedHandler( row )}>
-                    {newColumns.map((column) => {
+                    {newColumns?.map((column) => {
                       const value = row[column?.id];
                       return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number'
-                            ? column.format(value)
+                        <TableCell key={column?.id} align={column?.align}>
+                          {column?.format && typeof value === 'number'
+                            ? column?.format(value)
                             : value}
                         </TableCell>
                       );
@@ -170,7 +164,7 @@ const StickyHeaderTable = ({ columns,  rows, onRowSelectedHandler }) =>  {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={rows.length}
+        count={rows?.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

@@ -1,37 +1,37 @@
 import { 
-connect } from 'react-redux';
+connect } from 'services/course/pages/QuestionsPage/components/ListItems/node_modules/react-redux';
 
 import {
-points } from 'Services/course/Pages/QuestionsPage/helpers';
+points } from 'services/course/pages/QuestionsPage/components/ListItems/node_modules/Services/course/Pages/QuestionsPage/helpers';
 
 import {
 saveQuestion,
 loadQuestions,
-setMarkDownEditor } from 'Services/course/Actions/Questions';
+setMarkDownEditor } from 'services/course/pages/QuestionsPage/components/ListItems/node_modules/Services/course/Actions/Questions';
 
 import {
-videoComponentMeta } from 'Services/course/Actions/Video';
+videoComponentMeta } from 'services/course/pages/QuestionsPage/components/ListItems/node_modules/Services/course/Actions/Video';
 
 import {
-togglePreviewMode } from 'Services/course/Actions/App';
+togglePreviewMode } from 'services/course/pages/QuestionsPage/components/ListItems/node_modules/Services/course/Actions/App';
 
 import {
 upload_url,
-uploadImageUrl } from 'Services/course/Pages/OnlineQuestionsPage/helpers';
+uploadImageUrl } from 'services/course/pages/QuestionsPage/components/ListItems/node_modules/Services/course/Pages/OnlineQuestionsPage/helpers';
 
 import {
 elementMeta,
-editorContentType } from 'Services/course/Pages/QuestionsPage/helpers';
+editorContentType } from 'services/course/pages/QuestionsPage/components/ListItems/node_modules/Services/course/Pages/QuestionsPage/helpers';
 
 import {
 updateMarkDownEditorContent } from './helpers';
 
-import Interweave from 'interweave';
-import EditorComponent from 'Services/course/Pages/Components/EditorComponent';
+import Interweave from 'services/course/pages/QuestionsPage/components/ListItems/node_modules/interweave';
+import EditorComponent from 'services/course/pages/QuestionsPage/components/ListItems/node_modules/Services/course/Pages/Components/EditorComponent';
 import PointsDistribution from '../PointsDistribution';
 import MultiFieldComponent from '../MultiFieldComponent';
 import VideoComponent from '../VideoComponent';
-import LessonPlanIframeComponent from 'Services/course/Pages/Lessons/LessonPlan/Components/LessonPlanIframeComponent';
+import LessonPlanIframeComponent from 'services/course/pages/QuestionsPage/components/ListItems/node_modules/Services/course/Pages/Lessons/LessonPlan/Components/LessonPlanIframeComponent';
 import './style.css';
 
 // in progrss !!!
@@ -58,7 +58,7 @@ const ListItems = ({
 
   let currentLessonQuestions = questions?.find( question => question?.lessonId === lessonId ); 
 
-const handleChange = (  editor, element, type, elementkey ) => { //elementMeta.markDownContent
+const handleChange = (  editor, element, type, elementkey ) => {
   if (  type === editorContentType.Question && markDownEditors?.length > 0 ) { 
  
     let markDownObject = markDownEditors?.find( obj => obj?.id === element?.id );
@@ -66,32 +66,18 @@ const handleChange = (  editor, element, type, elementkey ) => { //elementMeta.m
 
       let newDumbArray = [ ...markDownEditors ];
 
-      //alert( editor.getHTML() )
-      alert(JSON.stringify( markDownEditors ))
-
       let markDownContent = editor.getHTML();
 
-      markDownObject = { ...markDownObject, markDownContent }
-      alert(JSON.stringify( markDownObject  ))
+      markDownObject = { ...markDownObject, markDownContent };
 
-      alert(JSON.stringify( [ ...markDownEditors, { ...markDownObject }   ] ))
-
-      markDownEditors = newDumbArray.splice( markDownEditors.indexOf( markDownObject ), 1, markDownObject  )
-
-      //alert(JSON.stringify( markDownEditors ))
-     // setMarkDownEditor( [ ...markDownEditors, { ...markDownObject, markDownContent: editor.getHTML()  }   ] );
-      //saveQuestion( { ...currentLessonQuestions, questions: [ ...markDownEditors, { ...markDownObject, markDownContent: editor.getHTML()  }   ]  } );
-    // let testr = newDumbArray.splice( markDownEditors.indexOf( markDownObject ), 1, newObject  )
+      markDownEditors = newDumbArray.splice( markDownEditors.indexOf( markDownObject ), 1, markDownObject  );
     }
-
-    
- 
   }
    //setMarkDownEditor( markDownEditors );
 
 };
 
-const handleExplanationContentMarkDownChange = (markDownEditors, editor, element, type ) => { // elementMeta.multipleChoiceQuestionExplanationAnswer
+const handleExplanationContentMarkDownChange = (markDownEditors, editor, element, type ) => { 
   if ( type === editorContentType.Explanation ) {
     markDownEditors = [ ...updateMarkDownEditorContent( markDownEditors, editor, element, elementMeta.markDownContent ) ];
   }

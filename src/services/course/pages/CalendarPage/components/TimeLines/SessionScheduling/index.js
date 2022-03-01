@@ -2,10 +2,10 @@ import Select from 'react-select';
 import './style.css';
 
 const SessionScheduling = ({ 
-onChange, 
-options, 
-scheduledStudents,
-children }) => {
+    onChange, 
+    options, 
+    scheduledStudents,
+    children }) => {
 return (
     <div className="events">
      <h2>{`Schedule Session`}</h2> 

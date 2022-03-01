@@ -22,7 +22,7 @@ import {
 manageEditorsFieldCollection } from 'Services/course/Pages/QuestionsPage/helpers';
 
 import {
-pageNavigationHelper } from 'Services/course/Pages/QuestionsPage/Components/ManageEditors/helpers';
+pageNavigationHelper } from 'services/course/pages/QuestionsPage/components/ManageEditors/helpers';
 
 function useManageEditorsHook( answers, question, currentUser, operatorBusinessName, courseId ){
 

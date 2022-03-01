@@ -188,7 +188,6 @@
 } 
 .CourseDetail .content .lesson-content .lesson2 .lessonPage {
   text-align: left;
-
   margin-left: 200px;
   display: flex;
   justify-content: center;
@@ -221,7 +220,18 @@
 .CourseDetail .content .lesson-content .lesson2 .content{
   /* margin-top: -1%;
   margin-left: 5%; */
-  margin-left: -35%;
+  /* margin-left: -35%; */
+  margin-left: 0%;
+} 
+.CourseDetail .content .lesson-content .toggleItems .lessonFileUploadFilelist{
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* margin-left:  -35%; */
+   
+     /* margin-left: -35%; */
+  /* margin-left: 200px; */
 } 
 .toggle-stage-btns-show,
 .plan-lesson-btn,

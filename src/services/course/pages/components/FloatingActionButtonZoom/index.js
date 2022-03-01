@@ -7,18 +7,12 @@ deepOrange, } from '@mui/material/colors';
 import { 
 useTheme } from '@mui/material/styles';
 
-import {
-navigate } from '@reach/router';
-
-import {
-v4 as uuidv4 } from 'uuid';
+import { 
+generateUuid } from 'services/course/pages/Users/helpers';
 
 import {
 addIconStyleHeader,
 plusOneIconStyleHeader } from './inlineStyles';
-
-import {
-getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
 
 import {
 elementMeta } from 'services/course/pages/QuestionsPage/helpers';
@@ -26,12 +20,14 @@ elementMeta } from 'services/course/pages/QuestionsPage/helpers';
 import { 
 role } from 'services/course/helpers/PageHelpers';
 
-import { 
-formTypes } from 'services/course/pages/FormBuilder/helpers';
-
 import {
 columnsQuizz } from 'services/course/pages/components/StickyHeaderTable/helpers'; 
 
+import {
+formToTableConverter } from 'services/course/pages/FormBuilder/FormTables/helpers';
+
+import Roles from 'services/course/pages/components/Roles';
+import FormTables from 'services/course/pages/FormBuilder/FormTables';
 import StickyHeaderTable from 'services/course/pages/components/StickyHeaderTable';
 import Pagination from 'services/course/pages/components/Pagination';
 import ListItemComponent from 'services/course/pages/Users/components/ListItemComponent';
@@ -49,8 +45,9 @@ import UpIcon from '@mui/icons-material/KeyboardArrowUp';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import StopCircleOutlinedIcon from '@mui/icons-material/StopCircleOutlined';
 import Box from '@mui/material/Box';
+import Swal from 'sweetalert2';
 import './style.css';
-/* <MenuItem value={item}>{`version: ${ moment(item?.timeSaved)?.local().format('YYYY-MM-DD hh:mm:ss') }`}</MenuItem> */
+import { blue } from '@material-ui/core/colors';
 
 function TabPanel(props) {
 
@@ -101,6 +98,7 @@ function a11yProps3(index) {
   };
 }
 
+
 const fabStyle = {
   position: 'absolute',
   bottom: 16,
@@ -123,11 +121,13 @@ const fabDeepOrangeStyle = {
     },
 };
 
+// Rename this
 export default function FloatingActionButtonZoom({ props }) {
   const theme = useTheme();
   const {
     operatorBusinessName,
     currentUser,
+    users,
     formBuilders,
     formsInBuildState,
     formsInUse,
@@ -137,6 +137,9 @@ export default function FloatingActionButtonZoom({ props }) {
     submittedFormsInTakingState,
     allSubmittedFormsInTakingState,
     loadPagedFormBuilders,
+    onlineQuestions,
+    formFieldAnswers,
+    reportFormFieldAnswers,
     formType,
     formName,
     formId,
@@ -145,25 +148,23 @@ export default function FloatingActionButtonZoom({ props }) {
     lessonId,
     userId,
     addNewFormBuilder,
+    loadFormBuilders,
     saveFormBuilder,
     addTime,
     saveTime,
     loadTestTimers, 
     timer,
     currentUserTimer,
-    allTimers
+    allTimers,
+    eventId
   } = props;
 
   const [ value, setValue ] = React.useState(currentUser?.role === role.Student ? 1 : 0);
   const [ value2, setValue2 ] = React.useState(0);
   const [ value3, setValue3 ] = React.useState(0);
+  const [ value4, setValue4 ] = React.useState(0);
 
-  const generateUuid = () => {
-    const uuid = uuidv4();
-    return uuid;
-  };
-
-  const handleChange = (event, newValue) => {
+  const handleChange = (newValue) => {
     if ( currentUser?.role === role.Student ){
       setValue(1);
     } else {
@@ -175,6 +176,7 @@ export default function FloatingActionButtonZoom({ props }) {
     setValue(index);
   };
 
+  // Rename these
   const handleChange2 = (event, newValue) => {
     setValue2(newValue);
   };
@@ -191,6 +193,10 @@ export default function FloatingActionButtonZoom({ props }) {
     setValue3(index);
   };
 
+  const handleChangeIndex4 = (index) => {
+    setValue4(index);
+  };
+
   const transitionDuration = {
     enter: theme.transitions.duration.enteringScreen,
     exit: theme.transitions.duration.leavingScreen,
@@ -200,7 +206,7 @@ export default function FloatingActionButtonZoom({ props }) {
     return allTimers?.find( timer => timer?.formName === selectValue?.formName && timer?.userId === userId );
   };
 
-  const addNewFormBuilderForm = () => {
+  const addNewFormBuilderForm = async () => {
 
     let dateTime = Date.now();
 
@@ -216,23 +222,38 @@ export default function FloatingActionButtonZoom({ props }) {
       takingDateTime: dateTime,
       createdBy: currentUser?._id,
       userId: currentUser?._id,
-      status: "Pending",
-      state: "Manage",
-      formBuilderStatus: elementMeta.status.Editing
+      status: elementMeta.status.Pending,
+      state: elementMeta.state.Manage,
+      eventId
     };
 
-    addNewFormBuilder( newBuilder );
+  const { value: formDisplayName } = await Swal.fire({
+      title: "Please enter a form display name.",
+      input: 'text',
+      inputPlaceholder: 'Enter form name.',
+      showCancelButton: false,
+      showConfirmButton: ( true ),
+      confirmButtonText: 'Enter',
+      confirmButtonColor:  '#1976d2',
+    });
+
+    if ( formDisplayName ) {
+
+      addNewFormBuilder( {...newBuilder, formDisplayName} );
+
+    }
+
   };
 
   const editExistingFormBuilderForm = ( selectValue ) => {
     if ( selectValue ) {
-      saveFormBuilder( { ...selectValue, state: "Manage", status: "Pending", formBuilderStatus: elementMeta.status.Editing, userId: currentUser?._id, } );
-      navigateToSelectedForm(selectValue, selectValue?.formType,  elementMeta.status.Editing); 
+
+      saveFormBuilder( { ...selectValue, state: elementMeta.state.Manage, status:elementMeta.status.Pending, userId: selectValue?.userId, eventId } );
+
     }
   };
 
   const takeExistingFormBuilderForm = ( selectValue  ) => { 
-    alert('start new report')
     let formUuId = generateUuid();
     let currentTimer = getCurrentTimer( selectValue );
    
@@ -241,6 +262,7 @@ export default function FloatingActionButtonZoom({ props }) {
       let newBuilder = {
         operatorBusinessName: selectValue?.operatorBusinessName,
         formType: selectValue?.formType,
+        formDisplayName: selectValue?.formDisplayName,
         formName: selectValue?.formName,
         courseId: selectValue?.courseId,
         lessonId: selectValue?.lessonId,
@@ -250,42 +272,57 @@ export default function FloatingActionButtonZoom({ props }) {
         takingDateTime: Date.now(),
         createdBy: selectValue?.createdBy,
         userId: currentUser?._id,
-        status: "InProgress",
-        state: "Taking",
-        formBuilderStatus: elementMeta.status.NotEditing
+        status: elementMeta.status.InProgress,
+        state: elementMeta.state.Taking,
+        eventId
       };
   
       addNewFormBuilder( newBuilder );
-
+   
       if ( !currentTimer?._id && timer?._id ){
+
         addTime({ ...timer, userId, role: currentUser?.role });
+
       } else {
+
         saveTime( { ...currentTimer,  testTime: timer?.testTime } );
+
       }
     }
   };
 
   const continueExistingFormBuilderForm = ( selectValue ) => {
-
-    alert('take new existing report / continue existing report')
-
     loadTestTimers();
 
     let currentTimer = getCurrentTimer( selectValue );
 
     // if it's not quizz, homework, exam we don't need to worry about getting or setting the timer - fix
     if ( !currentTimer?._id && timer?._id ){
+
       addTime({ formType: selectValue?.formType, formName: selectValue?.formName, formUuId: selectValue?.formUuId, testTime: timer?.testTime, userId, role: currentUser?.role });
+
     }
 
     if ( selectValue ) {
-      saveFormBuilder( { ...selectValue, status: "InProgress", formBuilderStatus: elementMeta.status.NotEditing, takingDateTime: Date.now(), userId: currentUser?._id, } );
+
+      saveFormBuilder( { ...selectValue, status: elementMeta.status.InProgress, takingDateTime: Date.now(), userId: currentUser?._id, eventId } );
+
     }
   };
 
   const goToSubmittedForm = ( selectValue ) => {
     if ( selectValue ) {  
-      navigateToSelectedForm(selectValue, selectValue?.formType, elementMeta.status.NotEditing);
+
+      saveFormBuilder( { ...selectValue, status: elementMeta.status.InProgress, state: elementMeta.state.Taking, takingDateTime: Date.now(), userId: selectValue?.userId, eventId } );
+
+    }
+  };
+
+  const manageSubmittedForm = ( selectValue ) => {
+    if ( selectValue ) {  
+
+      saveFormBuilder( { ...selectValue, status: elementMeta.status.Pending, state: elementMeta.state.Manage, takingDateTime: Date.now(), userId: selectValue?.userId, eventId: selectValue?.eventId  } );
+
     }
   };
 
@@ -316,55 +353,67 @@ export default function FloatingActionButtonZoom({ props }) {
     }
   ];
 
-  function navigateToSelectedForm(selectValue, formtype, formbuilderstatus){
-    switch (formtype) {
-      case formTypes?.quizzwithpoints:
-        navigate(`/${selectValue?.operatorBusinessName}/formBuilder/${selectValue?.formType}/${selectValue?.formName}/${selectValue?.formId}/${selectValue?.formUuId}/${selectValue?.userId}/${formbuilderstatus}`);
-        break;
-      case formTypes?.report:
-        navigate(`/${selectValue?.operatorBusinessName}/formBuilder/${selectValue?.formType}/${selectValue?.formName}/${selectValue?.formUuId}/${selectValue?.userId}/${formbuilderstatus}`);
-        break;
-      default:
-        break;
-    }
-  }
-
   function handleSelectedBuildEditSelectedAll( selected ) {
-    editExistingFormBuilderForm( selected )
+
+    editExistingFormBuilderForm( selected );
+
   }
 
-  function toggleHeaderTabs( label1, label2 ){
+  function toggleHeaderTabs( label1, label2, label3 ){
     return (
-      <Tabs
+      <div className="header-tab-0">
+        <div className={ value === 0 ? 'header-tab-label0-selected' : 'header-tab-label0' }>
+          <Tabs
+            textColor="white"
+            variant="fullWidth"
+            className={ value === 0 ? 'header-tab-label0-selected' : 'header-tab-label0' }
+            >
+              <Tab label={ label1 } {...a11yProps(0)}  onClick={() => handleChange(0)} className={ value === 0 ? 'header-tab-label0-selected' : 'header-tab-label0' }/>
+          </Tabs>
+        </div>
+        <div className={ value === 1 ? 'header-tab-label1-selected' : 'header-tab-label1' }>
+          <Tabs
+            textColor="white"
+            variant="fullWidth"
+          >
+            <Tab label={ label2 } {...a11yProps(1)}  onClick={() => handleChange(1) }/>
+          </Tabs>
+        </div>
+        <div className={ value === 2 ? 'header-tab-label2-selected' : 'header-tab-label2'}>
+        <Tabs
           value={value}
-          onChange={handleChange}
-          indicatorColor="primary"
-          textColor="secondary"
+          textColor="white"
           variant="fullWidth"
-          aria-label="action tabs example"
         >
-          <Tab label={ label1 } {...a11yProps(0)} />
-          <Tab label={ label2 } {...a11yProps(1)} />
-        </Tabs>
+            <span>
+            </span>
+            <Tab label={ label3 } {...a11yProps(2)}  onClick={() => handleChange(2) } />
+          </Tabs>
+        </div>
+        </div>
     )
   }
+  
+  const tableData = formToTableConverter( onlineQuestions, reportFormFieldAnswers, formName, formBuilders );
 
-  // return < StickyHeaderTable columns={columnsQuizz} rows={publishedFormsInBuildState} onRowSelectedHandler={ takeExistingFormBuilderForm }/>
   return (
     <>
     <Box
       sx={{
         bgcolor: 'background.paper',
-        width: 1000,
+        width: 1700,
         position: 'relative',
         minHeight: 200,
+        marginLeft: -50
       }}
       className="formbuilder"
     >
-      <AppBar position="static" color="default">
-        {( currentUser?.role === role?.Student ) 
-          ? toggleHeaderTabs("Take", formType )
-          : toggleHeaderTabs(`Manage ${ formType }`, `Take ${ formType }`)
+      <AppBar position="static" color="default" >
+        {/* {( currentUser?.role === role?.Student || ( formBuilders?.find( form => form?.createdBy === currentUser?._id ) === undefined )  ) 
+          ? toggleHeaderTabs( '',`Take ${formType}`, "Tables" )
+          : toggleHeaderTabs( ( currentUser?.role === role?.Student || ( formBuilders?.find( form => form?.createdBy === currentUser?._id ) !== undefined ) ) && `Manage ${ formType }`, `Take ${ formType }`, "Tables")
+        }  */}
+          {toggleHeaderTabs( `Manage ${ formType }`, `Take ${ formType }`, "Tables")
         } 
       </AppBar>
       <SwipeableViews
@@ -372,7 +421,14 @@ export default function FloatingActionButtonZoom({ props }) {
         index={value}
         onChangeIndex={handleChangeIndex}
       >
-        <TabPanel value={value} index={0} dir={theme.direction}>
+        {/* <Roles
+          role={ ( currentUser?.role === role.Tutor ) && ( formBuilders?.find( form => form?.createdBy === currentUser?._id ) !== undefined ) }
+        > */}
+       <Roles
+          role={ ( currentUser?.role === role.Tutor )  }
+        >
+
+        <TabPanel value={value} index={0} dir={theme.direction} className='secondary-toolbars'>
             <AppBar position="static" color="default">
                 <Tabs
                   value={value2}
@@ -381,8 +437,9 @@ export default function FloatingActionButtonZoom({ props }) {
                   textColor="primary"
                   variant="fullWidth"
                   aria-label="action tabs example"
+                  orientation={"vertical"}     
                 >
-                  <Tab icon={ <AddIcon  color="primary"/> }  label="All" {...a11yProps2(0)} />
+                  <Tab icon={ <AddIcon  color="primary"/> }  label={`Select ${formType}`} {...a11yProps2(0)} />
                   <Tab icon={ <EditIcon  color="secondary"/>} label="Pending" {...a11yProps2(1)} />
                   <Tab icon={ <EditIcon  color="default"/>} label="Published" {...a11yProps2(2)} />
                   <Tab icon={ <UpIcon   />} label="Submitted" {...a11yProps2(3)} /> 
@@ -393,54 +450,78 @@ export default function FloatingActionButtonZoom({ props }) {
           index={value2}
           onChangeIndex={handleChangeIndex2}
         >
+          <div className="sticky-header-tab-panel"> 
           <TabPanel value={value2} index={0} dir={theme.direction}>
           <div class="content"/>
-            <div class="sidebar"/>
-              <div class="listItem"/>
-          < StickyHeaderTable columns={columnsQuizz} rows={formsInBuildState} onRowSelectedHandler={ handleSelectedBuildEditSelectedAll }/>
+          <div class="sidebar"/>
+          <div class="listItem"/>
+          <div className="sticky-header-table">          
+          <StickyHeaderTable columns={columnsQuizz} rows={formsInBuildState} onRowSelectedHandler={ handleSelectedBuildEditSelectedAll }/>
+          </div>
+          <div/>
+          <div className="sticky-header-table-edit-0">
           <EditIcon 
-            // onClick={ () => handleSelectedBuildEditSelectedAll( selectedItem )} 
             style={plusOneIconStyleHeader()}
             className="comment-round-button-8"
           />
+          </div>
           </TabPanel>
+          </div>
+          <div className="sticky-header-tab-panel">   
           <TabPanel value={value2} index={1} dir={theme.direction} >
-          {/* <Link to={selectedPage?.path} > <span title={selectedPage?.status} > { selectedPage?._id } </span> </Link>  */}
           <div>
-          < StickyHeaderTable columns={columnsQuizz} rows={pendingFormsInBuildState} onRowSelectedHandler={ handleSelectedBuildEditSelectedAll } />
+          <div className="sticky-header-table">
+          <StickyHeaderTable columns={columnsQuizz} rows={pendingFormsInBuildState} onRowSelectedHandler={ handleSelectedBuildEditSelectedAll } />
+          </div>
+          <div className="sticky-header-table-edit-0">
             <EditIcon 
-              // onClick={ () => handleSelectedBuildEditSelectedAll( selectedItem )} 
               style={plusOneIconStyleHeader()}
               color={"default"}
               className="comment-round-button-8"
             />
             </div>
+            </div>
           <br></br>
           <div> 
           </div>             
           </TabPanel>
+          </div>
+          <div className="sticky-header-tab-panel"> 
           <TabPanel value={value2} index={2} dir={theme.direction}>
-          < StickyHeaderTable columns={columnsQuizz} rows={publishedFormsInBuildState} onRowSelectedHandler={ handleSelectedBuildEditSelectedAll }/>
+          <div>
+          <div className="sticky-header-table-published">
+          <StickyHeaderTable columns={columnsQuizz} rows={publishedFormsInBuildState} onRowSelectedHandler={ handleSelectedBuildEditSelectedAll }/>
+          </div>
+          <div className="sticky-header-table-edit-0">
           <EditIcon 
-            // onClick={ () => handleSelectedBuildEditSelectedAll( selectedItem )} 
             style={plusOneIconStyleHeader()}
             color={"default"}
             className="comment-round-button-8"
           />
+          </div>
+          </div>
           </TabPanel>
+          </div>
+          <div className="sticky-header-tab-panel"> 
           <TabPanel value={value2} index={3} dir={theme.direction}>
           <div className="user-item"/>
-          < StickyHeaderTable columns={columnsQuizz} rows={allSubmittedFormsInTakingState} onRowSelectedHandler={ goToSubmittedForm }/>
+          <div className="sticky-header-table-submitted">
+          <StickyHeaderTable columns={columnsQuizz} rows={allSubmittedFormsInTakingState} onRowSelectedHandler={ manageSubmittedForm }/>
+          </div>
+          <div className="sticky-header-table-edit-0">
           <UpIcon 
-            // onClick={ () => goToSubmittedForm( selectedItem )} 
             style={plusOneIconStyleHeader()}
             color={"default"}
             className="comment-round-button-8"
           />
+          </div>
           </TabPanel>
+          </div>
           </SwipeableViews>
         </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
+        </Roles>
+
+        <TabPanel value={value} index={1} dir={theme.direction}  className='secondary-toolbars-take'>
         <AppBar position="static" color="default">
           <Tabs
             value={value3}
@@ -449,8 +530,9 @@ export default function FloatingActionButtonZoom({ props }) {
             textColor="primary"
             variant="fullWidth"
             aria-label="action tabs example"
+            orientation={"vertical"}  
           >
-            <Tab icon={<AddIcon />} label="All" {...a11yProps3(0)} />
+            <Tab icon={<AddIcon />} label={`Select ${formType}`} {...a11yProps3(0)} />
             <Tab icon={<ArrowRightIcon />} label="In Progress" {...a11yProps3(1)} />
             <Tab icon={<UpIcon />} label="Submitted" {...a11yProps3(2)} /> 
           </Tabs>
@@ -460,26 +542,102 @@ export default function FloatingActionButtonZoom({ props }) {
           index={value3}
           onChangeIndex={handleChangeIndex3}
         >
+           <div className="sticky-header-tab-panel"> 
           <TabPanel value={value3} index={0} dir={theme.direction}>
-          < StickyHeaderTable columns={columnsQuizz} rows={publishedFormsInBuildState} onRowSelectedHandler={ takeExistingFormBuilderForm }/>
+          <div className="sticky-header-table-take">
+          <StickyHeaderTable columns={columnsQuizz} rows={publishedFormsInBuildState} onRowSelectedHandler={ takeExistingFormBuilderForm }/>
+          </div>
+          <div className="sticky-header-table-edit-0">
           <AddIcon 
-            // onClick={ () => takeExistingFormBuilderForm( selectedItem )} 
             style={plusOneIconStyleHeader()}
             className="comment-round-button-7"
           />
+          </div>
           </TabPanel>
+          </div>
+          <div className="sticky-header-tab-panel"> 
           <TabPanel value={value3} index={1} dir={theme.direction}>
-          < StickyHeaderTable columns={columnsQuizz} rows={inProgressFormsInTakingState} onRowSelectedHandler={ continueExistingFormBuilderForm }/>
+          <div className="sticky-header-table-progress">
+          <StickyHeaderTable columns={columnsQuizz} rows={inProgressFormsInTakingState} onRowSelectedHandler={ continueExistingFormBuilderForm }/>
+          </div>
+          <div className="sticky-header-table-edit-0">
           <ArrowRightIcon 
-            // onClick={ () => continueExistingFormBuilderForm( selectedItem )} 
             style={plusOneIconStyleHeader()}
             className="comment-round-button-7"
           />
+          </div>
           </TabPanel>
+          </div>
+          <div className="sticky-header-tab-panel"> 
           <TabPanel value={value3} index={2} dir={theme.direction}>
-          < StickyHeaderTable columns={columnsQuizz} rows={submittedFormsInTakingState} onRowSelectedHandler={ goToSubmittedForm }/>
+          <div className="sticky-header-table-take-submitted">
+          <StickyHeaderTable columns={columnsQuizz} rows={submittedFormsInTakingState} onRowSelectedHandler={ goToSubmittedForm }/>
+          </div>
+          <div className="sticky-header-table-edit-0">
           <UpIcon 
-            // onClick={ () => goToSubmittedForm( selectedItem )} 
+            style={plusOneIconStyleHeader()}
+            color={"default"}
+            className="comment-round-button-7"
+          />
+          </div>
+          </TabPanel>
+          </div>
+          </SwipeableViews>
+        </TabPanel>
+
+
+        {/* <div className="input-field-builder-selector"> 
+                      <div className="input-field-builder-selector-content"> 
+                        <div>
+                         <h2> { formBuilders?.find( form => form?.formUuId === formUuId )?.formDisplayName } </h2>
+                         </div>
+                         
+                         <h2>  { users?.find( user => user?._id === userId )?.firstname } </h2>
+                        </div>
+                      </div> */}
+        <TabPanel value={value} index={2} dir={theme.direction}>
+        <SwipeableViews
+          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+          index={value4}
+          onChangeIndex={handleChangeIndex4}
+        >
+          <TabPanel value={value4} index={0} dir={theme.direction}>
+          <div class="content"/>
+            <div class="sidebar"/>
+              <div class="listItem"/>
+              <div className="sticky-header-table">
+              <StickyHeaderTable columns={tableData?.columns} rows={tableData?.rows} onRowSelectedHandler={ handleSelectedBuildEditSelectedAll }/>
+              </div>
+          <EditIcon 
+            style={plusOneIconStyleHeader()}
+            className="comment-round-button-8"
+          />
+          </TabPanel>
+          <TabPanel value={value4} index={1} dir={theme.direction} >
+          <div>
+          <StickyHeaderTable columns={columnsQuizz} rows={pendingFormsInBuildState} onRowSelectedHandler={ handleSelectedBuildEditSelectedAll } />
+            <EditIcon 
+              style={plusOneIconStyleHeader()}
+              color={"default"}
+              className="comment-round-button-8"
+            />
+            </div>
+          <br></br>
+          <div> 
+          </div>             
+          </TabPanel>
+          <TabPanel value={value4} index={2} dir={theme.direction}>
+          <StickyHeaderTable columns={columnsQuizz} rows={publishedFormsInBuildState} onRowSelectedHandler={ handleSelectedBuildEditSelectedAll }/>
+          <EditIcon 
+            style={plusOneIconStyleHeader()}
+            color={"default"}
+            className="comment-round-button-8"
+          />
+          </TabPanel>
+          <TabPanel value={value4} index={3} dir={theme.direction}>
+          <div className="user-item"/>
+          <StickyHeaderTable columns={columnsQuizz} rows={allSubmittedFormsInTakingState} onRowSelectedHandler={ goToSubmittedForm }/>
+          <UpIcon 
             style={plusOneIconStyleHeader()}
             color={"default"}
             className="comment-round-button-8"
@@ -487,6 +645,7 @@ export default function FloatingActionButtonZoom({ props }) {
           </TabPanel>
           </SwipeableViews>
         </TabPanel>
+
       </SwipeableViews>
       {fabs.map((fab, index) => (
         <Zoom
@@ -494,8 +653,8 @@ export default function FloatingActionButtonZoom({ props }) {
           in={value === index }
           timeout={transitionDuration}
           style={{
-            "top": "-15px",
-            "left": "45%",
+            "top": "-45px",
+            "left": "48%",
             color:"greenyellow",
             transitionDelay: `${(value === index) ? transitionDuration.exit : 0}ms`,
           }}

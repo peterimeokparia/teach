@@ -1,5 +1,5 @@
 import ManageEditors  from '../ManageEditors';
-import ReplyComments from 'Services/course/Pages/QuestionsPage/Components/ReplyComments';
+import ReplyComments from 'services/course/pages/QuestionsPage/components/ReplyComments';
 
 import './style.css';
 

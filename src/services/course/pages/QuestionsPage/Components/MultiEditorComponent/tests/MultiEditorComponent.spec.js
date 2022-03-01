@@ -1,20 +1,20 @@
-import React from 'Services/course/Pages/QuestionsPage/Components/MultiEditorComponent/tests/node_modules/react';
+import React from 'services/course/pages/QuestionsPage/components/MultiEditorComponent/tests/node_modules/react';
 
 import { 
 Provider, 
-useSelector } from "Services/course/Pages/QuestionsPage/Components/MultiEditorComponent/tests/node_modules/react-redux";
+useSelector } from "services/course/pages/QuestionsPage/components/MultiEditorComponent/tests/node_modules/react-redux";
 
 import { 
-applyMiddleware } from 'Services/course/Pages/QuestionsPage/Components/MultiEditorComponent/tests/node_modules/redux'; 
+applyMiddleware } from 'services/course/pages/QuestionsPage/components/MultiEditorComponent/tests/node_modules/redux'; 
 
 import { 
-mockStoreObject } from 'Services/course/Pages/QuestionsPage/Components/MultiEditorComponent/tests/node_modules/Services/course/Api';
+mockStoreObject } from 'services/course/pages/QuestionsPage/components/MultiEditorComponent/tests/node_modules/Services/course/Api';
 
-import MultiEditorComponent  from 'Services/course/Pages/QuestionsPage/Components/MultiEditorComponent/tests/node_modules/Services/course/Pages/QuestionsPage/Components/MultiEditorComponent';
-import renderer from 'Services/course/Pages/QuestionsPage/Components/MultiEditorComponent/tests/node_modules/react-test-renderer';
-import thunk from "Services/course/Pages/QuestionsPage/Components/MultiEditorComponent/tests/node_modules/redux-thunk"; 
-import * as reactRedux from 'Services/course/Pages/QuestionsPage/Components/MultiEditorComponent/tests/node_modules/react-redux';
-import configureStore from 'Services/course/Pages/QuestionsPage/Components/MultiEditorComponent/tests/node_modules/redux-mock-store';
+import MultiEditorComponent  from 'services/course/pages/QuestionsPage/components/MultiEditorComponent/tests/node_modules/Services/course/Pages/QuestionsPage/Components/MultiEditorComponent';
+import renderer from 'services/course/pages/QuestionsPage/components/MultiEditorComponent/tests/node_modules/react-test-renderer';
+import thunk from "services/course/pages/QuestionsPage/components/MultiEditorComponent/tests/node_modules/redux-thunk"; 
+import * as reactRedux from 'services/course/pages/QuestionsPage/components/MultiEditorComponent/tests/node_modules/react-redux';
+import configureStore from 'services/course/pages/QuestionsPage/components/MultiEditorComponent/tests/node_modules/redux-mock-store';
 
 
   const mockStore = configureStore([]);

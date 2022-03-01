@@ -58,6 +58,7 @@
 }
 .builder2 .answerEditorBuilder .content2 .onlinequestion-list-items {
     margin-left: 30%;
+    list-style: none;
 }
 
 .builder2 .answerEditorBuilder .content2 .onlinequestion-list-items .question-card-top-right {

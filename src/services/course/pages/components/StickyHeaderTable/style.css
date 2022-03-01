@@ -4,10 +4,10 @@
     height: 100px;
     padding: 5px 5px 5px;
     margin: 5px 5px 5px; */
-    width: 100px;
+    /* height: 10px; */
+    width: 200px;
     height: 35px;
     margin-left: -80px;
-    /* height: 10px; */
     background-color: paleturquoise;
     background: paleturquoise;
     position: fixed;

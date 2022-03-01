@@ -62,11 +62,6 @@ import RegistrationForm from 'services/course/pages/SignUp/RegistrationForm';
 import CoursePackageRenewal from 'services/course/pages/Packages/CoursePackageRenewal';
 import SiteUser from 'services/course/helpers/SiteUser';
 import Swal from 'sweetalert2';
-
-import { 
-  Rnd } from 'react-rnd';
-  
-  
 import './style.css';
 
 const LoginPage = ({

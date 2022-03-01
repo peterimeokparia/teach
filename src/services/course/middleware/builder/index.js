@@ -36,7 +36,7 @@ export const builder = store => next =>  action => {
         return;
         case ADD_FORMBUILDER_SUCCESS:  
         case SAVE_FORMBUILDER_SUCCESS:
-            redirectToFormAfterAddingNewFormBuilder( store, action.payload  );  
+            redirectToFormAfterAddingNewFormBuilder( store, action.type, action.payload  );  
             next(action);
         return;
         case SAVE_FORMFIELDS_SUCCESS_MW:

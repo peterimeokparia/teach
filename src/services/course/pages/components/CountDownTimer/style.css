@@ -15,7 +15,6 @@
     color: green;
     font-size: 100px;
     top: 130px;
-    margin-left: 0%; 
 }
 
 .clock .digital .points-label {
@@ -23,5 +22,9 @@
     color: green;
     font-size: 20px;
     top: 130px;
-    margin-left: 2%; 
+    margin-left: -130px; 
+}
+
+.clock .digital .countdown-timer{
+    margin-left:  900px; 
 }

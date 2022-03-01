@@ -83,12 +83,14 @@ export const elementMeta = {
   questionPushNotificationSubscribers: 'questionPushNotificationSubscribers',
   questionEmailNotificationSubscribers: 'questionEmailNotificationSubscribers',
   savedQuestions: 'savedQuestions', 
-  status: { Editing: 'editing', NotEditing: 'notediting' }
+  status: { Editing: 'editing', NotEditing: 'notediting', InProgress:'InProgress', Submitted:'Submitted', Pending:'Pending', Published:'Published' },
+  state: { Manage: 'Manage', Taking: 'Taking' }
 };
 
 export const inputType = {
   CheckBox: "checkbox",
   RadioButton: "radio",
+  //RadioButton: "radiobutton",
   TextLabel: "textlabel",
   Text: "text",
   TextArea: "textarea",
@@ -97,9 +99,19 @@ export const inputType = {
   Number: "number",
   Phone: "phone", 
   Date: "date",
+  Time: "time",
   DateTime: "datetime",
+  Toggle: "toggle",
   DropDown: "dropdown",
-  Explanation: "explanation"
+  DataObjectSelector: "dataobjectselector",
+  Explanation: "explanation",
+  MainBodyQuestion: "mainbodyquestion",
+  MainBodyHeader: "mainbodyheader",
+  MainBodyTableColumnQuestion: "mainbodytablecolumnquestion",
+  Number: "number",
+  NumberPosition: "numberposition",
+  NumberPercentage: "numberpercentage",
+  FileUpload: "fileupload"
 };
 
 export const labelType = {
@@ -201,9 +213,10 @@ export function markDownEditorFieldCollection(config){
   } ;  
 };
 
-export function onlineMarkDownEditorFieldCollection(config){
+export function onlineMarkDownEditorFieldCollection( config ){
   return  { 
-    type: config?.inputFieldOptions?.type,  
+    type: config?.inputFieldOptions?.type, 
+    inputType: config?.inputType, 
     placeHolderText: config?.inputFieldOptions?.askHomeWorkQuestionPlaceHolder,
     questionCreatedOnDateTime: Date.now(),
     markDownContent: JSON.stringify(config?.placeHolder),
@@ -231,7 +244,8 @@ export function onlineMarkDownEditorFieldCollection(config){
     yAxisColumnPosition: config?.yAxisColumnPosition,
     columnMinWidth: config?.columnMinWidth,
     columnMinHeight: config?.columnMinHeight,
-    columnAlign: config?.columnAlign
+    columnAlign: config?.columnAlign,
+    position: config?.position
   };   
 };
 

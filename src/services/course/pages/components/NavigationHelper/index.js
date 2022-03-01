@@ -4,6 +4,9 @@ getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
 import { 
 role } from 'services/course/helpers/PageHelpers';
 
+import { 
+formTypes } from 'services/course/pages/FormBuilder/helpers';
+
 export const navContent = ( user, operatorBusinessName, currentRole, role, permissionDeniedGroup ) => { 
    operatorBusinessName = ( !operatorBusinessName ) ? getItemFromSessionStorage('operatorBusinessName') : operatorBusinessName;
 
@@ -16,6 +19,8 @@ export const navContent = ( user, operatorBusinessName, currentRole, role, permi
                { id: 2, hrefValue: `/${operatorBusinessName}/courses` , item: 'All Courses' },
                { id: 3, hrefValue:  (currentRole === role ) ? `/${operatorBusinessName}/users` : "" , item: (currentRole === role ) ? `My Tutors` : "Tutors"},
                { id: 4, hrefValue: `/${operatorBusinessName}/students` , item: 'Students' },
+               { id: 5, hrefValue: `/${operatorBusinessName}/forms` , item: 'Forms' },
+               { id: 6, hrefValue: `/${operatorBusinessName}/forms/${formTypes.report}` , item: 'Reports' }
             ]
    };
 };

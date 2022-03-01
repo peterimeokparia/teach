@@ -1,5 +1,4 @@
-import 
-react, { 
+import { 
 useState } from 'react';
 
 import { 
@@ -12,24 +11,17 @@ import {
 saveOnlineQuestion } from 'services/course/actions/onlinequestions';
 
 import { 
-handleChangedValue } from '../RadioButton/helpers';
+handleChangedValue } from 'services/course/pages/FormBuilder/FormFields/helpers';
 
-import { 
-role } from 'services/course/helpers/PageHelpers';
-
-import FormFieldPanel from 'services/course/pages/FormBuilder/FormFields/Components/FormFieldPanel';
+import FormFieldPanel from 'services/course/pages/FormBuilder/FormFields/components/FormFieldPanel';
 import useAssignPointsHook from 'services/course/pages/FormBuilder/hooks/useAssignPointsHook';
-
 
 const TextField = ( { 
     fieldProps,
     previewMode, 
     textValueCallBack, 
     formFieldElement,
-    formFields,
     elememtFormFields,
-    currentUser,
-    formFieldAnswers,
     studentsAnswer,
     saveFormField,
     saveOnlineQuestion  } ) => {

@@ -10,7 +10,6 @@ import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-/* <MenuItem value={item}>{`version: ${ moment(item?.timeSaved)?.local().format('YYYY-MM-DD hh:mm:ss') }`}</MenuItem> */
 import NotesIcon from '@material-ui/icons/Notes';
 import Select from '@mui/material/Select';
 import Switch from '@mui/material/Switch';
@@ -21,8 +20,6 @@ const MaxWidthDialog = ({ modalProps,  children }) => {
       isOpen, 
       handleClose,
       collection,
-      question,
-      addNewFormField,
       selectEventChangeHandler,
       dialogTitle,
       InputLabel

@@ -21,47 +21,36 @@ import {
 deleteFormField } from 'services/course/actions/formfields';
 
 import {
-getOnlineQuestion } from 'services/course/pages/OnlineQuestionsPage/helpers';
-
+getSortedRecords } from 'services/course/selectors';
+    
 import Swal from 'sweetalert2';
 
 function useOnlineQuestionsHook( onlineQuestionsConfig ){
     const dispatch = useDispatch();
+    const [ inputValue, setInputValue ] = useState("");
    
     let {
-        formType, 
-        formName,
-        formUuId,
         courseId, 
         failedOnlineQuestionNotifications, 
         currentUser, 
         pushNotificationUsers,
         toggleContentChanged,
-        contentUpdated,
         formFields,
-        operatorBusinessName,
-        onlineQuestionId,
+        formUuId,
+        formBuilderStatus,
         onlineQuestions,
     } = onlineQuestionsConfig;
 
-    let currentCourseQuestionss = getOnlineQuestion( onlineQuestionsConfig );
-
     useEffect(() => { 
- 
+
         if ( courseId ) {
             dispatch(onlineQuestionCourseId( courseId ));
         }
 
-        if ( contentUpdated ) {
-            dispatch(loadOnlineQuestions());
-            toggleContentChanged();
-        }
-
-    }, [ contentUpdated, toggleContentChanged, loadOnlineQuestions, failedOnlineQuestionNotifications, currentUser, pushNotificationUsers, 
+    }, [ failedOnlineQuestionNotifications, currentUser, pushNotificationUsers, 
             retryPushNotificationMessage, subscribePushNotificationUser, savePushNotificationUser, deleteOnlineQuestion,
             onlineQuestionCourseId, loadSubscribedPushNotificationUserByUserId, courseId ]);
-
-                   
+                  
     const saveRecording = ( selectedQuestion ) => {
         dispatch(saveOnlineQuestion( selectedQuestion ));
     };
@@ -85,6 +74,8 @@ function useOnlineQuestionsHook( onlineQuestionsConfig ){
 
     const deleteQuestion = ( selectedQuestion ) => {
 
+        let temp = [];
+
         Swal.fire({
             title: 'Confirm Delete',
             icon: 'warning',
@@ -95,23 +86,43 @@ function useOnlineQuestionsHook( onlineQuestionsConfig ){
             cancelButtonText: 'No'
             })
             .then( (response) => {
-            if ( response?.value ) {
-                getFormFieldsToDelete( selectedQuestion );
-                dispatch(deleteOnlineQuestion( selectedQuestion ));
-                loadOnlineQuestions();
-                toggleContentChanged();
-            } else {
-                return;
-            } })
-            .catch(error =>{   
-                throw Error(`Failed to delete question. ${error}`);
+
+                if ( response?.value ) {
+
+                    getFormFieldsToDelete( selectedQuestion );
+
+                    dispatch( deleteOnlineQuestion( selectedQuestion ) );
+
+                    let currentQuestions = onlineQuestions?.filter( question => question?.formUuId === formUuId && question?._id !== selectedQuestion?._id );
+
+                    let sortedItems = getSortedRecords( currentQuestions, 'position' );
+
+                        sortedItems.forEach( ( element, index ) => {
+
+                            let repositionedItem = { ...element, position: ( index + 1) };
+
+                            dispatch( saveOnlineQuestion( repositionedItem ) );
+
+                        });
+
+                    loadOnlineQuestions();
+
+                    toggleContentChanged();
+
+                } else {
+                    return;
+
+            } }).catch(error =>{   
+                    throw Error(`Failed to delete question. ${error}`);
             });
     };
 
 return {
-    questions: currentCourseQuestionss,
+    inputValue,
+    setInputValue: (val) => setInputValue( val ),
     saveRecording:(val) => saveRecording( val ),
     deleteQuestion:(val) => deleteQuestion( val )
 }; };
 
 export default useOnlineQuestionsHook;
+

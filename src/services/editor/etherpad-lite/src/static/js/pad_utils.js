@@ -60,10 +60,10 @@ const wordCharRegex = new RegExp(`[${[
 const urlRegex = (() => {
   // TODO: wordCharRegex matches many characters that are not permitted in URIs. Are they included
   // here as an attempt to support IRIs? (See https://tools.ietf.org/html/rfc3987.)
-  const urlChar = `[-:@_.,~%+/?=&#!;()$'*${wordCharRegex.source.slice(1, -1)}]`;
+  const urlChar = `[-:@_.,~%+/?=&#!;()\\[\\]$'*${wordCharRegex.source.slice(1, -1)}]`;
   // Matches a single character that should not be considered part of the URL if it is the last
   // character that matches urlChar.
-  const postUrlPunct = '[:.,;?!)\'*]';
+  const postUrlPunct = '[:.,;?!)\\]\'*]';
   // Schemes that must be followed by ://
   const withAuth = `(?:${[
     '(?:x-)?man',
@@ -89,6 +89,42 @@ const urlRegex = (() => {
 })();
 
 const padutils = {
+  /**
+   * Prints a warning message followed by a stack trace (to make it easier to figure out what code
+   * is using the deprecated function).
+   *
+   * Identical deprecation warnings (as determined by the stack trace, if available) are rate
+   * limited to avoid log spam.
+   *
+   * Most browsers include UI widget to examine the stack at the time of the warning, but this
+   * includes the stack in the log message for a couple of reasons:
+   *   - This makes it possible to see the stack if the code runs in Node.js.
+   *   - Users are more likely to paste the stack in bug reports they might file.
+   *
+   * @param {...*} args - Passed to `padutils.warnDeprecated.logger.warn` (or `console.warn` if no
+   *     logger is set), with a stack trace appended if available.
+   */
+  warnDeprecated: (...args) => {
+    if (padutils.warnDeprecated.disabledForTestingOnly) return;
+    const err = new Error();
+    if (Error.captureStackTrace) Error.captureStackTrace(err, padutils.warnDeprecated);
+    err.name = '';
+    // Rate limit identical deprecation warnings (as determined by the stack) to avoid log spam.
+    if (typeof err.stack === 'string') {
+      if (padutils.warnDeprecated._rl == null) {
+        padutils.warnDeprecated._rl =
+            {prevs: new Map(), now: () => Date.now(), period: 10 * 60 * 1000};
+      }
+      const rl = padutils.warnDeprecated._rl;
+      const now = rl.now();
+      const prev = rl.prevs.get(err.stack);
+      if (prev != null && now - prev < rl.period) return;
+      rl.prevs.set(err.stack, now);
+    }
+    if (err.stack) args.push(err.stack);
+    (padutils.warnDeprecated.logger || console).warn(...args);
+  },
+
   escapeHtml: (x) => Security.escapeHTML(String(x)),
   uniqueId: () => {
     const pad = require('./pad').pad; // Sidestep circular dependency
@@ -296,6 +332,7 @@ const padutils = {
 let globalExceptionHandler = null;
 padutils.setupGlobalExceptionHandler = () => {
   if (globalExceptionHandler == null) {
+    require('./vendors/gritter');
     globalExceptionHandler = (e) => {
       let type;
       let err;
@@ -382,17 +419,18 @@ const inThirdPartyIframe = () => {
 // This file is included from Node so that it can reuse randomString, but Node doesn't have a global
 // window object.
 if (typeof window !== 'undefined') {
-  exports.Cookies = require('js-cookie/src/js.cookie');
-  // Use `SameSite=Lax`, unless Etherpad is embedded in an iframe from another site in which case
-  // use `SameSite=None`. For iframes from another site, only `None` has a chance of working
-  // because the cookies are third-party (not same-site). Many browsers/users block third-party
-  // cookies, but maybe blocked is better than definitely blocked (which would happen with `Lax`
-  // or `Strict`). Note: `None` will not work unless secure is true.
-  //
-  // `Strict` is not used because it has few security benefits but significant usability drawbacks
-  // vs. `Lax`. See https://stackoverflow.com/q/41841880 for discussion.
-  exports.Cookies.defaults.sameSite = inThirdPartyIframe() ? 'None' : 'Lax';
-  exports.Cookies.defaults.secure = window.location.protocol === 'https:';
+  exports.Cookies = require('js-cookie/dist/js.cookie').withAttributes({
+    // Use `SameSite=Lax`, unless Etherpad is embedded in an iframe from another site in which case
+    // use `SameSite=None`. For iframes from another site, only `None` has a chance of working
+    // because the cookies are third-party (not same-site). Many browsers/users block third-party
+    // cookies, but maybe blocked is better than definitely blocked (which would happen with `Lax`
+    // or `Strict`). Note: `None` will not work unless secure is true.
+    //
+    // `Strict` is not used because it has few security benefits but significant usability drawbacks
+    // vs. `Lax`. See https://stackoverflow.com/q/41841880 for discussion.
+    sameSite: inThirdPartyIframe() ? 'None' : 'Lax',
+    secure: window.location.protocol === 'https:',
+  });
 }
 exports.randomString = randomString;
 exports.padutils = padutils;

@@ -140,6 +140,8 @@ export const eventEnum = {
     NewEvent: "newevent",
     IsModalOpen: "ismodalopen",
     ConsultationForm: "consultationform",
+    ReportForms: "reportforms",
+    QuizzForms: "quizzforms",
     SessionScheduling: "sessionscheduling", 
     OnlineTutoringRequest: "onlinetutoringrequest",
     FullCalendar: "fullcalendar",

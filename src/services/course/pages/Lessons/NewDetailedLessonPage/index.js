@@ -103,7 +103,6 @@ return (
             </input> 
             </form>
             <form
-                // className= {`${className || ''} editing ${error ? 'error' : ''}`} 
                 className={"add-new-lesson"}
             >
             <input

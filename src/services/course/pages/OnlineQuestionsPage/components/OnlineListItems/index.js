@@ -1,22 +1,100 @@
-import { 
-useState,
-useEffect } from 'react';
+import {
+connect } from 'react-redux';
 
+import {
+loadFormBuilders,
+saveFormBuilder } from 'services/course/actions/formbuilders';
+
+import { 
+saveOnlineQuestion } from 'services/course/actions/onlinequestions';
+
+import {
+elementMeta } from 'services/course/pages/QuestionsPage/helpers';
+  
+import { 
+DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import './style.css';
+
 
 const OnlineListItems = ({ 
   currentCourseQuestions,
+  builderState,
+  formName,
+  formBuilder,
+  contentUpdated,
+  saveFormBuilder,
+  loadFormBuilders,
+  saveOnlineQuestion,
+  currentUser,
   children }) => {
 
-return currentCourseQuestions?.map((element) => (
-    <>
-      {
-        children( element )
-      }  
-    </>
-  ));
+  function handleOnDragEnd(result) {
+
+    if (!result.destination) return;
+
+    const items = Array.from(currentCourseQuestions);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    let temp = [];
+
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    if ( builderState ===  elementMeta.state.Manage ) {
+
+      items.forEach( ( element, index ) => { 
+
+         let repositionedItem = { ...element, position: ( index + 1 ) };
+
+         temp.push( repositionedItem );
+
+         saveOnlineQuestion(  repositionedItem );
+
+      }); 
+      
+    }
+  
+    saveFormBuilder({ ...formBuilder, orderedFormQuestions: temp } );
+
+    loadFormBuilders();
+    
+  }
+
+  return( 
+    <DragDropContext onDragEnd={handleOnDragEnd}>
+      <Droppable droppableId="updatedOrderedQuestions">
+        {(provided) => (
+          <ul className="updatedOrderedQuestions" { ...provided.droppableProps } ref={ provided.innerRef }>
+            {  currentCourseQuestions?.map((element, index) => { return( <Draggable key={element?._id} draggableId={element?._id} index={index}>
+                  {(provided) => (
+                      <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                        {
+                          children( element )
+                        }  
+                      </li>
+                 )}
+               </Draggable> 
+             )} 
+            )} 
+             {provided.placeholder}
+        </ul>
+        )}
+      </Droppable>
+    </DragDropContext>
+  );
 };
 
-export default  OnlineListItems;
+const mapState = ( state, ownProps ) => {
+  return {
+    currentUser: state.users.user,
+    onlineQuestions: Object.values(state.onlineQuestions.onlineQuestions),
+    latestQuestion: state.onlineQuestions.latestOnlineQuestions,
+    failedOnlineQuestionNotifications: Object.values( state?.failedNotifications.failedPushNotifications ),
+    courses: Object.values( state?.courses?.courses ),
+    contentUpdated: state?.onlineQuestions?.contentUpdated,
+    hasRecordingStarted: state.hasRecordingStarted.hasRecordingStarted,
+    formFields: Object.values(state.formFields.formFields).filter( field => field?.formId === ownProps?.onlineQuestionProps?.courseId),
+  };
+};
+
+export default  connect( mapState, { saveFormBuilder, saveOnlineQuestion, loadFormBuilders } )(OnlineListItems);
   
   

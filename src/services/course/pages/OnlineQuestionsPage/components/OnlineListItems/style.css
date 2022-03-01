@@ -1,4 +1,4 @@
-.OnlineListItems{
+/* .OnlineListItems{
     width: 100vw;
     border-style: dotted solid dashed double;
     background-color: white;
@@ -6,6 +6,37 @@
     padding-right: 35px;
     padding-bottom: 10px;
     border: solid 0.3em whitesmoke;
+} */
+.OnlineListItems{
+/* width: 100vw; */
+border-style: dotted solid dashed double;
+background-color: white;
+/* padding-left: -505px; */
+/* padding-right: 35px; */
+padding-bottom: 10px;
+border: solid 0.3em whitesmoke;
+font-family: 'ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji !important';
+letter-spacing: 0.01rem;
+font-weight: 400;
+font-style: normal;
+font-size: 1.5rem;
+line-height: 1.9;
+color: #4a4a4a;
+text-rendering: optimizeLegibility;
+}
+.OnlineListItems .sideburgerMenu{
+  padding-left: -505px;
+  margin-bottom: -300px;
+}
+.OnlineListItems .input{
+  margin-left: 0%;
+}
+.OnlineListItems .editor{
+  margin-left: 25%;
+}
+.OnlineListItems .editor-taking{
+  margin-left: 25%;
+  margin-top: 100px;
 }
 .OnlineListItems video {
  border-width: 1px;
@@ -129,56 +160,56 @@
     margin-right: -100%;
 }
 .form-builder-btn, .input-field-builder-btn {
-    font-size: 10px;
-    cursor: pointer;
-    padding-left: 30px;
-    margin-top: 15px;
-    padding-right: 30px;
-    margin-left: 25px;
-    box-shadow: 10px 10px;
-    border-radius: 20%;
-    transition: all 0.2s;
-    -webkit-transform: perspective(1px) translateZ(0);
-    transform: perspective(1px) translateZ(0);
-    -webkit-transition-duration: 0.5s;
-    transition-duration: 0.5s;
+  font-size: 10px;
+  cursor: pointer;
+  padding-left: 30px;
+  margin-top: 15px;
+  padding-right: 30px;
+  margin-left: 25px;
+  box-shadow: 10px 10px;
+  border-radius: 20%;
+  transition: all 0.2s;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
 }
 .form-builder-btn {
-    color: #ab47bc;
-    margin-bottom: 10px;
+  color: #ab47bc;
+  margin-bottom: 10px;
 }
 .input-field-builder-btn {
     color: #ec407a;
     margin-bottom: 20px;
 }
 .form-builder-btn:hover, .form-builder-btn:focus, .form-builder-btn:active {
-    -webkit-transform: scale(0.8);
-    transform: scale(0.8);
-    -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
-    transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+  -webkit-transform: scale(0.8);
+  transform: scale(0.8);
+  -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+  transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
 }
 .input-field-builder-btn:hover, .input-field-builder-btn:focus, .input-field-builder-btn:active {
-    -webkit-transform: scale(0.8);
-    transform: scale(0.8);
-    -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
-    transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+  -webkit-transform: scale(0.8);
+  transform: scale(0.8);
+  -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+  transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
 }
 .input-field-builder-selector {
-    opacity: 1; 
-    border: 2px; 
-    right: 5px;
-    font-size: 10px;
-    cursor: pointer;
-    padding-left: 30px;
-    margin-bottom: 20px;
-    margin-top: 100px;
-    padding-right: 30px;
-    margin-left: 10px;
-    transition: all 0.2s;
-    -webkit-transform: perspective(1px) translateZ(0);
-    transform: perspective(1px) translateZ(0);
-    -webkit-transition-duration: 0.5s;
-    transition-duration: 0.5s;
+    background-color: #673ab7;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    text-align: center;
+    margin-top: 55px;
+    font-size: xx-large;
+    /* margin-left: 55px; */
+    background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+}
+.input-field-builder-selector-content .top {
+  padding-bottom: 10px;
 }
 .userBio {
     margin-top: 30px;

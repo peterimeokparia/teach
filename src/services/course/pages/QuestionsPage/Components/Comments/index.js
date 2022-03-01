@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState } from 'services/course/pages/QuestionsPage/components/Comments/node_modules/react';
 
 import {
-manageCommentsFieldCollection } from 'Services/course/Pages/QuestionsPage/helpers';
+manageCommentsFieldCollection } from 'services/course/pages/QuestionsPage/components/Comments/node_modules/Services/course/Pages/QuestionsPage/helpers';
 
 import EditorComponent  from '../../../Components/EditorComponent';
 import './style.css';

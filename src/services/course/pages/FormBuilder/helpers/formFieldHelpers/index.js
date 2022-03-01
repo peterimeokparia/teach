@@ -1,12 +1,10 @@
-import {
-role } from 'services/course/helpers/PageHelpers';
-
 import { 
-inputType,
 editorContentType,
 labelType } from 'services/course/pages/FormBuilder/helpers';
 
-// askHomeWorkQuestionPlaceHolder, homeWorkAnswerPlaceHolder
+import {
+inputType } from 'services/course/pages/QuestionsPage/helpers';
+
 export function markDownEditorFieldCollection(config){
     return  { 
       questionNumber: config?.markDownEditors?.length + 1,     
@@ -15,16 +13,16 @@ export function markDownEditorFieldCollection(config){
       type: config?.inputFieldOptions?.type,  
       placeHolderText: config?.inputFieldOptions?.askHomeWorkQuestionPlaceHolder,
       questionCreatedOnDateTime: Date.now(),
-      markDownContent: null, //JSON.stringify(config?.placeHolder),
+      markDownContent: null, 
       value: "",
       multipleChoiceQuestionAnswerKey: "",
       multipleChoiceQuestionStudentAnswer: "",
       multipleChoiceQuestionStudentAnswerInputValue: "",
       multipleChoiceQuestionAnswerKeyInputValue: "",
-      multipleChoiceQuestionExplanationAnswer: null,//JSON.stringify(config?.placeHolder),
+      multipleChoiceQuestionExplanationAnswer: null,
       explanationQuestionAnswerKey: JSON.stringify(config?.homeWorkAnswerPlaceHolder),
       explanationQuestionAnswer: JSON.stringify(config?.homeWorkAnswerPlaceHolder),
-      explanationAnswerCollection: [],//config.answerMarkDownEditors,
+      explanationAnswerCollection: [],
       commentsCollection: config?.commentsMarkDownEditors,
       markDownEditorFormInputFields: [],
       pointsPerQuestion: config?.pointsDistributionType,
@@ -120,28 +118,7 @@ export function markDownEditorFieldCollection(config){
       userId: config?.userId
     };
   };
-  
-  // KEEP!
-  // export function manageFormFieldCollection( config ){
-  //   return {
-  //     questionId: config?.question?._id,
-  //     answerId: config?.answerId,
-  //     formFieldGroupId: config?.formFieldGroupId,
-  //     enableFormFieldGroup: config?.enableFormFieldGroup,
-  //     inputType: config?.inputType,
-  //     inputValue: config?.inputValue,
-  //     labelType: config?.labelType,
-  //     labelValue: config?.labelValue,
-  //     formFieldCreatedOnDateTime: Date.now(),
-  //     formFieldCreatedBy: config?.userId,
-  //     markDownContent: null,  
-  //     xAxisformFieldPosition: config?.xAxisformFieldPosition,
-  //     yAxisformFieldPosition: config?.yAxisformFieldPosition,
-  //     files: [],
-  //     videoUrl: ""
-  //   };
-  // };
-  
+    
   export function setFieldCollection(config, setMultipleChoiceValue, setMultipleChoiceLabelValue){
     return { 
       questionNumber: config?.questionNumber,
@@ -179,7 +156,16 @@ export function markDownEditorFieldCollection(config){
     };
   };
 
-  export function getFormFieldAnswers( element, question, currentUser, formUuId){
+  export function getFormFieldAnswers( answerProps ){
+
+    let {
+      element, 
+      question, 
+      currentUser, 
+      formUuId, 
+      eventId
+    } = answerProps;
+
     return { 
       formId: element?.formId,
       parentComponentId: element?.parentComponentId,
@@ -207,6 +193,24 @@ export function markDownEditorFieldCollection(config){
       fieldId: element?._id,
       formType: question?.formType,
       formName: question?.formName,
-      formUuId: formUuId 
+      formUuId,
+      eventId
     };
   }
+
+  export  const questionInputCollection = [ 
+    inputType.MainBodyQuestion,
+    inputType.MainBodyHeader,
+    inputType.MainBodyTableColumnQuestion
+  ];
+  
+  export  const formFieldInputCollection = [ 
+    inputType.Text, inputType.TextLabel, 
+    inputType.RadioButton, inputType.DropDown, 
+    inputType.Explanation, inputType.CheckBox, 
+    inputType.Date, inputType.Time, 
+    inputType.DateTime, inputType.Toggle,
+    inputType.DataObjectSelector, inputType.Number,
+    inputType.NumberPosition, inputType.NumberPercentage,
+    inputType.FileUpload
+  ];

@@ -33,6 +33,7 @@ import PublishIcon from '@mui/icons-material/Publish';
 import Tooltip from '@mui/material/Tooltip';
 import Swal from 'sweetalert2';
 import './style.css';
+import { elementMeta } from '../../QuestionsPage/helpers';
 
 const FormBuilderDashBoard = ({ 
   addNewFormBuilder,
@@ -61,19 +62,38 @@ function publishContent(){
     confirmButtonColor: '#20c997',
     cancelButtonText: 'Cancel'
   }).then( (response) => {
-    if ( response?.value &&  publishForm ) {      
-      saveFormBuilder( { ...publishForm, status: "Published",  userId: currentUser?._id, } );
+
+    if ( response?.value &&  publishForm ) {    
+      saveFormBuilder( { ...publishForm, orderedFormQuestions: [], status: elementMeta.status.Published, state: elementMeta.state.Manage,  userId: currentUser?._id } );
       return;
     } else {
       return;
     }
+
   });
 };
 
 function submit(){
   let submitForm = formBuilders?.find( form => form?.formUuId === formUuId );
 
-  saveFormBuilder( { ...submitForm, status: "Submitted",  userId: currentUser?._id, } );
+  Swal.fire({
+    title: 'Submit content',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Submit',
+    confirmButtonColor: '#20c997',
+    cancelButtonText: 'Cancel'
+  }).then( (response) => {
+
+    if ( response?.value &&  submitForm ) {    
+      saveFormBuilder( { ...submitForm, status: elementMeta.status.Submitted, state: elementMeta.state.Taking } );
+      return;
+    } else {
+      return;
+    }
+
+  });
+
 };
 
 const fabStyle = {
@@ -139,7 +159,7 @@ return (
                     timeout={transitionDuration}
                     style={{
                       "top": "50%",
-                      "left": "255%",
+                      "left": "177%",
                       color:"greenyellow",
                       transitionDelay: `${(fab.value === index) ? transitionDuration.exit : 0}ms`,
                     }}

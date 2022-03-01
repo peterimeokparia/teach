@@ -6,6 +6,7 @@ remove,
 get,
 getById } from 'services/course/api';
 
+
 export const ADD_FORMFIELDANSWERS_BEGIN = "ADD FORMFIELDANSWERS BEGIN";
 export const ADD_FORMFIELDANSWERS_SUCCESS = "ADD FORMFIELDANSWERS SUCCESS";
 export const ADD_FORMFIELDANSWERS_ERROR = "ADD FORMFIELDANSWERS ERROR";
@@ -126,18 +127,18 @@ return dispatch => {
 };
 };
 
-// export const saveFormFieldAnswerPoints =  ( answerPoints ) => {
-// return dispatch => {
-//     dispatch({ type: ADD_ANSWER_POINTS, payload: answerPoints })
-//         return answerPoints;
-// } };
-
 export const saveFormFieldAnswerWithPoints = ( formfields ) => {
+
+    alert('saveFormFieldAnswerWithPoints')
+    alert( JSON.stringify( formfields ) )
+
     return dispatch => {
         dispatch({ type: SAVE_FORMFIELDANSWERS_BEGIN });
         return update( formfields, `/formfieldanswers/` )
-            .then( formfields => {  
-             dispatch({ type: SAVE_FORMFIELDANSWERS_WITH_POINTS_SUCCESS, payload: formfields }); 
+            .then( fields => {  
+                alert('saveFormFieldAnswerWithPoints fields')
+                alert( JSON.stringify( fields ) )
+             dispatch({ type: SAVE_FORMFIELDANSWERS_WITH_POINTS_SUCCESS, payload: fields }); 
             }).catch( error => {
             dispatch({ type: SAVE_FORMFIELDANSWERS_ERROR , error });
         });  

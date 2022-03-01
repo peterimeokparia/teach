@@ -13,7 +13,8 @@ getCurrentUserByEmail,
 getLoggedInUsers,
 purchase,
 remove,
-updateInvitationUrl } from 'services/course/api';
+updateInvitationUrl,
+getPagedData } from 'services/course/api';
 
 export const LOGIN_BEGIN = "LOGIN BEGIN";
 export const LOGIN_SUCCESS = "LOGIN SUCCESS";
@@ -314,6 +315,19 @@ export const updateUserInvitationUrl = (user) => {
         } catch (error) {
         dispatch({ type: FAILED_INVITATION, error });
       };
+    };
+};
+
+export const loadPagedUserSessions = ( userId, page, limit ) => { 
+    return dispatch => {
+        return getPagedData( `/users/pagedRoute?id=${userId}&page=${page}&limit=${limit}`)
+        .then( login => {
+            dispatch({ type: LOAD_USERS_SUCCESS, payload: login });
+            return login;
+        }).catch( error => {
+            dispatch({ type: LOAD_USERS_ERROR , error });
+            return error;
+        });
     };
 };
 

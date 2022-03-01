@@ -33,7 +33,8 @@ getCalendarEventsByUserIdSelector,
 getOperatorFromOperatorBusinessName, 
 getUsersByOperatorId,
 getCalendarsByOperatorId,
-getTimeLinesByOperatorId } from 'services/course/selectors';
+getTimeLinesByOperatorId,
+getPublishedForms } from 'services/course/selectors';
 
 import {
 eventEnum,
@@ -47,9 +48,17 @@ role } from 'services/course/helpers/PageHelpers';
 import { 
 saveEventData  } from "services/course/pages/CalendarPage/helpers/events";
 
-// import { 
-// momentLocalizer } from "react-big-calendar";
-// const localizer = momentLocalizer(moment);
+import { 
+elementMeta } from "services/course/pages/QuestionsPage/helpers";
+
+import {
+loadFormBuilders,
+addNewFormBuilder,
+saveFormBuilder } from 'services/course/actions/formbuilders';
+
+import {
+goToForms } from 'services/course/pages/Users/helpers';
+
 import Calendar from 'services/course/helpers/Calendar';
 import CalendarEvent from 'services/course/helpers/CalendarEvent';
 import FullCalendar from '@fullcalendar/react';
@@ -63,11 +72,13 @@ import Modal from "react-modal";
 import moment from "moment";
 import SessionScheduling from 'services/course/pages/CalendarPage/components/TimeLines/SessionScheduling';
 import OnlineTutoringRequestForm from 'services/course/pages/CalendarPage/components/OnlineTutoringRequestForm';
+import Forms from 'services/course/pages/CalendarPage/components/Forms';
 import Scheduling from 'services/course/pages/CalendarPage/components/Scheduling/index.js';
 import useBuildEventDataHook from "services/course/pages/CalendarPage/hooks/useBuildEventDataHook";
 import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/list/main.css";
 import "./style.css";
+import { object } from 'services/editor/etherpad-lite/src/tests/frontend/lib/underscore';
 
 moment.locale("en-GB");
 
@@ -79,6 +90,9 @@ const CalendarPage = ({
     saveEvent,
     loadCourses,
     loadAllEvents,
+    loadFormBuilders,
+    addNewFormBuilder,
+    saveFormBuilder,
     calendarEventType,
     setCalendarEventType,
     calendar,
@@ -96,7 +110,11 @@ const CalendarPage = ({
     userId,
     addNewTimeLine,
     saveTimeLine,
+    publishedForms,
+    formBuilders,
+    formType,
     courses }) => {
+
     if ( ! user?.userIsValidated  ){
         navigate(`/${operatorBusinessName}/login`);
     };
@@ -145,29 +163,59 @@ const openModal = () => {
 const handleEventClick = ( info ) => {
 
     switch ( calendarEventType ) {
+        case eventEnum.ReportForms:
+        case eventEnum.QuizzForms:
+            navigateToFormDetailsPage( info );  
+            return;
         case eventEnum.NewEvent: 
-          navigateToPersonalCalendarEventDetailsPage( info );
+            navigateToPersonalCalendarEventDetailsPage( info );
             return;
         case eventEnum.ConsultationForm:  
         case eventEnum.SessionScheduling:
         case eventEnum.TutorCalendar:
-          navigateToSchedulingEventDetailsPage( info );
+            navigateToSchedulingEventDetailsPage( info );
             return;
         default:
             break;
     }
-};
+}
+
+function navigateToFormDetailsPage( info ){
+
+    const currentEventId = info?.event?.id; 
+    const currentEventObject = events?.find( event => event?._id === currentEventId );
+    const selectedFormBuilderObject = currentEventObject?.schedulingData[0];
+    const formName = selectedFormBuilderObject?.formName;
+    const selectedUserId = userId;
+    const selectedUser = users?.find( user => user?._id === selectedUserId );
+    const currentUser = user;
+
+    let formProps = {
+        operatorBusinessName, 
+        currentUser, 
+        formName, 
+        events, 
+        currentUser,
+        selectedUser,
+        currentEventId,
+        calendarEventType, 
+        addNewFormBuilder,
+        formBuilders
+    };
+
+    goToForms( formProps );
+}
 
 function navigateToPersonalCalendarEventDetailsPage( info ){
     let meetingId = info?.event?.title?.split('_')[1];
     navigate( `/${operatorBusinessName}/${calendarEventType}/boardeditor/${calendarId}/${user?._id}/${meetingId}`); 
-};
+}
 
 function navigateToSchedulingEventDetailsPage( info ){
     if ( userCanAddOrEditEvent( info, user ) ) {
         navigate( `/${operatorBusinessName}/${calendarEventType}/calendar/${calendarId}/${user._id}/${info?.event?.id}`);
     }
-};
+}
 
 function renderSwitch( param ) {
     switch ( param ) {
@@ -204,30 +252,30 @@ function renderSwitch( param ) {
                             />  
                         </ SessionScheduling>
                     </Modal>;
-            case eventEnum.TutorCalendar:
-                return <Modal isOpen={isModalOpen} onRequestClose={closeModal}> 
-                            <SessionScheduling 
-                                scheduledStudents={scheduledStudents}
-                                onChange={setScheduledStudents}
-                                options={studentsOption(users)}
-                            > 
-                            {(user.role === role.Student ) && 
-                                <ConsultationForm 
-                                    user={user}
-                                    slotInfo={calendarSlotInfo}
-                                    courses={courses}
-                                    handleSubmit={addNewCalendarEvent}
-                                />  
-                            } 
-                                <Scheduling
-                                    slotInfo={calendarSlotInfo}
-                                    schedulingData={scheduledStudents}
-                                    submitEventButtonText={"Schedule Session"}
-                                    handleSubmit={addNewCalendarEvent} 
-                                />  
-                            </ SessionScheduling>
-                        </Modal>;
-            case eventEnum.OnlineTutoringRequest:
+        case eventEnum.TutorCalendar:
+            return <Modal isOpen={isModalOpen} onRequestClose={closeModal}> 
+                        <SessionScheduling 
+                            scheduledStudents={scheduledStudents}
+                            onChange={setScheduledStudents}
+                            options={studentsOption(users)}
+                        > 
+                        {(user.role === role.Student ) && 
+                            <ConsultationForm 
+                                user={user}
+                                slotInfo={calendarSlotInfo}
+                                courses={courses}
+                                handleSubmit={addNewCalendarEvent}
+                            />  
+                        } 
+                            <Scheduling
+                                slotInfo={calendarSlotInfo}
+                                schedulingData={scheduledStudents}
+                                submitEventButtonText={"Schedule Session"}
+                                handleSubmit={addNewCalendarEvent} 
+                            />  
+                        </ SessionScheduling>
+                    </Modal>;
+        case eventEnum.OnlineTutoringRequest:
             return <Modal isOpen={isModalOpen} onRequestClose={closeModal}> 
                         <OnlineTutoringRequestForm 
                             scheduledStudents={scheduledStudents}
@@ -242,6 +290,16 @@ function renderSwitch( param ) {
                             />  
                         </ OnlineTutoringRequestForm>
                     </Modal>;
+        case eventEnum.ReportForms:
+        case eventEnum.QuizzForms:    
+            return <Modal isOpen={isModalOpen} onRequestClose={closeModal}> 
+                        <Forms
+                            reportProps={ { events, currentUser: user, selectedUserId: userId, publishedForms, calendarEventType, calendarId, addNewFormBuilder } }
+                            operatorBusinessName={operatorBusinessName}
+                            slotInfo={calendarSlotInfo}
+                            handleSubmit={addNewCalendarEvent}
+                        />
+                    </Modal>;
         default:
             return <div>
                     <FullCalendar
@@ -252,6 +310,7 @@ function renderSwitch( param ) {
                             center: 'title',
                             right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
                         }}
+                        weekNumbers={true}
                         initialView='dayGridMonth'
                         editable={true}
                         selectable={true}
@@ -262,7 +321,12 @@ function renderSwitch( param ) {
                         events={ eventDataObj }
                         eventClick={handleEventClick}
                     />
-                    <FullCalendar defaultView="listWeek" plugins={[listWeek, dayGridPlugin, timeGridPlugin, interactionPlugin, rrulePlugin]} events={ eventDataObj } initialView='listWeek' />
+                    <FullCalendar  
+                        defaultView="listWeek" 
+                        plugins={[listWeek, dayGridPlugin, timeGridPlugin, interactionPlugin, rrulePlugin]} 
+                        events={ eventDataObj } 
+                        initialView='listWeek' 
+                    />
                     </div>;
 
     }
@@ -289,7 +353,10 @@ const mapDispatch = {
     addNewTimeLine,
     saveTimeLine,
     loadCourses,
-    setCalendarEventType
+    setCalendarEventType,
+    loadFormBuilders,
+    addNewFormBuilder,
+    saveFormBuilder,
 };
 
 const mapState = ( state, ownProps )  => ({
@@ -303,6 +370,8 @@ const mapState = ( state, ownProps )  => ({
     pushNotificationSubscribers: getPushNotificationUsersByOperatorId(state, ownProps),
     timeLines: getTimeLinesByOperatorId(state, ownProps),
     courses: getCoursesByOperatorId(state, ownProps),
+    publishedForms: getPublishedForms(state, ownProps),
+    formBuilders: Object.values( state?.formBuilders?.formBuilders)
 });
 
 export default connect(mapState, mapDispatch)(CalendarPage);

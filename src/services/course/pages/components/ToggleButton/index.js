@@ -8,17 +8,17 @@ const ToggleButton = ({
   placeHolder }) => {
   return (
   <div> 
-        <label className="switch">
-            <input 
-                type="checkbox" 
-                checked={isChecked}
-                disabled={isDisabled} 
-                value={value} 
-                onChange={onChange}
-                placeHolder={placeHolder}
-            />
-            <span class="slider round"></span>
-        </label>
+      <label className="switch">
+          <input 
+              type="checkbox" 
+              checked={isChecked}
+              disabled={false} 
+              value={value} 
+              onChange={onChange}
+              placeHolder={placeHolder}
+          />
+          <span class="slider round"></span>
+      </label>
   </div> 
   );
 };

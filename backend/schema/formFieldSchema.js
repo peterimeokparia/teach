@@ -119,6 +119,10 @@ const formFieldSchema = new Schema ({
         type: String,
         required: false,
     },
+    eventId: { 
+        type: String, 
+        required: false,
+    }
 });
 
 export default formFieldSchema;

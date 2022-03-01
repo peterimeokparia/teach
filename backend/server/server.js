@@ -46,6 +46,8 @@ import formQuestionPointsRoute from '../routes/formQuestionPointsRoute.js';
 import countDownTimerFormRoute from '../routes/countDownTimerFormRoute.js';
 import formBuilderRoute from '../routes/formBuilderRoute.js';
 import reportFieldRoute from '../routes/reportFieldRoute.js';
+import institutionRoute from '../routes/institutionRoute.js';  
+import classGradeRoute from '../routes/classGradeRoute.js';
 
 import dotenv from 'dotenv';
 dotenv.config({ path: '../../backend/.env' });
@@ -57,7 +59,7 @@ const server = http.createServer(app);
 const db = mongoose.connection;
 const localPort = 9005;
 
-// app.use('/static', express.static('public/backEnd'))
+//app.use('/static', express.static('public/backEnd'))
 app.use('/static', express.static('public/videos'))
 
 app.use(cors());
@@ -78,7 +80,7 @@ app.use('/api/v1/emails', emailRoute);
 
 app.use('/api/v1/uploads', videoRoute);
 
-app.use('/api/v1/fileUploads', fileRoute);
+app.use('/api/v1/fileUploads', fileRoute); 
 
 app.use('/api/v1/sessions', sessionRoute);
 
@@ -141,6 +143,10 @@ app.use('/api/v1/testtimers', countDownTimerFormRoute);
 app.use('/api/v1/formbuilder', formBuilderRoute);
 
 app.use('/api/v1/reportfield', reportFieldRoute);
+
+app.use('/api/v1/institutions', institutionRoute);
+
+app.use('/api/v1/classgrades', classGradeRoute);
 
 mongoose.connect('mongodb+srv://dbuser:dbuser2020@cluster0.8heal.mongodb.net/teach?retryWrites=true&w=majority', {
    useNewUrlParser: true, 

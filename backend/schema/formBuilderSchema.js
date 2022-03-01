@@ -16,6 +16,10 @@ const formBuilderSchema = new Schema ({
         type: String,
         required: false,
     },
+    formDisplayName:{
+        type: String,
+        required: false,
+    },
     formId:{
         type: String,
         required: false,
@@ -54,13 +58,21 @@ const formBuilderSchema = new Schema ({
         type: String, 
         required: false,
     },
-    formBuilderStatus: { 
-        type: String, 
-        required: false,
-    },
     state: {
         type: String,
         required: false
+    },
+    role: {
+        type: String,
+        required: false
+    },
+    orderedFormQuestions: {
+        type: Array,
+        required: false
+    },
+    eventId: { 
+        type: String, 
+        required: false,
     }
 });
 

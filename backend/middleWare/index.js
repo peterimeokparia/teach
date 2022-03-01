@@ -73,7 +73,6 @@ export function paginatedResults( model, Id ){
             result.resultTest = model;
             result.results = await model.find( id ).limit( limit ).skip( startIndex ).exec();
             res.paginatedResults =  result;
-            console.log( '@@@@@@@ getting result' )
             console.log( JSON.stringify(result) )
             next();
         } catch (error) {
@@ -173,8 +172,11 @@ export function deleteRoute(model, param){
         try {
             let result = await model.remove(id);
             res.newResult = result;
+            console.log(' delete route ')
+            console.log(JSON.stringify(result))
             next();
         } catch (error) {
+            console.log( error?.message )
             const collectionName = model.collection.collectionName;
             handleBackEndLogs(collectionName, error );
             res.status(500).json({ message: error.message });

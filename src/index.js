@@ -120,6 +120,9 @@ loadLogs } from 'services/course/actions/lessons/logforteach';
 import {
 loadFormBuilders } from 'services/course/actions/formbuilders';
 
+import { 
+loadInstitutions } from 'services/course/actions/institutions';
+
 import App from './App';
 import reducer from 'services/course/reducers';
 import thunk from 'redux-thunk';
@@ -158,7 +161,9 @@ export const store = createStore(
 );
 
 //store.dispatch(loadFailedPushNotifications());
-//store.dispatch(loadFailedEmailNotifications()); 
+//store.dispatch(loadFailedEmailNotifications());
+store?.dispatch(loadCourses());
+store?.dispatch(loadInstitutions());
 store?.dispatch(loadFormBuilders());
 store?.dispatch(loadTestTimers());
 store?.dispatch(loadFormFieldPoints());
@@ -167,7 +172,6 @@ store?.dispatch(loadFormFields());
 store?.dispatch(loadLoginSessions());
 store?.dispatch(loadMeetingNotes());
 store?.dispatch(loadWhiteBoardData());
-store?.dispatch(loadCourses());
 store.dispatch(loadOnlineComments());
 store.dispatch(loadLogs());
 store.dispatch(loadOnlineAnswers());

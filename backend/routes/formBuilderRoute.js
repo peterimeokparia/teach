@@ -40,7 +40,7 @@ formBuilderRoute.put('/:formBuilderId', putRoute( formBuilderModel, 'formBuilder
     return res.status(200).json(res?.savedResult);
 });
 
-formBuilderRoute.delete('/:formFieldId', deleteRoute(formBuilderModel, 'formBuilderId'), (req, res) => {
+formBuilderRoute.delete('/:formBuilderId', deleteRoute(formBuilderModel, 'formBuilderId'), (req, res) => {
     return res.status(200).json(res?.newResult);
 });
 

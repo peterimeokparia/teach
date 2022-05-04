@@ -1,37 +1,37 @@
 import { 
-connect } from 'services/course/pages/QuestionsPage/components/ListItems/node_modules/react-redux';
+connect } from 'react-redux';
 
 import {
-points } from 'services/course/pages/QuestionsPage/components/ListItems/node_modules/Services/course/Pages/QuestionsPage/helpers';
+points } from 'services/course/pages/QuestionsPage/helpers';
 
 import {
 saveQuestion,
 loadQuestions,
-setMarkDownEditor } from 'services/course/pages/QuestionsPage/components/ListItems/node_modules/Services/course/Actions/Questions';
+setMarkDownEditor } from 'services/course/actions/questions';
 
 import {
-videoComponentMeta } from 'services/course/pages/QuestionsPage/components/ListItems/node_modules/Services/course/Actions/Video';
+videoComponentMeta } from 'services/course/actions/video';
 
 import {
-togglePreviewMode } from 'services/course/pages/QuestionsPage/components/ListItems/node_modules/Services/course/Actions/App';
+togglePreviewMode } from 'services/course/actions/app';
 
 import {
-upload_url,
-uploadImageUrl } from 'services/course/pages/QuestionsPage/components/ListItems/node_modules/Services/course/Pages/OnlineQuestionsPage/helpers';
+handleChange,
+editor_upload_url } from 'services/course/pages/OnlineQuestionsPage/helpers';
 
 import {
 elementMeta,
-editorContentType } from 'services/course/pages/QuestionsPage/components/ListItems/node_modules/Services/course/Pages/QuestionsPage/helpers';
+editorContentType } from 'services/course/pages/QuestionsPage/helpers';
 
 import {
 updateMarkDownEditorContent } from './helpers';
 
-import Interweave from 'services/course/pages/QuestionsPage/components/ListItems/node_modules/interweave';
-import EditorComponent from 'services/course/pages/QuestionsPage/components/ListItems/node_modules/Services/course/Pages/Components/EditorComponent';
+import Interweave from 'interweave';
+import EditorComponent from 'services/course/pages/Components/EditorComponent';
 import PointsDistribution from '../PointsDistribution';
 import MultiFieldComponent from '../MultiFieldComponent';
 import VideoComponent from '../VideoComponent';
-import LessonPlanIframeComponent from 'services/course/pages/QuestionsPage/components/ListItems/node_modules/Services/course/Pages/Lessons/LessonPlan/Components/LessonPlanIframeComponent';
+import LessonPlanIframeComponent from 'services/course/pages/Lessons/LessonPlan/components/LessonPlanIframeComponent';
 import './style.css';
 
 // in progrss !!!
@@ -120,11 +120,8 @@ return form?.map( (element) => (
               id={element?.id}
               handleChange={(editor) => handleChange(editor, element, editorContentType.Question, elementMeta.markDownContent )}
               content={element?.markDownContent }
-              // onChange={(editor) => handleChange(editor, element?.id, editorContentType.Question, element )}
-              // handleChange={(editor) => handleChange(editor, element?.id, editorContentType.Question, element )}
-              //upload_url={upload_url}
-              //upload_handler={( file, imageBlock ) => uploadImageUrl( file, imageBlock, element, currentLessonQuestions, saveUploadedContent ) }
-              //readOnly={ previewMode ? true : false }
+              upload_url={editor_upload_url}
+              readOnly={ previewMode ? true : false }
           /> 
       </div>
       {( previewMode )    

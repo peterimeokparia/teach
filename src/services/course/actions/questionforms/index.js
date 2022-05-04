@@ -111,11 +111,11 @@ export const questionFormCourseId = courseId => ({
 
 let timerHandle = null;
 
-export const setMarkDown = ( teachObject, markDown, teachObjectType="", actionType, saveAction  ) => {
+export const setMarkDown = ( teachObject, markDownContent, teachObjectType="", actionType, saveAction  ) => {
     return ( dispatch, getState )  => {
         dispatch({ type: actionType, payload: {   
             teachObject,
-            markDown
+            markDownContent
           }});
 
         if ( timerHandle ){

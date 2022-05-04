@@ -15,7 +15,7 @@ import {
 manageCommentsFieldCollection } from 'Services/course/Pages/QuestionsPage/helpers';
     
 import { 
-getSortedRecordsByDate } from 'Services/course/Selectors';
+getSortedRecordsByDate } from 'Services/course/selectors';
 
 import {
 getCalendarColor } from 'Services/course/Pages/CalendarPage/helpers';

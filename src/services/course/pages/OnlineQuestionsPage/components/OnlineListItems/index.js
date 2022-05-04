@@ -6,7 +6,7 @@ loadFormBuilders,
 saveFormBuilder } from 'services/course/actions/formbuilders';
 
 import { 
-saveOnlineQuestion } from 'services/course/actions/onlinequestions';
+saveOnlineQuestions } from 'services/course/actions/onlinequestions';
 
 import {
 elementMeta } from 'services/course/pages/QuestionsPage/helpers';
@@ -24,7 +24,7 @@ const OnlineListItems = ({
   contentUpdated,
   saveFormBuilder,
   loadFormBuilders,
-  saveOnlineQuestion,
+  saveOnlineQuestions,
   currentUser,
   children }) => {
 
@@ -46,7 +46,7 @@ const OnlineListItems = ({
 
          temp.push( repositionedItem );
 
-         saveOnlineQuestion(  repositionedItem );
+         saveOnlineQuestions(  repositionedItem );
 
       }); 
       
@@ -64,13 +64,13 @@ const OnlineListItems = ({
         {(provided) => (
           <ul className="updatedOrderedQuestions" { ...provided.droppableProps } ref={ provided.innerRef }>
             {  currentCourseQuestions?.map((element, index) => { return( <Draggable key={element?._id} draggableId={element?._id} index={index}>
-                  {(provided) => (
-                      <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+              {(provided) => (
+                      <li id={element?._id} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                         {
-                          children( element )
+                          children( element )            
                         }  
                       </li>
-                 )}
+                )}
                </Draggable> 
              )} 
             )} 
@@ -95,6 +95,6 @@ const mapState = ( state, ownProps ) => {
   };
 };
 
-export default  connect( mapState, { saveFormBuilder, saveOnlineQuestion, loadFormBuilders } )(OnlineListItems);
+export default  connect( mapState, { saveFormBuilder, saveOnlineQuestions, loadFormBuilders } )(OnlineListItems);
   
   

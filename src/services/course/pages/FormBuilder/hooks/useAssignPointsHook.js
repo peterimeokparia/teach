@@ -57,6 +57,7 @@ function useAssignPointsHook( props ) {
     }, [ previewMode ]);
 
 function addFieldPoints( pointsAssigned ){
+    
     addPoints( pointsAssigned, formFieldElement, saveFormField, setPoints );
     
     let cummulativeScore = 0;
@@ -70,7 +71,7 @@ function addFieldPoints( pointsAssigned ){
     saveOnlineQuestion({ ...question, pointsAssigned: cummulativeScore }); 
 }
 
-function handleTogglingModal( e, requestCloseFunc ){
+function handleTogglingModal(){
     dispatch( loadFormFieldsByFormFieldId( formFieldElement?.fieldId  ) );
     dispatch( loadOnlineQuestionsByQuestionId( question?._id ) );
 
@@ -81,7 +82,7 @@ function handleTogglingModal( e, requestCloseFunc ){
     });       
 
     saveOnlineQuestion({ ...question, pointsAssigned: cummulativeScore });
-    requestCloseFunc( e );
+
 }
 
 function assignQuestionPointsToRadioButtonFormFields( fieldGroup ){
@@ -95,7 +96,7 @@ function assignQuestionPointsToCheckBoxFormFields( fieldGroup ){
 
     if ( formFieldElement?.inputType !== inputType.CheckBox ) return;
 
-    assignQuestionPoints( fieldGroup  );
+    assignCheckBoxQuestionPoints( fieldGroup  );
 }
 
 function assignQuestionPoints( fieldGroup ){
@@ -105,24 +106,44 @@ function assignQuestionPoints( fieldGroup ){
 
         if ( formBuilderStatus === elementMeta?.state?.Manage && !previewMode && fieldWithOutPointsExists )  {
     
-            let questionPoints = fieldGroup?.find( field => field?.points > 0 )?.points;
-
-            if ( questionPoints > 0 ) {
-
-                fieldGroup?.map( field => {
-    
-                    if ( field?.points === 0 ) {
-    
-                        saveFormField({ ...field, points: questionPoints });
-                        
-                    }
-    
-                });
-    
-            }
+            handleQuestionPoints( fieldGroup );
+          
         }
+        
     } catch (error) {
         console.log( error );
+    }
+}
+
+function assignCheckBoxQuestionPoints( fieldGroup ){
+    try {
+
+        if ( formBuilderStatus === elementMeta?.state?.Manage && !previewMode )  {
+    
+            handleQuestionPoints( fieldGroup );
+        }
+
+    } catch (error) {
+        console.log( error );
+    }
+}
+
+function handleQuestionPoints( fieldGroup ){
+
+    let questionPoints = fieldGroup?.find( field => field?.points > 0 )?.points;
+
+    if ( questionPoints > 0 ) {
+
+        fieldGroup?.map( field => {
+
+            if ( field?.points === 0 ) {
+
+                saveFormField({ ...field, points: questionPoints });
+                
+            }
+
+        });
+
     }
 }
     

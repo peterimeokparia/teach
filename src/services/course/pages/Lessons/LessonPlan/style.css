@@ -3,13 +3,117 @@
     height: 100vh; 
     max-width: 100vw;
     width: 100vw;
-    display: flex;
-    flex-direction: column;
     text-align: center;
     background-image: url(../../../images/geometry2.png);
     font-family: 'Courier New', Courier, monospace;
     overflow: hidden;
     overflow-y: hidden;
+  }
+  .MeetingPlan .sidebarOne {
+    padding-right: 10px;
+    margin-left: -3110px;
+    display: flex;
+    flex-direction: column;
+    color: #673ab7;
+  }
+  .MeetingPlan .sidebarTwo {
+    background: #fbf9ff;
+    border-right: 1px solid #bba0ea;
+    position: relative;
+    background: lightpink;
+    min-width: 500px;
+    height: 1200px;
+    width: 200px;
+    box-sizing: border-box;
+    text-align: center;
+
+    padding-right: 100px;
+    margin-left: -10px;
+    display: flex;
+    flex-direction: column;
+    color: #673ab7;
+  } 
+  .MeetingPlan .sidebarTwo .navLink:hover {
+    cursor: -webkit-grab; cursor: grab;
+    cursor: -webkit-grabbing; cursor: grabbing;
+  }
+
+  /* .MeetingPlan .sidebarTwo .children-subsection .notes-title .title-date {
+    /* padding-top: 100px; */
+  /* } */
+
+  /* .react-page-editable .react-page-editable-mode-insert {
+    padding-bottom: 7000px;
+    margin-bottom: 5000px;
+  }
+
+  .react-page-editable-mode-insert {
+    padding-bottom: 7000px;
+    margin-bottom: 5000px;
+  }   */
+
+  .sidebarThree {
+    flex-basis: 300px;  
+    background: #fbf9ff;
+    border-right: 1px solid #bba0ea;
+
+    position: relative;
+    background: aquamarine;
+    min-width: 200px;
+    height: 1200px;
+    width: 500px;
+    box-sizing: border-box;
+    text-align: center;
+
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: -99px;
+    display: flex;
+    flex-direction: column;
+    color: aquamarine;
+  }
+  .sidebarFour {
+    flex-basis: 300px;  
+    background: #fbf9ff;
+    border-right: 1px solid #bba0ea;
+
+    position: relative;
+    background: aquamarine;
+    min-width: 200px;
+    height: 1200px;
+    width: 400px;
+    box-sizing: border-box;
+    text-align: center;
+
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: -8px;
+    display: flex;
+    flex-direction: column;
+    color: aquamarine;
+  }
+   
+  .MeetingPlan .invite {
+    /* margin-top: -90px; */
+    margin-left: -300px;
+
+    flex-basis: 300px;  
+    background: red;
+    border-right: 1px solid red;
+    position: relative;
+    min-width: 200px;
+    height: 1200px;
+    box-sizing: border-box;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    color: aquamarine;
+  }
+  .MeetingPlan .splitview {
+    margin-top: -10px;
+    /* margin-left: -290px; */
   }
   .MeetingPlan .boomingllc header {
     background-color: #673ab7;
@@ -20,6 +124,16 @@
     justify-content: space-between;
     /* padding: 10px 20px; */
     /* background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red); */
+  }
+  .MeetingPlan .teach header {
+    background-color: #673ab7;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    /* padding: 10px 20px; */
+    background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
   }
   .MeetingPlan .others header {
     background-color: #673ab7;
@@ -48,9 +162,22 @@
   
   .MeetingPlan .content {
     display: flex;
-    height: 100vh;
+    width: 1132px;
+    /* display: flex; */
+    /* height: 100vh;
+    width: 1532px; */
+    /* width: 10vw; */
   }
-  
+  .MeetingPlan .content .editor {
+    margin-left: 1170px;
+  }
+  .MeetingPlan .content .editor .main {
+    margin-top: 95px;
+    margin-left: -1110px;
+    min-width: 102px;
+    width: 1092px;
+    overflow: hidden;
+  }
   .MeetingPlan .sidebar {
     padding-right: 0px;
     padding-left: 0px;
@@ -105,9 +232,12 @@
     cursor: pointer;
     box-shadow: 10px 10px;
   }
-  .MeetingPlan .lesson-item .span-btns {
-    /* padding-bottom: 5px; */
+  .MeetingPlan .lesson-item .div-btns {
+    padding-bottom: 40px;
   }
+  /* .MeetingPlan .lesson-item .span-btns {
+    padding-bottom: 5px;
+  } */
   .toggle-stage-btns-show {
     visibility: visible;
     margin-left: 5px;
@@ -178,8 +308,9 @@
     margin-top: -15%;
   }
   .MeetingPlan .lesson-item .span-btns .MaterialUiVideoComponent {
-    padding-right: 400px;
     margin-top: -15%;
+    /* padding-right: 400px;
+    margin-top: -15%; */
     /* padding-top: 10px; */
   }
   .lesson-plan-round-button-1 { 
@@ -243,9 +374,13 @@
     background: yellow;
   }
   .MeetingPlan .whiteBoardSideBar {
-    padding-right: 0px;
+    margin-top: 60px;
+    /* margin-top: -1000px;
+    width: 5000px;
+    height: 1000px; */
+    /* padding-right: 0px;
     padding-left: 0px;
-    /* display: flex; */
+    display: flex; */
   }
   .MeetingPlan .whiteBoardSideBar .savedBoards {
     list-style: none;
@@ -451,6 +586,7 @@
       flex: 1;
     }
     .MeetingPlan .whiteBoardSideBar {
+      /* flex-basis: 0px; */
       /* flex-basis: 300px;
       background: #fbf9ff;
       border-right: 1px solid #bba0ea; */
@@ -660,3 +796,7 @@
     resize: both;
     overflow: auto;
   }
+
+
+
+  

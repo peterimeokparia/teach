@@ -7,15 +7,15 @@ saveOnlineAnswer,
 loadOnlineAnswers,
 deleteOnlineAnswer } from 'services/course/actions/onlineanswers';
 
-import { 
-setMarkDown } from 'services/course/helpers/EditorHelpers'; 
-  
+import {
+editor_upload_url,
+handleChange } from 'services/course/pages/OnlineQuestionsPage/helpers';
+
 import {
 SET_ONLINEANSWERS_MARKDOWN } from 'services/course/actions/onlineanswers';
 
-import {
-upload_url, 
-uploadImageUrl } from 'services/course/pages/OnlineQuestionsPage/helpers';
+import { 
+saveEditorMarkDownObjectToMw } from 'services/course/actions/editor';
 
 import { 
 getSelectedOnlineAnswersByCourseId } from 'services/course/selectors';
@@ -44,11 +44,12 @@ const ManageEditors = ({
   addNewOnlineAnswer,
   saveOnlineAnswer,
   loadOnlineAnswers,
+  saveEditorMarkDownObjectToMw,
   answers,
   deleteOnlineAnswer,
   videoComponentMeta,
-  setMarkDown,
   children }) => {
+    
   let {
     addNewEditor,
     onhandleSelected,
@@ -67,19 +68,6 @@ const ManageEditors = ({
               }
             </span>;  
   }; 
-
-function handleChange( editor, element ){
-  let duration = 2000;  
-
-  setMarkDown(
-    element, 
-    editor.getHTML(), 
-    { propNameOne: "onlineAnswers",  propNameTwo: "onlineAnswers" }, 
-    SET_ONLINEANSWERS_MARKDOWN, 
-    saveOnlineAnswer, 
-    duration
-  );
-};
 
 return (
   <div 
@@ -108,10 +96,9 @@ return (
                     className={"answerEditor"}
                     id={ element?._id }
                     name={ element?.name } 
-                    handleChange={(editor) => handleChange(editor, element)}
+                    handleChange={(editor) => handleChange({ ...element, markDownContent: editor }, SET_ONLINEANSWERS_MARKDOWN, `/onlineanswers/`, saveEditorMarkDownObjectToMw )}
                     content={ element?.markDownContent }
-                    upload_url={ upload_url }
-                    upload_handler={ ( file, imageBlock ) => uploadImageUrl( file, imageBlock, element, saveOnlineAnswer ) }
+                    upload_url={ editor_upload_url }
                     readOnly={(element?.answerBy === currentUser?._id)? false : true }
                   /> 
                 <div className={'userBio'}>
@@ -210,5 +197,5 @@ const mapState = ( state, ownProps ) => {
   };
 };
 
-export default connect(mapState, { addNewOnlineAnswer, saveOnlineAnswer, loadOnlineAnswers, setMarkDown, deleteOnlineAnswer })(ManageEditors);
+export default connect(mapState, { addNewOnlineAnswer, saveOnlineAnswer, loadOnlineAnswers, saveEditorMarkDownObjectToMw, deleteOnlineAnswer })(ManageEditors);
   

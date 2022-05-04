@@ -48,6 +48,8 @@ import formBuilderRoute from '../routes/formBuilderRoute.js';
 import reportFieldRoute from '../routes/reportFieldRoute.js';
 import institutionRoute from '../routes/institutionRoute.js';  
 import classGradeRoute from '../routes/classGradeRoute.js';
+import notesRoute from '../routes/notesRoute.js';
+import fullTextSearchRoute from '../routes/fullTextSearchRoute.js';
 
 import dotenv from 'dotenv';
 dotenv.config({ path: '../../backend/.env' });
@@ -147,6 +149,10 @@ app.use('/api/v1/reportfield', reportFieldRoute);
 app.use('/api/v1/institutions', institutionRoute);
 
 app.use('/api/v1/classgrades', classGradeRoute);
+
+app.use('/api/v1/notes', notesRoute);
+
+app.use('/api/v1/fulltextsearch', fullTextSearchRoute);
 
 mongoose.connect('mongodb+srv://dbuser:dbuser2020@cluster0.8heal.mongodb.net/teach?retryWrites=true&w=majority', {
    useNewUrlParser: true, 

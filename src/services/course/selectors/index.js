@@ -7,11 +7,22 @@ setItemInSessionStorage } from 'services/course/helpers/ServerHelper';
 import { 
 elementMeta } from "services/course/pages/QuestionsPage/helpers";
 
+import { 
+role } from '../helpers/PageHelpers';
+
+import {
+LESSONNOTES } from  "services/course/actions/notes";
+
 const getUsers = state => state?.users?.users;
+const getTutors = state => Object.values(state?.users?.users).filter(user => user?.role === role.Tutor);
 const getCurrentUser = state => state.users.user;
 const getLessons = state => state.lessons.lessons;
+const getLessonId = (state, props) => props?.lessonId;
 const getCalendars = state => state?.calendar?.calendars;
 const getEvents = state => state?.events?.events;
+const getEventId = (state, props) => props.eventId;
+const getNoteType = (state, props) => props.noteType;
+const getNoteId = (state, props) => props.noteId;
 const getParsedCalendarId = ( state, props ) => props.calendarId;
 const getParsedCourseId = ( state, props ) => props?.courseId;
 const getParsedUserId = ( state, props ) => props?.currentUser?._id;
@@ -37,6 +48,7 @@ const getFailedPushNotifications = state => state?.failedNotifications.failedPus
 const getFailedEmailNotifications = state => state?.failedNotifications.failedEmailNotifications;
 const getFormFieldAnswers = state =>  state?.formFieldAnswers?.formFieldAnswers;
 const getFormBuilders = state =>  state?.formBuilders?.formBuilders;
+const getNotes = state => state?.notes?.notes;
 // const getCurrentOperatorId = ( state, props ) => props?.operatorId;
 // const parseCourseId = (state, props) => props.courseId;
 // const getCurrentUser = state => state.users.user;
@@ -99,6 +111,13 @@ export const getSortedLessonsSelector = createSelector(
     }),           
 );
 
+export const getLessonByLessonIdSelector = createSelector( 
+    getSortedLessonsSelector,
+    getLessonId,
+    (lessons , lessonId) => 
+           lessons?.find(lesson =>  lesson?._id === lessonId)        
+);
+
 export const getLessonsByCourseIdSelector = createSelector( 
     getSortedLessonsSelector,
     getParsedCourseId,
@@ -118,6 +137,13 @@ export const getCoursesByCreatedByIdSelector = createSelector(
     getParsedUserId,
     (courses , userId) => 
         Object.values(courses)?.find(course =>  course?.createdBy === userId)         
+);
+
+export const getMyCourseList = createSelector( 
+    getCourses,
+    getCurrentUser,
+    (courses , user) => 
+        Object.values(courses)?.filter(course => user?.courses?.includes(course?._id))         
 );
 
 export const getOperatorFromOperatorBusinessName = createSelector( 
@@ -268,6 +294,7 @@ export const getFormFieldAnswersByQuestionId = createSelector(
             field?.formUuId === fieldPropsFormUuid && field?.userId === (fieldPropsFormUserId ? fieldPropsFormUserId : userId ))       
 );
 
+
 export const getSelectedOnlineAnswersByCourseId = createSelector(
     getCourseId,
     getOnlineAnswers,
@@ -294,5 +321,41 @@ export const getPublishedForms = createSelector(
     getCurrentUser,
     getFormBuilders,
     (user, formBuilders) => 
-         Object.values(formBuilders).filter(form => form?.state === elementMeta.state.Manage && form?.status === elementMeta.status.Published || form?.status === elementMeta.status.Pending && form?.role === "" || form?.role === user?.role )   
+         Object.values(formBuilders).filter(form => form?.state === elementMeta.state.Manage && 
+            (form?.status === elementMeta.status.Published || form?.status === elementMeta.status.Pending) && 
+                (form?.role === "" || form?.role === user?.role) )   
+);
+
+export const getLessonUserNotesByEventId = createSelector(
+    getCurrentUser,
+    getNotes,
+    getEventId,
+    getNoteType,
+    ( user, notes, eventId  ) => 
+        Object.values(notes).find(note => note?.eventId === eventId && note?.userId === user?._id )       
+);
+
+export const getLessonUserNotesByNoteType = createSelector(
+    getCurrentUser,
+    getNotes,
+    getEventId,
+    getNoteType,
+    ( user, notes, eventId, noteType ) => 
+        Object.values(notes).find(note => note?.eventId === eventId && note?.userId === user?._id && note?.noteType === noteType)       
+);
+
+export const getEventByEventId = createSelector(
+    getEvents,
+    getEventId,
+    ( events, eventId ) => 
+        Object.values(events).find(event => event?._id === eventId)       
+);
+
+
+export const getTutorsLessonUserNotesByEventId = createSelector(
+    getCurrentUser,
+    getNotes,
+    getEventId,
+    ( user, notes, eventId ) => 
+        Object.values(notes).find(note => note?.eventId === eventId && note?.userId === user?._id && note?.noteType === LESSONNOTES)       
 );

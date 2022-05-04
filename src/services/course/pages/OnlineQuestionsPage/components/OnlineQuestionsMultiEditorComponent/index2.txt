@@ -1,0 +1,178 @@
+{
+                        ( element ) => {
+                          return <div className={"OnlineListItems"}
+                          id={ element?._id }
+                        >
+                          <div> 
+                          <Roles role={ currentUser?.role === role.Tutor && formBuilderStatus === elementMeta.state.Manage }>
+                          <div className={"sideburgerMenu"}>  
+                          <span>
+                          <MiniSideBarMenu question={ element } formType={formType}>
+                            {( handleMouseDown, menuVisible ) => (
+                              <>
+                              <MiniSideBarButton
+                                mouseDown={ handleMouseDown }
+                                navMenuVisible={ menuVisible } 
+                              />
+                              <div id="sideFlyoutMenu" className={ menuVisible ? "show" : "hide" } >
+                                { <Basic question={ element }/> }
+                              </div>
+                              </>
+                            )}
+                          </MiniSideBarMenu>
+                          </span>  
+                          </div> 
+                          <span>
+                            { previewMode?.isPreviewMode &&  <DeleteIcon
+                                style={ deleteQuestionIconStyle() }
+                                className="comment-round-button-3"
+                                onClick={() => deleteQuestion( element )}
+                              />
+                            }
+                          </span> 
+                          </Roles>  
+                       <div className={ (formBuilderStatus === elementMeta.state.Taking ) ? 'editor-taking' : 'editor'  }>
+                       {(element?.inputType === inputType.MathScienceQuestion) &&
+                            <div className=""> 
+                              {/* <MathScience 
+                                previewMode={previewMode?.isPreviewMode} 
+                                formElement={element}
+                                addNewMathScienceField={addNewMathScienceFormInputField}
+                                provider={editorProvider?.PageEditor}
+                              /> */}
+                            { (formType !== formTypes?.report) &&
+                              <div className="explanation-content"> 
+                                {/* <EditorComponent
+                                  id={element?._id}
+                                  name={element?.name}
+                                  provider={editorProvider?.PageEditor}
+                                  //handleChange={(editor) =>  handleSelectedEditor(selectedEditorElement, element, handleChange(editor, element, "onlineQuestions", SET_EXPLANATION_ANSWER_MARKDOWN, saveOnlineQuestions, setMarkDown))}
+                                  content={ element?.answerExplanationMarkDownContent }
+                                  //upload_url={editor_upload_url}
+                                 //upload_callback={( file, imageBlock ) => handleSelectedEditor(selectedEditorElement, element, handleEditorImageUpload( file, imageBlock, fileUploadMeta, element, saveOnlineQuestions ) ) }
+                                 // readOnly={( currentUser?._id && element?.userId === currentUser?._id && currentUser?.role === role.Tutor) ? false : true}
+                                  setOnClickEvent={() => setEditorOnClickClosure( element, 'explainer', fileUploadMeta  )}
+                                />  */}
+                              </div>
+                            }
+                             </div>
+                          }
+                          {(element?.inputType === inputType.MainBodyTableColumnQuestion && 
+                            previewMode?.isPreviewMode  ) &&
+                           <div className="input"> 
+                              <input
+                                type={"text"}
+                                // value={ inputValue }
+                                //value={ element?.markDownContent ? element?.markDownContent : inputValue }
+                                //onChange={e => handleChangedValue( e.target.value, setInputValue, { ...element, markDownContent: e.target.value }, saveOnlineQuestions ) }
+                                placeholder={""}
+                              />  
+                           </div>
+                          }
+                          {(element?.inputType === inputType.MainBodyTableColumnQuestion && 
+                            !previewMode?.isPreviewMode  ) &&
+                              <div className=""> 
+                               {element?.markDownContent }
+                             </div>
+                          }
+                          { (element?.inputType === inputType.MainBodyQuestion) &&
+                            <div>    
+                              <EditorComponent
+                              element={element}
+                              saveAction={saveOnlineQuestions}
+                                id={element?._id}
+                                name={element?.name}
+                                provider={editorProvider?.PageEditor}
+                               /// handleChange={(editor) =>  handleSelectedEditor(selectedEditorElement, element, handleChange(editor,  element, "onlineQuestions", SET_ONLINEQUESTION_MARKDOWN, saveOnlineQuestions, setMarkDown))}
+                               content={ element?.markDownContent }
+                                //handleChange={(editor) => handleChange(editor,  element, "onlineQuestions", SET_ONLINEQUESTION_MARKDOWN, saveMarkDownObject, setMarkDown)}
+                                // upload_url={editor_upload_url} 
+                                // upload_handler={( file, imageBlock ) =>  handleSelectedEditor(selectedEditorElement, element, handleEditorImageUpload( file, imageBlock, fileUploadMeta, element, saveOnlineQuestions ) ) }
+                                // upload_callback={( file, imageBlock ) =>  handleSelectedEditor(selectedEditorElement, element, handleEditorImageUpload( file, imageBlock, fileUploadMeta, element, saveOnlineQuestions ) ) }
+                                // readOnly={( currentUser?._id && element?.userId === currentUser?._id && currentUser?.role === role.Tutor) ? false : true}
+                                setOnClickEvent={() => setEditorOnClickClosure(element, 'main', fileUploadMeta )}
+                              /> 
+                              {(formType !== formTypes?.report) &&
+                              <div className="explanation-content"> 
+                                {/* <EditorComponent
+                                  id={element?._id}
+                                  name={element?.name}
+                                  provider={editorProvider?.PageEditor}
+                                  handleChange={(editor) => handleSelectedEditor(selectedEditorElement, element, handleChange(editor,  element, "onlineQuestions", SET_EXPLANATION_ANSWER_MARKDOWN, saveOnlineQuestions, setMarkDown))}
+                                  content={ element?.answerExplanationMarkDownContent }
+                                  //upload_url={editor_upload_url}
+                                  upload_callback={( file, imageBlock ) => handleSelectedEditor(selectedEditorElement, element, handleEditorImageUpload( file, imageBlock, fileUploadMeta, element, saveOnlineQuestions )) }
+                                  readOnly={( currentUser?._id && element?.userId === currentUser?._id && currentUser?.role === role.Tutor) ? false : true}
+                                  setOnClickEvent={() => setEditorOnClickClosure( element, 'explainer', fileUploadMeta )}
+                                />  */}
+                              </div>
+                            }
+                             { ( displayVideoComponent ) && 
+                                < MaterialUiVideoComponent 
+                                  className={"onlineQuestionVideoComponent"} 
+                                  element={ element } 
+                                  videoMeta={videoMeta( element )}
+                                  saveRecording={saveRecording}
+                                  extendedMeetingSettings={false} 
+                                />
+                            }
+                            </div> 
+                          }
+                          {
+                            children( element, courseId )
+                          }
+                      </div>
+                          </div>
+                          
+                        </div>
+                        } 
+                      }
+
+
+  // let {
+  //   handleEditorImageUpload
+  // } = useEditorWidgetHook(SAVE_ONLINEQUESTION_SUCCESS);
+
+  // function addNewQuestion( typeOfInput ){
+  //   let formQuestions = onlineQuestions?.filter( question => question?.formUuId === formUuId );
+  //   let sortedRecords = getSortedRecords( formQuestions, 'position' );
+  //   let sortedRecordsLength = sortedRecords?.length;
+  //   let position = (formQuestions?.length === 0 || undefined ) ? 1 : (sortedRecords[ sortedRecordsLength-1 ]?.position)+1;
+    
+  //   let config = {
+  //     typeOfInput,
+  //     formId,
+  //     formType,
+  //     formName,
+  //     courseId,
+  //     formUuId, 
+  //     onlineQuestionId,
+  //     currentUser,
+  //     operator,
+  //     position
+  //   };
+  
+  //   addNewOnlineQuestion( onlineMarkDownEditorFieldCollection( addQuestionConfig( config ) ) );
+  //   toggleContentChanged(); 
+  // // }  
+
+  // const handleSelectedEditor = ( selectedElement, element, func ) => {
+  //   if ( !selectedElement || !element ) return;
+  //   if ( selectedElement?.element?._id !== element?._id ) return;
+  //   return func;
+  // }
+
+  export function handleChange( editor, element, storeName, actionMarkDown, saveQuestion, setMarkDown ){
+
+  let duration = 2000;  
+
+    setMarkDown(
+      element,
+      editor, 
+      // editor.getHTML(), 
+      { propNameOne: storeName,  propNameTwo: storeName }, 
+      actionMarkDown, 
+      saveQuestion, 
+      duration
+    );
+  }

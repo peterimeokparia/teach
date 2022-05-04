@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema; 
 
-// To DO: Shared amongs tutors: Build new exam(s) & quizzes from existing set of questions
+// To DO: Shared amongs tutors: Build new exam(s) & quizzes from existing set of questions - in progress
 const formFieldSchema = new Schema ({
    
     formId:{
@@ -117,6 +117,10 @@ const formFieldSchema = new Schema ({
     },
     userId:{
         type: String,
+        required: false,
+    },
+    examId: { 
+        type: String, 
         required: false,
     },
     eventId: { 

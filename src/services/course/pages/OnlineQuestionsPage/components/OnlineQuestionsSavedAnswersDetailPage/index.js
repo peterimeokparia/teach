@@ -6,7 +6,7 @@ connect  } from 'react-redux';
 
 import { 
 addNewOnlineQuestion,
-saveOnlineQuestion,
+saveOnlineQuestions,
 loadOnlineQuestions,
 deleteOnlineQuestion } from 'services/course/actions/onlinequestions';
 
@@ -59,7 +59,7 @@ return (
 const mapDispatch = { 
   loadCourses,
   addNewOnlineQuestion, 
-  saveOnlineQuestion, 
+  saveOnlineQuestions, 
   loadOnlineQuestions, 
   deleteOnlineQuestion
 };

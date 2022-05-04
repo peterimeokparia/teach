@@ -21,6 +21,8 @@ export const SAVE_ONLINEQUESTION_BEGIN = "SAVE ONLINEQUESTION BEGIN";
 export const SAVE_ONLINEQUESTION_ERROR = "SAVE ONLINEQUESTION ERROR";
 export const SAVE_ONLINEQUESTION_SUCCESS = "SAVE ONLINEQUESTION SUCCESS";
 export const SET_EXPLANATION_ANSWER_MARKDOWN = "SET EXPLANATION ANSWER MARKDOWN";
+export const SET_ONLINEQUESTION_FILE_UPLOAD_META = "SET ONLINEQUESTION FILE UPLOAD META";
+export const SET_ONLINEQUESTION_MARKDOWN_DATA = "SET ONLINEQUESTION MARKDOWN DATA";
 export const QUESTION_META = "QUESTION META";
 export const ONLINE_QUESTION_COURSEID = "ONLINE_QUESTION_COURSEID";
 export const TOGGLE_CONTENT_CHANGED = "TOGGLE CONTENT CHANGED";
@@ -39,11 +41,11 @@ export const addNewOnlineQuestion = ( question ) => {
   };
 };
 
-export const saveOnlineQuestion = ( question ) => {
+export const saveOnlineQuestions = ( question ) => {
     return dispatch => {
          dispatch({ type: SAVE_ONLINEQUESTION_BEGIN });
          return update( question, `/onlinequestions/` )
-          .then( response => {
+          .then( response => { 
               dispatch({ type: SAVE_ONLINEQUESTION_SUCCESS, payload: response }); 
               dispatch({ type: LOAD_LATEST_ONLINEQUESTION_SUCCESS, payload: response }); 
            }).catch( error => {
@@ -102,6 +104,11 @@ export const deleteOnlineQuestion = question => {
     };
 };
 
+export const fileUploadMeta = fileUploadMeta => ({
+    type: SET_ONLINEQUESTION_FILE_UPLOAD_META,
+    payload: fileUploadMeta
+});
+
 export const questionMeta = questionMeta => ({
     type: QUESTION_META,
     payload: questionMeta
@@ -112,17 +119,22 @@ export const onlineQuestionCourseId = courseId => ({
      payload: courseId
 });
 
+export const saveQuestionMiddleWare = ( onlineQuestion ) => ({
+    type: SAVE_ONLINEQUESTION_SUCCESS,
+    payload: onlineQuestion
+});
+
 export const toggleContentChanged = () => ({
     type: TOGGLE_CONTENT_CHANGED
 });
 
 let timerHandle = null;
 
-export const setMarkDown = ( teachObject, markDown, teachObjectType="", actionType, saveAction  ) => {
+export const setMarkDown = ( teachObject, markDownContent, teachObjectType="", actionType, saveAction  ) => {
     return ( dispatch, getState )  => {
         dispatch({ type: actionType, payload: {   
             teachObject,
-            markDown
+            markDownContent
           }});
 
         if ( timerHandle ){

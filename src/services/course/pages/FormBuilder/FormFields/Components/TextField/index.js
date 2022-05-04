@@ -8,7 +8,7 @@ import {
 saveFormField } from 'services/course/actions/formfields';
 
 import {
-saveOnlineQuestion } from 'services/course/actions/onlinequestions';
+saveOnlineQuestions } from 'services/course/actions/onlinequestions';
 
 import { 
 handleChangedValue } from 'services/course/pages/FormBuilder/FormFields/helpers';
@@ -24,7 +24,7 @@ const TextField = ( {
     elememtFormFields,
     studentsAnswer,
     saveFormField,
-    saveOnlineQuestion  } ) => {
+    saveOnlineQuestions  } ) => {
 
     const [ inputValue, setInputValue ] = useState('');
 
@@ -35,7 +35,7 @@ const TextField = ( {
     let {
         addFieldPoints,
         handleTogglingModal,
-    } = useAssignPointsHook({...fieldProps, formFieldElement, elememtFormFields, saveOnlineQuestion, saveFormField } );
+    } = useAssignPointsHook({...fieldProps, formFieldElement, elememtFormFields, saveOnlineQuestions, saveFormField } );
 
 return(
     <>  
@@ -65,7 +65,7 @@ return(
 
 const mapDispatch = {
     saveFormField,
-    saveOnlineQuestion
+    saveOnlineQuestions
 };
   
 const mapState = ( state, ownProps ) => { 

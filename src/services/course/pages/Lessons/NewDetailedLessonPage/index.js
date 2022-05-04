@@ -51,16 +51,6 @@ const cancelEdit = (e) => {
     reset();
 };
 
-// const setInitialValuesForInputFields = () => {
-//     setLessonTitle(titleInitialValue);
-//     setEditing(false);
-// }
-
-// const beginEditing = () => {
-//     setInitialValuesForInputFields();
-//     setEditing(true);
-// }
-
 useEffect (() => {
     if ( editing ) {
         inputRef.current.focus();

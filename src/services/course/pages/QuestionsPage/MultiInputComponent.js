@@ -46,10 +46,6 @@ const MultiInputComponent = ( { inputFieldOptions, animateInvitationButton } ) =
 
  }
 
-
-
-
-
   const handleChange = ( event ) => {
 
     setInputName( event.target.name );

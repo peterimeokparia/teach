@@ -19,8 +19,7 @@ import {
 elementMeta } from 'services/course/pages/QuestionsPage/helpers';
       
 import {
-upload_url,
-uploadImageUrl,
+editor_upload_url,
 handleChange } from 'services/course/pages/OnlineQuestionsPage/helpers';
   
 import {
@@ -28,7 +27,11 @@ getById } from 'services/course/api';
 
 import {
 getMarkDownAsText } from 'services/course/pages/FormBuilder/FormTables/helpers';
-    
+
+import {
+inputType } from 'services/course/pages/QuestionsPage/helpers';
+
+import Latex from "react-latex";    
 import EditorComponent from 'services/course/pages/components/EditorComponent';
 import Form from 'services/course/pages/FormBuilder/FormFields/helpers/Form';
 import Swal from 'sweetalert2';
@@ -56,7 +59,7 @@ function useFormFieldHook( fieldProps ) {
     formFieldAnswers,
     userId,
     currentUser,
-    setMarkDown,
+    saveEditorMarkDownObjectToMw,
     saveStudentsAnswerPoints,
     setUpdatePoints,
     eventId
@@ -150,12 +153,13 @@ function handleFormFieldAnswers( element, inputValue, prevPoints ){
 function handleSelectorFormFieldAnswers( element, inputValue, answer, selected, prevPoints ){
 
   let existingAnswer = formAnswers?.find( answer => answer?.fieldId === element?._id );
-
+  
   let props = {
     element,
     value: inputValue,
     existingAnswer,
     answer,
+    answerKey: element?.answerKey,
     prevPoints,
     formStatus: formBuilderStatus,
     addNewFormFieldAnswer,
@@ -192,15 +196,15 @@ function handleMarkDownEditorChange( editor, element ){
   
   switch ( currentUser?.role ) {
     case role.Student:
-      handleChange( editor, element, "formFieldAnswers", SET_FORMFIELDANSWERS_MARKDOWN, saveFormFieldAnswer, setMarkDown );
+      handleChange({ ...element, markDownContent: editor }, SET_FORMFIELDANSWERS_MARKDOWN, `/formfieldanswers/`, saveEditorMarkDownObjectToMw );
       handleFormFieldAnswers( element, getMarkDownAsText( element?.markDownContent ) );    
     break;
     case role.Tutor:
       if ( formBuilderStatus === elementMeta.state.Manage ) {
-        handleChange( editor, element, "formFields", SET_FORMFIELDS_MARKDOWN, saveFormField, setMarkDown );
+        handleChange({ ...element, markDownContent: editor }, SET_FORMFIELDS_MARKDOWN, `/formfields/`, saveEditorMarkDownObjectToMw );
         setContentChanged( true ); 
       } else {
-        handleChange( editor, element, "formFieldAnswers", SET_FORMFIELDANSWERS_MARKDOWN, saveFormFieldAnswer, setMarkDown );       
+        handleChange({ ...element, markDownContent: editor }, SET_FORMFIELDANSWERS_MARKDOWN, `/formfieldanswers/`, saveEditorMarkDownObjectToMw );   
       }
     break;
     default:
@@ -250,9 +254,8 @@ function handleEditor( element ){
       name={element?.name}
       handleChange={(editor) => handleMarkDownEditorChange( editor, element )}
       content={ element?.markDownContent }
-      upload_url={upload_url}
-      upload_handler={( file, imageBlock ) => uploadImageUrl( file, imageBlock, element, saveFormField ) }
-      readOnly={(element?.questionCreatedBy === currentUser?._id) ? false : true}
+      upload_url={editor_upload_url}
+      // readOnly={(element?.questionCreatedBy === currentUser?._id) ? false : true}
       readOnly={false}
     /> 
   }
@@ -263,13 +266,38 @@ function handleEditor( element ){
          name={element?.name}
          handleChange={(editor) => handleMarkDownEditorChange( editor, element )}
          content={ element?.markDownContent }
-         upload_url={upload_url}
-         upload_handler={( file, imageBlock ) => uploadImageUrl( file, imageBlock, element, saveFormField ) }
+         upload_url={editor_upload_url}
         //  readOnly={(element?.questionCreatedBy === currentUser?._id) ? false : true}
         readOnly={false}
        /> 
   });
-};
+}
+
+function handleHighlightingFormAnswers( element ) {
+
+  if ( formBuilderStatus !== elementMeta.state.Submitted ) return 'radio';
+
+  if ( element?.inputType === inputType.RadioButton && 
+      element?.selected === true && element?.answerKey !== null ) {
+        return 'radio-highlighted';
+  }
+
+  if ( element?.inputType === inputType.CheckBox && element?.answerKey !== null ) {
+      return 'radio-highlighted';
+  }
+
+  if ( element?.inputType === inputType.DropDown && element?.answerKey !== null ) {
+    return 'radio-highlighted';
+  }
+
+  if ( element?.answerKey !== null ) {
+    return 'radio-highlighted';
+  }
+}
+
+function handleDisplayingAnswerKeys( element ){
+return ( <div>{ formBuilderStatus !== elementMeta.state.Taking && element?.answerKey !== null &&  <Latex>{`answer: $${element?.answerKey}$`}</Latex> } </div>)
+}
 
 return {
     formFields,
@@ -284,7 +312,9 @@ return {
     handleFormFieldAnswers,
     handleSelectorFormFieldAnswers,
     handleMarkDownEditorChange,
-    handleEditor
+    handleEditor,
+    handleHighlightingFormAnswers,
+    handleDisplayingAnswerKeys
 }; };
 
 export default useFormFieldHook;

@@ -40,9 +40,7 @@ eventEnum,
 getCalendarColor } from 'services/course/pages/CalendarPage/helpers';
 
 import {
-goToCalendar,
-goToTimeLine,
-gotToLessonPlan } from 'services/course/pages/Users/helpers';
+goToCalendar } from 'services/course/pages/Users/helpers';
 
 import HelpIcon from '@material-ui/icons/Help';
 import Roles from 'services/course/pages/components/Roles';
@@ -241,7 +239,7 @@ return  editing
     : ( <div className="ComponentCourseListItem">
             <ul>
             {courses?.map(course => (    
-            //  <NavLinks to={`/${operatorBusinessName}/tutor/${ course?.createdBy }/courses/${ course?._id }`}>   
+            <NavLinks to={`/${operatorBusinessName}/tutor/${course?.createdBy}/courses/${course?._id}`}>   
                 <li 
                     key={course?._id}
                     className={"component-seconday-list-body"}
@@ -329,7 +327,7 @@ return  editing
                     </div> 
                     </div>
                 </li>
-                // </NavLinks>
+                </NavLinks> 
                 ))}
             </ul>
     </div>

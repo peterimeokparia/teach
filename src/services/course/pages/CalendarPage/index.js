@@ -34,19 +34,25 @@ getOperatorFromOperatorBusinessName,
 getUsersByOperatorId,
 getCalendarsByOperatorId,
 getTimeLinesByOperatorId,
-getPublishedForms } from 'services/course/selectors';
+getPublishedForms, 
+getLessonsByCourseIdSelector} from 'services/course/selectors';
 
 import {
 eventEnum,
 studentsOption,
 getCalendarPageHeading,
-userCanAddOrEditEvent } from 'services/course/pages/CalendarPage/helpers';
+userCanAddOrEditEvent, 
+formNames } from 'services/course/pages/CalendarPage/helpers';
 
 import {
-role } from 'services/course/helpers/PageHelpers';
+addNotes,
+loadAllNotes } from 'services/course/actions/notes';
 
 import { 
 saveEventData  } from "services/course/pages/CalendarPage/helpers/events";
+
+import { 
+renderSwitch  } from "services/course/pages/CalendarPage/helpers/calendar";
 
 import { 
 elementMeta } from "services/course/pages/QuestionsPage/helpers";
@@ -59,34 +65,32 @@ saveFormBuilder } from 'services/course/actions/formbuilders';
 import {
 goToForms } from 'services/course/pages/Users/helpers';
 
+import {
+handleLessonNotes } from 'services/course/pages/CalendarPage/components/LessonNavigationComponent/helpers';
+
+import {
+handleLessons } from 'services/course/pages/CalendarPage/helpers/lessons';
+
+import { 
+forceReload } from 'services/course/helpers/ServerHelper';
+
 import Calendar from 'services/course/helpers/Calendar';
 import CalendarEvent from 'services/course/helpers/CalendarEvent';
-import FullCalendar from '@fullcalendar/react';
-import rrulePlugin from "@fullcalendar/rrule";
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
-import listWeek from "@fullcalendar/list";
-import ConsultationForm from 'services/course/pages/CalendarPage/components/ConsultationForm';
-import Modal from "react-modal";
-import moment from "moment";
-import SessionScheduling from 'services/course/pages/CalendarPage/components/TimeLines/SessionScheduling';
-import OnlineTutoringRequestForm from 'services/course/pages/CalendarPage/components/OnlineTutoringRequestForm';
-import Forms from 'services/course/pages/CalendarPage/components/Forms';
-import Scheduling from 'services/course/pages/CalendarPage/components/Scheduling/index.js';
 import useBuildEventDataHook from "services/course/pages/CalendarPage/hooks/useBuildEventDataHook";
+import useLessonHook from "services/course/pages/CalendarPage/hooks/useLessonHook";
 import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/list/main.css";
 import "./style.css";
-import { object } from 'services/editor/etherpad-lite/src/tests/frontend/lib/underscore';
-
-moment.locale("en-GB");
+//import moment from "moment";
+//moment.locale("en-GB");
 
 const CalendarPage = ({
     operatorBusinessName,
     pushNotificationSubscribers,
     operator,
     addEvent,
+    addNotes,
+    loadAllNotes,
     saveEvent,
     loadCourses,
     loadAllEvents,
@@ -108,16 +112,23 @@ const CalendarPage = ({
     users,
     user,
     userId,
+    courseId,
+    lessonId, 
+    classRoomId,
     addNewTimeLine,
     saveTimeLine,
     publishedForms,
     formBuilders,
     formType,
-    courses }) => {
+    courses,
+    lessons,
+    allNotes }) => {
 
     if ( ! user?.userIsValidated  ){
         navigate(`/${operatorBusinessName}/login`);
     };
+
+    const operatorId = operator?._id;
         
     let {
         eventDataObj,
@@ -129,6 +140,13 @@ const CalendarPage = ({
         setModalOpen,
         setScheduledStudents,
     } = useBuildEventDataHook( calendarEventType, events, calendarId, user );
+
+    let {
+        renderLessonModal,
+        setRenderLessonModal,
+        lessonProps,
+        setLessonProps
+    } = useLessonHook();
     
 function addNewCalendarEvent( calendarEventData ) {
     setModalOpen(false); // Need to set up groups and group management.
@@ -142,7 +160,7 @@ function addNewCalendarEvent( calendarEventData ) {
         calendarEventData, 
         testAdminUsers, 
         calendarEventType, 
-        operatorId: operator?._id,
+        operatorId,
         pushNotificationSubscribers, 
         user, 
         users,
@@ -163,6 +181,9 @@ const openModal = () => {
 const handleEventClick = ( info ) => {
 
     switch ( calendarEventType ) {
+        case eventEnum.Lessons:
+            navigateToLessonPage( info );  
+            return;
         case eventEnum.ReportForms:
         case eventEnum.QuizzForms:
             navigateToFormDetailsPage( info );  
@@ -180,15 +201,25 @@ const handleEventClick = ( info ) => {
     }
 }
 
+function renderEventContent( eventInfo ){
+    return (
+        <div>
+            <p>{eventInfo?.event?.title}</p>
+            <img src={eventInfo?.event?.url}></img>
+        </div>
+    )
+}
+
 function navigateToFormDetailsPage( info ){
 
-    const currentEventId = info?.event?.id; 
-    const currentEventObject = events?.find( event => event?._id === currentEventId );
-    const selectedFormBuilderObject = currentEventObject?.schedulingData[0];
-    const formName = selectedFormBuilderObject?.formName;
-    const selectedUserId = userId;
-    const selectedUser = users?.find( user => user?._id === selectedUserId );
-    const currentUser = user;
+    const calendarInfo = getCalendarInfo( info );
+    const currentEventId = calendarInfo?.currentEventId; 
+    const currentEventObject = calendarInfo?.currentEventObject;
+    const selectedFormBuilderObject = calendarInfo?.selectedFormBuilderObject;
+    const formName = calendarInfo?.formName;
+    const selectedUserId = calendarInfo?.selectedUserId;
+    const selectedUser = calendarInfo?.selectedUser;
+    const currentUser = calendarInfo?.currentUser;
 
     let formProps = {
         operatorBusinessName, 
@@ -217,130 +248,117 @@ function navigateToSchedulingEventDetailsPage( info ){
     }
 }
 
-function renderSwitch( param ) {
-    switch ( param ) {
+function getCalendarInfo( info ){
+    const currentEventId = info?.event?.id; 
+    const currentEventObject = events?.find( event => event?._id === currentEventId );
+    const selectedFormBuilderObject = currentEventObject?.schedulingData[0];
+    const formName = selectedFormBuilderObject?.formName;
+    const selectedUserId = userId;
+    const selectedUser = users?.find( user => user?._id === selectedUserId );
+    const currentUser = user;
 
-        case eventEnum.NewEvent:
-            return <Modal isOpen={isModalOpen} onRequestClose={closeModal}> <Scheduling
-                        slotInfo={calendarSlotInfo}
-                        schedulingData
-                        submitEventButtonText={"Add New Event"}
-                        handleSubmit={addNewCalendarEvent} 
-                    />
-                    </Modal>;
-        case eventEnum.ConsultationForm:
-            return <Modal isOpen={isModalOpen} onRequestClose={closeModal}> 
-                        <ConsultationForm 
-                            user={user}
-                            slotInfo={calendarSlotInfo}
-                            courses={courses}
-                            handleSubmit={addNewCalendarEvent}
-                        /> 
-                    </Modal>;
-        case eventEnum.SessionScheduling:
-            return <Modal isOpen={isModalOpen} onRequestClose={closeModal}> 
-                        <SessionScheduling 
-                            scheduledStudents={scheduledStudents}
-                            onChange={setScheduledStudents}
-                            options={studentsOption(users)}
-                        > 
-                            <Scheduling
-                                slotInfo={calendarSlotInfo}
-                                schedulingData={scheduledStudents}
-                                submitEventButtonText={"Schedule Session"}
-                                handleSubmit={addNewCalendarEvent} 
-                            />  
-                        </ SessionScheduling>
-                    </Modal>;
-        case eventEnum.TutorCalendar:
-            return <Modal isOpen={isModalOpen} onRequestClose={closeModal}> 
-                        <SessionScheduling 
-                            scheduledStudents={scheduledStudents}
-                            onChange={setScheduledStudents}
-                            options={studentsOption(users)}
-                        > 
-                        {(user.role === role.Student ) && 
-                            <ConsultationForm 
-                                user={user}
-                                slotInfo={calendarSlotInfo}
-                                courses={courses}
-                                handleSubmit={addNewCalendarEvent}
-                            />  
-                        } 
-                            <Scheduling
-                                slotInfo={calendarSlotInfo}
-                                schedulingData={scheduledStudents}
-                                submitEventButtonText={"Schedule Session"}
-                                handleSubmit={addNewCalendarEvent} 
-                            />  
-                        </ SessionScheduling>
-                    </Modal>;
-        case eventEnum.OnlineTutoringRequest:
-            return <Modal isOpen={isModalOpen} onRequestClose={closeModal}> 
-                        <OnlineTutoringRequestForm 
-                            scheduledStudents={scheduledStudents}
-                            onChange={setScheduledStudents}
-                            options={studentsOption(users)}
-                        > 
-                            <Scheduling
-                                slotInfo={calendarSlotInfo}
-                                schedulingData={scheduledStudents}
-                                submitEventButtonText={"Schedule Session"}
-                                handleSubmit={addNewCalendarEvent} 
-                            />  
-                        </ OnlineTutoringRequestForm>
-                    </Modal>;
-        case eventEnum.ReportForms:
-        case eventEnum.QuizzForms:    
-            return <Modal isOpen={isModalOpen} onRequestClose={closeModal}> 
-                        <Forms
-                            reportProps={ { events, currentUser: user, selectedUserId: userId, publishedForms, calendarEventType, calendarId, addNewFormBuilder } }
-                            operatorBusinessName={operatorBusinessName}
-                            slotInfo={calendarSlotInfo}
-                            handleSubmit={addNewCalendarEvent}
-                        />
-                    </Modal>;
-        default:
-            return <div>
-                    <FullCalendar
-                        plugins={[dayGridPlugin, timeGridPlugin, listWeek, interactionPlugin, rrulePlugin]}
-                        navLinks={true}
-                        headerToolbar={{
-                            left: 'prev, next today',
-                            center: 'title',
-                            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-                        }}
-                        weekNumbers={true}
-                        initialView='dayGridMonth'
-                        editable={true}
-                        selectable={true}
-                        selectMirror={true}
-                        dayMaxEvents={true}
-                        weekends={true}
-                        select={handleSelect}
-                        events={ eventDataObj }
-                        eventClick={handleEventClick}
-                    />
-                    <FullCalendar  
-                        defaultView="listWeek" 
-                        plugins={[listWeek, dayGridPlugin, timeGridPlugin, interactionPlugin, rrulePlugin]} 
-                        events={ eventDataObj } 
-                        initialView='listWeek' 
-                    />
-                    </div>;
-
-    }
+    return {
+        currentEventId,
+        currentEventObject,
+        selectedFormBuilderObject,
+        formName,
+        selectedUserId,
+        selectedUser,
+        currentUser
+    };
 }
+
+function navigateToLessonPage( info ){
+
+    const calendarInfo = getCalendarInfo( info );
+    const currentEventId = calendarInfo?.currentEventId; 
+    const currentEventObject = calendarInfo?.currentEventObject;
+    const selectedFormBuilderObject = calendarInfo?.selectedFormBuilderObject;
+    const formName = calendarInfo?.formName;
+    const selectedUserId = calendarInfo?.selectedUserId;
+    const selectedUser = calendarInfo?.selectedUser;
+    const currentUser = calendarInfo?.currentUser;
+    const title = calendarInfo?.formName;
+
+    let lessonProps = {
+        formNames,
+        allNotes,
+        currentEventId,
+        formName,
+        selectedUser,
+        currentUser,
+        title,
+        courseId,
+        lessonId,
+        userId: currentUser?._id,
+        markDownContent: null,
+        content: null,
+        noteDate: Date.now,
+        operatorId,
+        eventId: currentEventId,
+        operatorBusinessName,
+        addNotes,
+        loadAllNotes
+    }
+
+    handleLessonNotes( lessonProps );
+    setLessonProps( lessonProps );
+    setModalOpen( true );
+    setRenderLessonModal( true );
+    return;
+}
+
+function handleCalendarModalReloadOnClose(){
+    closeModal();
+    forceReload();
+}
+
+let renderSwitchProps = {
+    operatorBusinessName,
+    operatorId,
+    isModalOpen,
+    closeModal,
+    calendarSlotInfo,
+    addNewCalendarEvent,
+    addNotes,
+    user,
+    users,
+    courses,
+    lessons,
+    scheduledStudents,
+    setScheduledStudents,
+    studentsOption,
+    events, 
+    userId, 
+    publishedForms, 
+    calendarEventType, 
+    calendarId, 
+    courseId,
+    lessonId, 
+    classRoomId,
+    addNewFormBuilder,
+    eventDataObj,
+    component,
+    formNames,
+    handleEventClick,
+    handleSelect,
+    renderEventContent,
+    lessonProps
+};
+
 return (    
-<div className="calendar">
-    <h2>{ `Hello ${user?.firstname}` }</h2>
-    <h2>{ getCalendarPageHeading( calendarEventType ) }</h2>
-        {
-            renderSwitch( component )
-        }
-    <button onClick={openModal}>Back</button> 
-</div>
-); };
+    <div className="calendar">
+        <h2>{ `Hello ${user?.firstname}` }</h2>
+        <h2>{ getCalendarPageHeading( calendarEventType ) }</h2>
+            { ( renderLessonModal ) 
+                ?  handleLessons( renderSwitchProps )
+                :  renderSwitch( renderSwitchProps )
+                
+            }
+        <button onClick={() => handleCalendarModalReloadOnClose()}>Back</button> 
+    </div>
+    ); 
+};
 
 const mapDispatch = {
     addCalendar,
@@ -357,6 +375,8 @@ const mapDispatch = {
     loadFormBuilders,
     addNewFormBuilder,
     saveFormBuilder,
+    loadAllNotes,
+    addNotes
 };
 
 const mapState = ( state, ownProps )  => ({
@@ -370,8 +390,10 @@ const mapState = ( state, ownProps )  => ({
     pushNotificationSubscribers: getPushNotificationUsersByOperatorId(state, ownProps),
     timeLines: getTimeLinesByOperatorId(state, ownProps),
     courses: getCoursesByOperatorId(state, ownProps),
+    lessons: getLessonsByCourseIdSelector(state, ownProps),
     publishedForms: getPublishedForms(state, ownProps),
-    formBuilders: Object.values( state?.formBuilders?.formBuilders)
+    formBuilders: Object.values( state?.formBuilders?.formBuilders ),
+    allNotes: Object.values( state?.notes?.notes )
 });
 
 export default connect(mapState, mapDispatch)(CalendarPage);

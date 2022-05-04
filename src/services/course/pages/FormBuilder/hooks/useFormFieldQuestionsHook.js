@@ -14,19 +14,19 @@ addPoints } from 'services/course/pages/FormBuilder/helpers';
 
 function useFormFieldQuestionsHook( props ) {
 
-    let {
-      saveOnlineQuestion, 
-      studentsTotalPointsReceived,
-      studentsTotalPointsReceivedFromPersistence,
-    } = props;
+  let {
+    saveOnlineQuestion, 
+    studentsTotalPointsReceived,
+    studentsTotalPointsReceivedFromPersistence,
+  } = props;
 
-    const dispatch = useDispatch();
-    const [ previewMode, togglePreviewMode ] = useState({ question: undefined, isPreviewMode: false });
-    const [ enableAddPointsToQuestionInputField, setEnableAddPointsToQuestionInputField ] = useState(false);
-    const [ questionPoint, setQuestionPoints ] = useState(0);
-    const [ selectedQuestion, setSelectedQuestion ] = useState(0);
-    const [ editing, setEditing ] = useState(false);
-   
+  const dispatch = useDispatch();
+  const [ previewMode, togglePreviewMode ] = useState({ question: undefined, isPreviewMode: false });
+  const [ enableAddPointsToQuestionInputField, setEnableAddPointsToQuestionInputField ] = useState(false);
+  const [ questionPoint, setQuestionPoints ] = useState(0);
+  const [ selectedQuestion, setSelectedQuestion ] = useState(0);
+  const [ editing, setEditing ] = useState(false);
+    
 function getPoints(){
   return studentsTotalPointsReceived?.cummulativePoints ? studentsTotalPointsReceived['cummulativePoints'] : studentsTotalPointsReceivedFromPersistence?.cummulativePoints; 
 }

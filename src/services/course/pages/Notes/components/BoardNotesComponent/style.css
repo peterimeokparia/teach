@@ -1,0 +1,687 @@
+.BoardNotes {
+    max-height: 100vh;
+    /* height: 100vh;  */
+    max-width: 200vw;
+    /* width: 100vw; */
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background-image: url(../../../../images/geometry2.png);
+    font-family: 'Courier New', Courier, monospace;
+    overflow: hidden;
+    overflow-y: hidden;
+    /* background:white; */
+  }
+  .BoardNotes .boomingllc header {
+    background-color: #673ab7;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    /* padding: 10px 20px; */
+    /* background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red); */
+  }
+  .BoardNotes .others header {
+    background-color: #673ab7;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    /* padding: 10px 20px; */
+    background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  }
+  .BoardNotes header h1 {
+    background-color: #673ab7;
+    margin: 0;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.5rem;
+    font-weight: bold;
+  }
+  .BoardNotes header .current-lesson {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 400;
+    opacity: 0.8;
+  }
+  
+  .BoardNotes .content {
+    display: flex;
+    /* max-height: 100%;
+    max-width: 100100; */
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    overflow-y: hidden;
+  }
+  
+  .BoardNotes .sidebar {
+    padding-right: 0px;
+    padding-left: 0px;
+    display: flex;
+  }
+  
+  .BoardNotes .sidebar .lessons {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .lessons .lesson-item {
+    margin-bottom: 5px;
+    border-style: solid;
+    border-radius: 3px;
+
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+  }
+  .lessons .lesson-item:hover {
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+    -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+    transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+    box-shadow: 0px 0px;
+    cursor: pointer;
+    background-color: #673ab7;  /* booming */
+    background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red); /* others */
+    color: black;
+
+  }
+  .video-call {
+    /* margin-left: 1170px; */
+    margin-right: auto;
+  } 
+  .video-call-full {
+    margin-top: 5%;
+    margin-left: 100px;
+    margin-right: 0px;
+    border: 10px;
+    transform: translate(-1300px, -45px);
+  }
+  .video-call-hide {
+    margin-left: 0px;
+    padding-top: 0px;
+    height: 110vh;
+    display: none;
+  }
+  .tools {
+    margin-left: 0px;
+    padding-top: 0px;
+    height: 110vh;
+  }
+  .tools-hide {
+    margin-left: 0px;
+    padding-top: 0px;
+    height: 110vh;
+    display: none;
+  }
+  .toggle-stage-btns-show,
+  .plan-lesson-btn,
+  .delete-lesson-btn,
+  .edit-lesson-btn {
+    opacity: 1;
+    border: none;
+    font-size: 10px;
+    cursor: pointer;
+    box-shadow: 10px 10px;
+  }
+  .BoardNotes .lesson-item .span-btns {
+    /* padding-bottom: 5px; */
+  }
+  .toggle-stage-btns-show {
+    visibility: visible;
+    margin-left: 5px;
+  }
+  .plan-lesson-btn {
+    margin-left: 5px;
+  }
+  .edit-lesson-btn {
+    margin-right: 5px;
+  }
+  .delete-lesson-btn {
+    margin-right: 5px;
+  }
+  .toggle-stage-btns-hide {
+    visibility: hidden;
+  }
+    .lesson-item:hover .toggle-stage-btns-show,
+    .toggle-stage-btns-show:focus,
+    .lesson-item:hover .plan-lesson-btn,
+    .plan-lesson-btn:focus,
+    .lesson-item:hover .delete-lesson-btn,
+    .delete-lesson-btn:focus,
+    .lesson-item:hover .edit-lesson-btn,
+    .edit-lesson-btn:focus {
+      opacity: 1;
+    }
+  .lesson-item.selected {
+    background: #e9e5ff;
+    color: #222;
+    font-weight: 600;
+    box-shadow: 0 0 3px #6734ba, 0 0 3px inset #fff;
+  }
+  .lesson,
+  .lesson > div,
+  .lesson-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+  .lesson > div {
+    padding: 10px;
+    display: flex;
+  }
+  .lesson-editor {
+    font-size: 18px;
+    font-family: 'Fira Mono', monospace;
+    flex: 1;
+    padding: 10px;
+  }
+  .lesson-editor-help {
+    display: flex;
+    justify-content: space-between;
+  }
+  .preview-btn {
+    margin: 1px;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+    border: none;
+    border-radius: 2px;
+  }
+  .preview-btn:active {
+    background-color: #f7f2ff;
+  }
+  .BoardNotes .lesson-item .span-btns {
+    /* padding-left: 50px;
+    padding-top: 0px; */
+    margin-top: -15%;
+  }
+  .BoardNotes .lesson-item .span-btns .MaterialUiVideoComponent {
+    padding-right: 400px;
+    margin-top: -15%;
+    /* padding-top: 10px; */
+  }
+  .lesson-plan-round-button-1 { 
+    background: orange;
+    /* box-shadow: 10px 10px black; */
+  }
+  .lesson-plan-round-button-2 { 
+    background: yellowgreen
+  }
+  .lesson-plan-round-button-3 { 
+    background: red
+  }
+  .lesson-plan-round-button-4 { 
+  background: skyblue
+  }
+  .lesson-plan-round-button-1, .lesson-plan-round-button-2, .lesson-plan-round-button-3, .lesson-plan-round-button-4 {
+   align-self: flex-end; 
+   width:70px;
+   height:60px;
+   line-height: 60px;
+   border: 2px solid #f5f5f5;
+   border-radius: 50%; 
+   margin-top: 30px;
+   margin-right: 60px;
+   transition: transform .7s ease-in-out;
+   box-shadow: 10px 10px black;
+  }
+  .lesson-plan-round-button-1:hover
+  {
+  background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  cursor: pointer;
+  }
+  .lesson-plan-round-button-2:hover
+  {
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  cursor: pointer;
+  }
+  .lesson-plan-round-button-3:hover
+  {
+  background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  cursor: pointer;
+  }
+  .lesson-plan-round-button-4:hover
+  {
+  background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  cursor: pointer;
+  }
+  .BoardNotes .content .meeting-stage-hidden{
+    visibility: hidden;
+  }
+  .BoardNotes .content .meeting-stage-visible{
+    /* margin-left: -2000px; */
+    visibility: visible;
+  }
+  .sidebar-meeting{
+    flex-basis: 200px;
+    background: yellow;
+  }
+  .BoardNotes .whiteBoardSideBar {
+    padding-right: 0px;
+    padding-left: 0px;
+    background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+    /* display: flex; */
+  }
+  .BoardNotes .whiteBoardSideBar .savedBoards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .BoardNotes .mainvVideoSection-recordingStopped {
+  display: inline-block;
+  vertical-align: middle;
+  /* -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  margin-bottom: -50%; */
+}
+.BoardNotes .mainVideoSection-recording {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  /* transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transform: scale(1.9);
+  transform: scale(1.9);
+  top: 20%;
+  margin-top: -11%;
+  margin-left: 20%;  */
+}
+.BoardNotes .mainVideoSection-recordingNotVisible {
+  display: inline-block;
+  vertical-align: middle;
+  /* -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transform: scale(1);
+  transform: scale(1); */
+}
+.BoardNotes .mainvVideoSection-recordingStopped {
+    display: inline-block;
+    /* vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0); */
+    /* -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    margin-bottom: -50%; */
+  }
+  .BoardNotes .mainVideoSection-recording {
+    display: inline-block;
+    /* vertical-align: middle; */
+    /* -webkit-transform: perspective(1px) translateZ(0); */
+    /* transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transform: scale(1.9);
+    transform: scale(1.9);
+    top: 30%;
+    margin-top: 5%;
+    margin-left: 45%;  */
+  }
+  .BoardNotes .mainVideoSection-recordingNotVisible {
+    display: inline-block;
+    /* vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transform: scale(1);
+    transform: scale(1); */
+  }
+  .videoSectionCallOut{
+    color: #fff;
+    background-color: #333;
+    margin-left: 1%; 
+    margin-top: -11%;
+    transition: all 2s ease-out;
+    /* transition-timing-function: ease-in-out;
+    transition-duration: 3s;
+    transition-delay: 0.5s; */
+    /* transform: rotate(270deg); */
+  }
+  .videoSectionCallOut-selected{
+    color: #333;
+  background-color: #fff;
+    /* margin-left: 1%; 
+    margin-top: -11%;
+    transition-timing-function: ease-in-out;
+    transition-duration: 3s;
+    transition-delay: 0.5s; */
+    /* transform: rotate(270deg); */
+  }
+  .transformed-state {
+    transform: rotate(270deg);
+    background-color: blue;
+    color: yellow;
+    font-size: 12px;
+    transition-property: background-color font-size transform color;
+    transition-timing-function: ease-in-out;
+    transition-duration: 3s;
+  }
+  @media only screen and (min-width: 638px) {
+    .BoardNotes .content {
+      flex-direction: row;
+      height: 100%;
+    }
+    .BoardNotes .sidebar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
+    .BoardNotes .lesson {
+      flex: 1;
+    }
+    .BoardNotes .whiteBoardSideBar {
+      flex-basis: 100px;
+      background: transparent;
+      margin-left: -100px;
+      max-height: 900px;
+      overflow: scroll;
+    }
+    .BoardNotes .whiteBoardSideBar .savedBoards {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .BoardNotes .whiteBoardSideBar .savedBoards .savedBoards-items {
+      margin-bottom: 5px;
+      top: 50%;
+      left: 50%;
+      margin-right: 0%;
+      padding-bottom: 15px;
+      padding-left: 0.5rem;
+    }
+    .BoardNotes .whiteBoardSideBar .savedBoards .savedBoards-items:hover {
+      margin-bottom: 5px;
+      border-style: solid;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      margin-right: 0%;
+      padding-bottom: 15px;
+      padding-left: 0.5rem;
+      cursor: pointer;
+    }
+  }
+  @media only screen and (max-width: 637px) {
+    .BoardNotes .content {
+      flex-direction: column;
+    }
+    .BoardNotes .sidebar {
+      background: #fbf9ff;
+      border-bottom: 1px solid #bba0ea;
+      min-height: 50px;
+    }
+    .BoardNotes .lesson {
+      flex: 1;
+    }
+    .BoardNotes .whiteBoardSideBar {
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
+  }
+  
+  /* 
+    ##Device = Desktops
+    ##Screen = 1281px to higher resolution desktops
+  */
+  
+  @media (min-width: 1281px) {
+    
+    .BoardNotes .content {
+      flex-direction: row;
+      height: 100%;
+    }
+    .BoardNotes .sidebar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
+    .BoardNotes .lesson {
+      flex: 1;
+    }
+    .BoardNotes .whiteBoardSideBar {
+      /* flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea; */
+    }
+    
+  }
+  
+  /* 
+    ##Device = Laptops, Desktops
+    ##Screen = B/w 1025px to 1280px
+  */
+  
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    
+    .BoardNotes .content {
+      flex-direction: row;
+      height: 100%;
+    }
+    .BoardNotes .sidebar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
+    .BoardNotes .lesson {
+      flex: 1;
+    }
+    .BoardNotes .whiteBoardSideBar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
+    
+  }
+  
+  /* 
+    ##Device = Tablets, Ipads (portrait)
+    ##Screen = B/w 768px to 1024px
+  */
+  
+  @media (min-width: 768px) and (max-width: 1024px) {
+    
+    .BoardNotes .content {
+      flex-direction: row;
+      height: 100%;
+    }
+    .BoardNotes .sidebar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
+    .BoardNotes .lesson {
+      flex: 1;
+    }
+    .BoardNotes .whiteBoardSideBar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
+  }
+  
+  /* 
+    ##Device = Tablets, Ipads (landscape)
+    ##Screen = B/w 768px to 1024px
+  */
+  
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    
+    .BoardNotes .content {
+      flex-direction: row;
+      height: 100%;
+    }
+    .BoardNotes .sidebar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
+    .BoardNotes .lesson {
+      flex: 1;
+    }
+    .BoardNotes .whiteBoardSideBar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
+  }
+  
+  
+  
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    
+    .BoardNotes .content {
+      flex-direction: column;
+    }
+    .BoardNotes .sidebar {
+      background: #fbf9ff;
+      border-bottom: 1px solid #bba0ea;
+      min-height: 50px;
+    }
+    .BoardNotes .lesson {
+      flex: 1;
+    }
+    .BoardNotes .whiteBoardSideBar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
+   
+  }
+  
+  
+  
+  /* 
+    ##Device = Low Resolution Tablets, Mobiles (Landscape)
+    ##Screen = B/w 481px to 767px
+  */
+  
+  @media (min-width: 481px) and (max-width: 767px) {
+    
+    .BoardNotes .content {
+      flex-direction: row;
+      height: 100%;
+    }
+    .BoardNotes .sidebar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
+    .BoardNotes .lesson {
+      flex: 1;
+    } 
+    .BoardNotes .whiteBoardSideBar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
+  }
+  /* 
+    ##Device = Most of the Smartphones Mobiles (Portrait)
+    ##Screen = B/w 320px to 479px
+  */
+  @media (min-width: 320px) and (max-width: 480px) {
+    .BoardNotes {
+      height: 300vh; 
+      /* width: 15vh; */
+      /* display: flex;
+      flex-direction: column; */
+      /* text-align: center; */
+      background-image: url(../../../../images/geometry2.png);
+  /* 
+      margin-left: -50%; */
+    }
+    .BoardNotes .content {
+      height: 100%;
+   
+    }
+    .BoardNotes .sidebar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
+    .BoardNotes .lesson {
+      flex: 1;
+    }  
+    .BoardNotes .whiteBoardSideBar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
+  }
+  .flexible-modal {
+    position: absolute;
+    z-index: 1;
+    border: 1px solid #ccc;
+    background: white;
+    /* padding-left: 1%; */
+  }
+  .flexible-modal-mask {
+    position: fixed;
+    height: 0%;
+    background: rgba(55, 55, 55, 0.6);
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+  }
+  .flexible-modal-resizer {
+    position:absolute;
+    right:0;
+    bottom:0;
+    cursor:se-resize;
+    margin:5px;
+    border-bottom: solid 2px #333;
+    border-right: solid 2px #333;
+  }
+  .flexible-modal-drag-area{
+    background: rgba(22, 22, 333, 0.2);
+    height: 50px;
+    position:absolute;
+    right:0;
+    top:0;
+    cursor:move;
+  }
+  
+  .testResize{
+    /* border: 2px solid;
+    padding: 20px; 
+    width: 300px; */
+    resize: both;
+    overflow: auto;
+  }

@@ -111,27 +111,36 @@ export function goToCalendar( props, user, eventType ) {
     calendar,
     operator,
     addCalendar,
-    operatorBusinessName
+    operatorBusinessName,
+    courseId,
+    lessonId,
+    classRoomId
   } = props;
 
-  let personalCalendar = calendars?.find( cal => cal?.calendarEventType === eventType && cal?.userId === user?._id);
+  let currentCalendar = (eventType === eventEnum.Lessons) 
+        ? calendars?.find( cal => cal?.calendarEventType === eventType && cal?.courseId === courseId && cal?.classRoomId === classRoomId ) 
+        : calendars?.find( cal => cal?.calendarEventType === eventType && cal?.userId === user?._id);
 
-  if ( personalCalendar ) {
-  
-      navigate(`/${operatorBusinessName}/schedule/${eventType}/calendar/${personalCalendar._id}/user/${user._id}`);
-      return;
+  if ( !currentCalendar ) {
 
-  } else {
+      addCalendar( { calendar: new Calendar( calendarConfig( user, eventType, props ) )
+        .calendar()})
+        .then(calendar => {
+        
+        if ( calendar ) {
 
-      addCalendar( { calendar: new Calendar( calendarConfig( user, eventType, calendars, users, operator  ) ).calendar()} )
-      .then(calendar => {
-
-          if ( calendar ) {
-            navigateUserAfterGeneratingNewCalendar( operatorBusinessName, eventType, calendar, user );
-          }
+          navigateToCalendar( props, eventType, calendar, user );
+          
+        }
       })
-      .catch( error => console.log( error ));
-  }
+      .catch( error => { console.log( error ); alert( JSON.stringify( error ) )} );
+
+      return;
+  } 
+
+    navigateToCalendar( props, eventType, currentCalendar, user );
+
+  return;
 };
 
 export function goToTimeLine( operatorBusinessName, eventType, user ){
@@ -211,8 +220,22 @@ export function generateUuid(){
   return uuid;
 };
 
-function calendarConfig( tutor, calendarType, calendars, users, operator  ){
+function calendarConfig( tutor, calendarType, props  ){
+
+
+  let {
+    users,
+    calendars,
+    operator,
+    courseId,
+    lessonId,
+    classRoomId
+  } = props;
+
   return {
+    courseId,
+    lessonId,
+    classRoomId,
     users,
     userId: tutor?._id,
     calendarEventType: calendarType,
@@ -222,8 +245,23 @@ function calendarConfig( tutor, calendarType, calendars, users, operator  ){
   }
 };
 
-function navigateUserAfterGeneratingNewCalendar( operatorBusinessName, calendarEventType, calendar, user ){ 
-  navigate(`/${operatorBusinessName}/schedule/${calendarEventType}/calendar/${calendar._id}/user/${user._id}`);
+function navigateToCalendar( props, calendarEventType, calendar, user ){ 
+
+  let {
+    operatorBusinessName,
+    courseId,
+    lessonId,
+    classRoomId
+  } = props;
+
+  if ( calendarEventType === eventEnum.Lessons ) {
+   
+    navigate(`/${operatorBusinessName}/schedule/${calendarEventType}/calendar/${calendar?._id}/user/${user?._id}/${courseId}/${lessonId}/${classRoomId}`);
+
+    return;
+  }
+
+  navigate(`/${operatorBusinessName}/schedule/${calendarEventType}/calendar/${calendar?._id}/user/${user?._id}`);
 };
 
 function getFormType(calendarEventType){
@@ -251,14 +289,17 @@ function takeExistingFormBuilderForm( formProps ){
 
     const currentEventObject = events?.find( event => event?._id === currentEventId );
     const selectedFormBuilderObject = currentEventObject?.schedulingData[0];
-    const selectedFormBuilder = formBuilders?.find( formBuilder => formBuilder?.formName === selectedFormBuilderObject?.formName && formBuilder?.userId === currentUser?._id && formBuilder?.state === elementMeta.state.Taking );
+    const selectedFormBuilder = formBuilders?.find( formBuilder => formBuilder?.formName === selectedFormBuilderObject?.formName && 
+      formBuilder?.userId === currentUser?._id && 
+      formBuilder?.eventId === currentEventId && 
+      formBuilder?.state === elementMeta.state.Taking );
 
     if ( selectedFormBuilder && selectedFormBuilder?.state === elementMeta.state.Taking ) { 
-   
+
       return selectedFormBuilder;
 
     }
-
+ 
     const formName = selectedFormBuilderObject?.formName;
     const formDisplayName = selectedFormBuilderObject?.formDisplayName;
     const formUuId = selectedFormBuilderObject?.formUuId;
@@ -291,16 +332,5 @@ function takeExistingFormBuilderForm( formProps ){
 
    addNewFormBuilder( newBuilder );
 
-  return true;
- 
-    // if ( !currentTimer?._id && timer?._id ){
-
-    //   addTime({ ...timer, userId, role: currentUser?.role });
-
-    // } else {
-
-    //   saveTime( { ...currentTimer,  testTime: timer?.testTime } );
-
-    // }
-  
+  return true;  
 };

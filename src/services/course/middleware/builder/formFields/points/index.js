@@ -6,7 +6,9 @@ addNewFormFieldPoint,
 saveFormFieldPoint } from "services/course/actions/formquestionpoints";
 
 import {
-elementMeta, inputType } from 'services/course/pages/QuestionsPage/helpers';
+inputType } from 'services/course/pages/QuestionsPage/helpers';
+
+import isEqual from "react-fast-compare";
 
 const pointHelper = {
   Points : "points",
@@ -15,7 +17,7 @@ const pointHelper = {
 
 export function assignPointsToQuestionForCorrectAnswer(  store, answerFormInputField ) {
   
-  if ( !answerFormInputField || ( answerFormInputField?.inputType === 'radio' && !answerFormInputField['selected'] )  ) return;
+  if ( !answerFormInputField || ( answerFormInputField?.inputType === inputType.RadioButton && !answerFormInputField['selected'] )  ) return;
   
   let studentsPointsObject = Object?.values( store?.getState().formFieldAnswers?.studentsCummulativePointsRecieved )?.find( ans => ans?.userId === answerFormInputField?.userId 
     && ans?.formUuId === answerFormInputField?.formUuId && ans?.formName === answerFormInputField?.formName );
@@ -31,173 +33,164 @@ export function assignPointsToQuestionForCorrectAnswer(  store, answerFormInputF
   
   const points = getPointsForStudentAnswers( currentFormField, answerFormInputField ), assignedPoints = 0;
 
-  handleToggleAnswers( studentsPointsObject, persistedPointsObject, answerFormInputField, currentFormField, points );
+  handleToggleAnswers( studentsPointsObject, answerFormInputField, currentFormField, points );
 
-  handleCheckBoxAnswers( studentsPointsObject, persistedPointsObject, answerFormInputField, currentFormField, points );
+  handleCheckBoxAnswers( studentsPointsObject, answerFormInputField, currentFormField, points );
 
-  handleRadioButtonAnswers( studentsPointsObject, persistedPointsObject, answerFormInputField, currentFormField, points );
+  handleRadioButtonAnswers( studentsPointsObject, answerFormInputField, points );
 
-  handleInputFieldAnswers( studentsPointsObject, persistedPointsObject, answerFormInputField, currentFormField, points );
+  handleInputFieldAnswers( studentsPointsObject, answerFormInputField, points );
 
-
-  function handleToggleAnswers( studentsPointsObject, persistedPointsObject, answerFormInputField, currentFormField, points ) {
+  function handleToggleAnswers( studentsPointsObject, answerFormInputField, currentFormField, points ) {
 
     if ( answerFormInputField?.inputType !== inputType.Toggle ) return;
   
     let props = {}; const cummulativeStudentPoints = function( cummulativePoints ){
       return cummulativePoints < 0 ? 0 : cummulativePoints;    
     };
+
+    const isCorrectAnswer = ( answerFormInputField['answerKey'] === answerFormInputField['answer'] );
+    const inCorrectAnswer = ( answerFormInputField['answerKey'] !== answerFormInputField['answer'] );
+    const calculatePointsForCorrectAnswer = cummulativeStudentPoints( (studentsPointsObject[ pointHelper?.CummulativePoints ] + currentFormField[pointHelper?.Points] ));
+    const calculatePointsForInCorrectAnswer = cummulativeStudentPoints( (studentsPointsObject[ pointHelper?.CummulativePoints ] - currentFormField[pointHelper?.Points] ));
   
-    if ( answerFormInputField['answerKey'] === answerFormInputField['answer'] ) {
-      props = {
-        store,
-        studentsPointsObject,
-        persistedPointsObject,
-        cummulativePoints: cummulativeStudentPoints( (studentsPointsObject[ pointHelper?.CummulativePoints ] + currentFormField[pointHelper?.Points] )),
-        currentFormField,
-        answerFormInputField,
-        points
-      };
-    } 
-  
-    if ( answerFormInputField['answerKey'] !== answerFormInputField['answer'] ) {
-      props = {
-        store,
-        studentsPointsObject,
-        persistedPointsObject,
-        cummulativePoints: cummulativeStudentPoints( (studentsPointsObject[ pointHelper?.CummulativePoints ] - currentFormField[pointHelper?.Points] )),
-        currentFormField,
-        answerFormInputField,
-        points
-      };
-    }
-  
-    return handleAnswers( props );
-};
-
-function handleCheckBoxAnswers( studentsPointsObject, persistedPointsObject, answerFormInputField, currentFormField, points ) {
-
-  if ( answerFormInputField?.inputType !== 'checkbox' ) return;
-
-  if ( ( answerFormInputField?.inputType === "checkbox" ) && !( answerFormInputField['answerKey'] === answerFormInputField['inputValue'] ) ) return;
-
-  let props = {}; const cummulativeStudentPoints = function( cummulativePoints ){
-    return cummulativePoints < 0 ? 0 : cummulativePoints;    
-  };
-
-  if ( ( answerFormInputField?.inputType === "checkbox" ) && answerFormInputField['selected'] && answerFormInputField['answerKey'] === answerFormInputField['inputValue'] ) {
-    props = {
-      store,
-      studentsPointsObject,
-      persistedPointsObject,
-      cummulativePoints: cummulativeStudentPoints( (studentsPointsObject[ pointHelper?.CummulativePoints ] + currentFormField[pointHelper?.Points] )),
-      currentFormField,
-      answerFormInputField,
+    return handleAnswers( handleAnswersProps(
+      isCorrectAnswer, 
+      inCorrectAnswer, 
+      calculatePointsForCorrectAnswer,
+      calculatePointsForInCorrectAnswer,
+      points, 
       points
-    };
-  } 
-
-  if ( ( answerFormInputField?.inputType === "checkbox" ) && !answerFormInputField['selected'] && answerFormInputField['answerKey'] === answerFormInputField['inputValue'] ) {
-    props = {
-      store,
-      studentsPointsObject,
-      persistedPointsObject,
-      cummulativePoints: cummulativeStudentPoints( (studentsPointsObject[ pointHelper?.CummulativePoints ] - currentFormField[pointHelper?.Points] )),
-      currentFormField,
-      answerFormInputField,
-      points
-    };
-  }
-
-  return handleAnswers( props );
-};
-
-function handleRadioButtonAnswers( studentsPointsObject, persistedPointsObject, answerFormInputField, currentFormField, points ){
-
-  if ( answerFormInputField?.inputType !== 'radio' ) return;
-
-  let props = {}; const cummulativeStudentPoints = function( cummulativePoints ){
-    return cummulativePoints < 0 ? 0 : cummulativePoints;    
-  };
-
-  if ( points > 0 && answerFormInputField?.inputType === 'radio' ){
-
-    props = {
-      store,
-      studentsPointsObject,
-      persistedPointsObject,
-      cummulativePoints: studentsPointsObject[ pointHelper?.CummulativePoints ] + points,
-      currentFormField,
-      answerFormInputField,
-      points
-    };
-  
-  }
-
-  if ( points === 0 && answerFormInputField?.inputType === 'radio' && answerFormInputField['selected'] ) {
-
-    props = {
-      store,
-      studentsPointsObject,
-      persistedPointsObject,
-      cummulativePoints: cummulativeStudentPoints( (studentsPointsObject[ pointHelper?.CummulativePoints ] - answerFormInputField?.points )),
-      currentFormField,
-      answerFormInputField,
-      points: 0
-    };
-
-  }
-
-  return handleAnswers( props );
+    ) );
 }
 
-function handleInputFieldAnswers( studentsPointsObject, persistedPointsObject, answerFormInputField, currentFormField, points ) {
+function handleCheckBoxAnswers( studentsPointsObject, answerFormInputField, currentFormField, points ) {
 
-  if ( answerFormInputField?.inputType === "checkbox" || answerFormInputField?.inputType === inputType.Toggle ) return;
+  if ( answerFormInputField?.inputType !== inputType.CheckBox ) return; 
 
-  if ( answerFormInputField?.inputType === 'radio' ) return;
+  if ( !( answerFormInputField['answerKey'] === answerFormInputField['inputValue'] ) ) return;
 
-  let props = {}; const cummulativeStudentPoints = function( cummulativePoints ){
+  const cummulativeStudentPoints = function( cummulativePoints ){
     return cummulativePoints < 0 ? 0 : cummulativePoints;    
   };
 
-  if ( points > 0 ) {
+  const isCorrectAnswer = ( answerFormInputField['selected'] && answerFormInputField['answerKey'] === answerFormInputField['inputValue']  );
+  const inCorrectAnswer = ( !answerFormInputField['selected'] && answerFormInputField['answerKey'] === answerFormInputField['inputValue'] );
+  const calculatePointsForCorrectAnswer = cummulativeStudentPoints( (studentsPointsObject[ pointHelper?.CummulativePoints ] + currentFormField[pointHelper?.Points] ));
+  const calculatePointsForInCorrectAnswer = cummulativeStudentPoints( (studentsPointsObject[ pointHelper?.CummulativePoints ] - currentFormField[pointHelper?.Points] ));
 
-    props = {
-      store,
-      studentsPointsObject,
-      persistedPointsObject,
-      cummulativePoints: studentsPointsObject[ pointHelper?.CummulativePoints ] + points,
-      currentFormField,
-      answerFormInputField,
-      points
-    };
+  return handleAnswers( handleAnswersProps(
+    isCorrectAnswer, 
+    inCorrectAnswer, 
+    calculatePointsForCorrectAnswer,
+    calculatePointsForInCorrectAnswer,
+    points, 
+    points
+  ) );
+}
 
+function handleRadioButtonAnswers( studentsPointsObject, answerFormInputField, points ){
+
+  if ( answerFormInputField?.inputType !== inputType.RadioButton ) return;
+
+  const cummulativeStudentPoints = function( cummulativePoints ){
+    return cummulativePoints < 0 ? 0 : cummulativePoints;    
+  };
+
+  const isCorrectAnswer = ( points > 0  && answerFormInputField['selected'] && answerFormInputField['answerKey'] === answerFormInputField['inputValue']  );
+  const inCorrectAnswer = ( points === 0 && answerFormInputField['selected'] );
+  const calculatePointsForCorrectAnswer = studentsPointsObject[ pointHelper?.CummulativePoints ] + points;
+  const calculatePointsForInCorrectAnswer = cummulativeStudentPoints( (studentsPointsObject[ pointHelper?.CummulativePoints ] - answerFormInputField?.points ));
+
+  return handleAnswers( handleAnswersProps(
+    isCorrectAnswer, 
+    inCorrectAnswer, 
+    calculatePointsForCorrectAnswer,
+    calculatePointsForInCorrectAnswer,
+    points, 
+    0
+  ) );
+}
+
+function handleInputFieldAnswers( studentsPointsObject, answerFormInputField, points ) {
+
+  if ( answerFormInputField?.inputType === inputType.CheckBox || answerFormInputField?.inputType === inputType.Toggle ) return;
+
+  if ( answerFormInputField?.inputType === inputType.RadioButton ) return;
+
+  const cummulativeStudentPoints = function( cummulativePoints ){
+    return cummulativePoints < 0 ? 0 : cummulativePoints;    
+  };
+
+  const isCorrectAnswer = ( points > 0 ), inCorrectAnswer = ( points === 0 );
+  const calculatePointsForCorrectAnswer = studentsPointsObject[ pointHelper?.CummulativePoints ] + points;
+  const calculatePointsForInCorrectAnswer = cummulativeStudentPoints( (studentsPointsObject[ pointHelper?.CummulativePoints ] - answerFormInputField?.points ));
+
+  return handleAnswers( handleAnswersProps(
+    isCorrectAnswer, 
+    inCorrectAnswer, 
+    calculatePointsForCorrectAnswer,
+    calculatePointsForInCorrectAnswer,
+    points, 
+    points
+  ) );
+}
+
+function handleAnswersProps(isAnswer, inCorrectAnswer, calcCorrectAnsPoints, calcInCorrectAnsPoint, correctAnsPoints, inCorrectAnswerPoints){
+
+  if ( isAnswer ) {
+    return handlePoints( calcCorrectAnsPoints, correctAnsPoints);
   }
-
-  // if ( points === 0 && ( answerFormInputField?.points > 0 ) ) {
-    if ( points === 0 ) {
-
-    props = {
-      store,
-      studentsPointsObject,
-      persistedPointsObject,
-      cummulativePoints: cummulativeStudentPoints( (studentsPointsObject[ pointHelper?.CummulativePoints ] - answerFormInputField?.points )),
-      // cummulativePoints: cummulativeStudentPoints( (studentsPointsObject[ pointHelper?.CummulativePoints ] - currentFormField[pointHelper?.Points] )),
-      currentFormField,
-      answerFormInputField,
-      points
-    };
-
+  
+  if ( inCorrectAnswer ) {
+    return handlePoints( calcInCorrectAnsPoint, inCorrectAnswerPoints);
   }
-
-  return handleAnswers( props );
 
 }
 
+function handlePoints(cummulativePoints, points) {
+  return {
+    store,
+    studentsPointsObject,
+    persistedPointsObject,
+    cummulativePoints: cummulativePoints,
+    currentFormField,
+    answerFormInputField,
+    points
+  };
+}
 };
 
 function handleAnswers( props ) {
+    
+  let {
+    store,
+    studentsPointsObject,
+    persistedPointsObject,
+    cummulativePoints,
+    currentFormField,
+    answerFormInputField,
+    points
+  } = props;
+
+  let currentPoints = ( !getStudentPoints( props ) ) ? points : getStudentPoints( props ) ;
+
+  if ( !currentPoints ) {
+
+    if ( !persistedPointsObject?.userId ) {
+
+      store.dispatch(addNewFormFieldPoint({ userId: answerFormInputField?.userId, cummulativePoints: points, formUuId: answerFormInputField?.formUuId, formName: answerFormInputField?.formName }));
+
+    }
+    
+    store.dispatch(saveStudentsAnswerPoints({ userId: answerFormInputField?.userId, cummulativePoints: points, formUuId: answerFormInputField?.formUuId, formName: answerFormInputField?.formName }));
+
+  } 
+  
+  return currentPoints;
+}
+
+function getStudentPoints( props ) {
 
   let {
     store,
@@ -209,40 +202,21 @@ function handleAnswers( props ) {
     points
   } = props;
 
-  let currentPoints = 0;
+  if ( !studentsPointsObject?.userId ) return undefined;
 
-if ( studentsPointsObject?.userId ) {
-
-  if ( persistedPointsObject?.userId ){
-
+  if ( persistedPointsObject?.userId ) {
+  
     store.dispatch(saveFormFieldPoint({ ...persistedPointsObject, userId: answerFormInputField?.userId, cummulativePoints, formUuId: answerFormInputField?.formUuId }));
 
   }
 
   store.dispatch(saveStudentsAnswerPoints({ userId: answerFormInputField?.userId, cummulativePoints, formUuId: answerFormInputField?.formUuId, formName: answerFormInputField?.formName }));
-
-  currentPoints =  cummulativePoints;
-
-} else {
-
-  if ( !persistedPointsObject?.userId ) {
-
-    store.dispatch(addNewFormFieldPoint({ userId: answerFormInputField?.userId, cummulativePoints: points, formUuId: answerFormInputField?.formUuId, formName: answerFormInputField?.formName }));
-
-  }
   
-  store.dispatch(saveStudentsAnswerPoints({ userId: answerFormInputField?.userId, cummulativePoints: points, formUuId: answerFormInputField?.formUuId, formName: answerFormInputField?.formName }));
-
+  return cummulativePoints;
 }
-  // store.dispatch( saveFormFieldAnswerWithPoints({ ...answerFormInputField, points: points }) );
-
-  currentPoints = points;
-
-  return currentPoints;
-};
 
 function getPointsForStudentAnswers( question, answer ){
-   
+       
   if (  question?.answerKey?.toLowerCase() === "" || 
         question?.answerKey?.toLowerCase() === undefined || 
         question?.answerKey?.toLowerCase() === null ||
@@ -250,132 +224,27 @@ function getPointsForStudentAnswers( question, answer ){
 
   return 0;
 
+  return getPointsForCorrectAnswer( question, answer );
+}
+
+function getPointsForCorrectAnswer( question, answer ) {
+
   const isLowerCaseMatch =  ( answer?.answer?.toLowerCase() === question?.answerKey?.toLowerCase() );
   const isUpperCaseMatch =  ( answer?.answer?.toUpperCase() === question?.answerKey?.toUpperCase() );
   const isMatch =  ( answer?.answer?.trim() === question?.answerKey?.trim() );
+  const isDeepEqual = isEqual( answer?.answer,  question?.answerKey );
 
-  if ( isMatch && isLowerCaseMatch && isUpperCaseMatch )
+  let correctAnswerMatched = ( isMatch && isLowerCaseMatch && isUpperCaseMatch &&  isDeepEqual );
 
-    return question?.points;
+  if ( !correctAnswerMatched ) return 0
 
-  else 
+  return question?.points;
 
-    return 0;
-};
-
+}
 
 function hydrateCurrentCummulativePointsFromPersistence( store, persistedPointsObject, studentsPointsObject ){
   if ( persistedPointsObject && !studentsPointsObject?.userId ) {
     store.dispatch(saveStudentsAnswerPoints({ userId: persistedPointsObject?.userId, cummulativePoints: persistedPointsObject?.cummulativePoints, formUuId: persistedPointsObject?.formUuId, formName: persistedPointsObject?.formName }));
   };
   return { userId: persistedPointsObject?.userId, cummulativePoints: persistedPointsObject?.cummulativePoints, formUuId: persistedPointsObject?.formUuId, formName: persistedPointsObject?.formName };
-};
-
-
-
-
-
-
-
-
-
-
-
-// if ( points > 0 && answerFormInputField?.inputType === 'radio' ) {
-  //   //return handleRadioButtonCorrectAnswers( studentsPointsObject, persistedPointsObject, answerFormInputField, currentFormField, points );
-  // } 
-
-  // if ( points === 0 && answerFormInputField?.inputType === 'radio' && answerFormInputField['selected'] ) {
-  //   //return handleRadioButtonInCorrectAnswers( studentsPointsObject, persistedPointsObject, answerFormInputField, currentFormField, points );
-  // }
-
-  // if ( points > 0 && answerFormInputField?.inputType === 'checkbox' ) {
-  //   //return handleCorrectAnswers( studentsPointsObject, persistedPointsObject, answerFormInputField, currentFormField, points );
-  // } 
-
-  // if ( points === 0 && answerFormInputField?.inputType === 'checkbox' && answerFormInputField['selected'] ) {
-  //   // return handleInCorrectAnswers( studentsPointsObject, persistedPointsObject, answerFormInputField, currentFormField, points );
-  // }
-
-  // if ( answerFormInputField?.inputType === 'checkbox' && answerFormInputField['inputValue'] === currentFormField?.answerKey ) {
-  //   // return handleInCorrectAnswers( studentsPointsObject, persistedPointsObject, answerFormInputField, currentFormField, points );
-  // }
-  
-  // if ( points === 0 ) {
-  //   alert( points )
-  //   //return handleInCorrectAnswers( studentsPointsObject, persistedPointsObject, answerFormInputField, currentFormField, points );
-  // };
-
-// function handleCorrectAnswers( studentsPointsObject, persistedPointsObject, answerFormInputField, currentFormField, points ) {
-//   let props = {
-//     store,
-//     studentsPointsObject,
-//     persistedPointsObject,
-//     cummulativePoints: studentsPointsObject[ pointHelper?.CummulativePoints ] + points,
-//     currentFormField,
-//     answerFormInputField,
-//     points
-//   };
-
-//   return handleAnswers( props );
-// };
-
-// function handleInCorrectAnswers( studentsPointsObject, persistedPointsObject, answerFormInputField, currentFormField, points ){
-//   let props = {
-//     store,
-//     studentsPointsObject,
-//     persistedPointsObject,
-//     cummulativePoints: calculatePoints( studentsPointsObject, answerFormInputField, currentFormField, points ),
-//     currentFormField,
-//     answerFormInputField,
-//     points: 0
-//   };
-
-//   return handleAnswers( props );
-// }
-
-// function calculatePoints( studentsPointsObject, answerFormInputField, formField, points ) {
-
-//   const cummulativeStudentPoints = function( cummulativePoints ){
-//     return cummulativePoints < 0 ? 0 : cummulativePoints;    
-//   };
-  
-
-//   if ( answerFormInputField ) {
-
-//     alert('calculatePoints')
-//     alert('answerFormInputField')
-
-//     alert(JSON.stringify( answerFormInputField ) )
-
-//     alert( answerFormInputField?.points )
-
-//     alert(JSON.stringify( answerFormInputField['selected'] ) )
-
-//   }
-
-//   if ( answerFormInputField?.inputType === "checkbox" && answerFormInputField['selected'] === false ) {
-   
-//     alert('in checkbox')
-//     alert(JSON.stringify( answerFormInputField ) )
-//     return cummulativeStudentPoints( (studentsPointsObject[ pointHelper?.CummulativePoints ] - formField[pointHelper?.Points] )); 
-//   }
-  
-//   if ( answerFormInputField?.inputType === "checkbox" && answerFormInputField['selected'] ) {
-   
-//     alert('in checkbox')
-//     alert(JSON.stringify( answerFormInputField ) )
-//     return cummulativeStudentPoints( (studentsPointsObject[ pointHelper?.CummulativePoints ] + formField[pointHelper?.Points] )); 
-//   }
-
-//   return cummulativeStudentPoints( (studentsPointsObject[ pointHelper?.CummulativePoints ] - answerFormInputField?.points )); 
-
-
-//   // if ( answerFormInputField['previousAnswerState'] ) {
-//   //   return cummulativeStudentPoints( (studentsPointsObject[ pointHelper?.CummulativePoints ] - formField[pointHelper?.Points] ));  
-//   // }
-
-//   //return cummulativeStudentPoints( (studentsPointsObject[ pointHelper?.CummulativePoints ] - formField[pointHelper?.Points] ));  
-//   // return cummulativeStudentPoints( (studentsPointsObject[ pointHelper?.CummulativePoints ] - formField[pointHelper?.Points] ));  
- 
-// };
+}

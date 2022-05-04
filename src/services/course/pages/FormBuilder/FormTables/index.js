@@ -11,7 +11,7 @@ saveFormFieldNoCallback,
 saveFormField } from 'services/course/actions/formfields';
 
 import {
-saveOnlineQuestion } from 'services/course/actions/onlinequestions';
+saveOnlineQuestions } from 'services/course/actions/onlinequestions';
 
 import {
 formToTableConverter } from 'services/course/pages/FormBuilder/FormTables/helpers';
@@ -58,4 +58,4 @@ const mapState = ( state, ownProps ) => {
     };
 };
 
-export default connect( mapState, { saveFormField, saveFormFieldNoCallback, saveOnlineQuestion, loadFormFieldsByFormFieldId } )(FormTables);
+export default connect( mapState, { saveFormField, saveFormFieldNoCallback, saveOnlineQuestions, loadFormFieldsByFormFieldId } )(FormTables);

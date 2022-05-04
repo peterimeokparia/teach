@@ -20,7 +20,6 @@ role } from 'services/course/helpers/PageHelpers';
 import Roles from 'services/course/pages/components/Roles';
 import SplitViewComponent from 'services/course/pages/components/SplitViewComponent';
 import ResizePanel from 'services/course/pages/components/SplitViewComponent/components/ResizePanel';
-import EditorComponent from 'services/course/pages/components/EditorComponent';
 import LessonPlanIframeComponent  from 'services/course/pages/components/LessonPlanIframeComponent';
 import BoardEditorComponent from 'services/course/pages/Lessons/LessonPlan/components/BoardEditorComponent';
 import Meeting from 'services/course/pages/Meeting';
@@ -34,11 +33,12 @@ const LessonPlanSplitViewComponent = ({
     courseId,
     lessonId,
     roomSize,
+    saveMeetingNote,
     operatorBusinessName,
     hideMeetingStage }) => {
 
 return (
-    <div className="MeetingPlan">
+    <div className="MeetingPlan">       
       <SplitViewComponent 
         orientation={ SPLIT_VIEW_ORIENTATION?.WIDTH }
         left_top={ ( stopDragging, leftWidth, setLeftWidth ) => 
@@ -49,16 +49,17 @@ return (
             orientation={ SPLIT_VIEW_ORIENTATION?.WIDTH }
           > 
             <BoardEditorComponent 
-                meetingId={meetingId}
-                courseId={courseId}
-                lessonId={lessonId}
-                classRoomId={classRoomId}
-                operatorBusinessName={operatorBusinessName}
-                saveIconVisible={true}
+              meetingId={meetingId}
+              courseId={courseId}
+              lessonId={lessonId}
+              classRoomId={classRoomId}
+              operatorBusinessName={operatorBusinessName}
+              saveIconVisible={true}
             />
           </ResizePanel>
           </div>
          }
+         
          right_bottom={ ( stopDragging, rightWidth, setRightWidth ) => 
           <div onClick={stopDragging}>
               <SplitViewComponent
@@ -71,18 +72,18 @@ return (
                         orientation={ SPLIT_VIEW_ORIENTATION?.WIDTH }
                       > 
                       <Roles role={currentUser?.role === role.Student }>
-                      < LessonPlanIframeComponent 
-                            name="embed_readwrite" 
-                            source={`http://localhost:9001/p/${meetingId}${currentUser?._id}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false`}
-                            width={ rightWidth }
-                            height={topHeight }
-                            allow="camera;microphone"
-                            scrolling="yes"
-                            frameBorder="0"
-                            allowFullScreen
-                      /> 
+                        < LessonPlanIframeComponent 
+                          name="embed_readwrite" 
+                          source={`http://localhost:9001/p/${meetingId}${currentUser?._id}?showControls=true&showChat=true&showLineNumbers=true&useMonospaceFont=false`}
+                          width={ rightWidth }
+                          height={topHeight }
+                          allow="camera;microphone"
+                          scrolling="yes"
+                          frameBorder="0"
+                          allowFullScreen
+                        /> 
                       </Roles>
-                       </ResizePanel>
+                      </ResizePanel>
                     </div>
                    }
                    right_bottom={ ( stopDragging, bottomHeight, setBottomHeight ) => 
@@ -110,7 +111,7 @@ return (
                         </ ResizePanel >
                       </div>
                    }                
-              />                
+              />              
             </div>
          }
       />

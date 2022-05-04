@@ -93,7 +93,6 @@ export const loadPagedFormBuilders = ( formType, page, limit ) => {
 };
 
 export const deleteFormBuilder = formbuilder => {
-    alert( JSON.stringify(formbuilder))
     return dispatch => {
         dispatch({ type: DELETE_FORMBUILDER_BEGIN });
             return remove( formbuilder, `/formbuilder/` )

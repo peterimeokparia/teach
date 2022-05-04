@@ -59,6 +59,15 @@ export const swapHorizIconStyle = () => {
   };
 };
 
+export const calendarStyle = () => {
+  return {
+    fontSize: 50,
+    "top": -200
+    // "marginLeft": "-37px"
+    // "top": "10%",
+  };
+};
+
 export const saveQuestionIconStyle = () => {
   return {
     fontSize: 60,

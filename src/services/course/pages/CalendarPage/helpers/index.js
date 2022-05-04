@@ -7,6 +7,15 @@ getTimeZoneDateTime } from 'services/course/helpers/ServerHelper';
 
 import moment from "moment";
 
+export const formNames = { 
+    Lesson: 'Lesson',
+    Board: 'Board', 
+    LessonNote: 'LessonNote', 
+    StudentNote: 'StudentNote',
+    VideoCall: 'VideoCall',
+    RecordedLesson: 'RecordedLesson' 
+};
+
 export const getCalendarColor = ( calendars ) => {
     let color = null;
     let existingColor = null;
@@ -150,7 +159,8 @@ export const eventEnum = {
     isRecurring: "isRecurring",
     isAllDay: "isAllDay",
     TutorCalendar: "tutorcalendar",
-    Available: "Available"
+    Available: "Available",
+    Lessons: "lessons"
 };
 
 let calendarTypes = [eventEnum?.ConsultationForm, eventEnum?.SessionScheduling ]; 

@@ -96,7 +96,7 @@ return (
                     </input>
                   </label>
                   <span className="LoginPageRadioButton">
-                  <span className="left">
+                  <span className="leftRadioButton">
                       <label>                         
                         Student
                         <input
@@ -110,7 +110,7 @@ return (
                         </input>
                       </label>                    
                   </span>                    
-                 <span className="right">
+                 <span className="rightRadioButton">
                  <label>
                     Tutor
                     <input

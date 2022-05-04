@@ -1,6 +1,7 @@
 .whiteBoardSideBar .savedBoards {
     list-style: none;
     margin:  0;
+    margin-left: -3.4em;
     padding:  0;
 }
 .whiteBoardSideBar .save-icon-visible {
@@ -9,6 +10,59 @@
 .whiteBoardSideBar .save-icon-hidden {
     visibility: hidden;
 }
+.children-section {
+    background: #87ceeb;
+    max-height: 50%;
+    max-width: 20%;
+    height: 970px;
+    width: 1700px;
+    margin-top: 0%;
+    margin-bottom: 2000px;
+    margin-left: 4em;
+    margin-right: 0em;
+}
+.children-section .children-subsection  {
+    background: white;
+    max-height: 100%;
+    max-width: 220%;
+    height: 960px;
+    width: 400px;
+    margin-top: 0.3em;
+    margin-left: 0.47em;
+    border: 2px;
+    border-color: orange;
+    border-style: solid;
+    border-radius: 25px;
+    overflow-y: scroll;
+}
+.children-section .children-subsection .notes-title{
+    margin-top: 0.3em;
+}
+.children-section .children-subsection .notes-title .title-input{
+    background: white;
+    border-color: white;
+    border-right-color: orange;
+    margin-top: 0.3em;
+    margin-bottom: 0.5em;
+    box-shadow: 5px 10px #888888;
+    text-transform: capitalize;
+    border: 1px dashed #bb9eec;
+    border-radius: 5px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #333;
+    text-decoration: none;
+    font-size: 16px;
+    margin-bottom: 0;
+}
+.children-section .children-subsection .notes-title .title-date{
+    /* margin-top: 0.3em; */
+    margin-bottom: 1em;
+    /* box-shadow: 5px 10px #888888; */
+}
+
 @media only screen and (min-width: 638px) {
     .whiteBoardSideBar {
         flex-basis: 100px;

@@ -23,11 +23,18 @@ Accordion,
 AccordionSummary
 } from '@material-ui/core';
 
+import {
+handleChange,
+editor_upload_url } from 'services/course/pages/OnlineQuestionsPage/helpers';
+
 import { 
 styleObj, 
 replyIconStyle, 
 deleteIconStyle, 
 iconStyle } from './inlineStyles';
+
+import { 
+saveEditorMarkDownObjectToMw } from 'services/course/actions/editor';
 
 import useReplyCommentsHook from 'services/course/pages/OnlineQuestionsPage/hooks/useReplyCommentsHook';
 import moment from "moment";
@@ -57,9 +64,11 @@ const ReplyComments = ({
   courseId, 
   question, 
   onlineQuestionAnswerId, 
+  saveEditorMarkDownObjectToMw,
   parentComments,
   getSortedCommentContent,
   commentParentId }) => {
+
   let commentsConfig = {
     question, 
     answer, 
@@ -128,15 +137,9 @@ const getChildComments = ( collection ) => {
                   className={""}
                   id={ comment?._id }
                   name={ comment?.name } 
-                  editorConfiguration={{
-                    enableAutoSave: true,
-                    entity: comment, 
-                    stateObjectType: { propNameOne: "onlineComments",  propNameTwo: "onlineComments" }, 
-                    actionDescription: SET_ONLINECOMMENTS_MARKDOWN, 
-                    actionObject: saveOnlineComment, 
-                    duration: 2000 
-                    }}
-                  content={ comment?.markDownContent }
+                  handleChange={(editor) => handleChange({ ...element, markDownContent: editor }, SET_ONLINECOMMENTS_MARKDOWN, `/onlinecomments/`, saveEditorMarkDownObjectToMw )}
+                  content={ element?.markDownContent }
+                  upload_url={ editor_upload_url }
               /> 
               </div>
               <div>
@@ -237,4 +240,4 @@ const mapState = ( state, ownProps ) => {
   };
 };
   
-export default connect(mapState, { saveOnlineComment, addNewOnlineComment, loadOnlineComments, deleteOnlineComment })(ReplyComments);
+export default connect(mapState, { saveOnlineComment, addNewOnlineComment, loadOnlineComments, deleteOnlineComment, saveEditorMarkDownObjectToMw })(ReplyComments);

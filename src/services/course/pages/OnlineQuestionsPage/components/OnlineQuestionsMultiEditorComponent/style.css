@@ -23,6 +23,9 @@
     overflow-x: hidden; /* Hide horizontal scrollbar */
     padding: 19px 50px 50px 0px;
 }
+.builder .content .sidebar {
+    margin-bottom: 100px;
+}
 .builder iframe{
    height: 400px;
    width: 800px; 

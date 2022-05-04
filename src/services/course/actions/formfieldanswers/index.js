@@ -128,16 +128,10 @@ return dispatch => {
 };
 
 export const saveFormFieldAnswerWithPoints = ( formfields ) => {
-
-    alert('saveFormFieldAnswerWithPoints')
-    alert( JSON.stringify( formfields ) )
-
     return dispatch => {
         dispatch({ type: SAVE_FORMFIELDANSWERS_BEGIN });
         return update( formfields, `/formfieldanswers/` )
             .then( fields => {  
-                alert('saveFormFieldAnswerWithPoints fields')
-                alert( JSON.stringify( fields ) )
              dispatch({ type: SAVE_FORMFIELDANSWERS_WITH_POINTS_SUCCESS, payload: fields }); 
             }).catch( error => {
             dispatch({ type: SAVE_FORMFIELDANSWERS_ERROR , error });

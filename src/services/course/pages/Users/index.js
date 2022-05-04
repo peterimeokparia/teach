@@ -89,6 +89,7 @@ const Users = ({
     users,
     courses }) => {
 
+
     if ( ! operator || ! operatorBusinessName  ) {
         return <NotFoundPage />;
     }

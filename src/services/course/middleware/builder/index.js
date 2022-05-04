@@ -11,7 +11,13 @@ import {
 SAVE_FORMFIELDS_SUCCESS_MW } from 'services/course/actions/formfields';
 
 import {
+ADD_MISSED_ANSWERS_SUCCESS } from 'services/course/actions/missedanswers';
+
+import {
 assignPointsToQuestionForCorrectAnswer } from 'services/course/middleware/builder/formFields/points';
+
+import {
+getMissedAnswers } from 'services/course/middleware/builder/formFields/missedAnswers';
 
 import {
 redirectToFormAfterAddingNewFormBuilder } from 'services/course/middleware/builder/formFields/forms';
@@ -41,6 +47,10 @@ export const builder = store => next =>  action => {
         return;
         case SAVE_FORMFIELDS_SUCCESS_MW:
             updateFormFields( store, action.payload  );  
+            next(action);
+        return;
+        case ADD_MISSED_ANSWERS_SUCCESS:
+            getMissedAnswers( store, action.payload  );  
             next(action);
         return;
             default:

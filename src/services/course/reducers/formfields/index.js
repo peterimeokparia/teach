@@ -62,7 +62,7 @@ const reducer = produce((draft, action) => {
         return; 
         case SET_FORMFIELDS_MARKDOWN:
              if ( draft.formFields[action.payload.teachObject?._id] ) {
-                draft.formFields[action.payload.teachObject?._id].markDownContent = action.payload.markDown; 
+                draft.formFields[action.payload.teachObject?._id].markDownContent = action.payload.markDownContent; 
              }    
         return;
         case RESET_FORMFIELDS_ERROR:

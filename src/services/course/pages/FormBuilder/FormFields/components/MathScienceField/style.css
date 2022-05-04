@@ -1,0 +1,8 @@
+.latex-field-component p{
+    box-shadow: 0 0 0 10px lightgrey; 
+    background-color:  lightgrey; 
+    box-decoration-break: clone; 
+    line-height: 2.2;
+    width: 2rem;
+    margin-right: 25px;
+}

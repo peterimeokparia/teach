@@ -147,7 +147,7 @@ export const add = (data, route, prefix=PREFIX) => {
 export const get = ( route, prefix=PREFIX ) => {
   return getRequest(prefix + route)
    .then(handleErrors)
-    .then(response => response?.json() )
+    .then(response =>  response?.json() )
     .catch(error => { console.log(error); });
 };
 
@@ -346,6 +346,31 @@ export const purchase = ( currentUser ) => {
     throw new Error( error );    // throw new Error( "Payment processing failed!" ); 4 later
   };
 };
+
+export function addEditorFullTextSearchContent( element, route, duration = 2000) {
+  const saveEditorContentHandle = setTimeout(() => {
+    add( element, route ) 
+      .then( response => {
+          clearTimeout( saveEditorContentHandle );
+      })
+      .catch( error => { 
+        console.warn( JSON.stringify( error ));
+      });
+  }, duration );
+}
+
+export function saveEditorContent( element, route, duration = 2000) {
+  const saveEditorContentHandle = setTimeout(() => {
+      update( element, route )
+      .then( response => {
+          clearTimeout( saveEditorContentHandle );
+          return response;
+      })
+      .catch( error => { console.warn( JSON.stringify( error )) 
+          return error;
+      });
+  }, duration );
+}
 
 let operatorBusinessName= "boomingllc";
 

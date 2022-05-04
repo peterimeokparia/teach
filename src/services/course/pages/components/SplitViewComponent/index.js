@@ -9,6 +9,7 @@ SPLIT_VIEW_ORIENTATION } from './helpers';
 import './style.css';
 
 const SplitViewComponent = ({ 
+  left,
   left_top, 
   right_bottom, 
   className,
@@ -128,13 +129,13 @@ return (
         onTouchEnd={onMouseUp}
         onDoubleClick={resetRightAndLeftPositions}
        >
-        <div className={`divider${(orientation === SPLIT_VIEW_ORIENTATION?.HEIGHT)? '-height' : "" }`} onMouseUp={onMouseUp}> 
-            <div className={`dragbar${(orientation === SPLIT_VIEW_ORIENTATION?.HEIGHT)? '-height' : "" }`}
-              onTouchEnd={onMouseUp}
-              onBlur={onMouseUp}
-              onMouseUp={onMouseUp}
-            />
-        </div> 
+      <div className={`divider${(orientation === SPLIT_VIEW_ORIENTATION?.HEIGHT)? '-height' : "" }`} onMouseUp={onMouseUp}> 
+          <div className={`dragbar${(orientation === SPLIT_VIEW_ORIENTATION?.HEIGHT)? '-height' : "" }`}
+            onTouchEnd={onMouseUp}
+            onBlur={onMouseUp}
+            onMouseUp={onMouseUp}
+          />
+      </div> 
       </div>
       <div>
       <div onTouchEnd={onMouseUp} onBlur={onMouseUp} onMouseUp={onMouseUp}>

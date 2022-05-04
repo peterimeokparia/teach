@@ -48,6 +48,10 @@ function useLoginPageHook( loginPageProps ){
 
     useEffect(() => {
 
+    }, [ signUpOrLoginPreference ]);
+
+    useEffect(() => {
+
         if ( user?.length > 0 && user[0]?.lessonInProgress  ) {
 
             if ( user[0]?.course  ) {
@@ -94,11 +98,17 @@ function useLoginPageHook( loginPageProps ){
             return <Redirect to={`/${operatorBusinessName}/users`} noThrow />;
         }
         return <Redirect to={`/${operatorBusinessName}/login`} noThrow />;
-    } 
+    }
+    
+    function loginSignUpProcess(){
+        alert('in here in here')
+        setSignUpOrLoginInPreference( !signUpOrLoginPreference );
+    }
+    
 
 return {
     signUpOrLoginPreference, 
-    setSignUpOrLoginInPreference: val => setSignUpOrLoginInPreference( val ),
+    setSignUpOrLoginInPreference
 }; };
 
 export default useLoginPageHook;

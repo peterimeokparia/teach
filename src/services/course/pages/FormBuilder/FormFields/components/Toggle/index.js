@@ -9,7 +9,7 @@ import {
 saveFormField } from 'services/course/actions/formfields';
 
 import {
-saveOnlineQuestion } from 'services/course/actions/onlinequestions';
+saveOnlineQuestions } from 'services/course/actions/onlinequestions';
 
 import {
 getFormFieldAnswersByQuestionId } from 'services/course/selectors';
@@ -28,7 +28,7 @@ const Toggle = ( {
     fieldAnswer,
     formFields,
     elememtFormFields,
-    saveOnlineQuestion,
+    saveOnlineQuestions,
     saveFormField,
     studentsAnswer,
     currentUser  } ) => {
@@ -43,7 +43,7 @@ const Toggle = ( {
     let {
         addFieldPoints,
         handleTogglingModal,
-    } = useAssignPointsHook( { ...fieldProps, formFieldElement, elememtFormFields, saveOnlineQuestion, saveFormField }  );
+    } = useAssignPointsHook( { ...fieldProps, formFieldElement, elememtFormFields, saveOnlineQuestions, saveFormField }  );
 
     const handleToggleChange = (e) => {  
 
@@ -92,7 +92,7 @@ return(
 
 const mapDispatch = {
     saveFormField,
-    saveOnlineQuestion
+    saveOnlineQuestions
 };
   
 const mapState = ( state, ownProps ) => { 

@@ -55,5 +55,4 @@ const sessionSchema = new Schema ({
       }
 });
 
-
 export default sessionSchema;

@@ -17,7 +17,6 @@ getOnlineQuestion } from 'services/course/pages/OnlineQuestionsPage/helpers';
 
 function useSortOnlineQuestionsHook( onlineQuestionsConfig ){
     const dispatch = useDispatch();
-    const [ currentQuestions, setCurrentQuestions ] = useState([]);
     const [ currentFormBuilders, setCurrentFormBuilders ] = useState(undefined);
    
     let {
@@ -29,19 +28,28 @@ function useSortOnlineQuestionsHook( onlineQuestionsConfig ){
         eventId,
         formBuilders,
         contentUpdated,
+        onlineQuestionId,
         currentUser
     } = onlineQuestionsConfig;
 
     let currentCourseQuestions = getOnlineQuestion( onlineQuestionsConfig );
 
+    const [ currentQuestions, setCurrentQuestions ] = useState(currentCourseQuestions);
+    
     let currentFormBuilder = formBuilders?.find( builder => builder?.formName === formName && builder?.state === formBuilderStatus && builder?.formUuId === formUuId);
 
     useEffect(() => {
+
+        if ( handleSingleQuestionForms( onlineQuestionId, currentCourseQuestions, setCurrentQuestions ) ) {
+
+            return;
+        }
 
        let orderedFormQuestions = getExistingSortedOrderQuestions( currentCourseQuestions, currentFormBuilder?.orderedFormQuestions );
 
        let comparisonResultIsEqual = compareObjectsBeforeReload( orderedFormQuestions, currentQuestions );
 
+     
        if ( !comparisonResultIsEqual ){
 
             if ( currentFormBuilder ) {
@@ -73,15 +81,16 @@ function useSortOnlineQuestionsHook( onlineQuestionsConfig ){
 
             setCurrentFormBuilders( currentFormBuilder );
 
-            // saveFormBuilder( { ...currentFormBuilder, state: formBuilderStatus, orderedFormQuestions } );
-
-            // setCurrentFormBuilders( { ...currentFormBuilder, state: formBuilderStatus, orderedFormQuestions } );
-
         }
 
     }, [ contentUpdated ]);
        
     function getNewlyAddedQuestions(item, savedPinnedOrderedQuestions){
+
+        if ( !item ) return;
+
+        if ( savedPinnedOrderedQuestions?.length === 0 ) return;
+        
         let savedIds = savedPinnedOrderedQuestions?.map( saved => saved?._id );
 
         if ( savedIds?.length > 0 ){
@@ -103,7 +112,7 @@ function useSortOnlineQuestionsHook( onlineQuestionsConfig ){
 
         if ( !currentFormBuilderOrderedFormQuestions || currentFormBuilderOrderedFormQuestions?.length === 0 || currentFormBuilderOrderedFormQuestions[0] === null ) return currentCourseQuestions;
 
-            currentFormBuilder?.orderedFormQuestions.forEach(element => {
+            currentFormBuilderOrderedFormQuestions.forEach(element => {
 
             if ( currentCourseQuestions.map( question => question._id).includes( element?._id )){
 
@@ -114,7 +123,7 @@ function useSortOnlineQuestionsHook( onlineQuestionsConfig ){
 
         });
 
-        let formQuestions =  currentCourseQuestions?.filter( question => getNewlyAddedQuestions(question, tempQuestions))
+        let formQuestions =  currentCourseQuestions?.filter( question => getNewlyAddedQuestions(question, tempQuestions));
 
         return tempQuestions?.concat( formQuestions );
     }
@@ -142,6 +151,15 @@ function useSortOnlineQuestionsHook( onlineQuestionsConfig ){
         let tempResult = ( result?.includes( false ) === false );
 
         return tempResult;
+    }
+
+    function handleSingleQuestionForms( onlineQuestionId, currentCourseQuestions, setCurrentQuestions ) {
+
+        if ( ! ( onlineQuestionId && currentCourseQuestions?.length === 1 )) return false;
+
+        setCurrentQuestions( currentCourseQuestions );
+
+        return true;
     }
 
 return {

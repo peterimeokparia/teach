@@ -61,6 +61,8 @@ function useTeachMeetingSettingsHook( teachMeetingProps ) {
   const [ videoModalModeOn,  setVideoModalMode ] = useState(false);
   const [ meetingPanel,  setMeetingPanel ] = useState(false);
   const [ session, setSession ] = useState( false );  
+  const [ iconOnColor, setIconOnColor  ] = useState( false );
+
   let [ roomSize, setRoomSize ] = useState(1);  
 
   const dispatch = useDispatch();
@@ -252,6 +254,8 @@ return {
   roomSize,
   currentLesson, 
   currentCourse,
+  setIconOnColor, 
+  iconOnColor,
   toggleTeach,
   toggleRoomSize,
   resetAllStartSettings,

@@ -7,7 +7,7 @@ handleEmailNotificationSubscriptionToEntity,
 handleSavingEntityAction } from 'services/course/pages/components/SubscriptionComponent/MiniSideBarMenu/helper';
 
 import {
-saveOnlineQuestion } from 'services/course/actions/onlinequestions';
+saveOnlineQuestions } from 'services/course/actions/onlinequestions';
 
 import {
 elementMeta } from 'services/course/pages/QuestionsPage/helpers';
@@ -17,7 +17,7 @@ import ToggleButton from 'services/course/pages/components/ToggleButton';
 const Basic = ({
     question, 
     currentUser,
-    saveOnlineQuestion }) => {
+    saveOnlineQuestions }) => {
 
 return (
     <div>
@@ -28,7 +28,7 @@ return (
                     className={ "toggleButton" }
                     isChecked={ (question?.questionPushNotificationSubscribers?.includes( currentUser?._id ) || question?.userId === currentUser?._id) }
                     value={ 'isRecurring' }
-                    onChange={ () => handleAddPushNotificationSubscriptionToEntity( question, question?.questionPushNotificationSubscribers, currentUser,  saveOnlineQuestion, elementMeta.questionPushNotificationSubscribers  ) }
+                    onChange={ () => handleAddPushNotificationSubscriptionToEntity( question, question?.questionPushNotificationSubscribers, currentUser,  saveOnlineQuestions, elementMeta.questionPushNotificationSubscribers  ) }
                     placeHolder="push" 
                 />
             </span>
@@ -38,7 +38,7 @@ return (
                     className={ "navlinkItem" }
                     isChecked={ (question?.questionEmailNotificationSubscribers?.includes( currentUser?._id )) }
                     value={ 'isRecurring' }
-                    onChange={ () => handleEmailNotificationSubscriptionToEntity( question, question?.questionEmailNotificationSubscribers, currentUser,  saveOnlineQuestion, elementMeta.questionEmailNotificationSubscribers  ) } 
+                    onChange={ () => handleEmailNotificationSubscriptionToEntity( question, question?.questionEmailNotificationSubscribers, currentUser,  saveOnlineQuestions, elementMeta.questionEmailNotificationSubscribers  ) } 
                     placeHolder="email" 
                 />
                 </span>
@@ -47,7 +47,7 @@ return (
                 <ToggleButton
                     isChecked={ (question?.savedQuestions?.includes( currentUser?._id )) }
                     value={ 'isRecurring' }
-                    onChange={ ( ) => handleSavingEntityAction( question, question?.savedQuestions, currentUser, saveOnlineQuestion, elementMeta.savedQuestions ) } 
+                    onChange={ ( ) => handleSavingEntityAction( question, question?.savedQuestions, currentUser, saveOnlineQuestions, elementMeta.savedQuestions ) } 
                     placeHolder="save" 
                 />
                 </span>
@@ -59,7 +59,7 @@ return (
 };
 
 const mapDispatch = {
-    saveOnlineQuestion
+    saveOnlineQuestions
 };
 
 const mapState = ( state, ownProps ) => {

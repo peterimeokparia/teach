@@ -49,7 +49,7 @@ return(
                           {fileCollection?.files?.map( (file, index)  =>  ( 
                               <> 
                               <div className="testR" onClick={() => openFile(file)}>
-                                {getFileName( file )}
+                                {}
                               </div>
                                 <DeleteIcon 
                                     className="comment-round-button-3"

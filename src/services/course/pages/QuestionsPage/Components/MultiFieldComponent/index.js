@@ -1,23 +1,23 @@
 import { 
 useState, 
-useEffect } from 'services/course/pages/QuestionsPage/components/MultiFieldComponent/node_modules/react';
+useEffect } from 'react';
 
 import {
-connect } from 'services/course/pages/QuestionsPage/components/MultiFieldComponent/node_modules/react-redux';
+connect } from 'react-redux';
 
 import {
-role } from 'services/course/pages/QuestionsPage/components/MultiFieldComponent/node_modules/Services/course/helpers/PageHelpers';
+role } from 'services/course/helpers/PageHelpers';
 
 import { 
-placeHolder } from 'services/course/pages/QuestionsPage/components/MultiFieldComponent/node_modules/Services/course/helpers/EditorHelpers';
+placeHolder } from 'services/course/helpers/EditorHelpers';
 
 import {
 loadQuestions,
 saveQuestion,
-setMarkDownEditor } from 'services/course/pages/QuestionsPage/components/MultiFieldComponent/node_modules/Services/course/Actions/Questions';
+setMarkDownEditor } from 'services/course/actions/questions';
 
 import {
-toggleRecordingStatus } from 'services/course/pages/QuestionsPage/components/MultiFieldComponent/node_modules/Services/course/Actions/Video';
+toggleRecordingStatus } from 'services/course/actions/video';
 
 import {
 elementMeta,
@@ -30,12 +30,12 @@ setMultipleChoiceValue,
 calculatePointsReceived,
 handleMultiFieldFormEvents,
 contentType, 
-setFieldCollection} from 'services/course/pages/QuestionsPage/components/MultiFieldComponent/node_modules/Services/course/Pages/QuestionsPage/helpers';
+setFieldCollection} from 'services/course/pages/QuestionsPage/helpers';
 
-import EditorComponent from 'services/course/pages/QuestionsPage/components/MultiFieldComponent/node_modules/Services/course/Pages/Components/EditorComponent';
+import EditorComponent from 'services/course/pages/Components/EditorComponent';
 import VideoComponent from 'services/course/pages/QuestionsPage/components/VideoComponent';
-import LessonPlanIframeComponent from 'services/course/pages/QuestionsPage/components/MultiFieldComponent/node_modules/Services/course/Pages/Lessons/LessonPlan/Components/LessonPlanIframeComponent';
-import DropDown from 'services/course/pages/QuestionsPage/components/MultiFieldComponent/node_modules/Services/course/Pages/Components/DropDown';
+import LessonPlanIframeComponent from 'services/course/pages/Lessons/LessonPlan/components/LessonPlanIframeComponent';
+import DropDown from 'services/course/pages/Components/DropDown';
 import './style.css';
 // upload files to do
 
@@ -236,15 +236,18 @@ return(
                 </span>
         }
         {( contentType( element.editorContentType ).isExplanationContentType )  && 
+           <div> 
                 <EditorComponent
                   id={`input${element?.id}`}
                   name={`editor${element?.id}`}
-                  content={ JSON.parse( element?.explanationAnswerValue )}
-                  onChange={handleMarkDownContentChange}
+                  content={ element?.explanationAnswerValue }
+                  //onChange={handleMarkDownContentChange}
                   // onChange={ ( editor ) => handleMarkDownContentChange( inputFields, editor, element?.id, 
                   //             currentUser?.role, editorContentType.Explanation, handleUpdatingMarkDownEditor, 
                   //                     questionNumber, markDownEditorNumber )}
                 />
+
+           </div>
         }
         {( contentType( element.editorContentType ).isMultipleChoiceContentType  )  ?
               ( previewMode )   ?   <span>{element?.value}</span>    

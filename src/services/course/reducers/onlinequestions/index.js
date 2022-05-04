@@ -17,6 +17,7 @@ DELETE_ONLINEQUESTION_SUCCESS,
 DELETE_QUESTION_SUCCESS,
 SET_ONLINEQUESTION_MARKDOWN,
 SET_EXPLANATION_ANSWER_MARKDOWN,
+SET_ONLINEQUESTION_FILE_UPLOAD_META,
 QUESTION_META, 
 ONLINE_QUESTION_COURSEID,
 TOGGLE_CONTENT_CHANGED } from '../../actions/onlinequestions';
@@ -27,6 +28,7 @@ const initialState = {
     onlineQuestionCourseId: {},
     questionMarkDown: {},
     questionMeta: {},
+    fileUploadMeta: {},
     saveInProgress: false,
     onSaveError: null,
     onlineQuestionsLoading: false,
@@ -45,7 +47,7 @@ const reducer = produce((draft, action) => {
              draft.onSaveError = null;
         return;
         case ADD_ONLINEQUESTION_SUCCESS:
-        case SAVE_ONLINEQUESTION_SUCCESS:    
+        case SAVE_ONLINEQUESTION_SUCCESS:        
              draft.onlineQuestions[action.payload._id] = action.payload; 
              draft.saveInProgress = false;
         return;
@@ -73,12 +75,12 @@ const reducer = produce((draft, action) => {
         return; 
         case SET_ONLINEQUESTION_MARKDOWN:
              if ( draft.onlineQuestions[action.payload.teachObject?._id] ) {
-                draft.onlineQuestions[action.payload.teachObject?._id].markDownContent = action.payload.markDown; 
+                draft.onlineQuestions[action.payload.teachObject?._id].markDownContent = action.payload.markDownContent; 
              }    
         return;
         case SET_EXPLANATION_ANSWER_MARKDOWN:
              if ( draft.onlineQuestions[action.payload.teachObject?._id] ) {
-                draft.onlineQuestions[action.payload.teachObject?._id].answerExplanationMarkDownContent = action.payload.markDown; 
+                draft.onlineQuestions[action.payload.teachObject?._id].answerExplanationMarkDownContent = action.payload.markDownContent; 
              }    
         return;
         case DELETE_QUESTION_SUCCESS:
@@ -94,6 +96,9 @@ const reducer = produce((draft, action) => {
        return; 
        case QUESTION_META:
             draft.questionMeta = action.payload;    // onlineQuestionId, seletedCourseId
+       return; 
+       case SET_ONLINEQUESTION_FILE_UPLOAD_META:
+            draft.fileUploadMeta = action.payload;   
        return; 
        case ONLINE_QUESTION_COURSEID:
             draft.onlineQuestionCourseId = action.payload;

@@ -10,7 +10,8 @@ inviteStudentsToLearningSession } from 'services/course/actions/users';
 
 import { 
 getOperatorFromOperatorBusinessName, 
-getUsersByOperatorId} from 'services/course/selectors';
+getUsersByOperatorId,
+getLessonUserNotesByEventId } from 'services/course/selectors';
 
 import { 
 getBoardEditorId,
@@ -25,6 +26,15 @@ saveIconStyle,
 savedBoardIcon } from 'services/course/pages/Lessons/LessonPlan/inlineStyles.js';
 
 import {
+addNotes,
+loadAllNotes,
+saveNotes,
+SET_NOTES_MARKDOWN } from 'services/course/actions/notes';
+
+import { 
+saveEditorMarkDownObjectToMw } from 'services/course/actions/editor';
+
+import {
 loadWhiteBoardData,
 loadWhiteBoardDataByWid,
 selectSavedWhiteBoard,
@@ -37,8 +47,14 @@ import {
 getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
 
 import { 
+getTutorsLessonUserNotesByEventId,  
 getSortedRecordsByDate } from 'services/course/selectors';
 
+import {
+editor_upload_url,
+handleChange } from 'services/course/pages/OnlineQuestionsPage/helpers';
+
+import EditorComponent from 'services/course/pages/components/EditorComponent';
 import useWhiteBoardHook  from 'services/course/pages/Lessons/hooks/useWhiteBoardHook';
 import MenuItem from '@mui/material/MenuItem';
 import MaxWidthDialog from 'services/course/pages/components/MaxWidthDialog';
@@ -50,8 +66,8 @@ import HistoryIcon from '@mui/icons-material/History';
 import moment from "moment";
 import './style.css';
 
-//https://www.uuidgenerator.net/dev-corner/javascript
 const BoardEditorComponent = ({ 
+  note,
   setMarkDown,
   meetingNotes,
   saveMeetingNote,
@@ -60,8 +76,11 @@ const BoardEditorComponent = ({
   meetingId,
   courseId,
   lessonId,
+  eventId,
   classRoomId, 
+  whiteBoardEventId,
   users,
+  user,
   operators,
   currentUser,
   lessons,
@@ -72,12 +91,13 @@ const BoardEditorComponent = ({
   addWhiteBoardData,
   selectSavedWhiteBoard,
   whiteBoardData,
-  isModalOpen }) => {
+  isModalOpen, 
+  children }) => {
 
   let hideMeetingStage = false, fullMeetingStage = false;
-  let Id = getBoardEditorId(lessonId, meetingId, classRoomId);
+  let Id = ( whiteBoardEventId !== undefined ) ? whiteBoardEventId : getBoardEditorId(lessonId, meetingId, classRoomId, eventId);
   const urls = getUrls(Id, currentUser);
-  const fullScreenSize = "1536px";
+  const fullScreenSize = "1150px";
   const editorUrl = urls?.editor;
   const canvasUrl = urls.canvas; 
   const whiteBoardId = Id;
@@ -139,27 +159,28 @@ let modalProps =  {
 
 return (
       <div>
-          <div className="content">    
-            <div> 
+          {/* <div className="content">     */}
+          <div className="content">
+          <div> 
           <div className={ fullMeetingStage ? `tools-hide` : `tools` }> 
             {boardOrEditor 
-            ? <div className={`editor${hideMeetingStage}-show`}> 
-                < LessonPlanIframeComponent 
-                  name="embed_readwrite" 
-                  source={editorUrl}
-                  width={fullScreenSize}
-                  height="900px"
-                  allow="camera;microphone"
-                  scrolling="yes"
-                  frameBorder="0" 
-                /> 
-             </div>
-            : <div className={`canvas${hideMeetingStage}-show`}> 
+            ? <div className={"editor"}>  
+            {<div className="main" > 
+             <br></br>  <br></br>
+                   <EditorComponent  
+                    upload_url={editor_upload_url} 
+                    handleChange={(editor) => handleChange({ ...note, markDownContent: editor }, SET_NOTES_MARKDOWN, `/notes/`, saveEditorMarkDownObjectToMw )}
+                    content={ note?.markDownContent }
+                  />
+              </div> 
+            }
+              </div>
+            : <div className={`canvas${hideMeetingStage ? "-show" : ""}`}> 
                   < LessonPlanIframeComponent 
                     name="embed_readwrite" 
                     source={canvasUrl}
                     width={fullScreenSize}
-                    height="900px"
+                    height="1900px"
                     allow="camera;microphone"
                     scrolling="yes"
                     frameBorder="0"
@@ -171,12 +192,12 @@ return (
                          return <MenuItem value={item}>{`version: ${ moment(item?.timeSaved)?.local().format('YYYY-MM-DD hh:mm:ss') }`}</MenuItem>
                       }
                     }
-                    </MaxWidthDialog>
+                  </MaxWidthDialog>
               </div>                          
             } 
             </div>
             </div>   
-            <div className='whiteBoardSideBar'> 
+            <div className='whiteBoardSideBar'>
             <div>
               {
                 <SwapHorizIcon
@@ -202,8 +223,15 @@ return (
               }  
               </div>
             </div>
+
           </div>    
-          </div> 
+            <div>
+              {
+                children && children
+              }
+            </div> 
+          </div>
+
         { Validations.setErrorMessageContainer() }
       </div>
     );
@@ -229,6 +257,7 @@ const mapState = ( state, ownProps )   => {
     operator: getOperatorFromOperatorBusinessName(state, ownProps),
     users: getUsersByOperatorId(state, ownProps),
     currentUser: state.users.user,
+    user: state.users.user,
     lessons: Object.values(state.lessons.lessons),
     lessonStarted: state.lessons.lessonStarted,
     boardOrEditor: state.lessons.toggleTeachBoardOrEditor,
@@ -238,7 +267,8 @@ const mapState = ( state, ownProps )   => {
     allSessions: Object.values(state?.sessions?.sessions),
     selectedLessonFromLessonPlanDropDown: state.lessons.selectedLessonFromLessonPlanDropDown,
     meetingNotes: state?.meetingNotes?.meetingNotes,
-    isModalOpen: state?.courses?.isModalOpen
+    isModalOpen: state?.courses?.isModalOpen,
+    note: getTutorsLessonUserNotesByEventId(state, ownProps),
   };
 };
 

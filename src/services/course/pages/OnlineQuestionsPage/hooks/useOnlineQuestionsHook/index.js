@@ -14,7 +14,7 @@ savePushNotificationUser } from 'services/course/actions/notifications';
 import { 
 onlineQuestionCourseId,
 deleteOnlineQuestion,
-saveOnlineQuestion,
+saveOnlineQuestions,
 loadOnlineQuestions } from 'services/course/actions/onlinequestions';
 
 import {
@@ -22,23 +22,40 @@ deleteFormField } from 'services/course/actions/formfields';
 
 import {
 getSortedRecords } from 'services/course/selectors';
+
+import { 
+setItemInSessionStorage } from 'services/course/helpers/ServerHelper';
+
+import {
+onlineMarkDownEditorFieldCollection } from 'services/course/pages/QuestionsPage/helpers';
+
+import {
+addQuestionConfig } from 'services/course/pages/OnlineQuestionsPage/helpers';
     
 import Swal from 'sweetalert2';
 
 function useOnlineQuestionsHook( onlineQuestionsConfig ){
     const dispatch = useDispatch();
     const [ inputValue, setInputValue ] = useState("");
-   
+    const [ savedMarkDown, setSavedMarkDown ] = useState("");
+    const [ selectedQuestion, setSelectedQuestion ] = useState(null);
+
     let {
         courseId, 
         failedOnlineQuestionNotifications, 
         currentUser, 
         pushNotificationUsers,
         toggleContentChanged,
+        addNewOnlineQuestion,
         formFields,
         formUuId,
+        formId,
+        formType,
+        formName,
+        onlineQuestionId,
         formBuilderStatus,
         onlineQuestions,
+        operator,
     } = onlineQuestionsConfig;
 
     useEffect(() => { 
@@ -52,7 +69,7 @@ function useOnlineQuestionsHook( onlineQuestionsConfig ){
             onlineQuestionCourseId, loadSubscribedPushNotificationUserByUserId, courseId ]);
                   
     const saveRecording = ( selectedQuestion ) => {
-        dispatch(saveOnlineQuestion( selectedQuestion ));
+        dispatch(saveOnlineQuestions( selectedQuestion ));
     };
 
     const getFormFieldsToDelete = ( selectedQuestion ) => {
@@ -73,9 +90,6 @@ function useOnlineQuestionsHook( onlineQuestionsConfig ){
     }
 
     const deleteQuestion = ( selectedQuestion ) => {
-
-        let temp = [];
-
         Swal.fire({
             title: 'Confirm Delete',
             icon: 'warning',
@@ -86,11 +100,8 @@ function useOnlineQuestionsHook( onlineQuestionsConfig ){
             cancelButtonText: 'No'
             })
             .then( (response) => {
-
                 if ( response?.value ) {
-
                     getFormFieldsToDelete( selectedQuestion );
-
                     dispatch( deleteOnlineQuestion( selectedQuestion ) );
 
                     let currentQuestions = onlineQuestions?.filter( question => question?.formUuId === formUuId && question?._id !== selectedQuestion?._id );
@@ -98,17 +109,13 @@ function useOnlineQuestionsHook( onlineQuestionsConfig ){
                     let sortedItems = getSortedRecords( currentQuestions, 'position' );
 
                         sortedItems.forEach( ( element, index ) => {
-
                             let repositionedItem = { ...element, position: ( index + 1) };
 
-                            dispatch( saveOnlineQuestion( repositionedItem ) );
-
+                            dispatch( saveOnlineQuestions( repositionedItem ) );
                         });
 
                     loadOnlineQuestions();
-
                     toggleContentChanged();
-
                 } else {
                     return;
 
@@ -117,8 +124,36 @@ function useOnlineQuestionsHook( onlineQuestionsConfig ){
             });
     };
 
+    function addNewQuestion( typeOfInput ){
+        let formQuestions = onlineQuestions?.filter( question => question?.formUuId === formUuId );
+        let sortedRecords = getSortedRecords( formQuestions, 'position' );
+        let sortedRecordsLength = sortedRecords?.length;
+        let position = (formQuestions?.length === 0 || undefined ) ? 1 : (sortedRecords[ sortedRecordsLength-1 ]?.position)+1;
+        
+        let config = {
+          typeOfInput,
+          formId,
+          formType,
+          formName,
+          courseId,
+          formUuId, 
+          onlineQuestionId,
+          currentUser,
+          operator,
+          position
+        };
+      
+        addNewOnlineQuestion( onlineMarkDownEditorFieldCollection( addQuestionConfig( config ) ) );
+        toggleContentChanged(); 
+      } 
+
 return {
     inputValue,
+    savedMarkDown, 
+    selectedQuestion, 
+    setSelectedQuestion,
+    addNewQuestion,
+    setSavedMarkDown, 
     setInputValue: (val) => setInputValue( val ),
     saveRecording:(val) => saveRecording( val ),
     deleteQuestion:(val) => deleteQuestion( val )

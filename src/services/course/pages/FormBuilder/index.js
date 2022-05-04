@@ -18,6 +18,9 @@ role } from 'services/course/helpers/PageHelpers';
 import { 
 getSortedRecordsByDate } from 'services/course/selectors';
 
+import { 
+addMissedAnswers } from "services/course/actions/missedanswers";
+  
 import useSetFormBuilderHook from './hooks/useSetFormBuilderHook';
 import Modal from 'react-modal';
 import FloatingActionButtonZoom from 'services/course/pages/components/FloatingActionButtonZoom';
@@ -39,6 +42,7 @@ const FormBuilder = ({
     currentUser,
     users,
     formBuilders,
+    addMissedAnswers,
     addNewFormBuilder,
     saveFormBuilder,
     loadFormBuilders,
@@ -58,7 +62,8 @@ const FormBuilder = ({
       publishedFormsInBuildState,
       inProgressFormsInTakingState,
       submittedFormsInTakingState,  
-      allSubmittedFormsInTakingState,
+      allSubmittedFormsInSubmittedState,
+      currentUsersSubmittedFormsInSubmittedState,
       formsInBuildState,
       formsInUse
     } = useSetFormBuilderHook( formType, currentUser, loadFormBuilders, loadTestTimers, formBuilders );
@@ -75,7 +80,8 @@ const FormBuilder = ({
       publishedFormsInBuildState,
       inProgressFormsInTakingState,
       submittedFormsInTakingState,
-      allSubmittedFormsInTakingState,
+      allSubmittedFormsInSubmittedState,
+      currentUsersSubmittedFormsInSubmittedState,
       formType,
       formName,
       formId,
@@ -95,7 +101,8 @@ const FormBuilder = ({
       onlineQuestions,
       formFieldAnswers,
       reportFormFieldAnswers,
-      eventId
+      eventId,
+      addMissedAnswers
     };
 
     return <> 
@@ -105,25 +112,14 @@ const FormBuilder = ({
     </div>
     </>
 };
-
-function getFormBuilder( builder, formName, formType ){
-
-  if ( formName ) {
-
-    return builder?.formName === formName;
-
-  }
-
-  return  builder?.formType === formType;
-}
-
+// create / use selectors for some of these
 const mapState = ( state, ownProps ) => {
   return {
     currentUser: state.users.user,
     users: Object.values( state.users.users ),
     onlineQuestions: Object.values(state.onlineQuestions.onlineQuestions)?.filter( question => question?.formName === ownProps.formName ),
     formFieldAnswers: Object.values( state?.formFieldAnswers?.formFieldAnswers )?.filter( answer => answer?.formName === ownProps.formName ),
-    formBuilders: getSortedRecordsByDate(Object.values( state.formBuilders?.formBuilders ), 'createDateTime' ),
+    formBuilders: getSortedRecordsByDate(Object.values( state.formBuilders?.formBuilders ).filter(form => form?.formId === ownProps?.formId), 'createDateTime' ),
     timer: Object?.values( state?.timers?.timers )?.find( timer => timer?.formName === ownProps?.formName && timer?.role === role?.Tutor ),
     allTimers: Object?.values( state?.timers?.timers ),
     reportFormFieldAnswers: Object.values( state?.formFieldAnswers?.formFieldAnswers )?.filter( answer => answer?.formName === ownProps.formName &&
@@ -131,4 +127,4 @@ const mapState = ( state, ownProps ) => {
   };
 };
 
-export default connect( mapState, { addNewFormBuilder, saveFormBuilder, loadFormBuilders, addTime, saveTime, loadTestTimers, loadPagedFormBuilders } )(FormBuilder);
+export default connect( mapState, { addMissedAnswers, addNewFormBuilder, saveFormBuilder, loadFormBuilders, addTime, saveTime, loadTestTimers, loadPagedFormBuilders } )(FormBuilder);

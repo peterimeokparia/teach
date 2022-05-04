@@ -26,6 +26,8 @@ class Form {
         this.eventId = props?.eventId;
         this.getFormFieldAnswers = props?.getFormFieldAnswers;
         this.prevPoints = props?.prevPoints;
+        this.answer = props?.answer;
+        this.answerKey = props.answerKey;
 
     }
 
@@ -75,6 +77,7 @@ class Form {
         
         try {
 
+
             if ( this.formStatus !== elementMeta.state.Manage ) return;
 
             if ( this.currentUser?.role !== role.Tutor ) return;
@@ -107,7 +110,9 @@ class Form {
                     eventId: this.eventId  
                 };
           
-                let formFieldAnswer = { ...this.getFormFieldAnswers( answerProps ), inputValue: this.value, answer: this.value, selected: this.selected, points: this.prevPoints  }; 
+                // let formFieldAnswer = { ...this.getFormFieldAnswers( answerProps ), inputValue: this.value, answer: this.value, selected: this.selected, points: this.prevPoints  }; 
+
+                let formFieldAnswer = { ...this.getFormFieldAnswers( answerProps ), inputValue: this.value, answer: this.answer, selected: this.selected, points: this.prevPoints  }; 
           
                 this.addNewFormFieldAnswer( formFieldAnswer );
 
@@ -121,7 +126,7 @@ class Form {
 
         if ( !this.selected ) return false;
 
-            this.saveFormField({ ...this.element, answerKey: this.value, inputValue: this.value, selected: this.selected  });
+            this.saveFormField({ ...this.element, points: this.prevPoints, answerKey: this.value, inputValue: this.value, selected: this.selected  });
 
         return true;
     }
@@ -129,8 +134,9 @@ class Form {
     handleFormSelectExistingAnswerInTakingState() {
 
         if ( !this.existingAnswer ) return false;
-
-            this.saveFormFieldAnswer( { ...this.existingAnswer, points: this.prevPoints, answer: this.value, inputValue: this.value, selected: this.selected  } );
+        
+        this.saveFormFieldAnswer( { ...this.existingAnswer, answerKey: this.answerKey, points: this.prevPoints, answer: this.answer, inputValue: this.value, selected: this.selected  } );
+            // this.saveFormFieldAnswer( { ...this.existingAnswer, answerKey: this.answerKey, points: this.prevPoints, answer: this.value, inputValue: this.value, selected: this.selected  } );
 
         return true;
     }
@@ -139,7 +145,7 @@ class Form {
 
         if ( !this.existingAnswer ) return false;
 
-            this.saveFormFieldAnswer( { ...this.existingAnswer, points: this.prevPoints, inputValue: this.value, answer: this.value } );  
+        this.saveFormFieldAnswer( { ...this.existingAnswer, points: this.prevPoints, inputValue: this.value, answer: this.value } );  
 
         return true;
 

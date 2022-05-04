@@ -10,7 +10,7 @@ SAVE_ASSIGNMENT_ERROR,
 LOAD_ASSIGNMENTS_BEGIN,
 LOAD_ASSIGNMENTS_SUCCESS,
 LOAD_ASSIGNMENTS_ERROR,
-DELETE_ASSIGNMENT_SUCCESS } from '../../actions/calendar/assignments';
+DELETE_ASSIGNMENT_SUCCESS } from 'services/course/actions/assignments';
 
 const initialState = {
      assignments: {},

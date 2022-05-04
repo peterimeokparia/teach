@@ -26,6 +26,11 @@ columnsQuizz } from 'services/course/pages/components/StickyHeaderTable/helpers'
 import {
 formToTableConverter } from 'services/course/pages/FormBuilder/FormTables/helpers';
 
+import { 
+addMissedAnswers,
+saveMissedAnswers } from "services/course/actions/missedanswers";
+
+import MissedQuestionComponent from 'services/course/pages/FormBuilder/FormQuestions/components/MissedQuestionsComponent';
 import Roles from 'services/course/pages/components/Roles';
 import FormTables from 'services/course/pages/FormBuilder/FormTables';
 import StickyHeaderTable from 'services/course/pages/components/StickyHeaderTable';
@@ -135,7 +140,8 @@ export default function FloatingActionButtonZoom({ props }) {
     publishedFormsInBuildState,
     inProgressFormsInTakingState,
     submittedFormsInTakingState,
-    allSubmittedFormsInTakingState,
+    allSubmittedFormsInSubmittedState,
+    currentUsersSubmittedFormsInSubmittedState,
     loadPagedFormBuilders,
     onlineQuestions,
     formFieldAnswers,
@@ -313,7 +319,7 @@ export default function FloatingActionButtonZoom({ props }) {
   const goToSubmittedForm = ( selectValue ) => {
     if ( selectValue ) {  
 
-      saveFormBuilder( { ...selectValue, status: elementMeta.status.InProgress, state: elementMeta.state.Taking, takingDateTime: Date.now(), userId: selectValue?.userId, eventId } );
+      saveFormBuilder( { ...selectValue, status: elementMeta.status.Submitted, state: elementMeta.state.Submitted, takingDateTime: Date.now(), userId: selectValue?.userId, eventId } );
 
     }
   };
@@ -505,8 +511,8 @@ export default function FloatingActionButtonZoom({ props }) {
           <div className="sticky-header-tab-panel"> 
           <TabPanel value={value2} index={3} dir={theme.direction}>
           <div className="user-item"/>
-          <div className="sticky-header-table-submitted">
-          <StickyHeaderTable columns={columnsQuizz} rows={allSubmittedFormsInTakingState} onRowSelectedHandler={ manageSubmittedForm }/>
+          <div className="sticky-header-table-submitted"> 
+          <StickyHeaderTable columns={columnsQuizz} rows={allSubmittedFormsInSubmittedState} onRowSelectedHandler={ manageSubmittedForm }/>
           </div>
           <div className="sticky-header-table-edit-0">
           <UpIcon 
@@ -571,7 +577,7 @@ export default function FloatingActionButtonZoom({ props }) {
           <div className="sticky-header-tab-panel"> 
           <TabPanel value={value3} index={2} dir={theme.direction}>
           <div className="sticky-header-table-take-submitted">
-          <StickyHeaderTable columns={columnsQuizz} rows={submittedFormsInTakingState} onRowSelectedHandler={ goToSubmittedForm }/>
+          <StickyHeaderTable columns={columnsQuizz} rows={currentUsersSubmittedFormsInSubmittedState} onRowSelectedHandler={ goToSubmittedForm }/>
           </div>
           <div className="sticky-header-table-edit-0">
           <UpIcon 
@@ -585,16 +591,6 @@ export default function FloatingActionButtonZoom({ props }) {
           </SwipeableViews>
         </TabPanel>
 
-
-        {/* <div className="input-field-builder-selector"> 
-                      <div className="input-field-builder-selector-content"> 
-                        <div>
-                         <h2> { formBuilders?.find( form => form?.formUuId === formUuId )?.formDisplayName } </h2>
-                         </div>
-                         
-                         <h2>  { users?.find( user => user?._id === userId )?.firstname } </h2>
-                        </div>
-                      </div> */}
         <TabPanel value={value} index={2} dir={theme.direction}>
         <SwipeableViews
           axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
@@ -636,7 +632,7 @@ export default function FloatingActionButtonZoom({ props }) {
           </TabPanel>
           <TabPanel value={value4} index={3} dir={theme.direction}>
           <div className="user-item"/>
-          <StickyHeaderTable columns={columnsQuizz} rows={allSubmittedFormsInTakingState} onRowSelectedHandler={ goToSubmittedForm }/>
+          <StickyHeaderTable columns={columnsQuizz} rows={currentUsersSubmittedFormsInSubmittedState} onRowSelectedHandler={ goToSubmittedForm }/>
           <UpIcon 
             style={plusOneIconStyleHeader()}
             color={"default"}
@@ -649,7 +645,7 @@ export default function FloatingActionButtonZoom({ props }) {
       </SwipeableViews>
       {fabs.map((fab, index) => (
         <Zoom
-          key={fab.color}
+          // key={fab.color}
           in={value === index }
           timeout={transitionDuration}
           style={{

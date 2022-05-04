@@ -24,8 +24,14 @@ export async function addContent( url, data = {}  ){
 
 export async function updateContent( url, data = {}  ){
    return axios.put(url, data)
-    .then(resp => {console.log(resp)})
-     .catch(err => { console.log(err) })
+    .then(resp => { 
+       console.log(resp);
+       return resp;
+      })
+     .catch(err => { 
+        console.log(err); 
+        return err;
+      })
 }
 
 export function getPostData( req ) {
@@ -85,30 +91,46 @@ export async function verifyUser( existingUser, unHarshedPassword ) {
 }
 
 export async function saveUpdatedData( req, model, id ){
+  console.log('saveUpdatedData')
+  console.log(JSON.stringify(req.body));  
+  let tempResponse = null;
   try {
         const documentObjectToUpdate = await model.findById(mongoose.Types.ObjectId(id));
 
+        if ( documentObjectToUpdate ) {
+          console.log('found document documentObjectToUpdate')
+          console.log(JSON.stringify(documentObjectToUpdate));  
+        }
+
+        console.log(`documentObjectToUpdate${ documentObjectToUpdate }`);  
+
         if ( documentObjectToUpdate === null || documentObjectToUpdate === undefined ) {
-           return;
+          return Error(`Problem with update operation: documentObjectToUpdate is null || undefined`);
         }
 
         let bodyData = Object.keys(req.body);
+
         bodyData?.forEach(element => {
+
           let arrg = ['_id', '__v'];
+
            if ( !arrg.includes(element)  ) {
-            // if ( !arrg.includes(element)  ) {
+             // 4 debugging
+              // if ( !arrg.includes(element)  ) {
             console.log(`PUT - saveUpdatedData: modelName=${ model.collection.collectionName }`, element);   
             documentObjectToUpdate[element] = req.body[element] 
           }             
       });
-        return await documentObjectToUpdate.save();
-     
-  } catch ( error ) {
 
-      console.log('saveUpdatedData error')
-      console.log( error )
-      return error;
+      console.log(`after documentObjectToUpdate:${JSON.stringify(documentObjectToUpdate)}`);  
+      tempResponse = await documentObjectToUpdate.save();
+     
+    } catch ( error ) {
+      return Error(`Problem with update operation: ${error?.message} ${error}`);
   }
+
+  console.log(`PUT - saveUpdatedData:${JSON.stringify(tempResponse)}`);    
+  return tempResponse;
 }
 
 export const getVideoFileMeta = ( request ) => {

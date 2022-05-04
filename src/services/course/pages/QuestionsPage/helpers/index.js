@@ -84,7 +84,7 @@ export const elementMeta = {
   questionEmailNotificationSubscribers: 'questionEmailNotificationSubscribers',
   savedQuestions: 'savedQuestions', 
   status: { Editing: 'editing', NotEditing: 'notediting', InProgress:'InProgress', Submitted:'Submitted', Pending:'Pending', Published:'Published' },
-  state: { Manage: 'Manage', Taking: 'Taking' }
+  state: { Manage: 'Manage', Taking: 'Taking', Submitted: 'Submitted' }
 };
 
 export const inputType = {
@@ -94,6 +94,7 @@ export const inputType = {
   TextLabel: "textlabel",
   Text: "text",
   TextArea: "textarea",
+  MathTextArea: "mathtextarea",
   Video: "video",
   Email: "email",
   Number: "number",
@@ -105,13 +106,18 @@ export const inputType = {
   DropDown: "dropdown",
   DataObjectSelector: "dataobjectselector",
   Explanation: "explanation",
+  MathScience: "mathscience",
+  Latex: "latex",
+  LatexField: "latexfield",
   MainBodyQuestion: "mainbodyquestion",
+  MathScienceQuestion: "mathsciencequestion",
   MainBodyHeader: "mainbodyheader",
   MainBodyTableColumnQuestion: "mainbodytablecolumnquestion",
   Number: "number",
   NumberPosition: "numberposition",
   NumberPercentage: "numberpercentage",
-  FileUpload: "fileupload"
+  FileUpload: "fileupload",
+  MathScienceRadioButton: "mathscienceradiobutton"
 };
 
 export const labelType = {
@@ -217,10 +223,11 @@ export function onlineMarkDownEditorFieldCollection( config ){
   return  { 
     type: config?.inputFieldOptions?.type, 
     inputType: config?.inputType, 
+    inputValue: config?.inputValue,
     placeHolderText: config?.inputFieldOptions?.askHomeWorkQuestionPlaceHolder,
     questionCreatedOnDateTime: Date.now(),
-    markDownContent: JSON.stringify(config?.placeHolder),
-    answerExplanationMarkDownContent: JSON.stringify(config?.explanationPlaceHolder),
+    markDownContent: null,
+    answerExplanationMarkDownContent: null,
     pointsAssigned: config?.pointsAssigned,
     pointsReceived: config?.pointsReceived,
     formId: config?.formId, 

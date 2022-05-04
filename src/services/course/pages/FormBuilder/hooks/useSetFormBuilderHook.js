@@ -11,7 +11,8 @@ function useSetFormBuilderHook( formType, currentUser, loadFormBuilders,  loadTe
   const [ publishedFormsInBuildState, setPublishedFormsInBuildState ] = useState([]);
   const [ inProgressFormsInTakingState, setInProgressFormsInTakingState ] = useState([]);
   const [ submittedFormsInTakingState, setSubmittedFormsInTakingState ] = useState([]); 
-  const [ allSubmittedFormsInTakingState, setAllSubmittedFormsInTakingState ] = useState([]);
+  const [ allSubmittedFormsInSubmittedState, setAllSubmittedFormsInSubmittedState ] = useState([]);
+  const [ currentUsersSubmittedFormsInSubmittedState, setCurrentUsersSubmittedFormsInSubmittedState ] = useState([]);
   const [ formsInBuildState, setFormsInBuildState ] = useState([]); 
   const [ formsInUse, setFormsInUse ] = useState([]); 
 
@@ -46,10 +47,18 @@ function useSetFormBuilderHook( formType, currentUser, loadFormBuilders,  loadTe
       setSubmittedFormsInTakingState( submittedForms );
     }
 
-    let allSubmittedForms = formBuilders?.filter(form => form?.formType === formType &&  form?.state === elementMeta.state.Taking && form?.status === elementMeta.status.Submitted && form?.createdBy === currentUser?._id);
+    let allCurrentUsersSubmittedForms = formBuilders?.filter(form => form?.formType === formType && form?.state === elementMeta.state.Submitted && form?.status === elementMeta.status.Submitted && form?.userId === currentUser?._id);
+
+    if ( allCurrentUsersSubmittedForms ) {
+
+      setCurrentUsersSubmittedFormsInSubmittedState( allCurrentUsersSubmittedForms );
+    }
+
+    let allSubmittedForms = formBuilders?.filter(form => form?.formType === formType && form?.state === elementMeta.state.Submitted && form?.status === elementMeta.status.Submitted && form?.createdBy === currentUser?._id);
 
     if ( allSubmittedForms ) {
-      setAllSubmittedFormsInTakingState( allSubmittedForms )
+
+      setAllSubmittedFormsInSubmittedState( allSubmittedForms )
     }
 
     let currentFormsToUse = formBuilders.filter(form => form?.formType === formType && form?.state === elementMeta.state.Manage );
@@ -71,7 +80,8 @@ return {
   publishedFormsInBuildState,
   inProgressFormsInTakingState,
   submittedFormsInTakingState,  
-  allSubmittedFormsInTakingState,
+  allSubmittedFormsInSubmittedState,
+  currentUsersSubmittedFormsInSubmittedState,
   formsInBuildState,
   formsInUse
 }; };

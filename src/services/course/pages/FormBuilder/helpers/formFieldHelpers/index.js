@@ -201,7 +201,8 @@ export function markDownEditorFieldCollection(config){
   export  const questionInputCollection = [ 
     inputType.MainBodyQuestion,
     inputType.MainBodyHeader,
-    inputType.MainBodyTableColumnQuestion
+    inputType.MainBodyTableColumnQuestion,
+    inputType.MathScienceQuestion
   ];
   
   export  const formFieldInputCollection = [ 
@@ -212,5 +213,6 @@ export function markDownEditorFieldCollection(config){
     inputType.DateTime, inputType.Toggle,
     inputType.DataObjectSelector, inputType.Number,
     inputType.NumberPosition, inputType.NumberPercentage,
-    inputType.FileUpload
+    inputType.FileUpload, inputType.LatexField,
+    inputType.MathScienceRadioButton
   ];

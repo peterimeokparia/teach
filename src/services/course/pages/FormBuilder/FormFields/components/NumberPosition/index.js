@@ -11,7 +11,7 @@ import {
 getFormFieldAnswersByQuestionId } from 'services/course/selectors';
 
 import {
-saveOnlineQuestion } from 'services/course/actions/onlinequestions';
+saveOnlineQuestions } from 'services/course/actions/onlinequestions';
 
 import { 
 handleChangedValue } from 'services/course/pages/FormBuilder/FormFields/helpers';
@@ -26,7 +26,7 @@ const NumberPosition = ( {
     formFields,
     fieldAnswer,
     elememtFormFields,
-    saveOnlineQuestion,
+    saveOnlineQuestions,
     saveFormField,
     currentUser  } ) => {
 
@@ -39,7 +39,7 @@ const NumberPosition = ( {
     let {
         addFieldPoints,
         handleTogglingModal,
-    } = useAssignPointsHook( {...fieldProps, formFieldElement, elememtFormFields, saveOnlineQuestion, saveFormField }  );
+    } = useAssignPointsHook( {...fieldProps, formFieldElement, elememtFormFields, saveOnlineQuestions, saveFormField }  );
 
     const getPosition = ( number ) => {
         let numberAsString = number.toString();
@@ -98,7 +98,7 @@ return(
 
 const mapDispatch = {
     saveFormField,
-    saveOnlineQuestion
+    saveOnlineQuestions
 };
   
 const mapState = ( state, ownProps ) => { 

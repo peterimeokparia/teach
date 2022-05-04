@@ -3,6 +3,11 @@ import './style.css';
 
 export function FileUploadWithPreview({className}){
     //lessonFileUploadFilelist 
+
+    function getFileNames( link ){
+        return link;
+    };
+
 return (
     <> 
     {( previewMode, fileUploadUrl, onChangeHandler, currentObject, deleteFile, getFileName, openFile, fileViewerClassName ) => (
@@ -20,7 +25,8 @@ return (
                 <div>
                     {currentObject?.files?.map( (file, index) =>  ( 
                         <label onClick={() => deleteFile(file)}>
-                            {getFileName( file )}
+                            {/* {'fix file upload'} */}
+                            {getFileNames( file )} 
                         {/* <a  href={file} target="_blank" rel="noopener noreferrer"> {getFileName( file )}  </a>  */}
                         </label>
                     ))}
@@ -34,7 +40,8 @@ return (
                     <div>
                         {currentObject?.files?.map( (file, index)  =>  ( 
                             <label onClick={() => openFile(file)}>
-                                {getFileName( file )}
+                                 {/* {'fix file upload'} */}
+                                {getFileNames( file )}
                             </label>
                         ))}
                     </div> 

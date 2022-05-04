@@ -13,7 +13,7 @@ addNewFormFieldAnswer,
 saveFormFieldAnswer } from 'services/course/actions/formfieldanswers';
 
 import {
-saveOnlineQuestion } from 'services/course/actions/onlinequestions';
+saveOnlineQuestions } from 'services/course/actions/onlinequestions';
 
 import {
 FormFileUpload } from 'services/course/pages/components/FormFileUpload';
@@ -40,7 +40,7 @@ const FileUploadField = ( {
     saveFormField,
     addNewFormFieldAnswer,
     saveFormFieldAnswer,
-    saveOnlineQuestion,
+    saveOnlineQuestions,
     elememtFormFields,
     studentsAnswer,
     dropDownValues,
@@ -75,7 +75,7 @@ const FileUploadField = ( {
     let {
         addFieldPoints,
         handleTogglingModal,
-    } = useAssignPointsHook( {...fieldProps, formFieldElement, elememtFormFields, saveOnlineQuestion, saveFormField } );
+    } = useAssignPointsHook( {...fieldProps, formFieldElement, elememtFormFields, saveOnlineQuestions, saveFormField } );
 
     const handleFormFileUpload = () => {
 
@@ -105,9 +105,7 @@ const FileUploadField = ( {
         }
     }
     
-    const testR = () => { return ( elementMeta?.state.Manage ) ? formFieldElement : studentsAnswer}
-
-    const getFileName = ( link ) => {
+    function getFileName( link ){
         return link.split('files/')[1];
     };
     
@@ -120,6 +118,7 @@ const FileUploadField = ( {
             selectedFileToRemove( fileToDelete );
         }
     };
+
     let fileProps = {
         fileCollection: ( elementMeta?.state.Manage ) ? formFieldElement : studentsAnswer, 
         getFileName,
@@ -150,7 +149,7 @@ return(
                 fileViewer={formFileViewer}
             />
         </div>
-        <FormFileViewerPanel  props={ fileProps }/>
+        <FormFileViewerPanel  props={ fileProps } getFileName={getFileName}/>
         </>
     }
     </>
@@ -168,4 +167,4 @@ const mapState = ( state, ownProps ) => {
     };
 };
 
-export default connect( mapState, { saveFormField, saveOnlineQuestion, saveFormFieldAnswer, addNewFormFieldAnswer } )(FileUploadField);
+export default connect( mapState, { saveFormField, saveOnlineQuestions, saveFormFieldAnswer, addNewFormFieldAnswer } )(FileUploadField);

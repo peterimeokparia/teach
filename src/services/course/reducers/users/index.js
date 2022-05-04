@@ -161,8 +161,8 @@ const reducer = produce((draft, action) => {
         return;     
         case SET_USER_BIO_MARKDOWN:
              if ( typeof draft.user === 'object' && draft.user !== null ) {
-                draft.user.markDown = action.payload.markDown; 
-                draft.users[action.payload.teachObject._id].markDown = action.payload.markDown; 
+                draft.user.markDownContent = action.payload.markDownContent; 
+                draft.users[action.payload.teachObject._id].markDownContent = action.payload.markDownContent; 
              };      
         return; 
         case DELETE_USER_SUCCESS:

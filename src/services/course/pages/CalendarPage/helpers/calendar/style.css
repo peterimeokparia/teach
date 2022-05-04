@@ -1,0 +1,20 @@
+/* .whiteBoardSideBar {
+    padding-right: 0px;
+    padding-left: 0px; 
+    display: flex;
+    
+  } */
+.whiteBoardSideBar {
+    flex-basis: 500px;
+    background: transparent;
+    margin-left: 621px;
+    /* max-height: 900px; */
+    /* margin-left: 10000px;
+    max-height: 900px; */
+    overflow: scroll;
+}
+ .whiteBoardSideBar .savedBoards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }

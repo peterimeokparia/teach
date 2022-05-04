@@ -25,7 +25,6 @@ export function deleteData(url = ``, data = {}) {
 export const deleteFiles = ( file ) => {
     let url = routeUrl().DeleteFile;
     let formData = new FormData();
-
     formData.append('delete', file);
     return uploadContent(url, formData);
 };
@@ -35,24 +34,24 @@ export const uploadVideos = ( videoData, externalId, videoNamePrefix ) => {
   let id = { id: videoData?.objectId, videoNamePrefix, externalId };
   let data = {  
     id: videoData?.objectId, 
-    videoNamePrefix: videoData?.videoMetaData?.videoNamePrefix,
+    videoNamePrefix,
     // externlId: videoData?.videoMetaData[ externalId ],
     videoName: videoData?.videoName,
     inputFieldId: videoData?.inputFieldId,
     metaData:  videoData?.videoMetaData,
-    videoFileName: `${videoData?.videoMetaData?.videoNamePrefix}_${Date.now()}_${videoData?.videoMetaData[ externalId ]}_${videoData?.objectId}_${Math.floor(Math.random() * Math.floor(9000))}.webm`
+    videoFileName: ( videoData?.eventId !== undefined ) ? `${videoNamePrefix}_${videoData?.objectId}_${videoData?.eventId}.webm` : `${videoNamePrefix}_${Date.now()}_${videoData?.videoMetaData[ externalId ]}_${videoData?.objectId}_${Math.floor(Math.random() * Math.floor(9000))}.webm`
+    // videoFileName: `${videoData?.videoMetaData?.videoNamePrefix}_${Date.now()}_${videoData?.videoMetaData[ externalId ]}_${videoData?.objectId}_${Math.floor(Math.random() * Math.floor(9000))}.webm`
   };
 
   let formData = new FormData();
-
   formData.append('id', JSON.stringify(id));
   formData.append(videoNamePrefix, videoData?.videoMetaData?.videoNamePrefix);
-  // formData.append(externalId, videoData?.videoMetaData[ externalId ]);
   formData.append('data', JSON.stringify(data));
   formData.append('videoName', videoData?.videoName);
   formData.append('metaData', JSON.stringify( videoData?.videoMetaData ));
   formData.append('video', videoData?.videoBlob, videoData?.videoMetaData?._id);
-  return uploadContent(url, formData);
+  uploadContent(url, formData);
+  return data?.videoFileName;
 };
 
 export async function uploadContent(url, formData, method = `POST`) {
@@ -143,8 +142,7 @@ export const randomIdGenerator = (min, max) => {
 
 export const getTimeZoneDateTime = ( dateTime ) => {
  let currentTimeZone = sessionStorage?.getItem('timeZone');
-
- return moment( dateTime )?.tz( currentTimeZone );
+    return moment( dateTime )?.tz( currentTimeZone );
 };
 
 export const setItemInSessionStorage = (key, item) => {

@@ -5,7 +5,7 @@ import {
 connect } from 'react-redux';
 
 import { 
-saveOnlineQuestion } from 'services/course/actions/onlinequestions';
+saveOnlineQuestions } from 'services/course/actions/onlinequestions';
 
 import {
 handleAddPushNotificationSubscriptionToEntity,
@@ -51,4 +51,4 @@ const mapState = ( state, ownProps ) => {
     };
 };
 
-export default connect( mapState, { saveOnlineQuestion } )( MiniSideBarMenu );
+export default connect( mapState, { saveOnlineQuestions } )( MiniSideBarMenu );

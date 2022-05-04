@@ -88,6 +88,15 @@ import {
 builder } from 'services/course/middleware/builder';
 
 import {
+editor } from 'services/course/middleware/editor';
+
+import {
+fullTextSearches } from 'services/course/middleware/fullTextSearches';
+
+import {
+pageSpecificSearch } from 'services/course/middleware/fullTextSearches/pageSpecificSearch';
+
+import {
 loadWhiteBoardData } from "services/course/actions/whiteBoards";
 
 import {
@@ -123,6 +132,12 @@ loadFormBuilders } from 'services/course/actions/formbuilders';
 import { 
 loadInstitutions } from 'services/course/actions/institutions';
 
+import { 
+loadAllNotes } from 'services/course/actions/notes';
+
+import { 
+loadFullTextSearchContent} from 'services/course/actions/fulltextsearches';
+
 import App from './App';
 import reducer from 'services/course/reducers';
 import thunk from 'redux-thunk';
@@ -151,7 +166,10 @@ export const enhancer = composeEnhancers(
     events,
     sessions,
     grades,
-    builder ),
+    builder, 
+    editor,
+    fullTextSearches, 
+    pageSpecificSearch ),
   // other store enhancers if any
 );
 
@@ -162,6 +180,8 @@ export const store = createStore(
 
 //store.dispatch(loadFailedPushNotifications());
 //store.dispatch(loadFailedEmailNotifications());
+store?.dispatch(loadFullTextSearchContent());
+store?.dispatch(loadAllNotes());
 store?.dispatch(loadCourses());
 store?.dispatch(loadInstitutions());
 store?.dispatch(loadFormBuilders());

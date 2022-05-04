@@ -1,12 +1,26 @@
-import { useState } from 'services/course/pages/QuestionsPage/components/Comments/node_modules/react';
+import { 
+useState } from 'react';
+
+import { 
+connect } from 'react-redux';
 
 import {
-manageCommentsFieldCollection } from 'services/course/pages/QuestionsPage/components/Comments/node_modules/Services/course/Pages/QuestionsPage/helpers';
+handleChange,
+editor_upload_url } from 'services/course/pages/OnlineQuestionsPage/helpers';
+    
+import { 
+saveEditorMarkDownObjectToMw } from 'services/course/actions/editor';
+
+import {
+SET_ONLINECOMMENTS_MARKDOWN } from 'services/course/actions/comments';
+
+import {
+manageCommentsFieldCollection } from 'services/course/pages/QuestionsPage/helpers';
 
 import EditorComponent  from '../../../Components/EditorComponent';
 import './style.css';
 
-const Comments = ({ config, commentsConfig, onlineQuestionId }) => {
+const Comments = ({ config, commentsConfig, onlineQuestionId, saveEditorMarkDownObjectToMw }) => {
 
     const [ comments, setComments ] = useState( [] ); 
 
@@ -36,9 +50,6 @@ const Comments = ({ config, commentsConfig, onlineQuestionId }) => {
         ]);
     }
 
-   const handleChange = ( editor, name, type ) => {
-   }   
-
     return (
         <>
         {comments?.map( comment => (
@@ -48,10 +59,9 @@ const Comments = ({ config, commentsConfig, onlineQuestionId }) => {
                 key={ comment?.id }
                 id={ comment?.id }
                 name={ comment?.name } 
-                onChange={(editor) => handleChange(editor, comment?.name, commentsConfig?.editorContentType )} // editor, editors?.length, commentsConfig?.editorContentType, commentsConfig?.element
-                content={JSON.parse( comment?.markDownContent ) }
-                upload_url={commentsConfig.upload_url}
-                upload_handler={( file, imageBlock ) => commentsConfig?.uploadImageUrl( file, imageBlock, comments?.length )}
+                upload_url={ editor_upload_url }
+                handleChange={(editor) => handleChange({ ...comment, markDownContent: editor }, SET_ONLINECOMMENTS_MARKDOWN, `/onlinecomments/`, saveEditorMarkDownObjectToMw )}
+                content={comment?.markDownContent }
                 readOnly={config.previewMode? true : false }
             />
         ))
@@ -68,4 +78,4 @@ const Comments = ({ config, commentsConfig, onlineQuestionId }) => {
     );
 }
 
-export default Comments;
+export default connect(null, { saveEditorMarkDownObjectToMw })(Comments);

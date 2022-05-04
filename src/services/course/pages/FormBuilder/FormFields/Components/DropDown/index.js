@@ -1,116 +1,100 @@
 import { 
-useState,
-useEffect }from 'react';
-
-import { 
 connect } from 'react-redux';
 
 import {
+loadFormFields,
 saveFormField } from 'services/course/actions/formfields';
 
 import {
-saveOnlineQuestion } from 'services/course/actions/onlinequestions';
+loadFormFieldAnswers,
+saveFormFieldAnswer } from 'services/course/actions/formfieldanswers';
 
+import {
+saveOnlineQuestions } from 'services/course/actions/onlinequestions';
+
+import { 
+getFormFieldAnswersByQuestionId } from 'services/course/selectors';
+
+import Select from 'react-select';
+import MathScienceLatex from 'services/course/pages/OnlineQuestionsPage/components/MathScienceLatex';
 import FormFieldPanel from 'services/course/pages/FormBuilder/FormFields/components/FormFieldPanel';
 import useAssignPointsHook from 'services/course/pages/FormBuilder/hooks/useAssignPointsHook';
+import useDropDownSelectorHook from 'services/course/pages/FormBuilder/hooks/useDropDownSelectorHook';
 import './style.css';
 
 const DropDown = ( { 
     fieldProps,
     previewMode, 
     formFieldElement,
+    loadFormFields,
     saveFormField,
-    saveOnlineQuestion,
+    loadFormFieldAnswers,
+    saveFormFieldAnswer,
+    saveOnlineQuestions,
     elememtFormFields,
     studentsAnswer,
+    formFieldAnswers,
+    studentAnswerByQuestionId,
     dropDownValues,
     formFieldAnswersError,
     currentUser }) => {
 
-    const [ input, setInput ] = useState("");
-    const [ dropDownOptions,  setDropDownOptions ] = useState(['Select']);
-    const [ inputValue,  setInputValue ] = useState( null );
-    const [ answer, setStudentsAnswer ] = useState( null );
+    let {
+        userId,
+        formUuId,
+        handleFormFieldAnswers,
+    } = fieldProps;
+
+    let selectorProps = {
+        userId,
+        formUuId,
+        dropDownValues,
+        handleFormFieldAnswers,
+        formFieldAnswers,
+        studentAnswerByQuestionId,
+        saveFormField,
+        loadFormFieldAnswers,
+        saveFormFieldAnswer,
+        formFieldElement,
+        currentUser,
+        previewMode
+    };
 
     let {
-        handleFormFieldAnswers,
-      } = fieldProps;
-
-      // Disable field if the user viewing the submitted form isn't the one submitting the form.
-    useEffect(() => { 
-
-        if ( studentsAnswer?.answer && ( studentsAnswer?.answer !== null || studentsAnswer?.answer !== "" ) ) {
-            
-            setStudentsAnswer( studentsAnswer['answer'] );
-        }
-
-    }, [ studentsAnswer ]);
-
-    useEffect(() => {
-
-        if ( dropDownOptions?.length === dropDownValues?.length ) {
-
-            return;     
-
-        } else if ( dropDownValues?.length > dropDownOptions?.length ) {
-
-            saveFormField({ ...formFieldElement, dropDownOptions: dropDownValues });
-
-        } else {
-
-            saveFormField({ ...formFieldElement, dropDownOptions });
-
-        }
-
-    }, [ dropDownOptions?.length > dropDownValues?.length ]);
+        input, 
+        inputValue,  
+        mathModalOpen, 
+        setMathModalOpen,
+        setInput,
+        setInputValue,
+        handleDropDownSelection,
+        addOptionValue,
+        deleteOptionValue,
+        roleTypeCollection
+    } = useDropDownSelectorHook( selectorProps );
 
     let {
         addFieldPoints,
         handleTogglingModal,
-    } = useAssignPointsHook( {...fieldProps, formFieldElement, elememtFormFields, saveOnlineQuestion, saveFormField } );
+    } = useAssignPointsHook( {...fieldProps, formFieldElement, elememtFormFields, saveOnlineQuestions, saveFormField } );
  
-    const addOptionValue = () => {
-        
-        if ( input !== "" ) {
-
-            let dropDownValues = [ ...dropDownOptions, input ];
-
-            setDropDownOptions( dropDownValues );  
-
-            saveFormField({ ...formFieldElement, dropDownOptions: dropDownValues });
-        } 
-    };
-
-    const deleteOptionValue = () => {
-        
-        if ( input !== "" ) {
-
-            let dropDownValues = dropDownOptions?.filter( option => option?.id !== inputValue?.id );
-
-            saveFormField({ ...formFieldElement, dropDownOptions: dropDownValues });
-        } 
-    };
-
-    const handleDropDownSelection = ( value ) => {
-
-       if ( !currentUser?._id ) return;
-
-       let points = (  studentsAnswer?.answer !== formFieldElement?.answerKey ) ? 0 : formFieldElement['points'];
-       
-            setInputValue( value );
-
-            handleFormFieldAnswers( formFieldElement, value, points );
-
-        if ( !previewMode ) {
-            // handleFormFieldAnswers( formFieldElement, JSON.stringify( value ), formFieldElement?.points );
-        }
-    };
-
 return(
     <>
     { ( previewMode ) &&
         <div className={"on-top"}>
-            <FormFieldPanel props={ { ...fieldProps, handleTogglingModal, addFieldPoints, formFieldElement } } />
+            <FormFieldPanel props={ { ...fieldProps, handleTogglingModal, addFieldPoints, formFieldElement, setMathModalOpen } } >
+                <MathScienceLatex 
+                    previewMode={previewMode} 
+                    formElement={formFieldElement}
+                    saveMathScienceFormField={saveFormField} //check this
+                    loadMathScienceFormField={loadFormFields}
+                    mathModalOpen={mathModalOpen}
+                />
+            </FormFieldPanel>
+        </div>
+    }
+    { ( previewMode ) && 
+        <div>
             <input  
                 type={'text'}
                 value={input}
@@ -121,16 +105,14 @@ return(
         </div>
     }
     { ( dropDownValues?.length > 0 ) &&  
-        <select 
-            name={"select"}
-            value={ formFieldElement?.inputValue ? formFieldElement?.inputValue : (( answer !== "" || answer !== null ) ? answer : inputValue) }
-            onChange={(e)=> handleDropDownSelection( e.target.value  )}
-        >
-            { dropDownValues?.map( value  => (
-                <option value={value}> { (value) ? value : 'Select'   }</option>
-                ))
-            }
-        </select> 
+        <Select
+            placeholder={`Select`}
+            value={inputValue}
+            onChange={handleDropDownSelection}
+            options={ roleTypeCollection }  
+            // className='react-select-container'
+            // classNamePrefix="react-select"
+        />    
     }
     </>
     );
@@ -140,11 +122,12 @@ const mapState = ( state, ownProps ) => {
     return {
         currentUser: state.users.user,
         elememtFormFields: Object.values( state?.formFields?.formFields ).filter( field => field?.questionId === ownProps?.formFieldElement?.questionId ),
-        studentsAnswer: Object.values( state?.formFieldAnswers?.formFieldAnswers ).filter( field => field?.questionId === ownProps?.formFieldElement?.questionId ).find( field => field?.fieldId === ownProps?.formFieldElement?._id  && field?.formName === ownProps?.formFieldElement?.formName && field?.formUuId === ownProps?.fieldProps?.formUuId && field?.userId === (ownProps?.fieldProps?.userId ? ownProps?.fieldProps?.userId : ownProps?.currentUser?._id)),
         saveLessonInProgress: state.lessons.saveLessonInProgress,
         onlineQuestions: Object.values(state.onlineQuestions.onlineQuestions),
-        error: state.lessons.onSaveLessonError
+        error: state.lessons.onSaveLessonError,
+        formFieldAnswers: state?.formFieldAnswers?.formFieldAnswers,
+        studentAnswerByQuestionId: getFormFieldAnswersByQuestionId(state, ownProps)
     };
 };
 
-export default connect( mapState, { saveFormField, saveOnlineQuestion } )(DropDown);
+export default connect( mapState, { loadFormFields, saveFormField, saveFormFieldAnswer, saveOnlineQuestions, loadFormFieldAnswers } )(DropDown);

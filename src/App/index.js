@@ -14,19 +14,18 @@ dotenv.config();
 
 const App = ({logOut, user}) => {  
   return(
-    // <div>
-    //    <MainRoute/>
-    // </div>
     <div>
-       <Beforeunload onBeforeunload={(ev) => { 
-         ev.preventDefault()
-         logOut(user);
-         return;
-      } } >
-          <MainRoute/>
-      </Beforeunload> 
+       <MainRoute/>
     </div>
-
+    // <div>
+    //    <Beforeunload onBeforeunload={(ev) => { 
+    //      ev.preventDefault()
+    //      logOut(user);
+    //      return;
+    //   } } >
+    //       <MainRoute/>
+    //   </Beforeunload> 
+    // </div>
   );
 };
 

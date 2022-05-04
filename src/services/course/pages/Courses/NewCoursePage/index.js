@@ -56,7 +56,7 @@ const handleSubmit = e => {
             description: courseDescription, 
             createdBy: currentUser?._id,
             user: currentUser, 
-            operatorId: operator?._id,
+            operatorId: currentUser?.operatorId,
             coursePushNotificationSubscribers: [ currentUser?._id ],
             courseEmailNotificationSubscribers: [ currentUser?._id ] 
         };

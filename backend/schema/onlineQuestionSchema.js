@@ -23,6 +23,10 @@ const onlineQuestionSchema = new Schema ({
         type: String, 
         required: false,
     },
+    inputValue:{ 
+        type: String, 
+        required: false,
+    },
     inputType: { 
         type: String, 
         required: false,
@@ -37,11 +41,11 @@ const onlineQuestionSchema = new Schema ({
         default: Date.now  
     },
     markDownContent: { 
-        type: String, 
+        type: Schema.Types.Mixed, 
         required: false,
     },
     answerExplanationMarkDownContent: { 
-        type: String, 
+        type: Schema.Types.Mixed, 
         required: false,
     },
     courseId: { 
@@ -65,6 +69,14 @@ const onlineQuestionSchema = new Schema ({
         required: false,
     },
     userId: { 
+        type: String, 
+        required: false,
+    },
+    createdBy: { 
+        type: String, 
+        required: false,
+    },
+    examId: { 
         type: String, 
         required: false,
     },

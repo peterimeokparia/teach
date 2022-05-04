@@ -8,7 +8,7 @@ import {
 saveFormField } from 'services/course/actions/formfields';
 
 import {
-saveOnlineQuestion } from 'services/course/actions/onlinequestions';
+saveOnlineQuestions } from 'services/course/actions/onlinequestions';
 
 import {
 getFormFieldAnswersByQuestionId } from 'services/course/selectors';
@@ -23,7 +23,7 @@ const DateTime = ( {
     fieldAnswer,
     formFields,
     elememtFormFields,
-    saveOnlineQuestion,
+    saveOnlineQuestions,
     saveFormField,
     currentUser  } ) => {
 
@@ -38,7 +38,7 @@ const DateTime = ( {
     let {
         addFieldPoints,
         handleTogglingModal,
-    } = useAssignPointsHook( {...fieldProps, formFieldElement, elememtFormFields, saveOnlineQuestion, saveFormField }  );
+    } = useAssignPointsHook( {...fieldProps, formFieldElement, elememtFormFields, saveOnlineQuestions, saveFormField }  );
 
     function getDateTime( answer ){
         let dateTime = answer?.split('_');
@@ -77,7 +77,7 @@ return(
 
 const mapDispatch = {
     saveFormField,
-    saveOnlineQuestion
+    saveOnlineQuestions
 };
   
 const mapState = ( state, ownProps ) => { 

@@ -74,7 +74,7 @@ const reducer = produce((draft, action) => {
         return; 
         case SET_LESSON_MARKDOWN:
              if ( draft.lessons[action.payload.teachObject?._id] ) {
-                draft.lessons[action.payload.teachObject?._id].markDown = action.payload.markDown; 
+                draft.lessons[action.payload.teachObject?._id].markDownContent = action.payload.markDownContent; 
              }
         return;
         case RESET_LESSON_ERROR:

@@ -1,3 +1,5 @@
+Music - Wilson World - Youtube
+
 Dante
 --------
 
@@ -76,6 +78,34 @@ you can use the upload_handler option for the image block in order to override t
        ....otherOptions
        widgets={this.props.widgetsConfig()}
    </DanteEditor>
+
+
+   Dante another example
+   --------------------
+     # Handle POST-request (Receive data, save the uploaded file and return url of upload image)
+  post "/upload_image" do
+    name = params['file'][:filename] 
+    path = File.join(File.dirname(__FILE__), '/uploads/images', name)
+    File.open(path, "wb") do |f|
+      f.write(params['file'][:tempfile].read)
+    end
+    return "/uploads/images/#{name}"
+  end
+
+    upload_url: default: /uploads.json
+    upload_callback default: empty, allows optional way to handle the server response when image is uploaded This is useful when you don't have control on the backend response.
+    image_delete_callback: default: none, returns the image data before deletion. use this if you want to destroy image from the server.
+    image_caption_placeholder default: "Type caption for image (optional)"
+
+
+      //<image-block url="blob:http://localhost:3000/80d2b781-99a4-49c3-8278-ea9bc7cf7f25" width="1200" height="630" loading="true" loading_progress="0" caption="caption!" direction="center" aspect_ratio="{&quot;width&quot;:1000,&quot;height&quot;:525,&quot;ratio&quot;:52.5}"></image-block>
+        //await fetch( imageBlock?.img?.currentSrc )
+    // .then( result => result.blob())
+    //.then( response => { uploadFiles([ response ], question, upload_url, "questions", file?.name,  null )
+    //.then( resp => { console.log( resp ); } ); })
+    // .catch( error => { throw Error(`  ${error}`); });
+        // let file = await fetch(url).then(r => r.blob()).then(blobFile => new File([blobFile], "fileNameGoesHere", { type: "image/png" })). There was a missing 
+
 
 
 Redux-Form

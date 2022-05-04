@@ -6,19 +6,25 @@ import {
 connect } from 'react-redux';
     
 import {
-saveFormField } from 'services/course/actions/formfields';
+saveFormField, loadFormFields } from 'services/course/actions/formfields';
 
 import { 
 handleChangedValue } from 'services/course/pages/FormBuilder/FormFields/helpers';
 
 import {
-saveOnlineQuestion } from 'services/course/actions/onlinequestions';
+saveOnlineQuestions } from 'services/course/actions/onlinequestions';
 
 import {
-elementMeta, inputType } from 'services/course/pages/QuestionsPage/helpers';
+elementMeta, 
+inputType } from 'services/course/pages/QuestionsPage/helpers';
 
+import { 
+getFormFieldAnswersByQuestionId } from 'services/course/selectors';
+
+import MathScienceLatex from 'services/course/pages/OnlineQuestionsPage/components/MathScienceLatex';
 import FormFieldPanel from 'services/course/pages/FormBuilder/FormFields/components/FormFieldPanel';
 import useAssignPointsHook from 'services/course/pages/FormBuilder/hooks/useAssignPointsHook';
+import useFormFieldAnswersHook from 'services/course/pages/FormBuilder/hooks/useFormFieldAnswersHook';
 
 const CheckBox = ( { 
     fieldProps,
@@ -28,26 +34,32 @@ const CheckBox = ( {
     elememtFormFields,
     formFields,
     setSelected,
-    studentsAnswer,
     formFieldAnswers,
     checkBoxFormFields,
-    saveOnlineQuestion,
+    saveOnlineQuestions,
+    studentAnswerByQuestionId,
+    loadFormFields,
     saveFormField } ) => {
     
     const [ inputValue, setInputValue ] = useState('');
     const checkBoxGroup = formFields?.filter( field => field?.parentComponentId === formFieldElement?.parentComponentId && field?.inputType === inputType.CheckBox );
-    
+    const [ mathModalOpen, setMathModalOpen ] = useState(false);
+
     let {
       formBuilderStatus,
       handleSelectorFormFieldAnswers,
     } = fieldProps;
+
+    let {
+      studentsAnswers
+    } = useFormFieldAnswersHook( studentAnswerByQuestionId );
 
     const [checkedRadioButton, setCheckedRadioButton ] = useState( ( formBuilderStatus === elementMeta?.state.Manage ) ? { id: formFieldElement?._id, isChecked: formFieldElement['selected'] } : {} );
 
     let {
         addFieldPoints,
         handleTogglingModal,
-    } = useAssignPointsHook( {...fieldProps, formFieldElement, elememtFormFields, saveOnlineQuestion, saveFormField, previewMode, fieldGroup: checkBoxGroup }  );
+    } = useAssignPointsHook( {...fieldProps, formFieldElement, elememtFormFields, saveOnlineQuestions, saveFormField, previewMode, fieldGroup: checkBoxGroup }  );
 
     const handleCheckBoxSelection = ( e ) => {
 
@@ -61,7 +73,8 @@ const CheckBox = ( {
 
             const currentField = formFields?.find( field => field?._id === formFieldElement?._id );
 
-            handleSelectorFormFieldAnswers( formFieldElement, e?.target?.value, "", false, 0 );
+            handleSelectorFormFieldAnswers( formFieldElement, e?.target?.value, "", false, formFieldElement['points'] );
+
         }
     };
 
@@ -69,17 +82,28 @@ return(
     <>
       { ( previewMode ) &&
        <div className={"on-top"}>
-        <FormFieldPanel props={ { ...fieldProps, handleTogglingModal, addFieldPoints, formFieldElement } } />
-        <input
+        <FormFieldPanel props={ { ...fieldProps, handleTogglingModal, addFieldPoints, formFieldElement, setMathModalOpen } }>
+          <MathScienceLatex 
+            previewMode={previewMode} 
+            formElement={formFieldElement}
+            saveMathScienceFormField={saveFormField}
+            loadMathScienceFormField={loadFormFields}
+            mathModalOpen={mathModalOpen}
+          />
+        </FormFieldPanel>
+       </div>
+      }
+      {( previewMode ) && 
+        <div>
+           <input
             type={"text"}
             value={inputValue}
             onChange={e => handleChangedValue( e.target.value, setInputValue, { ...formFieldElement, inputValue: e.target.value }, saveFormField )}
             placeholder={ formFieldElement?.inputValue } 
           />
-       </div>
+        </div>
       }
     <span>
-        { previewMode && <span>  <label>   { inputValue } </label> </span> }
         <span className="radioButton">
         { !previewMode &&
             <input
@@ -88,7 +112,7 @@ return(
               value={ formFieldElement?.inputValue }
               onChange={e => handleCheckBoxSelection( e )}
               name={ formFieldElement?._id }
-              checked={ (  studentsAnswer && formBuilderStatus === elementMeta?.state.Taking  ) ? studentsAnswer['selected']  : ( formBuilderStatus === elementMeta?.state.Manage && checkedRadioButton?.id === formFieldElement?._id ) && checkedRadioButton?.isChecked }
+              checked={ (  studentsAnswers && ( formBuilderStatus === elementMeta?.state.Taking || formBuilderStatus === elementMeta?.state.Submitted ) ) ? studentsAnswers?.selected  : ( formBuilderStatus === elementMeta?.state.Manage && checkedRadioButton?.id === formFieldElement?._id ) && checkedRadioButton?.isChecked }
             /> 
         }
         </span>
@@ -99,7 +123,8 @@ return(
 
  const mapDispatch = {
     saveFormField,
-    saveOnlineQuestion
+    loadFormFields,
+    saveOnlineQuestions
   };
   
   const mapState = ( state, ownProps ) => { 
@@ -114,9 +139,7 @@ return(
       formFieldAnswersLoading: state?.formFieldAnswers?.formFieldAnswersLoading,
       onFormFieldAnswersLoadingError: state?.formFieldAnswers?.onFormFieldAnswersLoadingError,
       formQuestionPoints: Object.values( state?.formFieldPoints?.formFieldPoints )?.filter( field => field?.questionId === ownProps?.fieldProps?.question?._id ),
-      studentsAnswer: Object.values( state?.formFieldAnswers?.formFieldAnswers ).filter( field => field?.questionId === ownProps?.formFieldElement?.questionId ).
-                            find( field => field?.fieldId === ownProps?.formFieldElement?._id  && field?.formName === ownProps?.formFieldElement?.formName 
-                              && field?.formUuId === ownProps?.fieldProps?.formUuId && field?.userId === (ownProps?.fieldProps?.userId ? ownProps?.fieldProps?.userId : ownProps?.currentUser?._id)),
+      studentAnswerByQuestionId: getFormFieldAnswersByQuestionId(state, ownProps)
     };
   };
 

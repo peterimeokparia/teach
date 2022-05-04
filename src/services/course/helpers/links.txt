@@ -91,6 +91,9 @@ https://github.com/zcmgyu/dante2-editor-demo
 https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_image_grid_responsive
 https://michelson.github.io/dante2/#/src-tooltips
 
+https://vadb.org/
+
+
 Saving uploaded files:
 https://github.com/michelson/dante2/issues/175
 https://www.gitmemory.com/issue/michelson/dante2/163/489383191
@@ -111,6 +114,11 @@ widgets
 https://michelson.github.io/dante2/#/src-widgets
 https://github.com/michelson/dante2/blob/master/src/widgets.mdx
 https://github.com/michelson/dante2/blob/master/src/editor/components/blocks/image.js
+
+
+file-upload issue
+-------------------
+https://github-wiki-see.page/m/michelson/Dante/wiki/Upload-integration
 
 
 preview page on hover only css
@@ -493,3 +501,77 @@ https://www.usnews.com/education/best-high-schools/district-of-columbia/district
 
 
 https://mui.com/components/text-fields/
+
+Uuid Generator
+---------------
+https://www.uuidgenerator.net/dev-corner/javascript
+
+Resize-panel
+--------------
+react-resize-panel
+https://bjgrosse.github.io/react-resize-panel/demo/public/index.html
+https://github.com/bjgrosse/react-resize-panel/blob/master/demo/src/App.css
+https://github.com/bjgrosse/react-resize-panel/blob/master/demo/src/App.js
+https://github.com/bjgrosse/react-resize-panel
+https://codesandbox.io/s/1j3h4
+
+fullcalendar event eventBackgroundColor
+-----------------------------------------
+https://fullcalendar.io/docs/event-object
+https://fullcalendar.io/docs/eventBackgroundColor
+https://fullcalendar.io/docs/eventColor
+https://fullcalendar.io/docs/background-events
+
+Url to Images for testing
+---------------------------
+https://picsum.photos/200
+
+
+Customize FullCalendar Cells
+-------------------------------
+https://fullcalendar.io/docs/v4/dayRender
+https://fullcalendar.io/docs/v3/dayRender
+https://www.demo2s.com/javascript/javascript-fullcalendar-set-background-color-for-cell.html
+
+Mui-Autocomplete
+-----------------
+https://mui.com/components/autocomplete/
+
+React-Latex
+-------------
+https://www.youtube.com/watch?v=yxbhtFruNOM
+https://codesandbox.io/s/911v28qq1p?file=/src/index.js
+
+Guppy
+-------
+https://guppy.js.org/site/doc/quickstart.html
+
+Videos
+---------
+https://www.youtube.com/watch?v=oxFr7we3LC8
+
+React Context Menu
+-------------------
+https://www.pluralsight.com/guides/how-to-create-a-right-click-menu-using-react 
+
+
+React-Image-Marker
+--------------------
+https://github.com/galexandrade/react-image-marker
+https://codesandbox.io/examples/package/react-image-marker
+https://markerjs.com/docs/react-walkthrough/
+
+Image - editor
+https://github.com/salgum1114/react-design-editor
+
+https://github.com/salgum1114/react-design-editor.git
+https://salgum1114.github.io/react-design-editor/
+https://github.com/salgum1114/react-design-editor
+
+ClassNames
+----------
+https://github.com/JedWatson/classnames
+
+Animate - Rotate - axis - perspective effect
+---------------------------------------------
+https://css-tricks.com/how-css-perspective-works/

@@ -23,7 +23,7 @@ class SiteUser {
     this.meetingId = "";
     this.meetings = [];
     this.sessions = [];
-    this.markDown = "";
+    this.markDownContent = "";
     this.avatarUrl = "";
     this.files = [];
     this.classRooms = [];

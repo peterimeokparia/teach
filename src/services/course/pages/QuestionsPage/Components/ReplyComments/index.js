@@ -1,30 +1,36 @@
 import { 
 useState,
-useEffect } from 'services/course/pages/QuestionsPage/components/ReplyComments/node_modules/react';
+useEffect } from 'react';
 
 import { 
-connect } from 'services/course/pages/QuestionsPage/components/ReplyComments/node_modules/react-redux';
+connect } from 'react-redux';
 
 import { 
 getOperatorFromOperatorBusinessName,
-getSortedRecordsByDate } from 'services/course/pages/QuestionsPage/components/ReplyComments/node_modules/Services/course/Selectors';
+getSortedRecordsByDate } from 'services/course/selectors';
 
 import {
 loadOnlineComments,
 addNewOnlineComment,
 deleteOnlineComment,
-saveOnlineComment } from 'services/course/pages/QuestionsPage/components/ReplyComments/node_modules/Services/course/Actions/OnlineComments'; 
+saveOnlineComment } from 'services/course/actions/onlinecomments'; 
 
 import {
-SET_ONLINECOMMENTS_MARKDOWN } from 'services/course/pages/QuestionsPage/components/ReplyComments/node_modules/Services/course/Actions/OnlineComments'; 
+SET_ONLINECOMMENTS_MARKDOWN } from 'services/course/actions/onlinecomments'; 
+
+import { 
+saveEditorMarkDownObjectToMw } from 'services/course/actions/editor';
 
 import {
 getCommentIdCollection } from './helpers';
 
+import {
+editor_upload_url } from 'services/course/pages/OnlineQuestionsPage/helpers';
+
 import { 
 Accordion, 
 AccordionSummary
-} from 'services/course/pages/QuestionsPage/components/ReplyComments/node_modules/@material-ui/core';
+} from '@material-ui/core';
 
 import { 
 styleObj, 
@@ -32,13 +38,13 @@ replyIconStyle,
 deleteIconStyle, 
 iconStyle } from './inlineStyles';
 
-import useReplyCommentsHook from 'services/course/pages/QuestionsPage/components/ReplyComments/node_modules/Services/course/Pages/QuestionsPage/hooks/useReplyCommentsHook';
-import moment from "services/course/pages/QuestionsPage/components/ReplyComments/node_modules/moment";
+import useReplyCommentsHook from 'services/course/pages/QuestionsPage/hooks/useReplyCommentsHook';
+import moment from "moment";
 import EditorComponent  from '../../../Components/EditorComponent';
-import ReplyIcon from 'services/course/pages/QuestionsPage/components/ReplyComments/node_modules/@material-ui/icons/Reply';
-import DeleteIcon from 'services/course/pages/QuestionsPage/components/ReplyComments/node_modules/@material-ui/icons/Delete';
-import AddCommentOutlinedIcon from 'services/course/pages/QuestionsPage/components/ReplyComments/node_modules/@material-ui/icons/AddCommentOutlined';
-import ExpandMoreIcon from 'services/course/pages/QuestionsPage/components/ReplyComments/node_modules/@material-ui/icons/ExpandMore';
+import ReplyIcon from '@material-ui/icons/Reply';
+import DeleteIcon from '@material-ui/icons/Delete';
+import AddCommentOutlinedIcon from '@material-ui/icons/AddCommentOutlined';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import './style.css';
 
 const ReplyComments = ({ 
@@ -52,6 +58,7 @@ const ReplyComments = ({
   comment,
   addComment,
   parentComment,
+  saveEditorMarkDownObjectToMw,
   onlineCommentsCollectionTest,
   operator,
   currentUser,
@@ -129,18 +136,12 @@ const getChildComments = ( collection ) => {
             <div style={styleObj( comment?.color )}> 
             <div className={""}>
               <EditorComponent
-                  className={""}
-                  id={ comment?._id }
-                  name={ comment?.name } 
-                  editorConfiguration={{
-                    enableAutoSave: true,
-                    entity: comment, 
-                    stateObjectType: { propNameOne: "onlineComments",  propNameTwo: "onlineComments" }, 
-                    actionDescription: SET_ONLINECOMMENTS_MARKDOWN, 
-                    actionObject: saveOnlineComment, 
-                    duration: 2000 
-                   }}
-                  content={ comment?.markDownContent }
+                className={""}
+                id={ comment?._id }
+                name={ comment?.name } 
+                upload_url={ editor_upload_url }
+                content={ comment?.markDownContent }
+                handleChange={(editor) => handleChange({ ...element, markDownContent: editor }, SET_ONLINECOMMENTS_MARKDOWN, `/onlinecomments/`, saveEditorMarkDownObjectToMw )}    
               /> 
               </div>
               <div>
@@ -243,4 +244,4 @@ const mapState = ( state, ownProps ) => {
   
 
 
-export default connect(mapState, { saveOnlineComment, addNewOnlineComment, loadOnlineComments, deleteOnlineComment })(ReplyComments);
+export default connect(mapState, { saveOnlineComment, addNewOnlineComment, loadOnlineComments, deleteOnlineComment, saveEditorMarkDownObjectToMw })(ReplyComments);

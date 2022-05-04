@@ -38,6 +38,9 @@ import timers from './countdowntimer';
 import formBuilders from './formbuilders';
 import institutions from './institutions';
 import classGrades from './classgrades';
+import notes from './notes';
+import missedQuestions from './missedanswers';
+import fullTextSearches from './fulltextsearches';
 
 let reducers = { 
     courses, 
@@ -78,7 +81,10 @@ let reducers = {
     timers,
     formBuilders,
     institutions,
-    classGrades
+    classGrades,
+    notes,
+    missedQuestions,
+    fullTextSearches
 };
 
 export default combineReducers( reducers );

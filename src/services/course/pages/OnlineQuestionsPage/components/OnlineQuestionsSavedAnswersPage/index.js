@@ -9,7 +9,7 @@ import {
   
   import { 
   addNewOnlineQuestion,
-  saveOnlineQuestion,
+  saveOnlineQuestions,
   loadOnlineQuestions,
   deleteOnlineQuestion } from 'services/course/actions/onlinequestions';
   
@@ -90,7 +90,7 @@ import {
   const mapDispatch = { 
     loadCourses,
     addNewOnlineQuestion, 
-    saveOnlineQuestion, 
+    saveOnlineQuestions, 
     loadOnlineQuestions, 
     deleteOnlineQuestion
   };

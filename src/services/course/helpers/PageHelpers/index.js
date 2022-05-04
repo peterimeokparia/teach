@@ -25,7 +25,7 @@ export const newSiteUser = {
     meetingId: "",
     meetings: [],
     sessions: [],
-    markDown: "",
+    markDownContent: "",
     avatarUrl: "",
     files: [],
     classRooms: [],

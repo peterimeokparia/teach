@@ -28,8 +28,12 @@ const onlineQuestionAnswersCommentsSchema = new Schema ({
         type: String, 
         required: false,
     },
-    markDownContent: { 
+    inputValue:{ 
         type: String, 
+        required: false,
+    },
+    markDownContent: { 
+        type: Schema.Types.Mixed, 
         required: false,
     },
     courseId: { 

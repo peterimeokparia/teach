@@ -8,7 +8,7 @@ import {
 Link } from '@reach/router';
 
 import {
-getSortedRecordsByDate } from '../../Selectors';
+getSortedRecordsByDate } from '../../selectors';
 
 import {
 role } from '../../../../helpers/pageHelpers';

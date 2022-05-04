@@ -9,19 +9,20 @@ export const commentsPlaceHolder = {"blocks":[{"key":"99c5e","text":"Enter comme
 
 let timerHandle = null;
 
-export const setMarkDown = ( teachObject, markDown, teachObjectType, actionType, saveAction, duration  ) => {
+export const setMarkDown = ( teachObject, markDownContent, teachObjectType, actionType, saveAction, duration  ) => {
     return ( dispatch, getState )  => {
         dispatch({ type: actionType, payload: {   
             teachObject,
-            markDown
+            markDownContent
           }});
           
         if ( timerHandle ){
             clearTimeout( timerHandle );
         };
+
         timerHandle = setTimeout(() => {
             const latestTeachObjectData = getState()[teachObjectType.propNameOne][teachObjectType.propNameTwo][ teachObject?._id ]; 
-            
+    
             if ( latestTeachObjectData !== undefined  ) {
                 saveAction( latestTeachObjectData );
             }

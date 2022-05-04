@@ -66,7 +66,7 @@ const reducer = produce((draft, action) => {
         return; 
         case SET_ONLINECOMMENTS_MARKDOWN:
              if ( draft.onlineComments[action.payload.teachObject?._id] ) {
-                draft.onlineComments[action.payload.teachObject?._id].markDownContent = action.payload.markDown; 
+                draft.onlineComments[action.payload.teachObject?._id].markDownContent = action.payload.markDownContent; 
              }    
         return;
         case RESET_ONLINECOMMENTS_ERROR:

@@ -125,7 +125,7 @@
   top: 50%;
   left: 10%;
   margin-right: 1%;
-  margin-left: 1%;
+  margin-left: 0%;
   margin-top: 2%;
 }
 .lessons .lessonMultiColor{
@@ -147,7 +147,7 @@
 }
 .CourseDetail .content .lesson-content {
   margin-top: -1%;
-  margin-left: 5%;
+  margin-left: -62%;
   width: 50vh; 
 } 
 .CourseDetail .content .lesson-content .content {
@@ -183,9 +183,19 @@
    margin-left: 0px; 
 }
 .CourseDetail .content .lesson-content .lesson2 {
-  margin-left: 95px;
-  width: 50vh; 
+  /* margin-left: 0px;
+  width: 10vh */
+   /* width: 50vh; */
+   /* width: auto; */
+   /* width: 10vh;
+   text-align: justify; */
+   text-align: justify
 } 
+.CourseDetail .content .lesson-content .lesson2:after {
+  content: "";
+  display: inline-block;
+  width: 100%;
+}
 .CourseDetail .content .lesson-content .lesson2 .lessonPage {
   text-align: left;
   margin-left: 200px;
@@ -215,7 +225,7 @@
   letter-spacing: 0.2rem;
   font-family: 'Courier New', Courier, monospace;
   font-weight: bold; 
-  /* width: 300px; */
+  width: 300px;
 }
 .CourseDetail .content .lesson-content .lesson2 .content{
   /* margin-top: -1%;

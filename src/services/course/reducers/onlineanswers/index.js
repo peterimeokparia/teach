@@ -64,7 +64,7 @@ const reducer = produce((draft, action) => {
         return; 
         case SET_ONLINEANSWERS_MARKDOWN:
              if ( draft.onlineAnswers[action.payload.teachObject?._id] ) {
-                draft.onlineAnswers[action.payload.teachObject?._id].markDownContent = action.payload.markDown; 
+                draft.onlineAnswers[action.payload.teachObject?._id].markDownContent = action.payload.markDownContent; 
              }    
         return;
         case RESET_ONLINEANSWERS_ERROR:

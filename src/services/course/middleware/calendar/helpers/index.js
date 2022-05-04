@@ -58,11 +58,11 @@ export const addCalendarTimeLineGroupOnAddingANewCalendar = ( calendar, store ) 
 
 export const sendPushNotificationsAfterDeletingACalendar = ( calendar, store ) => {
     try {
-        store.dispatch(sendPushNotificationMessage( 
-            calendar?.pushNotificationUser, { 
-           title:`${  calendar?.currentUser?.firstname } Deleted A Calendar!`, 
-           body:`Deleted Calendar: ${  calendar?.calendar?._id }` 
-       })); 
+    //     store.dispatch(sendPushNotificationMessage( 
+    //         calendar?.pushNotificationUser, { 
+    //        title:`${  calendar?.currentUser?.firstname } Deleted A Calendar!`, 
+    //        body:`Deleted Calendar: ${  calendar?.calendar?._id }` 
+    //    })); 
     } catch (error) {
         console.error( `Problem with notifying users after deleting calendar`);
     }
@@ -70,13 +70,13 @@ export const sendPushNotificationsAfterDeletingACalendar = ( calendar, store ) =
 
 export const sendEmailNotificationsAfterDeletingACalendar = ( calendar ) => {
     try {
-        sendEmail(
-        emailMessageConfig?.sendersEmailAddress,
-        calendar?.currentUser?.email, 
-        emailMessageConfig?.emailHeader, 
-        `${  calendar?.currentUser?.firstname } Deleted A Calendar!`,
-        calendar?.currentUser?._id
-    );
+    //     sendEmail(
+    //     emailMessageConfig?.sendersEmailAddress,
+    //     calendar?.currentUser?.email, 
+    //     emailMessageConfig?.emailHeader, 
+    //     `${  calendar?.currentUser?.firstname } Deleted A Calendar!`,
+    //     calendar?.currentUser?._id
+    // );
     } catch (error) {
         console.error( `Problem with notifying users after deleting calendar`);
     }

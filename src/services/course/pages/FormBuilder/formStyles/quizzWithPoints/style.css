@@ -8,6 +8,7 @@
     font-family: 'Courier New', Courier, monospace;
     text-align: left;
     margin-top: 0px;
+    margin-left: 500px;
     background: rgb(101, 245, 101);
     border-radius: 25px;
     padding-bottom: 90px;
@@ -37,6 +38,17 @@
     margin-right: 250px;
     margin-left: 30px;
     position: relative;
+    transform: scale(1); 
+    transition: all 0.6s ease 0s;
+
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 560px;
+    display: flex;
+    flex: 0 1 auto;
+    flex-direction: column;
+    align-items: stretch;
 }
 .quizzWithPointsBuilder .answerEditorBuilder .formlist {
     height: 90vh;
@@ -65,7 +77,8 @@
     background: rgb(101, 245, 101);
     border-radius: 5px;
     padding-bottom: 9px;
-    background: orange;
+    background: transparent;
+    /* background: orange; */
 }
 .quizzWithPointsBuilder .answerEditorBuilder .content3 {
     flex-direction: row;
@@ -87,19 +100,100 @@
 }
 .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .question-card-top-right .manage-input-field-icons:hover {
     visibility: visible;
+    transition: transform .7s ease-in-out;
 }
 .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio {
      margin-top: 5%;
      margin-left: 5%;
      margin-bottom: 3%;
      width: 10px;
+     -webkit-transform: perspective(1px) translateZ(0);
+     transform: perspective(1px) translateZ(0);
+     box-shadow: 0 0 1px rgba(0, 0, 0, 0);
 } 
+.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio-move {
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-bottom: 3%;
+    width: 10px;
+    -webkit-animation-name: hvr-pulse-grow;
+    animation-name: hvr-pulse-grow;
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 0.3s;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+    animation-direction: alternate;
+}
+.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio-highlighted {
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-bottom: 7%;
+    height: 50px;
+    width: 380px;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    background:  yellow;
+} 
+
+.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .label-move {
+    color: grey;
+    background-color: grey;
+    width: 5px;
+    max-width: 5px;
+}
+.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio input {
+    border: 2px solid red;
+    border-radius: 4px;
+} 
+.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio input:hover {
+    border: 2px solid blue;
+    border-radius: 4px;
+}
 .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio select {
     border: none;
     width: 300px;
     text-align: center;
     margin-top: 10px;
     background: orange;
+}
+.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio .css-2b097c-container {
+    position: relative;
+    z-index: 1000; 
+    background-color: transparent;
+    border: none;
+    width: 200px;
+}
+.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio .css-2b097c-container .css-yk16xz-control{
+    border: burlywood;
+    border-style: solid;
+    width: 200px;
+}
+.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio .css-2b097c-container .css-yk16xz-control:hover{
+    border: burlywood;
+    border-style: solid;
+    width: 200px;
+}
+.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio .css-2b097c-container .css-yk16xz-control {
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    z-index: -1000; 
+}
+.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio .css-26l3qy-menu {
+    border: none;
+    width: 300px;
+    text-align: center;
+    margin-top: 10px;
+    /* background-color: transparent; */
+    background: orange;
+
+    position: absolute;
+    z-index: 10; 
+
 }
 .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .explanation {
      margin-top: 55%;
@@ -184,6 +278,50 @@
     text-align: center;
     margin-bottom: -10%;
 }
+/* Pulse Grow */
+@-webkit-keyframes hvr-pulse-grow {
+    to {
+      -webkit-transform: scale(1.1);
+      transform: scale(1.1);
+    }
+  }
+  @keyframes hvr-pulse-grow {
+    to {
+      -webkit-transform: scale(1.1);
+      transform: scale(1.1);
+    }
+  }
+  /* .on-top button {
+    visibility: hidden;
+    border-radius: 65%;
+    width:  3px;
+    height: 35px;
+  
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+   
+  }  */
+  /* .on-top button:hover {
+    visibility: visible;
+    border-radius: 65%;
+    width:  3px;
+    height: 35px;
+  
+    -webkit-animation-name: hvr-pulse-grow;
+    animation-name: hvr-pulse-grow;
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 0.3s;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+    animation-direction: alternate;
+   
+  } */
 
 @media only screen and (min-width: 638px) {
     .quizzWithPointsBuilder{
@@ -251,7 +389,8 @@
         background: rgb(101, 245, 101);
         border-radius: 5px;
         padding-bottom: 9px;
-        background: orange;
+        background: transparent;
+        /* background: orange; */
     }
     .quizzWithPointsBuilder .answerEditorBuilder .content3 {
         flex-direction: row;

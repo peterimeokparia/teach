@@ -112,9 +112,6 @@ const App = () => (
 render(<App />, document.getElementById('root'));
 
 
-
-
-
 https://codesandbox.io/s/wyzj8o3228?file=/index.js:0-1320
 
 import React, { Component } from "react";
@@ -345,9 +342,7 @@ render(<App />, document.getElementById("root"));
 // </div>
 //   )
 // };
-
 // render(<App />, document.getElementById("root"));
-
 
 
 // return(
@@ -470,3 +465,79 @@ render(<App />, document.getElementById("root"));
                                 //receipt / verification
                                 //follow up notes */}
 
+
+FullCalendar alert on event date
+When you create your calendar object/function you need to create a eventAfterRender function. This only fires when you have a function that has been placed on the calendar. Then you can read the date and compare it to ones birthday and display popup. I hope that is what your were looking for. I gave a little example.
+
+    $(document).ready(function () {
+            $('#calendar').fullCalendar({
+                height: 600,
+                width: 700,
+                header: {
+                    right: 'prev,next today',
+                    center: 'title',
+                    left: 'month,agendaWeek,agendaDay'
+                },
+                eventAfterRender: function (event, element, view) {
+                    birthday = new Date('<somedate>');
+                    year = new Date(event.start).getFullYear();
+                    month = new Date(event.start).getMonth();
+                    day = new Date(event.start).getDate();
+                    alert(year + ' ' + month + ' ' + day);
+    //do some if statement to see if the year matches then if the month, then the day. 
+//if so then go to another function or just put the code here for the pop 
+
+                }
+            });
+        });
+        
+
+Show Events with Images
+----------------------------
+https://www.youtube.com/watch?v=DEQS8EpiDKE
+https://therichpost.com/how-to-show-event-with-image-in-fullcalendar-in-reactjs/
+https://therichpost.com/how-to-show-event-with-image-in-fullcalendar-in-reactjs/
+
+External Styling
+------------------
+https://fullcalendar.io/docs/css-customization
+body {
+  margin: 40px 10px;
+  padding: 0;
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  font-size: 14px;
+}
+
+#calendar {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+
+Customize Calendar Cells
+
+https://www.demo2s.com/javascript/javascript-fullcalendar-set-background-color-for-cell.html
+var $calendar = $('#calendar').fullCalendar({
+    header: {//w ww  .  d  e m o  2  s  .c  o m
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,basicWeek,basicDay'
+    },
+    defaultView: 'month',
+    dayRender: function (date, cell) {
+         //Month is zero-based, so, 9 is october
+         var holiday_date = new Date(2014,9,20);
+         var date_as_locale = date.toLocaleDateString();
+         if (date_as_locale == holiday_date.toLocaleDateString()) {
+            cell.css("background-color", "red");
+         }
+         holiday_date = new Date(2014,9,27);
+         if (date_as_locale == holiday_date.toLocaleDateString()) {
+             cell.css("background-color", "red");
+         }
+         var day_of_the_week = date.getDay();
+         if ((day_of_the_week == 0) || (day_of_the_week == 6)){
+             cell.css("background-color", "red");
+         }
+    }
+});

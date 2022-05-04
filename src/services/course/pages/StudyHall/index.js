@@ -4,7 +4,7 @@ connect } from 'react-redux';
 import {
 Redirect } from '@reach/router';
 
-import LessonPlan from '../Lessons/LessonPlan';
+import LessonPlan from '../Lessons/LessonPlan/index';
 import './style.css';
 
 const StudyHall = ({ 

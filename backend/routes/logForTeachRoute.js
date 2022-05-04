@@ -34,12 +34,15 @@ logForTeachRoute.get('/', (req, res) => {
 
  logForTeachRoute.post('/', (req, res) => {
      console.log( Object.values( req.body ) )
+
     let logForTeachData = getPostData( req );
     let logforteachobject = new logForTeachModel({
         objectName: req.body?.objectName,
         errorMessage: req.body?.errorMessage
-      });
+    });
+
     console.log(logforteachobject)
+
     logforteachobject.save()
     .then(data => {
         console.log('saved', data);

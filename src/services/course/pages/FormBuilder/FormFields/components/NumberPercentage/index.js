@@ -12,7 +12,7 @@ import {
 getFormFieldAnswersByQuestionId } from 'services/course/selectors';
 
 import {
-saveOnlineQuestion } from 'services/course/actions/onlinequestions';
+saveOnlineQuestions } from 'services/course/actions/onlinequestions';
 
 import { 
 handleChangedValue } from 'services/course/pages/FormBuilder/FormFields/helpers';
@@ -30,7 +30,7 @@ const NumberPercentage = ( {
     formFields,
     fieldAnswer,
     elememtFormFields,
-    saveOnlineQuestion,
+    saveOnlineQuestions,
     saveFormField,
     currentUser  } ) => {
 
@@ -44,7 +44,7 @@ const NumberPercentage = ( {
     let {
         addFieldPoints,
         handleTogglingModal,
-    } = useAssignPointsHook( {...fieldProps, formFieldElement, elememtFormFields, saveOnlineQuestion, saveFormField }  );
+    } = useAssignPointsHook( {...fieldProps, formFieldElement, elememtFormFields, saveOnlineQuestions, saveFormField }  );
 
 
 return(
@@ -72,7 +72,7 @@ return(
 
 const mapDispatch = {
     saveFormField,
-    saveOnlineQuestion
+    saveOnlineQuestions
 };
   
 const mapState = ( state, ownProps ) => { 

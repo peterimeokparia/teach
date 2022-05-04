@@ -60,6 +60,9 @@ function getEventData( eventData ) {
             allDay:  eventData?.event?.allDay,
             start: eventData?.event?.start, 
             end: eventData?.event?.end,
+            backgroundColor: eventData?.event?.backgroundColor,
+            textColor: eventData?.event?.textColor,
+            url: eventData?.event?.url,
             rrule: {
                 freq: eventData?.event?.rrule?.freq,
                 // interval: eventData?.event?.rrule?.interval,
@@ -78,6 +81,9 @@ function getEventData( eventData ) {
             allDay:  eventData?.event?.allDay,
             start: eventData?.event?.start, 
             end: eventData?.event?.end,
+            backgroundColor: eventData?.event?.backgroundColor,
+            textColor: eventData?.event?.textColor,
+            url: eventData?.event?.url,
             duration:  1,
             userId: eventData?.userId,
             calendarId: eventData?.calendarId,  
@@ -124,6 +130,11 @@ const handleSelect = ( slotInfo ) => {
             return;       
         case eventEnum.QuizzForms:
             setComponent( eventEnum.QuizzForms );
+            setCalendarSlotInfo( slotInfo );
+            setModalOpen( true );
+            return;       
+        case eventEnum.Lessons:
+            setComponent( eventEnum.Lessons );
             setCalendarSlotInfo( slotInfo );
             setModalOpen( true );
             return;       

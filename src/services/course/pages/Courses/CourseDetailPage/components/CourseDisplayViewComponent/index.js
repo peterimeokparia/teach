@@ -6,7 +6,7 @@ import {
 connect } from 'react-redux';
 
 import { 
-Link } from '@reach/router';
+Link, navigate } from '@reach/router';
 
 import { 
 addNewLesson, 
@@ -41,7 +41,13 @@ navContent } from 'services/course/pages/components/NavigationHelper';
 
 import { 
 getUsersByOperatorId,    
-getCoursesByCreatedByIdSelector } from 'services/course/selectors';
+getCoursesByCreatedByIdSelector,
+getOperatorFromOperatorBusinessName, 
+getCalendarEventsByUserIdSelector, 
+getCalendarsByOperatorId} from 'services/course/selectors';
+
+import { 
+addCalendar } from 'services/course/actions/calendar';
 
 import { 
 setItemInSessionStorage } from 'services/course/helpers/ServerHelper';
@@ -58,12 +64,20 @@ sideBarEditIconStyle,
 sideBarDeleteIconStyle,
 sideBarHomeWorkIconStyle,
 sideBarHelpIconStyle,
-swapHorizIconStyle } from '../inlineStyles';
+swapHorizIconStyle,
+calendarStyle } from '../inlineStyles';
 
 import {
 formTypes } from 'services/course/pages/FormBuilder/helpers';
 
+import {
+eventEnum } from 'services/course/pages/CalendarPage/helpers';
+
+import {
+goToCalendar } from 'services/course/pages/Users/helpers';
+
 import BoardEditorComponent from 'services/course/pages/Lessons/LessonPlan/components/BoardEditorComponent';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import HelpIcon from '@material-ui/icons/Help';
@@ -87,6 +101,10 @@ const CourseDisplayViewComponent = ({
     onLessonError,
     courseId,
     lessonId,
+    calendars,
+    calendar,
+    addCalendar,
+    users,
     courses,
     setVideoUrl,
     selectedTutorId,
@@ -106,6 +124,7 @@ const CourseDisplayViewComponent = ({
     const fileUploadUrl =  "/api/v1/fileUploads";
     const [ fileToRemove, setFileToRemove ] = useState( undefined );
     const [ lessonItem, setLessonItem  ] = useState( 0 )
+
     const onMatchListItem = ( match, listItem ) => {
         if( match ){
             setCurrentLesson( listItem );
@@ -140,23 +159,29 @@ const CourseDisplayViewComponent = ({
     let lessonsByCourseId = lessons?.filter( lesson => lesson?.courseId === courseId && lesson?.userId === selectedTutorId );
 
     const incrementDisplayedItemCount = () => {
+           navigate(`/${operatorBusinessName}/animate`);
+        ///navigate(`/${operatorBusinessName}/search`)
+        //navigate(`/${operatorBusinessName}/editor`)
+        // navigate(`/${operatorBusinessName}/questions/missedQuestions/quizzwithpoints/Bonds-quizz_4caf799f-371a-4332-853e-7eb477e2a48e`);
         if ( lessonItem === 2 ) {
             setLessonItem( 0 );
             return;
         }
-        setLessonItem( lessonItem + 1 )
+        setLessonItem( lessonItem + 1 );
     };
 
     const toggleDisplayedItems = ( key, selectedlesson ) => {
         switch (key) {
             case 1:
-            return <div className="boardEditorDisplay"><BoardEditorComponent 
+            return <div className="boardEditorDisplay">
+                    <BoardEditorComponent 
                         courseId={courseId}
                         lessonId={selectedlesson?._id}
                         classRoomId={selectedTutorId}
                         operatorBusinessName={operatorBusinessName}
                         saveIconVisible={true}
-                    /></div>
+                    />
+                    </div>
             case 2:
             return < FormFileUpload
                         previewMode={previewMode}
@@ -180,8 +205,21 @@ const CourseDisplayViewComponent = ({
                         className={"iframe"}
                     />;
         }
-    }
+    };
 
+    const calendarProps = {
+        users,
+        calendars,
+        calendar,
+        addCalendar,
+        operatorBusinessName,
+        operator,
+        courseId,
+        lessonId: selectedLessonPlanLesson?._id,
+        classRoomId: selectedTutorId
+    };
+
+ 
 return (
     <div className="CourseDetail"> 
         <header>
@@ -280,6 +318,16 @@ return (
                                     style={ swapHorizIconStyle() }
                                 />
                             {/* </Roles> */}
+                             {/* <Roles
+                                role={currentUser?.role === role.Tutor  ||  currentUser?.role === role.Student}
+                            >  */}
+                                <CalendarMonthIcon 
+                                    onClick={() => goToCalendar( calendarProps, currentUser, eventEnum?.Lessons )}
+                                    color="action"
+                                    className="comment-round-button-2"
+                                    style={ calendarStyle() }
+                                />
+                            {/* </Roles> */}
                             </span>     
                         </div>
                          
@@ -310,6 +358,8 @@ return (
                 </Roles>
                 {/*SIDE BAR 1 */}
                 </div>
+
+
                 <div className="lesson-content"> 
                     <div className="lesson2">   
 
@@ -351,12 +401,16 @@ const mapDispatch = {
     setMarkDown,
     setLessonPlanUrl,
     setCurrentLesson,
-    togglePreviewMode
+    togglePreviewMode,
+    addCalendar
 };
 
 const mapState = (state, ownProps) => {
     return {
-        operator: state.operators.opeator,
+        operator: getOperatorFromOperatorBusinessName(state, ownProps),
+        users: getUsersByOperatorId(state, ownProps),
+        calendar: getCalendarEventsByUserIdSelector(state, ownProps),
+        calendars: getCalendarsByOperatorId(state, ownProps),
         courseTutor: state.courses.courseTutor,
         currentUser: state.users.user,
         previewMode: state.app.previewMode,

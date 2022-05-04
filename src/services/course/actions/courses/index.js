@@ -22,6 +22,7 @@ export const DELETE_COURSE_ERROR = "DELETE LESSON ERROR";
 export const USER_UPDATED = "USER UPDATED";
 export const LAST_LOGGEDIN_USER = "LAST LOGGEDIN USER";
 export const LESSONPLAN_DROPDOWN_COURSE = "LESSONPLAN DROPDOWN COURSE";
+export const COURSES = "COURSES";
 
 export const addNewCourse = ( newCourse ) => {
     return dispatch => {   

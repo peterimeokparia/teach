@@ -24,6 +24,7 @@ emailInputOptions } from  'services/course/pages/Courses/helpers';
 import { 
 links } from 'services/course/pages/Users/helpers';
 
+import DisplayViewComponent from 'services/course/pages/Users/components/DisplayViewComponent';
 import ListItemComponent from '../ListItemComponent';
 import LoginLogout from 'services/course/pages/LoginPage/components/LoginLogout';
 import Roles from 'services/course/pages/components/Roles';
@@ -74,7 +75,27 @@ return (
     </header>
     <div className="content"> 
               <div className="sidebar"> 
-                <ListItemComponent
+              <DisplayViewComponent 
+                id={selectedStudents?._id}
+                ulClassName={"lessons"}
+                liClassName={"lesson-item"}
+                altLinkPath={"student"}
+                collection={links( selectedStudents, getCourseId( selectedLessonFromLessonPlanDropDown?._id, courseId ) )}
+                onMatchListItem={onMatchListItem}
+              >
+                {( selectedPage ) => (
+                  <div>      
+                    <div>
+                      <Link to={selectedPage?.path} > <span title={selectedPage?.title} > { selectedPage?.title } </span> </Link> 
+                      <br></br>
+                      <div> 
+                      </div>  
+                    </div>                            
+                  </div>                    
+                )}
+              </DisplayViewComponent>
+
+                {/* <ListItemComponent
                     id={selectedStudents?._id}
                     ulClassName={"lessons"}
                     liClassName={"lesson-item"}
@@ -93,7 +114,7 @@ return (
                             </div>                            
                           </div>                    
                       )}
-                  </ListItemComponent>    
+                  </ListItemComponent>     */}
                 </div>          
                 <div className="lesson"> 
                     <div className="children">

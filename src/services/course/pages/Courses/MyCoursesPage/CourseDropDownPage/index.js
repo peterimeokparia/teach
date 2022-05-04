@@ -14,7 +14,7 @@ const CourseDropDownPage = ({ lesson, previewMode, togglePreviewMode  }) => {
     </div> 
     ) : (    
     <div> 
-      <MarkDown source={lesson?.markDown} /> 
+      <MarkDown source={lesson?.markDownContent} /> 
     </div> 
   );
 };

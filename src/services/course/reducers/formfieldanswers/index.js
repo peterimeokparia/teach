@@ -67,7 +67,7 @@ const reducer = produce((draft, action) => {
         return; 
         case SET_FORMFIELDANSWERS_MARKDOWN:
              if ( draft.formFieldAnswers[action.payload.teachObject?._id] ) {
-                draft.formFieldAnswers[action.payload.teachObject?._id].markDownContent = action.payload.markDown; 
+                draft.formFieldAnswers[action.payload.teachObject?._id].markDownContent = action.payload.markDownContent; 
              }    
         return;
         case STUDENTS_TOTAL_ANSWER_POINTS:

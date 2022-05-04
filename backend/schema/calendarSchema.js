@@ -7,6 +7,18 @@ const calendarSchema = new Schema ({
         type: String, 
         required: true  
     },
+    courseId: { 
+        type: String, 
+        required: false  
+    },
+    lessonId: { 
+        type: String, 
+        required: false  
+    },
+    classRoomId: { 
+        type: String, 
+        required: false  
+    },
     calendarEventType: { 
         type: String, 
         required: true  
@@ -18,6 +30,18 @@ const calendarSchema = new Schema ({
     firstName: {
         type: String, 
         required: false  
+    },
+    backgroundColor: {
+        type: String,
+        required: false
+    },
+    textColor: {
+        type: String,
+        required: false
+    },
+    url: {
+        type: String,
+        required: false
     },
     color: {
         type: String,

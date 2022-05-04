@@ -61,7 +61,7 @@ export function courseDetailPageComponentConfig(
     currentLessonVideoUrl
 }; };
 
-export function lessonFileViewer( props ){
+export function lessonFileViewer( props  ){
     let {
         previewMode, 
         fileUploadUrl, 
@@ -86,10 +86,12 @@ return(
             {currentObject?.files?.length > 0 && (
             <div>
                 {currentObject?.files?.map( (file, index) =>  ( 
-                    <label onClick={() => deleteFile(file)}>
-                        {getFileName( file )}
-                    {/* <a  href={file} target="_blank" rel="noopener noreferrer"> {getFileName( file )}  </a>  */}
-                    </label>
+                    <div> </div>
+                    // <label onClick={() => deleteFile(file)}> fix file upload
+                    //     {file}
+                    //     {getFileName( file )}
+                    // <a  href={file} target="_blank" rel="noopener noreferrer"> {getFileName( file )}  </a> 
+                    // </label>
                 ))}
             </div> 
             )}
@@ -99,11 +101,12 @@ return(
         :   ( <div>
                 {currentObject?.files?.length > 0 && (
                 <div>
-                    {currentObject?.files?.map( (file, index)  =>  ( 
+                    {/* {currentObject?.files?.map( (file, index)  =>  ( 
                         <label onClick={() => openFile(file)}>
-                            {getFileName( file )}
+                            { file }
+                            {() => getFileName( file )}
                         </label>
-                    ))}
+                    ))} */}
                 </div> 
                 )}
             </div> ) 

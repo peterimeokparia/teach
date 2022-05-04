@@ -90,7 +90,7 @@ const userSchema = new Schema ({
         type: Array,
         require: false
     },
-    markDown: { 
+    markDownContent: { 
         type: String, 
         required: false  
     },

@@ -9,7 +9,7 @@ import {
 saveFormField } from 'services/course/actions/formfields';
 
 import {
-saveOnlineQuestion } from 'services/course/actions/onlinequestions';
+saveOnlineQuestions } from 'services/course/actions/onlinequestions';
 
 import { 
 role } from 'services/course/helpers/PageHelpers';
@@ -17,8 +17,12 @@ role } from 'services/course/helpers/PageHelpers';
 import {
 elementMeta } from 'services/course/pages/QuestionsPage/helpers';
 
+import { 
+getFormFieldAnswersByQuestionId } from 'services/course/selectors';
+
 import FormFieldPanel from 'services/course/pages/FormBuilder/FormFields/components/FormFieldPanel';
 import useAssignPointsHook from 'services/course/pages/FormBuilder/hooks/useAssignPointsHook';
+import useFormFieldAnswersHook from 'services/course/pages/FormBuilder/hooks/useFormFieldAnswersHook';
 import './style.css';
 
 const DataObjectSelector = ( { 
@@ -26,9 +30,9 @@ const DataObjectSelector = ( {
     previewMode, 
     formFieldElement,
     saveFormField,
-    saveOnlineQuestion,
+    saveOnlineQuestions,
     elememtFormFields,
-    studentsAnswer,
+    studentAnswerByQuestionId,
     dropDownValues,
     formFieldAnswersError,
     tutors,
@@ -49,13 +53,11 @@ const DataObjectSelector = ( {
         handleFormFieldAnswers,
         moveInputField, 
         setMoveInputField,
-      } = fieldProps;
+    } = fieldProps;
 
-    useEffect(() => { 
-        if ( studentsAnswer?.answer && ( studentsAnswer?.answer !== null || studentsAnswer?.answer !== "" ) ) {
-            setStudentsAnswer( studentsAnswer['answer'] );
-        }
-    }, [ studentsAnswer ]);
+    let {
+        studentsAnswers
+    } = useFormFieldAnswersHook( studentAnswerByQuestionId );
 
     useEffect(() => {
 
@@ -106,7 +108,7 @@ const DataObjectSelector = ( {
     let {
         addFieldPoints,
         handleTogglingModal,
-    } = useAssignPointsHook( {...fieldProps, formFieldElement, elememtFormFields, saveOnlineQuestion, saveFormField } );
+    } = useAssignPointsHook( {...fieldProps, formFieldElement, elememtFormFields, saveOnlineQuestions, saveFormField } );
  
     // need operator business name and Id
     const addOptionValue = ( event ) => {
@@ -172,11 +174,11 @@ const mapState = ( state, ownProps ) => {
         courses: Object.values( state.courses.courses ),
         lessons: Object.values( state.lessons.lessons ),
         elememtFormFields: Object.values( state?.formFields?.formFields ).filter( field => field?.questionId === ownProps?.formFieldElement?.questionId ),
-        studentsAnswer: Object.values( state?.formFieldAnswers?.formFieldAnswers ).filter( field => field?.questionId === ownProps?.formFieldElement?.questionId ).find( field => field?.fieldId === ownProps?.formFieldElement?._id  && field?.formName === ownProps?.formFieldElement?.formName && field?.formUuId === ownProps?.fieldProps?.formUuId && field?.userId === (ownProps?.fieldProps?.userId ? ownProps?.fieldProps?.userId : ownProps?.currentUser?._id)),
         saveLessonInProgress: state.lessons.saveLessonInProgress,
         onlineQuestions: Object.values(state.onlineQuestions.onlineQuestions),
-        error: state.lessons.onSaveLessonError
+        error: state.lessons.onSaveLessonError,
+        studentAnswerByQuestionId: getFormFieldAnswersByQuestionId(state, ownProps)
     };
 };
 
-export default connect( mapState, { saveFormField, saveOnlineQuestion } )(DataObjectSelector);
+export default connect( mapState, { saveFormField, saveOnlineQuestions } )(DataObjectSelector);

@@ -12,12 +12,16 @@ setCurrentLesson,
 loadLessons,
 SET_LESSON_MARKDOWN} from 'services/course/actions/lessons';
 
+import {
+editor_upload_url,
+handleChange } from 'services/course/pages/OnlineQuestionsPage/helpers';
+
 import { 
 togglePreviewMode } from 'services/course/actions/app';
 
 import { 
-setMarkDown } from 'services/course/helpers/EditorHelpers'; 
-    
+saveEditorMarkDownObjectToMw } from 'services/course/actions/editor';
+
 import { 
 getUsersByOperatorId,    
 getCoursesByCreatedByIdSelector } from 'services/course/selectors';
@@ -29,7 +33,7 @@ import './style.css';
 const MoreLessonContentPage = ({
     previewMode,
     saveLesson,
-    setMarkDown,
+    saveEditorMarkDownObjectToMw,
     addNewLesson,
     setVideoUrl,
     lessonId,
@@ -50,19 +54,6 @@ const MoreLessonContentPage = ({
         loadLessons(courseId);
     }, [ courseId ]);
 
-function handleChange( editor, element ){
-    let duration = 2000;  
-
-    setMarkDown(
-    element, 
-    editor.getHTML(), 
-    { propNameOne: "lessons",  propNameTwo: "lessons" }, 
-    SET_LESSON_MARKDOWN, 
-    saveLesson, 
-    duration
-    );
-};
-
 let lesson = lessons.find(lsn => lsn?._id === lessonId );
 
 return <div className="builder3"> 
@@ -81,18 +72,18 @@ return <div className="builder3">
             < MaterialUiVideoComponent 
                 className={"onlineQuestionVideoComponent"} 
                 element={ lesson } 
-                //  videoMeta={videoMeta( lessonTest )}
+                // videoMeta={videoMeta( lessonTest )}
                 // saveRecording={saveRecording}
                 extendedMeetingSettings={false} 
             />
             </div>
-                   
-                </div>   
+            </div>   
                 <div className="lesson2">        
                     { 
                         <EditorComponent
-                            handleChange={(editor) => handleChange(editor,  lesson)}
-                            content={ lesson?.markDown }
+                            handleChange={(editor) => handleChange({ ...lesson, markDownContent: editor }, SET_LESSON_MARKDOWN, `/lessons/`, saveEditorMarkDownObjectToMw )}
+                            content={ lesson?.markDownContent }
+                            upload_url={editor_upload_url}
                         /> 
                     }            
                 </div> 
@@ -105,7 +96,7 @@ return <div className="builder3">
 const mapDispatch = {
     addNewLesson, 
     saveLesson, 
-    setMarkDown,
+    saveEditorMarkDownObjectToMw,
     setLessonPlanUrl,
     setCurrentLesson,
     togglePreviewMode

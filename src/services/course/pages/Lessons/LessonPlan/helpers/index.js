@@ -99,9 +99,11 @@ export function adjustRoomSize( roomsize ) {
   return settings;
 };
 
-export function getBoardEditorId(lessonId, meetingId, classRoomId){
-  if ( (meetingId === undefined || meetingId === "") && lessonId !== undefined ){
-    return lessonId;
+export function getBoardEditorId(lessonId, meetingId, classRoomId, eventId){
+  if ( (meetingId === undefined || meetingId === "") && lessonId !== undefined && eventId !== undefined ){
+    return eventId;
+  }else  if ( (meetingId === undefined || meetingId === "") && lessonId !== undefined && ( eventId === undefined || eventId === "") ){
+    return eventId;
   } else if ( meetingId !== undefined && lessonId === undefined ){
     return meetingId;
   } else {

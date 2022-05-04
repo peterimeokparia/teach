@@ -36,9 +36,9 @@ export function setUpNewUser( newSiteUserProps ){
 
 export function directUserNavigation ( loggedInUser, operatorBusinessName ) {
     if ( loggedInUser?.role === role.Tutor ) {
-        navigate(`/${operatorBusinessName}/users`);                              
+        navigate(`/${operatorBusinessName}/mycourses`);                              
     } else {
-        navigate(`/${operatorBusinessName}/students`); 
+        navigate(`/${operatorBusinessName}/mycourses`); 
     }
 };
 

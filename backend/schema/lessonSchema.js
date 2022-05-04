@@ -19,7 +19,7 @@ const lessonSchema = new Schema ({
         type: String, 
         required: true  
     },
-    markDown: { 
+    markDownContent: { 
         type: String, 
         required: false  
     },

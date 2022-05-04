@@ -3,25 +3,46 @@ elementMeta } from 'services/course/pages/QuestionsPage/helpers';
 
 import {
 getSortedRecords } from 'services/course/selectors';
-      
-export const upload_url = "http://localhost:9005/api/v1/fileUploads";
 
-export async function uploadImageUrl( file, imageBlock, question, saveAction ) { // this behavior may have changed in the new Dante editor
-  await fetch( imageBlock?.img?.currentSrc )
-          .then( result => result.blob())
-          //.then( response => { uploadFiles([ response ], question, upload_url, "questions", file?.name,  null )
-          //.then( resp => { console.log( resp ); } ); })
-          .catch( error => { throw Error(`  ${error}`); });
-          let inputFieldObject = JSON.parse( question )[ elementMeta.markDownContent ];
+import { 
+forceReload,
+setItemInSessionStorage,
+getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
 
-          Object.values(inputFieldObject)?.forEach( block => {
-          if ( Object.keys( block ).length > 0 ) {
-              block.find( obj => obj?.type === "image" && obj?.data?.url === imageBlock?.img?.currentSrc ).data.url = `http://localhost:3000/files/${ file?.name }`;
-          } });
-      
-          question[ elementMeta.markDownContent ] = JSON.stringify( inputFieldObject );  
-          saveAction( { ...question } );
+export const upload_url = "/api/v1/fileUploads", editor_upload_url = '/api/v1/fileUploads/editor?fileName=';
+ 
+export function uploadImageUrl( file, imageBlock, fileUploadMeta, selectedElement, saveAction ) {
+
+    const fileData = file, blobUrl = getItemFromSessionStorage('fileUploadBlobUrl');
+
+    if ( fileData && blobUrl ) {
+
+    let markDownContentKey = getItemFromSessionStorage('markDownType') === 'main' ? 'markDownContent' : 'answerExplanationMarkDownContent';
+
+    let fileNotUploaded = handleNewFileUpload( file, fileUploadMeta );
+
+    if ( fileNotUploaded ){
+
+      let markDownContent = selectedElement[ markDownContentKey ];
+
+      let savedMarkedDownData = getItemFromSessionStorage('markDownContent');
+
+      saveAction({ ...selectedElement, markDownContent: savedMarkedDownData });
+     
+    }
+  }
 };
+
+function handleNewFileUpload( file, fileUploadMeta ) {
+
+  const isFileUploaded = file?.data?.fileCollection?.includes(file?.data?.file);
+
+  setItemInSessionStorage('filename', `http://localhost:3000/files/${ file?.data?.file }`);
+
+  fileUploadMeta({ imageUploaded: isFileUploaded ? false : true, blobUrl: undefined, fileName: file?.data?.file, markDownType: null }); 
+  
+  return isFileUploaded;
+}
 
 // change
 export function Linkssss( selectedStudents, courseId ){
@@ -35,62 +56,49 @@ export function Linkssss( selectedStudents, courseId ){
 
 export function getOnlineQuestion( onlineQuestionsConfig ){
 
-  let {
-    formType, 
-    formName,
-    formUuId,
-    formBuilderStatus,
-    courseId, 
-    onlineQuestionId,
-    onlineQuestions,
-  } = onlineQuestionsConfig;
+    let {
+      formType, 
+      formName,
+      formUuId,
+      formBuilderStatus,
+      courseId, 
+      onlineQuestionId,
+      onlineQuestions,
+    } = onlineQuestionsConfig;
 
-    switch ( onlineQuestionId ) {
-      case ( onlineQuestionId !== undefined ) :
-        return onlineQuestions?.filter( question => question?.courseId === courseId 
-          && question?.formType === formType 
-            && question?.formName === formName ).
-             filter(question => question?._id === onlineQuestionId);
+    if ( onlineQuestionId ) {
+      
+      return onlineQuestions?.filter(question => question?._id === onlineQuestionId);
 
-      case (onlineQuestionId === undefined && courseId !== undefined ):
-        return onlineQuestions?.filter( question => question?.courseId === courseId 
-          && question?.formType === formType 
-            && question?.formName === formName );
-
-      case (onlineQuestionId === undefined && courseId === undefined ):
-        return onlineQuestions?.filter( question => 
-          question?.formType === formType 
-            && question?.formName === formName );
-
-      default:
-
-        if ( elementMeta.state.Manage === formBuilderStatus ) {
-
-           let questions =  onlineQuestions?.filter( question => 
-                              question?.formType === formType 
-                                && question?.formName === formName 
-                                 && question?.formUuId === formUuId );
-
-           return getSortedRecords( questions, 'position' );
-        }
-
-        return onlineQuestions?.
-            filter( question => question?.formType === formType && question?.formName === formName );
     }
+
+    if ( elementMeta.state.Manage === formBuilderStatus && !onlineQuestionId ) {
+
+        let questions =  onlineQuestions?.filter( question => 
+                          question?.formType === formType 
+                            && question?.formName === formName 
+                              && question?.formUuId === formUuId );
+
+        return getSortedRecords( questions, 'position' );
+    }
+
+    return onlineQuestions?.
+              filter( question => question?.formType === formType && question?.formName === formName );
+
 };
 
-export function handleChange( editor, element, storeName, actionMarkDown, saveQuestion, setMarkDown ){
-    let duration = 2000;  
-    
-    setMarkDown(
-      element, 
-      editor.getHTML(), 
-      { propNameOne: storeName,  propNameTwo: storeName }, 
-      actionMarkDown, 
-      saveQuestion, 
-      duration
-    );
-  };
+
+export function handleChange( element, actionType, route, saveActionMw ){
+  const duration = 5000;
+
+  const timeHandler = setTimeout(() => {
+
+    if ( element?._id ) {
+      saveActionMw({ element, actionType, route });
+    }
+     clearTimeout( timeHandler );
+  }, duration );
+}
 
 export const addQuestionConfig = ( props ) => {
 
@@ -117,6 +125,7 @@ export const addQuestionConfig = ( props ) => {
       onlineQuestionId,
       position,
       inputType: typeOfInput,
+      inputValue: null,
       userId: currentUser?._id, 
       questionCreatedBy: ( currentUser?._id ) ? ( currentUser?.firstname ) : 'anonymous', 
       operator: operator?._id,

@@ -57,7 +57,6 @@ export const encryptData = (config) => {
          dispatch({ type: LOAD_CONFIGS_BEGIN });
          return getDecrypted(config)
          .then( config => {
-             alert( JSON.stringify( config ));
              dispatch({ type: LOAD_CONFIGS_SUCCESS, payload: config });
              return config;
          })

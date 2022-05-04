@@ -115,7 +115,7 @@ const LoginPage = ({
 
   let { 
     signUpOrLoginPreference, 
-    setSignUpOrLoginInPreference,
+    setSignUpOrLoginInPreference
   } = useLoginPageHook( loginPageProps );
 
 const handleCreateUser = ( newSiteUser ) => {
@@ -169,14 +169,15 @@ async function getCurrentUser( email, password ){
   });
 };
 
+
 function setUserSignUpOrLoginInPreferenceValue () {  
-  setSignUpOrLoginInPreference( !signUpOrLoginPreference );
+  setSignUpOrLoginInPreference( !signUpOrLoginPreference ); 
 }
 
 return ( <div className="LoginPage"> 
 {
-  signUpOrLoginPreference ? <p> Please <button  data-cy={`signin`} className="signUp" onClick={()=> setUserSignUpOrLoginInPreferenceValue()}> log in </button> or  sign up to continue.</p>
-                          : <p> Please log in or <button  data-cy={`signup`} className="signUp" onClick={() => setUserSignUpOrLoginInPreferenceValue()}> sign up </button> to continue.</p>
+  signUpOrLoginPreference ? <p> Please <button  data-cy={`signin`} className="signUp" onClick={setUserSignUpOrLoginInPreferenceValue}> log in </button> or  sign up to continue.</p>
+                          : <p> Please log in or <button  data-cy={`signup`} className="signUp" onClick={setUserSignUpOrLoginInPreferenceValue}> sign up </button> to continue.</p>
 } 
 {
   signUpOrLoginPreference ? <RegistrationForm

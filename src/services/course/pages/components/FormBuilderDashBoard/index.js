@@ -86,7 +86,7 @@ function submit(){
   }).then( (response) => {
 
     if ( response?.value &&  submitForm ) {    
-      saveFormBuilder( { ...submitForm, status: elementMeta.status.Submitted, state: elementMeta.state.Taking } );
+      saveFormBuilder( { ...submitForm, status: elementMeta.status.Submitted, state: elementMeta.state.Submitted } );
       return;
     } else {
       return;
@@ -154,7 +154,7 @@ return (
             {
               fabs?.map((fab, index) => (
                   <Zoom
-                    key={fab.color}
+                    // key={fab.color}
                     in={((previewMode) ? fab.value : 0 )=== index }
                     timeout={transitionDuration}
                     style={{

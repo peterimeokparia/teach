@@ -1,4 +1,3 @@
-import React from 'react';
 
 import { 
 connect } from 'react-redux';
@@ -8,7 +7,7 @@ getOperatorFromOperatorBusinessName,
 getPushNotificationUsersByOperatorId } from 'services/course/selectors';
 
 import { 
-saveOnlineQuestion } from 'services/course/actions/onlinequestions';
+saveOnlineQuestions } from 'services/course/actions/onlinequestions';
 
 import {
 addNewFormField } from 'services/course/actions/formfields';
@@ -42,6 +41,7 @@ formTypes } from '../helpers';
 import {
 elementMeta } from 'services/course/pages/QuestionsPage/helpers';
 
+import MissedQuestionComponent from 'services/course/pages/FormBuilder/FormQuestions/components/MissedQuestionsComponent';
 import useloadQuestionsOnUpdatedQuestionContentHook from 'services/course/pages/OnlineQuestionsPage/hooks/useloadQuestionsOnUpdatedQuestionContentHook';
 import useInputTypeSelectorMaxDialogHook from 'services/course/pages/FormBuilder/hooks/useInputTypeSelectorMaxDialogHook';
 import useFormFieldQuestionsHook from '../hooks/useFormFieldQuestionsHook';
@@ -72,7 +72,7 @@ const FormQuestions = ({
   onlineQuestions,
   onlineQuestionsLoading,
   onQuestionsLoadingError,
-  saveOnlineQuestion,
+  saveOnlineQuestions,
   loadFormFieldAnswers,
   addNewFormField,
   currentUser,
@@ -81,21 +81,17 @@ const FormQuestions = ({
   studentsTotalPointsReceivedFromPersistence,
   formBuilders,
   orderedFormBuilderQuestions }) => {
-
-  useUserVerificationHook( currentUser, operatorBusinessName );
-
-  useOnLoadingHook( onlineQuestionsLoading , onQuestionsLoadingError );
  
   let questionProps = {
       onlineQuestions, 
-      courseId, 
+      courseId,
       formType,
       formName,
       formUuId,
       formBuilderStatus,
       eventId,
-      onlineQuestionId, 
-      saveOnlineQuestion, 
+      onlineQuestionId,
+      saveOnlineQuestions, 
       loadFormFieldAnswers,
       studentsTotalPointsReceived,
       studentsTotalPointsReceivedFromPersistence,
@@ -108,6 +104,10 @@ const FormQuestions = ({
       formId,
       userId,
   };
+
+  useUserVerificationHook( currentUser, operatorBusinessName );
+
+  useOnLoadingHook( onlineQuestionsLoading , onQuestionsLoadingError );
 
   let {
     previewMode,
@@ -132,37 +132,47 @@ const FormQuestions = ({
     let props = { typeOfInput, question: previewMode?.question, uuid, currentUser, formId };
     addNewFormField( manageFormFieldCollection( addFormFieldConfig( props ) ) )
   }
- 
+
+  const setMissedQuestions = () => {
+    console.log( '##############' )
+  }
+
 return (
     <div className="stage" id="stage">
         <div className="" id=""> 
         <div>
         {
           <> 
-            <FormBuilderDashBoard 
-              formUuId = { formUuId }
-              previewMode = { previewMode?.isPreviewMode }
-            >
-              { formType !== formTypes.report &&
-                 <div className="points-label">
-                   <label className="points-label">{'Points'}</label>
-                   <DigitalClock digits={ studentsCummulativePointsReceived } /> 
-                 </div>
+           <MissedQuestionComponent 
+              display={ true }
+              formType = { formType }
+              formName = { formName }
+              formId = { formId }
+              setMissedQuestions={ setMissedQuestions }
+            />
+          <FormBuilderDashBoard 
+            formUuId = { formUuId }
+            previewMode = { previewMode?.isPreviewMode }
+          >
+            { formType !== formTypes.report &&
+                <div className="points-label">
+                  <label className="points-label">{'Points'}</label>
+                  <DigitalClock digits={ studentsCummulativePointsReceived } /> 
+                </div>
+            }
+            <div className="countdown-timer">
+              { 
+                // <CountDownTimer props={ { ...questionProps, previewMode, editing, timer, studentsCummulativePointsReceived } } />
               }
-              <div className="countdown-timer">
-                { 
-                  <CountDownTimer props={ { ...questionProps, previewMode, editing, timer, studentsCummulativePointsReceived } } />
-                }
-              </div>  
-            </FormBuilderDashBoard>
+            </div>  
+          </FormBuilderDashBoard>
           </>
         }
-        <OnlineQuestionsMultiEditorComponent onlineQuestionProps={{ ...questionProps, previewMode, selectedQuestion }}>
+        <OnlineQuestionsMultiEditorComponent onlineQuestionProps={{ ...questionProps, previewMode, selectedQuestion, addNewFormInputField }}>
         {( element, courseId ) => {
               return <> 
               { 
                <Roles role={ currentUser?.role ===  role.Tutor && formBuilderStatus === elementMeta.state.Manage }>
-               
                   <Tooltip title="Toggle Preview Mode" arrow>
                     <SwapHorizIcon
                       style={ toggleIconStyleHeader() }
@@ -202,7 +212,6 @@ return (
                       /> 
                     </div>
                   }
-  
                   </Roles> 
                 }
                   <FormFields 
@@ -238,4 +247,4 @@ const mapState = ( state, ownProps ) => {
   };
 };
 
-export default connect(mapState, { saveOnlineQuestion, loadFormFieldAnswers, addNewFormField } )( FormQuestions );
+export default connect(mapState, { saveOnlineQuestions, loadFormFieldAnswers, addNewFormField } )( FormQuestions );

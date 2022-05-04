@@ -68,12 +68,12 @@ const reducer = produce((draft, action) => {
         return; 
         case SET_QUESTION_MARKDOWN:
              if ( draft.questions[action.payload.teachObject?._id] ) {
-                draft.questions[action.payload.teachObject?._id].markDown = action.payload.markDown; 
+                draft.questions[action.payload.teachObject?._id].markDownContent = action.payload.markDownContent; 
              }    
         return;
         case SET_EXPLANATION_ANSWER_MARKDOWN:
              if ( draft.questions[action.payload.teachObject?._id] ) {
-                draft.questions[action.payload.teachObject?._id].markDown = action.payload.markDown; 
+                draft.questions[action.payload.teachObject?._id].markDownContent = action.payload.markDownContent; 
              }    
         return;
         case RESET_QUESTION_ERROR:

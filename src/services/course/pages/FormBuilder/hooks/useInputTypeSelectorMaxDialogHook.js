@@ -40,6 +40,10 @@ function selectInputAction( typeOfInput ){
     switch ( typeOfInput ) {
       case inputType.MainBodyQuestion: 
       case inputType.MainBodyTableColumnQuestion:
+      case inputType.MathScienceQuestion:   
+
+      case inputType.MathTextArea:
+      case inputType.Latex:
         addNewQuestion( typeOfInput );
         break; 
       case inputType.Text: 
@@ -57,6 +61,12 @@ function selectInputAction( typeOfInput ){
       case inputType.NumberPercentage:
       case inputType.DataObjectSelector:
       case inputType.FileUpload:  
+      case inputType.MathScience:
+      case inputType.LatexField:
+      case inputType.MathScienceRadioButton:
+
+      case inputType.MathTextArea:
+      case inputType.Latex:
         addNewFormInputField( typeOfInput, uuid);
         break; 
       default:

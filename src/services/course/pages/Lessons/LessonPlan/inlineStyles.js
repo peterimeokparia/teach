@@ -52,8 +52,13 @@ let globalTest = false;
 export const videoCallIconMain = ( capturingVideo ) => {
   globalTest = true;
   return {
-    fontSize: 45,
-    position: "relative",
+    fontSize: 70,
+    position: "fixed",
+    "zIndex": 1, 
+    left: "46%",
+    top: "-3%",
+    // fontSize: 45,
+    // position: "relative",
     // "top": ( capturingVideo ) ? "-130px" : "",
     // "margin-left": ( capturingVideo ) ? "20%" : "1%",
     // "visibility": ( capturingVideo ) ? "hidden" : "visible", 
@@ -82,10 +87,13 @@ export const exitVideoCallIcon = (capturingVideo ) => {
   };
 };
 
-export const videoCallIcon = ( ) => {
+export const videoCallIcon = () => {
   return {
-    fontSize: 45,
-    'margin-left': '0px',
+    fontSize: 70,
+    position: "fixed",
+    "zIndex": 1, 
+    left: "36%",
+    top: "-3.5%",
   };
 };
 
@@ -131,7 +139,6 @@ export const videoMeta = (element) =>  {
   exitVideoCallIconPageName: "OnlineListItems",
   videoSectionCallOut: `${globalTest ? 'videoSectionCallOut-selected' : 'videoSectionCallOut'}`,
   videoMetaData: {element},
-  // videoMetaData: { inputFieldId: element?._id, currentQuestion: element, name: element?._id?.toString() },
   videoName: `${element?._id}_${element?._id}_${element?._id}_${element?.type}`,
   videoMetaDataExternalId:"courseId",
   buttonClassName: `toggle-stage-btns${( true ) ? "-show" : "-hide"}`, 

@@ -39,14 +39,15 @@ export const MEETINGNOTESROUTE = "meetingNotesModel";
 export const LOGINROUTE = "loginModel";
 export const FORMQUESTIONPOINTSROUTE = "formQuestionPointsModel";
 export const COUNTDOWNTIMERFORMROUTE = "countDownTimerFormModel";
+export const FULLTEXTSEARCHROUTE = "fullTextSearchModel";
 
 export const getLogObject = () => {
 }
 
 export async function handleBackEndLogs( modelName, errormessage ){
-    let message = JSON.stringify( errormessage );
-    console.log('modelName modelName')
-    console.log(modelName)
+    // let message = JSON.stringify( errormessage );
+    // console.log('modelName modelName')
+    // console.log(modelName)
 
     return fetchData(`${url.BackeEndServerLessonPrefix}/logforteach/byObjectName?objectName=${modelName}`)
      .then(resp =>  { return resp.json() })
@@ -56,14 +57,14 @@ export async function handleBackEndLogs( modelName, errormessage ){
          if ( logs && errorMessage ) {
             const {  _id, objectName } = errorMessage;
             if ( objectName && _id ) {
-                console.log('.SAVING')
+                //console.log('.SAVING')
                return handleFetch(`${url.BackeEndServerLessonPrefix}/logforteach/${_id}`, 'PUT', { ...logs, errorMessage: [...errorMessage?.errorMessage, { message, time: Date.now() } ]  });  
             }
          } else {
             return handleFetch(`${url.BackeEndServerLessonPrefix}/logforteach`, 'POST', { objectName: modelName, errorMessage: [{ message, time: Date.now() }]  });
          }
      }).catch( error => {
-         console.log( error );
+         //console.log( error );
      });
 };
 
@@ -88,11 +89,11 @@ return fetch( url, {
         },
         body:JSON.stringify(data)
     }).then( resp => { 
-        console.log(resp);
+       // console.log(resp);
         return resp;
     })
     .catch( error => { 
-        console.log(`Error ${error}`)
+       // console.log(`Error ${error}`)
         return error;
     });
 };

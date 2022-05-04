@@ -77,5 +77,10 @@
     margin-left: 260px;
 }
 .files-file-Container {
-   margin-left: 100px;
+/* margin-left: 100px; */
+/* added top. will break forms - fix alignment  */
+/* check chrome and ie  */
+
+   margin-top: 17%;
+   margin-left: -147%;
 }

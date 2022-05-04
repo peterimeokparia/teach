@@ -29,9 +29,6 @@ import {
 inputType } from 'services/course/pages/QuestionsPage/helpers';
 
 import { 
-setMarkDown } from 'services/course/helpers/EditorHelpers'; 
-
-import { 
 useUserVerificationHook } from 'services/course/helpers/Hooks/useUserVerificationHook';
 
 import { 
@@ -46,7 +43,19 @@ manageFormFieldCollection } from 'services/course/pages/FormBuilder/helpers/form
 import {
 addGroupedFormFieldsConfig  } from 'services/course/pages/FormBuilder/FormFields/helpers';
 
-import useFormFieldHook from '../hooks/useFormFieldHook';
+import {
+elementMeta } from 'services/course/pages/QuestionsPage/helpers';
+
+import { 
+saveEditorMarkDownObjectToMw } from 'services/course/actions/editor';
+
+import MissedQuestionComponent from 'services/course/pages/FormBuilder/FormQuestions/components/MissedQuestionsComponent';
+import MiniSideBarMenu from 'services/course/pages/components/SubscriptionComponent/MiniSideBarMenu';
+import MiniSideBarButton from 'services/course/pages/components/SubscriptionComponent/MiniSideBarButton';
+import Basic from 'services/course/pages/components/SubscriptionComponent/MiniSideBarMenu/helper/formTypeSelector/Basic'; 
+import Latex from "react-latex";
+import useFormFieldHook from 'services/course/pages/FormBuilder/hooks/useFormFieldHook';
+import useFormFieldPanelHook from 'services/course/pages/FormBuilder/hooks/useFormFieldPanelHook';
 import CheckBox from 'services/course/pages/FormBuilder/FormFields/components/CheckBox';
 import RadioButton from 'services/course/pages/FormBuilder/FormFields/components/RadioButton';
 import DropDown from 'services/course/pages/FormBuilder/FormFields/components/DropDown';
@@ -63,6 +72,7 @@ import Toggle from 'services/course/pages/FormBuilder/FormFields/components/Togg
 import DateTime from 'services/course/pages/FormBuilder/FormFields/components/DateTime';
 import NumberPercentage from 'services/course/pages/FormBuilder/FormFields/components/NumberPercentage';
 import FileUploadField from 'services/course/pages/FormBuilder/FormFields/components/FileUploadField'; 
+import MathScienceField from 'services/course/pages/FormBuilder/FormFields/components/MathScienceField';
 import 'services/course/pages/FormBuilder/formStyles/quizz/style.css';
 import 'services/course/pages/FormBuilder/formStyles/report/style.css';
 
@@ -95,10 +105,20 @@ const FormFields = ({
   formFieldAnswersLoading,
   onFormFieldAnswersLoadingError,
   form,
-  setMarkDown,
+  saveEditorMarkDownObjectToMw,
   saveStudentsAnswerPoints,
   setUpdatePoints,
   modalProps,
+  missedQuestions,
+  missedQuestionIds,
+  leftUnAnsweredFormFields,
+  leftUnAnsweredQuestions,
+  unAnswerdQuestionIds,
+  answerFieldId,
+  answerFormType,
+  answerFormName,
+  answerFormUuId,
+  answerFormUserId,
   children }) => {
 
   let {
@@ -137,7 +157,7 @@ const FormFields = ({
     formBuilderStatus,
     userId,
     currentUser,
-    setMarkDown,
+    saveEditorMarkDownObjectToMw,
     fields,
     formFieldAnswers,
     formQuestionPoints,
@@ -157,8 +177,15 @@ const FormFields = ({
     onhandleSelected,
     handleFormFieldAnswers,
     handleSelectorFormFieldAnswers,
-    handleEditor
+    handleEditor, 
+    handleHighlightingFormAnswers,
+    handleDisplayingAnswerKeys, 
   } = useFormFieldHook( fieldProps );  
+
+  let {
+    selectedFormField, 
+    setSelectedFormField,
+  } = useFormFieldPanelHook();
 
   useUserVerificationHook( currentUser, operatorBusinessName );
 
@@ -173,17 +200,26 @@ const FormFields = ({
     handleFormFieldAnswers, 
     handleSelectorFormFieldAnswers, 
     addGroupedFormFields, 
-    onhandleSelected 
+    onhandleSelected,
+    selectedFormField, 
+    setSelectedFormField 
   };
 
   function addGroupedFormFields( element ){ 
     addNewFormField( manageFormFieldCollection( addGroupedFormFieldsConfig( element, formUuId, currentUser ) ) );
   }
+
+  function selectFormField( selectedFormField ){
+    if ( previewMode ) {
+      setSelectedFormField( selectedFormField );
+    }
+   
+  }
    
 return (
-    <div className={getStyles( formType )?.builder} ref={ boundryRef }> 
-      <div className="headerboundry">
-      </div>
+    
+      <div className={getStyles( formType )?.builder }  style={{  'backgroundColor': missedQuestions?.find(ans => ans?._id === question?._id) && ( formBuilderStatus === elementMeta.state.Submitted )  ? "#C8FDC8" :"rgb(101, 245, 101)" }} ref={ boundryRef }>
+        <div className="headerboundry"/>
       <div className="answerEditorBuilder">
         <MaxWidthDialog modalProps={modalProps}>
         {
@@ -197,17 +233,18 @@ return (
                 default={{
                   x: element?.xAxisformFieldPosition,
                   y: element?.yAxisformFieldPosition,
-                  width: 250,
+                  width: 0,
                   height: 50,
                 }}
                   onDragStart={ !moveInputField }
                   onDragStop={(e, d) => handleRndPostioning(d.x, d.y, element) }
-                  minWidth={250}
+                  minWidth={0}
                   minHeight={50}
                   bounds="parent"
                   allowAnyClick={ false }
                   disableDragging={ !moveInputField }
                   onResize={ false }
+                  onClick={() => selectFormField(element)}
               >
               <div className={getStyles( formType )?.content}>
                 <div className="onlinequestion-list-items">
@@ -217,6 +254,19 @@ return (
                 <div>
                 <div className="question-card-top-right" /> 
                 <div className="" />
+                  {(element?.inputType === inputType.LatexField ) && <div className="latex-field-component">  
+                  <div className={(moveInputField && (selectedFormField?._id === element?._id)) ? 'radio-move' : handleHighlightingFormAnswers( element )}>
+                      <label className={(moveInputField && (selectedFormField?._id === element?._id)) ? 'label-move' : ''}>
+                      { !isPreviewMode( element ) &&  <span> { <Latex>{`$${element?.inputValue}$`}</Latex> } </span> } 
+                        <MathScienceField 
+                            previewMode={isPreviewMode( element )} 
+                            formFieldElement={element} 
+                            fieldProps={formFieldProps}
+                        />
+                    </label> 
+                    </div>
+                    </div>
+                  }
                 { (element?.inputType === inputType.Explanation) && 
                   <div className="explanation-answer">
                     { 'Explanation answer'}
@@ -224,20 +274,21 @@ return (
                   </div>
                 }
                 { (element?.inputType === inputType.Text) &&
-                  <div className="radio">
-                    <label>  
+                  <div className={(moveInputField && (selectedFormField?._id === element?._id)) ? 'radio-move' : handleHighlightingFormAnswers( element )}>
+                    <label className={(moveInputField && (selectedFormField?._id === element?._id)) ? 'label-move' : ''}> 
                     { !isPreviewMode( element ) &&  <span className="textfield">  { element?.inputValue } </span> }  
-                      <TextField 
-                        fieldProps={formFieldProps}
-                        previewMode={ isPreviewMode( element ) } 
-                        formFieldElement={element} 
-                      />
+                        <TextField 
+                          fieldProps={formFieldProps}
+                          previewMode={ isPreviewMode( element ) } 
+                          formFieldElement={element} 
+                        />
+                          { handleDisplayingAnswerKeys( element ) }
                     </label> 
                   </div>
                 }
                 { (element?.inputType === inputType.TextLabel) &&
-                  <div className="radio">
-                    <label>  
+                  <div className={(moveInputField && (selectedFormField?._id === element?._id)) ? 'radio-move' :  handleHighlightingFormAnswers( element )}>
+                   <label className={(moveInputField && (selectedFormField?._id === element?._id)) ? 'label-move' : ''}> 
                     { !isPreviewMode( element ) &&  <span className="textfield">  { element?.inputValue } </span> }  
                       <TextLabel 
                         fieldProps={formFieldProps}
@@ -245,58 +296,64 @@ return (
                         formFieldElement={element} 
                       />
                     </label> 
+                    { handleDisplayingAnswerKeys( element ) }
                   </div>
                 }
                 { (element?.inputType === inputType.RadioButton ) &&  
-                    <div className="radio">
-                      <label> 
-                  { !isPreviewMode( element ) &&  <span> { element?.inputValue } </span> } 
+                    <div className={(moveInputField && (selectedFormField?._id === element?._id)) ? 'radio-move' : handleHighlightingFormAnswers( element )}>
+                      <label className={(moveInputField && (selectedFormField?._id === element?._id)) ? 'label-move' : ''}>
+                      { !isPreviewMode( element ) &&  <span> { <Latex>{`$${element?.inputValue}$`}</Latex> } </span> } 
                         <RadioButton 
                           fieldProps={formFieldProps}
                           previewMode={ isPreviewMode( element ) } 
                           formFieldElement={ element } 
                         />
+                         { handleDisplayingAnswerKeys( element ) }
                       </label> 
                     </div>
                 }
                 { (element?.inputType === inputType.CheckBox) &&
-                    <div className="radio">     
-                      <label>
-                      { !isPreviewMode( element ) &&  <span>   {  element?.inputValue } </span> } 
+                    <div className={(moveInputField && (selectedFormField?._id === element?._id)) ? 'radio-move' : handleHighlightingFormAnswers( element )}>
+                     <label className={(moveInputField && (selectedFormField?._id === element?._id)) ? 'label-move' : ''}> 
+                     { !isPreviewMode( element ) &&  <span> { <Latex>{`$${element?.inputValue}$`}</Latex> } </span> } 
                         <CheckBox 
                           fieldProps={formFieldProps}
                           previewMode={ isPreviewMode( element ) } 
                           formFieldElement={element} 
                         />
+                        { handleDisplayingAnswerKeys( element ) }
                       </label>  
                     </div>
                 }
                 { (element?.inputType === inputType.DropDown ) &&  
-                    <div className="radio">  
-                      <label> 
+                    <div className={(moveInputField && (selectedFormField?._id === element?._id)) ? 'radio-move' : handleHighlightingFormAnswers( element )}>
+                      <label className={(moveInputField && (selectedFormField?._id === element?._id)) ? 'label-move' : ''}> 
                       <DropDown 
                         fieldProps={formFieldProps}
                         previewMode={ isPreviewMode( element ) }
                         formFieldElement={element} 
                         dropDownValues={ element?.dropDownOptions }
                       />
+                      { handleDisplayingAnswerKeys( element ) }
                       </label>
+
                     </div>
                 } 
                 { (element?.inputType === inputType?.FileUpload ) &&  
-                    <div className="radio">  
-                      <label> 
+                    <div className={(moveInputField && (selectedFormField?._id === element?._id)) ? 'radio-move' : handleHighlightingFormAnswers( element )}>
+                     <label className={(moveInputField && (selectedFormField?._id === element?._id)) ? 'label-move' : ''}> 
                       <FileUploadField 
                         fieldProps={formFieldProps}
                         previewMode={ isPreviewMode( element ) }
                         formFieldElement={element} 
                       />
                       </label>
+                      { handleDisplayingAnswerKeys( element ) }
                     </div>
                 } 
                 { (element?.inputType === inputType?.DataObjectSelector ) &&  
-                    <div className="radio">  
-                      <label> 
+                    <div className={(moveInputField && (selectedFormField?._id === element?._id)) ? 'radio-move' : handleHighlightingFormAnswers( element )}>
+                     <label className={(moveInputField && (selectedFormField?._id === element?._id)) ? 'label-move' : ''}> 
                       <DataObjectSelector 
                         fieldProps={formFieldProps}
                         previewMode={ isPreviewMode( element ) }
@@ -304,81 +361,89 @@ return (
                         dropDownValues={ element?.dropDownOptions }
                       />
                       </label>
+                      { handleDisplayingAnswerKeys( element ) }
                     </div>
                 } 
                 { (element?.inputType === inputType.Number) &&
-                    <div className="radio">     
+                    <div className={(moveInputField && (selectedFormField?._id === element?._id)) ? 'radio-move' : handleHighlightingFormAnswers( element )}>   
                       { isPreviewMode( element ) &&  <span> { element?.inputValue } </span> } 
                         <Numbers 
                           fieldProps={formFieldProps}
                           previewMode={ isPreviewMode( element ) } 
                           formFieldElement={element} 
                         />
+                         { handleDisplayingAnswerKeys( element ) }
                     </div>
                 }
                  { (element?.inputType === inputType.NumberPercentage) &&
-                    <div className="radio">     
+                    <div className={(moveInputField && (selectedFormField?._id === element?._id)) ? 'radio-move' : handleHighlightingFormAnswers( element )}>  
                       { isPreviewMode( element ) &&  <span> { element?.inputValue } </span> } 
                         <NumberPercentage 
                           fieldProps={formFieldProps}
                           previewMode={ isPreviewMode( element ) } 
                           formFieldElement={element} 
                         />
+                         { handleDisplayingAnswerKeys( element ) }
                     </div>
                 }
                 { (element?.inputType === inputType.NumberPosition) &&
-                    <div className="radio">     
+                    <div className={(moveInputField && (selectedFormField?._id === element?._id)) ? 'radio-move' : handleHighlightingFormAnswers( element )}> 
                       { isPreviewMode( element ) &&  <span> { element?.inputValue } </span> } 
                         <NumberPosition 
                           fieldProps={formFieldProps}
                           previewMode={ isPreviewMode( element ) } 
                           formFieldElement={element} 
                         />
+                         { handleDisplayingAnswerKeys( element ) }
                     </div>
                 }
                 { (element?.inputType === inputType.Date) &&
-                    <div className="radio">     
+                    <div className={(moveInputField && (selectedFormField?._id === element?._id)) ? 'radio-move' : handleHighlightingFormAnswers( element )}>    
                       <label>
                         <Date 
                           fieldProps={formFieldProps}
                           previewMode={ isPreviewMode( element ) } 
                           formFieldElement={element} 
                         />
+                        { handleDisplayingAnswerKeys( element ) }
                       </label>  
                     </div>
                 }
                 { (element?.inputType === inputType.Time) &&
-                  <div className="radio">     
-                    <label>
+                  <div className={(moveInputField && (selectedFormField?._id === element?._id)) ? 'radio-move' : handleHighlightingFormAnswers( element )}>
+                    <label className={(moveInputField && (selectedFormField?._id === element?._id)) ? 'label-move' : ''}> 
                     { !isPreviewMode( element ) &&  <span> { element?.inputValue } </span> } 
                       <Time 
                         fieldProps={formFieldProps}
                         previewMode={ isPreviewMode( element ) } 
                         formFieldElement={element} 
                       />
+                      { handleDisplayingAnswerKeys( element ) }
                     </label>  
                   </div>
                }
                { (element?.inputType === inputType.DateTime) &&
-                <div className="radio">     
-                  <label>
+                 <div className={(moveInputField && (selectedFormField?._id === element?._id)) ? 'radio-move' : handleHighlightingFormAnswers( element )}>
+                  <label className={(moveInputField && (selectedFormField?._id === element?._id)) ? 'label-move' : ''}> 
                   { !isPreviewMode( element ) &&  <span> { element?.inputValue } </span> } 
                     <DateTime 
                       fieldProps={formFieldProps}
                       previewMode={ isPreviewMode( element ) } 
                       formFieldElement={element} 
                     />
+                     { handleDisplayingAnswerKeys( element ) }
                   </label>  
                 </div>
               }
               { (element?.inputType === inputType.Toggle) &&
-                <div className="radio">     
+                <div className={(moveInputField && (selectedFormField?._id === element?._id)) ? 'radio-move' : handleHighlightingFormAnswers( element )}>  
                   <>
                     <Toggle 
                       fieldProps={formFieldProps}
                       previewMode={ isPreviewMode( element ) } 
                       formFieldElement={element} 
                     />
+                     { handleDisplayingAnswerKeys( element ) }
                   </>  
                 </div>
               }
@@ -406,7 +471,7 @@ return (
       saveFormFieldAnswer,
       saveFormFieldAnswerByFieldId,
       loadFormFieldAnswers,
-      setMarkDown,
+      saveEditorMarkDownObjectToMw,
       addNewFormFieldPoint,
       deleteFormFieldPoints,
       saveFormFieldPoint,
@@ -425,7 +490,17 @@ return (
         formFieldAnswersError: state?.formFieldAnswers?.onSaveError,
         formFieldAnswersLoading: state?.formFieldAnswers?.formFieldAnswersLoading,
         onFormFieldAnswersLoadingError: state?.formFieldAnswers?.onFormFieldAnswersLoadingError,
-        formQuestionPoints: Object.values( state?.formFieldPoints?.formFieldPoints )?.filter( field => field?.questionId === ownProps?.form?.question?._id )
+        formQuestionPoints: Object.values( state?.formFieldPoints?.formFieldPoints )?.filter( field => field?.questionId === ownProps?.form?.question?._id ),
+        missedQuestions: state?.missedQuestions?.missedQuestions,
+        missedQuestionIds: state?.missedQuestions?.missedQuestionIds,
+        leftUnAnsweredFormFields: state?.missedQuestions?.leftUnAnsweredFormFields,
+        leftUnAnsweredQuestions: state?.missedQuestions?.leftUnAnsweredQuestions,
+        unAnswerdQuestionIds: state?.missedQuestions?.unAnswerdQuestionIds,
+        answerFieldId: state?.missedQuestions?.answerFieldId,
+        answerFormType:state?.missedQuestions?.answerFormType,
+        answerFormName: state?.missedQuestions?.answerFormName,
+        answerFormUuId: state?.missedQuestions?.answerFormUuId,
+        answerFormUserId: state?.missedQuestions?.answerFormUserId
       };
     };
     

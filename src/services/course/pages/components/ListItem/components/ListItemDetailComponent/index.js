@@ -51,7 +51,6 @@ const ListItemDetailComponent = ({
     };
 
     const beginEditing = () => {
-        alert('beginEditing')
         setInnerTitle();
         setEditing(true);
     };

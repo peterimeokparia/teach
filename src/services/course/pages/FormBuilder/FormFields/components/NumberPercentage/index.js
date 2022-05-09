@@ -20,7 +20,7 @@ handleChangedValue } from 'services/course/pages/FormBuilder/FormFields/helpers'
 import {
 elementMeta } from 'services/course/pages/QuestionsPage/helpers';
 
-import FormFieldPanel from 'services/course/pages/FormBuilder/FormFields/components/FormFieldPanel';
+import FormFieldPanel from 'services/course/pages/FormBuilder/FormFields/component/FormFieldPanel';
 import useAssignPointsHook from 'services/course/pages/FormBuilder/hooks/useAssignPointsHook';
 
 const NumberPercentage = ( { 

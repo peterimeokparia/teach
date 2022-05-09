@@ -26,13 +26,13 @@ saveFormFieldAnswer,
 saveFormFieldAnswerWithPoints } from 'services/course/actions/formfieldanswers';
 
 import {
-handleRadioButtonSelection } from 'services/course/pages/FormBuilder/FormFields/components/RadioButton/helpers';
+handleRadioButtonSelection } from 'services/course/pages/FormBuilder/FormFields/component/RadioButton/helpers';
 
 import { 
 getFormFieldAnswersByQuestionId } from 'services/course/selectors';
 
 import MathScienceLatex from 'services/course/pages/OnlineQuestionsPage/components/MathScienceLatex';
-import FormFieldPanel from 'services/course/pages/FormBuilder/FormFields/components/FormFieldPanel';
+import FormFieldPanel from 'services/course/pages/FormBuilder/FormFields/component/FormFieldPanel';
 import useAssignPointsHook from 'services/course/pages/FormBuilder/hooks/useAssignPointsHook';
 import useFormFieldAnswersHook from 'services/course/pages/FormBuilder/hooks/useFormFieldAnswersHook';
 import './style.css';

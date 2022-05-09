@@ -27,8 +27,8 @@ getFormFieldAnswers } from 'services/course/pages/FormBuilder/helpers/formFieldH
 import { 
 formFileViewer } from '../../helpers/FileViewer';
 
-import FormFileViewerPanel from 'services/course/pages/FormBuilder/FormFields/components/FormFileViewerPanel';
-import FormFieldPanel from 'services/course/pages/FormBuilder/FormFields/components/FormFieldPanel';
+import FormFileViewerPanel from 'services/course/pages/FormBuilder/FormFields/component/FormFileViewerPanel';
+import FormFieldPanel from 'services/course/pages/FormBuilder/FormFields/component/FormFieldPanel';
 import useAssignPointsHook from 'services/course/pages/FormBuilder/hooks/useAssignPointsHook';
 import useFormFileUploadHook from '../../../hooks/useFormFileUploadHook';
 //import './style.css';

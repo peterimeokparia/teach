@@ -13,7 +13,7 @@ saveOnlineQuestions } from 'services/course/actions/onlinequestions';
 import {
 getFormFieldAnswersByQuestionId } from 'services/course/selectors';
     
-import FormFieldPanel from 'services/course/pages/FormBuilder/FormFields/components/FormFieldPanel';
+import FormFieldPanel from 'services/course/pages/FormBuilder/FormFields/component/FormFieldPanel';
 import useAssignPointsHook from 'services/course/pages/FormBuilder/hooks/useAssignPointsHook';
 
 const DateTime = ( { 

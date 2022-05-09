@@ -20,7 +20,7 @@ elementMeta } from 'services/course/pages/QuestionsPage/helpers';
 import { 
 getFormFieldAnswersByQuestionId } from 'services/course/selectors';
 
-import FormFieldPanel from 'services/course/pages/FormBuilder/FormFields/components/FormFieldPanel';
+import FormFieldPanel from 'services/course/pages/FormBuilder/FormFields/component/FormFieldPanel';
 import useAssignPointsHook from 'services/course/pages/FormBuilder/hooks/useAssignPointsHook';
 import useFormFieldAnswersHook from 'services/course/pages/FormBuilder/hooks/useFormFieldAnswersHook';
 import './style.css';

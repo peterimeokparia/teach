@@ -3,7 +3,7 @@ useState,
 useEffect } from "react";
 
 import { 
-getPreviouslySelectedDropDownAnswer } from "services/course/pages/FormBuilder/FormFields/components/DropDown/helpers";
+getPreviouslySelectedDropDownAnswer } from "services/course/pages/FormBuilder/FormFields/component/DropDown/helpers";
 
 import Latex from "react-latex";
 

@@ -171,7 +171,7 @@ function toggleTeach(){
       dispatch( endMeeting({ tutor, currentUser, loadMeetingsByMeetingId, operatorBusinessName }) ); 
       dispatch( loadUsers() );
       dispatch( loadMeetings() );
-      navigate(`/${operatorBusinessName}/LessonPlan/classRoom/${tutor?._id}/thankyou`)
+      navigate(`/${operatorBusinessName}/LessonPlan/classRoom/${tutor?._id}/thankyou`) // change route
   } else {
       setSession(true);
       setHideMeetingStage(false);

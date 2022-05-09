@@ -51,6 +51,26 @@
     padding-bottom: 7000px;
     margin-bottom: 5000px;
   }   */
+  .sidebarThreeTutor {
+    flex-basis: 300px;  
+    background: #fbf9ff;
+    border-right: 1px solid #bba0ea;
+
+    position: relative;
+    background: aquamarine;
+    min-width: 200px;
+    height: 1200px;
+    width: 500px;
+    box-sizing: border-box;
+    text-align: center;
+
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: -320px;
+    display: flex;
+    flex-direction: column;
+    color: aquamarine;
+  }
 
   .sidebarThree {
     flex-basis: 300px;  
@@ -67,7 +87,7 @@
 
     padding-left: 10px;
     padding-right: 10px;
-    margin-left: -99px;
+    margin-left: -210px;
     display: flex;
     flex-direction: column;
     color: aquamarine;

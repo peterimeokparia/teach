@@ -25,7 +25,8 @@ import {
 getUsersByOperatorId,    
 getCoursesByCreatedByIdSelector, 
 getLessonByLessonIdSelector,
-getLessonUserNotesByEventId } from 'services/course/selectors';
+getLessonUserNotesByEventId 
+} from 'services/course/selectors';
 
 import Meeting from 'services/course/pages/Meeting';
 
@@ -43,7 +44,6 @@ const ShowMeeting = ({
     noteId,
     notes,
     allNotes,
-    eventId,
     selectedTutorId,
     currentVideoUrl,
     setLessonPlanUrl,
@@ -76,7 +76,7 @@ const ShowMeeting = ({
                     {      
                         <Meeting
                           userName={currentUser?.firstname}   
-                          roomName={`${eventId}`}
+                          roomName={`${lessonId}`}
                           resizedHeight={"900px"}
                           containerHeight={"100%"}
                           containerWidth={"100%"}  
@@ -112,7 +112,7 @@ const mapState = (state, ownProps) => {
         lessons: Object.values(state.lessons.lessons),
         coursesByTutor: getCoursesByCreatedByIdSelector( state, ownProps ),
         lesson: getLessonByLessonIdSelector( state, ownProps ),
-        note: getLessonUserNotesByEventId( state, ownProps )
+       //note: getLessonUserNotesByEventId( state, ownProps )
     };
 };
 

@@ -26,6 +26,7 @@ export const SELECTED_LESSONPLAN_LESSON = "SELECTED LESSONPLAN LESSON";
 export const LESSONPLAN_URL = "LESSONPLAN URL";
 export const LESSONPLAN_COURSE = "LESSONPLAN COURSE";
 export const LESSONPLAN_DROPDOWN_LESSON = "LESSONPLAN DROPDOWN LESSON";
+export const START_NEW_LESSON_SUCCESS = "START NEW LESSON SUCCESS";
 
 export const addNewLesson = ( title, introduction,  courseId, lessonDate, userId ) => {
     return dispatch => {
@@ -116,4 +117,9 @@ export const setLessonPlanUrl = link => ({
 export const setLessonCourse = course => ({
     type: LESSONPLAN_COURSE,
     payload: course
+});
+
+export const startLesson = startLessonProps => ({
+    type: START_NEW_LESSON_SUCCESS,
+    payload: startLessonProps
 });

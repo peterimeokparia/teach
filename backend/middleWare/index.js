@@ -1,4 +1,5 @@
 import Jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 //export const privateKey = "secret_nsa_key"; 
 import {
 getPostData,    
@@ -26,14 +27,33 @@ export function verifyRoute( req, res, next ){
     }
 };
 
+export async function hashPasswordField( req, res, next ){
+    const passwordField = req.body['password'];
+    if( req.body['password'] ) {
+        try {
+
+            const salt = await bcrypt.genSalt();
+
+            req.body['password'] = await bcrypt.hash( passwordField, salt );
+           
+        } catch (error) {
+            return res.status(403).json({ error });
+        }
+    } else {
+        return res.status(401).json({ error: 'Authorization header not set'});
+    }
+};
+
+
 export async function verifyToken( token, key ){
-  let verificationResult = await Jwt.verify(token, key, (err, data ) => {
-      if ( err ){
-         console.log(err); 
-         } else {
-         console.log(data);
+  let verificationResult = Jwt.verify(token, key, (err, data) => {
+      if (err) {
+          console.log(err);
       }
-   });   
+      else {
+          console.log(data);
+      }
+  });   
    return verificationResult
 };
 
@@ -177,7 +197,7 @@ export function getByObjectIdRoute(model, param){
 export function postRoute(model){
     return async ( req, res, next ) => {
 
-        let formData = getPostData( req );
+        let formData = getPostData(req);
         let form = new model( formData );
 
         try {

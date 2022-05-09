@@ -94,7 +94,7 @@ function handleSelectedForm( selectedForm ){
         duration
     };
 
-    handleSubmit( newCalendarEventData( event, 'location', [ selectedForm ], undefined, undefined ) );
+    handleSubmit( newCalendarEventData( event, 'location', [ selectedForm ], undefined, undefined, undefined, undefined ) );
 
     navigate(`/${operatorBusinessName}/schedule/${calendarEventType}/calendar/${calendarId}/user/${selectedUserId}`);
 }

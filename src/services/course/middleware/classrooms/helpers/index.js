@@ -417,8 +417,8 @@ export function addNewMeetingEventToCalendar( meetingEvent, store ){
         markDownContent: "",
         notesUrl: "",
         videoUrl: ""
-    };
-    let newCalendarEventData = automateEventCreation( event, meetingId, durationHrs );
+    }; 
+    let newCalendarEventData = automateEventCreation( event, meetingId, durationHrs, undefined, undefined );
     let  eventProps = {
         calendarEventData: newCalendarEventData, 
         testAdminUsers, 
@@ -432,7 +432,7 @@ export function addNewMeetingEventToCalendar( meetingEvent, store ){
     };
 
     if ( currentUser?.role === role.Tutor && selectedTutor?._id === currentUser?._id ) {
-        let tutorsCalendar = calendars?.find( calendar => calendar?.userId === selectedTutor?._id && calendar?.calendarEventType === eventEnum.NewEvent);
+        let tutorsCalendar = calendars?.find( calendar =>  calendar?.calendarEventType === eventEnum.NewEvent);
 
         saveEventData({
             ...eventProps,
@@ -444,7 +444,7 @@ export function addNewMeetingEventToCalendar( meetingEvent, store ){
         store.dispatch( addNewMeetingNote( notesConfig ) );
         if ( meetingEvent?.invitees?.length > 0 ) {
             meetingEvent?.invitees.forEach(student => {
-                let studentsCalendar = calendars?.find( calendar => calendar?.userId === student?._id );
+                let studentsCalendar = calendars?.find( calendar =>  calendar?.calendarEventType === eventEnum.Student );
         
                 saveEventData({
                     ...eventProps,
@@ -459,7 +459,7 @@ export function addNewMeetingEventToCalendar( meetingEvent, store ){
     }
 
     if ( currentUser?.role === role.Student ) {
-        let studentsCalendar = calendars?.find( calendar => calendar?.userId === currentUser?._id );
+        let studentsCalendar = calendars?.find( calendar =>  calendar?.calendarEventType === eventEnum.Student );
   
         saveEventData({
             ...eventProps,

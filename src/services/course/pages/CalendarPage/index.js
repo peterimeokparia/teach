@@ -29,7 +29,7 @@ import {
 getCoursesByOperatorId,    
 getEventsByOperatorId,
 getPushNotificationUsersByOperatorId,
-getCalendarEventsByUserIdSelector,     
+getCalendarByCalendarEventType,     
 getOperatorFromOperatorBusinessName, 
 getUsersByOperatorId,
 getCalendarsByOperatorId,
@@ -64,9 +64,6 @@ saveFormBuilder } from 'services/course/actions/formbuilders';
 
 import {
 goToForms } from 'services/course/pages/Users/helpers';
-
-import {
-handleLessonNotes } from 'services/course/pages/CalendarPage/components/LessonNavigationComponent/helpers';
 
 import {
 handleLessons } from 'services/course/pages/CalendarPage/helpers/lessons';
@@ -300,8 +297,6 @@ function navigateToLessonPage( info ){
         addNotes,
         loadAllNotes
     }
-
-    handleLessonNotes( lessonProps );
     setLessonProps( lessonProps );
     setModalOpen( true );
     setRenderLessonModal( true );
@@ -343,7 +338,8 @@ let renderSwitchProps = {
     handleEventClick,
     handleSelect,
     renderEventContent,
-    lessonProps
+    lessonProps,
+    renderLessonModal
 };
 
 return (    
@@ -352,8 +348,7 @@ return (
         <h2>{ getCalendarPageHeading( calendarEventType ) }</h2>
             { ( renderLessonModal ) 
                 ?  handleLessons( renderSwitchProps )
-                :  renderSwitch( renderSwitchProps )
-                
+                :  renderSwitch( renderSwitchProps )   
             }
         <button onClick={() => handleCalendarModalReloadOnClose()}>Back</button> 
     </div>
@@ -383,7 +378,7 @@ const mapState = ( state, ownProps )  => ({
     operator: getOperatorFromOperatorBusinessName(state, ownProps),
     users: getUsersByOperatorId(state, ownProps),
     user: state?.users?.user,
-    calendar: getCalendarEventsByUserIdSelector(state, ownProps),
+    calendar: getCalendarByCalendarEventType(state, ownProps),
     calendars: getCalendarsByOperatorId(state, ownProps),
     events: getEventsByOperatorId(state, ownProps),
     pushNotUsers: state?.notifications?.pushNotificationSubscribers,

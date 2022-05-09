@@ -11,7 +11,8 @@ import {
 role } from '../helpers/PageHelpers';
 
 import {
-LESSONNOTES } from  "services/course/actions/notes";
+LESSONNOTES,
+STUDENTNOTES } from  "services/course/actions/notes";
 
 const getUsers = state => state?.users?.users;
 const getTutors = state => Object.values(state?.users?.users).filter(user => user?.role === role.Tutor);
@@ -222,12 +223,11 @@ export const getCalendarEventsByCalendarIdSelector = createSelector(
         Object.values(calendars)?.find(calendar =>  calendar?._id === calendarId)      
 );
 
-export const getCalendarEventsByUserIdSelector = createSelector( 
+export const getCalendarByCalendarEventType = createSelector( 
     getCalendars,
-    getUserId,
     getCalendarEventType,
-    (calendars , userId, calendarEventType) => 
-        Object.values(calendars)?.find(calendar =>  calendar?.userId === userId && calendar?.calendarEventType === calendarEventType)      
+    (calendars, calendarEventType) => 
+        Object.values(calendars)?.find(calendar =>  calendar?.calendarEventType === calendarEventType)      
 );
 
 export const getCalendarsByOperatorId = createSelector( 
@@ -242,8 +242,9 @@ export const getEventsByOperatorId = createSelector(
     getOperators,
     getOperatorBusinessName,
     getEvents,
-    (operators , operatorBusinessName, events) => 
-         Object.values(events).filter(event => event?.operatorId === Object.values(operators).find(operator =>  operator.businessName === operatorBusinessName)?._id)       
+    getCalendarEventType,
+    (operators , operatorBusinessName, events, calendarEventType) => 
+         Object.values(events).filter(event => event?.operatorId === Object.values(operators).find(operator =>  operator.businessName === operatorBusinessName)?._id && event.calendarEventType === calendarEventType )       
 );
 
 export const getEventsByUserIdSelector = createSelector( 
@@ -326,22 +327,13 @@ export const getPublishedForms = createSelector(
                 (form?.role === "" || form?.role === user?.role) )   
 );
 
-export const getLessonUserNotesByEventId = createSelector(
-    getCurrentUser,
-    getNotes,
-    getEventId,
-    getNoteType,
-    ( user, notes, eventId  ) => 
-        Object.values(notes).find(note => note?.eventId === eventId && note?.userId === user?._id )       
-);
-
 export const getLessonUserNotesByNoteType = createSelector(
-    getCurrentUser,
+    getParsedUserId,
     getNotes,
-    getEventId,
+    getLessonId,
     getNoteType,
-    ( user, notes, eventId, noteType ) => 
-        Object.values(notes).find(note => note?.eventId === eventId && note?.userId === user?._id && note?.noteType === noteType)       
+    ( userId, notes, lessonId, noteType ) => 
+        Object.values(notes).find(note => note?.lessonId === lessonId && note?.userId === userId && note?.noteType === noteType)       
 );
 
 export const getEventByEventId = createSelector(
@@ -351,11 +343,26 @@ export const getEventByEventId = createSelector(
         Object.values(events).find(event => event?._id === eventId)       
 );
 
-
-export const getTutorsLessonUserNotesByEventId = createSelector(
-    getCurrentUser,
+export const getTutorsLessonUserNotesByLessonId = createSelector(
     getNotes,
-    getEventId,
-    ( user, notes, eventId ) => 
-        Object.values(notes).find(note => note?.eventId === eventId && note?.userId === user?._id && note?.noteType === LESSONNOTES)       
+    getLessonId,
+    ( notes, lessonId ) => 
+        Object.values(notes).find(note => note?.lessonId === lessonId && note?.noteType === LESSONNOTES)       
+);
+
+export const getStudentsLessonUserNotesByLessonId = createSelector(
+    getParsedUserId,
+    getNotes,
+    getLessonId,
+    ( userId, notes, lessonId  ) => 
+        Object.values(notes).find(note => note?.lessonId === lessonId && note?.userId === userId && note?.noteType === STUDENTNOTES)       
+);
+
+export const getEventByCourseIdLessonIdUserId = createSelector(
+    getEvents,
+    getParsedCourseId,
+    getLessonId,
+    getParsedUserId,
+    ( events, courseId, lessonId, userId  ) => 
+        Object.values(events).find(event => event?.courseId === courseId && event?.lessonId === lessonId && event?.userId === userId)       
 );

@@ -102,33 +102,3 @@ export let group = [
         ]  
     }
 ];
-
-
-
-
-// function navigateUserAfterGeneratingNewCalendar(user, calendarEventType){ 
-//     navigate(`/${operatorBusinessName}/schedule/${calendarEventType}/calendar/${calendar._id}/user/${user._id}`);
-// };
-
-// function addNewUserCalendar( student, calendarType ){
-//     return {
-//         calendar: {
-//             userId: student?._id,
-//             calendarEventType: calendarType,
-//             operatorId: operator?._id,
-//             firstName: student?.firstname,
-//             color: getCalendarColor( calendars )
-//         }
-//     };
-// };
-
-// let calendarConfig = ( tutor, calendarType ) => 
-//     { return {
-//         users: users,
-//         userId: tutor?._id,
-//         calendarEventType: calendarType,
-//         operatorId: operator?._id,
-//         firstName: tutor?.firstname,
-//         color: getCalendarColor( calendars )
-//     };
-// };

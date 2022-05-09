@@ -5,19 +5,6 @@ useEffect } from 'react';
 import { 
 connect } from 'react-redux';
 
-import {
-newCalendarEventData, 
-eventEnum } from 'services/course/pages/CalendarPage/helpers';
-
-import { 
-generateUuid } from 'services/course/pages/Users/helpers';
-
-import {
-elementMeta } from 'services/course/pages/QuestionsPage/helpers';
-
-import { 
-formTypes } from 'services/course/pages/FormBuilder/helpers';
-
 import { 
 formNames } from 'services/course/pages/CalendarPage/helpers';
 
@@ -79,7 +66,7 @@ const LessonNavigationComponent = ({ props }) => {
 
     let {
         addEventToCalendar
-    } = useAddEventToCalendarHook( props )
+    } = useAddEventToCalendarHook( props );
 
     const lessonCalendarObjects = { 
         Board: {

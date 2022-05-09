@@ -6,6 +6,8 @@ class CalendarEvent {
             calendarEventData, 
             testAdminUsers, 
             calendarEventType, 
+            courseId,
+            lessonId,
             operatorId, 
             pushNotificationSubscribers, 
             user, 
@@ -22,6 +24,8 @@ class CalendarEvent {
         this.schedulingData = calendarEventData?.schedulingData;
         this.consultation = calendarEventData?.consultation;
         this.calendarEventType = calendarEventType;
+        this.courseId = courseId;
+        this.lessonId = lessonId;
         this.operatorId = operatorId;
         this.color = ( calendar?.color ) ? calendar?.color : color;
         this.currentUser = user;
@@ -35,13 +39,15 @@ class CalendarEvent {
             pushNotificationUser: this.pushNotificationUser,  
             emailAddresses: this.emailAddresses,
             event: {
-                calendarId: this.calendarId , 
+                calendarId: this.calendarId, 
                 userId: this.userId,
                 event: this.event,
                 location: this.location,
                 schedulingData: this.schedulingData,
                 consultation: this.consultation,
                 calendarEventType: this.calendarEventType,
+                courseId: this.courseId,
+                lessonId: this.lessonId,
                 operatorId: this.operatorId,
                 color: this.color 
             }

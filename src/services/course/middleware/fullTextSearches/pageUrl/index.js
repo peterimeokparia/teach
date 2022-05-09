@@ -47,7 +47,7 @@ export const pageUrl = ( action, element ) => {
         case SAVE_COURSE_SUCCESS:
             return `/${sessionStorage.getItem('operatorBusinessName')}/courses`;
         case SET_NOTES_MARKDOWN:
-            return `/teach/notes/${element?._id}/course/${element?.courseId}/lesson/${element?.lessonId}/event/${element?.eventId}`;
+            return `/teach/notes/${element?._id}/noteType/${element?.noteType}/course/${element?.courseId}/lesson/${element?.lessonId}`;
             //return `/${sessionStorage.getItem('operatorBusinessName')}/courses`;
         case ADD_NEW_LESSON_SUCCESS:
         case SAVE_LESSON_SUCCESS:    

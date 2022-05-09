@@ -166,6 +166,14 @@ const eventSchema = new Schema ({
             required: false
         }
     }],
+    courseId: {
+        type: String,
+        required: false
+    },
+    lessonId: {
+        type: String,
+        required: false
+    },
     calendarEventType: { 
         type: String, 
         required: false  

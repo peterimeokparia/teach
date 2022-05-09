@@ -39,7 +39,7 @@ export const uploadVideos = ( videoData, externalId, videoNamePrefix ) => {
     videoName: videoData?.videoName,
     inputFieldId: videoData?.inputFieldId,
     metaData:  videoData?.videoMetaData,
-    videoFileName: ( videoData?.eventId !== undefined ) ? `${videoNamePrefix}_${videoData?.objectId}_${videoData?.eventId}.webm` : `${videoNamePrefix}_${Date.now()}_${videoData?.videoMetaData[ externalId ]}_${videoData?.objectId}_${Math.floor(Math.random() * Math.floor(9000))}.webm`
+    videoFileName: ( videoData?.eventId !== undefined ) ? `${videoNamePrefix}_${videoData?.objectId}.webm` : `${videoNamePrefix}_${Date.now()}_${videoData?.videoMetaData[ externalId ]}_${videoData?.objectId}_${Math.floor(Math.random() * Math.floor(9000))}.webm`
     // videoFileName: `${videoData?.videoMetaData?.videoNamePrefix}_${Date.now()}_${videoData?.videoMetaData[ externalId ]}_${videoData?.objectId}_${Math.floor(Math.random() * Math.floor(9000))}.webm`
   };
 

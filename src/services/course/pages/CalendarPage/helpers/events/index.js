@@ -17,13 +17,13 @@ import Calendar from 'services/course/helpers/Calendar';
 import CalendarEvent from 'services/course/helpers/CalendarEvent';
 import moment from "moment";
 
-export const automateEventCreation = ( event, meetingId, durationHrs ) => {
-   
-    let { title, location, startDateTime, recurringEvent, allDay  } = event;
+export const automateEventCreation = ( event, meetingId, durationHrs, courseId, lessonId ) => {
+  
+    let { title, backgroundColor, textColor, url, location, startDateTime, recurringEvent, allDay  } = event;
 
     let endDateTime = startDateTime;
     let start = startDateTime.format('YYYY-MM-DDTHH:mm:ss');
-    let end = endDateTime?.add(1, 'hours').format('YYYY-MM-DDTHH:mm:ss');
+    let end = endDateTime?.add(durationHrs, 'hours').format('YYYY-MM-DDTHH:mm:ss');
     let duration = moment( new Date() ).add(durationHrs, 'hours').diff( moment( new Date() ) )
 
     let newEvent = {
@@ -32,10 +32,13 @@ export const automateEventCreation = ( event, meetingId, durationHrs ) => {
         allDay,
         start,
         end,
-        duration        
+        duration,
+        backgroundColor, 
+        textColor, 
+        url        
     };
     
-    return newCalendarEventData( newEvent, location, undefined, undefined, meetingId );
+    return newCalendarEventData( newEvent, location, undefined, undefined, meetingId, courseId, lessonId );
 };
 
 export function saveEventData( eventProps, store ){
@@ -45,12 +48,14 @@ export function saveEventData( eventProps, store ){
         calendarEventData, 
         testAdminUsers, 
         calendarEventType, 
+        courseId,
+        lessonId,
         operatorId,
         calendars,
         user,
         users,
         userId,
-        pushNotificationSubscribers,
+        //pushNotificationSubscribers,
         addEvent,
         addCalendar
     } = eventProps;
@@ -60,10 +65,12 @@ export function saveEventData( eventProps, store ){
     let calendarEventConfig = { 
         calendar, 
         calendarEventData, 
+        courseId,
+        lessonId,
         testAdminUsers, 
         calendarEventType, 
         operatorId, 
-        pushNotificationSubscribers, 
+        //pushNotificationSubscribers, 
         user, 
         users,
         userId,

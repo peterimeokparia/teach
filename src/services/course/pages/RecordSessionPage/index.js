@@ -17,8 +17,6 @@ saveAs } from 'file-saver';
 
 import VideoCallIcon from '@material-ui/icons/VideoCall';
 import DeleteIcon from '@material-ui/icons/Delete';
-import CancelIcon from '@material-ui/icons/Cancel';
-import ScreenShareIcon from '@material-ui/icons/ScreenShare';
 import './style.css';
 
 class RecordSessionPage extends PureComponent {
@@ -147,7 +145,7 @@ class RecordSessionPage extends PureComponent {
       alert('video url')
       alert(url);
 
-      saveAs(this.url,  ( this.props?.eventId !== undefined ) ? `${this.props?.eventId}.webm` : "recording.webm");
+      saveAs(this.url,  ( this.props?.lessonId !== undefined ) ? `${this.props?.lessonId}.webm` : "recording.webm");
 
       this.theStream = null;
       this.props.extendedMeetingSettings && this.props.resetAllStopSettings();
@@ -168,9 +166,6 @@ class RecordSessionPage extends PureComponent {
     this.stopCapture();
     this.setState({ screenSharing: false });
     this.setState({ capture: false });
-    //this.saveRecording( this.state.selectedElement );
-    //this.stopCapture();
-    // this.props.toggleCurrentMeetingSession();
     return;
   }
 
@@ -287,13 +282,6 @@ class RecordSessionPage extends PureComponent {
             <>
             <span className="videoSectionMain">  
                <span>  
-               {
-                //  <ScreenShareIcon 
-                //     style={ this.props?.videoMeta?.shareScreenIcon( this.state.capture, this.props.element?._id, this.state.selectedElement?._id ) }
-                //     className={ ( this.state.capture ) ? ( this.state.screenSharing ) ? "comment-round-button-3" :  "comment-round-button-2" : "comment-round-button-4" }
-                //     onClick={ this.enableScreenSharing }
-                // />
-              }
               { 
                 <span className={"videoSectionMain"}> 
                   {
@@ -301,7 +289,6 @@ class RecordSessionPage extends PureComponent {
                       style={  this.props?.videoMeta?.videoCallIconMain( this.state.capture , this.props.element?._id, this.state.selectedElement?._id  )}
                       className={ ( this.state.capture && (  this.props.element?._id === this.props.selectedElement?._id )) ? "comment-round-button-3" : "comment-round-button-4" }
                       onClick={ this.enableScreenSharing }
-                      // onClick={() => this.handleSelectedElement(  this.props.element )} 
                     /> 
                   }
                   {/* <DeleteIcon 
@@ -328,29 +315,6 @@ class RecordSessionPage extends PureComponent {
                 </div>        
               }
              
-              {/* { this.state.capture &&  (   
-                <div className={this.props?.videoMeta?.videoSectionCallOut}>   
-                  {      
-                    <span> 
-                      <CancelIcon 
-                          style={ this.props?.videoMeta?.exitVideoCallIcon( this.state.capture, this.props.element?._id, this.state.selectedElement?._id ) }
-                          className={ ( this.state.capture ) ? ( this.state.cameraOn ) ? "comment-round-button-3" : "comment-round-button-2" : "comment-round-button-4" }
-                          onClick={ this.closeVideo }
-                      /> 
-                       <VideoCallIcon 
-                          style={ this.props?.videoMeta?.videoCallIcon( this.state.capture, this.props.element?._id, this.state.selectedElement?._id  ) }
-                          className={ ( this.state.capture ) ? ( this.state.cameraOn ) ? "comment-round-button-3" : "comment-round-button-2" : "comment-round-button-4" }
-                          onClick={ this.enableCamera }
-                      />
-                       <ScreenShareIcon 
-                          style={ this.props?.videoMeta?.shareScreenIcon( this.state.capture, this.props.element?._id, this.state.selectedElement?._id ) }
-                          className={ ( this.state.capture ) ? ( this.state.screenSharing ) ? "comment-round-button-3" :  "comment-round-button-2" : "comment-round-button-4" }
-                          onClick={ this.enableScreenSharing }
-                        />
-                    </span>
-                  } 
-                </div>
-              )} */}
               </span> 
         </span>
         </>

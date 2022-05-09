@@ -97,34 +97,34 @@ export function handleLessons( renderSwitchProps  ){
     } = lessonProps;
 
     const course = courses?.find( course => course?._id === courseId ); 
-    const lessonNote = allNotes?.find( note => note?.eventId === eventId && note?.noteType === LESSONNOTES );
-    const myNote = allNotes?.find( note => note?.eventId === eventId && note?.noteType === STUDENTNOTES );
+    const lessonNote = allNotes?.find( note => note?.lessonId === lessonId && note?.noteType === LESSONNOTES );
+    const myNote = allNotes?.find( note => note?.lessonId === lessonId && note?.noteType === STUDENTNOTES );
     const goToPage = ( url ) => { window.location.href = url; };
 
     function handlePageNavigation( page ) {
 
-        switch (page) {
+        switch ( page ) {
             case lesson.lesson:
                 alert('navigating')
-                navigate(`/${operatorBusinessName}/board/course/${courseId}/lesson/${lessonId}/event/${eventId}`);
+                navigate(`/${operatorBusinessName}/lessonplan/course/${courseId}/lesson/${lessonId}`);
                 return 
             case lesson.lessonNotes:
                 alert('notes')
                 alert(JSON.stringify(lessonNote))
-                navigate(`/${operatorBusinessName}/notes/${lessonNote?._id}/noteType/${LESSONNOTES}/course/${courseId}/lesson/${lessonId}/event/${eventId}`);
+                navigate(`/${operatorBusinessName}/notes/${lessonNote?._id}/noteType/${LESSONNOTES}/course/${courseId}/lesson/${lessonId}`);
                 return
              case lesson.myNotes:
-                navigate(`/${operatorBusinessName}/notes/${myNote?._id}/noteType/${STUDENTNOTES}/course/${courseId}/lesson/${lessonId}/event/${eventId}`);
+                navigate(`/${operatorBusinessName}/notes/${myNote?._id}/noteType/${STUDENTNOTES}/course/${courseId}/lesson/${lessonId}/user/${userId}`);
                 return;
             case lesson.videoCall:
-                navigate(`/${operatorBusinessName}/meetings/course/${courseId}/lesson/${lessonId}/event/${eventId}`);
+                navigate(`/${operatorBusinessName}/meetings/course/${courseId}/lesson/${lessonId}`);
                 return;
             case lesson.recordedSession:
-                const url = `http://localhost:3000/videos/LessonVideo_${lessonId}_${eventId}.webm`
+                const url = `http://localhost:3000/videos/LessonVideo_${lessonId}.webm`
                 goToPage( url );
                 return;
             case lesson.whiteBoard:
-                navigate(`/${operatorBusinessName}/board/${courseId}/lesson/${lessonId}/event/${eventId}`);
+                navigate(`/${operatorBusinessName}/board/course/${courseId}/lesson/${lessonId}`);
                 return;
             default:
                 break;

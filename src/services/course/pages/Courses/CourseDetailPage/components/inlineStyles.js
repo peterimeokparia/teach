@@ -63,8 +63,6 @@ export const calendarStyle = () => {
   return {
     fontSize: 50,
     "top": -200
-    // "marginLeft": "-37px"
-    // "top": "10%",
   };
 };
 
@@ -72,7 +70,7 @@ export const saveQuestionIconStyle = () => {
   return {
     fontSize: 60,
     "marginLeft": "95%",
-    "marginBottom": "1%",
+    "marginBottom": "0%",
   };
 };
 

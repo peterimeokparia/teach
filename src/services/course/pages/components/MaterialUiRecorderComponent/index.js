@@ -17,6 +17,7 @@ const MaterialUiRecorderComponent = ({
   setVideoModalMode,
   videoModalMode,
   eventId,
+  lessonId,
   toggleCurrentMeetingSession,
   extendedMeetingSettings }) => {
 return (
@@ -47,6 +48,7 @@ return (
           setVideoModalMode={(modal) => setVideoModalMode(modal)}
           videoModalMode={videoModalMode}
           eventId={eventId}
+          lessonId={lessonId}
           extendedMeetingSettings={extendedMeetingSettings}
           toggleCurrentMeetingSession={toggleCurrentMeetingSession}
       />  

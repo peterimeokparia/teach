@@ -97,6 +97,9 @@ import {
 pageSpecificSearch } from 'services/course/middleware/fullTextSearches/pageSpecificSearch';
 
 import {
+lessons } from 'services/course/middleware/lessons';
+
+import {
 loadWhiteBoardData } from "services/course/actions/whiteBoards";
 
 import {
@@ -128,6 +131,9 @@ loadLogs } from 'services/course/actions/lessons/logforteach';
 
 import {
 loadFormBuilders } from 'services/course/actions/formbuilders';
+
+import {
+loadOutcomes } from 'services/course/actions/outcomes';
 
 import { 
 loadInstitutions } from 'services/course/actions/institutions';
@@ -169,7 +175,8 @@ export const enhancer = composeEnhancers(
     builder, 
     editor,
     fullTextSearches, 
-    pageSpecificSearch ),
+    pageSpecificSearch,
+    lessons ),
   // other store enhancers if any
 );
 
@@ -180,6 +187,7 @@ export const store = createStore(
 
 //store.dispatch(loadFailedPushNotifications());
 //store.dispatch(loadFailedEmailNotifications());
+store?.dispatch(loadOutcomes());
 store?.dispatch(loadFullTextSearchContent());
 store?.dispatch(loadAllNotes());
 store?.dispatch(loadCourses());

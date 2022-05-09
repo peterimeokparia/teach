@@ -144,19 +144,6 @@ const lessonNoteProps = {
 
 function startLessonSession(){
 
-  alert('all events')
-  alert(JSON.stringify(allEvents))
-
-  alert('all lessonItem')
-  alert(JSON.stringify(lessonItem))
-
-  alert('all courseId')
-  alert(JSON.stringify(courseId))
-
-  alert('all courseId')
-  alert(JSON.stringify(courseId))
-
-
   const currentEvent = allEvents?.find( event => event?.courseId === courseId 
                           && event?.lessonId === lessonItem?._id 
                           && event?.userId === currentUser?._id);

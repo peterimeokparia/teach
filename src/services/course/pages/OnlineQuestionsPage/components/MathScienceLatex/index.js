@@ -37,8 +37,6 @@ function handleMathInputChange( latexText ) {
     }
 
     timerHandler = setTimeout(() => {
-      alert('setTimeout')
-      alert(JSON.stringify(formElement))
       // saveMathScienceFormField({ ...formElement, markDownContent: latexText, inputValue: latexText });
       saveMathScienceFormField({ ...formElement, inputValue: latexText });
       loadMathScienceFormField();

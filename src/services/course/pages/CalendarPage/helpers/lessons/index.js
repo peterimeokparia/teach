@@ -105,12 +105,9 @@ export function handleLessons( renderSwitchProps  ){
 
         switch ( page ) {
             case lesson.lesson:
-                alert('navigating')
                 navigate(`/${operatorBusinessName}/lessonplan/course/${courseId}/lesson/${lessonId}`);
                 return 
             case lesson.lessonNotes:
-                alert('notes')
-                alert(JSON.stringify(lessonNote))
                 navigate(`/${operatorBusinessName}/notes/${lessonNote?._id}/noteType/${LESSONNOTES}/course/${courseId}/lesson/${lessonId}`);
                 return
              case lesson.myNotes:

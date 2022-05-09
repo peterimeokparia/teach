@@ -101,7 +101,6 @@ function useLoginPageHook( loginPageProps ){
     }
     
     function loginSignUpProcess(){
-        alert('in here in here')
         setSignUpOrLoginInPreference( !signUpOrLoginPreference );
     }
     

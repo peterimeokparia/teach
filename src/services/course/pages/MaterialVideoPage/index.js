@@ -233,9 +233,6 @@ class MaterialVideoPage extends PureComponent {
         video.srcObject = stream;
         video.play();
       }
-
-      alert('theStream')
-      alert(JSON.stringify(this.theStream))
       
       let options = {mimeType: 'video/webm;codecs=vp9,opus'};
 
@@ -261,9 +258,6 @@ class MaterialVideoPage extends PureComponent {
       }
       
       this.theRecorder = this.recorder;
-
-      alert('recorder')
-      alert(JSON.stringify(this.theRecorder))
   
       if ( this.recordedChunks ){
           this.recordedChunks = [];

@@ -154,7 +154,6 @@ const LessonPlan = ({
   };
 
   function saveVideoRecording( element ){
-    alert('saving recording')
     saveLesson( element );
   };
 

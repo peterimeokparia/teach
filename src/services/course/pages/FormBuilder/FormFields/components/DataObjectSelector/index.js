@@ -180,5 +180,4 @@ const mapState = ( state, ownProps ) => {
         studentAnswerByQuestionId: getFormFieldAnswersByQuestionId(state, ownProps)
     };
 };
-
 export default connect( mapState, { saveFormField, saveOnlineQuestions } )(DataObjectSelector);

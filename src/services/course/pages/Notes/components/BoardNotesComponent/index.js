@@ -115,6 +115,7 @@ const mapState = ( state, ownProps )   => {
     operator: getOperatorFromOperatorBusinessName(state, ownProps),
     users: getUsersByOperatorId(state, ownProps),
     // note: getLessonUserNotesByEventId(state, ownProps),
+    
     event: getEventByEventId(state, ownProps),
     lesson: getLessonByLessonIdSelector( state, ownProps )
     };

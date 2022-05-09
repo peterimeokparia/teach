@@ -19,7 +19,9 @@ setMarkDown } from 'services/course/helpers/EditorHelpers';
 import { 
 getUsersByOperatorId,    
 getCoursesByCreatedByIdSelector, 
-getLessonUserNotesByEventId } from 'services/course/selectors';
+// getLessonUserNotesByEventId 
+
+} from 'services/course/selectors';
 
 import LessonPlanIframeComponent  from 'services/course/pages/components/LessonPlanIframeComponent';
 import EditorComponent  from 'services/course/pages/components/EditorComponent';
@@ -162,7 +164,7 @@ const mapState = (state, ownProps) => {
         onLessonError: state.lessons.onSaveLessonError,
         lessons: Object.values(state.lessons.lessons),
         coursesByTutor: getCoursesByCreatedByIdSelector( state, ownProps ),
-        notes: getLessonUserNotesByEventId( state, ownProps )
+        // notes: getLessonUserNotesByEventId( state, ownProps )
     };
 };
 

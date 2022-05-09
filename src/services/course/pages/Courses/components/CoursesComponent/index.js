@@ -18,7 +18,7 @@ setCurrentLesson } from 'services/course/actions/lessons';
 import { 
 getUsersByOperatorId,
 getCalendarsByOperatorId,
-getCalendarEventsByUserIdSelector,
+getCalendarByCalendarEventType,
 getOperatorFromOperatorBusinessName } from 'services/course/selectors';
 
 import { 
@@ -239,7 +239,7 @@ return  editing
     : ( <div className="ComponentCourseListItem">
             <ul>
             {courses?.map(course => (    
-            <NavLinks to={`/${operatorBusinessName}/tutor/${course?.createdBy}/courses/${course?._id}`}>   
+            <NavLinks to={`/${operatorBusinessName}/tutor/${course?.createdBy}/courses/${course?._id}`}>  
                 <li 
                     key={course?._id}
                     className={"component-seconday-list-body"}
@@ -337,7 +337,7 @@ const mapState = ( state, ownProps) => ({
     user: state?.users?.user,
     operator: getOperatorFromOperatorBusinessName(state, ownProps),
     users: getUsersByOperatorId(state, ownProps),
-    calendar: getCalendarEventsByUserIdSelector(state, ownProps),
+    calendar: getCalendarByCalendarEventType(state, ownProps),
     calendars: getCalendarsByOperatorId(state, ownProps),
     selectedLessonPlanLesson: state.lessons.selectedLessonPlanLesson,
     coursesLoading: state.courses.coursesLoading,

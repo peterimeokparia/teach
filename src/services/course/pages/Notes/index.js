@@ -1,15 +1,13 @@
 import { 
-useEffect,
-useState } from 'react';
-
-import { 
 connect } from 'react-redux';
 
 import { 
 loadAllNotes,
 addNotes, 
 saveNotes,
-SET_NOTES_MARKDOWN } from 'services/course/actions/notes';
+SET_NOTES_MARKDOWN,
+LESSONNOTES,
+STUDENTNOTES } from 'services/course/actions/notes';
 
 import { 
 togglePreviewMode } from 'services/course/actions/app';
@@ -21,16 +19,13 @@ handleChange } from 'services/course/pages/OnlineQuestionsPage/helpers';
 import { 
 saveEditorMarkDownObjectToMw } from 'services/course/actions/editor'; 
     
-import { 
-getUsersByOperatorId,    
+import {   
 getCoursesByCreatedByIdSelector, 
 getLessonByLessonIdSelector,
-getLessonUserNotesByNoteType} from 'services/course/selectors';
+getStudentsLessonUserNotesByLessonId,
+getTutorsLessonUserNotesByLessonId } from 'services/course/selectors';
 
 import EditorComponent  from 'services/course/pages/components/EditorComponent';
-import Meeting from 'services/course/pages/Meeting';
-
-import MaterialUiVideoComponent from 'services/course/pages/components/MaterialUiVideoComponent';
 import './style.css';
 
 const Notes = ({
@@ -57,13 +52,18 @@ const Notes = ({
     course,
     lessons,
     lesson,
-    note,
+    privateNotes,
+    tutorsLessonNote,
     togglePreviewMode,
     operatorBusinessName,
     operator,
     currentUser, 
     selectedLessonPlanLesson
 }) => {
+
+    const selectedNote = ( noteType === LESSONNOTES )
+                            ? tutorsLessonNote
+                            : privateNotes
 
  return <div className="builder3"> 
         <header>
@@ -78,16 +78,16 @@ const Notes = ({
             <div className="OnlineListItems">
             <div className="lesson-content"> 
             </div>   
-                <div className="lesson2">  
+            <div className="lesson2">  
                 <br></br>   <br></br>     <br></br>        
-                    { 
-                        <EditorComponent
-                            upload_url={editor_upload_url}
-                            handleChange={(editor) => handleChange({ ...note, markDownContent: editor }, SET_NOTES_MARKDOWN, `/notes/`, saveEditorMarkDownObjectToMw )}
-                            content={ note?.markDownContent }
-                        /> 
-                    }            
-                </div> 
+                { 
+                    <EditorComponent
+                        upload_url={editor_upload_url}
+                        handleChange={(editor) => handleChange({ ...selectedNote, markDownContent: editor }, SET_NOTES_MARKDOWN, `/notes/`, saveEditorMarkDownObjectToMw )}
+                        content={ selectedNote?.markDownContent }
+                    /> 
+                }            
+            </div> 
             </div>
         </div>
         </div>
@@ -118,7 +118,8 @@ const mapState = (state, ownProps) => {
         lessons: Object.values(state.lessons.lessons),
         coursesByTutor: getCoursesByCreatedByIdSelector( state, ownProps ),
         lesson: getLessonByLessonIdSelector( state, ownProps ),
-        note: getLessonUserNotesByNoteType( state, ownProps )
+        privateNotes: getStudentsLessonUserNotesByLessonId( state, ownProps ),
+        tutorsLessonNote: getTutorsLessonUserNotesByLessonId( state, ownProps ),
     };
 };
 

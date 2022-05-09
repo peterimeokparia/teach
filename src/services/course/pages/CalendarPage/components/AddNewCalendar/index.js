@@ -4,7 +4,7 @@ import {
     import {
     getEventsByOperatorId,
     getPushNotificationUsersByOperatorId,
-    getCalendarEventsByUserIdSelector,     
+    getCalendarByCalendarEventType,     
     getOperatorFromOperatorBusinessName, 
     getUsersByOperatorId,
     getCalendarsByOperatorId,
@@ -116,7 +116,7 @@ import {
     const mapState = ( state, ownProps )  => ({
         operator: getOperatorFromOperatorBusinessName(state, ownProps),
         users: getUsersByOperatorId(state, ownProps),
-        calendar: getCalendarEventsByUserIdSelector(state, ownProps),
+        calendar: getCalendarByCalendarEventType(state, ownProps),
         calendars: getCalendarsByOperatorId(state, ownProps),
         events: getEventsByOperatorId(state, ownProps),
         pushNotUsers: state?.notifications?.pushNotificationSubscribers,

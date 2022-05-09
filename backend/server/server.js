@@ -50,6 +50,7 @@ import institutionRoute from '../routes/institutionRoute.js';
 import classGradeRoute from '../routes/classGradeRoute.js';
 import notesRoute from '../routes/notesRoute.js';
 import fullTextSearchRoute from '../routes/fullTextSearchRoute.js';
+import outcomesRoute from '../routes/outcomesRoute.js';
 
 import dotenv from 'dotenv';
 dotenv.config({ path: '../../backend/.env' });
@@ -152,7 +153,9 @@ app.use('/api/v1/classgrades', classGradeRoute);
 
 app.use('/api/v1/notes', notesRoute);
 
-app.use('/api/v1/fulltextsearch', fullTextSearchRoute);
+app.use('/api/v1/fulltextsearch', fullTextSearchRoute); 
+
+app.use('/api/v1/outcomes', outcomesRoute); 
 
 mongoose.connect('mongodb+srv://dbuser:dbuser2020@cluster0.8heal.mongodb.net/teach?retryWrites=true&w=majority', {
    useNewUrlParser: true, 

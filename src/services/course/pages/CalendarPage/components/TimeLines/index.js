@@ -11,7 +11,7 @@ import {
   import {
   getEventsByOperatorId,    
   getPushNotificationUsersByOperatorId,
-  getCalendarEventsByUserIdSelector,     
+  getCalendarByCalendarEventType,     
   getOperatorFromOperatorBusinessName, 
   getUsersByOperatorId,
   getCalendarsByOperatorId,
@@ -238,7 +238,7 @@ import {
       allStudents: getUsersByOperatorId(state, ownProps)?.filter( user => user?.role === role.Student )?.map( user => user?._id ),
       allTutors: getUsersByOperatorId(state, ownProps)?.filter( user => user?.role === role.Tutor )?.map( user => user?._id ),
       user: state?.users?.user,
-      calendar: getCalendarEventsByUserIdSelector(state, ownProps),
+      calendar: getCalendarByCalendarEventType(state, ownProps),
       calendars: getCalendarsByOperatorId(state, ownProps),
       events: getEventsByOperatorId(state, ownProps),
       pushNotUsers: state?.notifications?.pushNotificationSubscribers,

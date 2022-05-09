@@ -16,7 +16,7 @@ import {
 getUsersByOperatorId,
 getOperatorFromOperatorBusinessName,
 getEventsByOperatorId,    
-getCalendarEventsByUserIdSelector,
+getCalendarByCalendarEventType,
 getPushNotificationUsersByOperatorId } from 'services/course/selectors';
 
 import {
@@ -291,7 +291,7 @@ const mapState = (state, ownProps)   => {
     user: state.users.user,
     currentUsers: getUsersByOperatorId(state, ownProps),
     operator: getOperatorFromOperatorBusinessName(state, ownProps),
-    calendar: getCalendarEventsByUserIdSelector(state, ownProps),
+    calendar: getCalendarByCalendarEventType(state, ownProps),
     events: getEventsByOperatorId(state, ownProps),
     pushNotUsers: state?.notifications?.pushNotificationSubscribers,
     pushNotificationSubscribers: getPushNotificationUsersByOperatorId(state, ownProps),

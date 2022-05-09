@@ -65,13 +65,15 @@ export let frequencyCollection = [
     {_id:'secondly', id:'secondly', name:'secondly'}
 ];
 
-export const newCalendarEventData = ( event, location, schedulingData, consultation, meetingId ) => {
+export const newCalendarEventData = ( event, location, schedulingData, consultation, meetingId, courseId, lessonId ) => {
     return {
         event: ( event ) ? event : {},
         location: ( location ) ? location : '',
         schedulingData: ( schedulingData?.length > 0 ) ? schedulingData : [],
         consultation: ( consultation ) ? consultation : {},
-        meetingId 
+        meetingId,
+        courseId,
+        lessonId 
     };
 };
 
@@ -160,7 +162,8 @@ export const eventEnum = {
     isAllDay: "isAllDay",
     TutorCalendar: "tutorcalendar",
     Available: "Available",
-    Lessons: "lessons"
+    Lessons: "lessons",
+    Student: "student"
 };
 
 let calendarTypes = [eventEnum?.ConsultationForm, eventEnum?.SessionScheduling ]; 

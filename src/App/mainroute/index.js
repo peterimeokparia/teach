@@ -73,7 +73,7 @@ const MainRoute = () => {
              <ClassRoomPage path="/:operatorBusinessName/classroom/:selectedUserId" /> 
              <CourseListPage path="/:operatorBusinessName/courses"/>
              
-             <CourseDetailPage path="/:operatorBusinessName/tutor/:selectedTutorId/courses/:courseId/">   
+             <CourseDetailPage path="/:operatorBusinessName/tutor/:selectedTutorId/courses/:courseId">   
                 <LessonPage path="lessons/:lessonId" /> 
              </CourseDetailPage>
              
@@ -111,12 +111,12 @@ const MainRoute = () => {
              <LessonPlan path="/:operatorBusinessName/LessonPlan/classRoom/:classRoomId/:meetingId/:meetingEndingPromo"/>
              <LessonPlan path="/:operatorBusinessName/LessonPlan/:classRoomGroupId/:classRoomGroupName/:classRoomId/:classRoomName"/>
              <LessonPlan path="/LessonPlan/:courseId/:lessonId/:lessonTitle/:userId"/>
-             <LessonPlan path="/:operatorBusinessName/board/course/:courseId/lesson/:lessonId/event/:eventId" />
+             <LessonPlan path="/:operatorBusinessName/lessonplan/course/:courseId/lesson/:lessonId" />
              <LessonPlanInviteUserVerification path="/:operatorBusinessName/LessonPlan/invite/userverification/classRoom/:classRoomId"/> 
              <LessonPlanInviteUserVerifiedPage path="/:operatorBusinessName/LessonPlan/invite/userverified/classRoom/:classRoomId"/> 
              <LoginPage path="/:operatorBusinessName/login"/>
              <OperatorSignUpPage path="/operator/signup" />
-             <ShowMeeting path="/:operatorBusinessName/meetings/course/:courseId/lesson/:lessonId/event/:eventId" /> 
+             <ShowMeeting path="/:operatorBusinessName/meetings/course/:courseId/lesson/:lessonId" /> 
              <FileUpload path="/files" />
              <Users path="/:operatorBusinessName/users"/>
              <MyCoursesPage path="/:operatorBusinessName/mycourses"/>
@@ -128,10 +128,7 @@ const MainRoute = () => {
              <SendNotificationsPage path="/:operatorBusinessName/demo/sendnotifications" />
              <CalendarPage path="/:operatorBusinessName/schedule/:calendarEventType/calendar/:calendarId/user/:userId"/>
              <CalendarPage path="/:operatorBusinessName/schedule/:calendarEventType/calendar/:calendarId/user/:userId/:formType"/>
-             
-             {/* remove this */}
-             <CalendarPage path="/:operatorBusinessName/schedule/:calendarEventType/calendar/:calendarId/user/:userId/:courseId/:lessonId/:classRoomId"/>
-             <CalendarPage path="/:operatorBusinessName/schedule/:calendarEventType/calendar/:calendarId/user/:userId/:courseId/:lessonId/:classRoomId"/>
+             <CalendarPage path="/:operatorBusinessName/schedule/:calendarEventType/calendar/:calendarId/course/:courseId/lesson/:lessonId"/>                             
              <CalendarEventsDetailPage path="/:operatorBusinessName/:calendarEventType/calendar/:calendarId/:userId/:selectedCalendarEventId"/>
              <CalendarEventsDetailPage path="/:operatorBusinessName/:calendarEventType/calendar/:calendarId/:userId"/>
              <EventDetailPage path="/:operatorBusinessName/:calendarEventType/calendar/:calendarId/user/:userId/event/:eventId" />
@@ -141,7 +138,8 @@ const MainRoute = () => {
              <OnlineQuestionPage path="/:operatorBusinessName/homework/askquestion/course/:courseId/question/:onlineQuestionId" />
              <OnlineQuestionsCourseListPage path="/:operatorBusinessName/homework/askquestion/course"/>
              <MoreLessonContentPage path="/lessons/:lessonId/more" />
-             <Notes path="/:operatorBusinessName/notes/:noteId/noteType/:noteType/course/:courseId/lesson/:lessonId/event/:eventId" />
+             <Notes path="/:operatorBusinessName/notes/:noteId/noteType/:noteType/course/:courseId/lesson/:lessonId/user/userId" />
+             <Notes path="/:operatorBusinessName/notes/:noteId/noteType/:noteType/course/:courseId/lesson/:lessonId" />
              <SiteEntryComponent path="/main"/>
              <SiteEntryComponent path="/:operatorBusinessName"/>
              <SiteEntryComponent path="/main/:operatorBusinessName"/>
@@ -164,7 +162,7 @@ const MainRoute = () => {
              <FormListPage path="/:operatorBusinessName/forms"/>
              <FormListPage path="/:operatorBusinessName/forms/:formType"/>
              <Charts path="/:operatorBusinessName/charts"/>
-             <BoardNotesComponent path="/:operatorBusinessName/board/:courseId/lesson/:lessonId/event/:eventId" />
+             <BoardNotesComponent path="/:operatorBusinessName/board/course/:courseId/lesson/:lessonId" />
              <MultiSelectSearchComponent path="/search" />
              <MissedQuestionsComponent path="/:operatorBusinessName/questions/missedQuestions/:formType/:formName"/>
              <FormQuestions path="/:operatorBusinessName/formBuilder/:formType/:formName/:courseId/:formUuId/:userId/:formBuilderStatus/:eventId/:onlineQuestionId"/>

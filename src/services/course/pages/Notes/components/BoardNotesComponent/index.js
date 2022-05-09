@@ -18,7 +18,7 @@ import {
 getOperatorFromOperatorBusinessName, 
 getUsersByOperatorId,
 getLessonByLessonIdSelector,
-getLessonUserNotesByEventId, 
+// getLessonUserNotesByEventId, 
 getEventByEventId} from 'services/course/selectors';
 
 import { 
@@ -44,6 +44,7 @@ const BoardNotesComponent = ({
     classRoomId, 
     courseId,
     lessonId,
+    userId,
     lessons,
     eventId,
     operatorBusinessName,
@@ -61,12 +62,12 @@ return (
 
         <div>
             <BoardEditorComponent 
-                meetingId={eventId}
+                meetingId={lessonId}
                 courseId={courseId}
                 lessonId={lessonId}
-                classRoomId={eventId}
-                eventId={eventId}
-                whiteBoardEventId={eventId}
+                classRoomId={lessonId}
+                eventId={lessonId}
+                whiteBoardLessonId={lessonId}
                 operatorBusinessName={operatorBusinessName}
                 saveIconVisible={true}
             >
@@ -113,7 +114,7 @@ const mapState = ( state, ownProps )   => {
     operatorBusinessName: state.operators.operatorBusinessName,
     operator: getOperatorFromOperatorBusinessName(state, ownProps),
     users: getUsersByOperatorId(state, ownProps),
-    note: getLessonUserNotesByEventId(state, ownProps),
+    // note: getLessonUserNotesByEventId(state, ownProps),
     event: getEventByEventId(state, ownProps),
     lesson: getLessonByLessonIdSelector( state, ownProps )
     };

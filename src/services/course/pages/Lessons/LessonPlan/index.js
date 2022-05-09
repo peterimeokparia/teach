@@ -15,7 +15,7 @@ inviteStudentsToLearningSession } from 'services/course/actions/users';
 
 import { 
 getEventByEventId,  
-getLessonUserNotesByEventId,
+getStudentsLessonUserNotesByLessonId,
 getLessonByLessonIdSelector,
 getOperatorFromOperatorBusinessName, 
 getUsersByOperatorId } from 'services/course/selectors';
@@ -53,36 +53,26 @@ handleChange } from 'services/course/pages/OnlineQuestionsPage/helpers';
 import { 
 saveEditorMarkDownObjectToMw } from 'services/course/actions/editor'; 
 
-import BoardNotesComponent from 'services/course/pages/Notes/components/BoardNotesComponent';
-import LessonPlanIframeComponent  from 'services/course/pages/components/LessonPlanIframeComponent';
 import BoardEditorComponent from 'services/course/pages/Lessons/LessonPlan/components/BoardEditorComponent';
 import Meeting from 'services/course/pages/Meeting';
   
 import {
 iconStyleMain,
 videoCallIcon,
-// adjustRoomIcon,
+//adjustRoomIcon,
 videoMeta } from 'services/course/pages/Lessons/LessonPlan/inlineStyles.js';
 
 import { 
 adjustRoomSize } from 'services/course/pages/Lessons/LessonPlan/helpers';
 
 import EditorComponent from 'services/course/pages/components/EditorComponent';
-import ResizePanel from "react-resize-panel";
-import style from './style.css';
-import classNames from 'classnames/bind';
 import Roles from 'services/course/pages/components/Roles';
-import LessonPlanSplitViewComponent from 'services/course/pages/Lessons/LessonPlan/LessonPlanSplitViewComponent';
+import useLessonSelectionHook from 'services/course/pages/Lessons/hooks/useLessonSelectionHook'; 
 import useTeachMeetingSettingsHook  from 'services/course/pages/Lessons/hooks/useTeachMeetingSettingsHook';
 import useEndMeetingHook  from 'services/course/pages/Lessons/hooks/useEndMeetingHook';
-import MaterialUiVideoComponent from 'services/course/pages/components/MaterialUiVideoComponent';
 import MaterialUiRecorderComponent from 'services/course/pages/components/MaterialUiRecorderComponent';
 import NavLinks  from 'services/course/pages/components/NavLinks';
-import VideoCallIcon from '@material-ui/icons/VideoCall';
-// import AdjustIcon from '@material-ui/icons/Adjust';
 import './style.css';
-
-// let cx = classNames.bind(style);
 
 const LessonPlan = ({ 
   operatorBusinessName,
@@ -111,17 +101,19 @@ const LessonPlan = ({
   toggleTeachBoardOrEditor,
   saveEditorMarkDownObjectToMw }) => {
 
-  let selectedCourse = (selectedCourseFromLessonPlanCourseDropDown?._id === undefined) 
-                            ? getItemFromSessionStorage('selectedCourse') 
-                            : selectedCourseFromLessonPlanCourseDropDown;
+  let useLessonSelectionProps = {
+    selectedCourseFromLessonPlanCourseDropDown, 
+    selectedLessonFromLessonPlanDropDown, 
+    courses, 
+    lessons, 
+    courseId, 
+    lessonId
+  };
 
-  let selectedLesson = (selectedLessonFromLessonPlanDropDown?._id === undefined) 
-                            ? getItemFromSessionStorage('selectedLesson') 
-                            : selectedLessonFromLessonPlanDropDown;
-
-  selectedCourse  = ( selectedCourse ?? courses?.find( crs => crs?._id === courseId));
-
-  selectedLesson  = ( selectedLesson ?? lessons?.find( lssn => lssn?._id === lessonId ));  
+  let {
+    selectedCourse,
+    selectedLesson
+  } = useLessonSelectionHook( useLessonSelectionProps );
                        
   let useTeachMeetingProps = {
     meetingId, 
@@ -186,7 +178,7 @@ const PageObject = {
   LessonPlan_VideoCallIcon: 'LessonPlan_VideoCallIcon'
 };
 
-let testGroup = [
+let testGroup = [ // refactor create groups, permissions etc
   {   page: 'Users',
       operatorBusinessName: [Organization.Teach, Organization.Boomingllc ],
       pageObject: [ 
@@ -195,8 +187,6 @@ let testGroup = [
       ]  
   }
 ];
-
-const noteType = ( user?.role === role.Tutor ) ? LESSONNOTES : STUDENTNOTES;
 
 return (
     <div className="MeetingPlan"> 
@@ -222,6 +212,7 @@ return (
             setVideoModalMode={(stage) => setVideoModalMode(stage)}
             VideoModalMode={videoModalModeOn}
             eventId={eventId}
+            lessonId={selectedLesson?._id}
             saveVideoRecording={saveVideoRecording}
             toggleCurrentMeetingSession={toggleCurrentMeetingSession}
         /> 
@@ -233,14 +224,13 @@ return (
           <div class="row justify-content-md-center">
               <div class="col col-lg-2">
                 <SiteFunctionalityGroup group={ permission( testGroup, operatorBusinessName, PageObject?.LessonPlan_VideoCallIcon )}> 
-                  {/* <Roles role={currentUser?.role === role.Tutor }> */}
                     <div className="sidebarThree">
                       <div className={adjustRoomSize( roomSize ).containerStyle}>   
                         <div className={`meeting-stage-${(hideMeetingStage) ? 'hidden' : 'visible'}`}>
                         { ( session  ) && 
                             <Meeting
                               userName={currentUser?.firstname}   
-                              roomName={`${classRoomId}`}
+                              roomName={selectedLesson?._id}
                               resizedHeight={"900px"}
                               containerHeight={adjustRoomSize( roomSize )?.meetingRoomHeight}
                               containerWidth={adjustRoomSize( roomSize )?.meetingRoomWidth}  
@@ -249,38 +239,30 @@ return (
                         </div>
                       </div> 
                     </div> 
-                    {/* <VideoCallIcon 
-                      name={PageObject?.LessonPlan_VideoCallIcon}
-                      style={ videoCallIcon( iconOnColor ) }
-                      className={ ( session ) ? "lesson-plan-round-button-3" : "lesson-plan-round-button-2" }
-                      onClick={() => toggleCurrentMeetingSession()} 
-                    /> */}
-                  {/* </Roles>   */}
                   </SiteFunctionalityGroup>
               </div>
               <div class="col-md-auto">
                 <SiteFunctionalityGroup group={ permission( testGroup, operatorBusinessName, PageObject?.LessonPlan_VideoCallIcon )}> 
-                  {/* <Roles role={currentUser?.role === role.Tutor }> */}
-                  <div></div>
                     <div className='splitview'>
                       <BoardEditorComponent 
                           meetingId={meetingId}
+                          whiteBoardLessonId={lessonId}
                           eventId={eventId}
                           courseId={courseId}
                           lessonId={lessonId}
                           classRoomId={classRoomId}
                           operatorBusinessName={operatorBusinessName}
                           saveIconVisible={true}
-                        />
-                      </div>
-                  {/* </Roles>   */}
+                      />
+                    </div>
                   </SiteFunctionalityGroup>
               </div>
+              <Roles role={currentUser?.role === role.Student }>
               <div class="col col-lg-2"> 
               <div className="sidebarTwo">   
-                <div>
+                <div>   
                   { <label>
-                      <NavLinks to={`/${operatorBusinessName}/notes/${user?._id}/noteType/${noteType}/course/${courseId}/lesson/${lessonId}/event/${eventId}`}> 
+                      <NavLinks to={`/${operatorBusinessName}/notes/${note?._id}/noteType/${STUDENTNOTES}/course/${courseId}/lesson/${lessonId}/user/${currentUser?._id}`}> 
                           <label className="navLink"><h3>{selectedLesson?.title}</h3></label>
                       </NavLinks> 
                     </label>     
@@ -301,9 +283,7 @@ return (
                 </div>
               </div>
               </div>
-              {/* <div class="col col-lg-2">
-                    
-              </div> */}
+              </Roles>
           </div>
         </div>
       </div>
@@ -336,7 +316,7 @@ const mapState = ( state, ownProps )   => {
     selectedCourseFromLessonPlanCourseDropDown: state.courses.selectedCourseFromLessonPlanCourseDropDown,
     selectedLessonFromLessonPlanDropDown: state.lessons.selectedLessonFromLessonPlanDropDown,
     user: state?.users?.user,
-    note: getLessonUserNotesByEventId(state, ownProps),
+    note: getStudentsLessonUserNotesByLessonId(state, ownProps),
     event: getEventByEventId(state, ownProps),
     lesson: getLessonByLessonIdSelector( state, ownProps )
   };

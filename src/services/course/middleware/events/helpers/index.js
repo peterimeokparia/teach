@@ -10,11 +10,12 @@ import {
 sendPushNotificationMessage } from 'services/course/actions/notifications';
     
 import {
-getTimeLineItems} from 'services/course/pages/CalendarPage/helpers';
+getTimeLineItems, eventEnum} from 'services/course/pages/CalendarPage/helpers';
 
 import {
 SAVE_USER_SUCCESS,
 LAST_LOGGEDIN_USER } from 'services/course/actions/users';
+import { navigate } from '@reach/router';
     
     const emailMessageConfig = {
         sendersEmailAddress: "teachpadsconnect247@gmail.com",

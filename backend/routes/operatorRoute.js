@@ -2,8 +2,10 @@ import express from 'express';
 
 import operatorModel from '../model/operatorModel.js';
 
+
 import { 
 verifyRoute,
+hashPasswordField,
 getRoute,
 getByIdRoute,
 getByObjectIdRoute,
@@ -28,10 +30,12 @@ operatorRoute.get('/operator', getByIdRoute( operatorModel, 'email' ),  (req, re
   return res.status(200).json(res?.newResult);
 });
 
+operatorRoute.use(hashPasswordField);
 operatorRoute.post('/', postRoute( operatorModel ), (req, res) => {
   return res.status(200).json(res?.newResult);
 });
 
+operatorRoute.use(hashPasswordField);
 operatorRoute.put('/:operatorId', putRoute( operatorModel, 'operatorId' ), (req, res) => {
   return res.status(200).json(res?.savedResult);
 });

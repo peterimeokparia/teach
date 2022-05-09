@@ -1,7 +1,6 @@
 import {
 eventEnum,
-studentsOption,
-} from 'services/course/pages/CalendarPage/helpers';
+studentsOption } from 'services/course/pages/CalendarPage/helpers';
 
 import {
 iconStyleMain } from './inlineStyles';

@@ -41,6 +41,7 @@ import classGrades from './classgrades';
 import notes from './notes';
 import missedQuestions from './missedanswers';
 import fullTextSearches from './fulltextsearches';
+import outcomes from './outcomes';
 
 let reducers = { 
     courses, 
@@ -84,7 +85,8 @@ let reducers = {
     classGrades,
     notes,
     missedQuestions,
-    fullTextSearches
+    fullTextSearches,
+    outcomes
 };
 
 export default combineReducers( reducers );

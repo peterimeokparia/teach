@@ -70,8 +70,7 @@ export const goToForms = ( formProps ) => {
 
   }
 
-}
-
+};
 
 export function addUsersToMeeting( meetingProps, enableTeachPlatform ) {
 
@@ -114,12 +113,12 @@ export function goToCalendar( props, user, eventType ) {
     operatorBusinessName,
     courseId,
     lessonId,
-    classRoomId
+    classRoomId,
+    selectedCourse,
+    lessonsByCourseId
   } = props;
 
-  let currentCalendar = (eventType === eventEnum.Lessons) 
-        ? calendars?.find( cal => cal?.calendarEventType === eventType && cal?.courseId === courseId && cal?.classRoomId === classRoomId ) 
-        : calendars?.find( cal => cal?.calendarEventType === eventType && cal?.userId === user?._id);
+  let currentCalendar = calendars?.find( cal => cal?.calendarEventType === eventType )
 
   if ( !currentCalendar ) {
 
@@ -251,12 +250,12 @@ function navigateToCalendar( props, calendarEventType, calendar, user ){
     operatorBusinessName,
     courseId,
     lessonId,
-    classRoomId
+    selectedCourse,
   } = props;
 
   if ( calendarEventType === eventEnum.Lessons ) {
-   
-    navigate(`/${operatorBusinessName}/schedule/${calendarEventType}/calendar/${calendar?._id}/user/${user?._id}/${courseId}/${lessonId}/${classRoomId}`);
+  
+    navigate(`/${operatorBusinessName}/schedule/${calendarEventType}/calendar/${calendar?._id}/course/${courseId}/lesson/${lessonId}`);
 
     return;
   }

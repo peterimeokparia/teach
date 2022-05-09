@@ -42,8 +42,7 @@ function useBuildEventDataHook( calendarEventType, events, calendarId, user ) {
     let eventDataObj = null;
 
     if ( events?.length > 0  ) {
-        let filteredEvents = events?.filter(evnt => evnt?.calendarEventType === calendarEventType && 
-            evnt?.calendarId === calendarId );
+        let filteredEvents = events?.filter(evnt => evnt?.calendarId === calendarId );
 
             if ( filteredEvents ) {
                 eventDataObj = filteredEvents?.map(eventData => (  getEventData( eventData )  ));

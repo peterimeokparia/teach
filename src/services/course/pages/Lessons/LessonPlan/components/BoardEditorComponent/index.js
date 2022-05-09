@@ -9,11 +9,6 @@ import{
 inviteStudentsToLearningSession } from 'services/course/actions/users';
 
 import { 
-getOperatorFromOperatorBusinessName, 
-getUsersByOperatorId,
-getLessonUserNotesByEventId } from 'services/course/selectors';
-
-import { 
 getBoardEditorId,
 getUrls } from 'services/course/pages/Lessons/LessonPlan/helpers';
 
@@ -26,9 +21,6 @@ saveIconStyle,
 savedBoardIcon } from 'services/course/pages/Lessons/LessonPlan/inlineStyles.js';
 
 import {
-addNotes,
-loadAllNotes,
-saveNotes,
 SET_NOTES_MARKDOWN } from 'services/course/actions/notes';
 
 import { 
@@ -47,7 +39,9 @@ import {
 getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
 
 import { 
-getTutorsLessonUserNotesByEventId,  
+getOperatorFromOperatorBusinessName, 
+getUsersByOperatorId,
+getTutorsLessonUserNotesByLessonId,  
 getSortedRecordsByDate } from 'services/course/selectors';
 
 import {
@@ -78,7 +72,7 @@ const BoardEditorComponent = ({
   lessonId,
   eventId,
   classRoomId, 
-  whiteBoardEventId,
+  whiteBoardLessonId,
   users,
   user,
   operators,
@@ -95,7 +89,7 @@ const BoardEditorComponent = ({
   children }) => {
 
   let hideMeetingStage = false, fullMeetingStage = false;
-  let Id = ( whiteBoardEventId !== undefined ) ? whiteBoardEventId : getBoardEditorId(lessonId, meetingId, classRoomId, eventId);
+  let Id = ( whiteBoardLessonId !== undefined ) ? whiteBoardLessonId : getBoardEditorId(lessonId, meetingId, classRoomId, eventId);
   const urls = getUrls(Id, currentUser);
   const fullScreenSize = "1150px";
   const editorUrl = urls?.editor;
@@ -103,7 +97,6 @@ const BoardEditorComponent = ({
   const whiteBoardId = Id;
   const whiteBoard = getSortedRecordsByDate(Object.values( whiteBoardData ).filter( board => board?.wid === whiteBoardId ), 'timeSaved');
   const businessName = (operatorBusinessName === "") ? getItemFromSessionStorage('operatorBusinessName') :  operatorBusinessName;
-  const lesson = lessons.find( lesson => lesson?._id === lessonId);
   const operator = Object.values( operators )?.find( operator => operator?.businessName === businessName) 
                   ? Object.values( operators )?.find( operator => operator?.businessName === businessName )
                   : getItemFromSessionStorage('operator');
@@ -159,7 +152,6 @@ let modalProps =  {
 
 return (
       <div>
-          {/* <div className="content">     */}
           <div className="content">
           <div> 
           <div className={ fullMeetingStage ? `tools-hide` : `tools` }> 
@@ -167,11 +159,11 @@ return (
             ? <div className={"editor"}>  
             {<div className="main" > 
              <br></br>  <br></br>
-                   <EditorComponent  
-                    upload_url={editor_upload_url} 
-                    handleChange={(editor) => handleChange({ ...note, markDownContent: editor }, SET_NOTES_MARKDOWN, `/notes/`, saveEditorMarkDownObjectToMw )}
-                    content={ note?.markDownContent }
-                  />
+                <EditorComponent  
+                  upload_url={editor_upload_url} 
+                  handleChange={(editor) => handleChange({ ...note, markDownContent: editor }, SET_NOTES_MARKDOWN, `/notes/`, saveEditorMarkDownObjectToMw )}
+                  content={ note?.markDownContent }
+                />
               </div> 
             }
               </div>
@@ -268,7 +260,7 @@ const mapState = ( state, ownProps )   => {
     selectedLessonFromLessonPlanDropDown: state.lessons.selectedLessonFromLessonPlanDropDown,
     meetingNotes: state?.meetingNotes?.meetingNotes,
     isModalOpen: state?.courses?.isModalOpen,
-    note: getTutorsLessonUserNotesByEventId(state, ownProps),
+    note: getTutorsLessonUserNotesByLessonId(state, ownProps),
   };
 };
 

@@ -20,7 +20,7 @@ getCalendarColor } from 'services/course/pages/CalendarPage/helpers';
 import { 
 getPushNotificationUsersByOperatorId,
 getCalendarsByOperatorId,
-getCalendarEventsByUserIdSelector,
+getCalendarByCalendarEventType,
 getEventsByOperatorId,    
 getOperatorFromOperatorBusinessName, 
 getUsersByOperatorId,
@@ -290,7 +290,7 @@ const mapState = ( state, ownProps ) => ({
     user: state?.users?.user,
     allStudents: getUsersByOperatorId(state, ownProps)?.filter(user => user?.role === role.Student),
     operator: getOperatorFromOperatorBusinessName(state, ownProps),
-    calendar: getCalendarEventsByUserIdSelector(state, ownProps),
+    calendar: getCalendarByCalendarEventType(state, ownProps),
     calendars: getCalendarsByOperatorId(state, ownProps),
     events: getEventsByOperatorId(state, ownProps),
     users: getUsersByOperatorId(state, ownProps)?.filter(user => user?.role === role.Tutor),

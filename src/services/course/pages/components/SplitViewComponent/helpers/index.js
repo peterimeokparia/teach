@@ -1,4 +1,0 @@
-export const SPLIT_VIEW_ORIENTATION = {
-    WIDTH: "WIDTH",
-    HEIGHT: "HEIGHT"
-};

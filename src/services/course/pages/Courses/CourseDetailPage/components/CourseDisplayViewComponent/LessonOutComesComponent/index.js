@@ -198,7 +198,8 @@ return ( <div className="row">
                         <div className="lesson-item">
                           {
                               
-                               cardItem(cardProps)
+                               cardItem(cardProps) 
+                           
 
                           }
                        </div>

@@ -26,7 +26,8 @@ getUsersByOperatorId,
 getCoursesByCreatedByIdSelector,
 getOperatorFromOperatorBusinessName, 
 getCalendarByCalendarEventType, 
-getCalendarsByOperatorId} from 'services/course/selectors';
+getCalendarsByOperatorId, 
+getLessonOutcomesByLessonId } from 'services/course/selectors';
 
 import { 
 addCalendar } from 'services/course/actions/calendar';
@@ -50,8 +51,86 @@ import NewLessonPage from 'services/course/pages/Lessons/NewLessonPage';
 import LoginLogout from 'services/course/pages/LoginPage/components/LoginLogout';
 import Roles from 'services/course/pages/components/Roles';
 import ListItem from 'services/course/pages/components/ListItem';
+import MuiCardListItemComponent from 'services/course/pages/components/MuiCardListItemComponent';
 import ListItemDetailComponent from 'services/course/pages/components/ListItem/components/ListItemDetailComponent';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+
+
+import Divider from '@mui/material/Divider';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import { styled } from '@mui/material/styles';
+
 import Swal from 'sweetalert2';
+
+// import * as React from 'react';
+// import Box from '@mui/material/Box';
+// import Card from '@mui/material/Card';
+// import CardActions from '@mui/material/CardActions';
+// import CardContent from '@mui/material/CardContent';
+// import Button from '@mui/material/Button';
+// import Typography from '@mui/material/Typography';
+const bull = (
+  <Box
+    component="span"
+    sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
+  >
+    •
+  </Box>
+);
+
+const cardItem = ( cardProp, currentUser ) => ( 
+  <Card sx={{ minWidth: 275 }}>
+      <CardContent>
+      <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+        {
+        cardProp?.title 
+        }
+        </Typography>
+        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+          Word of the Day
+        </Typography>
+        <Typography variant="h5" component="div">
+          be{bull}nev{bull}o{bull}lent
+        </Typography>
+        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+          adjective
+        </Typography>
+        <Typography variant="body2">
+          well meaning and kindly.
+          <br />
+          {'"a benevolent smile"'}
+        </Typography>
+      </CardContent>
+      {/* <Roles
+        role={ currentUser?.role === role.Tutor }
+      > */}
+        <EditIcon 
+            // onClick={() => { edit(lesson.title); } }
+            color="action"
+            className="comment-round-button-1"
+            // style={ sideBarEditIconStyle() }
+        />
+
+        <DeleteIcon 
+            // onClick={remove}
+            color="action"
+            className="comment-round-button-3"
+            // style={ sideBarDeleteIconStyle() }
+        />
+    {/* </Roles> */}
+      <CardActions>
+        <Button size="small">Learn More</Button>
+      </CardActions>
+
+     
+    </Card>
+);
 
 const LessonOutComesComponent = ({
     props,
@@ -78,7 +157,7 @@ const LessonOutComesComponent = ({
     operator,
     courseDetailChildren,
     currentUser, 
-    outcomes,
+    lessonOutComes,
     selectedLessonPlanLesson }) => {
 
     const onMatchListItem = ( match, listItem ) => {
@@ -108,90 +187,32 @@ const LessonOutComesComponent = ({
         editItemFunc();
     }
 
-return (
-    <div className=""> 
-        <div className=""> 
-                <div className=""> 
-                <ListItem
-                    collection={outcomes}
-                    onMatchListItem={onMatchListItem}
-                    path={"lessons"}
-                >
-                    {( lesson ) => (
-                        < ListItemDetailComponent
-                            something={lesson.title}
-                            className="lesson-item"
-                            lessons={outcomes}
-                            courseId={courseId}
-                            onSubmit={(title) => saveOutcome({...lesson, title})}
-                            operatorBusinessName={ operatorBusinessName }
-                        >
-                        { (edit, remove ) => (
-                           <div>
-                              
-                            <div className="row justify-content-center">
-                                <span>
-                                { lesson.title }
-                                </span>
-                              
-                                </div>
-                                <div className="row justify-content-center">
-                                <span> 
-                                <Roles
-                                    role={ currentUser?.role === role.Tutor }
-                                >
-                                    <EditIcon 
-                                        onClick={() => { edit(lesson.title); } }
-                                        color="action"
-                                        className="comment-round-button-1"
-                                        style={ sideBarEditIconStyle() }
-                                    />
-                                </Roles>
-                                <Roles
-                                    role={currentUser?.role === role.Tutor }
-                                >
-                                    <DeleteIcon 
-                                        onClick={remove}
-                                        color="action"
-                                        className="comment-round-button-3"
-                                        style={ sideBarDeleteIconStyle() }
-                                    />
-                                </Roles>
-                            </span>     
-                                </div>
-                           </div>
-                         
-                        )}
-                        </ListItemDetailComponent> 
-                    )}
-                </ListItem>    
-                <Roles
-                    role={currentUser?.role === role.Tutor }
-                >
-                    < ListItemDetailComponent 
-                        className="add-lesson-button"
-                        onSubmit={title => addNewOutcome({ title, ...outcomeProps })} 
-                        lessons={outcomes}
-                        courseId={courseId}
-                    >
-                        {(edit) =>  (
-                            <div>
-                            <button 
-                                className="add-lesson-button"
-                                onClick={() => handleLessonOutcome(edit)}
-                            > 
-                               { buttonText }
-                               {/* add new outcome */}
-                            </button>
-                            { onLessonError && onLessonError?.message  }
-                            </div>
-                        )}
-                    </ListItemDetailComponent>
-                </Roles>
-                </div>        
-        </div>
-    </div>
-    );
+return ( <div className="row">
+        {( lessonOutComes ).map(cardProps => ( 
+
+           <div>
+           {   <div className='col'> 
+               {
+                   <div className="listItem">  
+                       <div className="lessons">  
+                        <div className="lesson-item">
+                          {
+                               cardItem(cardProps)
+                          }
+                       </div>
+                       </div>
+                   </div>
+               }
+              
+           </div>
+           }
+         </div>
+
+            
+         ))
+        }
+
+</div>)
 };
 
 const mapDispatch = {
@@ -225,7 +246,7 @@ const mapState = (state, ownProps) => {
         lessonStarted: state.lessons.lessonStarted,
         sessions: Object.values(state?.sessions?.sessions)?.filter(session => session?.courseId === ownProps?.courseId),
         onSessionRenewal: state.sessions.autoRenewedPackageSuccess, 
-        outcomes: Object.values(state.outcomes.outcomes)
+        lessonOutComes: getLessonOutcomesByLessonId(state, ownProps )
     };
 };
 

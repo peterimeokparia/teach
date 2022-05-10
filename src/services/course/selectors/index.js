@@ -17,6 +17,7 @@ STUDENTNOTES } from  "services/course/actions/notes";
 const getUsers = state => state?.users?.users;
 const getTutors = state => Object.values(state?.users?.users).filter(user => user?.role === role.Tutor);
 const getCurrentUser = state => state.users.user;
+const getLessonOutcomes = state => state.outcomes.outcomes;
 const getLessons = state => state.lessons.lessons;
 const getLessonId = (state, props) => props?.lessonId;
 const getCalendars = state => state?.calendar?.calendars;
@@ -365,4 +366,11 @@ export const getEventByCourseIdLessonIdUserId = createSelector(
     getParsedUserId,
     ( events, courseId, lessonId, userId  ) => 
         Object.values(events).find(event => event?.courseId === courseId && event?.lessonId === lessonId && event?.userId === userId)       
+);
+
+export const getLessonOutcomesByLessonId = createSelector(
+    getLessonOutcomes,
+    getLessonId,
+    ( lessonOutcomes, lessonId ) => 
+        Object.values(lessonOutcomes).filter(outcome => outcome?.lessonId === lessonId )       
 );

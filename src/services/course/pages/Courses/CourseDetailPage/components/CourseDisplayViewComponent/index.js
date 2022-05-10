@@ -82,6 +82,7 @@ import NewLessonPage from 'services/course/pages/Lessons/NewLessonPage';
 import LoginLogout from 'services/course/pages/LoginPage/components/LoginLogout';
 import Roles from 'services/course/pages/components/Roles';
 import ListItem from 'services/course/pages/components/ListItem';
+//https://mui.com/material-ui/react-card/
 
 const CourseDisplayViewComponent = ({
     props,
@@ -338,16 +339,7 @@ return (
                     </div> 
                     <div className="toggleItems"> 
                     {
-                        toggleDisplayedItems( toggleLessonItemDisplayCount, selectedLessonPlanLesson, courseDisplayProps )  
-                    }
-                    { ( lessonItem ) && 
-                        <div className="sidebar" >
-                            <LessonOutComesComponent 
-                                buttonText={'Add New Lesson Outcome'}
-                                courseId={ courseId }
-                                lessonId={ lessonItem && lessonItem?._id }
-                            />
-                        </div>          
+                       lessonItem && toggleDisplayedItems( toggleLessonItemDisplayCount, selectedLessonPlanLesson ?? lessonItem, courseDisplayProps )  
                     }
                     </div> 
                 </div> 

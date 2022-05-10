@@ -1,5 +1,5 @@
 import { 
-getPreviouslySelectedDropDownAnswer } from "services/course/pages/FormBuilder/FormFields/components/DropDown/helpers";
+getPreviouslySelectedDropDownAnswer } from "services/course/pages/FormBuilder/FormFields/component/DropDown/helpers";
 
 describe('Dropdown', () => {  
 

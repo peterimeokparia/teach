@@ -82,6 +82,7 @@ import NewLessonPage from 'services/course/pages/Lessons/NewLessonPage';
 import LoginLogout from 'services/course/pages/LoginPage/components/LoginLogout';
 import Roles from 'services/course/pages/components/Roles';
 import ListItem from 'services/course/pages/components/ListItem';
+//https://mui.com/material-ui/react-card/
 
 const CourseDisplayViewComponent = ({
     props,
@@ -167,6 +168,8 @@ const CourseDisplayViewComponent = ({
         lessonItem,
         setFileToRemove,
         setLessonItem,
+        toggleLessonItemDisplayCount, 
+        setToggleLessonItemDisplayCount,
         calendarProps,
         lessonProps,
         formProps, 
@@ -282,7 +285,7 @@ return (
                                 role={currentUser?.role === role.Tutor  ||  currentUser?.role === role.Student}
                             >  */}
                                 <SwapHorizIcon 
-                                    onClick={() => incrementDisplayedItemCount(  lessonItem, setLessonItem, operatorBusinessName ) }
+                                    onClick={() => incrementDisplayedItemCount(  toggleLessonItemDisplayCount, setToggleLessonItemDisplayCount ) }
                                     color="action"
                                     className="comment-round-button-6"
                                     style={ swapHorizIconStyle() }
@@ -336,16 +339,7 @@ return (
                     </div> 
                     <div className="toggleItems"> 
                     {
-                        toggleDisplayedItems( lessonItem, selectedLessonPlanLesson, courseDisplayProps )  
-                    }
-                    { ( lessonItem ) && 
-                        <div className="sidebar" >
-                            <LessonOutComesComponent 
-                                buttonText={'Add New Lesson Outcome'}
-                                courseId={courseId}
-                                lessonId={lessonId}
-                            />
-                        </div>          
+                       lessonItem && toggleDisplayedItems( toggleLessonItemDisplayCount, selectedLessonPlanLesson ?? lessonItem, courseDisplayProps )  
                     }
                     </div> 
                 </div> 

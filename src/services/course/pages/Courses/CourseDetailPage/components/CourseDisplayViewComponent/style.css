@@ -1,0 +1,31 @@
+.courseDetailFilelist{
+    margin-left: 200px;
+}
+.courseDetailcourseDetailFilelist ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-left: 10px;
+}
+.courseDetailFilelist li:nth-child(odd){
+    color: lightsalmon;
+}
+.courseDetailFilelist li:nth-child(even){
+    color: lightseagreen;
+}
+.courseDetailFilelist li {
+    margin-top: 20px;
+    margin-bottom: 5px;
+    border-style: solid;
+    border-radius: 30px; 
+    width: 600px;
+}
+.courseDetailFilelist ul > li > a {
+    margin-left: 250px;
+    font: black;
+}
+/* .CourseDetail row {
+    margin-bottom: 255px;
+    padding-bottom: 255px;
+} */
+

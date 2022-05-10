@@ -1,0 +1,168 @@
+.builder2{
+    height: 100vh;
+    width: 90vw;
+    max-width: 90vw;
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: left;
+    margin-top: 0px;
+    background: rgb(101, 245, 101);
+    border-radius: 25px;
+    padding-bottom: 9px;
+}
+
+.builder2 .answerEditorBuilder {
+    height: 90vh;
+    max-height: 100vh;
+    margin-top: 250px;
+    margin-right: 250px;
+    margin-left: 350px;
+    position: relative;
+}
+.builder2 .answerEditorBuilder .formlist {
+    height: 90vh;
+    max-height: 100vh;
+}
+.builder2 header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index: 1;
+    width: 80%;
+    height: 10%;
+    text-align: center;
+    margin-bottom: 25%;
+}
+.builder2 label{
+    width: 400px;
+    height: 50px;
+    font-size: 25px;
+    text-align: center;
+    margin-top: 20px;
+    background: rgb(101, 245, 101);
+    border-radius: 5px;
+    padding-bottom: 9px;
+    background: orange;
+}
+.builder2 .answerEditorBuilder .content2 {
+    flex-direction: row;
+    height: 1px;
+    max-height: 1px;
+    display: flex;
+    width: 5%;
+}
+.builder2 .answerEditorBuilder .content2 .onlinequestion-list-items {
+    margin-left: 30%;
+    list-style: none;
+}
+
+.builder2 .answerEditorBuilder .content2 .onlinequestion-list-items .question-card-top-right {
+    margin-left: 0%;
+}
+.builder2 .answerEditorBuilder .content2 .onlinequestion-list-items .question-card-top-right .manage-input-field-icons {
+    visibility: hidden;
+}
+.builder2 .answerEditorBuilder .content2 .onlinequestion-list-items .question-card-top-right .manage-input-field-icons:hover {
+    visibility: visible;
+}
+.builder2 .answerEditorBuilder .content2 .onlinequestion-list-items .radio {
+     margin-top: 5%;
+     margin-left: 5%;
+     margin-bottom: 3%;
+     width: 10px;
+} 
+.builder2 .answerEditorBuilder .content2 .onlinequestion-list-items .radio select {
+    border: none;
+    width: 300px;
+    text-align: center;
+    margin-top: 10px;
+    background: orange;
+}
+.builder2 .answerEditorBuilder .content2 .onlinequestion-list-items .explanation {
+     margin-top: 55%;
+     margin-left: 55%;
+     margin-bottom: 33%;
+     width: 10px;
+ }
+ .builder2 .answerEditorBuilder .content2 .onlinequestion-list-items .explanation .explanation-label {
+    width: 400px;
+    height: 50px;
+    font-size: 25px;
+    text-align: center;
+    margin-top: 0px;
+    background: rgb(101, 245, 101);
+    border-radius: 5px;
+    padding-bottom: 9px;
+}
+ 
+.builder2 .answerEditorBuilder .content2 .onlinequestion-list-items .radio .radioButton {
+    width: 10vw;
+}
+.builder2 .answerEditorBuilder .content2 .onlinequestion-list-items .text {
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-bottom: 3%;
+    width: 100vw;
+}
+.builder2 .answerEditorBuilder .content2 .onlinequestion-list-items .OnlineListItems {
+    height: 80vh;
+}
+.content2 .sidebar2 {
+    flex-basis: 300px;
+    background: #fbf9ff;
+    border-right: 1px solid #bba0ea;
+    padding-right: 0px;
+    padding-left: 1px;
+    display: flex;
+    flex-direction: column;
+    background-color: slateblue;
+    z-index: 1;
+}
+.builder2 .answerEditorBuilder .rnd{
+    height: 100vh;
+    width: 90vw;
+    max-width: 90vw;
+    max-height: 100vh; 
+}
+.builder2 .answerEditorBuilder .content2 .onlinequestion-list-items .question-card-top-right .manage-input-field-icons .builder-round-button-1, .builder-round-button-2, .builder-round-button-3, .builder-round-button-4, .builder-round-button-5, .builder-round-button-6 {
+    align-self: flex-end; 
+    width:70px;
+    height:60px;
+    line-height: 60px;
+    border: 2px solid #f5f5f5;
+    border-radius: 50%; 
+    margin-top: 30px;
+    margin-right: 60px;
+    transition: transform .7s ease-in-out;
+    box-shadow: 10px 10px black;
+ }
+ .builder2 .answerEditorBuilder .content2 .onlinequestion-list-items .question-card-top-right .manage-input-field-icons .builder-round-button-2 { 
+   background: yellowgreen;
+   visibility: hidden;
+ }
+ .builder2 .answerEditorBuilder .content2 .onlinequestion-list-items .question-card-top-right .manage-input-field-icons .builder-round-button-2:hover
+ {
+    background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+    background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+    cursor: pointer;
+    visibility: visible;
+ }
+ .modal-header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-left: 11%;
+    z-index: 1;
+    width: 80%;
+    height: 10%;
+    text-align: center;
+    margin-bottom: -10%;
+}

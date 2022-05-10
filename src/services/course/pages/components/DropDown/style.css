@@ -1,0 +1,24 @@
+.dropDownSelector {
+  font-size: 30px;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+.dropDownSelector p{
+  font-size: 30px;
+  font-family: 'Courier New', Courier, monospace;
+}
+.space-between-select {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 25px;
+  font-family: 'Courier New', Courier, monospace;
+}
+.dropDownSelector label {
+  font-family: 'Courier New', Courier, monospace;
+  text-decoration: underline linear-gradient(#e66465, #9198e5);
+}
+.dropDownSelector .main-title {
+  font-family: 'Courier New', Courier, monospace;
+  text-decoration: underline linear-gradient(#e66465, #9198e5);
+}

@@ -1,0 +1,15 @@
+.bar {
+    fill: steelblue;
+}
+.highlight {
+    fill: orange;
+}
+.solid{
+    stroke:solid;
+ }
+ .dashed{
+    stroke-dasharray: 5,5; 
+ }
+ .median{
+    stroke-dasharray: 5,5; 
+ }

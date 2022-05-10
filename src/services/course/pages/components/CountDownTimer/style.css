@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css?family=Orbitron');
+.clock {
+    position: fixed;
+    z-index: 1;
+    margin-left: 35%;
+    top: 50px;
+    width: 356px;
+    height: 100px;
+    /* border-radius: 0%; */
+    /* border: 0px solid orange; */
+    /* background-color: white; */
+}
+.clock .digital {
+    font-family: 'Orbitron';
+    color: green;
+    font-size: 100px;
+    top: 130px;
+}
+
+.clock .digital .points-label {
+    font-family: 'Orbitron';
+    color: green;
+    font-size: 20px;
+    top: 130px;
+    margin-left: -130px; 
+}
+
+.clock .digital .countdown-timer{
+    margin-left:  900px; 
+}

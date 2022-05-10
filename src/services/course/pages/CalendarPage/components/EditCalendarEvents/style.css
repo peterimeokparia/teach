@@ -1,0 +1,26 @@
+.events-main {
+    background-image: url(../../../../images/geometry2.png);
+}
+.recurring .tooltiptext  {
+    visibility: hidden;
+    width: 360px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 2;
+
+    /* top: -5px;
+    left: 125%; */
+
+    /* top: -5px;
+    right: 105%; */
+}
+.recurring:hover .tooltiptext {
+    visibility: visible;
+    right: 16%;
+}

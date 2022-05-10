@@ -1,0 +1,179 @@
+.formbuilder text {
+    color: red;
+}
+.formbuilder ul {
+ list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.formbuilder .user-item {
+    cursor: pointer;
+}
+.header-tabs-0 {
+    margin-left: -20px;
+    margin-bottom: 10px;
+}
+.header-tab-label0 {
+    margin-bottom: 10px;
+    border: tomato;
+    border-radius: 30%;
+}
+.header-tab-label0-selected {
+    background-color:#1976d2;
+    margin-bottom: 10px;
+    
+}
+.header-tab-label1 {
+    margin-bottom: 10px;
+}
+.header-tab-label1-selected {
+    background-color: #ff5722;
+    margin-bottom: 10px;
+}
+.header-tab-label2 {
+    margin-bottom: 10px;
+}
+.header-tab-label2-selected {
+    background-color: #9c27b0;;
+    margin-bottom: 10px;
+}
+.sticky-header-table {
+    margin-left: -2px;
+}
+@media only screen and (min-width: 638px) {
+   
+   
+}
+
+  @media only screen and (max-width: 637px) {
+    
+  }
+  
+  /* 
+    ##Device = Desktops
+    ##Screen = 1281px to higher resolution desktops
+  */
+  
+  @media (min-width: 1281px) {
+    
+  }
+  
+  /* 
+    ##Device = Laptops, Desktops
+    ##Screen = B/w 1025px to 1280px
+  */
+  
+  @media (min-width: 1025px) and (max-width: 1280px) {
+   
+    
+  }
+  
+  /* 
+    ##Device = Tablets, Ipads (portrait)
+    ##Screen = B/w 768px to 1024px
+  */
+  
+  @media (min-width: 768px) and (max-width: 1024px) {
+    
+   
+  }
+  
+  /* 
+    ##Device = Tablets, Ipads (landscape)
+    ##Screen = B/w 768px to 1024px
+  */
+  
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    
+  }
+  
+  
+  
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    
+  }
+  
+  
+  
+  /* 
+    ##Device = Low Resolution Tablets, Mobiles (Landscape)
+    ##Screen = B/w 481px to 767px
+  */
+  
+  @media (min-width: 481px) and (max-width: 767px) {
+    .sticky-header-table {
+        margin-left: 535px;
+        overflow: scroll;
+    }
+    .sticky-header-tab-panel {
+        /* margin-left: 100px; */
+        overflow: scroll;
+    }
+    .sticky-header-tab-panel .sticky-header-table{
+        margin-left: 28%;
+        overflow: scroll;
+    }
+    .sticky-header-tab-panel .sticky-header-table-published{
+        margin-left: 19%;
+        overflow: scroll;
+    }
+    .sticky-header-tab-panel .sticky-header-table-submitted{
+        margin-left: 28%;
+    }
+    .sticky-header-tab-panel .sticky-header-table-take{
+        margin-left: 15%;
+    }
+    .sticky-header-tab-panel .sticky-header-table-progress{
+        margin-left: 26%;
+    }
+    .sticky-header-tab-panel .sticky-header-table-take-submitted{
+        margin-left: 15%;
+    }
+    .sticky-header-table-edit-0 {
+        margin-left: -525%;
+    }
+  }
+  /* 
+    ##Device = Most of the Smartphones Mobiles (Portrait)
+    ##Screen = B/w 320px to 479px
+  */
+  @media (min-width: 320px) and (max-width: 480px) {
+    .sticky-header-table {
+        margin-left: 555px;
+        overflow: scroll;
+    }
+    .sticky-header-tab-panel {
+        /* margin-left: 100px; */
+        overflow: scroll;
+    }
+    .sticky-header-tab-panel .sticky-header-table{
+        margin-left: 30%;
+        overflow: scroll;
+    }
+    .sticky-header-tab-panel .sticky-header-table-published{
+        margin-left: 23%;
+        overflow: scroll;
+    }
+    .sticky-header-tab-panel .sticky-header-table-submitted{
+        margin-left: 30%;
+        overflow: scroll;
+    }
+    .sticky-header-tab-panel .sticky-header-table-take{
+        margin-left: 20%;
+        overflow: scroll;
+    }
+    .sticky-header-tab-panel .sticky-header-table-progress{
+        margin-left: 29%;
+        overflow: scroll;
+    }
+    .sticky-header-tab-panel .sticky-header-table-take-submitted{
+        margin-left: 19%;
+        overflow: scroll;
+    }
+    .sticky-header-table-edit-0 {
+        margin-left: -525%;
+        margin-top: -1px;
+        padding-top: 13px;
+        overflow: scroll;
+    }
+}

@@ -1,0 +1,141 @@
+#sideFlyoutMenu {
+    width: 15vw;
+    height: 35vh;
+    background-color: white;
+    border: 5px solid #673ab7;
+    /* position: fixed; */
+    left: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5rem;
+    padding: 2rem 1rem;
+    font-weight: bold;
+    transition: color 0.3s linear;
+    transition: transform .3s
+                cubic-bezier(0, .52, 0, 1);
+    overflow: scroll;
+    z-index: 1000;
+    margin-top: 15px;
+  }
+  #sideFlyoutMenu.hide {
+    transform: translate3d(-15vw, 0, 0);
+  }
+  #sideFlyoutMenu.show {
+    /* position: fixed; */
+    transform: translate3d(0vw, 0, 0);
+    overflow: hidden;
+    width: 20vw;
+    /* padding: 2rem 2rem; */
+  }
+  #sideFlyoutMenu h2 a {
+    color: #333;
+    margin-left: 15px;
+    text-decoration: none;
+  }
+  #sideFlyoutMenu h2 a:hover {
+    /* text-decoration: underline; */
+  }
+  #sideFlyoutMenu h2 a:active {
+    text-decoration: line-through;
+  }
+  .navlinkItem {
+    list-style: none;
+    padding-top: 10px;
+    padding-bottom: 0px;
+  }
+  .toggleButton {
+    margin-top: 100px;
+   padding-bottom: 100px;
+  }
+  @media (min-width: 1281px) {
+    /* CSS */
+    #sideFlyoutMenu.show {
+      /* position: absolute; */
+      transform: translate3d(0vw, 0, 0);
+      overflow: hidden;
+      width: 30vw;
+    }
+  }
+  
+  /* 
+    ##Device = Laptops, Desktops
+    ##Screen = B/w 1025px to 1280px
+  */
+  
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    
+    /* CSS */
+    
+    #sideFlyoutMenu.show {
+      /* position: absolute; */
+      transform: translate3d(0vw, 0, 0);
+      overflow: hidden;
+      width: 80vw;
+    }
+  }
+  
+  /* 
+    ##Device = Tablets, Ipads (portrait)
+    ##Screen = B/w 768px to 1024px
+  */
+  
+  @media (min-width: 768px) and (max-width: 1024px) {
+    
+    /* CSS */
+    #sideFlyoutMenu.show {
+      /* position: absolute; */
+      transform: translate3d(0vw, 0, 0);
+      overflow: hidden;
+      width: 80vw;
+    }
+    
+  }
+  
+  /* 
+    ##Device = Tablets, Ipads (landscape)
+    ##Screen = B/w 768px to 1024px
+  */
+  
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    
+    /* CSS */
+    #sideFlyoutMenu.show {
+      /* position: absolute; */
+      transform: translate3d(0vw, 0, 0);
+      overflow: hidden;
+      width: 80vw;
+    }
+    
+  }
+  
+  /* 
+    ##Device = Low Resolution Tablets, Mobiles (Landscape)
+    ##Screen = B/w 481px to 767px
+  */
+  
+  @media (min-width: 481px) and (max-width: 767px) {
+    
+    /* CSS */
+    #sideFlyoutMenu.show {
+      /* position: absolute; */
+      transform: translate3d(0vw, 0, 0);
+      overflow: hidden;
+      width: 80vw;
+    }
+  }
+  
+  /* 
+    ##Device = Most of the Smartphones Mobiles (Portrait)
+    ##Screen = B/w 320px to 479px
+  */
+  
+  @media (min-width: 320px) and (max-width: 480px) {
+    
+    /* CSS */
+
+    #sideFlyoutMenu.show {
+      /* position: absolute; */
+      transform: translate3d(0vw, 0, 0);
+      overflow: hidden;
+      width: 80vw;
+    }
+  }

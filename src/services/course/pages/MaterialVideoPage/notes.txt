@@ -1,0 +1,31 @@
+{/*
+Handle Styling:
+--------------
+  this.props?.videoMeta?.videoCallIconMain,
+  this.props?.videoMeta?.deleteIconStyle,
+  this.props?.videoMeta?.exitVideoCallIcon,
+  this.props?.videoMeta?.videoCallIcon,
+  this.props?.videoMeta?.shareScreenIcon
+
+  Handle Saving:
+  -------------
+  this.props.displaySavedRecording,
+  this.props.saveRecording,
+  this.props?.videoMeta?.objectId,
+  this.props?.videoMeta?.videoMetaData,
+  this.props?.videoMeta?.videoName,
+  this.props?.videoMeta?.videoMetaDataExternalId,
+  this.props?.videoMeta?.videoNamePrefix
+  this.props?.videoMeta?.videoSectionClassNameRecording,
+  this.props?.videoMeta?.videoSectionClassNameRecordingStopped,
+  this.props?.videoMeta?.videoSectionCallOut
+
+  Operational Settings:
+  -----------------------
+  this.props.element : Platform specific object
+  this.props.setVideoModalMode(false);
+  this.props.recordingStatusRecordingStarted();
+  this.props.recordingStatusRecordingStopped();
+  this.props.resetAllStartSettings();
+  this.props.resetAllStopSettings();
+*/}

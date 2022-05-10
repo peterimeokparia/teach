@@ -1,0 +1,41 @@
+.verifyattendees {
+    max-height: 100vh;
+    height: 100vh; 
+    max-width: 100vw;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    /* background-image: url(../../../images/geometry2.png); */
+    font-family: 'Courier New', Courier, monospace;
+    overflow: hidden;
+    overflow-y: hidden;
+    font-size: larger;
+    font-weight: bold;
+}
+.verifyattendees .boomingllc header {
+    background-color: #673ab7;
+    color: #fff;
+    padding: 5px;
+    justify-content: center;
+    align-items: center;
+    /* color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    text-align: center; */
+    /* background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red); */
+  }
+  .verifyattendees .others header {
+    background-color: #673ab7;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    text-align: center;
+    background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  }

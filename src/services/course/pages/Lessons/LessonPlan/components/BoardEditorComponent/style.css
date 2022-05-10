@@ -1,0 +1,215 @@
+.whiteBoardSideBar .savedBoards {
+    list-style: none;
+    margin:  0;
+    margin-left: -3.4em;
+    padding:  0;
+}
+.whiteBoardSideBar .save-icon-visible {
+    visibility: visible;
+}
+.whiteBoardSideBar .save-icon-hidden {
+    visibility: hidden;
+}
+.children-section {
+    background: #87ceeb;
+    max-height: 50%;
+    max-width: 20%;
+    height: 970px;
+    width: 1700px;
+    margin-top: 0%;
+    margin-bottom: 2000px;
+    margin-left: 4em;
+    margin-right: 0em;
+}
+.children-section .children-subsection  {
+    background: white;
+    max-height: 100%;
+    max-width: 220%;
+    height: 960px;
+    width: 400px;
+    margin-top: 0.3em;
+    margin-left: 0.47em;
+    border: 2px;
+    border-color: orange;
+    border-style: solid;
+    border-radius: 25px;
+    overflow-y: scroll;
+}
+.children-section .children-subsection .notes-title{
+    margin-top: 0.3em;
+}
+.children-section .children-subsection .notes-title .title-input{
+    background: white;
+    border-color: white;
+    border-right-color: orange;
+    margin-top: 0.3em;
+    margin-bottom: 0.5em;
+    box-shadow: 5px 10px #888888;
+    text-transform: capitalize;
+    border: 1px dashed #bb9eec;
+    border-radius: 5px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #333;
+    text-decoration: none;
+    font-size: 16px;
+    margin-bottom: 0;
+}
+.children-section .children-subsection .notes-title .title-date{
+    /* margin-top: 0.3em; */
+    margin-bottom: 1em;
+    /* box-shadow: 5px 10px #888888; */
+}
+
+@media only screen and (min-width: 638px) {
+    .whiteBoardSideBar {
+        flex-basis: 100px;
+        background: transparent;
+        margin-left: -100px;
+        max-height: 900px;
+        overflow: scroll;
+    }
+    .whiteBoardSideBar .savedBoards {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .whiteBoardSideBar .save-icon-visible {
+        visibility: visible;
+    }
+    .whiteBoardSideBar .save-icon-hidden {
+        visibility: hidden;
+    }
+    .whiteBoardSideBar .savedBoards .savedBoards-items {
+        margin-bottom: 5px;
+        top: 50%;
+        left: 50%;
+        margin-right: 0%;
+        padding-bottom: 15px;
+        padding-left: 0.5rem;
+    }
+    .whiteBoardSideBar .savedBoards .savedBoards-items:hover {
+        margin-bottom: 5px;
+        border-style: solid;
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        margin-right: 0%;
+        padding-bottom: 15px;
+        padding-left: 0.5rem;
+        cursor: pointer;
+    }
+}
+@media only screen and (max-width: 637px) {
+    .whiteBoardSideBar {
+        background: #fbf9ff;
+        border-right: 1px solid #bba0ea;
+    }
+    .whiteBoardSideBar .save-icon-visible {
+        visibility: visible;
+    }
+    .whiteBoardSideBar .save-icon-hidden {
+        visibility: hidden;
+    }
+}
+/* 
+##Device = Desktops
+##Screen = 1281px to higher resolution desktops
+*/
+@media (min-width: 1281px) {
+    .whiteBoardSideBar {
+        border-right: 0px solid #bba0ea;
+    }
+    .whiteBoardSideBar .save-icon-visible {
+        visibility: visible;
+    }
+    .whiteBoardSideBar .save-icon-hidden {
+        visibility: hidden;
+    }
+}
+
+/* 
+##Device = Laptops, Desktops
+##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+    .whiteBoardSideBar {
+        flex-basis: 300px;
+        background: #fbf9ff;
+        border-right: 1px solid #bba0ea;
+    }
+    .whiteBoardSideBar .save-icon-visible {
+        visibility: visible;
+    }
+    .whiteBoardSideBar .save-icon-hidden {
+        visibility: hidden;
+    }
+}
+/* 
+##Device = Tablets, Ipads (portrait)
+##Screen = B/w 768px to 1024px
+*/
+@media (min-width: 768px) and (max-width: 1024px) {
+    .whiteBoardSideBar {
+        flex-basis: 300px;
+        background: #fbf9ff;
+        border-right: 1px solid #bba0ea;
+    }
+    .whiteBoardSideBar .save-icon-visible {
+        visibility: visible;
+    }
+    .whiteBoardSideBar .save-icon-hidden {
+        visibility: hidden;
+    }
+}
+/* 
+##Device = Tablets, Ipads (landscape)
+##Screen = B/w 768px to 1024px
+*/
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .whiteBoardSideBar {
+        flex-basis: 300px;
+        background: #fbf9ff;
+        border-right: 1px solid #bba0ea;
+    }
+    .whiteBoardSideBar .save-icon-visible {
+        visibility: visible;
+    }
+    .whiteBoardSideBar .save-icon-hidden {
+        visibility: hidden;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .whiteBoardSideBar {
+        flex-basis: 300px;
+        background: #fbf9ff;
+        border-right: 1px solid #bba0ea;
+    }
+    .whiteBoardSideBar .save-icon-visible {
+        visibility: visible;
+    }
+    .whiteBoardSideBar .save-icon-hidden {
+        visibility: hidden;
+    }
+}
+/* 
+##Device = Low Resolution Tablets, Mobiles (Landscape)
+##Screen = B/w 481px to 767px
+*/
+@media (min-width: 481px) and (max-width: 767px) { 
+    .whiteBoardSideBar {
+        flex-basis: 300px;
+        background: #fbf9ff;
+        border-right: 1px solid #bba0ea;
+    }
+    .whiteBoardSideBar .save-icon-visible {
+        visibility: visible;
+    }
+    .whiteBoardSideBar .save-icon-hidden {
+        visibility: hidden;
+    }
+}

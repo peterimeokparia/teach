@@ -1,0 +1,540 @@
+.Users {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  background-image: url(../../images/geometry2.png);
+  background-size: 300px 300px;
+  font-family: 'Courier New', Courier, monospace;
+}
+.Users .items{
+  align-items: center;
+}
+.Users header {
+  /* background-color: #673ab7; */
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  text-align: center;
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red); 
+}
+.Users .others header {
+  background-color: #673ab7;
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  text-align: center;
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+}
+/* change-later - styled components */
+/* .Users header {
+  background-color: #673ab7;
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  text-align: center;
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+} */
+.Users header h1 {
+  /* background-color: #673ab7; */
+  text-decoration: underline burlywood;
+  margin: 0;
+  font-size: 24px;
+  font-weight: bolder;
+  text-align: center;
+  text-transform: capitalize;
+}
+.Users header h2 {
+  background-color: #673ab7;
+  margin: 0;
+  font-size: 24px;
+  text-align: center;
+  color: white;
+  padding-right: 250px;
+}
+.Users header h3 {
+  background-color: #673ab7;
+  font-size: 24px;
+  text-align: center;
+  color: white;
+  padding-right: 250px;
+}
+.Users header .current-lesson {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  opacity: 0.8;
+}
+.CreateCourse {
+    height: 100%;
+    padding-top: 80px;
+    text-align: center;
+  }
+  .CreateCourse h1 {
+    font-size: 30px;
+  }
+  .CreateCourse {
+    background-image: url(../../images/geometry2.png);
+  }
+  .CreateCourse form {
+    max-width: 600px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+    margin: 0 auto;
+  }
+  .CreateCourse form input {
+    width: 100%;
+    border: 1px solid #c244d8;
+    outline: none;
+    transition: box-shadow 0.2s;
+    margin-bottom: 20px;
+  }
+  .CreateCourse form input:focus {
+    box-shadow: 0 0 3px #c244d8;
+  }
+  .CreateCourse form label {
+    margin-bottom: 0.6em;
+    display: block;
+  }
+  .CreateCourse form button {
+    color: #fff;
+    background-color: #c244d8;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 2px;
+    width: 200px;
+    margin: 0 auto;
+    display: block;
+    border: none;
+    border-bottom: 3px solid #673ab7;
+    transition: all 0.2s;
+  }
+  .createCourse-form button:focus {
+    outline: none;
+    box-shadow: 0 0 4px #673ab7;
+  }
+  .createCourse-form button:active {
+    border-bottom: none;
+    margin-top: 2px;
+    box-shadow: 0 2px 0 #673ab7 inset;
+  }
+  .createCourse-form button:disabled {
+    background-color: #dec5e2;
+    border-bottom: 2px solid #f0e9fd;
+  }
+  /***** Course Listing *****/
+  .ComponentUserList {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  .ComponentUserList header {
+    background-color: #673ab7;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    /* padding: 20px 800px; */
+  } 
+  .ComponentUserList h1 {
+    font-family: 'Bebas Neue', 'Helvetica Neue', arial,
+      sans-serif;
+    font-size: 60px;
+    color: #43005a;
+    margin-top: 0.2em;
+  }
+  .ComponentUserList ul {
+    list-style: none;
+    padding: 0;
+  }
+  .ComponentUserList .addStudentsToMeeting {
+    background: whitesmoke;
+    align-self: flex-end; 
+    width:90px;
+    height:30px;
+    line-height: 30px;
+    border: 2px solid #f5f5f5;
+    border-radius: 25%; 
+    margin-right: 15px;
+    margin-top: 20px;
+    transition: transform .7s ease-in-out;
+    box-shadow: 10px 10px black;
+  }
+  .ComponentUserList .addStudentsToMeeting:hover {
+    background: peachpuff;
+    align-self: flex-end; 
+    width:90px;
+    height:30px;
+    line-height: 30px;
+    border: 2px solid #f5f5f5;
+    border-radius: 25%; 
+    margin-right: 15px;
+    margin-top: 20px;
+    transition: transform .7s ease-in-out;
+    box-shadow: 10px 10px purple;
+  }
+  .ComponentUserList .component-list-body {
+    border-radius: 25px;
+    background: #673ab7;
+    padding: 20px;
+    max-width: 2000px;
+    max-height: 2000px;
+  }
+  .ComponentUserList .component-seconday-list-body-users, .component-secondary-list-body-one {
+    border-radius: 25px;
+    /* background: #673ab7; */
+    background: whitesmoke;
+    padding: 10px;
+    padding-top: 40px;
+    margin-top: 35px;
+    height: 175px;
+    box-shadow: 10px 10px;
+    box-shadow: 0 6px  rgba(255, 0, 0, 1), 0 9px  rgba(0, 255, 0, 1), 0 9px rgb(255, 174, 0);  
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+  }
+  .ComponentUserList .component-seconday-list-body-users-boomingllc, .component-secondary-list-body-one {
+    border-radius: 25px;
+    /* background: #673ab7; */
+    background: whitesmoke;
+    padding: 10px;
+    padding-top: 40px;
+    margin-top: 35px;
+    height: 150px;
+    box-shadow: 10px 10px;
+    box-shadow: 0 6px  rgba(255, 0, 0, 1), 0 9px  rgba(0, 255, 0, 1), 0 9px rgb(255, 174, 0);  
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+  }
+  .component-secondary-list-body-one {
+    background: #9c27b0;
+  }
+  .component-seconday-list-body-users:hover, .component-seconday-list-body-users:focus, .component-seconday-list-body-users:active {
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+    -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+    transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+    box-shadow: 0px 0px;
+    cursor: pointer;
+    /* background-color: #673ab7; */
+    background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+    color: black;
+  }
+  .component-seconday-list-body-users-boomingllc:hover, .component-seconday-list-body-users:focus, .component-seconday-list-body-users:active {
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+    -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+    transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+    box-shadow: 0px 0px;
+    cursor: pointer;
+    /* background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red); */
+    background-color: #673ab7;
+    color: black;
+  }
+  .ComponentUserList li > a {
+    margin-bottom: 20px;
+    line-height: 1.5;
+    font-weight: 600;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 3px;
+    display: block;
+    text-decoration: none;
+    color: #222;
+
+  }
+  .ComponentUserList .price h6{
+    opacity: 0.5;
+    color: black;
+    font-weight: bolder;
+  }
+  .ComponentUserList .list-items {
+    padding-top: 10px;
+    /* margin-bottom: 5px; */
+    border-style: outset;
+    border-radius: 3px;
+    font-size: 20px; 
+  }
+  .ComponentUserList .user-list-items-users {
+    padding-top: 0px;
+    color: white;
+    border-radius: 3px;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.5rem;
+    /* letter-spacing: 0.5rem;
+    padding: 2rem 0;
+    font-weight: bold; */
+  }
+  .ComponentUserList .user-list-items-users img {
+    border-radius: 5px;
+  }
+  .ComponentUserList .user-list-items-users .multicolortext{
+    background-color: #673ab7;
+    margin: 0;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.5rem;
+    font-weight: bold; 
+    background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-decoration: underline burlywood;
+    margin: 0;
+    font-size: 24px;
+    font-weight: bolder;
+    text-align: center;
+    text-transform: capitalize;
+    text-shadow: 2px 2px black;
+  }
+  .ComponentUserList .user-list-items-users .multicolortext:hover{
+    color: white;
+    /* background-color: #673ab7;
+    margin: 0;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.5rem;
+    font-weight: bold; 
+    background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-decoration: underline burlywood;
+    margin: 0;
+    font-size: 24px;
+    font-weight: bolder;
+    text-align: center;
+    text-transform: capitalize; */
+  }
+  .ComponentUserList .user-list-items-users .round-button-1, .ComponentUserList .user-list-items-users .round-button-2, 
+  .ComponentUserList .user-list-items-users .round-button-3, .ComponentUserList .user-list-items-users .round-button-4, 
+  .ComponentUserList .user-list-items-users .round-button-5, .ComponentUserList .user-list-items-users .round-button-6, 
+  .ComponentUserList .user-list-items-users .round-button-7 
+  .ComponentUserList .addStudentsToMeeting {
+    align-self: flex-end; 
+    width:30px;
+    height:30px;
+    line-height: 30px;
+    border: 2px solid #f5f5f5;
+    border-radius: 50%; 
+    margin-right: 15px;
+    transition: transform .7s ease-in-out;
+    box-shadow: 10px 10px black;
+}
+.ComponentUserList .user-list-items-users .round-button-1:hover
+ {
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  cursor: pointer;
+}
+.ComponentUserList .user-list-items-users .round-button-2:hover  
+ {
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  cursor: pointer;
+}
+.ComponentUserList .user-list-items-users .round-button-3:hover, .round-button-4:hover
+ {
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  cursor: pointer;
+}
+.ComponentUserList .user-list-items-users .round-button-4:hover   
+ {
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  cursor: pointer;
+}
+.ComponentUserList .user-list-items-users .round-button-5:hover   
+ {
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  cursor: pointer;
+}
+.ComponentUserList .user-list-items-users .round-button-6:hover   
+ {
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  cursor: pointer;
+}
+.ComponentUserList .user-list-items-users .round-button-7:hover   
+ {
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  cursor: pointer;
+}
+.ComponentUserList .user-list-items-users .round-button-1 { 
+    background: orange;
+  }
+  .ComponentUserList .user-list-items-users .round-button-2 { 
+    background: green
+  }
+  .ComponentUserList .user-list-items-users .round-button-3 { 
+    background: red
+  }
+  .ComponentUserList .user-list-items-users .round-button-4 { 
+    background: #f5f5f5
+  }
+  .ComponentUserList .user-list-items-users .round-button-5 { 
+    background: red
+  }
+  .ComponentUserList .user-list-items-users .round-button-6 { 
+    background: orange
+  }
+  .ComponentUserList .user-list-items-users .round-button-7 { 
+    background: green
+  }
+  .ComponentUserList .component-list-items {
+    padding-top: 10px;
+    font-size: 10px; 
+    color: white;
+    text-align: center;
+  }
+  .ComponentUserList .component-text-items { 
+    padding-top: 10px;
+    font-size: 10px; 
+    color: white;
+    padding-left: 40px;
+  }
+  .ComponentUserList .user-course-btn {
+    align-self: flex-end;
+    color: #fff;
+    font-size: 16px;
+    font-family: 'Source Sans Pro', helvetica, sans-serif;
+    background:#673ab7;
+    border: none;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 1px;
+    box-shadow: 10px 10px black;
+  }
+  
+  .ComponentUserList .new-course-btn {
+    align-self: flex-end;
+    color: #fff;
+    font-size: 16px;
+    font-family: 'Source Sans Pro', helvetica, sans-serif;
+    background: #9c27b0;
+    border: none;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 1px;
+    box-shadow: 10px 10px;
+  }
+  .ComponentUserList .new-course-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5),
+      0 0 5px 2px #9c27b0;
+  }
+  .ComponentUserList .new-course-btn:active {
+    background-color: purple;
+  }
+  .delete-lesson-btn,
+  .edit-lesson-btn{
+    opacity: 0;
+    border: 1px;
+    font-size: 10px;
+    cursor: pointer;
+    box-shadow: 10px 10px;
+  }
+  .Login-LogOut-btn {
+    padding-left: 1280px; 
+    /* align-self: flex-end; */
+    color: #fff;
+    font-size: 16px;
+    font-family: 'Source Sans Pro', helvetica, sans-serif;
+    border: none;
+    font-weight: 600;
+    border-radius: 1px;
+  }
+  .my-courses-btn {
+    padding-top: 1%;
+    padding-left: 1400px;
+    box-shadow: 10px 10px; 
+  }
+  .invite-btn {
+    opacity: 1;
+    border: 2px;
+    font-size: 10px;
+    cursor: pointer;
+    padding-left: 30px;
+    margin-top: 15px;
+    padding-right: 30px;
+    margin-left:25px;
+    box-shadow: 10px 10px;
+  }
+  .add-substract-btns {
+    opacity: 1;
+    border: 2px;
+    font-size: 10px;
+    cursor: pointer;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-left:25px;
+    box-shadow: 10px 10px;
+  }
+  /* Bounce Out */
+.hvr-bounce-out  {
+  display: inline-block; 
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+}
+.hvr-bounce-out:hover, .hvr-bounce-out:focus, .hvr-bounce-out:active {
+  -webkit-transform: scale(0.8);
+  transform: scale(0.8);
+  -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+  transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+}
+.tooltip {
+  color: white;
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.component-list-items .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+
+  /* top: -5px;
+  right: 105%; */
+}
+
+.component-list-items:hover .tooltiptext {
+  visibility: visible;
+}

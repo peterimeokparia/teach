@@ -1,0 +1,543 @@
+Big Calendar
+https://jquense.github.io/react-big-calendar/examples/index.html
+
+https://codesandbox.io/examples/package/react-big-calendar
+
+Events
+----------
+https://codesandbox.io/s/m5vr0wq5ox?file=/src/index.js:0-1673
+
+import React from "react";
+import ReactDOM from "react-dom";
+import events from "./events";
+import HTML5Backend from "react-dnd-html5-backend";
+import { DragDropContext } from "react-dnd";
+import BigCalendar from "react-big-calendar";
+import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
+import moment from "moment";
+
+BigCalendar.momentLocalizer(moment);
+const DragAndDropCalendar = withDragAndDrop(BigCalendar);
+
+class Dnd extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      events: events
+    };
+
+    this.moveEvent = this.moveEvent.bind(this);
+  }
+
+  moveEvent({ event, start, end }) {
+    const { events } = this.state;
+
+    const idx = events.indexOf(event);
+    const updatedEvent = { ...event, start, end };
+
+    const nextEvents = [...events];
+    nextEvents.splice(idx, 1, updatedEvent);
+
+    this.setState({
+      events: nextEvents
+    });
+  }
+
+  resizeEvent = (resizeType, { event, start, end }) => {
+    const { events } = this.state;
+
+    const nextEvents = events.map(existingEvent => {
+      return existingEvent.id == event.id
+        ? { ...existingEvent, start, end }
+        : existingEvent;
+    });
+
+    this.setState({
+      events: nextEvents
+    });
+  };
+
+  render() {
+    return (
+      <DragAndDropCalendar
+        selectable
+        events={this.state.events}
+        onEventDrop={this.moveEvent}
+        resizable
+        onEventResize={this.resizeEvent}
+        defaultView={BigCalendar.Views.MONTH}
+        defaultDate={new Date(2015, 3, 12)}
+      />
+    );
+  }
+}
+
+const Calendar = DragDropContext(HTML5Backend)(Dnd);
+ReactDOM.render(<Calendar />, document.getElementById("root"));
+
+
+
+https://codesandbox.io/s/l98v2jjqjz?file=/index.js:0-826
+
+import React from 'react';
+import { render } from 'react-dom';
+import BigCalendar from 'react-big-calendar';
+import moment from 'moment';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+
+moment.locale('en-GB');
+BigCalendar.momentLocalizer(moment);
+
+const App = () => (
+  <div style={{ height: 700 }}>
+    <BigCalendar
+      events={[
+        {
+          'title': 'My event',
+          'allDay': false,
+          'start': new Date(2018, 0, 1, 10, 0), // 10.00 AM
+          'end': new Date(2018, 0, 1, 14, 0), // 2.00 PM 
+        }
+      ]}
+      step={60}
+      view='week'
+      views={['week']}
+      min={new Date(2008, 0, 1, 8, 0)} // 8.00 AM
+      max={new Date(2008, 0, 1, 17, 0)} // Max will be 6.00 PM!
+      date={new Date(2018, 0, 1)}
+    />
+  </div>
+);
+
+render(<App />, document.getElementById('root'));
+
+
+https://codesandbox.io/s/wyzj8o3228?file=/index.js:0-1320
+
+import React, { Component } from "react";
+import { render } from "react-dom";
+import events from "./events";
+import BigCalendar from "react-big-calendar";
+import moment from "moment";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+
+moment.locale("en");
+BigCalendar.momentLocalizer(moment);
+
+const allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k]);
+
+class App extends Component {
+  state = {
+    view: "day",
+    date: new Date(2015, 3, 12),
+    width: 500
+  };
+
+  componentDidMount() {
+    window.addEventListener("resize", () => {
+      /*this.setState({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });*/
+    });
+  }
+
+  render() {
+    return (
+      <div style={{ height: 700 }}>
+        <button onClick={() => this.setState({ view: "day" })}>Day</button>
+        <button onClick={() => this.setState({ view: "month" })}>Month</button>
+        <BigCalendar
+          style={{ height: 500, width: this.state.width }}
+          toolbar={false}
+          events={events}
+          step={60}
+          views={allViews}
+          view={this.state.view}
+          onView={() => {}}
+          date={this.state.date}
+          onNavigate={date => this.setState({ date })}
+        />
+      </div>
+    );
+  }
+}
+
+render(<App />, document.getElementById("root"));
+
+
+Working Example with Events
+
+import React, { useState, useEffect, useRef } from "react";
+
+import Modal from "react-modal";
+import BigCalendar from "react-big-calendar";
+import { render } from "react-dom";
+import { Calendar, momentLocalizer } from "react-big-calendar";
+import moment from "moment";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+
+moment.locale("en-GB");
+const localizer = momentLocalizer(moment);
+
+const App = () => {
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [dropDownSelection, setDropDownSelection] = React.useState("Java 1");
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [cal_events, setCalEvents] = useState([]);
+  const subtitleRef = useRef();
+
+  useEffect(() => {
+    console.log("mounted calander");
+    Modal.setAppElement("body");
+    setCalEvents( [{
+      'title': 'Gig',
+      'allDay': false,
+      'start': new Date(2021, 2, 1, 10, 0), // 10.00 AM
+      'end': new Date(2021, 2, 1, 14, 0), // 2.00 PM 
+    }])
+  });
+
+  const onchangeSelectDropdown = (e) => {
+    setDropDownSelection(e);
+  };
+
+  const readRef = () => subtitleRef.current;
+
+  const handleSelect = (slotInfo) => {
+    //set model to true
+    console.log("here");
+    console.log(slotInfo);
+
+    // then focus on the selected  header subtitle
+    alert(JSON.stringify(slotInfo));
+  };
+
+  const onFormSubmit = (e) => {
+    e.preventDeafault();
+  };
+
+  const afterOpenModal = () => {};
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
+  const openModal = () => {
+    //set model to true
+    console.log("here");
+    setModalIsOpen(true);
+    readRef();
+  };
+
+  // const showModal = () => {
+  //   return  modalIsOpen &&  <div>
+  //    <h2> Hello </h2>
+  //    <Modal
+  //      isOpen={modalIsOpen}
+  //      onAfterOpen={afterOpenModal}
+  //      onRequestClose={closeModal}
+  //      contentLabel="Example Modal"
+  //    >
+  //      <h2 ref={subtitle => (subtitleRef(subtitle))}>
+  //        For admins/ Lectures
+  //      </h2>
+
+  //      <button onClick={setModalIsOpen(false)}>close</button>
+
+  //      <div>Add lecture to calender</div>
+
+  //      <form onSubmit={onFormSubmit}>
+  //        <input />
+  //        <input type="submit" value="Submit" />
+  //      </form>
+  //    </Modal>
+  //  </div>
+  // }
+
+  return (
+    // modalIsOpen ?
+
+    <div>
+      <h2> Hello </h2>
+      {modalIsOpen ? (
+        <Modal
+          isOpen={modalIsOpen}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+          contentLabel="Example Modal"
+        >
+          <h2 ref={subtitleRef}>For admins/ Lectures</h2>
+
+          <button onClick={closeModal}>close</button>
+
+          <div>Add lecture to calender</div>
+
+          <form onSubmit={onFormSubmit}>
+            <input />
+            <input type="submit" value="Submit" />
+          </form>
+        </Modal>
+      ) : (
+        <div style={{ height: 700 }}>
+          <Calendar
+            selectable={true}
+            localizer={localizer}
+            events={cal_events}
+            step={30}
+            defaultView="month"
+            views={["month", "week", "day"]}
+            defaultDate={new Date()}
+            scrollToTime={new Date(1970, 1, 1, 6)}
+            onSelectEvent={(event) => alert(event.title)}
+            onSelectSlot={handleSelect}
+          />
+        </div>
+      )}
+      <button onClick={openModal}>Open Modal</button>
+    </div>
+    //  :
+    //   <div style={{ height: 700 }}>
+    //   <Calendar
+    //   selectable={true}
+    //   localizer={localizer}
+    //   events={cal_events}
+    //   step={30}
+    //   defaultView="month"
+    //   views={["month", "week", "day"]}
+    //   defaultDate={new Date()}
+    //   scrollToTime={new Date(1970, 1, 1, 6)}
+    //   onSelectEvent={event => alert(event.title)}
+    //   onSelectSlot={handleSelect}
+    // />
+    // <button onClick={handleSelect}>Open Modal</button>
+
+    //   </div>
+    /*:*/
+   /*:*/);
+};
+
+render(<App />, document.getElementById("root"));
+
+// <div style={{ height: 700 }}>
+//   <Calendar
+//     localizer={localizer}
+//     events={[
+//       {
+//         title: "My event",
+//         allDay: false,
+//         start: new Date(2018, 0, 1, 10, 0), // 10.00 AM
+//         end: new Date(2018, 0, 1, 14, 0) // 2.00 PM
+//       }
+//     ]}
+//     step={5}
+//     timeslots={3}
+//     view="week"
+//     views={["week"]}
+//     min={new Date(2008, 0, 1, 8, 0)} // 8.00 AM
+//     max={new Date(2008, 0, 1, 17, 0)} // Max will be 6.00 PM!
+//     date={new Date(2018, 0, 1)}
+//   />
+// </div>
+//   )
+// };
+// render(<App />, document.getElementById("root"));
+
+
+// return(
+//     <div className="newPropertyForm">
+//         <div className="row form-group">
+//           <div className="title col-xs-12 col-sm-6 col-md-6">
+//             <h4>Title</h4>
+//             <input type="text" name="" id="" className="form-control" />
+//           </div>
+//           <div className="Price col-xs-12 col-sm-6 col-md-6">
+//             <h4>Price</h4>
+//             <div className="input-group">
+//               <span className="input-group-addon">$</span>
+//               <input type="text" name="" id="" className="form-control" />
+//             </div>
+//           </div>
+//         </div>
+//         <div className="row form-group">
+//           <div className="discription col-xs-12 col-sm-12 col-md-12">
+//             <h4>Description</h4>
+//             <textarea className="description form-control" />
+//           </div>
+//         </div>
+//         <div className="row form-group">
+//           <div className="address col-xs-12 col-sm-12 col-md-12">
+//             <h4>Address</h4>
+//             {/* <InputMap /> */}
+//           </div>
+//         </div>
+//         <div className="row form-group">
+//           <div className="bedrooms col-xs-12 col-sm-6 col-md-3">
+//             <h4>Bedrooms</h4>
+//             <input type="text" name="" id="" className="form-control" />
+//           </div>
+//           <div className="bathrooms col-xs-12 col-sm-6 col-md-3">
+//             <h4>Bathrooms</h4>
+//             <input type="text" name="" id="" className="form-control" />
+//           </div>
+//           <div className="area col-xs-12 col-sm-6 col-md-3">
+//             <h4>Area</h4>
+//             <div className="input-group">
+//               <input type="text" name="" id="" className="form-control" />
+//               <span className="input-group-addon">Sq Ft</span>
+//             </div>
+//           </div>
+//           <div className="type col-xs-12 col-sm-6 col-md-3">
+//             <h4>Type</h4>
+//             {/* <SelectComponent listItem={this.types} /> */}
+//           </div>
+//         </div>
+//         <div className="row form-group">
+//           <div className="imageGallery col-xs-12 col-sm-12 col-md-12">
+//             <h4>Image Gallery</h4>
+//             <div className="file-input file-input-new">
+//               <input type="hidden" value="" />
+//               <div className="file-preview">
+//                 <div className="file-preview-status text-center text-success" />
+//                 <div className="close fileinput-remove text-right">×</div>
+//                 <div className="file-preview-thumbnails" />
+//                 <div className="clearfix" />
+//               </div>
+//               <div className="btn btn-o btn-default btn-file">
+//                 {/* <Icon name="folder-open" /> */}
+//                 &nbsp;Browse Images
+//                 <input type="file" className="file" multiple={true} />
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//         <div className="row form-group">
+//           <div className="amenities col-xs-12 col-sm-12 col-md-12">
+//             <h4>Amenities</h4>
+//             <div className="col-xs-12 col-sm-4 col-md-3">
+//               {/* <CheckBox>Garage</CheckBox> */}
+//             </div>
+//             <div className="col-xs-12 col-sm-4 col-md-3">
+//               {/* <CheckBox>Outdoor Pool</CheckBox> */}
+//             </div>
+//             <div className="col-xs-12 col-sm-4 col-md-3">
+//               {/* <CheckBox>Garden</CheckBox> */}
+//             </div>
+//             <div className="col-xs-12 col-sm-4 col-md-3">
+//               {/* <CheckBox>Security System</CheckBox> */}
+//             </div>
+//             <div className="col-xs-12 col-sm-4 col-md-3">
+//               {/* <CheckBox>Internet</CheckBox> */}
+//             </div>
+//             <div className="col-xs-12 col-sm-4 col-md-3">
+//               {/* <CheckBox>Telephone</CheckBox> */}
+//             </div>
+//             <div className="col-xs-12 col-sm-4 col-md-3">
+//               {/* <CheckBox>Air Conditioning  </CheckBox> */}
+//             </div>
+//             <div className="col-xs-12 col-sm-4 col-md-3">
+//               {/* <CheckBox>Heating</CheckBox> */}
+//             </div>
+//           </div>
+//         </div>
+//         <div className="row form-group">
+//           <div className="agent col-xs-12 col-sm-12 col-md-12">
+//             <h4>Agents</h4>
+//             <div className="agentItems col-xs-6 col-sm-6 col-md-6">
+//               {/* <RadioButton>No Agent</RadioButton> */}
+//             </div>
+//             <div className="agentItems col-xs-6 col-sm-6 col-md-6">
+//               {/* <RadioButton>Find Agent</RadioButton> */}
+//             </div>
+//           </div>
+//         </div>
+//         <div className="row form-group rowBtn">
+//           <input type="submit" className="btn btn-green btn-lg" defaultValue="Add Property" />
+//         </div>
+//       </div>
+// )
+
+
+       {/* //sweetalert2 different pop up box for different events: 
+                                //contacted? time of contact, contacted by whom? who was the contact?
+                                //method: tel, email, 
+                                //receipt / verification
+                                //follow up notes */}
+
+
+FullCalendar alert on event date
+When you create your calendar object/function you need to create a eventAfterRender function. This only fires when you have a function that has been placed on the calendar. Then you can read the date and compare it to ones birthday and display popup. I hope that is what your were looking for. I gave a little example.
+
+    $(document).ready(function () {
+            $('#calendar').fullCalendar({
+                height: 600,
+                width: 700,
+                header: {
+                    right: 'prev,next today',
+                    center: 'title',
+                    left: 'month,agendaWeek,agendaDay'
+                },
+                eventAfterRender: function (event, element, view) {
+                    birthday = new Date('<somedate>');
+                    year = new Date(event.start).getFullYear();
+                    month = new Date(event.start).getMonth();
+                    day = new Date(event.start).getDate();
+                    alert(year + ' ' + month + ' ' + day);
+    //do some if statement to see if the year matches then if the month, then the day. 
+//if so then go to another function or just put the code here for the pop 
+
+                }
+            });
+        });
+        
+
+Show Events with Images
+----------------------------
+https://www.youtube.com/watch?v=DEQS8EpiDKE
+https://therichpost.com/how-to-show-event-with-image-in-fullcalendar-in-reactjs/
+https://therichpost.com/how-to-show-event-with-image-in-fullcalendar-in-reactjs/
+
+External Styling
+------------------
+https://fullcalendar.io/docs/css-customization
+body {
+  margin: 40px 10px;
+  padding: 0;
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  font-size: 14px;
+}
+
+#calendar {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+
+Customize Calendar Cells
+
+https://www.demo2s.com/javascript/javascript-fullcalendar-set-background-color-for-cell.html
+var $calendar = $('#calendar').fullCalendar({
+    header: {//w ww  .  d  e m o  2  s  .c  o m
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,basicWeek,basicDay'
+    },
+    defaultView: 'month',
+    dayRender: function (date, cell) {
+         //Month is zero-based, so, 9 is october
+         var holiday_date = new Date(2014,9,20);
+         var date_as_locale = date.toLocaleDateString();
+         if (date_as_locale == holiday_date.toLocaleDateString()) {
+            cell.css("background-color", "red");
+         }
+         holiday_date = new Date(2014,9,27);
+         if (date_as_locale == holiday_date.toLocaleDateString()) {
+             cell.css("background-color", "red");
+         }
+         var day_of_the_week = date.getDay();
+         if ((day_of_the_week == 0) || (day_of_the_week == 6)){
+             cell.css("background-color", "red");
+         }
+    }
+});

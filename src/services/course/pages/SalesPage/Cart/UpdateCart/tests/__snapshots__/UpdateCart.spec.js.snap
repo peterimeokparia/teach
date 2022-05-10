@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Updates a shopping cart. renders as expected 1`] = `
+<div>
+  <div>
+     
+    are you sure you want to remove undefined from your cart?
+     
+  </div>
+  <div>
+    <button
+      onClick={[Function]}
+    >
+      Yes
+    </button>
+    <button
+      onClick={[Function]}
+    >
+      No
+    </button>
+  </div>
+</div>
+`;

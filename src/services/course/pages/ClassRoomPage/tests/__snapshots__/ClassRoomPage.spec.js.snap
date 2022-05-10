@@ -1,0 +1,234 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ClassRoomComponent renders as expected 1`] = `
+<div
+  className="ClassRoomDetail"
+>
+  <header>
+    <div>
+      <h1>
+          
+        <span
+          className="multiColor"
+        >
+           
+           
+        </span>
+      </h1>
+      <span
+        className="header-left"
+      >
+        <div>
+          <div
+            className="burgerMenuDiv"
+            onMouseDown={[Function]}
+          >
+            <div
+              className="divOne"
+            />
+            <div
+              className="divTwo"
+            />
+            <div
+              className="divThree"
+            >
+               
+            </div>
+          </div>
+          <div
+            className="hide"
+            id="flyoutMenu"
+            onMouseUp={[Function]}
+          >
+            <li
+              className="navlinkItem"
+            >
+              <a
+                href="/boomingllc/mycourses"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "color": "white",
+                  }
+                }
+              >
+                 
+                My Courses
+                 
+              </a>
+            </li>
+            <li
+              className="navlinkItem"
+            >
+              <a
+                href="/boomingllc/courses"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "color": "white",
+                  }
+                }
+              >
+                 
+                All Courses
+                 
+              </a>
+            </li>
+            <li
+              className="navlinkItem"
+            >
+              <a
+                aria-current="page"
+                href="/"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "color": "white",
+                  }
+                }
+              >
+                 
+                Tutors
+                 
+              </a>
+            </li>
+            <li
+              className="navlinkItem"
+            >
+              <a
+                href="/boomingllc/students"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "color": "white",
+                  }
+                }
+              >
+                 
+                Students
+                 
+              </a>
+            </li>
+          </div>
+        </div>
+      </span>
+    </div>
+    <span>
+      <button
+        className="plan-lesson-btn"
+        onClick={[Function]}
+      >
+        Join
+      </button>
+    </span>
+    <span
+      className="lock-icon"
+    >
+      <svg
+        aria-hidden={true}
+        className="MuiSvgIcon-root"
+        focusable="false"
+        onClick={[Function]}
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"
+        />
+      </svg>
+      <div>
+        <div>
+          <div
+            className="Toastify"
+          />
+        </div>
+      </div>
+    </span>
+  </header>
+  <div
+    className="content"
+  >
+    <div
+      className="sidebar"
+    >
+      
+    </div>
+    <div
+      className="class"
+    >
+      <div>
+        <div>
+          <div
+            className="dropdownComponents"
+          >
+            <span
+              className="left"
+            >
+              <span
+                className="dropDownSelector"
+              >
+                <span>
+                  <form
+                    onSubmit={[Function]}
+                  >
+                    <label>
+                      <span
+                        className="main-title"
+                      >
+                        Courses
+                      </span>
+                    </label>
+                    <label>
+                      <div
+                        className="MuiInputBase-root MuiInput-root MuiInput-underline space-between-select"
+                        onClick={[Function]}
+                      >
+                        <div
+                          aria-haspopup="listbox"
+                          aria-label="Without label"
+                          className="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
+                          onBlur={[Function]}
+                          onFocus={[Function]}
+                          onKeyDown={[Function]}
+                          onMouseDown={[Function]}
+                          role="button"
+                          tabIndex={0}
+                        >
+                          <span
+                            dangerouslySetInnerHTML={
+                              Object {
+                                "__html": "&#8203;",
+                              }
+                            }
+                          />
+                        </div>
+                        <input
+                          aria-hidden={true}
+                          className="MuiSelect-nativeInput"
+                          onAnimationStart={[Function]}
+                          onChange={[Function]}
+                          tabIndex={-1}
+                        />
+                        <svg
+                          aria-hidden={true}
+                          className="MuiSvgIcon-root MuiSelect-icon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M7 10l5 5 5-5z"
+                          />
+                        </svg>
+                      </div>
+                    </label>
+                  </form>
+                </span>
+              </span>
+            </span>
+            <div />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

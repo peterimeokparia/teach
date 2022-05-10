@@ -1,0 +1,517 @@
+.ClassRoomDetail {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.ClassRoomDetail form {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  margin: 0;
+}
+.ClassRoomDetail form label {
+  margin-bottom: 1em;
+  font-weight: bold; 
+}
+.ClassRoomDetail form input {
+  padding: 8px 6px 8px 8px 9px;
+  border: 1px solid #aaa;
+  border-radius: 2px;
+}
+.ClassRoomDetail form input:focus {
+  outline: none;
+  border: 1px solid #5d2faf;
+}
+.ClassRoomDetail form button {
+  background: #5d2faf;
+  font-size: 18px;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px #5d2faf;
+  transition: box-shadow, background-color 0.12s;
+  outline: none;
+  margin-bottom: 10px;
+}
+.ClassRoomDetail form button + button {
+  opacity: 0.8;
+  font-size: 14px;
+  padding: 7px;
+  margin: initial 10px;
+}
+.ClassRoomDetail form button:hover {
+  background-color: #753fd6;
+  cursor: pointer;
+}
+.ClassRoomDetail form button[disabled] {
+  opacity: 0.4;
+}
+.ClassRoomDetail form button:focus {
+  box-shadow: 0 1px 8px #5d2faf;
+}
+.ClassRoomDetail form button:active {
+  transform: scale(0.98);
+}
+
+.ClassRoomDetail header {
+  background-color: #673ab7;
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px 20px;
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+}
+.ClassRoomDetail header h1 {
+  margin: 0;
+  font-size: 24px;
+
+   text-transform: uppercase;
+    letter-spacing: 0.5rem;
+    /* padding: 2rem 0; */
+    font-weight: bold; 
+    /* background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red); */
+}
+.ClassRoomDetail header .current-class {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  opacity: 0.8;
+}
+.header-left{
+ /* margin-left: 10px; */
+}
+
+.header-right{
+  margin-left: 40px;
+}
+.ClassRoomDetail header .current-class-button {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 400;
+  opacity: 0.8;
+}
+.ClassRoomDetail .multiColor{
+  /* background-color: #673ab7; */
+  margin: 0;
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.5rem;
+  font-weight: bold;
+  background-image: linear-gradient(to left, black, blue );
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  box-shadow: 10px 10px black;
+}
+.ClassRoomDetail .content {
+  display: flex;
+  height: 100vh;
+}
+.ClassRoomDetail .sidebar {
+  /* padding: 10px;  */
+  padding-right: 0px;
+  padding-left: 1px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ClassRoomDetail .sidebar .lessons {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  top: 50%;
+  left: 20%;
+  margin-right: 1%;
+}
+.lessons .lessonMultiColor{
+  background-color: #673ab7;
+  margin: 0;
+  /* font-size: 24px; */
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  font-weight: bold;
+  background-image: linear-gradient(to left, blue);
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.class {
+  margin-left: 280px;
+  padding-top: 10px;
+  height: 110vh;
+}
+.lesson2 {
+  /* margin-left: 300px;
+  padding-top: 10px;
+  height: 110vh; */
+  margin-left: 10px;
+  width: 50vh; 
+} 
+.lessons .class-item {
+  margin-bottom: 5px;
+  border-style: solid;
+  border-radius: 3px;
+  top: 50%;
+  left: 50%;
+  margin-right: 0%;
+  padding-bottom: 15px;
+  padding-left: 0.5rem;
+
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  /* padding: 0.5rem 0;  */
+  font-weight: bold; 
+}
+.toggle-stage-btns-show,
+.plan-class-btn,
+.current-class-button,
+.delete-class-btn,
+.edit-class-btn {
+  opacity: 0;
+  border: none;
+  font-size: 10px;
+  cursor: pointer;
+}
+.toggle-stage-btns-show {
+  visibility: visible;
+  margin-left: 5px;
+}
+.plan-class-btn {
+  margin-left: 5px;
+}
+.edit-class-btn {
+  margin-right: 5px;
+}
+.delete-class-btn {
+  margin-right: 5px;
+}
+.toggle-stage-btns-hide {
+  visibility: hidden;
+} 
+.class-item:hover .toggle-stage-btns-show,
+.toggle-stage-btns-show:focus,
+.class-item:hover .plan-class-btn,
+.plan-class-btn:focus,
+.class-item:hover .current-class-button,
+.current-class-button:focus,
+.class-item:hover .delete-class-btn,
+.delete-class-btn:focus,
+.class-item:hover .edit-class-btn,
+.edit-class-btn:focus {
+  opacity: 1;
+}
+.class-item.selected {
+  background: #e9e5ff;
+  color: #222;
+  font-weight: 600;
+  box-shadow: 0 0 3px #6734ba, 0 0 3px inset #fff;
+}
+.class,
+.class > div,
+.class-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  /* margin-left: 12%; */
+  margin-left: 12%;
+}
+.class > div {
+  padding: 10px;
+  display: flex;
+}
+.class-editor {
+  font-size: 18px;
+  font-family: 'Fira Mono', monospace;
+  flex: 1;
+  padding: 10px;
+}
+.class-editor-help {
+  display: flex;
+  justify-content: space-between;
+}
+.preview-btn {
+  margin: 10px;
+  background-color: #fff;
+  color: #555;
+  font-size: 14px;
+  border: none;
+  border-radius: 2px;  
+}
+.preview-btn:active {
+  background-color: #f7f2ff;
+}
+.span-btns {
+  padding-left: 50px;
+  padding-top: 0px;
+}
+.StudentDetailPageLink{
+  padding-top: 20px;
+  font-size: 18px;
+  font-weight: 600;
+}
+.multiColor{
+  /* background-color: #673ab7; */
+  margin: 0;
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.5rem;
+  font-weight: bold;
+  /* background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red); */
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.viewGradesLink, .checkBoxViewGradesLink {
+  color: blue;
+  cursor: pointer;
+}
+.viewGradesLink, .checkBoxViewGradesLink:hover {
+  color: #673ab7;
+}
+.checkBoxViewGradesLink {
+  color: white;
+  cursor: pointer;
+}
+.checkBoxViewGradesLink:hover {
+  color: greenyellow;
+}
+
+/* unvisited link */
+ a:link {
+  color: blue;
+}
+
+/* visited link */
+ /* a:visited {
+  color: green;
+}  */
+
+/* mouse over link */
+a:hover {
+  color: #673ab7;
+}
+
+/* selected link */
+/* a:active {
+  color: blue;
+} */ 
+
+.invite-btn-animation {
+
+  opacity: 1;
+  border: 2px;
+  font-size: 10px;
+  cursor: pointer;
+  padding-left: 30px;
+  margin-top: 15px;
+  padding-right: 30px;
+  margin-left: 25px;
+  box-shadow: 10px 10px;
+
+  /* width: 100px;
+  height: 100px; */
+  background-color: #20c997; 
+  position: relative;
+  animation-name: example;
+  animation-duration: 4s;
+  animation-iteration-count: 2;
+}
+
+.AddStudentGradeComponent{
+  margin-left: 12%;
+}
+.MarkAttendanceComponent{
+  margin-left: 12%;
+}
+
+@media only screen and (min-width: 638px) {
+  .ClassRoomDetail .content {
+    flex-direction: row;
+    height: 100%;
+  }
+  .ClassRoomDetail .sidebar {
+    flex-basis: 300px;
+    background: #fbf9ff;
+    border-right: 1px solid #bba0ea;
+  }
+  .ClassRoomDetail .class {
+    flex: 1;
+  }
+}
+@media only screen and (max-width: 637px) {
+  .ClassRoomDetail .content {
+    flex-direction: column;
+  }
+  .ClassRoomDetail .sidebar {
+    background: #fbf9ff;
+    border-bottom: 1px solid #bba0ea;
+    min-height: 50px;
+  }
+  .ClassRoomDetail .class {
+    flex: 1;
+  }
+}
+.ClassRoomDetail .gradesHeader{
+  padding-left: 80px;
+}
+.ClassRoomDetail .grades{
+  padding-left: 165px;
+}
+
+.flexible-modal {
+  position: absolute;
+  z-index: 1;
+  border: 1px solid #ccc;
+  background: white;
+  /* padding-left: 1%; */
+}
+.flexible-modal-mask {
+  position: fixed;
+  height: 0%;
+  background: rgba(55, 55, 55, 0.6);
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+}
+.flexible-modal-resizer {
+  position:absolute;
+  right:0;
+  bottom:0;
+  cursor:se-resize;
+  margin:5px;
+  border-bottom: solid 2px #333;
+  border-right: solid 2px #333;
+}
+.flexible-modal-drag-area{
+  background: rgba(22, 22, 333, 0.2);
+  height: 50px;
+  position:absolute;
+  right:0;
+  top:0;
+  cursor:move;
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+
+@keyframes example {
+  0%   {background-color:red; left:0px; top:0px;}
+  25%  {background-color:yellow; left:200px; top:0px;}
+  50%  {background-color:blue; left:200px; top:200px;}
+  75%  {background-color:green; left:0px; top:200px;}
+  100% {background-color:red; left:0px; top:0px;}
+}
+
+
+@media (min-width: 1281px) {
+  
+  /* CSS */
+  
+}
+
+/* 
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+  
+  /* CSS */
+  
+}
+
+/* 
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  
+  /* CSS */
+  
+}
+
+/* 
+  ##Device = Tablets, Ipads (landscape)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  
+  /* CSS */  
+}
+
+/* 
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+
+@media (min-width: 481px) and (max-width: 767px) {    
+  /* CSS */
+  .class,
+  .class > div,
+  .class-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    /* margin-left: 12%; */
+    margin-left: 30%;
+  }
+.AddStudentGradeComponent{
+    margin-left: -30%;
+  }
+ .MarkAttendanceComponent{
+    margin-left: -30%;
+  }
+}
+/* 
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+@media (min-width: 320px) and (max-width: 480px) {
+  /* CSS */
+  .class,
+  .class > div,
+  .class-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    /* margin-left: 12%; */
+    margin-left: 39%;
+  }
+  .AddStudentGradeComponent{
+    margin-left: -55%;
+  }
+  .MarkAttendanceComponent{
+    margin-left: -55%;
+  }
+}

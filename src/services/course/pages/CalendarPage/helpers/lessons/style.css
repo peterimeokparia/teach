@@ -1,0 +1,23 @@
+
+  .rowBetween {
+    padding-top: 100px;
+    padding-bottom: 100px;
+  } 
+
+  /* .whiteBoardSideBar {
+    padding-right: 0px;
+    padding-left: 0px; 
+    display: flex;
+    
+  }
+.whiteBoardSideBar {
+  flex-basis: 500px;
+  background: transparent;
+  margin-left: 621px;  
+  overflow: scroll;
+}
+.whiteBoardSideBar .savedBoards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+} */

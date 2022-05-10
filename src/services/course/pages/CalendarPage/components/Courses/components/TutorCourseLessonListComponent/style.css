@@ -1,0 +1,398 @@
+.CoursesComponent {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  background-image: url(../../../../images/geometry2.png);
+  background-size: 300px 300px;
+}
+.CoursesComponent .items{
+  align-items: center;
+}
+
+.CoursesComponent header {
+  background-color: #673ab7;
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  text-align: center;
+}
+.CoursesComponent header h1 {
+  background-color: #673ab7;
+  margin: 0;
+  font-size: 24px;
+  text-align: center;
+}
+.CoursesComponent header h2 {
+  background-color: #673ab7;
+  margin: 0;
+  font-size: 24px;
+  text-align: center;
+  color: white;
+  padding-right: 250px;
+}
+.CoursesComponent header h3 {
+  background-color: #673ab7;
+  /* padding-top: 200px;
+  margin-bottom: 300px; */
+  font-size: 24px;
+  text-align: center;
+  color: white;
+  padding-right: 250px;
+}
+.CoursesComponent header .current-lesson {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  opacity: 0.8;
+}
+  /***** Course Listing *****/
+  .ComponentCourseListItem {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  .ComponentCourseListItem header {
+    background-color: #673ab7;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    /* padding: 20px 800px; */
+  } 
+  .ComponentCourseListItem h1 {
+    font-family: 'Bebas Neue', 'Helvetica Neue', arial,
+    sans-serif;
+    font-size: 60px;
+    color: #43005a;
+    margin-top: 0.2em;
+  }
+  .ComponentCourseListItem ul {
+    list-style: none;
+    padding: 0;
+  }
+  .ComponentCourseListItem .component-list-body {
+    border-radius: 25px;
+    background: #673ab7;
+    padding: 20px;
+    max-width: 2000px;
+    max-height: 2000px;
+  }
+  .ComponentCourseListItem .component-seconday-list-body, .component-secondary-list-body-one {
+    border-radius: 25px;
+    /* background: #673ab7; */
+    background: whitesmoke;
+    text-decoration: underline burlywood;
+    padding: 10px;
+    padding-top: 25px;
+    margin-top: 45px;
+    height: 220px;
+    box-shadow: 10px 10px;
+    box-shadow: 10px 10px;
+    box-shadow: 0 6px  rgba(255, 0, 0, 1), 0 9px  rgba(0, 255, 0, 1), 0 9px rgb(255, 174, 0); 
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+  }
+  .component-secondary-list-body-one {
+    background: #9c27b0;
+  }
+  .component-seconday-list-body:hover, .component-seconday-list-body:focus, .component-seconday-list-body:active {
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+    -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+    transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+    box-shadow: 0px 0px;
+    background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+    color: black;
+    cursor: -webkit-grab; cursor: grab;
+    cursor: -webkit-grabbing; cursor: grabbing;
+  }
+  .ComponentCourseListItem li > a {
+    margin-bottom: 20px;
+    line-height: 1.5;
+    font-weight: 600;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 3px;
+    display: block;
+    text-decoration: none;
+    color: #222;
+
+  }
+  .ComponentCourseListItem .price {
+    opacity: 0.5;
+    color: black;
+    font-weight: bolder;
+  }
+  .ComponentCourseListItem .list-items {
+    padding-top: 10px;
+    /* margin-bottom: 5px; */
+    border-style: outset;
+    border-radius: 3px;
+    font-size: 20px; 
+  }
+  .ComponentCourseListItem .user-list-items {
+    padding-top: 10px;
+    color: white;
+    border-radius: 3px;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.5rem;
+    /* letter-spacing: 0.5rem;
+    padding: 2rem 0;
+    font-weight: bold; */
+  }
+  .ComponentCourseListItem .user-list-items img {
+    border-radius: 5px;
+  }
+  .ComponentCourseListItem .user-list-items .multicolortext {
+    /* background-image: linear-gradient(to left, violet, indigo, green, blue, yellow, orange, red); */
+    /* background-image: linear-gradient(to left, violet, red, white, yellow, orange, red); */
+    background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 2px 2px black;
+  }
+  .ComponentCourseListItem .user-list-items .round-button-1, .ComponentCourseListItem .user-list-items .round-button-2, 
+  .ComponentCourseListItem .user-list-items .round-button-3, .ComponentCourseListItem .user-list-items .round-button-4, 
+  .ComponentCourseListItem .user-list-items .round-button-5, .ComponentCourseListItem .user-list-items .round-button-6, 
+  .ComponentCourseListItem .user-list-items .round-button-7 {
+    align-self: flex-end; 
+    width:30px;
+    height:30px;
+    line-height: 30px;
+    border: 2px solid #f5f5f5;
+    border-radius: 50%; 
+    margin-right: 15px;
+    transition: transform .7s ease-in-out;
+    box-shadow: 10px 10px black;
+}
+.ComponentCourseListItem .user-list-items .round-button-1:hover
+ {
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  cursor: pointer;
+}
+.ComponentCourseListItem .user-list-items .round-button-2:hover  
+ {
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  cursor: pointer;
+}
+.ComponentCourseListItem .user-list-items .round-button-3:hover, .round-button-4:hover
+ {
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  cursor: pointer;
+}
+.ComponentCourseListItem .user-list-items .round-button-4:hover   
+ {
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  cursor: pointer;
+}
+.ComponentCourseListItem .user-list-items .round-button-5:hover   
+ {
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  cursor: pointer;
+}
+.ComponentCourseListItem .user-list-items .round-button-6:hover   
+ {
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  cursor: pointer;
+}
+.ComponentCourseListItem .user-list-items .round-button-7:hover   
+ {
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  cursor: pointer;
+}
+.ComponentCourseListItem .user-list-items .round-button-1 { 
+    background: orange;
+    /* box-shadow: 10px 10px black; */
+  }
+  .ComponentCourseListItem .user-list-items .round-button-2 { 
+    background: green
+  }
+  .ComponentCourseListItem .user-list-items .round-button-3 { 
+    background: red
+  }
+  .ComponentCourseListItem .user-list-items .round-button-4 { 
+    background: #f5f5f5
+  }
+  .ComponentCourseListItem .user-list-items .round-button-5 { 
+    background: red
+  }
+  .ComponentCourseListItem .user-list-items .round-button-6 { 
+    background: orange
+  }
+  .ComponentCourseListItem .user-list-items .round-button-7 { 
+    background: green
+  }
+  .ComponentCourseListItem .user-list-items img:hover, .ComponentCourseListItem .user-list-items img:focus, .ComponentCourseListItem .user-list-items img:active {
+    position:relative;
+    background-color:green;
+    -webkit-animation: backandforth 2s ease 0s;
+    -webkit-animation-iteration-count:infinite;
+    animation: backandforth 2s ease 0s;
+    animation-iteration-count:infinite;
+  }
+  .ComponentCourseListItem .component-list-items {
+    padding-top: 10px;
+    font-size: 10px; 
+    color: white;
+    text-align: center;
+  }
+  .ComponentCourseListItem .component-text-items { 
+    padding-top: 10px;
+    font-size: 10px; 
+    color: white;
+    padding-left: 40px;
+  }
+  .ComponentCourseListItem .user-course-btn {
+    align-self: flex-end;
+    color: #fff;
+    font-size: 16px;
+    font-family: 'Source Sans Pro', helvetica, sans-serif;
+    background:#673ab7;
+    border: none;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 1px;
+    box-shadow: 10px 10px black;
+  }
+  .ComponentCourseListItem .new-course-btn {
+    align-self: flex-end;
+    color: #fff;
+    font-size: 16px;
+    font-family: 'Source Sans Pro', helvetica, sans-serif;
+    background: #9c27b0;
+    border: none;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 1px;
+    box-shadow: 10px 10px;
+  }
+  .ComponentCourseListItem .new-course-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5),
+      0 0 5px 2px #9c27b0;
+  }
+  .ComponentCourseListItem .new-course-btn:active {
+    background-color: purple;
+  }
+  .delete-course-btn,
+  .edit-course-btn{
+    opacity: 1;
+    border: 1px;
+    font-size: 10px;
+    cursor: pointer;
+    box-shadow: 10px 10px;
+  }
+  .delete-course-btn{
+   margin-left: 10px;
+  }
+  .edit-course-btn{
+   margin-right: 10px;
+  }
+  .Login-LogOut-btn {
+    padding-left: 1280px; 
+    /* align-self: flex-end; */
+    color: #fff;
+    font-size: 16px;
+    font-family: 'Source Sans Pro', helvetica, sans-serif;
+    border: none;
+    font-weight: 600;
+    border-radius: 1px;
+  }
+  .my-courses-btn {
+    padding-top: 1%;
+    padding-left: 1400px;
+    box-shadow: 10px 10px; 
+  }
+  .invite-btn {
+    opacity: 1;
+    border: 2px;
+    font-size: 10px;
+    cursor: pointer;
+    padding-left: 30px;
+    margin-top: 15px;
+    padding-right: 30px;
+    margin-left:25px;
+    box-shadow: 10px 10px;
+  }
+  .add-substract-btns {
+    opacity: 1;
+    border: 2px;
+    font-size: 10px;
+    cursor: pointer;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-left:25px;
+    box-shadow: 10px 10px;
+  }
+  /* Bounce Out */
+.hvr-bounce-out  {
+  display: inline-block; 
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+}
+.hvr-bounce-out:hover, .hvr-bounce-out:focus, .hvr-bounce-out:active {
+  -webkit-transform: scale(0.8);
+  transform: scale(0.8);
+  -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+  transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+}
+.tooltip {
+  color: white;
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+.component-list-items .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+
+  /* top: -5px;
+  right: 105%; */
+}
+.component-list-items:hover .tooltiptext {
+  visibility: visible;
+}
+.move {
+  position:relative;
+  background-color:green;
+  -webkit-animation: backandforth 2s ease 0s;
+  -webkit-animation-iteration-count:infinite;
+  animation: backandforth 2s ease 0s;
+  animation-iteration-count:infinite;
+}
+
+@-webkit-keyframes backandforth {0%{left:0;} 50%{left:58%;} 100%{left:0;}}
+
+@keyframes backandforth {0%{left:0;} 50%{left:100%;} 100%{left:0;}}

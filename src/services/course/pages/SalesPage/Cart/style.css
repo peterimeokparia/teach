@@ -1,0 +1,79 @@
+.cart{
+    background: transparent;
+    color: blue;
+    position: absolute;
+    right: 50%;
+    top: 0px;
+    font-size: 20px;
+    margin-top: 50px;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+} 
+.cartTitle {
+  /* text-align: center; */
+  padding-left: 37%;
+  margin-bottom: 1000px;
+  right: 50%;
+}
+.cart ul {
+  list-style: none;
+  padding: 0;
+}
+.cart li > a {
+  margin-bottom: 20px;
+  line-height: 1.5;
+  font-weight: 600;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 3px;
+  display: block;
+  text-decoration: none;
+  color: #222;
+}
+.cart .price {
+  margin-left: 15px;
+  margin-right: 15px;
+  opacity: 0.5;
+}
+.cart .list-items {
+  padding-top: 10px;
+  padding-bottom: 5px;
+  border-style: none;
+  border-radius: 3px;
+  font-size: 20px; 
+}
+ .flexible-modal {
+    position: absolute;
+    left:100px;
+    z-index: 1;
+    border: 1px solid #ccc;
+    background: white;
+  }
+  .flexible-modal-mask {
+    position: fixed;
+    height: 100%;
+    background: rgba(55, 55, 55, 0.6); 
+    background: transparent;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+  }
+  .flexible-modal-resizer {
+    position:absolute;
+    right:0;
+    bottom:0;
+    cursor:se-resize;
+    margin:5px;
+    border-bottom: solid 2px #333;
+    border-right: solid 2px #333;
+  }
+  .flexible-modal-drag-area{
+    background: rgba(22, 22, 333, 0.2); 
+    background: green;
+    height: 50px;
+    position:absolute;
+    right:0;
+    top:0;
+    cursor:move;
+  } 

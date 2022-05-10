@@ -1,0 +1,822 @@
+.MeetingPlan {
+    max-height: 100vh;
+    height: 100vh; 
+    max-width: 100vw;
+    width: 100vw;
+    text-align: center;
+    background-image: url(../../../images/geometry2.png);
+    font-family: 'Courier New', Courier, monospace;
+    overflow: hidden;
+    overflow-y: hidden;
+  }
+  .MeetingPlan .sidebarOne {
+    padding-right: 10px;
+    margin-left: -3110px;
+    display: flex;
+    flex-direction: column;
+    color: #673ab7;
+  }
+  .MeetingPlan .sidebarTwo {
+    background: #fbf9ff;
+    border-right: 1px solid #bba0ea;
+    position: relative;
+    background: lightpink;
+    min-width: 500px;
+    height: 1200px;
+    width: 200px;
+    box-sizing: border-box;
+    text-align: center;
+
+    padding-right: 100px;
+    margin-left: -10px;
+    display: flex;
+    flex-direction: column;
+    color: #673ab7;
+  } 
+  .MeetingPlan .sidebarTwo .navLink:hover {
+    cursor: -webkit-grab; cursor: grab;
+    cursor: -webkit-grabbing; cursor: grabbing;
+  }
+
+  /* .MeetingPlan .sidebarTwo .children-subsection .notes-title .title-date {
+    /* padding-top: 100px; */
+  /* } */
+
+  /* .react-page-editable .react-page-editable-mode-insert {
+    padding-bottom: 7000px;
+    margin-bottom: 5000px;
+  }
+
+  .react-page-editable-mode-insert {
+    padding-bottom: 7000px;
+    margin-bottom: 5000px;
+  }   */
+  .sidebarThreeTutor {
+    flex-basis: 300px;  
+    background: #fbf9ff;
+    border-right: 1px solid #bba0ea;
+
+    position: relative;
+    background: aquamarine;
+    min-width: 200px;
+    height: 1200px;
+    width: 500px;
+    box-sizing: border-box;
+    text-align: center;
+
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: -320px;
+    display: flex;
+    flex-direction: column;
+    color: aquamarine;
+  }
+
+  .sidebarThree {
+    flex-basis: 300px;  
+    background: #fbf9ff;
+    border-right: 1px solid #bba0ea;
+
+    position: relative;
+    background: aquamarine;
+    min-width: 200px;
+    height: 1200px;
+    width: 500px;
+    box-sizing: border-box;
+    text-align: center;
+
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: -210px;
+    display: flex;
+    flex-direction: column;
+    color: aquamarine;
+  }
+  .sidebarFour {
+    flex-basis: 300px;  
+    background: #fbf9ff;
+    border-right: 1px solid #bba0ea;
+
+    position: relative;
+    background: aquamarine;
+    min-width: 200px;
+    height: 1200px;
+    width: 400px;
+    box-sizing: border-box;
+    text-align: center;
+
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: -8px;
+    display: flex;
+    flex-direction: column;
+    color: aquamarine;
+  }
+   
+  .MeetingPlan .invite {
+    /* margin-top: -90px; */
+    margin-left: -300px;
+
+    flex-basis: 300px;  
+    background: red;
+    border-right: 1px solid red;
+    position: relative;
+    min-width: 200px;
+    height: 1200px;
+    box-sizing: border-box;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    color: aquamarine;
+  }
+  .MeetingPlan .splitview {
+    margin-top: -10px;
+    /* margin-left: -290px; */
+  }
+  .MeetingPlan .boomingllc header {
+    background-color: #673ab7;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    /* padding: 10px 20px; */
+    /* background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red); */
+  }
+  .MeetingPlan .teach header {
+    background-color: #673ab7;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    /* padding: 10px 20px; */
+    background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  }
+  .MeetingPlan .others header {
+    background-color: #673ab7;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    /* padding: 10px 20px; */
+    background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  }
+  .MeetingPlan header h1 {
+    background-color: #673ab7;
+    margin: 0;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.5rem;
+    font-weight: bold;
+  }
+  .MeetingPlan header .current-lesson {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 400;
+    opacity: 0.8;
+  }
+  
+  .MeetingPlan .content {
+    display: flex;
+    width: 1132px;
+    /* display: flex; */
+    /* height: 100vh;
+    width: 1532px; */
+    /* width: 10vw; */
+  }
+  .MeetingPlan .content .editor {
+    margin-left: 1170px;
+  }
+  .MeetingPlan .content .editor .main {
+    margin-top: 95px;
+    margin-left: -1110px;
+    min-width: 102px;
+    width: 1092px;
+    overflow: hidden;
+  }
+  .MeetingPlan .sidebar {
+    padding-right: 0px;
+    padding-left: 0px;
+    display: flex;
+  }
+  
+  .MeetingPlan .sidebar .lessons {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .lessons .lesson-item {
+    margin-bottom: 5px;
+    border-style: solid;
+    border-radius: 3px;
+  }
+  .video-call {
+    /* margin-left: 1170px; */
+    margin-right: auto;
+  } 
+  .video-call-full {
+    margin-top: 5%;
+    margin-left: 100px;
+    margin-right: 0px;
+    border: 10px;
+    transform: translate(-1300px, -45px);
+  }
+  .video-call-hide {
+    margin-left: 0px;
+    padding-top: 0px;
+    height: 110vh;
+    display: none;
+  }
+  .tools {
+    margin-left: 0px;
+    padding-top: 0px;
+    height: 110vh;
+  }
+  .tools-hide {
+    margin-left: 0px;
+    padding-top: 0px;
+    height: 110vh;
+    display: none;
+  }
+  .toggle-stage-btns-show,
+  .plan-lesson-btn,
+  .delete-lesson-btn,
+  .edit-lesson-btn {
+    opacity: 1;
+    border: none;
+    font-size: 10px;
+    cursor: pointer;
+    box-shadow: 10px 10px;
+  }
+  .MeetingPlan .lesson-item .div-btns {
+    padding-bottom: 40px;
+  }
+  /* .MeetingPlan .lesson-item .span-btns {
+    padding-bottom: 5px;
+  } */
+  .toggle-stage-btns-show {
+    visibility: visible;
+    margin-left: 5px;
+  }
+  .plan-lesson-btn {
+    margin-left: 5px;
+  }
+  .edit-lesson-btn {
+    margin-right: 5px;
+  }
+  .delete-lesson-btn {
+    margin-right: 5px;
+  }
+  .toggle-stage-btns-hide {
+    visibility: hidden;
+  }
+    .lesson-item:hover .toggle-stage-btns-show,
+    .toggle-stage-btns-show:focus,
+    .lesson-item:hover .plan-lesson-btn,
+    .plan-lesson-btn:focus,
+    .lesson-item:hover .delete-lesson-btn,
+    .delete-lesson-btn:focus,
+    .lesson-item:hover .edit-lesson-btn,
+    .edit-lesson-btn:focus {
+      opacity: 1;
+    }
+  .lesson-item.selected {
+    background: #e9e5ff;
+    color: #222;
+    font-weight: 600;
+    box-shadow: 0 0 3px #6734ba, 0 0 3px inset #fff;
+  }
+  .lesson,
+  .lesson > div,
+  .lesson-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+  .lesson > div {
+    padding: 10px;
+    display: flex;
+  }
+  .lesson-editor {
+    font-size: 18px;
+    font-family: 'Fira Mono', monospace;
+    flex: 1;
+    padding: 10px;
+  }
+  .lesson-editor-help {
+    display: flex;
+    justify-content: space-between;
+  }
+  .preview-btn {
+    margin: 1px;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+    border: none;
+    border-radius: 2px;
+  }
+  .preview-btn:active {
+    background-color: #f7f2ff;
+  }
+  .MeetingPlan .lesson-item .span-btns {
+    /* padding-left: 50px;
+    padding-top: 0px; */
+    margin-top: -15%;
+  }
+  .MeetingPlan .lesson-item .span-btns .MaterialUiVideoComponent {
+    margin-top: -15%;
+    /* padding-right: 400px;
+    margin-top: -15%; */
+    /* padding-top: 10px; */
+  }
+  .lesson-plan-round-button-1 { 
+    background: orange;
+    /* box-shadow: 10px 10px black; */
+  }
+  .lesson-plan-round-button-2 { 
+    background: yellowgreen
+  }
+  .lesson-plan-round-button-3 { 
+    background: red
+  }
+  .lesson-plan-round-button-4 { 
+  background: skyblue
+  }
+  .lesson-plan-round-button-1, .lesson-plan-round-button-2, .lesson-plan-round-button-3, .lesson-plan-round-button-4 {
+   align-self: flex-end; 
+   width:70px;
+   height:60px;
+   line-height: 60px;
+   border: 2px solid #f5f5f5;
+   border-radius: 50%; 
+   margin-top: 30px;
+   margin-right: 60px;
+   transition: transform .7s ease-in-out;
+   box-shadow: 10px 10px black;
+  }
+  .lesson-plan-round-button-1:hover
+  {
+  background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  cursor: pointer;
+  }
+  .lesson-plan-round-button-2:hover
+  {
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  cursor: pointer;
+  }
+  .lesson-plan-round-button-3:hover
+  {
+  background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  cursor: pointer;
+  }
+  .lesson-plan-round-button-4:hover
+  {
+  background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  cursor: pointer;
+  }
+  .MeetingPlan .content .meeting-stage-hidden{
+    visibility: hidden;
+  }
+  .MeetingPlan .content .meeting-stage-visible{
+    /* margin-left: -2000px; */
+    visibility: visible;
+  }
+  .sidebar-meeting{
+    flex-basis: 200px;
+    background: yellow;
+  }
+  .MeetingPlan .whiteBoardSideBar {
+    margin-top: 60px;
+    /* margin-top: -1000px;
+    width: 5000px;
+    height: 1000px; */
+    /* padding-right: 0px;
+    padding-left: 0px;
+    display: flex; */
+  }
+  .MeetingPlan .whiteBoardSideBar .savedBoards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .MeetingPlan .mainvVideoSection-recordingStopped {
+  display: inline-block;
+  vertical-align: middle;
+  /* -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  margin-bottom: -50%; */
+}
+.MeetingPlan .mainVideoSection-recording {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  /* transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transform: scale(1.9);
+  transform: scale(1.9);
+  top: 20%;
+  margin-top: -11%;
+  margin-left: 20%;  */
+}
+.MeetingPlan .mainVideoSection-recordingNotVisible {
+  display: inline-block;
+  vertical-align: middle;
+  /* -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transform: scale(1);
+  transform: scale(1); */
+}
+.MeetingPlan .mainvVideoSection-recordingStopped {
+    display: inline-block;
+    /* vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0); */
+    /* -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    margin-bottom: -50%; */
+  }
+  .MeetingPlan .mainVideoSection-recording {
+    display: inline-block;
+    /* vertical-align: middle; */
+    /* -webkit-transform: perspective(1px) translateZ(0); */
+    /* transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transform: scale(1.9);
+    transform: scale(1.9);
+    top: 30%;
+    margin-top: 5%;
+    margin-left: 45%;  */
+  }
+  .MeetingPlan .mainVideoSection-recordingNotVisible {
+    display: inline-block;
+    /* vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transform: scale(1);
+    transform: scale(1); */
+  }
+  .videoSectionCallOut{
+    color: #fff;
+    background-color: #333;
+    margin-left: 1%; 
+    margin-top: -11%;
+    transition: all 2s ease-out;
+    /* transition-timing-function: ease-in-out;
+    transition-duration: 3s;
+    transition-delay: 0.5s; */
+    /* transform: rotate(270deg); */
+  }
+  .videoSectionCallOut-selected{
+    color: #333;
+  background-color: #fff;
+    /* margin-left: 1%; 
+    margin-top: -11%;
+    transition-timing-function: ease-in-out;
+    transition-duration: 3s;
+    transition-delay: 0.5s; */
+    /* transform: rotate(270deg); */
+  }
+  .transformed-state {
+    transform: rotate(270deg);
+    background-color: blue;
+    color: yellow;
+    font-size: 12px;
+    transition-property: background-color font-size transform color;
+    transition-timing-function: ease-in-out;
+    transition-duration: 3s;
+  }
+  @media only screen and (min-width: 638px) {
+    .MeetingPlan .content {
+      flex-direction: row;
+      height: 100%;
+    }
+    .MeetingPlan .sidebar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
+    .MeetingPlan .lesson {
+      flex: 1;
+    }
+    .MeetingPlan .whiteBoardSideBar {
+      flex-basis: 100px;
+      background: transparent;
+      margin-left: -100px;
+      max-height: 900px;
+      overflow: scroll;
+    }
+    .MeetingPlan .whiteBoardSideBar .savedBoards {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .MeetingPlan .whiteBoardSideBar .savedBoards .savedBoards-items {
+      margin-bottom: 5px;
+      top: 50%;
+      left: 50%;
+      margin-right: 0%;
+      padding-bottom: 15px;
+      padding-left: 0.5rem;
+    }
+    .MeetingPlan .whiteBoardSideBar .savedBoards .savedBoards-items:hover {
+      margin-bottom: 5px;
+      border-style: solid;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      margin-right: 0%;
+      padding-bottom: 15px;
+      padding-left: 0.5rem;
+      cursor: pointer;
+    }
+  }
+  @media only screen and (max-width: 637px) {
+    .MeetingPlan .content {
+      flex-direction: column;
+    }
+    .MeetingPlan .sidebar {
+      background: #fbf9ff;
+      border-bottom: 1px solid #bba0ea;
+      min-height: 50px;
+    }
+    .MeetingPlan .lesson {
+      flex: 1;
+    }
+    .MeetingPlan .whiteBoardSideBar {
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
+  }
+  
+  /* 
+    ##Device = Desktops
+    ##Screen = 1281px to higher resolution desktops
+  */
+  
+  @media (min-width: 1281px) {
+    
+    .MeetingPlan .content {
+      flex-direction: row;
+      height: 100%;
+    }
+    .MeetingPlan .sidebar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
+    .MeetingPlan .lesson {
+      flex: 1;
+    }
+    .MeetingPlan .whiteBoardSideBar {
+      /* flex-basis: 0px; */
+      /* flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea; */
+    }
+    
+  }
+  
+  /* 
+    ##Device = Laptops, Desktops
+    ##Screen = B/w 1025px to 1280px
+  */
+  
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    
+    .MeetingPlan .content {
+      flex-direction: row;
+      height: 100%;
+    }
+    .MeetingPlan .sidebar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
+    .MeetingPlan .lesson {
+      flex: 1;
+    }
+    .MeetingPlan .whiteBoardSideBar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
+    
+  }
+  
+  /* 
+    ##Device = Tablets, Ipads (portrait)
+    ##Screen = B/w 768px to 1024px
+  */
+  
+  @media (min-width: 768px) and (max-width: 1024px) {
+    
+    .MeetingPlan .content {
+      flex-direction: row;
+      height: 100%;
+    }
+    .MeetingPlan .sidebar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
+    .MeetingPlan .lesson {
+      flex: 1;
+    }
+    .MeetingPlan .whiteBoardSideBar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
+  }
+  
+  /* 
+    ##Device = Tablets, Ipads (landscape)
+    ##Screen = B/w 768px to 1024px
+  */
+  
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    
+    .MeetingPlan .content {
+      flex-direction: row;
+      height: 100%;
+    }
+    .MeetingPlan .sidebar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
+    .MeetingPlan .lesson {
+      flex: 1;
+    }
+    .MeetingPlan .whiteBoardSideBar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
+  }
+  
+  
+  
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    
+    .MeetingPlan .content {
+      flex-direction: column;
+    }
+    .MeetingPlan .sidebar {
+      background: #fbf9ff;
+      border-bottom: 1px solid #bba0ea;
+      min-height: 50px;
+    }
+    .MeetingPlan .lesson {
+      flex: 1;
+    }
+    .MeetingPlan .whiteBoardSideBar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
+  }
+  
+  
+  
+  /* 
+    ##Device = Low Resolution Tablets, Mobiles (Landscape)
+    ##Screen = B/w 481px to 767px
+  */
+  
+  @media (min-width: 481px) and (max-width: 767px) {
+    
+    .MeetingPlan .content {
+      flex-direction: row;
+      height: 100%;
+    }
+    .MeetingPlan .sidebar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
+    .MeetingPlan .lesson {
+      flex: 1;
+    } 
+    .MeetingPlan .whiteBoardSideBar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
+  }
+  /* 
+    ##Device = Most of the Smartphones Mobiles (Portrait)
+    ##Screen = B/w 320px to 479px
+  */
+  @media (min-width: 320px) and (max-width: 480px) {
+    .MeetingPlan {
+      height: 300vh; 
+      /* width: 15vh; */
+      /* display: flex;
+      flex-direction: column; */
+      /* text-align: center; */
+      background-image: url(../../../images/geometry2.png);
+  /* 
+      margin-left: -50%; */
+    }
+    .MeetingPlan .content {
+      height: 100%;
+   
+    }
+    .MeetingPlan .sidebar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
+    .MeetingPlan .lesson {
+      flex: 1;
+    }  
+    .MeetingPlan .whiteBoardSideBar {
+      flex-basis: 300px;
+      background: #fbf9ff;
+      border-right: 1px solid #bba0ea;
+    }
+  }
+  .flexible-modal {
+    position: absolute;
+    z-index: 1;
+    border: 1px solid #ccc;
+    background: white;
+    /* padding-left: 1%; */
+  }
+  .flexible-modal-mask {
+    position: fixed;
+    height: 0%;
+    background: rgba(55, 55, 55, 0.6);
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+  }
+  .flexible-modal-resizer {
+    position:absolute;
+    right:0;
+    bottom:0;
+    cursor:se-resize;
+    margin:5px;
+    border-bottom: solid 2px #333;
+    border-right: solid 2px #333;
+  }
+  .flexible-modal-drag-area{
+    background: rgba(22, 22, 333, 0.2);
+    height: 50px;
+    position:absolute;
+    right:0;
+    top:0;
+    cursor:move;
+  }
+  
+  .testResize{
+    /* border: 2px solid;
+    padding: 20px; 
+    width: 300px; */
+    resize: both;
+    overflow: auto;
+  }
+
+
+
+  

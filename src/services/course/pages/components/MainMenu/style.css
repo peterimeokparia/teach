@@ -1,0 +1,50 @@
+#flyoutMenu {
+    width: 15vw;
+    height: 100vh;
+    /* background-color: black; */
+    background-image: url(../../../images/geometry2.png);
+    border: 5px solid red;
+    position: fixed;
+    top: 2.3rem;
+    left: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5rem;
+    padding: 2rem 0;
+    font-weight: bold;
+    transition: color 0.3s linear;
+    transition: transform .3s
+                cubic-bezier(0, .52, 0, 1);
+    overflow: scroll;
+    z-index: 1000;
+  }
+   
+  #flyoutMenu.hide {
+    transform: translate3d(-15vw, 0, 0);
+  }
+   
+  #flyoutMenu.show {
+    transform: translate3d(0vw, 0, 0);
+    overflow: hidden;
+  }
+   
+  #flyoutMenu h2 a {
+    color: #333;
+    margin-left: 15px;
+    text-decoration: none;
+  }
+   
+  #flyoutMenu h2 a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  #flyoutMenu h2 a:active {
+    text-decoration: line-through;
+  }
+  .navlinkItem {
+    list-style: none;
+    padding-top: 10px;
+    padding-bottom: 40px;
+  }
+  #flyoutMenu :hover {
+    cursor: pointer;
+  }

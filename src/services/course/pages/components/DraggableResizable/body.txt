@@ -1,0 +1,13 @@
+<div class="popup">
+  <div class="popup-header">Click here to move</div>
+  <p>Move</p>
+  <p>this</p>
+  <p>DIV</p>
+</div>
+
+<div class="popup">
+  <div class="popup-header noselect">Click here to move</div>
+  <p>Move</p>
+  <p>this</p>
+  <p>DIV</p>
+</div>

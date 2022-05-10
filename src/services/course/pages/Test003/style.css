@@ -1,0 +1,198 @@
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+
+*, *::before, *::after {
+  /* padding: 0;
+  margin: 0 auto;
+  box-sizing: border-box; */
+}
+
+body {
+  /* font-family: 'Anton', sans-serif;
+  background-color: #eee;
+  color: #333;
+  min-height: 100vh;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+          justify-content: center;
+  align-content: center;
+  -webkit-box-align: end;
+          align-items: flex-end;
+  flex-wrap: wrap; */
+}
+
+.outerContainer {
+  width: 400px;
+  margin: 1em;
+}
+
+.indent {
+  padding-left: 1em;
+}
+
+.container {
+  position: relative;
+  /* width: 100%;
+  height: 200px; */
+  border: 1px solid #fff;
+  border-radius: 4px;
+  margin: 0.5em auto;
+  -webkit-perspective: 420px;
+          perspective: 420px;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+}
+
+.square {
+  width: 100px;
+  height: 100px;
+  background-color: green;
+  position: absolute;
+  top: 150px;
+  left: calc(50% - 50px);
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+          align-items: center;
+  font-size: 80px;
+  color: lightgreen;
+}
+
+.squareswitch {
+  width: 100px;
+  height: 100px;
+  background-color: green;
+  position: absolute;
+  top: 150px;
+  left: calc(50% - 50px);
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+          align-items: center;
+  font-size: 80px;
+  color: lightgreen;
+  -webkit-animation: sqrA 4s linear;
+  animation: sqrA 4s linear;
+}
+
+.squareA {
+  /* -webkit-animation: sqrA 4s infinite linear;
+          animation: sqrA 4s infinite linear; */
+          -webkit-animation: sqrA 4s linear;
+          animation: sqrA 4s linear;
+}
+
+.divtext{
+  color: blue;
+  -webkit-transform: translateX(120px) rotateY(0deg);
+  transform: translateX(120px) rotateY(0deg);
+}
+
+.divtext:hover{
+  color: blue;
+  -webkit-transform: translateX(120px) rotateY(180deg);
+            transform: translateX(120px) rotateY(180deg);
+}
+
+@-webkit-keyframes sqrA {
+  from {
+    -webkit-transform: translateX(120px) rotateY(0deg);
+            transform: translateX(120px) rotateY(0deg);
+  }
+  to {
+    -webkit-transform: translateX(120px) rotateY(180deg);
+            transform: translateX(120px) rotateY(180deg);
+  }
+}
+
+@keyframes sqrA {
+  from {
+    -webkit-transform: translateX(120px) rotateY(0deg);
+            transform: translateX(120px) rotateY(0deg);
+  }
+  to {
+    -webkit-transform: translateX(120px) rotateY(180deg);
+            transform: translateX(120px) rotateY(180deg);
+  }
+}
+
+.squareB {
+  -webkit-animation: sqrB 4s infinite linear;
+          animation: sqrB 4s infinite linear;
+}
+
+@-webkit-keyframes sqrB {
+  from {
+    -webkit-transform: rotateY(0deg) translateX(120px);
+            transform: rotateY(0deg) translateX(120px);
+  }
+  to {
+    -webkit-transform: rotateY(360deg) translateX(120px);
+            transform: rotateY(360deg) translateX(120px);
+  }
+}
+
+@keyframes sqrB {
+  from {
+    -webkit-transform: rotateY(0deg) translateX(120px);
+            transform: rotateY(0deg) translateX(120px);
+  }
+  to {
+    -webkit-transform: rotateY(360deg) translateX(120px);
+            transform: rotateY(360deg) translateX(120px);
+  }
+}
+
+.lineSquare {
+  width: 100px;
+  height: 100px;
+  border: 2px dashed #D50000;
+  position: absolute;
+  top: 50px;
+  left: calc(50% - 50px);
+}
+
+.rotationAxis {
+  position: absolute;
+  top: 30px;
+  width: 1px;
+  height: 140px;
+  border: 1px dashed #AA00FF;
+  -webkit-transform: translateZ(1px);
+          transform: translateZ(1px);
+}
+
+.rotationAxis.A {
+  left: calc(50% + 120px);
+}
+
+.rotationAxis.B {
+  left: 50%;
+}
+
+.outerContainer > span {
+  display: block;
+}
+
+.outerContainer > span:nth-child(3)::before {
+  display: inline-block;
+  content: '';
+  width: 1em;
+  height: 1em;
+  margin-right: 0.25em;
+  border: 2px dashed #D50000;
+}
+
+.outerContainer > span:nth-child(4)::before {
+  display: inline-block;
+  content: '';
+  width: 1em;
+  height: 1px;
+  margin-right: 0.25em;
+  border: 1px dashed #AA00FF;
+  vertical-align: middle;
+}

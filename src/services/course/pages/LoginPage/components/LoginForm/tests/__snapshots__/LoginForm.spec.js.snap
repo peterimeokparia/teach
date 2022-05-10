@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoginForm renders as expected 1`] = `
+<div
+  className="LoginPage"
+>
+  <form
+    onSubmit={[Function]}
+  >
+    <label>
+      Email
+      <input
+        autoComplete="username"
+        data-cy="email"
+        id="email"
+        name="email"
+        onChange={[Function]}
+        placeholder="email"
+        type="email"
+      />
+    </label>
+    <label>
+      Password
+      <input
+        autoComplete="current-password"
+        data-cy="password"
+        id="password"
+        name="password"
+        onChange={[Function]}
+        placeholder="password"
+        type="password"
+      />
+    </label>
+    <div />
+    <div />
+    <button
+      data-cy="submit-login"
+      id="submit-login"
+      onClick={[Function]}
+      type="submit"
+    >
+      Sign In
+    </button>
+  </form>
+</div>
+`;

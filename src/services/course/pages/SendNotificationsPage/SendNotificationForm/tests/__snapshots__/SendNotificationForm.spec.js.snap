@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SendNotificationForm renders as expected 1`] = `
+<div>
+  <form
+    onSubmit={[Function]}
+  >
+    <label>
+      Push Notification Message Title
+      <input
+        name="notification-title"
+        onChange={[Function]}
+        placeholder="push notification title"
+        type="text"
+        value=""
+      />
+    </label>
+    <label>
+      Push Notification Message
+      <input
+        name="notification-message"
+        onChange={[Function]}
+        placeholder="push notification message"
+        type="text"
+        value=""
+      />
+    </label>
+    <div />
+    <button
+      onClick={[Function]}
+      type="submit"
+    >
+      Send Message
+    </button>
+  </form>
+</div>
+`;

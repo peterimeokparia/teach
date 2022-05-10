@@ -1,0 +1,181 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditCalendarEvents renders as expected 1`] = `
+<div
+  className="events-main"
+>
+  <span
+    className="events"
+  >
+    <span>
+      <form
+        className=""
+        onSubmit={[Function]}
+      >
+        <span
+          className="row"
+        >
+          <input
+            onChange={[Function]}
+            placeholder="Event Title"
+            type="text"
+            value=""
+          />
+        </span>
+        <span
+          className="row"
+        >
+          <input
+            onChange={[Function]}
+            placeholder="Event Location"
+            type="text"
+            value=""
+          />
+        </span>
+        <span
+          className="row"
+        >
+          <span
+            className="col"
+          >
+            Start Date
+            <input
+              onChange={[Function]}
+              placeholder="Event Start"
+              type="date"
+            />
+          </span>
+          <span
+            className="col"
+          >
+            Start Time
+            <input
+              onChange={[Function]}
+              placeholder="Event Start"
+              type="time"
+            />
+          </span>
+        </span>
+        <span
+          className="row"
+        >
+          <span
+            className="col"
+          >
+            End Date
+            <input
+              onChange={[Function]}
+              placeholder="Event End"
+              type="date"
+            />
+          </span>
+          <span
+            className="col"
+          >
+            End Time
+            <input
+              onChange={[Function]}
+              placeholder="Event End"
+              type="time"
+            />
+          </span>
+        </span>
+        <span
+          className="row"
+        >
+          <span
+            className="col-sm-3"
+          >
+            <label>
+              All Day ?
+            </label>
+          </span>
+          <div
+            class="w-10"
+          />
+          <span
+            className="col-sm-6"
+          >
+            <div>
+              <label
+                className="switch"
+              >
+                <input
+                  checked={false}
+                  onChange={[Function]}
+                  type="checkbox"
+                  value="isAllDay"
+                />
+                <span
+                  class="slider round"
+                />
+              </label>
+            </div>
+          </span>
+        </span>
+        <span
+          className="row"
+        >
+          <span
+            className="col-sm-3"
+          >
+            <label>
+              Is Recurring ?
+            </label>
+          </span>
+          <div
+            class="w-10"
+          />
+          <span
+            className="col-sm-6"
+          >
+            <div>
+              <label
+                className="switch"
+              >
+                <input
+                  checked={false}
+                  onChange={[Function]}
+                  type="checkbox"
+                  value="isRecurring"
+                />
+                <span
+                  class="slider round"
+                />
+              </label>
+            </div>
+          </span>
+        </span>
+        <button
+          onClick={[Function]}
+        >
+           
+          Edit
+           
+        </button>
+      </form>
+    </span>
+    <br />
+    <form
+      className=" editing "
+    >
+      <span>
+        <input
+          name="reset"
+          onChange={[Function]}
+          type="submit"
+          value="Reset"
+        />
+      </span>
+    </form>
+  </span>
+</div>
+`;
+
+exports[`EditCalendarEvents renders children as expected 1`] = `
+<div>
+  <form>
+    <input />
+  </form>
+</div>
+`;

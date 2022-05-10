@@ -1,0 +1,123 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OperatorRegistrationForm renders as expected 1`] = `
+<div
+  className="LoginPage"
+>
+  <form
+    onSubmit={[Function]}
+  >
+    <label>
+      Email
+      <input
+        name="email"
+        onChange={[Function]}
+        placeholder="email"
+        type="email"
+        value=""
+      />
+    </label>
+    <label>
+      Password
+      <input
+        name="password"
+        onChange={[Function]}
+        placeholder="password"
+        type="password"
+        value=""
+      />
+    </label>
+    <label>
+      First Name
+      <input
+        name="firstName"
+        onChange={[Function]}
+        placeholder="first name"
+        type="text"
+        value=""
+      />
+    </label>
+    <label>
+      Last Name
+      <input
+        name="lastName"
+        onChange={[Function]}
+        placeholder="last name"
+        type="text"
+        value=""
+      />
+    </label>
+    <span
+      className="LoginPageRadioButton"
+    >
+      <span
+        className="left"
+      >
+        <label>
+          School
+          <input
+            name="firstName"
+            placeholder="first name"
+            type="radio"
+            value="Student"
+          />
+        </label>
+      </span>
+      <span
+        className="right"
+      >
+        <label>
+          Organization
+          <input
+            name="firstName"
+            placeholder="first name"
+            type="radio"
+            value="Tutor"
+          />
+        </label>
+      </span>
+      <span
+        className="right"
+      >
+        <label>
+          Individual
+          <input
+            name="firstName"
+            placeholder="first name"
+            type="radio"
+            value="Tutor"
+          />
+        </label>
+      </span>
+    </span>
+    <label>
+      Business Name
+      <input
+        name="businessName"
+        onChange={[Function]}
+        placeholder="business name"
+        type="text"
+        value=""
+      />
+    </label>
+    <label>
+      Phone
+      <input
+        name="phone"
+        onChange={[Function]}
+        placeholder="phone"
+        type="phone"
+        value=""
+      />
+    </label>
+    <div />
+    <div />
+    <button
+      onClick={[Function]}
+      type="submit"
+    >
+      Create Service Account
+    </button>
+  </form>
+</div>
+`;

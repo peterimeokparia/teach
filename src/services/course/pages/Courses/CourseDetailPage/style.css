@@ -1,0 +1,580 @@
+.CourseDetail {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Courier New', Courier, monospace;
+}
+.CourseDetail form {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  margin: 0;
+}
+.CourseDetail form label {
+  margin-bottom: 1em;
+  font-weight: bold; 
+}
+.CourseDetail form input {
+  padding: 8px 6px 8px 8px 9px;
+  border: 1px solid #aaa;
+  border-radius: 2px;
+}
+.CourseDetail form input:focus {
+  outline: none;
+  border: 1px solid #5d2faf;
+}
+.CourseDetail form button {
+  background: #5d2faf;
+  font-size: 18px;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px #5d2faf;
+  transition: box-shadow, background-color 0.12s;
+  outline: none;
+  margin-bottom: 10px;
+}
+.CourseDetail form button + button {
+  opacity: 0.8;
+  font-size: 14px;
+  padding: 7px;
+  margin: initial 10px;
+}
+.CourseDetail form button:hover {
+  background-color: #753fd6;
+  cursor: pointer;
+}
+.CourseDetail form button[disabled] {
+  opacity: 0.4;
+}
+.CourseDetail form button:focus {
+  box-shadow: 0 1px 8px #5d2faf;
+}
+.CourseDetail form button:active {
+  transform: scale(0.98);
+}
+
+.CourseDetail header {
+  background-color: #673ab7;
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px 20px;
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+}
+.CourseDetail header h1 {
+  background-color: #673ab7;
+  margin: 0;
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.5rem;
+  font-weight: bold; 
+    /* background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red); */
+}
+.CourseDetail header .current-lesson {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  opacity: 0.8;
+}
+.header-left{
+ /* margin-left: 10px; */
+}
+.header-right{
+  margin-left: 40px;
+}
+.CourseDetail header .current-lesson-button {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 400;
+  opacity: 0.8;
+}
+.CourseDetail .multiColor{
+  background-color: #673ab7;
+  margin: 0;
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.5rem;
+  font-weight: bold;
+  /* background-image: linear-gradient(to left, white, green, yellow, orange, black, blue ); */
+  background-image: linear-gradient(to left, black, blue );
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  box-shadow: 10px 10px black;
+}
+.CourseDetail .content {
+  display: flex;
+  height: 100vh;
+}
+.CourseDetail .sidebar {
+  padding-right: 0px;
+  padding-left: 1px;
+  display: flex;
+  flex-direction: column;
+}
+
+.CourseDetail .sidebar .lessons {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  top: 50%;
+  left: 10%;
+  margin-right: 1%;
+  margin-left: 0%;
+  margin-top: 2%;
+}
+.lessons .lessonMultiColor{
+  background-color: #673ab7;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  font-weight: bold;
+  background-image: linear-gradient(to left, blue);
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.lesson {
+  margin-left: 280px;
+  padding-top: 10px;
+  height: 110vh;
+}
+.CourseDetail .content .lesson-content {
+  margin-top: -1%;
+  /* margin-left: -62%; */
+  width: 50vh; 
+} 
+.CourseDetail .content .lesson-content .content {
+  margin-left: -85px;
+}
+.CourseDetail .content .lesson-content .content .whiteBoardSideBar {
+  flex-basis: 100px;
+  background: transparent;
+  margin-left: -100px;
+  max-height: 900px;
+  overflow: scroll;
+}
+.CourseDetail .content .lesson-content .content .whiteBoardSideBar .savedBoards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.CourseDetail .content .lesson-content .content .whiteBoardSideBar .save-icon-visible {
+  visibility: visible;
+}
+.CourseDetail .content .lesson-content .content .whiteBoardSideBar .save-icon-hidden {
+  visibility: hidden;
+  margin-top: -90px;
+}
+.CourseDetail .content .lesson-content .lesson2 h5 {
+   margin-left: 200px;
+   /* width: 50vh;  */
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 1000px;
+   max-width: 1000px; 
+   margin-left: 0px; 
+}
+.CourseDetail .content .lesson-content .lesson2 {
+  /* margin-left: 0px;
+    width: 10vh */
+   /* width: 50vh; */
+   /* width: auto; */
+   /* width: 10vh;
+   text-align: justify; */
+   text-align: justify
+} 
+.CourseDetail .content .lesson-content .lesson2:after {
+  content: "";
+  display: inline-block;
+  width: 100%;
+}
+.CourseDetail .content .lesson-content .lesson2 .lessonPage {
+  text-align: left;
+  margin-left: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* width: 1000px; */
+  max-width: 1000px; 
+  margin-left: auto; 
+  /* margin-left:1542px; */
+  /* dev  margin-left: 0px;  */
+} 
+.CourseDetail .content .lesson-content .toggleItems {
+  /* margin-left: 130px; development */
+  /* margin-left: 1642px; */
+  margin-left: 130px;
+} 
+.CourseDetail .content .lesson-content .toggleItems .sidebar{
+  /* margin-left: 130px; development */
+  /* margin-left: 1642px; */
+  margin-left: 230px;
+} 
+.CourseDetail .content .lesson-content .toggleItems .boardEditorDisplay {
+  margin-left: -130px;
+}
+.lessons .lesson-item {
+  margin-bottom: 5px;
+  border-style: solid;
+  border-radius: 3px;
+  top: 50%;
+  left: 50%;
+  margin-right: 0%;
+  padding-bottom: 15px;
+  padding-left: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold; 
+  width: 300px;
+}
+.CourseDetail .content .lesson-content .lesson2 .content{
+  /* margin-top: -1%;
+  margin-left: 5%; */
+  /* margin-left: -35%; */
+  margin-left: 0%;
+} 
+.CourseDetail .content .lesson-content .toggleItems .lessonFileUploadFilelist{
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* margin-left:  -35%; */
+   
+     /* margin-left: -35%; */
+  /* margin-left: 200px; */
+} 
+.toggle-stage-btns-show,
+.plan-lesson-btn,
+.current-lesson-button,
+.delete-lesson-btn,
+.edit-lesson-btn {
+  opacity: 0;
+  border: none;
+  font-size: 10px;
+  cursor: pointer;
+}
+.toggle-stage-btns-show {
+  visibility: visible;
+  margin-left: 5px;
+}
+.plan-lesson-btn {
+  margin-left: 5px;
+}
+.edit-lesson-btn {
+  margin-right: 5px;
+}
+.delete-lesson-btn {
+  margin-right: 5px;
+}
+.toggle-stage-btns-hide {
+  visibility: hidden;
+} 
+.lesson-item:hover .toggle-stage-btns-show,
+.toggle-stage-btns-show:focus,
+.lesson-item:hover .plan-lesson-btn,
+.plan-lesson-btn:focus,
+.lesson-item:hover .current-lesson-button,
+.current-lesson-button:focus,
+.lesson-item:hover .delete-lesson-btn,
+.delete-lesson-btn:focus,
+.lesson-item:hover .edit-lesson-btn,
+.edit-lesson-btn:focus {
+  opacity: 1;
+}
+.lesson-item.selected {
+  background: #e9e5ff;
+  color: #222;
+  font-weight: 600;
+  box-shadow: 0 0 3px #6734ba, 0 0 3px inset #fff;
+}
+.lesson,
+.lesson > div,
+.lesson-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin-left: 25%;
+}
+.lesson > div {
+  padding: 10px;
+  display: flex;
+}
+.lesson-editor {
+  font-size: 18px;
+  font-family: 'Fira Mono', monospace;
+  flex: 1;
+  padding: 10px;
+}
+.lesson-editor-help {
+  display: flex;
+  justify-content: space-between;
+}
+.preview-btn {
+  margin: 10px;
+  background-color: #fff;
+  color: #555;
+  font-size: 14px;
+  border: none;
+  border-radius: 2px;  
+}
+.preview-btn:active {
+  background-color: #f7f2ff;
+}
+.span-btns {
+  padding-left: 50px;
+  padding-top: 0px;
+}
+.StudentDetailPageLink{
+  padding-top: 20px;
+  font-size: 18px;
+  font-weight: 600;
+}
+.multiColor{
+  background-color: #673ab7;
+  margin: 0;
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.5rem;
+  font-weight: bold;
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.viewGradesLink, .checkBoxViewGradesLink {
+  color: blue;
+  cursor: pointer;
+}
+.viewGradesLink, .checkBoxViewGradesLink:hover {
+  color: #673ab7;
+}
+.checkBoxViewGradesLink {
+  color: white;
+  cursor: pointer;
+}
+.checkBoxViewGradesLink:hover {
+  color: greenyellow;
+}
+
+/* unvisited link */
+ a:link {
+  color: blue;
+}
+
+/* visited link */
+ /* a:visited {
+  color: green;
+}  */
+
+/* mouse over link */
+a:hover {
+  color: #673ab7;
+}
+
+/* selected link */
+/* a:active {
+  color: blue;
+} */ 
+
+.invite-btn-animation {
+  opacity: 1;
+  border: 2px;
+  font-size: 10px;
+  cursor: pointer;
+  padding-left: 30px;
+  margin-top: 15px;
+  padding-right: 30px;
+  margin-left: 25px;
+  box-shadow: 10px 10px;
+  background-color: #20c997; 
+  position: relative;
+  animation-name: example;
+  animation-duration: 4s;
+  animation-iteration-count: 2;
+}
+
+/* .toggle-stage-btns-show {
+  visibility: visible;
+}
+.toggle-stage-btns-hide {
+  visibility: hidden;
+} */
+
+@media only screen and (min-width: 638px) {
+  .CourseDetail .content {
+    flex-direction: row;
+    height: 100%;
+  }
+  .CourseDetail .sidebar {
+    flex-basis: 300px;
+    /* background: #fbf9ff; */
+    background: transparent;
+    /* border-right: 1px solid #bba0ea; */
+    border-right: 1px solid transparent;
+  }
+  .CourseDetail .lesson {
+    flex: 1;
+  }
+}
+@media only screen and (max-width: 637px) {
+  .CourseDetail .content {
+    flex-direction: column;
+  }
+  .CourseDetail .sidebar {
+    background: #fbf9ff;
+    border-bottom: 1px solid #bba0ea;
+    min-height: 50px;
+  }
+  .CourseDetail .lesson {
+    flex: 1;
+  }
+}
+.CourseDetail .gradesHeader{
+  padding-left: 80px;
+}
+.CourseDetail .grades{
+  padding-left: 165px;
+}
+
+.flexible-modal {
+  position: absolute;
+  z-index: 1;
+  border: 1px solid #ccc;
+  background: white;
+  /* padding-left: 1%; */
+}
+.flexible-modal-mask {
+  position: fixed;
+  height: 0%;
+  background: rgba(55, 55, 55, 0.6);
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+}
+.flexible-modal-resizer {
+  position:absolute;
+  right:0;
+  bottom:0;
+  cursor:se-resize;
+  margin:5px;
+  border-bottom: solid 2px #333;
+  border-right: solid 2px #333;
+}
+.flexible-modal-drag-area{
+  background: rgba(22, 22, 333, 0.2);
+  height: 50px;
+  position:absolute;
+  right:0;
+  top:0;
+  cursor:move;
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+
+@keyframes example {
+  0%   {background-color:red; left:0px; top:0px;}
+  25%  {background-color:yellow; left:200px; top:0px;}
+  50%  {background-color:blue; left:200px; top:200px;}
+  75%  {background-color:green; left:0px; top:200px;}
+  100% {background-color:red; left:0px; top:0px;}
+}
+@media (min-width: 1281px) {
+  /* CSS */
+}
+
+/* 
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+  
+  /* CSS */
+  
+}
+
+/* 
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  
+  /* CSS */
+  
+}
+
+/* 
+  ##Device = Tablets, Ipads (landscape)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  
+  /* CSS */  
+}
+
+/* 
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+
+@media (min-width: 481px) and (max-width: 767px) {    
+  /* CSS */
+  .lesson,
+  .lesson > div,
+  .lesson-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    margin-left: 5%;
+  }
+}
+/* 
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+@media (min-width: 320px) and (max-width: 480px) {
+  /* CSS */
+  .lesson,
+  .lesson > div,
+  .lesson-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    margin-left: 5%;
+  }
+}

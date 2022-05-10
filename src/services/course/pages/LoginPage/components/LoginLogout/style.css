@@ -1,0 +1,7 @@
+.LoginLogout {
+  list-style: none;
+  padding: 0;
+}
+.lock-icon:hover{
+  cursor: pointer;
+}

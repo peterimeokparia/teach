@@ -1,0 +1,215 @@
+.points-input {
+    position: absolute;
+    align-self: flex-end; 
+    width:70px;
+    height:60px;
+    line-height: 60px;
+    border: 2px solid #f5f5f5;
+    border-radius: 15%;
+    margin-left: 6px; 
+    margin-top: -3px;
+    margin-right: 60px;
+    transition: transform .7s ease-in-out;
+    box-shadow: 10px 10px black;
+    background: yellowgreen;
+    cursor: pointer;
+}
+.points-input:hover {
+    cursor: pointer;
+}
+.points-title{
+    margin-top: -30px;
+    margin-left: 150px;
+}
+.answer-title{
+    margin-top: 60px;
+}
+.on-top{
+    /* visibility: hidden; */
+    position: relative;
+    z-index: 1; 
+}
+.on-top .on-top-right {
+    width: 4000px;
+    height: 20px;
+}
+.on-top .on-top-right .button-handle{
+    width: 40px;
+    height: 20px;
+    transition-duration: 0.4s;
+    background-color: yellowgreen;
+    border: 1px solid black;
+    border-radius: 30px;
+    
+}
+.on-top .on-top-right .button-handle-move{
+    width: 40px;
+    height: 20px;
+    background-color: red;
+    border: 1px solid black;
+    border-radius: 30px;
+}
+.modal-test{
+    margin-right: 1000px;
+}
+.Overlay{
+    background: yellowgreen;
+}
+.modal-content{
+    margin-top: 10%; 
+    margin-left: 25%;
+    border: 0px solid black;
+}
+.open-file-viewer{
+  width: 260px;
+  height: 50px;
+  transition-duration: 0.4s;
+  background-color: #673ab7;
+  border: 1px solid white;
+  border-radius: 30px;
+  color: white;
+
+  background-color: #673ab7;
+border: none;
+color: white;
+padding: 15px 97px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+font-size: 16px;
+margin: 4px 2px;
+cursor: pointer;
+transition-duration: 0.4s;
+border-radius: 15px;
+}
+.file-viewer .modal-content label{
+  background-color: yellowgreen;
+}
+.file-viewer .modal-content label{
+  background-color: yellowgreen;
+}
+.file-viewer label{
+  background-color: yellowgreen;
+}
+.file-viewer .modal-content label{
+  background-color: yellowgreen;
+}
+
+.file-viewer .modal-content label{
+  background-color: yellowgreen;
+}
+.file-viewer .modal-content label{
+  background-color: yellowgreen;
+}
+.file-viewer label{
+  background-color: yellowgreen;
+}
+.file-viewer .modal-content label{
+  background-color: yellowgreen;
+}
+.file-viewer .modal-content .testR{
+  background-color: yellowgreen;
+}
+.testR label{
+  background-color: yellowgreen;
+  cursor: grabbing;
+}
+.testR {
+  background-color: yellowgreen;
+  margin-top: 10px;
+  margin-bottom: 0px;
+  height: 25px;
+  transition-duration: 0.4s;
+  background-color: yellowgreen;
+  border: 1px solid black;
+  border-radius: 30px;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  cursor: grabbing;
+}
+@media only screen and (min-width: 638px) {
+   
+   
+}
+
+  @media only screen and (max-width: 637px) {
+    
+  }
+  
+  /* 
+    ##Device = Desktops
+    ##Screen = 1281px to higher resolution desktops
+  */
+  
+  @media (min-width: 1281px) {
+    
+  }
+  
+  /* 
+    ##Device = Laptops, Desktops
+    ##Screen = B/w 1025px to 1280px
+  */
+  
+  @media (min-width: 1025px) and (max-width: 1280px) {
+   
+    
+  }
+  
+  /* 
+    ##Device = Tablets, Ipads (portrait)
+    ##Screen = B/w 768px to 1024px
+  */
+  
+  @media (min-width: 768px) and (max-width: 1024px) {
+    
+   
+  }
+  
+  /* 
+    ##Device = Tablets, Ipads (landscape)
+    ##Screen = B/w 768px to 1024px
+  */
+  
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    
+  }
+  
+  
+  
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    
+  }
+  
+  
+  
+  /* 
+    ##Device = Low Resolution Tablets, Mobiles (Landscape)
+    ##Screen = B/w 481px to 767px
+  */
+  
+  @media (min-width: 481px) and (max-width: 767px) {
+    .on-top .on-top-right .button-handle-move{
+        width: 40px;
+        height: 20px;
+        background-color: red;
+        border: 1px solid black;
+        border-radius: 30px;
+        margin-left: -35%; 
+    }
+    
+  }
+  /* 
+    ##Device = Most of the Smartphones Mobiles (Portrait)
+    ##Screen = B/w 320px to 479px
+  */
+  @media (min-width: 320px) and (max-width: 480px) {
+    .on-top .on-top-right .button-handle-move{
+        width: 40px;
+        height: 20px;
+        background-color: red;
+        border: 1px solid black;
+        border-radius: 30px;
+        margin-left: -35%; 
+    }
+}

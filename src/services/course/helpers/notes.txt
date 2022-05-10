@@ -1,0 +1,371 @@
+Music - Wilson World - Youtube
+
+Dante
+--------
+
+const content = this.editor.emitSerializedOutput();
+this.uploadImagesAndFixUrls(content.blocks, html, id);
+
+private async uploadImagesAndFixUrls(blocks: any[], html: string, postId: string): Promise<string> {
+    let fixedHtml = html;
+
+    for (const block of blocks) {
+      if (block.type !== 'image') {
+        continue;
+      }
+
+      const {url} = block.data;
+
+      if (!url.startsWith('blob:')) {
+        continue;
+      }
+
+      const blob = await fetch(url).then(r => r.blob());
+
+      const uploadFormData = new FormData();
+      uploadFormData.append('file', blob);
+
+      const uploadRes = await fetch(`/post/${postId}/image`, {
+        method: 'POST',
+        body: uploadFormData,
+      });
+
+      switch (uploadRes.status) {
+        case 200: // OK
+          const {url: uploadedUrl} = await uploadRes.json();
+          block.data.url = uploadedUrl;
+          fixedHtml = fixedHtml.replace(url, uploadedUrl);
+          break;
+        case 500: // INTERNAL_SERVER_ERROR
+          throw new Error();
+      }
+    }
+
+    return fixedHtml;
+  }
+@kaloraat
+ 
+Author
+kaloraat commented on Sep 2, 2019
+@ALEUT
+With your code, I am able to do what was almost impossible :)
+Thanks heaps!!!
+
+@michelson
+ 
+Owner
+michelson commented on Sep 3, 2019
+you can use the upload_handler option for the image block in order to override the entire upload behavior with your own logic
+
+  import { EmbedBlockConfig } from 'Dante2/package/es/components/blocks/embed.js'
+  ...
+
+  uploadHandler = (file, imageBlock)=>{
+    // your logic here   
+  }
+
+  widgetsConfig = () => {
+    return [otherBlocks,
+    ImageBlockConfig({
+      options: {
+        upload_handler: this.uploadHandler,
+        image_caption_placeholder: "type a caption (optional)"
+      }
+    }),
+
+
+   <DanteEditor 
+       ....otherOptions
+       widgets={this.props.widgetsConfig()}
+   </DanteEditor>
+
+
+   Dante another example
+   --------------------
+     # Handle POST-request (Receive data, save the uploaded file and return url of upload image)
+  post "/upload_image" do
+    name = params['file'][:filename] 
+    path = File.join(File.dirname(__FILE__), '/uploads/images', name)
+    File.open(path, "wb") do |f|
+      f.write(params['file'][:tempfile].read)
+    end
+    return "/uploads/images/#{name}"
+  end
+
+    upload_url: default: /uploads.json
+    upload_callback default: empty, allows optional way to handle the server response when image is uploaded This is useful when you don't have control on the backend response.
+    image_delete_callback: default: none, returns the image data before deletion. use this if you want to destroy image from the server.
+    image_caption_placeholder default: "Type caption for image (optional)"
+
+
+      //<image-block url="blob:http://localhost:3000/80d2b781-99a4-49c3-8278-ea9bc7cf7f25" width="1200" height="630" loading="true" loading_progress="0" caption="caption!" direction="center" aspect_ratio="{&quot;width&quot;:1000,&quot;height&quot;:525,&quot;ratio&quot;:52.5}"></image-block>
+        //await fetch( imageBlock?.img?.currentSrc )
+    // .then( result => result.blob())
+    //.then( response => { uploadFiles([ response ], question, upload_url, "questions", file?.name,  null )
+    //.then( resp => { console.log( resp ); } ); })
+    // .catch( error => { throw Error(`  ${error}`); });
+        // let file = await fetch(url).then(r => r.blob()).then(blobFile => new File([blobFile], "fileNameGoesHere", { type: "image/png" })). There was a missing 
+
+
+
+Redux-Form
+------------
+import { reducer as formReducer } from 'redux-form';
+
+Swal
+----------
+Swal.fire({
+title: `Please join the following lesson in progress: ${currentUser?.nameOfLessonInProgress}`,
+icon: 'warning',
+// html: currentUser?.cart?.map((item, index) => '<ul><li key=' + `${index}` + '>' + `${item?.name}` + '</li></ul') + "Do you still want to log out?",
+showCancelButton: true,
+confirmButtonText: 'Join',
+confirmButtonColor: '#673ab7',
+cancelButtonText: 'Next time'
+
+MomentJs
+-----------
+moment( initialEventDateTime )?.local().format('YYYY-MM-DD[T]HH:mm:ss'),
+
+Mongoose / Jest
+Mongoose: looks like you're trying to test a Mongoose app with Jest's default jsdom test environment. Please make sure you read Mongoose's docs on configuring Jest to test Node.js apps: http://mongoosejs.com/docs/jest.html
+
+Full Calendar
+--------------
+Event After Render
+----------------
+  eventAfterRender: function (event, element, view) {
+                    birthday = new Date('<somedate>');
+                    year = new Date(event.start).getFullYear();
+                    month = new Date(event.start).getMonth();
+                    day = new Date(event.start).getDate();
+                    alert(year + ' ' + month + ' ' + day);
+
+  
+  Media Query Template
+  ------------------------
+  @media (min-width: 1281px) {
+  /* CSS */
+}
+/* 
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {  
+  /* CSS */
+}
+/* 
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+@media (min-width: 768px) and (max-width: 1024px) { 
+  /* CSS */ 
+}
+/* 
+  ##Device = Tablets, Ipads (landscape)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  /* CSS */  
+}
+/* 
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+  @@@ Gets mobile landscape
+*/
+@media (min-width: 480px) and (max-width: 767px)  {    
+  /* CSS */
+
+}
+@media  only screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation:landscape)  {    
+  /* CSS */
+}
+/* 
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+@media (min-width: 320px) and (max-width: 480px)  {
+  /* CSS */
+}
+
+Buffer
+------------------------------------
+// new Buffer(number) // Deprecated 
+// Buffer.alloc(number) // New
+
+// new Buffer(string) // Deprecated 
+// Buffer.from(string) // New
+
+
+Browser & Tab Close Events
+----------------------------
+window.onbeforeunload = function () {
+    return "Do you really want to close?";
+};
+
+
+3
+
+FullCalendar alert on event date
+When you create your calendar object/function you need to create a eventAfterRender function. This only fires when you have a function that has been placed on the calendar. Then you can read the date and compare it to ones birthday and display popup. I hope that is what your were looking for. I gave a little example.
+
+    $(document).ready(function () {
+            $('#calendar').fullCalendar({
+                height: 600,
+                width: 700,
+                header: {
+                    right: 'prev,next today',
+                    center: 'title',
+                    left: 'month,agendaWeek,agendaDay'
+                },
+                eventAfterRender: function (event, element, view) {
+                    birthday = new Date('<somedate>');
+                    year = new Date(event.start).getFullYear();
+                    month = new Date(event.start).getMonth();
+                    day = new Date(event.start).getDate();
+                    alert(year + ' ' + month + ' ' + day);
+    //do some if statement to see if the year matches then if the month, then the day. 
+//if so then go to another function or just put the code here for the pop 
+
+                }
+            });
+        });
+
+External Css Content - Font
+-----------------------------
+/* @font-face{
+    font-family:'digital-clock-font';
+    src: url()
+} */
+
+//https://www.freecodecamp.org/news/how-to-add-drag-and-drop-in-react-with-react-beautiful-dnd/
+// return( 
+//   <DragDropContext onDragEnd={handleOnDragEnd}>
+//   <Droppable droppableId="characters">
+//     {(provided) => (
+//       <ul className="characters" {...provided.droppableProps} ref={provided.innerRef}>
+//         {  characters?.map(({id, name, thumb}, index) => { return( <Draggable key={id} draggableId={id} index={index}>
+//               {(provided) => (
+//                   <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+//                     { name }
+//                   </li>
+//                 )}
+//            </Draggable> 
+//          )} 
+//         )} 
+//          {provided.placeholder}
+//     </ul>
+//     )}
+//   </Droppable>
+// </DragDropContext>
+// )
+
+Jitsi Changed a lot of ish with this one.
+Jitsi - Install - Latest Updates
+https://community.jitsi.org/t/rejoining-for-more-than-one-participent/20917/3
+https://www.digitalocean.com/community/tutorials/how-to-install-jitsi-meet-on-ubuntu-20-04
+
+Formfields
+------------
+// import './style.css';
+// I need a toggle field
+// I need a digital signature type field
+// Report form field answers can be weighted 
+//- we would report on this - as well as chart these 
+// - profiling response and creating weighted response for review
+
+// use case - find a way to build new exams / quizz from existing question banks/
+
+
+Get onlinequestions old-
+---------------------------
+ // let currentFormQuestions = onlineQuestions?.filter( question => question?.courseId === courseId 
+  //   && question?.formType === formType 
+  //     && question?.formName === formName );
+  //       // && question?.formUuId === formUuId  );
+
+
+  // let currentCourseQuestionCollection = onlineQuestions?.filter( question => question?.courseId === courseId 
+  //                                         && question?.formType === formType 
+  //                                           && question?.formName === formName );
+  //                                             // && question?.formUuId === formUuId  );
+
+  // let currentCourseQuestions = ( onlineQuestionId === undefined || !onlineQuestionId ) 
+  //         ? currentCourseQuestionCollection
+  //         : currentCourseQuestionCollection?.filter(question => question?._id === onlineQuestionId);
+
+  //   return currentCourseQuestions;
+
+  Css Centering Items
+  ----------------------
+  div.container6 {
+  height: 10em;
+  display: flex;
+  align-items: center;
+  justify-content: center }
+div.container6 p {
+  margin: 0 }
+
+  Custom Toggle - css
+  ---------------------
+  /* .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+} */

@@ -1,0 +1,2 @@
+//https://www.google.com/search?q=record+live+video+with+iphone+stream+to+youtube&oq=record+live+video+with+iphone+stream+to+youtube+&aqs=chrome..69i57.34863j0j1&sourceid=chrome&ie=UTF-8
+//https://blog.hootsuite.com/youtube-live/

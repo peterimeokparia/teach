@@ -1,0 +1,161 @@
+.logins{
+    position: absolute;
+    background: white;
+  }
+  .logins .content .sidebar {
+    flex-basis: 300px;
+    background: white;
+    border-right: 0px solid #bba0ea;
+    padding-left: 0px; 
+  }
+  .logins .content .loginSessions .header{
+    /* background-color:whitesmoke; */
+    color: blue;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 30px 5px 5px;
+    text-align: center;
+    text-transform: capitalize;
+    margin-top: 0px;
+    margin-bottom: 35px;
+    border-style: solid;
+    border-radius: 3px;
+    border-color: black;
+
+    top: 50%;
+    left: 50%;
+    margin-right: 0%;
+    padding-bottom: 15px;
+    padding-left: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+  }
+  .logins .content .loginSessions .loginTime{ 
+   margin-left: 150px;
+  }
+  .logins .content .loginSessions .logoutTime{ 
+    margin-left: 185px;
+   }
+  .savedAnswersList{
+    list-style: none;
+    margin-top:  -10px;
+    margin-left:  -320px;
+    overflow: auto;
+    height: 500px;
+    width: 360px;
+  }
+  .logins-item{
+    text-transform: capitalize;
+    padding-bottom: 20px;
+    margin-bottom: 5px;
+    margin-left: 30px;
+    background: white;
+  }
+  .navlink-text {
+    text-align: block;
+    color: blue;
+    padding-bottom: 20px;
+  }
+  .loginSessions{
+    position: absolute;
+    background: white;
+    text-transform: capitalize;
+    margin-left: -420px;
+    width: 650px;
+    overflow: auto;
+  }
+  @media (min-width: 1281px) {
+    
+    /* CSS */
+    
+  }
+  
+  /* 
+    ##Device = Laptops, Desktops
+    ##Screen = B/w 1025px to 1280px
+  */
+  
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    
+    /* CSS */
+    
+  }
+  
+  /* 
+    ##Device = Tablets, Ipads (portrait)
+    ##Screen = B/w 768px to 1024px
+  */
+  
+  @media (min-width: 768px) and (max-width: 1024px) {
+    
+    /* CSS */
+    
+  }
+  
+  /* 
+    ##Device = Tablets, Ipads (landscape)
+    ##Screen = B/w 768px to 1024px
+  */
+  
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    
+    /* CSS */  
+  }
+  
+  /* 
+    ##Device = Low Resolution Tablets, Mobiles (Landscape)
+    ##Screen = B/w 481px to 767px
+  */
+  
+  @media (min-width: 481px) and (max-width: 767px) {    
+    /* CSS */
+    .loginSessions{
+      position: absolute;
+      background: white;
+      text-transform: capitalize;
+      margin-left: 10px;
+      width: 320px;
+      overflow: auto;
+    }
+  }
+  /* 
+    ##Device = Most of the Smartphones Mobiles (Portrait)
+    ##Screen = B/w 320px to 479px
+  */
+  @media (min-width: 320px) and (max-width: 480px) {
+    /* CSS */
+    .logins{
+      /* position: relative; */
+      background: white;
+    }
+    .logins header {
+      width: 20px;
+    }
+    .logins .content .sidebar {
+      flex-basis: 300px;
+      background: white;
+      border-right: 0px solid #bba0ea;
+      padding-left: 0px; 
+    }
+    .savedAnswersList{
+    list-style: none;
+    margin-top:  -10px;
+    margin-left:  -350px;
+    overflow: auto;
+    height: 300px;
+    width: 220px;
+  }
+  .loginSessions{
+    /* position: absolute; */
+    /* position: relative; */
+    background: white;
+    text-transform: capitalize;
+    margin-left: -80px;
+    width: 250px;
+    overflow: auto;
+  }
+  }

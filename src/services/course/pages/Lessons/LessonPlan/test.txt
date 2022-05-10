@@ -1,0 +1,85 @@
+<div className={operatorBusinessName}>
+     <header> 
+        <h1>
+          <NavLinks to={`/${operatorBusinessName}/classroomgroups/${classRoomGroupId}/${classRoomGroupName}/classroom/${classRoomId}`}> 
+            {classRoomName}   
+          </NavLinks>
+        </h1>
+        <div className="lesson-item"> 
+        <div className="div-btns"/>
+        <span className="span-btns">  
+        <SiteFunctionalityGroup group={ permission( testGroup, operatorBusinessName, PageObject?.LessonPlan_MaterialUiVideoComponent )}>
+        < MaterialUiVideoComponent 
+            name={PageObject?.LessonPlan_MaterialUiVideoComponent}
+            className={"MaterialUiVideoComponent"} 
+            element={ selectedLesson } 
+            hasRights={true}
+            videoMeta={videoMeta( selectedLesson )}
+            resetAllStartSettings={resetAllStartSettings}
+            resetAllStopSettings={resetAllStopSettings}
+            setVideoModalMode={(stage) => setVideoModalMode(stage)}
+            VideoModalMode={videoModalModeOn}
+            saveVideoRecording={saveVideoRecording}
+            toggleCurrentMeetingSession={toggleCurrentMeetingSession}
+        /> 
+       
+      
+        </SiteFunctionalityGroup>
+        </span>
+        </div>
+      </header>
+        <div class="container">
+          <div class="row justify-content-md-center">
+              <div class="col col-lg-2">
+                1 of 3
+
+                <SiteFunctionalityGroup group={ permission( testGroup, operatorBusinessName, PageObject?.LessonPlan_VideoCallIcon )}> 
+                  <Roles role={currentUser?.role === role.Tutor }>
+                  <div> {"test"}  </div>
+                  {/* <div className="sidebar"> 
+                      <div> {"test"}  </div>
+                      <div> {"test"}  </div>
+                      <div> {"test"}  </div>
+                      <div> {"test"}  </div>
+                    </div> */}
+                    {/* <VideoCallIcon 
+                      name={PageObject?.LessonPlan_VideoCallIcon}
+                      style={ videoCallIcon( iconOnColor ) }
+                      className={ ( session ) ? "lesson-plan-round-button-3" : "lesson-plan-round-button-2" }
+                      onClick={() => toggleCurrentMeetingSession()} 
+                    /> */}
+                  </Roles>  
+                  </SiteFunctionalityGroup>
+              </div>
+              <div class="col-md-auto">
+                Variable width content
+
+                <SiteFunctionalityGroup group={ permission( testGroup, operatorBusinessName, PageObject?.LessonPlan_VideoCallIcon )}> 
+                  <Roles role={currentUser?.role === role.Tutor }>
+                  <div></div>
+                    {/* <div></div>
+                    <VideoCallIcon 
+                      name={PageObject?.LessonPlan_VideoCallIcon}
+                      style={ videoCallIcon( iconOnColor ) }
+                      className={ ( session ) ? "lesson-plan-round-button-3" : "lesson-plan-round-button-2" }
+                      onClick={() => toggleCurrentMeetingSession()} 
+                    /> */}
+                      {/* <div className='splitview'>
+                        <LessonPlanSplitViewComponent 
+                            session={session}
+                            currentUser={currentUser}
+                            classRoomId={classRoomId} 
+                            roomSize={roomSize} 
+                            hideMeetingStage={hideMeetingStage}
+                            meetingId={currentMeetingId}
+                        />
+                      </div> */}
+                  </Roles>  
+                  </SiteFunctionalityGroup>
+              </div>
+              <div class="col col-lg-2">
+                3 of 3
+              </div>
+          </div>
+        </div>
+      </div>

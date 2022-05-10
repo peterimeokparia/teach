@@ -1,0 +1,661 @@
+.answers {
+    height: 300vh;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+.answers header {
+    background-color: #673ab7;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px 10px 10px;
+}
+.answers iframe{
+   height: 400px;
+   width: 800px; 
+   margin-left: 10px;
+}
+.answers .imageCaption{
+    margin-right: 90%;
+}
+.labelQuestion{
+  font-size: 30px;
+  padding-bottom: 25px;  
+}
+.labelPoints{
+  padding-bottom: 25px;   
+}
+.onlineListItemMultipleChoiceQuestion{
+    width: 100vw;
+    border-style: inset;
+    padding-left: 10px;
+    padding-bottom: 50px;
+    border: solid 0.3em gold;
+    border-bottom-color: red;
+    border-left-color: #673ab7;
+    border-right-color: green;
+    width: auto;
+}
+.question{
+    font-size: 40px;
+}
+.answerCard {
+  text-align: center;
+  margin-top: 100px;
+  padding-Bottom: 100px;
+  background:  rgb(101, 245, 101);
+  border-radius: 25px;
+  font-family: sans-serif;
+}
+.answerEditor {
+  text-align: left;
+  margin-top: 30px;
+  background:  rgb(101, 245, 101);
+  border-radius: 25px;
+  padding-bottom: 9px;
+}
+.answerDisplay {
+    font-size: 20px;
+    padding-top: 5px;
+    padding-bottom: 25px;
+}
+.answerValue{
+    padding-left: 30px;
+}
+.explanationDisplay {
+    margin-top: 75px;
+    background-color: rgb(255, 250, 190);
+}
+.multipleChoice{
+    padding-top: 0px;
+    padding-bottom: 20px;
+    font-size: 20px;  
+}
+.multipleChoiceRadio{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.multipleChoicelabel{
+    padding-right: 10px;
+}
+.form-builder-btn, .input-field-builder-btn {
+    font-size: 10px;
+    cursor: pointer;
+    padding-left: 30px;
+    margin-top: 15px;
+    padding-right: 30px;
+    margin-left: 25px;
+    box-shadow: 10px 10px;
+    border-radius: 20%;
+    transition: all 0.2s;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+}
+.form-builder-btn {
+    color: #ab47bc;
+    margin-bottom: 10px;
+}
+.input-field-builder-btn {
+    color: #ec407a;
+    margin-bottom: 20px;
+}
+.form-builder-btn:hover, .form-builder-btn:focus, .form-builder-btn:active {
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+    -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+    transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+}
+.input-field-builder-btn:hover, .input-field-builder-btn:focus, .input-field-builder-btn:active {
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+    -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+    transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+}
+.input-field-builder-selector {
+    opacity: 1; 
+    border: 2px; 
+    right: 5px;
+    font-size: 10px;
+    cursor: pointer;
+    padding-left: 30px;
+    margin-bottom: 20px;
+    margin-top: 30px;
+    padding-right: 30px;
+    margin-left: 10px;
+    transition: all 0.2s;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+}
+.userBio {
+    margin-top: 30px;
+}
+.userBioSub {
+    margin-left: 39%;
+}
+.userBioSub-support {
+  margin-left: 39%;
+}
+.userBio img {
+    box-shadow: 10px 10px black;
+    /* margin-top: 30px; */
+}
+.answerVideoSub {
+  margin-left: 44%;
+  margin-bottom: 5%;
+  margin-top: -1%;
+}
+.comment {
+    box-shadow: 10px 10px black;
+    margin-top: 1%;
+    margin-left: 20%;
+    margin-right: 15%;
+}
+.addAnswerFieldCollection {
+    margin-top: 30px;
+}
+.moreInfo .popup {
+    visibility: visible;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* The actual popup */
+  .moreInfo .popup .popuptext {
+    visibility: hidden;
+    width: 360px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+  }
+  /* Popup arrow */
+  .moreInfo .popup .popuptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+  }
+  .moreInfo .popup .popuptext {
+    visibility: visible;
+  }
+  .moreInfo .popup .popuptext-hidden {
+    visibility: hidden;
+    width: 360px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+  }
+  .ComponentUserList .user-list-items-users .multicolortext{
+    background-color: #673ab7;
+    margin: 0;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.5rem;
+    font-weight: bold; 
+    background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+.round-button-1,  .round-button-2, 
+.round-button-3,  .round-button-4, 
+.round-button-5,  .round-button-6, 
+.round-button-7 {
+    align-self: flex-end; 
+    width:30px;
+    border: 2px solid #f5f5f5;
+    margin-right: 15px;
+    transition: transform .7s ease-in-out;
+    box-shadow: 10px 10px black;
+}
+.ComponentUserList .user-list-items-users .round-button-1:hover
+ {
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  cursor: pointer;
+}
+.ComponentUserList .user-list-items-users .round-button-2:hover  
+ {
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  cursor: pointer;
+}
+.ComponentUserList .user-list-items-users .round-button-3:hover, .round-button-4:hover
+ {
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  cursor: pointer;
+}
+.ComponentUserList .user-list-items-users .round-button-4:hover   
+ {
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  cursor: pointer;
+}
+.ComponentUserList .user-list-items-users .round-button-5:hover   
+ {
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  cursor: pointer;
+}
+.ComponentUserList .user-list-items-users .round-button-6:hover   
+ {
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  cursor: pointer;
+}
+.ComponentUserList .user-list-items-users .round-button-7:hover   
+ {
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+  cursor: pointer;
+}
+.ComponentUserList .user-list-items-users .round-button-1 { 
+    background: orange;
+  }
+  .ComponentUserList .user-list-items-users .round-button-2 { 
+    background: green
+  }
+  .ComponentUserList .user-list-items-users .round-button-3 { 
+    background: red
+  }
+  .ComponentUserList .user-list-items-users .round-button-4 { 
+    background: #f5f5f5
+  }
+  .ComponentUserList .user-list-items-users .round-button-5 { 
+    background: red
+  }
+  .ComponentUserList .user-list-items-users .round-button-6 { 
+    background: orange
+  }
+  .ComponentUserList .user-list-items-users .round-button-7 { 
+    background: green
+  }
+  /* Grow */
+  .answerCard .answerVideoSection-recordingStopped {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    margin-top: -10%;
+    margin-left: -14.5%;
+  }
+  .answerVideoSection-recording {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transform: scale(1.9);
+    transform: scale(1.9);
+    top: 20%;
+    margin-top: -20%;
+    margin-left: 50%; 
+    margin-bottom: 15%; 
+   }
+.answerVideoSection-recordingStopped {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  margin-top: -10%;
+  margin-left: -14.5%;
+  margin-bottom: -50%;
+
+} */
+
+.answerCard .answerVideoSection-recording {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+
+  -webkit-transform: scale(1.9);
+  transform: scale(1.9);
+
+  margin-top: 10%;
+  margin-left: 250%;
+}
+.answerCard video {
+  border-radius: 2em;
+}
+.answerCard .answerVideoPlayer {
+  width: 0%;
+  max-width: 0px; 
+  width: 500px;
+  height: 300px;
+  max-width: 700px;
+  max-height: 500px;
+  margin-right: 20%;
+}
+.answerCard .answerVideoSectionCallOut{
+   margin-left: 730px;
+   margin-top: -45%;
+}
+.answerCard .onlineQuestionVideoComponent {
+  margin-left: 70%;
+  margin-top: 5%;
+}
+.videoPlayer {
+  margin-right: 80%;
+}
+.plusIcon {
+  margin-bottom: 200%;
+}
+.answerCard .question-card-top-right {
+  margin-right: 70px
+}
+.answerCard .onlineQuestionImage {
+  margin-top: -40%;
+  margin-left: -60%;
+}
+.answerCard .onlineQuestionCalendarIcon {
+  margin-top: -70px;
+  margin-left: 55px;
+}
+@media (min-width: 1281px) {
+  
+  /* CSS */
+  .answerVideoSub {
+    margin-left: 1%;
+    margin-bottom: 5%;
+    margin-top: -1%;
+  }
+  .userBioSub {
+    margin-left: 39%;
+  }  
+}
+
+/* 
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+  
+  /* CSS */
+  .answerVideoSub {
+    margin-left: auto;
+    margin-bottom: 5%;
+    margin-top: -1%;
+  }
+  .userBioSub {
+    margin-left: 39%;
+  }
+
+  .userBioSub-support {
+    margin-top: 50px;
+    margin-left: -22%;
+    margin-bottom: 80px;
+  }
+  
+}
+
+/* 
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  
+  /* CSS */
+.videoComponents {
+    margin-left: -43%;
+  }
+  .answerVideoSub {
+    margin-left: 1%;
+    margin-bottom: 5%;
+    margin-top: -1%;
+  }
+  .userBioSub {
+    margin-left: 19%;
+  }
+
+  .userBioSub-support {
+    margin-top: 50px;
+    margin-left: -22%;
+    margin-bottom: 80px;
+  }
+  
+}
+
+/* 
+  ##Device = Tablets, Ipads (landscape)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  
+  /* CSS */
+  .videoComponents {
+    margin-left: -43%;
+  }
+  .answerVideoSub {
+    margin-left: 1%;
+    margin-bottom: 5%;
+    margin-top: -1%;
+  }
+  .userBioSub {
+    margin-left: 19%;
+  }
+
+  .userBioSub-support {
+    margin-top: 50px;
+    margin-left: -22%;
+    margin-bottom: 80px;
+  }
+  
+}
+/* 
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+@media (min-width: 481px) and (max-width: 767px) {
+  
+  /* CSS */
+  .videoComponents {
+    margin-left: -43%;
+  }
+  .answerVideoSub {
+    margin-left: 1%;
+    margin-bottom: 5%;
+    margin-top: -1%;
+  }
+  .userBioSub {
+    margin-left: 19%;
+  }
+  .userBioSub-support {
+    margin-top: 50px;
+    margin-left: 10px; 
+    margin-bottom: 80px;
+  }
+  .onlineQuestionImage img {
+    height: 70px;
+    width: 70px;
+  }
+  .answerCard video {
+    border-radius: 2em;
+    width: 0px;
+  }
+  .answerCard .answerVideoSectionCallOut{
+    margin-left: 80px;
+    margin-top: -45%;
+    font-size: 10px;
+ }
+ .answerVideoSection-recording {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transform: scale(1.9);
+    transform: scale(1.9);
+    top: 20%;
+    margin-top: -20%;
+    margin-left: 5%; 
+    margin-bottom: 50%; 
+}
+.answerVideoSection-recordingStopped {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  margin-top: -10%;
+  margin-left: -14.5%;
+  margin-bottom: -50%;
+  } 
+
+}
+
+/* 
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+
+@media (min-width: 320px) and (max-width: 480px) {
+  
+  /* CSS */
+
+  .videoComponents {
+    margin-left: -43%;
+  }
+  .answerVideoSub {
+    margin-left: 1%;
+    margin-bottom: 5%;
+    margin-top: -1%;
+  }
+  .userBioSub {
+    margin-left: 19%;
+  }
+  .userBioSub-support {
+    margin-top: 50px;
+    margin-left: -22%;
+    margin-right: 100%;
+    margin-bottom: 80px;
+  }
+  .answerCard video {
+    border-radius: 2em;
+    width: 150px;
+  }
+
+  .answerCard .onlineQuestionVideoComponent video {
+    margin-left: 70%;
+    margin-top: 5%;
+  }
+
+  .answerCard .answerVideoSectionCallOut{
+    margin-left: 80px;
+    margin-top: -45%;
+    font-size: 10px;
+ }
+ .answerVideoSection-recording {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transform: scale(1.9);
+  transform: scale(1.9);
+  top: 20%;
+  margin-top: -20%;
+  margin-left: 5%; 
+  margin-bottom: 50%; 
+}
+.answerVideoSection-recordingStopped {
+display: inline-block;
+vertical-align: middle;
+-webkit-transform: perspective(1px) translateZ(0);
+transform: perspective(1px) translateZ(0);
+box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+-webkit-transition-duration: 0.3s;
+transition-duration: 0.3s;
+-webkit-transition-property: transform;
+transition-property: transform;
+-webkit-transform: scale(1);
+transform: scale(1);
+margin-top: -10%;
+margin-left: -14.5%;
+margin-bottom: -50%;
+} 
+
+}
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;} 
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+

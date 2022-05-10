@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ClassRoomComponent renders as expected 1`] = `
+<div
+  className="pagination"
+>
+  <span>
+     
+    <span>
+       
+      <span>
+         
+        <button
+          className="page"
+          onClick={[Function]}
+        >
+           
+          1
+           
+        </button>
+      </span>
+      <span>
+         
+        <button
+          className="page"
+          onClick={[Function]}
+        >
+           
+          2
+           
+        </button>
+      </span>
+      <span>
+         
+        <button
+          className="page"
+          onClick={[Function]}
+        >
+           
+          3
+           
+        </button>
+      </span>
+      <button
+        className="elipsis"
+        onClick={[Function]}
+      >
+        ...
+      </button>
+      <button
+        className="page"
+        onClick={[Function]}
+      >
+         
+        3
+         
+      </button>
+    </span>
+      
+  </span>
+</div>
+`;

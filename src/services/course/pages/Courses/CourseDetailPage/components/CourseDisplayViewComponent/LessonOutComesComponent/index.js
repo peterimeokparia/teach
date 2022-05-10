@@ -197,7 +197,9 @@ return ( <div className="row">
                        <div className="lessons">  
                         <div className="lesson-item">
                           {
+                              
                                cardItem(cardProps)
+
                           }
                        </div>
                        </div>

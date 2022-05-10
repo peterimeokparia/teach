@@ -2,6 +2,7 @@ import {
 SENDGRID,
 NODEMAILER } from '../providers/index.js';
 
+
 export function emailClient( mailOptions, emailProvider  ){
     console.log(`@@@@@@ i am in the mock implementation emailClient email was sent successfully`);
     const fromEmail = "teachpadsconnect247@gmail.com";
@@ -37,6 +38,7 @@ export function emailClient( mailOptions, emailProvider  ){
     }
     return emailSentStatus;
 };
+
 
 export const nodeMailerEmailServiceProvider = ( mailOptions, fromEmail  ) => {
     console.log("...in Mock implementation nodeMailerEmailServiceProvider");

@@ -147,7 +147,8 @@
 }
 .CourseDetail .content .lesson-content {
   margin-top: -1%;
-  /* margin-left: -62%; */
+  margin-left: -62%;
+  /* margin-left: 0%; update for production - 0 */
   width: 50vh; 
 } 
 .CourseDetail .content .lesson-content .content {

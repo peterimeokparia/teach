@@ -20,7 +20,8 @@ import { navigate } from '@reach/router';
 function useCourseDisplayHook( props ) {
 
   const [ fileToRemove, setFileToRemove ] = useState( undefined );
-  const [ lessonItem, setLessonItem  ] = useState( undefined )
+  const [ lessonItem, setLessonItem  ] = useState( undefined );
+  const [ toggleLessonItemDisplayCount, setToggleLessonItemDisplayCount ] = useState( 0 );
 
   let { 
         currentUser,
@@ -180,6 +181,8 @@ return {
   lessonItem,
   setFileToRemove,
   setLessonItem,
+  toggleLessonItemDisplayCount, 
+  setToggleLessonItemDisplayCount,
   calendarProps,
   lessonProps,
   formProps,

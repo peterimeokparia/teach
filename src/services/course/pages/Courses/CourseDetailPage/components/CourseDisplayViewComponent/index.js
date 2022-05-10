@@ -144,7 +144,7 @@ const CourseDisplayViewComponent = ({
         operatorBusinessName,
         operator,
         courseId,
-        lessonId: lessonItem?._id,
+        lessonId,
         event,
         allEvents,
         addNotes,
@@ -167,6 +167,8 @@ const CourseDisplayViewComponent = ({
         lessonItem,
         setFileToRemove,
         setLessonItem,
+        toggleLessonItemDisplayCount, 
+        setToggleLessonItemDisplayCount,
         calendarProps,
         lessonProps,
         formProps, 
@@ -282,7 +284,7 @@ return (
                                 role={currentUser?.role === role.Tutor  ||  currentUser?.role === role.Student}
                             >  */}
                                 <SwapHorizIcon 
-                                    onClick={() => incrementDisplayedItemCount(  lessonItem, setLessonItem, operatorBusinessName ) }
+                                    onClick={() => incrementDisplayedItemCount(  toggleLessonItemDisplayCount, setToggleLessonItemDisplayCount ) }
                                     color="action"
                                     className="comment-round-button-6"
                                     style={ swapHorizIconStyle() }
@@ -336,14 +338,14 @@ return (
                     </div> 
                     <div className="toggleItems"> 
                     {
-                        toggleDisplayedItems( lessonItem, selectedLessonPlanLesson, courseDisplayProps )  
+                        toggleDisplayedItems( toggleLessonItemDisplayCount, selectedLessonPlanLesson, courseDisplayProps )  
                     }
                     { ( lessonItem ) && 
                         <div className="sidebar" >
                             <LessonOutComesComponent 
                                 buttonText={'Add New Lesson Outcome'}
                                 courseId={ courseId }
-                                lessonId={ lessonItem?._id }
+                                lessonId={ lessonItem && lessonItem?._id }
                             />
                         </div>          
                     }

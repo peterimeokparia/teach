@@ -12,16 +12,16 @@ import LessonPlanIframeComponent from 'services/course/pages/Lessons/LessonPlan/
 
 const fileUploadUrl =  "/api/v1/fileUploads";
 
-export const incrementDisplayedItemCount = ( lessonItem, setLessonItem, operatorBusinessName ) => {
-    //navigate(`/${operatorBusinessName}/animate`);
-    ///navigate(`/${operatorBusinessName}/search`)
-    //navigate(`/${operatorBusinessName}/editor`)
-    // navigate(`/${operatorBusinessName}/questions/missedQuestions/quizzwithpoints/Bonds-quizz_4caf799f-371a-4332-853e-7eb477e2a48e`);
-    if ( lessonItem === 2 ) {
-        setLessonItem( 0 );
+export const incrementDisplayedItemCount = ( toggleLessonItemDisplayCount, setToggleLessonItemDisplayCount ) => {
+    //navigate(`/teach/animate`);
+    ///navigate(`/teach/search`)
+    //navigate(`/teach/editor`)
+    // navigate(`/teach/questions/missedQuestions/quizzwithpoints/Bonds-quizz_4caf799f-371a-4332-853e-7eb477e2a48e`);
+    if ( toggleLessonItemDisplayCount === 2 ) {
+        setToggleLessonItemDisplayCount( 0 );
         return;
     }
-    setLessonItem( lessonItem + 1 );
+    setToggleLessonItemDisplayCount( toggleLessonItemDisplayCount + 1 );
 };
 
 export const toggleDisplayedItems = ( key, selectedlesson, courseDisplayProps ) => {

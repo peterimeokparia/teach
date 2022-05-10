@@ -49,6 +49,7 @@ export const nodeMailerEmailServiceProvider = ( mailOptions, fromEmail  ) => {
             }          
 };
 
+
 export const sendGridEmailServiceProvider = ( mailOptions, fromEmail  ) => {
             console.log("Mock implementation sendGridEmailServiceProvider");
             if ( mailOptions?.to !== undefined )   {

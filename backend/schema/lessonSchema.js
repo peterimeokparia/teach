@@ -35,6 +35,10 @@ const lessonSchema = new Schema ({
         type: Date, 
         required: false,
         default: Date.now  
+    },
+    lessonType: {
+        type: String, 
+        required: false  
     }
 });
 

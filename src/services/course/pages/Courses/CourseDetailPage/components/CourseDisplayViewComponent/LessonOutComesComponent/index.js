@@ -189,28 +189,22 @@ const LessonOutComesComponent = ({
 
 return ( <div className="row">
         {( lessonOutComes ).map(cardProps => ( 
-
            <div>
            {   <div className='col'> 
                {
                    <div className="listItem">  
                        <div className="lessons">  
                         <div className="lesson-item">
-                          {
-                              
-                               cardItem(cardProps)
-
+                          {  
+                            cardItem(cardProps) 
                           }
                        </div>
                        </div>
                    </div>
                }
-              
-           </div>
+                </div>
            }
-         </div>
-
-            
+         </div>  
          ))
         }
 

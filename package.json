@@ -93,6 +93,7 @@
     "react-katex": "^2.0.2",
     "react-latex": "^2.0.0",
     "react-markdown": "^6.0.2",
+    "react-media-recorder": "^1.6.5",
     "react-modal": "^3.11.2",
     "react-redux": "^7.2.4",
     "react-resize-panel": "^0.3.5",

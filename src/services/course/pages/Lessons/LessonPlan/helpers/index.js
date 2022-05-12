@@ -68,10 +68,11 @@ export function getCurrentStudentsPaidSessions(usersPaidSessions, student, tutor
 
 export function adjustRoomSize( roomsize ) {
   let settings = {}, roomSizeSettings = { 
-    settings: ( containerStyle, meetingRoomHeight, meetingRoomWidth ) => { return {
-      containerStyle, 
-      meetingRoomHeight, 
-      meetingRoomWidth
+    settings: ( containerStyle, meetingRoomHeight, meetingRoomWidth ) => { 
+      return {
+        containerStyle, 
+        meetingRoomHeight, 
+        meetingRoomWidth
     }; } 
   };
 
@@ -92,7 +93,8 @@ export function adjustRoomSize( roomsize ) {
       settings = roomSizeSettings.settings(size.videoCallFull, size.videoCallPixelPoints, size.videoCallPixelPoints);
       break;
     default:
-      settings = roomSizeSettings.settings(size.videoCall, size.videoCallPercentageOne, size.videoCallPercentageOne);
+     // settings = roomSizeSettings.settings(size.videoCall, size.videoCallPercentageOne, size.videoCallPercentageOne);
+     settings = roomSizeSettings.settings("500px", size.videoCallPercentageOne, size.videoCallPercentageOne);
       break;
       
   }

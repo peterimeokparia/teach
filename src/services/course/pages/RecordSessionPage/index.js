@@ -1,6 +1,8 @@
 import { 
 createRef, 
-PureComponent } from 'react';
+PureComponent, 
+useEffect, 
+useState } from 'react';
 
 import { 
 connect } from 'react-redux';
@@ -20,8 +22,9 @@ import VideoCallIcon from '@material-ui/icons/VideoCall';
 import DeleteIcon from '@material-ui/icons/Delete';
 import './style.css';
 
-const RecordSessionPage = () => {
-   return < ReactRecorder />;
+const RecordSessionPage = ({toggleCurrentMeetingSession}) => {
+  
+   return < ReactRecorder toggleCurrentMeetingSession = { toggleCurrentMeetingSession }/>;
 }
 
 export default connect( null, null )( RecordSessionPage );

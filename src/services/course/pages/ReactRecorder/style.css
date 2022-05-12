@@ -1,0 +1,23 @@
+.blink_me {
+    animation: blinker 1s linear infinite;
+    color: green;
+    position: fixed;
+    z-Index: 1; 
+    left: 6%;
+    top: 2%; 
+  }
+  
+  .blink_me_not {
+    /* animation: blinker 1s linear infinite; */
+    color: blue;
+    position: fixed;
+    z-Index: 1; 
+    left: 6%;
+    top: 2%; 
+  }
+
+  @keyframes blinker {
+    50% {
+      opacity: 0;
+    }
+  }

@@ -231,8 +231,10 @@ return (
                               userName={currentUser?.firstname}   
                               roomName={selectedLesson?._id}
                               resizedHeight={"900px"}
+                              resizedWidth={"480px"}
+                              containerWidth={"100%"}  
                               containerHeight={adjustRoomSize( roomSize )?.meetingRoomHeight}
-                              containerWidth={adjustRoomSize( roomSize )?.meetingRoomWidth}  
+                              // containerWidth={adjustRoomSize( roomSize )?.meetingRoomWidth}  
                             /> 
                         }
                         </div>

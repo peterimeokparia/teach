@@ -16,15 +16,6 @@ const useLessonSelectionHook = ( props ) => {
         lessonId
     } = props;
 
-        // const [ selectedCourse, setSelectedCourse ] = useState( undefined );
-        // const [ selectedLesson, setSelectedLesson ] = useState( undefined );
-
-        // useEffect(() => {
-
-         
-            
-        // }, []);
-
         let selectedCourse = (selectedCourseFromLessonPlanCourseDropDown?._id === undefined) 
                     ? getItemFromSessionStorage('selectedCourse') 
                     : selectedCourseFromLessonPlanCourseDropDown;

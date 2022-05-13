@@ -305,7 +305,8 @@ return (
                 >
                     < NewLessonPage 
                         className="add-lesson-button"
-                        onSubmit={title => addNewLesson(title, title, courseId, Date.now(), selectedTutorId)} 
+                        // onSubmit={title => addNewLesson(title, title, courseId, Date.now(), selectedTutorId)} 
+                        onSubmit={title => addNewLesson(title, title, courseId, Date.now(), currentUser?._id)} 
                         lessons={lessonsByCourseId}
                         courseId={courseId}
                     >

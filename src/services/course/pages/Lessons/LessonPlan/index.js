@@ -107,7 +107,8 @@ const LessonPlan = ({
     courses, 
     lessons, 
     courseId, 
-    lessonId
+    lessonId,
+    classRoomId
   };
 
   let {
@@ -226,10 +227,16 @@ return (
                     <div className="sidebarThree">
                       <div className={adjustRoomSize( roomSize ).containerStyle}>   
                         <div className={`meeting-stage-${(hideMeetingStage) ? 'hidden' : 'visible'}`}>
+                        {/* The room name is the lesson userId for lessons. The lesson userId by should be the current tutor. */}
+                         {/* 1. There are situations in which we may need to replace a tutor or course created by user in the middle of the
+                            current term. 
+                         2. Using the lesson creator, we are current with regards to the current tutor as well as the meeting room id for external
+                            users e.g parents connecting to view their kid's live session etc.  */}
                         { ( session  ) && 
                             <Meeting
                               userName={currentUser?.firstname}   
-                              roomName={selectedLesson?._id}
+                              // roomName={selectedLesson?._id} 
+                              roomName={ classRoomId ? classRoomId : selectedLesson?.userId } 
                               resizedHeight={"900px"}
                               resizedWidth={"480px"}
                               containerWidth={"100%"}  
@@ -246,14 +253,14 @@ return (
                 <SiteFunctionalityGroup group={ permission( testGroup, operatorBusinessName, PageObject?.LessonPlan_VideoCallIcon )}> 
                     <div className='splitview'>
                       <BoardEditorComponent 
-                          meetingId={meetingId}
-                          whiteBoardLessonId={lessonId}
-                          eventId={eventId}
-                          courseId={courseId}
-                          lessonId={lessonId}
-                          classRoomId={classRoomId}
-                          operatorBusinessName={operatorBusinessName}
-                          saveIconVisible={true}
+                        meetingId={meetingId}
+                        whiteBoardLessonId={selectedLesson?._id}
+                        eventId={eventId}
+                        courseId={courseId}
+                        lessonId={selectedLesson?._id}
+                        classRoomId={classRoomId}
+                        operatorBusinessName={operatorBusinessName}
+                        saveIconVisible={true}
                       />
                     </div>
                   </SiteFunctionalityGroup>

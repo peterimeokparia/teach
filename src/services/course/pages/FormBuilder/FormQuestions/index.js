@@ -80,7 +80,7 @@ function questionProps(){
     onlineQuestions, courseId, lessonId, formType, formName, formUuId, formBuilderState, formBuilderStatus,
     eventId, onlineQuestionId, saveOnlineQuestions, loadFormFieldPoints, loadFormFieldAnswers, studentsTotalPointsReceived,
     studentsTotalPointsReceivedFromPersistence,timer, currentUser, formBuilders, orderedFormBuilderQuestions, operatorBusinessName, 
-    displayVideoComponent: false, formId, userId, outcomeId, linkId, previewMode
+    displayVideoComponent: false, formId, userId, outcomeId, linkId
   };
 }
 
@@ -95,7 +95,7 @@ return (
             <MissedQuestionComponent display={ true } questionProps={ questionProps() } setMissedQuestions={ handleMissedQuestions } />
           } */}
           {/* <FormBuilderDashBoard form={questionProps()} formUuId = { formUuId } previewMode = { previewMode?.isPreviewMode }> */}
-          <FormBuilderDashBoard form={questionProps()}>
+          <FormBuilderDashBoard form={{...questionProps(), previewMode }}>
             { formType !== formTypes.report &&
                 <div className="points-label">
                   <label className="points-label">{'Points'}</label>

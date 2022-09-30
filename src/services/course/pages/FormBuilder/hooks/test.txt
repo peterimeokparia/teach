@@ -1,0 +1,393 @@
+import { 
+useState, 
+useEffect,
+useRef } from 'react';
+
+import {
+getSortedRecords } from 'services/course/selectors';
+
+import {
+inputType, 
+elementMeta } from 'services/course/pages/QuestionsPage/helpers';
+
+import Swal from 'sweetalert2'
+
+
+function useDraggableListItemComponentHook( fieldProps, handleDraggableFormFieldAnswers ) {
+
+  let { 
+    formBuilderState,
+    formBuilderStatus,
+    loadFormFields, 
+    addNewFormField, 
+    saveFormField,  
+    loadFormFieldsByFormFieldId,
+    loadFormFieldAnswersByFormFieldId,
+    deleteFormField,
+    loadFormFieldAnswers, 
+    loadFormFieldPoints,
+    formFieldAnswersError,
+    addNewFormFieldAnswer, 
+    saveFormFieldAnswer,
+    courseId, 
+    lessonId,
+    formId,
+    formUuId,
+    previewMode,
+    question,
+    fields,
+    formFieldAnswers,
+    userId,
+    currentUser,
+    saveEditorMarkDownObjectToMw,
+    saveStudentsAnswerPoints,
+    setUpdatePoints,
+    eventId
+  } =  fieldProps;
+
+  // create answer fields...
+  const [ itemMoved, setItemMoved ] = useState( false );
+  const [ saveAnwer, setSaveAnswer ] = useState( false );
+  const [ fieldMoved, setFieldMoved ] = useState( undefined );
+
+  const [ testFlag, setTestFlag ] = useState( false ); // change this
+  
+  let newCopy = [];
+
+  let formFields = fields?.filter( field => field?.questionId === question?._id && field?.inputType === inputType.DraggableListItem );
+
+  let formFieldsCopy = [ ...formFields ];
+  
+   formFieldsCopy.forEach(item => {
+
+    newCopy = [...newCopy, {...item, userId: currentUser?._id, position: 0 }]
+
+  });
+
+  let formAnswers = formFieldAnswers?.filter( field => field?.questionId === question?._id  && field?.inputType === inputType.DraggableListItem && field?.userId === currentUser?._id);
+       
+  useEffect(() => { 
+    loadFormFieldAnswers();
+  }, [] );   
+
+  useEffect(() => { 
+
+    if ( itemMoved && saveAnwer && fieldMoved ) {
+
+      alert('saving...')
+      handleDraggable( fieldMoved );
+      setItemMoved( false );
+      setSaveAnswer( false );
+      loadFormFieldAnswersByFormFieldId( fieldMoved?.fieldId );
+      loadFormFieldAnswers();
+    }
+    
+  }, [ ( itemMoved && saveAnwer && fieldMoved ) ] );  
+
+  useEffect(() => { 
+
+    if ( !itemMoved && saveAnwer && fieldMoved ) {
+      alert('saving...')
+      handleDraggable( fieldMoved );
+      setSaveAnswer( false );
+      loadFormFieldAnswersByFormFieldId( fieldMoved?.fieldId );
+      loadFormFieldAnswers();
+    }
+    
+  }, [ ( !itemMoved && saveAnwer && fieldMoved ) ] ); 
+
+
+  function handleDraggableOnElementMove( element ){
+    setFieldMoved( element );
+    setItemMoved( true );
+
+    alert('item moved')
+    alert('new position')
+    alert(JSON.stringify( element ))
+    alert('new position')
+    alert(element?.position)
+
+    if ( formBuilderState === elementMeta.state.Manage ) {
+      saveFormField( element );
+      loadFormFieldsByFormFieldId( element );
+    }
+
+    if ( formBuilderState === elementMeta.state.Taking ) {
+  // create answer fields...
+      alert('moving...')
+
+      Swal.fire({
+        title: 'An item has been moved...test test test',
+        icon: 'warning',
+        html: "<div>Do you still want to save changes?</div>",
+        showCancelButton: true,
+        confirmButtonText: 'Save move',
+        cancelButtonText: 'Do not save move'
+      }).then( (response) => {
+        if ( response?.value ) {  
+
+          setTestFlag( true );
+
+          if ( formAnswers?.length === 0 ) {
+
+            newCopy.map( ( element ) => {
+
+              addNewFormFieldAnswer(element)
+              .then( resp => {
+                alert('add new form field ')
+                alert(JSON.stringify( resp ))
+
+                alert('element');
+                alert(JSON.stringify( element ));
+
+                loadFormFieldAnswersByFormFieldId( element?.fieldId );
+                loadFormFieldAnswers();
+
+              }).catch( error => console.log(error));
+              
+            });
+
+            let formAnswer = formFieldAnswers?.
+                              find( field => field?.questionId === question?._id  && 
+                                  field?.inputType === inputType.DraggableListItem && 
+                                    field?.userId === currentUser?._id && 
+                                      field?.fieldId === element?._id );
+
+            if ( formAnswer?._id ) {
+
+              alert(' found new ans')
+              handleFieldMoved( formAnswer );
+            }
+
+          } else {
+
+            let formAnswer = formFieldAnswers?.
+                    find( field => field?.questionId === question?._id  && 
+                        field?.inputType === inputType.DraggableListItem && 
+                          field?.userId === currentUser?._id && 
+                            field?.fieldId === element?._id );
+
+            alert( 'getting form answer ')
+            alert(JSON.stringify( formAnswer ))
+
+            if ( formAnswer?._id ) {
+              alert(' found existing ans')
+              handleFieldMoved( formAnswer );
+            }
+          } 
+          //saveFormField( {...element, selected: false } );
+          //loadFormFieldsByFormFieldId( element );    
+          return;
+        } else {
+          return;
+        }
+      });
+
+      // saveFormField( {...element, selected: false } );
+      // loadFormFieldsByFormFieldId( element );
+    }
+  }
+
+  function handleDraggable( element ){
+
+    if ( formBuilderState !== elementMeta.state.Taking ) return;
+ 
+    
+  // create answer fields... on saving
+
+    alert('handleDraggable')
+
+    alert(JSON.stringify(element?.position.toString()  ))
+
+    alert(JSON.stringify(  element?.answerKey))
+
+    if ( element?.selected && element?.position.toString() === element?.answerKey ){
+
+      alert('right answer')
+  
+      handleDraggableFormFieldAnswers( element, element.points, element?.position  );      
+    }
+
+    if ( element?.selected && element?.position.toString() !== element?.answerKey ){
+
+      alert('wrong answer')
+  
+      handleDraggableFormFieldAnswers( element, 0, element?.position  );      
+    }
+    // formFieldAnswerGroup.map(( answerField, index ) => {
+      
+    //   let questionField = formFieldGroup?.find( field => field?._id === answerField?.fieldId );
+
+    //   if ( answerField?.points === 0 && answerField?.answer === questionField?.answerKey ){
+    
+    //     handleDraggableFormFieldAnswers( answerField, questionField.points, answerField?.position  );      
+    //   }
+
+    //   if ( answerField?.points === questionField?.points && answerField?.answer !== questionField?.answerKey ){
+    
+    //     handleDraggableFormFieldAnswers( answerField, 0, answerField?.position  );      
+    //   }
+
+    // });
+
+    // formFieldAnswerGroup.map(( ansField, index ) => {
+
+    //     let questionField = formFieldGroup?.find( field => field?._id === ansField?.fieldId )
+
+          //if ( answer?.points === 0 && answer?.position === questionField?.position ){
+          //   cummulativeScore += questionField.points
+          //   answer?.points = questionField.points
+        //}
+
+
+        //if ( answer?.points === questionField?.points && answer?.position !== questionField?.position ){
+          //   cummulativeScore -= questionField.points
+          //   answer?.points = 0
+        //}
+
+    /// })
+  }
+
+  function handleFieldMoved( element ){
+    alert('field moved')
+    alert(JSON.stringify( element ))
+
+    if ( formBuilderState !== elementMeta.state.Taking ) return;
+
+    if ( element ) {
+      alert('copyElement')
+      alert(JSON.stringify( element ))
+      setFieldMoved( { ...element, selected: true } );
+      setSaveAnswer( true );
+    }
+    
+  }
+
+  let draggableListItemProps = {
+    // itemCollection: testFlag ? getSortedRecords( formAnswers, 'position' ): getSortedRecords( newCopy, 'position'),  // create answer fields... on saving && change
+    // itemCollection: getSortedRecords( formAnswers, 'position' ) ,  // create answer fields... on saving && change
+    itemCollection: getSortedRecords( formFields, 'position' ) ,  // create answer fields... on saving && change
+    formFields,
+    formAnswers,
+    handleFieldMoved,
+    setSaveAnswer,
+    handleDraggableOnElementMove,
+   // formfields || formfieldans,
+   // saveAction: saveFormFields || saveFormFieldAns
+   // formBuilderStatus,
+   // formBuilderState
+   //...
+  };
+
+return {
+  draggableListItemProps
+}; };
+
+export default useDraggableListItemComponentHook;
+
+
+
+
+
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getPreviouslySelectedDropDownAnswer } from "services/course/pages/FormBuilder/FormBuilderStepWizard/SelectExistingFormBuilderComponent/FormFields/component/DropDown/helpers";
+import { loadFormFieldAnswers, loadFormFieldAnswersByFormFieldId,  saveFormFieldAnswer  } from 'services/course/actions/formfieldanswers';
+import { loadFormFields, loadFormFieldsByFormFieldId, saveFormField } from 'services/course/actions/formfields';
+import { generateUuid } from 'services/course/pages/Users/helpers';
+
+function useDropDownSelectorHook( props ) {
+  let {
+    handleFormFieldAnswers,
+    studentAnswerByQuestionId,
+    formFieldElement,
+    currentUser,
+    previewMode
+  } = props;
+
+  const [ inputValue,  setInputValue ] = useState( null );
+  const [ mathModalOpen, setMathModalOpen ] = useState(false);
+  const [ editorState,  setEditorState ] = useState(null);
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch( loadFormFieldAnswers() );
+  //   if ( studentAnswerByQuestionId && roleTypeCollection?.length > 0 ) {
+  //     if ( roleTypeCollection?.find( val => val.item === studentAnswerByQuestionId?.answer)?.item ) {
+  //         setInputValue(   { value: studentAnswerByQuestionId?.answer, item: studentAnswerByQuestionId?.answer, label: <Latex>{`$${studentAnswerByQuestionId?.answer}$`}</Latex> } ) ;
+  //     } 
+  //   }
+  // }, [ loadFormFieldAnswers, studentAnswerByQuestionId, roleTypeCollection ]);
+
+  // useEffect(() => {
+  //   if ( dropDownOptions?.length === dropDownValues?.length ) {
+  //       return;     
+  //   } else if ( dropDownValues?.length > dropDownOptions?.length ) {
+  //     dispatch( saveFormField({ ...formFieldElement,  dropDownOptions: dropDownValues }) );
+  //   } else {
+  //     dispatch( saveFormField({ ...formFieldElement,  dropDownOptions: dropDownOptions }) );
+  //   }
+  // }, [ ( dropDownOptions?.length > dropDownValues?.length ) ]);
+
+  const handleInputValue = ( selectedOption ) => {
+    setInputValue( selectedOption );
+    handleDropDownSelection( selectedOption );
+  };
+
+  const addOptionValue = () => {    
+    try {
+      const uuid = generateUuid();
+
+      let dropDownSelectorValues = [ ...formFieldElement?.dropDownOptions, { markDownContent: editorState, id: uuid } ];
+
+      dispatch( saveFormField({ ...formFieldElement, dropDownOptions: dropDownSelectorValues }) );
+      dispatch( loadFormFieldsByFormFieldId( formFieldElement?._id) );
+
+    } catch (error) {
+
+      alert('error')
+      alert(JSON.stringify( error ));
+    }
+  };
+
+  const deleteOptionValue = () => {
+    if ( inputValue ) {
+      let dropDownSelectorValues = formFieldElement?.dropDownOptions?.filter( option => option?.id !== inputValue?.id );
+
+      dispatch( saveFormField({ ...formFieldElement, dropDownOptions: dropDownSelectorValues }) );
+      dispatch( loadFormFieldsByFormFieldId( formFieldElement?._id) );
+    } 
+  };
+
+  const handleDropDownSelection = ( value ) => {
+    const prevPoints = getPreviouslySelectedDropDownAnswer( studentAnswerByQuestionId, formFieldElement?.questionId, formFieldElement?._id ); 
+
+    if ( !currentUser?._id ) return;
+
+      let points = ( !formFieldElement?.answerKey || value?.id !== formFieldElement?.answerKey ) ? 0 : formFieldElement['points'];
+
+      setInputValue( value  );
+
+      points = prevPoints > 0 ? prevPoints : points;
+
+      handleFormFieldAnswers( formFieldElement, value?.id, points );
+      dispatch( loadFormFieldAnswersByFormFieldId( studentAnswerByQuestionId?._id) );
+    };
+
+ function setEditorStateTest( markDownContent ){
+  setEditorState( markDownContent );
+ }
+
+return {
+  inputValue,  
+  mathModalOpen,  
+  setEditorStateTest,
+  setMathModalOpen,
+  setInputValue,
+  handleInputValue,
+  handleDropDownSelection,
+  addOptionValue,
+  deleteOptionValue
+}; };
+
+export default useDropDownSelectorHook;

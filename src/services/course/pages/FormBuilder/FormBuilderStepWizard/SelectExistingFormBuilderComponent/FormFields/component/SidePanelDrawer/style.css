@@ -1,0 +1,17 @@
+.sidePanel label {
+    margin-bottom: -19px;
+    margin-left: 1px;
+    border-radius: 50%;
+    width: 60px;
+    background: #87ceeb;
+    color: white;
+    box-shadow: 10px 10px black;
+}
+.sidePanel .explanation-label-test-selected {
+    margin-left: 1px;
+    border-radius: 50%;
+    width: 60px;
+    background: #87ceeb;
+    color: white;
+    box-shadow: 10px 10px black;
+}

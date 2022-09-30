@@ -1,0 +1,35 @@
+import { 
+useEffect } from 'react';
+
+import {
+useState
+} from 'react';
+
+import { 
+connect } from 'react-redux';
+
+import ContextMenu from 'services/course/pages/components/ContextMenu';
+
+const Test004 = ({
+    operatorBusinessName,
+    operator,
+    user,
+    courses,
+    lessons,
+    loadCourses,
+    coursesLoading,
+    onCoursesError }) => {
+
+
+    useEffect(() => {
+        
+    }, [])
+   
+return <div className={'outerContainer'}>
+    <ContextMenu />
+    {'TEST'}
+</div>
+
+};
+
+export default connect()( Test004 );

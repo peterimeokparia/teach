@@ -1,0 +1,37 @@
+.menu {
+  font-size: 14px;
+  background-color: #fff;
+  border-radius: 2px;
+  padding: 5px 0 5px 0;
+  width: 150px;
+  height: auto;
+  /* margin-left: 65%; */
+/* use absolute positioning  */
+  /* position: absolute; */
+  /* position: relative;
+  z-index: 1; */
+  position: absolute;
+  /* z-index: 1; */
+  list-style: none;
+  box-shadow: 0 0 20px 0 #ccc;
+  opacity: 1;
+  transition: opacity 0.5s linear;
+}
+
+.menu-2 {
+  font-size: 14px;
+  background-color: #fff;
+  border-radius: 2px;
+  padding: 5px 0 5px 0;
+  width: 150px;
+  height: auto;
+  margin-left: 65%;
+/* use absolute positioning  */
+  /* position: absolute; */
+  position: absolute;
+  /* z-index: 1; */
+  list-style: none;
+  box-shadow: 0 0 20px 0 #ccc;
+  opacity: 1;
+  transition: opacity 0.5s linear;
+}

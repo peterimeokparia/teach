@@ -1,5 +1,5 @@
 import { ADD_FORMFIELDANSWERS_SUCCESS, SAVE_FORMFIELDANSWERS_SUCCESS, SAVE_FORMFIELD_DRAGGABLE_ANSWERS_POINTS_AFTER_MOVE, 
-    ADD_ANSWER_POINTS, SAVE_DRAGGABLE_ANSWERS_SUCCESS } from 'services/course/actions/formfieldanswers';
+    ADD_ANSWER_POINTS, SAVE_DRAGGABLE_ANSWERS_SUCCESS, ADD_UNANSWERED_QUESTIONS } from 'services/course/actions/formfieldanswers';
 import { ADD_FORMBUILDER_SUCCESS, SAVE_FORMBUILDER_SUCCESS } from 'services/course/actions/formbuilders';
 import { SAVE_FORMFIELDS_SUCCESS_MW, SET_FORMFIELDS_MARKDOWN } from 'services/course/actions/formfields';
 import { ADD_MISSED_ANSWERS_SUCCESS } from 'services/course/actions/missedanswers';
@@ -76,6 +76,10 @@ export const builder = store => next =>  action => {
             next(action);
         return;
         case SAVE_FORMFIELDS_POINTS_SUCCESS_MW:
+            handleFormFieldPoints( store, action.payload  );  
+            next(action);
+        return;
+        case ADD_UNANSWERED_QUESTIONS:
             handleFormFieldPoints( store, action.payload  );  
             next(action);
         return;

@@ -1,21 +1,7 @@
-import {
-updateUser,
-sendEmail } from 'services/course/api';
-
-import {
-saveEvent,
-saveTimeLineEvents } from 'services/course/actions/event';
-
-import {
-sendPushNotificationMessage } from 'services/course/actions/notifications';
-    
-import {
-getTimeLineItems, eventEnum} from 'services/course/pages/CalendarPage/helpers';
-
-import {
-SAVE_USER_SUCCESS,
-LAST_LOGGEDIN_USER } from 'services/course/actions/users';
-import { navigate } from '@reach/router';
+import { updateUser } from 'services/course/api';
+import { saveEvent, saveTimeLineEvents } from 'services/course/actions/event';
+import { getTimeLineItems } from 'services/course/pages/CalendarPage/helpers';
+import { SAVE_USER_SUCCESS, LAST_LOGGEDIN_USER } from 'services/course/actions/users';
     
     const emailMessageConfig = {
         sendersEmailAddress: "teachpadsconnect247@gmail.com",

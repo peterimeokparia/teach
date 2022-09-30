@@ -1,17 +1,8 @@
-import {
-useState,
-useEffect } from 'react';
-
-import { 
-connect } from 'react-redux';
-
-import { 
-togglePreviewMode } from 'services/course/actions/app';
-
-import {
-saveLesson } from 'services/course/actions/lessons';
-
-import LessonOutComesComponent from 'services/course/pages/Courses/CourseDetailPage/components/CourseDisplayViewComponent/LessonOutComesComponent';
+import { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { saveLesson } from 'services/course/actions/lessons';
+import { restrictTextLength } from 'services/course/pages/Courses/helpers';
+import { role } from 'services/course/helpers/PageHelpers';
 import NavLinks from 'services/course/pages/components/NavLinks';
 import './style.css';
 
@@ -20,26 +11,26 @@ const LessonPage = ({
   lessonId,  
   previewMode, 
   saveLesson,
-  outcomes,
-  togglePreviewMode, 
-  currentUser  }) => { 
+  currentUser }) => { 
   const [ textAreaValue, setTextAreaValue ] = useState("");
 
   useEffect(() => {
     if ( textAreaValue && textAreaValue !== "" ) {
       saveLesson({...lesson, introduction: textAreaValue });
     }
-  }, [ previewMode ]);
+  }, [ textAreaValue, previewMode, saveLesson, lesson ]);
 
   const handleTextAreaInput = ( eat ) => {
     setTextAreaValue( eat?.target?.value );
   };
 
 return <div className=""><div className="lessonPage">
-  <div className="title">
+  <div className= { (currentUser?.role === role.Tutor) ? 'title' : 'title-student' }>
+    
     <NavLinks to={`/lessons/${lessonId}/more`}>
-      <span className="multicolortext"> {`${lesson?.title}`} </span>
+      <span className="multicolortext"> {`${restrictTextLength( lesson?.title, 15, 15 )}`} </span>
     </NavLinks>
+
     { (previewMode) && <div className="textBoxItem">  
       <textarea 
         id="txtid" 
@@ -55,16 +46,15 @@ return <div className=""><div className="lessonPage">
   }
   </div>
 </div>
-</div>
+</div>;
 };
 
 const mapState = (state, ownProps)   => {
   return {
-    previewMode: state.app.previewMode,
-    lesson: state.lessons.lessons[ownProps?.lessonId], 
     currentUser: state.users.user,
-    outcomes: Object.values(state.outcomes.outcomes)
+    previewMode: state.app.previewMode,
+    lesson: state.lessons.lessons[ownProps?.lessonId]
   };
 };
 
-export default connect(mapState, { togglePreviewMode, saveLesson } )(LessonPage);
+export default connect(mapState, { saveLesson } )(LessonPage);

@@ -8,8 +8,8 @@ export function buildFormTableColumns( formQuestions, formName ){
             align: 'left',
             x: 100,
             y: -4
-         }
-    })
+         };
+    });
 };
 
 export function formToTableConverter( formQuestions, formAnswers, formName, formBuilders ){
@@ -20,11 +20,8 @@ export function formToTableConverter( formQuestions, formAnswers, formName, form
     if ( formAnswers?.length === 0 ) return;
 
     formUniqueIds?.forEach( uniqueId => {  
-
         formQuestions?.forEach( question => {
-          
           formAnswers?.filter( ans => ans?.questionId === question?._id && ans?.formUuId === uniqueId).forEach( (ansValue, index ) => {
-
             rows = [ ...rows, { uniqueId, index, qId:question?._id, ans: ansValue?.answer  }];  
         });
      }); 
@@ -33,7 +30,7 @@ export function formToTableConverter( formQuestions, formAnswers, formName, form
     let tempRows = [];
 
     formUniqueIds?.forEach( uniqueId => {        
-        let tempRowEntries =  Object.fromEntries( rows?.filter( rw => rw?.uniqueId === uniqueId)?.map(val => { return [ val?.qId, val?.ans ] }) );
+        let tempRowEntries =  Object.fromEntries( rows?.filter( rw => rw?.uniqueId === uniqueId)?.map(val => { return [ val?.qId, val?.ans ]; }) );
 
         tempRows.push( tempRowEntries );
     });
@@ -44,11 +41,11 @@ export function formToTableConverter( formQuestions, formAnswers, formName, form
 };
 
 export function getMarkDownAsText( markDown ){
-    return markDown?.split('<p class="graf graf--p">')[1]?.split('</p>')[0] 
+    return markDown?.split('<p class="graf graf--p">')[1]?.split('</p>')[0]; 
 };
 
 function getFormUniqueIds( formName, formBuilders ){
     let submittedForms = formBuilders?.filter( form => form?.formName === formName && form?.status === 'Submitted' );
 
-    return submittedForms?.map(form => { return form?.formUuId } );
+    return submittedForms?.map(form => { return form?.formUuId; } );
 };

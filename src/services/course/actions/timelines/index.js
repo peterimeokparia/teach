@@ -3,7 +3,7 @@ add,
 update,
 remove,
 get,
-getById } from 'services/course/api';
+getById } from 'services/course/api/index.js';
 
 export const LOAD_TIMELINES_BEGIN = "LOAD TIMELINES BEGIN";
 export const LOAD_TIMELINES_SUCCESS = "LOAD TIMELINES SUCCESS";

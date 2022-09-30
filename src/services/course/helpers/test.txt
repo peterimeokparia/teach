@@ -135,3 +135,6 @@ const mapState = ( state, ownProps )  => ({
 })
 
 export default connect(mapState, mapDispatch)(TimeLine2);
+
+
+https://github.com/graphql/graphql-js/issues/2721

@@ -53,13 +53,13 @@ flex-flow: row nowrap;
 width: 30%;
 }
 .sidebar {
-background: lightpink;
+/* background: lightpink;
 min-width: 200px;
 width: 400px;
 width:100%;
 box-sizing: border-box;
 text-align: center;
-flex-grow: 1;
+flex-grow: 1; */
 }
 
 

@@ -1,21 +1,8 @@
-import { 
-useState, 
-useRef, 
-useEffect } from 'react';
-
-import { 
-connect } from 'react-redux';
-
-import { 
-resetLessonError, 
-deleteLesson } from 'services/course/actions/lessons';
-
-import {
-forms } from 'services/course/pages/Lessons/NewLessonPage/helpers';
-
-import { 
-Validations } from 'services/course/helpers/Validations';
-
+import { useState, useRef, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { resetLessonError, deleteLesson } from 'services/course/actions/lessons';
+import { forms } from 'services/course/pages/Lessons/NewLessonPage/helpers';
+import { Validations } from 'services/course/helpers/Validations';
 import './style.css';
 
 const NewLessonPage = ({
@@ -81,11 +68,6 @@ const NewLessonPage = ({
         return <div>Save in progress, please wait.</div>;
     };
 
-    const formProps = {
-        operatorBusinessName,
-        currentUser,
-    };
-
 return editing ? (
            <>
             <form
@@ -103,7 +85,7 @@ return editing ? (
              {error && <div>{error.message}</div>}
            </>
             ) : ( 
-                children(beginEditing, performDelete, forms )
+                children( beginEditing, performDelete, forms )
             );                
 };
 

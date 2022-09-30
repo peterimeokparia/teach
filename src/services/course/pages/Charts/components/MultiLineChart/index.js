@@ -1,23 +1,8 @@
-import {
-React,
-useRef,
-useEffect,
-useState,
-useMemo } from "react";
-
-import { 
-connect } from 'react-redux';
-
-import {
-getXScale,
-getYScale,
-drawAxis,
-drawLine,
-animateLine
-} from 'services/course/pages/Charts/helper'
-
+import { React, useRef, useEffect, useState, useMemo } from "react";
+import { connect } from 'react-redux';
+import { getXScale, getYScale, drawAxis, drawLine, animateLine } from 'services/course/pages/Charts/helper';
 import * as d3 from "d3";
-
+// refactor
 const MultiLineChart = ({ data = [], dimensions = {}  }) => {
     // Get DOM object in useRef
     const svgRef = useRef( null );
@@ -33,18 +18,20 @@ const MultiLineChart = ({ data = [], dimensions = {}  }) => {
     const { items } = portfolioData;
 
 
-    const xScale = useMemo(
-        () => getXScale( items , width), [portfolioData, width]
+    const xScale = useMemo(() =>
+        () => getXScale( items , width), [ width, items ]
+        // () => getXScale( items , width), [ portfolioData, width, items ]
     );
 
     const yScale = useMemo(
-        () => getYScale( items, height, 50), [portfolioData, height]
+        () => getYScale( items, height, 50), [ height, items ]
+        // () => getYScale( items, height, 50), [ portfolioData, height, items ]
     );
 
     useEffect(() => {
-
     // Create root container
     const svgEl = d3.select(svgRef.current);
+
     svgEl.selectAll("*").remove(); // Clear svg content before adding new dom elements.
 
     // Add an svg group 
@@ -67,22 +54,16 @@ const MultiLineChart = ({ data = [], dimensions = {}  }) => {
     });
 
     data.forEach( ( d ) => {
-
         const line = drawLine({ container: svg, data:d, xScale, yScale } );
 
         if (!prevItems.includes(d.name)) {
-
             animateLine({ element: line.node() });
         }
-
     });
 
     setPrevItems( data.map(( { name } ) => name )); 
+}, [ data, xScale, yScale, margin, height, prevItems, width ]);
 
-}, [ data, xScale, yScale, margin ]);
-
-
-  
 
 return   (    
         <div> 

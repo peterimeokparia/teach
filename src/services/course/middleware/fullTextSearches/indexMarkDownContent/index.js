@@ -1,8 +1,4 @@
-import {
-update,
-getById,
-addEditorFullTextSearchContent,
-saveEditorContent } from 'services/course/api';
+import { update, getById, addEditorFullTextSearchContent, saveEditorContent } from 'services/course/api';
 
 export function handleEditorFullTextSearchContent( store, element, route, contentType, markDownContent, pageUrl, duration = 5000) {
    const saveEditorContentHandle = setTimeout(() => {
@@ -13,25 +9,22 @@ export function handleEditorFullTextSearchContent( store, element, route, conten
          clearTimeout( saveEditorContentHandle );
          //return response1;
        })
-       .catch( error => { console.warn( JSON.stringify( error )) 
+       .catch( error => { console.warn( JSON.stringify( error )); 
          //return error;
        });
    }, duration, store );
  }
 
 function handleFullTextSearchMarkDownContent( element, contentType, markDownContent, pageUrl ){
-
    let fullTextSearchContent = null;
-   if ( markDownContent && ( !markDownContent?.rows ) && typeof( markDownContent ) === 'string'  ) return;
 
+   if ( markDownContent && ( !markDownContent?.rows ) && typeof( markDownContent ) === 'string'  ) return;
       fullTextSearchContent = markDownContentFullTextSearch( markDownContent );
       saveFullTextSearchContent( element, contentType, fullTextSearchContent, pageUrl );
 }
 
 function handleFullTextSearchTextContent( element, contentType, textContent, pageUrl ) {
-
    if ( typeof(textContent !== 'string') || textContent?.rows !== undefined ) return;
-
    saveFullTextSearchContent(  element, contentType, textContent, pageUrl );
 }
 
@@ -40,17 +33,18 @@ function saveFullTextSearchContent( element, contentType, fullTextSearchContent,
       .then( response => {
          if ( response?.length > 0 && response.find(item => item?.contentId === element?._id)  ) {
             let upatedResponse = response.find(item => item?.contentId === element?._id);
+
             upatedResponse[contentType] = fullTextSearchContent;
             saveEditorContent( upatedResponse, '/fulltextsearch/'); 
          } else {
             addEditorFullTextSearchContent(fullTextSearchItem( element, contentType, fullTextSearchContent, pageUrl ), '/fulltextsearch', 2000);
          }
       })
-      .catch( error => { console.warn( error )});
+      .catch( error => { console.warn( error );
+      });
 }
 
 function fullTextSearchItem( element, contentType, fullTextSearchContent,  pageUrl ){
-
    let fullTextSearchItemObject = {
       contentId: element?._id,
       modelNamePrimary: "",
@@ -66,7 +60,7 @@ function fullTextSearchItem( element, contentType, fullTextSearchContent,  pageU
       dateFirstIndexed: Date.now(),
       userId: element?.userId,
       operatorId: sessionStorage.getItem('operator')?._id
-   }
+   };
 
    fullTextSearchItemObject[contentType] = fullTextSearchContent;
    return fullTextSearchItemObject;
@@ -77,6 +71,7 @@ function fullTextSearchItem( element, contentType, fullTextSearchContent,  pageU
 function findFullTextSearchMarkDownContentText( cellBlock ){
   if ( cellBlock?.dataI18n?.default?.slate ) { 
     let textBlock = Object.values( cellBlock?.dataI18n?.default?.slate )?.find( child => Object.values(child))?.children?.find(child => Object.values(child));
+
     if ( textBlock ) {
       newText += textBlock?.text ;
     }
@@ -89,23 +84,23 @@ function findMarkDownContentRowCellFields(row){
 
 export function markDownContentFullTextSearch( markDownObject ){
       newText = "\n";
-   markDownObject?.rows?.filter(row => Object.values(row))?.
-      map(row => {
-         findFullTextSearchMarkDownContentText(findMarkDownContentRowCellFields(row));
-      });
-      return newText;
+   markDownObject?.rows?.filter(row => Object.values(row))?.map(row => 
+         findFullTextSearchMarkDownContentText(findMarkDownContentRowCellFields(row))
+         );
+   return newText;
 }
 
 export function buildSearchContent( ...args ) {
-
    if ( arguments?.length === 0 ) return;
-
    let searchContent = "";
 
-   let argumentArray = args.map( (item, index) =>  { 
-         searchContent += ` ${item} `;
-      });
+   args.map( item => setSearchContent( searchContent, item ) );
+
    return searchContent;
+}
+
+function setSearchContent( searchContent, item ){
+   searchContent += ` ${item} `;
 }
 
 

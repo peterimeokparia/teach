@@ -1,28 +1,11 @@
-import { 
-useState, 
-useEffect } from "react";
-
-import { 
-useDispatch } from 'react-redux';
-
-import {
-eventEnum } from 'services/course/pages/CalendarPage/helpers';
-
-import {
-loadSubscribedPushNotificationUsers } from 'services/course/actions/notifications';
-
-import { 
-setCalendarEventType,
-loadAllCalendars } from 'services/course/actions/calendar';
-
-import {  
-loadAllEvents } from 'services/course/actions/event';
-
-import { 
-loadCourses } from "services/course/actions/courses";
-
-import {
-role } from 'services/course/helpers/PageHelpers';
+import { useState, useEffect } from "react";
+import { useDispatch } from 'react-redux';
+import { eventEnum } from 'services/course/pages/CalendarPage/helpers';
+import { loadSubscribedPushNotificationUsers } from 'services/course/actions/notifications';
+import { setCalendarEventType, loadAllCalendars } from 'services/course/actions/calendar';
+import { loadAllEvents } from 'services/course/actions/event';
+import { loadCourses } from "services/course/actions/courses";
+import { role } from 'services/course/helpers/PageHelpers';
 
 function useBuildEventDataHook( calendarEventType, events, calendarId, user ) {
     const [ isModalOpen, setModalOpen] = useState(false);
@@ -37,7 +20,7 @@ function useBuildEventDataHook( calendarEventType, events, calendarId, user ) {
         dispatch( loadAllEvents() );
         dispatch( loadSubscribedPushNotificationUsers() );
         dispatch( setCalendarEventType( calendarEventType ) );
-    },[ loadAllCalendars, loadSubscribedPushNotificationUsers, loadAllEvents, loadCourses, calendarEventType, dispatch ]);
+    },[ calendarEventType, dispatch ]);
 
     let eventDataObj = null;
 
@@ -92,7 +75,6 @@ function getEventData( eventData ) {
 };
 
 const handleSelect = ( slotInfo ) => {
-
     switch ( calendarEventType ) {
 
         case eventEnum.NewEvent:

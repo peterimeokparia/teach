@@ -34,13 +34,15 @@ export const drawAxis = ( { container, xScale, yScale, ticks, tickSize, tickForm
         .attr("class", "axis")
         .attr("transform", transform)
         .call(axis);
+
     return applyAxisStyles( axisGroup );
 };
 
 export const drawLine = ({ container, data, xScale, yScale }) => {
     const line = d3.line()
         .x((d) => xScale(d.date))
-        .y((d) => yScale(d.value))
+        .y((d) => yScale(d.value));
+
     return container.append("path")
         .datum(data)
         .attr("fill", "none")
@@ -51,15 +53,15 @@ export const drawLine = ({ container, data, xScale, yScale }) => {
 
 export const animateLine = ( { element } ) => {
     const length = element?.getTotalLength();
+
     return d3.select( element )
         .attr("stroke-dasharray", `${length},${length}`)
         .attr("stroke-dashoffset", length)
         .transition()
         .duration(750)
         .ease(d3.easeLinear)
-        .attr("stroke-dashoffset", 0)
+        .attr("stroke-dashoffset", 0);
 };
-
 
 vl.register(vega, vegaLite, {});
 
@@ -67,7 +69,7 @@ let testData = [
     { name:'sch', value: 1 },
     { name:'folio', value: 2 },
     { name:'bank', value: 3 }
-]
+];
  
 export const barChart = () => vl
             .markBar()

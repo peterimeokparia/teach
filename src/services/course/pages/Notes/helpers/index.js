@@ -1,12 +1,7 @@
-import {
-role } from 'services/course/helpers/PageHelpers';
-
-import {
-LESSONNOTES,
-STUDENTNOTES } from 'services/course/actions/notes';
+import { role } from 'services/course/helpers/PageHelpers';
+import { LESSONNOTES, STUDENTNOTES } from 'services/course/actions/notes';
 
 export function handleLessonNotes( props ) {
-
     let {
         currentUser,
         title,
@@ -37,8 +32,8 @@ export function handleLessonNotes( props ) {
         loadAllNotes();
         return;
     })
-    .catch( error => { console.log( error) });  
-
+    .catch( error => { console.log( error); 
+    });  
 
     return;
 }

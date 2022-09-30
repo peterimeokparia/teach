@@ -34,7 +34,7 @@ const reducer = produce((draft, action) => {
         return;
         case ADD_TIME_SUCCESS:
         case SAVE_TIME_SUCCESS:  
-             draft.currentTimer[ action.payload?.formUuId ] = action.payload    
+             draft.currentTimer[ action.payload?.formUuId ] = action.payload;    
              draft.saveInProgress = false;
         return;
         case ADD_TIME_ERROR:

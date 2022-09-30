@@ -20,8 +20,10 @@ export const SAVE_FORMFIELDS_BEGIN = "SAVE FORMFIELDS BEGIN";
 export const SAVE_FORMFIELDS_ERROR = "SAVE FORMFIELDS ERROR";
 export const SAVE_FORMFIELDS_SUCCESS = "SAVE FORMFIELDS SUCCESS";
 export const SET_FORMFIELDS_MARKDOWN = "SET FORMFIELDS MARKDOWN";
-export const SET_EXPLANATION_ANSWER_MARKDOWN = "SET EXPLANATION ANSWER MARKDOWN";
 export const SAVE_FORMFIELDS_SUCCESS_MW = "SAVE FORMFIELDS SUCCESS MW";
+export const SET_SELECTED_FORMFIELD = "SET SELECTED FORMFIELD";
+export const SAVE_FORMFIELDS_POINTS_SUCCESS_MW = "SAVE FORMFIELDS POINTS SUCCESS MW";
+export const FORMFIELD_MARKDOWN = "FORMFIELD MARKDOWN";
 
 export const addNewFormField = newFormField => {
     return dispatch => {
@@ -52,6 +54,17 @@ export const saveFormFieldNoCallback = formfieldvalues => ({
     payload: formfieldvalues
 });
 
+export const saveFormFieldPoints = formfieldvalues => ({
+    type: SAVE_FORMFIELDS_POINTS_SUCCESS_MW,
+    payload: formfieldvalues
+});
+
+
+export const setSelectedFormField = ( formField ) => ({
+    type: SET_SELECTED_FORMFIELD,
+    payload: formField
+});
+
 
 export const loadFormFields = ( ) => {
     return dispatch => {
@@ -66,6 +79,7 @@ export const loadFormFields = ( ) => {
     };
   };
 
+  // change to formFieldGroupId
 export const loadFormFieldsByFormFieldId = ( formfieldId ) => {
     return dispatch => {
          dispatch({ type: LOAD_FORMFIELDS_BEGIN });

@@ -1,33 +1,10 @@
-import { 
-createRef, 
-PureComponent, 
-useEffect, 
-useState } from 'react';
-
-import { 
-connect } from 'react-redux';
-
-import { 
-uploadVideos } from 'services/course/helpers/ServerHelper';
-
-import {
-recordingStatusRecordingStarted,
-recordingStatusRecordingStopped } from 'services/course/actions/video';
-
-import { 
-saveAs } from 'file-saver';
-
-import ReactRecorder from 'services/course/pages/ReactRecorder';
+import { createRef, PureComponent } from 'react';
+import { connect } from 'react-redux';
+import { uploadVideos } from 'services/course/helpers/ServerHelper';
+import { recordingStatusRecordingStarted, recordingStatusRecordingStopped } from 'services/course/actions/video';
+import { saveAs } from 'file-saver';
 import VideoCallIcon from '@material-ui/icons/VideoCall';
-import DeleteIcon from '@material-ui/icons/Delete';
 import './style.css';
-
-// const RecordSessionPage = ({toggleCurrentMeetingSession}) => {
-  
-//    return < ReactRecorder toggleCurrentMeetingSession = { toggleCurrentMeetingSession }/>;
-// }
-
-// export default connect( null, null )( RecordSessionPage );
 
 class RecordSessionPage extends PureComponent {
 
@@ -51,10 +28,15 @@ class RecordSessionPage extends PureComponent {
   };
 
   theStream;
+
   theRecorder;
+
   recorder;
+
   url;
+
   blob;
+  
   recordedChunks = [];
 
   componentDidMount = () => {
@@ -151,10 +133,8 @@ class RecordSessionPage extends PureComponent {
       };
       
       let url = uploadVideos( videoData, this.props?.videoMeta?.videoMetaDataExternalId, this.props?.videoMeta?.videoNamePrefix );
-   
-      alert('video url')
-      alert(url);
-
+      
+      alert( url );
       saveAs(this.url,  ( this.props?.lessonId !== undefined ) ? `${this.props?.lessonId}.webm` : "recording.webm");
 
       this.theStream = null;
@@ -298,15 +278,9 @@ class RecordSessionPage extends PureComponent {
                     <VideoCallIcon 
                       style={  this.props?.videoMeta?.videoCallIconMain( this.state.capture , this.props.element?._id, this.state.selectedElement?._id  )}
                       className={ ( this.state.screenSharing ) ? "comment-round-button-3" : "comment-round-button-10" }
-                     //className={ ( this.state.capture && (  this.props.element?._id === this.props.selectedElement?._id )) ? "comment-round-button-3" : "comment-round-button-4" }
                       onClick={ this.enableScreenSharing }
                     /> 
                   }
-                  {/* <DeleteIcon 
-                      style={ this.props?.videoMeta?.deleteIconStyle(  this.state.capture, this.props.element?._id, this.state.selectedElement?._id )  }
-                      className="comment-round-button-3"
-                      onClick={() => this.handleSelectedElementToDelete( this.props.element ) }
-                  /> */}
                 </span>
               }      
               {

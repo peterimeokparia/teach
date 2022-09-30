@@ -36,7 +36,7 @@ const reducer = produce((draft, action) => {
         return;
         case ADD_FORMFIELDPOINTS_SUCCESS:
         case SAVE_FORMFIELDPOINTS_SUCCESS:  
-             draft.studentsCummulativePointsRecieved[ action.payload?.userId ] = action.payload    
+             draft.studentsCummulativePointsRecieved[ action.payload?.userId ] = action.payload;    
              draft.saveInProgress = false;
         return;
         case ADD_FORMFIELDPOINTS_ERROR:

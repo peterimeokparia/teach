@@ -1,8 +1,6 @@
 .BoardNotes {
     max-height: 100vh;
-    /* height: 100vh;  */
     max-width: 200vw;
-    /* width: 100vw; */
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -10,7 +8,6 @@
     font-family: 'Courier New', Courier, monospace;
     overflow: hidden;
     overflow-y: hidden;
-    /* background:white; */
   }
   .BoardNotes .boomingllc header {
     background-color: #673ab7;
@@ -19,8 +16,6 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    /* padding: 10px 20px; */
-    /* background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red); */
   }
   .BoardNotes .others header {
     background-color: #673ab7;
@@ -29,7 +24,6 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    /* padding: 10px 20px; */
     background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
   }
   .BoardNotes header h1 {
@@ -46,23 +40,18 @@
     font-weight: 400;
     opacity: 0.8;
   }
-  
   .BoardNotes .content {
     display: flex;
-    /* max-height: 100%;
-    max-width: 100100; */
     height: 100%;
     width: 100%;
     overflow: hidden;
     overflow-y: hidden;
   }
-  
   .BoardNotes .sidebar {
     padding-right: 0px;
     padding-left: 0px;
     display: flex;
   }
-  
   .BoardNotes .sidebar .lessons {
     list-style: none;
     margin: 0;
@@ -88,10 +77,8 @@
     background-color: #673ab7;  /* booming */
     background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red); /* others */
     color: black;
-
   }
   .video-call {
-    /* margin-left: 1170px; */
     margin-right: auto;
   } 
   .video-call-full {
@@ -129,7 +116,7 @@
     box-shadow: 10px 10px;
   }
   .BoardNotes .lesson-item .span-btns {
-    /* padding-bottom: 5px; */
+    padding-bottom: 0px;
   }
   .toggle-stage-btns-show {
     visibility: visible;
@@ -196,18 +183,14 @@
     background-color: #f7f2ff;
   }
   .BoardNotes .lesson-item .span-btns {
-    /* padding-left: 50px;
-    padding-top: 0px; */
     margin-top: -15%;
   }
   .BoardNotes .lesson-item .span-btns .MaterialUiVideoComponent {
     padding-right: 400px;
     margin-top: -15%;
-    /* padding-top: 10px; */
   }
   .lesson-plan-round-button-1 { 
     background: orange;
-    /* box-shadow: 10px 10px black; */
   }
   .lesson-plan-round-button-2 { 
     background: yellowgreen
@@ -232,33 +215,32 @@
   }
   .lesson-plan-round-button-1:hover
   {
-  background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
-  background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
-  cursor: pointer;
+    transform: translateY(4px);
+    box-shadow: 5px 5px #999;
+    cursor: pointer;
   }
   .lesson-plan-round-button-2:hover
   {
-  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
-  background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
-  cursor: pointer;
+    transform: translateY(4px);
+    box-shadow: 5px 5px #999;
+    cursor: pointer;
   }
   .lesson-plan-round-button-3:hover
   {
-  background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
-  background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
-  cursor: pointer;
+    transform: translateY(4px);
+    box-shadow: 5px 5px #999;
+    cursor: pointer;
   }
   .lesson-plan-round-button-4:hover
   {
-  background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
-  background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
-  cursor: pointer;
+    transform: translateY(4px);
+    box-shadow: 5px 5px #999;
+    cursor: pointer;
   }
   .BoardNotes .content .meeting-stage-hidden{
     visibility: hidden;
   }
   .BoardNotes .content .meeting-stage-visible{
-    /* margin-left: -2000px; */
     visibility: visible;
   }
   .sidebar-meeting{
@@ -269,7 +251,6 @@
     padding-right: 0px;
     padding-left: 0px;
     background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
-    /* display: flex; */
   }
   .BoardNotes .whiteBoardSideBar .savedBoards {
     list-style: none;
@@ -279,88 +260,24 @@
   .BoardNotes .mainvVideoSection-recordingStopped {
   display: inline-block;
   vertical-align: middle;
-  /* -webkit-transform: perspective(1px) translateZ(0);
-  transform: perspective(1px) translateZ(0);
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-  -webkit-transition-duration: 0.3s;
-  transition-duration: 0.3s;
-  -webkit-transition-property: transform;
-  transition-property: transform;
-  -webkit-transform: scale(1);
-  transform: scale(1);
-  margin-bottom: -50%; */
 }
 .BoardNotes .mainVideoSection-recording {
   display: inline-block;
   vertical-align: middle;
-  -webkit-transform: perspective(1px) translateZ(0);
-  /* transform: perspective(1px) translateZ(0);
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-  -webkit-transition-duration: 0.3s;
-  transition-duration: 0.3s;
-  -webkit-transition-property: transform;
-  transition-property: transform;
-  -webkit-transform: scale(1.9);
-  transform: scale(1.9);
-  top: 20%;
-  margin-top: -11%;
-  margin-left: 20%;  */
+  /* -webkit-transform: perspective(1px) translateZ(0); */
 }
 .BoardNotes .mainVideoSection-recordingNotVisible {
   display: inline-block;
   vertical-align: middle;
-  /* -webkit-transform: perspective(1px) translateZ(0);
-  transform: perspective(1px) translateZ(0);
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-  -webkit-transition-duration: 0.3s;
-  transition-duration: 0.3s;
-  -webkit-transition-property: transform;
-  transition-property: transform;
-  -webkit-transform: scale(1);
-  transform: scale(1); */
 }
 .BoardNotes .mainvVideoSection-recordingStopped {
     display: inline-block;
-    /* vertical-align: middle;
-    -webkit-transform: perspective(1px) translateZ(0);
-    transform: perspective(1px) translateZ(0);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0); */
-    /* -webkit-transition-duration: 0.3s;
-    transition-duration: 0.3s;
-    -webkit-transition-property: transform;
-    transition-property: transform;
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    margin-bottom: -50%; */
   }
   .BoardNotes .mainVideoSection-recording {
     display: inline-block;
-    /* vertical-align: middle; */
-    /* -webkit-transform: perspective(1px) translateZ(0); */
-    /* transform: perspective(1px) translateZ(0);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-    -webkit-transition-duration: 0.3s;
-    transition-duration: 0.3s;
-    -webkit-transition-property: transform;
-    transition-property: transform;
-    -webkit-transform: scale(1.9);
-    transform: scale(1.9);
-    top: 30%;
-    margin-top: 5%;
-    margin-left: 45%;  */
   }
   .BoardNotes .mainVideoSection-recordingNotVisible {
     display: inline-block;
-    /* vertical-align: middle;
-    -webkit-transform: perspective(1px) translateZ(0);
-    transform: perspective(1px) translateZ(0);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-    -webkit-transition-duration: 0.3s;
-    transition-duration: 0.3s;
-    -webkit-transition-property: transform;
-    transition-property: transform;
-    -webkit-transform: scale(1);
-    transform: scale(1); */
   }
   .videoSectionCallOut{
     color: #fff;
@@ -368,20 +285,10 @@
     margin-left: 1%; 
     margin-top: -11%;
     transition: all 2s ease-out;
-    /* transition-timing-function: ease-in-out;
-    transition-duration: 3s;
-    transition-delay: 0.5s; */
-    /* transform: rotate(270deg); */
   }
   .videoSectionCallOut-selected{
     color: #333;
-  background-color: #fff;
-    /* margin-left: 1%; 
-    margin-top: -11%;
-    transition-timing-function: ease-in-out;
-    transition-duration: 3s;
-    transition-delay: 0.5s; */
-    /* transform: rotate(270deg); */
+    background-color: #fff;
   }
   .transformed-state {
     transform: rotate(270deg);
@@ -454,12 +361,10 @@
       border-right: 1px solid #bba0ea;
     }
   }
-  
   /* 
     ##Device = Desktops
     ##Screen = 1281px to higher resolution desktops
   */
-  
   @media (min-width: 1281px) {
     
     .BoardNotes .content {
@@ -475,20 +380,16 @@
       flex: 1;
     }
     .BoardNotes .whiteBoardSideBar {
-      /* flex-basis: 300px;
-      background: #fbf9ff;
+      flex-basis: 0px;
+      /* background: #fbf9ff;
       border-right: 1px solid #bba0ea; */
     }
-    
-  }
-  
+  } 
   /* 
     ##Device = Laptops, Desktops
     ##Screen = B/w 1025px to 1280px
   */
-  
   @media (min-width: 1025px) and (max-width: 1280px) {
-    
     .BoardNotes .content {
       flex-direction: row;
       height: 100%;
@@ -506,14 +407,11 @@
       background: #fbf9ff;
       border-right: 1px solid #bba0ea;
     }
-    
   }
-  
   /* 
     ##Device = Tablets, Ipads (portrait)
     ##Screen = B/w 768px to 1024px
   */
-  
   @media (min-width: 768px) and (max-width: 1024px) {
     
     .BoardNotes .content {
@@ -534,14 +432,11 @@
       border-right: 1px solid #bba0ea;
     }
   }
-  
   /* 
     ##Device = Tablets, Ipads (landscape)
     ##Screen = B/w 768px to 1024px
   */
-  
   @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-    
     .BoardNotes .content {
       flex-direction: row;
       height: 100%;
@@ -560,11 +455,7 @@
       border-right: 1px solid #bba0ea;
     }
   }
-  
-  
-  
-  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-    
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) { 
     .BoardNotes .content {
       flex-direction: column;
     }
@@ -580,11 +471,8 @@
       flex-basis: 300px;
       background: #fbf9ff;
       border-right: 1px solid #bba0ea;
-    }
-   
+    } 
   }
-  
-  
   
   /* 
     ##Device = Low Resolution Tablets, Mobiles (Landscape)
@@ -618,13 +506,7 @@
   @media (min-width: 320px) and (max-width: 480px) {
     .BoardNotes {
       height: 300vh; 
-      /* width: 15vh; */
-      /* display: flex;
-      flex-direction: column; */
-      /* text-align: center; */
       background-image: url(../../../../images/geometry2.png);
-  /* 
-      margin-left: -50%; */
     }
     .BoardNotes .content {
       height: 100%;
@@ -649,7 +531,6 @@
     z-index: 1;
     border: 1px solid #ccc;
     background: white;
-    /* padding-left: 1%; */
   }
   .flexible-modal-mask {
     position: fixed;
@@ -677,11 +558,7 @@
     top:0;
     cursor:move;
   }
-  
   .testResize{
-    /* border: 2px solid;
-    padding: 20px; 
-    width: 300px; */
     resize: both;
     overflow: auto;
   }

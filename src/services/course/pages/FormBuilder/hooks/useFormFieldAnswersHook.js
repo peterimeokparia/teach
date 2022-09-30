@@ -1,24 +1,28 @@
-import { 
-useState, 
-useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch } from 'react-redux';
+import { elementMeta } from 'services/course/pages/QuestionsPage/helpers';
+import { loadFormFieldAnswersByQuestionId } from 'services/course/actions/formfieldanswers';
 
-function useFormFieldAnswersHook( studentAnswerByQuestionId, formFieldElement ) {
-
+function useFormFieldAnswersHook( studentAnswerByQuestionId, formFieldElement, formBuilderState ) {
     const [ studentsAnswers, setStudentsAnswers ] = useState( undefined );
+    const dispatch = useDispatch();
 
-    useEffect(() => {
+    useEffect(()=>{ 
+      dispatch( loadFormFieldAnswersByQuestionId( formFieldElement?.questionId ) );
+    }, [ formFieldElement?.selected, studentAnswerByQuestionId?.selected ])
+ 
+  function getStudentAnswer( element ){
+    if ( formBuilderState === elementMeta?.state.Manage ) {
+      return formFieldElement?.selected
+    } else {
+      return studentAnswerByQuestionId?.selected;
+    }
+  }
 
-        if ( studentAnswerByQuestionId ) {
-
-          setStudentsAnswers( studentAnswerByQuestionId );
-          
-        }
-  
-      }, [ studentAnswerByQuestionId ])
-   
 return {
     studentsAnswers,
-    setStudentsAnswers
+    setStudentsAnswers,
+    getStudentAnswer
 }; };
 
 export default useFormFieldAnswersHook;

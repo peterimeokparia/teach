@@ -60,6 +60,22 @@ const outcomesSchema = new Schema ({
     outcomeType: {
         type: String, 
         required: false  
+    }, 
+    color: {
+        type: String,
+        required: false
+    },
+    outcomeName: { 
+        type: String, 
+        required: false,
+    },
+    lessonConcepts: { 
+        type: Array, 
+        required: false  
+    },
+    links: { 
+        type: Array, 
+        required: false  
     }
 });
 

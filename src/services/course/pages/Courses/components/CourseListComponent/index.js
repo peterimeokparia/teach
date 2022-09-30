@@ -1,20 +1,8 @@
-import {
-useState } from 'react';
-
-import { 
-connect,
-useDispatch } from 'react-redux';
-
-import { 
-openNewCourseModal, 
-closeNewCourseModal } from 'services/course/actions/courses';
-
-import { 
-helpIconStyle } from 'services/course/pages/Courses/MyCoursesPage/inlineStyles';
-
-import {
-COURSES } from 'services/course/actions/courses';
-
+import { useState } from 'react';
+import { connect, useDispatch } from 'react-redux';
+import { toggleCourseModal } from 'services/course/actions/courses';
+import { helpIconStyle } from 'services/course/pages/Courses/MyCoursesPage/inlineStyles';
+import { COURSES } from 'services/course/actions/courses';
 import FullTextSearchComponentTest from 'services/course/pages/components/FullTextSearchComponentTest';
 import CoursesComponent from 'services/course/pages/Courses/components/CoursesComponent';
 import NewCoursePage from 'services/course/pages/Courses/NewCoursePage';
@@ -25,10 +13,10 @@ const CourseListComponent = ({
     operatorBusinessName,
     user,
     courses,
-    openNewCourseModal,
-    closeNewCourseModal,
-    isModalOpen }) => {
-
+    toggleCourseModal,
+    isModalOpen,
+    isFormModalOpen 
+}) => {
     const dispatch = useDispatch();
     const [ toggleMainContent, setToggleMainContent ] = useState( false );
 
@@ -50,7 +38,7 @@ return (
             <PostAddIcon 
                 style={helpIconStyle()}
                 className="comment-round-button-5"
-                onClick={openNewCourseModal}
+                onClick={toggleCourseModal}
             />
         }
         {<div onClick={handleSearchOnClick} onBlur={handleSearchOnBlur}>
@@ -63,7 +51,7 @@ return (
          </div>
         }
         {  (!toggleMainContent) &&
-           <>
+            <>
                 <CoursesComponent
                     operatorBusinessName={operatorBusinessName}
                     modal={isModalOpen} 
@@ -71,7 +59,7 @@ return (
                 />     
                 <Modal 
                     isOpen={isModalOpen} 
-                    onRequestClose={closeNewCourseModal}
+                    onRequestClose={toggleCourseModal}
                 > 
                     <NewCoursePage user={user} operatorBusinessName={operatorBusinessName}/> 
                 </Modal>
@@ -81,12 +69,12 @@ return (
 ); };
 
 const mapDispatch = {
-    openNewCourseModal,
-    closeNewCourseModal
+    toggleCourseModal
 };
 
 const mapState = ( state, ownProps )  => ({
-    isModalOpen: state?.courses?.isModalOpen
+    isModalOpen: state?.courses?.isModalOpen,
+    isFormModalOpen: state?.formBuilders?.isFormModalOpen,
 });
 
 export default connect(mapState, mapDispatch)(CourseListComponent);

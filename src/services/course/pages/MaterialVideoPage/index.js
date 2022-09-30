@@ -1,20 +1,8 @@
-import { 
-createRef, 
-PureComponent } from 'react';
-
-import { 
-connect } from 'react-redux';
-
-import { 
-uploadVideos } from 'services/course/helpers/ServerHelper';
-
-import {
-recordingStatusRecordingStarted,
-recordingStatusRecordingStopped } from 'services/course/actions/video';
-
-import { 
-saveAs } from 'file-saver';
-
+import { createRef, PureComponent } from 'react';
+import { connect } from 'react-redux';
+import { uploadVideos } from 'services/course/helpers/ServerHelper';
+import { recordingStatusRecordingStarted, recordingStatusRecordingStopped } from 'services/course/actions/video';
+import { saveAs } from 'file-saver';
 import VideoCallIcon from '@material-ui/icons/VideoCall';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CancelIcon from '@material-ui/icons/Cancel';
@@ -44,10 +32,15 @@ class MaterialVideoPage extends PureComponent {
   };
 
   theStream;
+
   theRecorder;
+
   recorder;
+
   url;
+
   blob;
+  
   recordedChunks = [];
 
   componentDidMount = () => {

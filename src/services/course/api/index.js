@@ -1,16 +1,6 @@
-import { 
-getRequest,
-postData, 
-putData, 
-deleteData,   
-paymentStatus } from 'services/course/helpers/ServerHelper';
-
-import { 
-tokenGenerator, 
-privateKey} from 'services/course/pages/LoginPage/components/Authentication';
-
-import {
-getHostName } from 'services/course/helpers/PageHelpers';
+import { getRequest, postData, putData, deleteData, paymentStatus } from 'services/course/helpers/ServerHelper/index.js';
+// import { tokenGenerator, privateKey } from 'services/course/pages/LoginPage/components/Authentication/index.js';
+import { getHostName } from 'services/course/helpers/PageHelpers/index.js';
 
 export const PREFIX = `${getHostName() ? '' : '/backend'}/api/v1`;
 
@@ -21,7 +11,6 @@ export const setAuthToken = token => {
 };
 
 export const deleteFileByFileName = ( fileName ) => {
-
   return fetch(PREFIX + `/fileUploads/delete?fileName=${fileName}`) 
     .then(handleErrors)
     .then(response => response.json())
@@ -178,7 +167,7 @@ export const updateWithId = (data, route, id, prefix=PREFIX) => {
   {
     ...data
   });      
-}
+};
 
 export const remove = (data, route, prefix=PREFIX) => {
   return deleteData(prefix + route +`${ data?._id }`);
@@ -188,7 +177,9 @@ export const login = (user) => {
   if ( ! user?.userIsVerified ) {
     return Error(`Please verify your account. Kindly, check your email.`);
   }
-  let token = tokenGenerator({username: user?.email, password: user.password}, privateKey, { expiresIn: '1h' });
+
+  let email = user?.email;
+  let token = null;
   let loginCount = user?.loginCount; 
   let userIsValidated = true;
   let userIsVerified = user?.userIsVerified;
@@ -201,6 +192,7 @@ export const login = (user) => {
       loginCount += 1;
   }
   return putData(PREFIX + `/users/login/${user?._id}`, { 
+    email,
     unHarshedPassword,
     token,
     userIsValidated,
@@ -212,29 +204,42 @@ export const login = (user) => {
 
 export const resetPassword = (user) => {
   let newUserPassword = user?.newUserPassword;
-  let token = tokenGenerator({ username: user?.email, password: user.password}, privateKey, { expiresIn: '1h' });
+  let email = user?.email;
+  let token = null;
+  let unHarshedPassword = user?.newUserPassword;
 
   return putData(PREFIX + `/users/reset/${user?._id}`, {
+    email,
     token,
-    newUserPassword
+    newUserPassword,
+    unHarshedPassword
  });
 };
 
 export const signUp = (user, route='/users/register') => {
-  let token = tokenGenerator({usename: user.username, password: user.password}, privateKey, { expiresIn: '1h' });
+  let email = user?.email;
+  let token = null;
+  let unHarshedPassword = user?.password;
 
   return postData(PREFIX + route, {  
     ...user,
-    token
+    token,
+    email,
+    unHarshedPassword
+
  });
 };
 
 export const operatorSignUp = (operator) => {
-  let token = tokenGenerator({usename: operator.email, password: operator.password}, privateKey, { expiresIn: '1h' });
-
+  let email = operator?.email;
+  let token = null;
+  let unHarshedPassword = operator?.password;
+  
   return postData(PREFIX + '/operators', {
     ...operator,
-    token
+    token,
+    email,
+    unHarshedPassword
  });
 };
 
@@ -366,7 +371,7 @@ export function saveEditorContent( element, route, duration = 2000) {
           clearTimeout( saveEditorContentHandle );
           return response;
       })
-      .catch( error => { console.warn( JSON.stringify( error )) 
+      .catch( error => { console.warn( JSON.stringify( error )); 
           return error;
       });
   }, duration );

@@ -7,7 +7,8 @@ const QuestionPage = ({ lessonId }) => {
   useEffect(() => {}, []);
 return (
     <div className="LessonPlan">
-      <div className="stage" id="stage"> 
+      {/* <div className="stage" id="stage">  */}
+      <div> 
         <div>
             <MultiEditorComponent lessonId={lessonId} />
         </div>    

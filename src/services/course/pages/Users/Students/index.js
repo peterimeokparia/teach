@@ -1,63 +1,16 @@
-import {
-useState } from 'react';
-
-import { 
-connect } from 'react-redux';
-
-import { 
-navigate } from '@reach/router';
-
-import {
-navContent } from  'services/course/pages/components/NavigationHelper';
-
-import { 
-addCalendar } from 'services/course/actions/calendar';
-
-import {
-eventEnum,
-getCalendarColor } from 'services/course/pages/CalendarPage/helpers';
-
-import { 
-getPushNotificationUsersByOperatorId,
-getCalendarsByOperatorId,
-getCalendarByCalendarEventType,
-getEventsByOperatorId,    
-getOperatorFromOperatorBusinessName, 
-getUsersByOperatorId,
-getCoursesByOperatorId,
-getMeetingsByOperatorId,
-getSessionsByOperatorId } from 'services/course/selectors';
-
-import {
-permission,
-SiteFunctionalityGroup,
-Organization }from 'services/course/pages/components/SiteFunctionalityGroup';
-
-import{
-enableTeachPlatform } from 'services/course/actions/classrooms';
-
-import {
-addNewSession } from 'services/course/actions/sessions';
-
-import { 
-role } from 'services/course/helpers/PageHelpers';
-
-import {
-goToCalendar,
-goToTimeLine,
-gotToLessonPlan } from 'services/course/pages/Users/helpers';
-
-import {
-viewAllTutors,
-viewCurrentUsersCourseList,
-goToMeeting,
-getCoursesOwnedByUser,
-getUsers,
-studentDetailPage,
-PageObject,
-group,
-addNewStudentSession } from 'services/course/pages/Users/Students/helpers';
-    
+import { connect } from 'react-redux';
+import { navigate } from '@reach/router';
+import { navContent } from  'services/course/pages/components/NavigationHelper';
+import { addCalendar } from 'services/course/actions/calendar';
+import { eventEnum } from 'services/course/pages/CalendarPage/helpers';
+import { getPushNotificationUsersByOperatorId, getCalendarsByOperatorId, getCalendarByCalendarEventType, getEventsByOperatorId,    
+    getOperatorFromOperatorBusinessName, getUsersByOperatorId, getCoursesByOperatorId, getMeetingsByOperatorId, getSessionsByOperatorId } from 'services/course/selectors';
+import { permission, SiteFunctionalityGroup, organization }from 'services/course/pages/components/SiteFunctionalityGroup';
+import { addNewSession } from 'services/course/actions/sessions';
+import { role } from 'services/course/helpers/PageHelpers';
+import { goToCalendar, goToTimeLine, gotToLessonPlan } from 'services/course/pages/Users/helpers';
+import { viewAllTutors, viewCurrentUsersCourseList, goToMeeting, getCoursesOwnedByUser, getUsers, studentDetailPage,
+    PageObject, group, addNewStudentSession } from 'services/course/pages/Users/Students/helpers';
 import NotFoundPage from 'services/course/pages/components/NotFoundPage';
 import LoginLogout from 'services/course/pages/LoginPage/components/LoginLogout';
 import MainMenu from 'services/course/pages/components/MainMenu';
@@ -70,12 +23,10 @@ import BookIcon from '@material-ui/icons/Book';
 import ForumIcon from '@material-ui/icons/Forum';
 import VideoCallIcon from '@material-ui/icons/VideoCall';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import Calendar from 'services/course/helpers/Calendar';
 import PollIcon from '@mui/icons-material/Poll';
 import Roles from 'services/course/pages/components/Roles';
 
 const Students = ({
-    enableTeachPlatform,
     addNewSession,
     meetings,
     allSessions,
@@ -93,7 +44,6 @@ const Students = ({
     user,
     users,
     selectedCourseFromLessonPlanCourseDropDown }) => {
-
     if ( ! operator || ! operatorBusinessName  ) {
         return <NotFoundPage />;
     }
@@ -132,7 +82,7 @@ return (
         <div className={operatorBusinessName}>
         <header> 
             <MainMenu 
-                navContent={navContent( user, operatorBusinessName, user?.role,  "Student", [Organization.Boomingllc] ).users}
+                navContent={navContent( user, operatorBusinessName, user?.role,  "Student", [organization.Boomingllc] ).users}
             />   
             <h1>  {`Welcome ${user?.firstname}! `} </h1>
 
@@ -149,7 +99,7 @@ return (
             <div className="ComponentUserList">
             { <ul className={"component-seconday-ul"}>
                 {getUsers( users, user ).map(singleUser => 
-                    <li className={`component-seconday-list-body-users${operatorBusinessName === Organization.Boomingllc ? '-boomingllc' : ''}`} data-cy={`li_${singleUser?.firstname}`} key={singleUser?._id}> 
+                    <li className={`component-seconday-list-body-users${operatorBusinessName === organization.Boomingllc ? '-boomingllc' : ''}`} data-cy={`li_${singleUser?.firstname}`} key={singleUser?._id}> 
                         <div className={ "user-list-items-users"}>
                             <div className="row">
                                 <div className="col-1"> 
@@ -283,4 +233,4 @@ const mapState = ( state, ownProps ) => ({
     selectedCourseFromLessonPlanCourseDropDown: state.courses.selectedCourseFromLessonPlanCourseDropDown,
 });
 
-export default connect(mapState, { addCalendar, enableTeachPlatform, addNewSession })(Students);
+export default connect(mapState, { addCalendar, addNewSession })(Students);

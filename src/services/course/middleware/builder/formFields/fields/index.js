@@ -1,18 +1,19 @@
-import {
-add,
-update,
-remove,
-get,
-getById } from 'services/course/api';
-
-import { 
-SAVE_FORMFIELDS_SUCCESS,
-saveFormField } from "services/course/actions/formfields";
+import { update } from 'services/course/api';
+import { SET_FORMFIELDS_MARKDOWN } from 'services/course/actions/formfields';
 
 export const  updateFormFields = ( store, fieldvalue ) => {
     try {
-        update( fieldvalue, `/formfields/` )
+        update( fieldvalue, `/formfields/` );
     } catch (error) {
-        console.log( error )
+        console.log( error );
+    } 
+};
+
+export const  updateFormFieldsMarkDown = ( store, payload ) => {
+    try {
+        //update( payload, '/formfields/content/' );
+        //store.dispatch({type: SET_FORMFIELDS_MARKDOWN,  payload });
+    } catch (error) {
+        console.log( error );
     } 
 };

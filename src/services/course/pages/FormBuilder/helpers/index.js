@@ -1,11 +1,5 @@
-import {
-role } from 'services/course/helpers/PageHelpers';
-
-import {
-inputType } from 'services/course/pages/QuestionsPage/helpers';
-
-import {
-elementMeta as styleMeta } from 'services/course/pages/QuestionsPage/helpers';
+import { role } from 'services/course/helpers/PageHelpers';
+import { inputType } from 'services/course/pages/QuestionsPage/helpers';
 
 export const labelValue = ( labelType, index ) => {
   let alphabet = [ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" ];  
@@ -15,6 +9,7 @@ export const labelValue = ( labelType, index ) => {
 
   try {      
       switch ( labelType ) {
+
         case "roman":
           selectedValue = roman[ index-1 ];    
         break;
@@ -24,6 +19,7 @@ export const labelValue = ( labelType, index ) => {
         default:
           selectedValue = alphabet[ index-1 ];
         break;
+
       }
       return selectedValue;    
   } catch (error) {
@@ -160,16 +156,11 @@ export function contentType ( elementType ){
   };
 };
 
-export function addPoints( pointValue, element, saveAction, setPoints ) {
+export function addPoints( pointValue, element, saveFormFieldPoints, question, setPoints ) { 
   setPoints( pointValue );  
   if ( pointValue > 0 ) {
-    saveAction({ ...element, points: pointValue })
-    .then( response => {
-       if ( response ) {
-        setPoints( 0 );
-       }
-    })
-    .catch( error => console.log( error ))
+   saveFormFieldPoints({ element, pointValue, question });
+    //setPoints( 0 );
   }
 };
 
@@ -185,6 +176,7 @@ export const formTypes = {
   quizzwithpoints:  "quizzwithpoints",
   examwithpoints:  "examwithpoints",
   onlinequestions: "onlinequestions",
+  furtherstudy: "furtherstudy",
   survey: "survey",
   livesurvey: "livesurvey",
   announcements: "announcements",
@@ -219,8 +211,27 @@ export function getStyles(formtype){
     case formTypes?.quizzwithpoints:
       return { builder: 'quizzWithPointsBuilder', content: 'content3' };  
     default:
-     return { builder:'builder2', content: 'content2' };
+      return { builder:'quizzWithPointsBuilder', content: 'content3' };  
+    //  return { builder:'builder2', content: 'content2' };  
   }
 };
 
+export const handleFormDisplayName = ( formType ) => {
+  switch (formType) {
+    case formTypes.quizzwithpoints:
+      return 'quizz with points';
+    case formTypes.homework:
+      return 'home work';
+    case formTypes.onlinequestions:
+      return 'online questions';
+    case formTypes.examwithpoints:
+      return 'exam with points';
+    case formTypes.livesurvey:
+      return 'live survey';
+    case formTypes.furtherstudy:
+        return 'further study';
+    default:
+      return formType;
+  }
+};
 

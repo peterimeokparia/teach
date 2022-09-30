@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { 
+useState } from 'react';
 
 import MainMenuButton from '../MainMenuButton';
 import NavLinks from '../NavLinks';
@@ -31,19 +32,19 @@ return (
             navMenuVisible={menuVisible} 
         />
         <div
-            id="flyoutMenu"
-            className={menuVisible ? "show" : "hide"}
-            onMouseUp={handleMouseDown}
+         id="flyoutMenu"
+         className={menuVisible ? "show" : "hide"}
+         onMouseUp={handleMouseDown}
         >
-            {sortedNavContent?.map(element => (
-                <li key={element?.id}
-                    className="navlinkItem"
-                >
-                    <NavLinks to={element?.hrefValue} color={"black"}> { element?.item} </NavLinks>
-                </li>
-                
-                ))
-            } 
+        {sortedNavContent?.map(element => (
+            <li 
+                key={element?.id}
+                className="navlinkItem"
+            >
+            <NavLinks to={element?.hrefValue} color={"black"}> { element?.item} </NavLinks>
+            </li>
+            ))
+        } 
         </div>
     </div>
     );

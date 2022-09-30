@@ -1,54 +1,73 @@
 .quizzWithPointsBuilder{
-    height: 50vh;
-    width: 50vw;
-    max-width: 100vw;
-    max-height: 100vh;
-    display: flex;
+    height:auto;
+    min-height: 5vh;
+    width: 92vw;
+    max-width: 92vw;    
+    display: flex; 
     flex-direction: column;
     font-family: 'Courier New', Courier, monospace;
     text-align: left;
-    margin-top: 0px;
-    margin-left: 500px;
-    background: rgb(101, 245, 101);
-    border-radius: 25px;
+    background:white;
     padding-bottom: 90px;
+    background:#ffffff; 
     list-style: none;
+    align-items: center;
+    justify-content: center;
 }
-.quizzWithPointsBuilder-taking{
-    height: 50vh;
-    width: 50vw;
-    max-width: 100vw;
-    max-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    font-family: 'Courier New', Courier, monospace;
-    text-align: left;
-    margin-top: 50px;
-    background: rgb(101, 245, 101);
-    border-radius: 25px;
-    padding-bottom: 90px;
-    list-style: none;
-}
-
 .quizzWithPointsBuilder .answerEditorBuilder {
-    height: 90vh;
-    width: 50vw;
-    max-height: 100vh;
-    margin-top: 50px;
-    margin-right: 250px;
-    margin-left: 30px;
-    position: relative;
+    height:auto;
+    min-height: 5vh;
+    max-width: 92vw;
     transform: scale(1); 
     transition: all 0.6s ease 0s;
-
     position: relative;
     box-sizing: border-box;
-    width: 100%;
-    min-height: 560px;
     display: flex;
     flex: 0 1 auto;
     flex-direction: column;
-    align-items: stretch;
+    align-items: center; 
+    background:#ffffff; 
+    list-style: none;
+    align-items: center;
+    justify-content: center;
+}
+.quizzWithPointsBuilder .answerEditorBuilder .editorTest {
+    /* font: normal 1.71em KaTeX_Main,Times New Roman,serif;
+    height: auto;
+    min-height: 5vh;
+    width: 1070px;
+    text-align: left; */
+
+    max-width: 95vw;
+display: flex;
+flex-direction: column;
+font-family: 'Courier New', Courier, monospace;
+text-align: left;
+border-radius: 25px;
+border-style: solid;
+border-width: 3px;
+box-shadow: 0 0 0 5px #d2e3f7;
+padding-bottom: 90px;
+list-style: none;
+background: white;
+padding: 10px 5px 15px 20px;
+}
+.quizzWithPointsBuilder .answerEditorBuilder .editorTest-preview {
+    height: auto;
+    min-height: 17vh;
+    width: 1150px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: left;
+    border-radius: 25px;
+    border-style: solid;
+    border-width: 3px;
+    box-shadow: 0 0 0 5px #d2e3f7;
+    list-style: none;
+    background: white;
+    padding: 10px 5px 15px 20px;
 }
 .quizzWithPointsBuilder .answerEditorBuilder .formlist {
     height: 90vh;
@@ -73,135 +92,82 @@
     font-size: 25px;
     text-align: center;
     margin-top: 20px;
-    /* margin-left: 250px; */
+    margin-left: -190px;
     background: rgb(101, 245, 101);
     border-radius: 5px;
     padding-bottom: 9px;
     background: transparent;
-    /* background: orange; */
 }
-.quizzWithPointsBuilder .answerEditorBuilder .content3 {
-    flex-direction: row;
-    height: 1px;
-    max-height: 1px;
-    display: flex;
-    width: 5%;
-}
-.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items {
-    margin-left: 30%;
+.quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 {
+    width: 2000px;
     list-style: none;
+    margin-left: -40%;
+    margin-bottom: -5%;
 }
-
-.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .question-card-top-right {
+.quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .row-margin {
+    margin-top: 50px;
+    width: 2000px;
+    margin-left: 10%;
+}
+.quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2  .col-margin {
+    margin-top: 165px;
+    margin-left: 40%;
+}
+.quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2  .col-margin-no-editor {
+    margin-top: 165px;
+    margin-left: 77%;
+}
+.quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2  .col-input {
+    margin-top: 220px;
+    margin-left: -700px;
+}
+.quizzWithPointsBuilder .answerEditorBuilder  .listItem .lessons  .lesson-item2  .col-editor {
+    margin-left: 49%;
+}
+.quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .col-editor-selected {
+    margin-left: 49%;
+}
+.quizzWithPointsBuilder .answerEditorBuilder  .listItem .lessons  .lesson-item2  .col-editor .custom-answer .answer-label-test  {
+    margin-left: 49%;
+}
+.quizzWithPointsBuilder .answerEditorBuilder  .listItem .lessons  .lesson-item2  .col-editor-selected .custom-answer .answer-label-test {
+    margin-left: 49%;
+}
+.quizzWithPointsBuilder .answerEditorBuilder  .listItem .lessons  .lesson-item2  .col-editor .custom-answer .answer-checkbox-label-test {
+    margin-left: 49%;
+}
+.quizzWithPointsBuilder .answerEditorBuilder  .listItem .lessons  .lesson-item2  .col-editor-selected .custom-answer .answer-checkbox-label-test  {
+    margin-left: 49%;
+}
+.quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .question-card-top-right {
     margin-left: 0%;
 }
-.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .question-card-top-right .manage-input-field-icons {
+.quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .question-card-top-right .manage-input-field-icons {
     visibility: hidden;
 }
-.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .question-card-top-right .manage-input-field-icons:hover {
+.quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .question-card-top-right .manage-input-field-icons:hover {
     visibility: visible;
-    transition: transform .7s ease-in-out;
 }
-.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio {
+.quizzWithPointsBuilder .answerEditorBuilder .radio {
      margin-top: 5%;
      margin-left: 5%;
      margin-bottom: 3%;
      width: 10px;
-     -webkit-transform: perspective(1px) translateZ(0);
-     transform: perspective(1px) translateZ(0);
-     box-shadow: 0 0 1px rgba(0, 0, 0, 0);
 } 
-.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio-move {
-    margin-top: 5%;
-    margin-left: 5%;
-    margin-bottom: 3%;
-    width: 10px;
-    -webkit-animation-name: hvr-pulse-grow;
-    animation-name: hvr-pulse-grow;
-    -webkit-animation-duration: 0.3s;
-    animation-duration: 0.3s;
-    -webkit-animation-timing-function: linear;
-    animation-timing-function: linear;
-    -webkit-animation-iteration-count: infinite;
-    animation-iteration-count: infinite;
-    -webkit-animation-direction: alternate;
-    animation-direction: alternate;
-}
-.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio-highlighted {
-    margin-top: 5%;
-    margin-left: 5%;
-    margin-bottom: 7%;
-    height: 50px;
-    width: 380px;
-    -webkit-transform: perspective(1px) translateZ(0);
-    transform: perspective(1px) translateZ(0);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-    background:  yellow;
-} 
-
-.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .label-move {
-    color: grey;
-    background-color: grey;
-    width: 5px;
-    max-width: 5px;
-}
-.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio input {
-    border: 2px solid red;
-    border-radius: 4px;
-} 
-.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio input:hover {
-    border: 2px solid blue;
-    border-radius: 4px;
-}
-.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio select {
+.quizzWithPointsBuilder .answerEditorBuilder .radio select {
     border: none;
     width: 300px;
     text-align: center;
     margin-top: 10px;
     background: orange;
 }
-.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio .css-2b097c-container {
-    position: relative;
-    z-index: 1000; 
-    background-color: transparent;
-    border: none;
-    width: 200px;
-}
-.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio .css-2b097c-container .css-yk16xz-control{
-    border: burlywood;
-    border-style: solid;
-    width: 200px;
-}
-.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio .css-2b097c-container .css-yk16xz-control:hover{
-    border: burlywood;
-    border-style: solid;
-    width: 200px;
-}
-.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio .css-2b097c-container .css-yk16xz-control {
-    border: none;
-    background-color: transparent;
-    position: absolute;
-    z-index: -1000; 
-}
-.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio .css-26l3qy-menu {
-    border: none;
-    width: 300px;
-    text-align: center;
-    margin-top: 10px;
-    /* background-color: transparent; */
-    background: orange;
-
-    position: absolute;
-    z-index: 10; 
-
-}
-.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .explanation {
+.quizzWithPointsBuilder .answerEditorBuilder .explanation {
      margin-top: 55%;
      margin-left: 55%;
      margin-bottom: 33%;
      width: 10px;
  }
- .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .explanation .explanation-label {
+ .quizzWithPointsBuilder .answerEditorBuilder .explanation .explanation-label {
     width: 400px;
     height: 50px;
     font-size: 25px;
@@ -212,17 +178,21 @@
     padding-bottom: 9px;
 }
  
-.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio .radioButton {
+.quizzWithPointsBuilder .answerEditorBuilder .radio .radioButton {
     width: 10vw;
 }
-.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .text {
+.quizzWithPointsBuilder .answerEditorBuilder .text {
     margin-top: 5%;
     margin-left: 5%;
     margin-bottom: 3%;
     width: 100vw;
 }
-.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .OnlineListItems {
+.quizzWithPointsBuilder .answerEditorBuilder .OnlineListItems {
     height: 80vh;
+    width: 190vw;
+    max-width: 195vw;  
+    align-items: center;
+    justify-content: center;
 }
 .content3 .sidebar2 {
     flex-basis: 300px;
@@ -241,7 +211,7 @@
     max-width: 90vw;
     max-height: 100vh; 
 }
-.quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .question-card-top-right .manage-input-field-icons .builder-round-button-1, .builder-round-button-2, .builder-round-button-3, .builder-round-button-4, .builder-round-button-5, .builder-round-button-6 {
+.quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .question-card-top-right .manage-input-field-icons .builder-round-button-1, .builder-round-button-2, .builder-round-button-3, .builder-round-button-4, .builder-round-button-5, .builder-round-button-6 {
     align-self: flex-end; 
     width:70px;
     height:60px;
@@ -253,14 +223,14 @@
     transition: transform .7s ease-in-out;
     box-shadow: 10px 10px black;
  }
- .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .question-card-top-right .manage-input-field-icons .builder-round-button-2 { 
+ .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .question-card-top-right .manage-input-field-icons .builder-round-button-2 { 
    background: yellowgreen;
    visibility: hidden;
  }
- .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .question-card-top-right .manage-input-field-icons .builder-round-button-2:hover
+ .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .question-card-top-right .manage-input-field-icons .builder-round-button-2:hover
  {
-    background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
-    background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+    background-image: linear-gradient(to left, violet, red, white, green, green, orange, red);
+    background: linear-gradient(to left, violet, red,  green, white, green, green, orange, red);
     cursor: pointer;
     visibility: visible;
  }
@@ -291,77 +261,62 @@
       transform: scale(1.1);
     }
   }
-  /* .on-top button {
-    visibility: hidden;
-    border-radius: 65%;
-    width:  3px;
-    height: 35px;
-  
-    display: inline-block;
-    vertical-align: middle;
-    -webkit-transform: perspective(1px) translateZ(0);
-    transform: perspective(1px) translateZ(0);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-   
-  }  */
-  /* .on-top button:hover {
-    visibility: visible;
-    border-radius: 65%;
-    width:  3px;
-    height: 35px;
-  
-    -webkit-animation-name: hvr-pulse-grow;
-    animation-name: hvr-pulse-grow;
-    -webkit-animation-duration: 0.3s;
-    animation-duration: 0.3s;
-    -webkit-animation-timing-function: linear;
-    animation-timing-function: linear;
-    -webkit-animation-iteration-count: infinite;
-    animation-iteration-count: infinite;
-    -webkit-animation-direction: alternate;
-    animation-direction: alternate;
-   
-  } */
-
 @media only screen and (min-width: 638px) {
     .quizzWithPointsBuilder{
-        height: 50vh;
-        width: 50vw;
-        max-width: 100vw;
-        max-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        font-family: 'Courier New', Courier, monospace;
-        text-align: left;
-        margin-top: 0px;
-        background: rgb(101, 245, 101);
-        border-radius: 25px;
-        padding-bottom: 90px;
-        list-style: none;
+    height:auto;
+    min-height: 5vh;
+    width: 92vw;
+    max-width: 92vw;   
+    display: flex; 
+    flex-direction: column;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: left;
+    background:#ffffff; 
+    padding-bottom: 90px;
+    list-style: none;
+    align-items: center;
+    justify-content: center;
     }
-    .quizzWithPointsBuilder-taking{
-        height: 50vh;
-        width: 50vw;
-        max-width: 100vw;
-        max-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        font-family: 'Courier New', Courier, monospace;
-        text-align: left;
-        margin-top: 50px;
-        background: rgb(101, 245, 101);
-        border-radius: 25px;
-        padding-bottom: 90px;
-        list-style: none;
-    }
-    
     .quizzWithPointsBuilder .answerEditorBuilder {
-        height: 90vh;
-        max-height: 100vh;
-        margin-top: 50px;
-        margin-right: 250px;
-        margin-left: 30px;
+        height:auto;
+        min-height: 5vh;
+        max-width: 92vw;
+        transform: scale(1); 
+        transition: all 0.6s ease 0s;
         position: relative;
+        box-sizing: border-box;
+        width: 100%;
+        display: flex;
+        flex: 0 1 auto;
+        flex-direction: column;
+        align-items: center; 
+        list-style: none;
+        align-items: center;
+        justify-content: center;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder .editorTest {
+        font: normal 1.71em KaTeX_Main,Times New Roman,serif;
+        height: auto;
+        min-height: 5vh;
+        width: 1150px;
+        text-align: left;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder .editorTest-preview {
+        height: auto;
+        min-height: 17vh;
+        width: 1150px;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        font-family: 'Courier New', Courier, monospace;
+        text-align: left;
+        border-radius: 25px;
+        border-style: solid;
+        border-width: 3px;
+        box-shadow: 0 0 0 5px #d2e3f7;
+        list-style: none;
+        background: white;
+        padding: 10px 5px 15px 20px;
     }
     .quizzWithPointsBuilder .answerEditorBuilder .formlist {
         height: 90vh;
@@ -386,53 +341,280 @@
         font-size: 25px;
         text-align: center;
         margin-top: 20px;
+        margin-left: -190px;
         background: rgb(101, 245, 101);
         border-radius: 5px;
         padding-bottom: 9px;
         background: transparent;
-        /* background: orange; */
-    }
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 {
-        flex-direction: row;
-        height: 1px;
-        max-height: 1px;
-        display: flex;
-        width: 5%;
-    }
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items {
-        margin-left: 30%;
+    } 
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 {
+        width: 2000px;
         list-style: none;
+        margin-left: -40%;
+        margin-bottom: -5%;
     }
-    
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .question-card-top-right {
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .item {
+        width: 500px;
+        margin-left: 600px;
+        background-color: white;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons {
+        width: 2000px;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .row-margin {
+        margin-top: 220px;
+        width: 2000px;
+        margin-left: 10%;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .row-margin .row-answer-key{
+        margin-top: 100px;
+        width: 2000px;
+        margin-left: -650px;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2  .col-margin {
+        margin-top: 165px;
+        margin-left: 40%;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2  .col-margin-no-editor {
+        margin-top: 165px;
+        margin-left: 77%;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2  .col-input {
+        margin-top: 220px;
+        margin-left: -700px;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder  .listItem .lessons  .lesson-item2  .col-editor {
+        margin-left: 49%;
+        margin-top: -10%;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .col-editor-selected {
+        margin-left: 49%;
+        margin-top: -10%;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder  .listItem .lessons  .lesson-item2  .col-editor .custom-answer .answer-label-test {
+        margin-left: 1px;
+        border-radius: 50%;
+        width: 60px;
+        background: white;
+        box-shadow: 10px 10px black;
+
+        /* Bounce Out */
+        display: inline-block;
+        vertical-align: middle;
+        -webkit-transform: perspective(1px) translateZ(0);
+        transform: perspective(1px) translateZ(0);
+        -webkit-transition-duration: 0.5s;
+        transition-duration: 0.5s;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder  .listItem .lessons  .lesson-item2  .col-editor .custom-answer .answer-label-test:hover  {
+        margin-left: 1px;
+        border-radius: 50%;
+        width: 60px;
+        color: green;
+        background-color: #dfd;
+        box-shadow: 10px 10px black;
+        cursor: grab;
+
+         /* Bounce Out */
+        -webkit-transform: scale(0.8);
+        transform: scale(0.8);
+        -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+        transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+        box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder  .listItem .lessons  .lesson-item2  .col-editor .custom-answer .answer-label-test-selected, .answer-label-test-selected:focus, .answer-label-test-selected:active {
+        margin-left: 1px;
+        border-radius: 50%;
+        width: 60px;
+        background:#d2e3f7;
+        color: black;
+
+        /* Bounce Out */
+        display: inline-block;
+        vertical-align: middle;
+        -webkit-transform: perspective(1px) translateZ(0);
+        transform: perspective(1px) translateZ(0);
+        -webkit-transition-duration: 0.5s;
+        transition-duration: 0.5s;
+  
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder  .listItem .lessons  .lesson-item2  .col-editor .custom-answer .answer-label-test-selected:hover, .answer-label-test-selected:focus, .answer-label-test-selected:active {
+        margin-left: 1px;
+        border-radius: 50%;
+        width: 60px;
+        color: #d2e3f7;
+        background-color: #dfd;
+        box-shadow: 10px 10px black;
+        cursor: grab;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder  .listItem .lessons  .lesson-item2  .col-editor-selected .custom-answer .answer-label-test {
+        margin-left: 1px;
+        border-radius: 50%;
+        width: 60px;
+        background: white;
+        box-shadow: 10px 10px black;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder  .listItem .lessons  .lesson-item2  .col-editor-selected .custom-answer .answer-label-test-selected {
+        margin-left: 1px;
+        border-radius: 50%;
+        width: 60px;
+        background:#d2e3f7;
+        color: white;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder  .listItem .lessons  .lesson-item2  .col-editor-selected .custom-answer .answer-label-test:hover {
+        margin-left: 1px;
+        border-radius: 50%;
+        width: 60px;
+        color:#d2e3f7;
+        background-color: #dfd;
+        cursor: grab;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder  .listItem .lessons  .lesson-item2  .col-editor-selected .custom-answer .answer-label-test-selected:hover {
+        margin-left: 1px;
+        border-radius: 50%;
+        width: 60px;
+        color: #d2e3f7;
+        background-color: #dfd;
+        box-shadow: 10px 10px black;
+    }
+
+    .quizzWithPointsBuilder .answerEditorBuilder  .listItem .lessons  .lesson-item2  .col-editor .custom-answer .answer-checkbox-label-test {
+        margin-left: 1px;
+        border-radius: 5%;
+        width: 60px;
+        background: white;
+        box-shadow: 10px 10px black;
+
+        /* Bounce Out */
+        display: inline-block;
+        vertical-align: middle;
+        -webkit-transform: perspective(1px) translateZ(0);
+        transform: perspective(1px) translateZ(0);
+        -webkit-transition-duration: 0.5s;
+        transition-duration: 0.5s;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder  .listItem .lessons  .lesson-item2  .col-editor .custom-answer .answer-checkbox-label-test:hover {
+        margin-left: 1px;
+        border-radius: 5%;
+        width: 60px;
+        color: green;
+        background-color: #dfd;
+        box-shadow: 10px 10px black;
+        cursor: grab;
+
+        /* Bounce Out */
+        -webkit-transform: scale(0.8);
+        transform: scale(0.8);
+        -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+        transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+        box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder  .listItem .lessons  .lesson-item2  .col-editor .custom-answer .answer-checkbox-label-test-selected, .answer-checkbox-label-test-selected:focus, .answer-checkbox-label-test-selected:active  {
+        margin-left: 1px;
+        border-radius: 5%;
+        width: 60px;
+        background:#d2e3f7;
+        color: black;
+
+        /* Bounce Out */
+        display: inline-block;
+        vertical-align: middle;
+        -webkit-transform: perspective(1px) translateZ(0);
+        transform: perspective(1px) translateZ(0);
+        -webkit-transition-duration: 0.5s;
+        transition-duration: 0.5s;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder  .listItem .lessons  .lesson-item2  .col-editor .custom-answer .answer-checkbox-label-test-selected:hover {
+        margin-left: 1px;
+        border-radius: 5%;
+        width: 60px;
+        color: #d2e3f7;
+        background-color: #dfd;
+        box-shadow: 10px 10px black;
+        cursor: grab;
+
+        /* Bounce Out */
+        -webkit-transform: scale(0.8);
+        transform: scale(0.8);
+        -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+        transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+        box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder  .listItem .lessons  .lesson-item2  .col-editor-selected .custom-answer .answer-checkbox-label-test {
+        margin-left: 1px;
+        border-radius: 5%;
+        width: 60px;
+        background: white;
+        box-shadow: 10px 10px black;
+
+        /* Bounce Out */
+        display: inline-block;
+        vertical-align: middle;
+        -webkit-transform: perspective(1px) translateZ(0);
+        transform: perspective(1px) translateZ(0);
+        -webkit-transition-duration: 0.5s;
+        transition-duration: 0.5s;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder  .listItem .lessons  .lesson-item2  .col-editor-selected .custom-answer .answer-checkbox-label-test-selected, .answer-checkbox-label-test-selected:focus, .answer-checkbox-label-test-selected:active   {
+        margin-left: 1px;
+        border-radius: 5%;
+        width: 60px;
+        background:#d2e3f7;
+        color: white;
+     
+        /* Bounce Out */
+        display: inline-block;
+        vertical-align: middle;
+        -webkit-transform: perspective(1px) translateZ(0);
+        transform: perspective(1px) translateZ(0);
+        -webkit-transition-duration: 0.5s;
+        transition-duration: 0.5s;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder  .listItem .lessons  .lesson-item2  .col-editor-selected .custom-answer .answer-checkbox-label-test:hover {
+        margin-left: 1px;
+        border-radius: 5%;
+        width: 60px;
+        color:#d2e3f7;
+        background-color: #dfd;
+        box-shadow: 10px 10px black;
+        cursor: grab;
+
+        /* Bounce Out */
+        -webkit-transform: scale(0.8);
+        transform: scale(0.8);
+        -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+        transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+        box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .question-card-top-right {
         margin-left: 0%;
     }
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .question-card-top-right .manage-input-field-icons {
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .question-card-top-right .manage-input-field-icons {
         visibility: hidden;
     }
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .question-card-top-right .manage-input-field-icons:hover {
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .question-card-top-right .manage-input-field-icons:hover {
         visibility: visible;
     }
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio {
+    .quizzWithPointsBuilder .answerEditorBuilder .radio {
          margin-top: 5%;
          margin-left: 5%;
          margin-bottom: 3%;
          width: 10px;
     } 
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio select {
+    .quizzWithPointsBuilder .answerEditorBuilder .radio select {
         border: none;
         width: 300px;
         text-align: center;
         margin-top: 10px;
         background: orange;
     }
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .explanation {
+    .quizzWithPointsBuilder .answerEditorBuilder .explanation {
          margin-top: 55%;
          margin-left: 55%;
          margin-bottom: 33%;
          width: 10px;
      }
-     .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .explanation .explanation-label {
+     .quizzWithPointsBuilder .answerEditorBuilder .explanation .explanation-label {
         width: 400px;
         height: 50px;
         font-size: 25px;
@@ -443,16 +625,16 @@
         padding-bottom: 9px;
     }
      
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio .radioButton {
+    .quizzWithPointsBuilder .answerEditorBuilder .radio .radioButton {
         width: 10vw;
     }
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .text {
+    .quizzWithPointsBuilder .answerEditorBuilder .text {
         margin-top: 5%;
         margin-left: 5%;
         margin-bottom: 3%;
         width: 100vw;
     }
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .OnlineListItems {
+    .quizzWithPointsBuilder .answerEditorBuilder .OnlineListItems {
         height: 80vh;
     }
     .content3 .sidebar2 {
@@ -472,7 +654,7 @@
         max-width: 90vw;
         max-height: 100vh; 
     }
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .question-card-top-right .manage-input-field-icons .builder-round-button-1, .builder-round-button-2, .builder-round-button-3, .builder-round-button-4, .builder-round-button-5, .builder-round-button-6 {
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .question-card-top-right .manage-input-field-icons .builder-round-button-1, .builder-round-button-2, .builder-round-button-3, .builder-round-button-4, .builder-round-button-5, .builder-round-button-6 {
         align-self: flex-end; 
         width:70px;
         height:60px;
@@ -484,14 +666,14 @@
         transition: transform .7s ease-in-out;
         box-shadow: 10px 10px black;
      }
-     .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .question-card-top-right .manage-input-field-icons .builder-round-button-2 { 
+     .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .question-card-top-right .manage-input-field-icons .builder-round-button-2 { 
        background: yellowgreen;
        visibility: hidden;
      }
-     .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .question-card-top-right .manage-input-field-icons .builder-round-button-2:hover
+     .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .question-card-top-right .manage-input-field-icons .builder-round-button-2:hover
      {
-        background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
-        background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+        background-image: linear-gradient(to left, violet, red, white, green, green, orange, red);
+        background: linear-gradient(to left, violet, red,  green, white, green, green, orange, red);
         cursor: pointer;
         visibility: visible;
      }
@@ -549,65 +731,72 @@
     ##Device = Tablets, Ipads (landscape)
     ##Screen = B/w 768px to 1024px
   */
-  
   @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-
   }
   
-  
-  
-  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-    
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) { 
   }
-  
-  
-  
   /* 
     ##Device = Low Resolution Tablets, Mobiles (Landscape)
     ##Screen = B/w 481px to 767px
   */
-  
   @media (min-width: 481px) and (max-width: 767px) {
     .quizzWithPointsBuilder{
-        height: 50vh;
-        width: 80vw;
-        max-width: 100vw;
-        max-height: 100vh;
-        display: flex;
+        height:auto;
+        min-height: 5vh;
+        width: 92vw;
+        max-width: 92vw;    
+        display: flex; 
         flex-direction: column;
         font-family: 'Courier New', Courier, monospace;
         text-align: left;
-        margin-top: 0px;
-        margin-left: -50px;
-        background: rgb(101, 245, 101);
-        border-radius: 25px;
+        background:#ffffff; 
         padding-bottom: 90px;
         list-style: none;
+        align-items: center;
+        justify-content: center;
     }
-    .quizzWithPointsBuilder-taking{
-        height: 50vh;
-        width: 50vw;
-        max-width: 100vw;
-        max-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        font-family: 'Courier New', Courier, monospace;
-        text-align: left;
-        margin-top: 50px;
-        background: rgb(101, 245, 101);
-        border-radius: 25px;
-        padding-bottom: 90px;
-        list-style: none;
-    }
-    
     .quizzWithPointsBuilder .answerEditorBuilder {
-        height: 90vh;
-        width: 45vw;
-        max-height: 100vh;
-        margin-top: 50px;
-        margin-right: 250px;
-        margin-left: 20px;
+        height:auto;
+        min-height: 5vh;
+        max-width: 92vw; 
+        transform: scale(1); 
+        transition: all 0.6s ease 0s;
         position: relative;
+        box-sizing: border-box;
+        width: 100%;
+        display: flex;
+        flex: 0 1 auto;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        list-style: none;
+        background:#ffffff; 
+
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder .editorTest {
+        font: normal 1.71em KaTeX_Main,Times New Roman,serif;
+        height: auto;
+        min-height: 5vh;
+        width: 1070px;
+        text-align: left;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder .editorTest-preview {
+        height: auto;
+        min-height: 17vh;
+        width: 1150px;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        font-family: 'Courier New', Courier, monospace;
+        text-align: left;
+        border-radius: 25px;
+        border-style: solid;
+        border-width: 3px;
+        box-shadow: 0 0 0 5px #d2e3f7;
+        list-style: none;
+        background: white;
+        padding: 10px 5px 15px 20px;
     }
     .quizzWithPointsBuilder .answerEditorBuilder .formlist {
         height: 90vh;
@@ -627,58 +816,75 @@
         margin-bottom: 25%;
     }
     .quizzWithPointsBuilder label{
-        width: 300px;
+        width: 400px;
         height: 50px;
         font-size: 25px;
         text-align: center;
-        margin-left: 0px;
-        margin-bottom: 20px;
+        margin-top: 20px;
+        margin-left: -190px;
         background: rgb(101, 245, 101);
         border-radius: 5px;
         padding-bottom: 9px;
-        background: orange;
+        background: transparent;
     }
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 {
-        flex-direction: row;
-        height: 1px;
-        max-height: 1px;
-        display: flex;
-        width: 5%;
-    }
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items {
-        margin-left: 30%;
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 {
+        width: 2000px;
         list-style: none;
+        margin-left: -40%;
+        margin-bottom: -5%;
     }
-    
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .question-card-top-right {
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .row-margin {
+        margin-top: 50px;
+        width: 2000px;
+        margin-left: 10%;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2  .col-margin {
+        margin-top: 165px;
+        margin-left: 40%;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2  .col-margin-no-editor {
+        margin-top: 165px;
+        margin-left: 77%;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2  .col-input {
+        margin-top: 220px;
+        margin-left: -700px;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder  .listItem .lessons  .lesson-item2  .col-editor {
+        margin-left: 49%
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .col-editor-selected {
+        margin-left: 49%;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .question-card-top-right {
         margin-left: 0%;
     }
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .question-card-top-right .manage-input-field-icons {
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .question-card-top-right .manage-input-field-icons {
         visibility: hidden;
     }
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .question-card-top-right .manage-input-field-icons:hover {
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .question-card-top-right .manage-input-field-icons:hover {
         visibility: visible;
     }
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio {
+    .quizzWithPointsBuilder .answerEditorBuilder .radio {
          margin-top: 5%;
          margin-left: 5%;
          margin-bottom: 3%;
          width: 10px;
     } 
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio select {
+    .quizzWithPointsBuilder .answerEditorBuilder .radio select {
         border: none;
         width: 300px;
         text-align: center;
         margin-top: 10px;
         background: orange;
     }
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .explanation {
+    .quizzWithPointsBuilder .answerEditorBuilder .explanation {
          margin-top: 55%;
          margin-left: 55%;
          margin-bottom: 33%;
          width: 10px;
      }
-     .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .explanation .explanation-label {
+     .quizzWithPointsBuilder .answerEditorBuilder .explanation .explanation-label {
         width: 400px;
         height: 50px;
         font-size: 25px;
@@ -689,16 +895,16 @@
         padding-bottom: 9px;
     }
      
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio .radioButton {
+    .quizzWithPointsBuilder .answerEditorBuilder .radio .radioButton {
         width: 10vw;
     }
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .text {
+    .quizzWithPointsBuilder .answerEditorBuilder .text {
         margin-top: 5%;
         margin-left: 5%;
         margin-bottom: 3%;
         width: 100vw;
     }
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .OnlineListItems {
+    .quizzWithPointsBuilder .answerEditorBuilder .OnlineListItems {
         height: 80vh;
     }
     .content3 .sidebar2 {
@@ -718,7 +924,7 @@
         max-width: 90vw;
         max-height: 100vh; 
     }
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .question-card-top-right .manage-input-field-icons .builder-round-button-1, .builder-round-button-2, .builder-round-button-3, .builder-round-button-4, .builder-round-button-5, .builder-round-button-6 {
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .question-card-top-right .manage-input-field-icons .builder-round-button-1, .builder-round-button-2, .builder-round-button-3, .builder-round-button-4, .builder-round-button-5, .builder-round-button-6 {
         align-self: flex-end; 
         width:70px;
         height:60px;
@@ -730,14 +936,14 @@
         transition: transform .7s ease-in-out;
         box-shadow: 10px 10px black;
      }
-     .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .question-card-top-right .manage-input-field-icons .builder-round-button-2 { 
+     .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .question-card-top-right .manage-input-field-icons .builder-round-button-2 { 
        background: yellowgreen;
        visibility: hidden;
      }
-     .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .question-card-top-right .manage-input-field-icons .builder-round-button-2:hover
+     .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .question-card-top-right .manage-input-field-icons .builder-round-button-2:hover
      {
-        background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
-        background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+        background-image: linear-gradient(to left, violet, red, white, green, green, orange, red);
+        background: linear-gradient(to left, violet, red,  green, white, green, green, orange, red);
         cursor: pointer;
         visibility: visible;
      }
@@ -763,44 +969,58 @@
   */
   @media (min-width: 320px) and (max-width: 480px) {
     .quizzWithPointsBuilder{
-        height: 50vh;
-        width: 80vw;
-        max-width: 100vw;
-        max-height: 100vh;
-        display: flex;
+        height:auto;
+        min-height: 5vh;
+        width: 92vw;
+        max-width: 92vw;   
+        display: flex; 
         flex-direction: column;
         font-family: 'Courier New', Courier, monospace;
-        text-align: left;
-        margin-top: 0px;
-        background: rgb(101, 245, 101);
-        border-radius: 25px;
+        align-items: center;
+        justify-content: center;
+        background:#ffffff; 
         padding-bottom: 90px;
         list-style: none;
     }
-    .quizzWithPointsBuilder-taking{
-        height: 50vh;
-        width: 50vw;
-        max-width: 100vw;
-        max-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        font-family: 'Courier New', Courier, monospace;
-        text-align: left;
-        margin-top: 50px;
-        background: rgb(101, 245, 101);
-        border-radius: 25px;
-        padding-bottom: 90px;
-        list-style: none;
-    }
-    
     .quizzWithPointsBuilder .answerEditorBuilder {
-        height: 90vh;
-        width: 45vw;
-        max-height: 100vh;
-        margin-top: 50px;
-        margin-right: 250px;
-        margin-left: 20px;
+        height:auto;
+        min-height: 5vh;
+        max-width: 92vw;  
+        transform: scale(1); 
+        transition: all 0.6s ease 0s;
         position: relative;
+        box-sizing: border-box;
+        width: 100%;
+        display: flex;
+        flex: 0 1 auto;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        list-style: none; 
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder .editorTest {
+        font: normal 1.71em KaTeX_Main,Times New Roman,serif;
+        height: auto;
+        min-height: 5vh;
+        width: 1070px;
+        text-align: left;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder .editorTest-preview {
+        height: auto;
+        min-height: 15vh;
+        width: 1150px;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        font-family: 'Courier New', Courier, monospace;
+        text-align: left;
+        border-radius: 25px;
+        border-style: solid;
+        border-width: 3px;
+        box-shadow: 0 0 0 5px #d2e3f7;
+        list-style: none;
+        background: white;
+        padding: 10px 5px 15px 20px;
     }
     .quizzWithPointsBuilder .answerEditorBuilder .formlist {
         height: 90vh;
@@ -820,58 +1040,75 @@
         margin-bottom: 25%;
     }
     .quizzWithPointsBuilder label{
-        width: 300px;
+        width: 400px;
         height: 50px;
         font-size: 25px;
         text-align: center;
-        margin-left: -250px;
-        margin-bottom: 20px;
+        margin-top: 20px;
+        margin-left: -190px;
         background: rgb(101, 245, 101);
         border-radius: 5px;
         padding-bottom: 9px;
-        background: orange;
+        background: transparent;
     }
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 {
-        flex-direction: row;
-        height: 1px;
-        max-height: 1px;
-        display: flex;
-        width: 5%;
-    }
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items {
-        margin-left: 30%;
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 {
+        width: 2000px;
         list-style: none;
+        margin-left: -40%;
+        margin-bottom: -5%;
     }
-    
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .question-card-top-right {
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .row-margin {
+        margin-top: 50px;
+        width: 2000px;
+        margin-left: 10%;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2  .col-margin {
+        margin-top: 165px;
+        margin-left: 40%;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2  .col-margin-no-editor {
+        margin-top: 165px;
+        margin-left: 77%;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2  .col-input {
+        margin-top: 220px;
+        margin-left: -700px;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder  .listItem .lessons  .lesson-item2  .col-editor {
+        margin-left: 49%;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .col-editor-selected {
+        margin-left: 49%;
+    }
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .question-card-top-right {
         margin-left: 0%;
     }
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .question-card-top-right .manage-input-field-icons {
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .question-card-top-right .manage-input-field-icons {
         visibility: hidden;
     }
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .question-card-top-right .manage-input-field-icons:hover {
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .question-card-top-right .manage-input-field-icons:hover {
         visibility: visible;
     }
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio {
+    .quizzWithPointsBuilder .answerEditorBuilder .radio {
          margin-top: 5%;
          margin-left: 5%;
          margin-bottom: 3%;
          width: 10px;
     } 
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio select {
+    .quizzWithPointsBuilder .answerEditorBuilder .radio select {
         border: none;
         width: 300px;
         text-align: center;
         margin-top: 10px;
         background: orange;
     }
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .explanation {
+    .quizzWithPointsBuilder .answerEditorBuilder .explanation {
          margin-top: 55%;
          margin-left: 55%;
          margin-bottom: 33%;
          width: 10px;
      }
-     .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .explanation .explanation-label {
+     .quizzWithPointsBuilder .answerEditorBuilder .explanation .explanation-label {
         width: 400px;
         height: 50px;
         font-size: 25px;
@@ -882,16 +1119,16 @@
         padding-bottom: 9px;
     }
      
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .radio .radioButton {
+    .quizzWithPointsBuilder .answerEditorBuilder .radio .radioButton {
         width: 10vw;
     }
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .text {
+    .quizzWithPointsBuilder .answerEditorBuilder .text {
         margin-top: 5%;
         margin-left: 5%;
         margin-bottom: 3%;
         width: 100vw;
     }
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .OnlineListItems {
+    .quizzWithPointsBuilder .answerEditorBuilder .OnlineListItems {
         height: 80vh;
     }
     .content3 .sidebar2 {
@@ -911,7 +1148,7 @@
         max-width: 90vw;
         max-height: 100vh; 
     }
-    .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .question-card-top-right .manage-input-field-icons .builder-round-button-1, .builder-round-button-2, .builder-round-button-3, .builder-round-button-4, .builder-round-button-5, .builder-round-button-6 {
+    .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .question-card-top-right .manage-input-field-icons .builder-round-button-1, .builder-round-button-2, .builder-round-button-3, .builder-round-button-4, .builder-round-button-5, .builder-round-button-6 {
         align-self: flex-end; 
         width:70px;
         height:60px;
@@ -923,14 +1160,14 @@
         transition: transform .7s ease-in-out;
         box-shadow: 10px 10px black;
      }
-     .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .question-card-top-right .manage-input-field-icons .builder-round-button-2 { 
+     .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .question-card-top-right .manage-input-field-icons .builder-round-button-2 { 
        background: yellowgreen;
        visibility: hidden;
      }
-     .quizzWithPointsBuilder .answerEditorBuilder .content3 .onlinequestion-list-items .question-card-top-right .manage-input-field-icons .builder-round-button-2:hover
+     .quizzWithPointsBuilder .answerEditorBuilder .listItem .lessons .lesson-item2 .question-card-top-right .manage-input-field-icons .builder-round-button-2:hover
      {
-        background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
-        background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+        background-image: linear-gradient(to left, violet, red, white, green, green, orange, red);
+        background: linear-gradient(to left, violet, red,  green, white, green, green, orange, red);
         cursor: pointer;
         visibility: visible;
      }
@@ -949,3 +1186,6 @@
         margin-bottom: -10%;
     }
 }
+
+
+

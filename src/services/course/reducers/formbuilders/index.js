@@ -2,7 +2,7 @@ import produce from 'immer';
 
 import { 
 ADD_FORMBUILDER_BEGIN,
-ADD_FORMBUILDER_SUCCESS,            
+ADD_FORMBUILDER_SUCCESS,   
 ADD_FORMBUILDER_ERROR,      
 LOAD_FORMBUILDER_BEGIN, 
 LOAD_FORMBUILDER_SUCCESS,
@@ -11,7 +11,10 @@ SAVE_FORMBUILDER_SUCCESS,
 SAVE_FORMBUILDER_BEGIN, 
 SAVE_FORMBUILDER_ERROR, 
 DELETE_FORMBUILDER_SUCCESS, 
-DELETE_FORMBUILDER_ERROR } from 'services/course/actions/formbuilders';
+DELETE_FORMBUILDER_ERROR,
+TOGGLE_FORMBUILDER_MODAL,
+TOGGLE_MAX_QUESTION_DIALOG, 
+TOGGLE_MAX_FIELD_DIALOG } from 'services/course/actions/formbuilders';
 
 const initialState = {
      formBuilders:{}, 
@@ -19,18 +22,22 @@ const initialState = {
      onSaveError: null,
      formBuildersLoading: false,
      onFormBuildersLoadingError: null,
-     builders: {}
+     builders: {},
+     isFormModalOpen: false,
+     isMaxQuestionDialogOpen: false,
+     isMaxFieldDialogOpen: false
 };
 
 const reducer = produce((draft, action) => {
     switch(action.type){
+         
      case ADD_FORMBUILDER_BEGIN:
      case SAVE_FORMBUILDER_BEGIN:
           draft.saveInProgress = true;
           draft.onSaveError = null;
      return;
-     case ADD_FORMBUILDER_SUCCESS:
-     case SAVE_FORMBUILDER_SUCCESS:  
+     case ADD_FORMBUILDER_SUCCESS:   
+     case SAVE_FORMBUILDER_SUCCESS:
           draft.formBuilders[action.payload._id] = action.payload; 
           draft.saveInProgress = false;
      return;
@@ -59,6 +66,15 @@ const reducer = produce((draft, action) => {
      case DELETE_FORMBUILDER_ERROR:
           draft.onFormBuildersLoadingError = action.error;
           draft.formBuildersLoading = false;
+     return; 
+     case TOGGLE_FORMBUILDER_MODAL:
+          draft.isFormModalOpen = !draft.isFormModalOpen;  
+     return; 
+     case TOGGLE_MAX_QUESTION_DIALOG:
+          draft.isMaxQuestionDialogOpen = action.payload; 
+     return; 
+     case TOGGLE_MAX_FIELD_DIALOG:
+          draft.isMaxFieldDialogOpen = action.payload; 
      return; 
      default:
     return;

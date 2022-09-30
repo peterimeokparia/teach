@@ -1,23 +1,9 @@
-import { 
-useState,
-useEffect } from 'react';
-
-import { 
-useDispatch } from 'react-redux';
-
-import {
-loadOnlineComments,
-addNewOnlineComment,
-deleteOnlineComment } from 'services/course/actions/onlinecomments'; 
-
-import {
-manageCommentsFieldCollection } from 'services/course/pages/QuestionsPage/helpers';
-    
-import { 
-getSortedRecordsByDate } from 'services/course/selectors';
-
-import {
-getCalendarColor } from 'services/course/pages/CalendarPage/helpers';
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { loadOnlineComments, addNewOnlineComment, deleteOnlineComment } from 'services/course/actions/onlinecomments'; 
+import { manageCommentsFieldCollection } from 'services/course/pages/QuestionsPage/helpers';
+import { getSortedRecordsByDate } from 'services/course/selectors';
+import { getCalendarColor } from 'services/course/pages/CalendarPage/helpers';
 
 function useReplyCommentsHook( commentsConfig ){
     let {
@@ -42,7 +28,7 @@ function useReplyCommentsHook( commentsConfig ){
         dispatch(loadOnlineComments());
         setContentChanged( false );
       }
-    }, [ loadOnlineComments, contentChanged ] );      
+    }, [ contentChanged, dispatch ] );      
   
     let onlineComments = getSortedRecordsByDate( comments?.filter( comment => comment?.onlineQuestionAnswerId === answer?._id ), 'commentDateTime');
   

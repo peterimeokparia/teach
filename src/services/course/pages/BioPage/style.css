@@ -25,11 +25,6 @@
   font-size: 24px;
   text-align: center;
   text-transform: capitalize;
-
-  /* text-transform: uppercase;
-    letter-spacing: 0.5rem;
-    padding: 2rem 0;
-    font-weight: bold; */
 }
 .MyBios header h2 {
   background-color: #673ab7;
@@ -38,16 +33,9 @@
   text-align: center; 
   color: white;
   padding-right: 0px;
-
-  /* text-transform: uppercase;
-    letter-spacing: 0.5rem;
-    padding: 2rem 0;
-    font-weight: bold; */
 }
 .MyBios header h3 {
   background-color: #673ab7;
-  /* padding-top: 200px;
-  margin-bottom: 300px; */
   font-size: 24px;
   text-align: center;
   color: white;

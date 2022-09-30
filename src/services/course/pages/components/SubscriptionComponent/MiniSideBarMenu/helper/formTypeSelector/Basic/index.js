@@ -1,24 +1,13 @@
-import { 
-connect } from 'react-redux';
-
-import {
-handleAddPushNotificationSubscriptionToEntity,
-handleEmailNotificationSubscriptionToEntity,
-handleSavingEntityAction } from 'services/course/pages/components/SubscriptionComponent/MiniSideBarMenu/helper';
-
-import {
-saveOnlineQuestions } from 'services/course/actions/onlinequestions';
-
-import {
-elementMeta } from 'services/course/pages/QuestionsPage/helpers';
-
+import { connect } from 'react-redux';
+import { handleAddPushNotificationSubscriptionToEntity, handleEmailNotificationSubscriptionToEntity, handleSavingEntityAction } from 'services/course/pages/components/SubscriptionComponent/MiniSideBarMenu/helper';
+import { saveOnlineQuestions } from 'services/course/actions/onlinequestions';
+import { elementMeta } from 'services/course/pages/QuestionsPage/helpers';
 import ToggleButton from 'services/course/pages/components/ToggleButton';
 
 const Basic = ({
     question, 
     currentUser,
     saveOnlineQuestions }) => {
-
 return (
     <div>
         {   <span>

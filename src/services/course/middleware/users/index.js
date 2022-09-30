@@ -77,7 +77,7 @@ export const users = store => next =>  action => {
                logLogOutTime( JSON.parse( sessionStorage?.getItem('currentlogins')), store );
                sessionStorage.removeItem('currentuser');
                sessionStorage.removeItem('currentlogins');
-               handleFormBuilderTimer(store)
+               handleFormBuilderTimer(store);
                next(action);
           return; 
           default:

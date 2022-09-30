@@ -1,35 +1,9 @@
-import {
-useEffect } from 'react';
-
-import { 
-Redirect,
-navigate} from '@reach/router';
-
-import {
-euphoricEffect } from 'services/course/pages/components/Euphoric';
-
-import NavLinks from 'services/course/pages/components/NavLinks';
+import { useEffect } from 'react';
+import { navigate } from '@reach/router';
+import { euphoricEffect } from 'services/course/pages/components/Euphoric';
 import DropDown from '../DropDown';
 
-const SiteEntryComponent = ({
-    operatorBusinessName } ) => {   
-
-    // if ( operatorBusinessName === 'main' ) {
-    //     return <Redirect to={`/teach`} noThrow />;
-    // }
-
-    // let organizations = [
-    //     {_id:'teach', id:'teach',   name:'teach'},
-    //     {_id:'boomingllc',id:'boomingllc',   name:'boomingllc'},
-    //     {_id:'main', id:'main',   name:'main'},
-    // ];
-
-    // let business = organizations?.find( org => org?.name === operatorBusinessName );
-
-    // if ( !business ) {
-    //     return <div>{`${operatorBusinessName} was not found.`}</div>;
-    // }
-
+const SiteEntryComponent = ({ operatorBusinessName } ) => {   
     let organizations = [
         {_id:'teach', id:'teach',   name:'teach'},
         {_id:'boomingllc',id:'boomingllc',   name:'boomingllc'}
@@ -85,9 +59,6 @@ return (
     { introStyleEffects() }
     <div className='euphoric'> 
         <div className="orgSelector">
-        {/* <NavLinks to={`/${operatorBusinessName}/login`}> 
-             <label className="navLink">{business?.name}</label>
-        </NavLinks>  */}
         <label>Organization</label>
         <span className="euphoric_dropdown">
             <DropDown 

@@ -1,21 +1,8 @@
-import { 
-useEffect } from 'react';
-
-import { 
-connect  } from 'react-redux';
-
-import { 
-addNewOnlineQuestion,
-saveOnlineQuestions,
-loadOnlineQuestions,
-deleteOnlineQuestion } from 'services/course/actions/onlinequestions';
-
-import { 
-loadCourses } from 'services/course/actions/courses';
-
-import { 
-Markup } from 'interweave';
-
+import { useEffect } from 'react';
+import { connect  } from 'react-redux';
+import { addNewOnlineQuestion, saveOnlineQuestions, loadOnlineQuestions, deleteOnlineQuestion } from 'services/course/actions/onlinequestions';
+import { loadCourses } from 'services/course/actions/courses';
+import { Markup } from 'interweave';
 import NavLinks from 'services/course/pages/components/NavLinks';
 import './style.css';
 
@@ -26,17 +13,17 @@ const OnlineQuestionsSavedAnswersDetailPage = ({
   loadCourses,
   courses,
   courseId, 
-  children }) => {
-    
+  children
+}) => {    
   useEffect(() => {
     loadOnlineQuestions();
     loadCourses();
-  }, []);
+  }, [ loadCourses ]);
 
   let savedQuestions = onlineQuestions?.filter(question => question.savedQuestions?.includes( studentId ) && question?.courseId === courseId );
     
 return (
-  <div className="stage" id="stage">
+  <div>
     <div> 
     { savedQuestions?.map(( question  ) => (
         <div 

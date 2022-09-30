@@ -51,9 +51,15 @@ import classGradeRoute from '../routes/classGradeRoute.js';
 import notesRoute from '../routes/notesRoute.js';
 import fullTextSearchRoute from '../routes/fullTextSearchRoute.js';
 import outcomesRoute from '../routes/outcomesRoute.js';
+import equationRoute from '../routes/equationRoute.js';
+import onlineQuestionExplainAnswerRoute from '../routes/onlineQuestionExplainAnswerRoute.js';
+import questionInsightsRoute from '../routes/questionInsightsRoute.js';
+import studentQuestionInsightsRoute from '../routes/studentQuestionInsightsRoute.js';
+import insightsRoute from '../routes/insightsRoute.js'
+import outcomeInsightsRoute from '../routes/outcomeInsightsRoute.js';
 
-import dotenv from 'dotenv';
-dotenv.config({ path: '../../backend/.env' });
+// import dotenv from 'dotenv';
+// dotenv.config({ path: '../../backend/.env' });
 
 console.log( process.env.SENDGRIDAPIKEY);
 
@@ -104,6 +110,8 @@ app.use('/api/v1/assignments', assignmentRoute);
 app.use('/api/v1/questions', questionRoute);
 
 app.use('/api/v1/onlinequestions', onlineQuestionRoute);
+
+app.use('/api/v1/onlinequestionexplainanswer', onlineQuestionExplainAnswerRoute);
 
 app.use('/api/v1/onlineanswers', onlineQuestionAnswersRoute);
 
@@ -156,6 +164,16 @@ app.use('/api/v1/notes', notesRoute);
 app.use('/api/v1/fulltextsearch', fullTextSearchRoute); 
 
 app.use('/api/v1/outcomes', outcomesRoute); 
+
+app.use('/api/v1/equations', equationRoute); 
+
+app.use('/api/v1/questioninsights', questionInsightsRoute);
+
+app.use('/api/v1/outcomeinsights', outcomeInsightsRoute);
+
+app.use('/api/v1/studentquestioninsights', studentQuestionInsightsRoute);
+
+app.use('/api/v1/insights', insightsRoute);
 
 mongoose.connect('mongodb+srv://dbuser:dbuser2020@cluster0.8heal.mongodb.net/teach?retryWrites=true&w=majority', {
    useNewUrlParser: true, 

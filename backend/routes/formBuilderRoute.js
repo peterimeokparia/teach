@@ -24,11 +24,11 @@ formBuilderRoute.get('/', getRoute( formBuilderModel ), (req, res) => {
     return res.status(200).json(res?.newResult);
 });
 
-formBuilderRoute.get('/formbuilder/builder', getByIdRoute( formBuilderModel, 'formBuilderId' ),  (req, res) => {
+formBuilderRoute.get('/builder', getByIdRoute( formBuilderModel, 'formBuilderId' ),  (req, res) => {
     return res.status(200).json(res?.newResult);
 });
 
-formBuilderRoute.get('/formbuilder/user', getByIdRoute( formBuilderModel, 'userId' ),  (req, res) => {
+formBuilderRoute.get('/user', getByIdRoute( formBuilderModel, 'userId' ),  (req, res) => {
     return res.status(200).json(res?.newResult);
 });
 
@@ -37,7 +37,7 @@ formBuilderRoute.post('/', postRoute( formBuilderModel ), (req, res) => {
 });
 
 formBuilderRoute.put('/:formBuilderId', putRoute( formBuilderModel, 'formBuilderId' ), (req, res) => {
-    return res.status(200).json(res?.savedResult);
+    return res?.status(200).json(res?.savedResult);
 });
 
 formBuilderRoute.delete('/:formBuilderId', deleteRoute(formBuilderModel, 'formBuilderId'), (req, res) => {

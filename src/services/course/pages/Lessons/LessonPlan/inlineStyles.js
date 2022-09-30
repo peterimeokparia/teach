@@ -49,6 +49,7 @@ export const iconStyleMain = () => {
 };
 
 let globalTest = false;
+
 export const videoCallIconMain = ( capturingVideo ) => {
   globalTest = true;
   return {
@@ -76,6 +77,14 @@ export const onlineAnswerVideoDeleteIconStyle = ( recording, id, selectedId ) =>
 export const saveIconStyle = () => {
   return {
     fontSize: 45
+  };
+};
+
+export const saveDraggableIconStyle = () => {
+  return {
+    fontSize: 45,
+    'marginBottom': '-20px',
+    'marginLeft': "-120px",
   };
 };
 

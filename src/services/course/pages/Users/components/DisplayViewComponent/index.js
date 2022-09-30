@@ -1,16 +1,7 @@
-import { 
-connect } from 'react-redux';
-
-import {
-saveGrade } from 'services/course/actions/grades';
-
-import {
-markAttendance,
-saveAttendance } from 'services/course/actions/attendance';
-  
-import { 
-getLessonsByCourseIdSelector } from 'services/course/selectors';
-
+import { connect } from 'react-redux';
+import { saveGrade } from 'services/course/actions/grades';
+import { markAttendance, saveAttendance } from 'services/course/actions/attendance';
+import { getLessonsByCourseIdSelector } from 'services/course/selectors';
 import ListItemComponent from '../ListItemComponent';
 
 const DisplayViewComponent = ({
@@ -21,7 +12,6 @@ const DisplayViewComponent = ({
   collection,
   onMatchListItem,
   children }) => {
-
 return (
       <ListItemComponent
           id={item?._id}

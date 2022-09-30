@@ -31,16 +31,16 @@ body {
 }
 
 .container {
-  position: relative;
+  /* position: relative; */
   /* width: 100%;
   height: 200px; */
-  border: 1px solid #fff;
+  /* border: 1px solid #fff;
   border-radius: 4px;
   margin: 0.5em auto;
   -webkit-perspective: 420px;
           perspective: 420px;
   -webkit-transform-style: preserve-3d;
-          transform-style: preserve-3d;
+          transform-style: preserve-3d; */
 }
 
 .square {

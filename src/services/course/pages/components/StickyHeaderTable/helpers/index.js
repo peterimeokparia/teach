@@ -1,5 +1,3 @@
-import { relativeTimeRounding } from "moment";
-
 export const columnsQuizz = [
     // { id: '_id', label: 'Id', minWidth: 100, minHeight: 10, align: 'left', position: "absolute", zIndex: 100, x:100, y:-4  },
     { id: 'formDisplayName', label: 'Form Name', minWidth: 250, minHeight: 10, align: 'left', position: "absolute", zIndex: 100, x:100, y:-4  },
@@ -12,5 +10,6 @@ export const columnsQuizz = [
     { id: 'userId', label: 'userId', minWidth: 100, minHeight: 10,  position: "absolute", align: 'left', zIndex: 100, x:100, y:-4  },
     { id: 'status', label: 'Status', minWidth: 100, minHeight: 10,  position: "absolute", align: 'left',  zIndex: 100, x:100, y:-4  },
     { id: 'state', label: 'State', minWidth: 100, minHeight: 10,  position: "absolute",  align: 'left', zIndex: 100, x:100, y:-4  },
+    { id: 'outcomeId', label: 'OutcomeId', minWidth: 100, minHeight: 10,  position: "absolute",  align: 'left', zIndex: 100, x:100, y:-4  },
     { id: 'eventId', label: 'EventId', minWidth: 100, minHeight: 10,  position: "absolute",  align: 'left', zIndex: 100, x:100, y:-4  }
 ];

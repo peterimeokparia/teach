@@ -1,32 +1,32 @@
 import { 
 useState, 
-useEffect } from 'services/course/pages/QuestionsPage/components/MultiEditorComponent/node_modules/react';
+useEffect } from 'react';
 
 import { 
-connect } from 'services/course/pages/QuestionsPage/components/MultiEditorComponent/node_modules/react-redux';
+connect } from 'react-redux';
 
 import { 
 addNewQuestion,
 saveQuestion,
 loadQuestions,
-setMarkDownEditor } from 'services/course/pages/QuestionsPage/components/MultiEditorComponent/node_modules/Services/course/Actions/Questions';
+setMarkDownEditor } from 'services/course/actions/questions';
 
 import { 
-togglePreviewMode } from 'services/course/pages/QuestionsPage/components/MultiEditorComponent/node_modules/Services/course/Actions/App';
+togglePreviewMode } from 'services/course/actions/app';
 
 import {
 savedQuestionsExist } from './helpers';
 
 import { 
-addNewGrade } from 'services/course/pages/QuestionsPage/components/MultiEditorComponent/node_modules/Services/course/Actions/Grades';
+addNewGrade } from 'services/course/ctions/grades';
 
 import {
 elementMeta,
 points,
-markDownEditorFieldCollection } from 'services/course/pages/QuestionsPage/components/MultiEditorComponent/node_modules/Services/course/Pages/QuestionsPage/helpers';
+markDownEditorFieldCollection } from 'services/course/pages/QuestionsPage/helpers';
 
 import {
-placeHolder } from 'services/course/pages/QuestionsPage/components/MultiEditorComponent/node_modules/Services/course/helpers/EditorHelpers';
+placeHolder } from 'services/course/helpers/EditorHelpers';
 
 import PointsDistribution from '../PointsDistribution';
 import DropDown from '../../../Components/DropDown';
@@ -199,7 +199,7 @@ return(
 const mapState = ( state, ownProps ) => {
   return {
     currentUser: state.users.user,
-    questions: Object.values(state.questions.questions),
+    questions: Object.values(state.que.questions),
     latestQuestion: state.questions.latestQuestion,
     lessons: Object.values(state.lessons.lessons),
     markDownEditors: state.questions.markDownEditors,

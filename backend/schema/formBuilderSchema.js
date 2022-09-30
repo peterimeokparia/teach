@@ -73,7 +73,15 @@ const formBuilderSchema = new Schema ({
     eventId: { 
         type: String, 
         required: false,
-    }
+    },
+    outcomeId: { 
+        type: String, 
+        required: false,
+    },
+    linkId: { 
+        type: String, 
+        required: false,
+    } 
 });
 
 export default formBuilderSchema;

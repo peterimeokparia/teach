@@ -3,7 +3,7 @@ add,
 update,
 remove,
 get,
-updateUser } from 'services/course/api';
+updateUser } from 'services/course/api/index.js';
 
 export const ADD_COURSE_BEGIN = "ADD COURSE BEGIN";
 export const ADD_COURSE_SUCCESS = "ADD COURSE SUCCESS";
@@ -11,14 +11,13 @@ export const ADD_COURSE_ERROR = "ADD COURSE ERROR";
 export const LOAD_COURSES_BEGIN = "LOAD COURSES BEGIN";
 export const LOAD_COURSES_SUCCESS = "LOAD COURSES SUCCESS";
 export const LOAD_COURSES_ERROR = "LOAD COURSES ERROR";
-export const OPEN_NEW_COURSE_MODAL = "OPEN NEW COURSE MODAL";
-export const CLOSE_NEW_COURSE_MODAL = "CLOSE NEW COURSE MODAL";
+export const TOGGLE_COURSE_MODAL = "TOGGLE COURSE MODAL";
 export const SAVE_COURSE_BEGIN = "SAVE COURSE BEGIN";    
 export const SAVE_COURSE_SUCCESS = "SAVE COURSE SUCCESS";
 export const SAVE_COURSE_ERROR = "SAVE COURSE ERROR";
 export const DELETE_COURSE_SUCCESS = "DELETE COURSE SUCCESS";
-export const DELETE_COURSE_BEGIN = "DELETE LESSON BEGIN";
-export const DELETE_COURSE_ERROR = "DELETE LESSON ERROR";
+export const DELETE_COURSE_BEGIN = "DELETE EQUATION BEGIN";
+export const DELETE_COURSE_ERROR = "DELETE EQUATION ERROR";
 export const USER_UPDATED = "USER UPDATED";
 export const LAST_LOGGEDIN_USER = "LAST LOGGEDIN USER";
 export const LESSONPLAN_DROPDOWN_COURSE = "LESSONPLAN DROPDOWN COURSE";
@@ -95,10 +94,6 @@ export const selectCourseFromLessonPlanCourseDropDown = course => ({
 });
 
  
-export const openNewCourseModal = () => ({
-    type: OPEN_NEW_COURSE_MODAL
-});
-
-export const closeNewCourseModal = () => ({
-   type: CLOSE_NEW_COURSE_MODAL
+export const toggleCourseModal = () => ({
+    type: TOGGLE_COURSE_MODAL
 });

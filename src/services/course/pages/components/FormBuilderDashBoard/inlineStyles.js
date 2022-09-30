@@ -17,7 +17,6 @@ export const iconStyle = () => {
     fontSize: 30,
     "marginLeft": "570px",
     "marginBottom": "46px",
-    visibility: "visible",
     cursor: "pointer",
     visibility: "visible"
   };
@@ -57,11 +56,8 @@ export const plusOneIconStyleHeader = ( id, selectedId ) => {
 
 export const addIconStyleHeader = ( id, selectedId ) => {
   return {
-    // fontSize: 30,
     "z-index": 1,
     "top": "130%",
-    // "marginBottom": "15px",
-    // "marginLeft": "90%",
     visibility: ( id === selectedId ) ? "visible" : "hidden"
   };
 };
@@ -125,6 +121,16 @@ export const shareScreenIcon = ( capturingVideo, id, selectedId  ) => {
   };
 };
 
+export const submitIconStyle = () => {
+  return {
+    fontSize: 10,
+    position: "fixed",
+    "zIndex": 1, 
+    left: "47%",
+    top: "-3%",
+  };
+};
+
 export const videoMeta = element  => { 
   return {
     videoCallIconMain,
@@ -147,7 +153,5 @@ export const videoMeta = element  => {
     buttonClassName: `toggle-stage-btns${( true ) ? "-show" : "-hide"}`, 
     objectId: element?._id, 
     displaySavedRecording: true
-  }};
-  
-
-
+  };
+};

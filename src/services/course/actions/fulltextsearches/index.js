@@ -19,6 +19,7 @@ export const DELETE_FULLTEXTSEARCH_ERROR = "DELETE FULLTEXTSEARCH ERROR";
 export const SAVE_FULLTEXTSEARCH_BEGIN = "SAVE FULLTEXTSEARCH BEGIN";
 export const SAVE_FULLTEXTSEARCH_ERROR = "SAVE FULLTEXTSEARCH ERROR";
 export const SAVE_FULLTEXTSEARCH_SUCCESS = "SAVE FULLTEXTSEARCH SUCCESS";
+export const SET_SEARCH_ITEM = "SET SEARCH ITEM";
 
 export const addNewFullTextSearchContent = ( searchContent ) => {
     return dispatch => {
@@ -141,3 +142,8 @@ export const setFullTextSearchContent = ( teachObject, content, teachObjectType=
         }, 2000);  
     };
 };
+
+export const setSelectedSearchItem = searchItem => ({
+    type: SET_SEARCH_ITEM,
+    payload: searchItem
+});

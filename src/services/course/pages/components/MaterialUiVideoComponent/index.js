@@ -1,11 +1,6 @@
-import { 
-connect } from 'react-redux';
-
-import {
-videoComponentMeta } from 'services/course/actions/video';
-
+import { connect } from 'react-redux';
+import { videoComponentMeta } from 'services/course/actions/video';
 import MaterialVideoPage from 'services/course/pages/MaterialVideoPage';
-import RecordSessionPage from 'services/course/pages/RecordSessionPage';
 import './style.css';
 
 const MaterialUiVideoComponent = ({
@@ -17,7 +12,6 @@ const MaterialUiVideoComponent = ({
   resetAllStopSettings,
   setVideoModalMode,
   videoModalMode,
-  toggleCurrentMeetingSession,
   extendedMeetingSettings }) => {
 return (
   <span className={className}> 

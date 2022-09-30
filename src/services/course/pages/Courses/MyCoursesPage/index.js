@@ -1,20 +1,7 @@
-import { 
-connect } from 'react-redux';
-
-import { 
-Link, 
-Redirect,
-navigate } from '@reach/router';
-
-import { 
-navContent } from  'services/course/pages/components/NavigationHelper';
-
-import { 
-getMyCourseList,
-getOperatorFromOperatorBusinessName, 
-getUsersByOperatorId,
-getCoursesByOperatorId } from 'services/course/selectors';
-
+import { connect } from 'react-redux';
+import { Link, Redirect, navigate } from '@reach/router';
+import { navContent } from  'services/course/pages/components/NavigationHelper';
+import { getMyCourseList, getUsersByOperatorId } from 'services/course/selectors';
 import CourseListComponent from 'services/course/pages/Courses/components/CourseListComponent';
 import LoginLogout from 'services/course/pages/LoginPage/components/LoginLogout';
 import MainMenu from 'services/course/pages/components/MainMenu';
@@ -23,9 +10,9 @@ import './style.css';
 
 const MyCoursesPage = ({
     operatorBusinessName,
-    operator,
     user,
-    myCourseList }) => {
+    myCourseList 
+}) => {        
     if ( ! user?.userIsValidated ){
         navigate(`/${operatorBusinessName}/login`);
     }
@@ -65,14 +52,9 @@ return (
 ); };
 
 const mapState = ( state, ownProps )  => ({
-    operator: getOperatorFromOperatorBusinessName(state, ownProps),
     users: getUsersByOperatorId(state, ownProps),
-    courses: getCoursesByOperatorId(state, ownProps),
     myCourseList: getMyCourseList(state, ownProps),
     user: state?.users?.user,
-    yourCourses: getCoursesByOperatorId(state, ownProps)?.filter(course => state?.users.user?.courses?.includes(course?._id)),
-    coursesLoading: state?.courses?.coursesLoading,
-    onCoursesError: state?.courses?.onCoursesError,
 });
 
 export default connect( mapState, null )(MyCoursesPage);

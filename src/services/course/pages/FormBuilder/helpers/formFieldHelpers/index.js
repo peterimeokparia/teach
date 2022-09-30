@@ -1,9 +1,5 @@
-import { 
-editorContentType,
-labelType } from 'services/course/pages/FormBuilder/helpers';
-
-import {
-inputType } from 'services/course/pages/QuestionsPage/helpers';
+import { editorContentType, labelType } from 'services/course/pages/FormBuilder/helpers';
+import { inputType } from 'services/course/pages/QuestionsPage/helpers';
 
 export function markDownEditorFieldCollection(config){
     return  { 
@@ -110,6 +106,7 @@ export function markDownEditorFieldCollection(config){
       answerKey: config?.answerKey,
       pointsRecived: config?.pointsRecived,
       points: config?.points,
+      position: config?.position,
       xAxisformFieldPosition: config?.xAxisformFieldPosition,
       yAxisformFieldPosition: config?.yAxisformFieldPosition,
       files: [],
@@ -157,14 +154,7 @@ export function markDownEditorFieldCollection(config){
   };
 
   export function getFormFieldAnswers( answerProps ){
-
-    let {
-      element, 
-      question, 
-      currentUser, 
-      formUuId, 
-      eventId
-    } = answerProps;
+    let { element, question, currentUser, formUuId, eventId } = answerProps;
 
     return { 
       formId: element?.formId,
@@ -183,7 +173,8 @@ export function markDownEditorFieldCollection(config){
       answer: element?.answer,
       answerKey: element?.answerKey,
       pointsReceived: element?.pointsReceived,
-      points: element?.points, 
+      points: element?.points,
+      position: 0, 
       xAxisformFieldPosition: element?.xAxisformFieldPosition,
       yAxisformFieldPosition: element?.yAxisformFieldPosition,
       files: element?.files,
@@ -201,8 +192,7 @@ export function markDownEditorFieldCollection(config){
   export  const questionInputCollection = [ 
     inputType.MainBodyQuestion,
     inputType.MainBodyHeader,
-    inputType.MainBodyTableColumnQuestion,
-    inputType.MathScienceQuestion
+    inputType.MainBodyTableColumnQuestion
   ];
   
   export  const formFieldInputCollection = [ 
@@ -213,6 +203,6 @@ export function markDownEditorFieldCollection(config){
     inputType.DateTime, inputType.Toggle,
     inputType.DataObjectSelector, inputType.Number,
     inputType.NumberPosition, inputType.NumberPercentage,
-    inputType.FileUpload, inputType.LatexField,
-    inputType.MathScienceRadioButton
+    inputType.FileUpload,inputType.ExplanationAnswerEditor,
+    inputType.DraggableListItem
   ];

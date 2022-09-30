@@ -27,7 +27,7 @@
     max-width: 220%;
     height: 960px;
     width: 400px;
-    margin-top: 0.3em;
+    margin-top: 0.1em;
     margin-left: 0.47em;
     border: 2px;
     border-color: orange;
@@ -36,13 +36,13 @@
     overflow-y: scroll;
 }
 .children-section .children-subsection .notes-title{
-    margin-top: 0.3em;
+    margin-top: 0.1em;
 }
 .children-section .children-subsection .notes-title .title-input{
     background: white;
     border-color: white;
     border-right-color: orange;
-    margin-top: 0.3em;
+    margin-top: 0.1em;
     margin-bottom: 0.5em;
     box-shadow: 5px 10px #888888;
     text-transform: capitalize;

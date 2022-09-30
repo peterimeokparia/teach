@@ -1,4 +1,5 @@
 import moment from 'moment-timezone';
+import isEqual from 'react-fast-compare';
 
 let authToken = null;
 
@@ -25,6 +26,7 @@ export function deleteData(url = ``, data = {}) {
 export const deleteFiles = ( file ) => {
     let url = routeUrl().DeleteFile;
     let formData = new FormData();
+
     formData.append('delete', file);
     return uploadContent(url, formData);
 };
@@ -44,6 +46,7 @@ export const uploadVideos = ( videoData, externalId, videoNamePrefix ) => {
   };
 
   let formData = new FormData();
+
   formData.append('id', JSON.stringify(id));
   formData.append(videoNamePrefix, videoData?.videoMetaData?.videoNamePrefix);
   formData.append('data', JSON.stringify(data));
@@ -131,6 +134,7 @@ async function fetchWithData( url =``, data = {}, method = 'POST') {
       console.log( error );    
       throw Error(`${ error?.message }` );
     }
+    
     return responseData?.json();
 }
 
@@ -142,11 +146,13 @@ export const randomIdGenerator = (min, max) => {
 
 export const getTimeZoneDateTime = ( dateTime ) => {
  let currentTimeZone = sessionStorage?.getItem('timeZone');
-    return moment( dateTime )?.tz( currentTimeZone );
+
+  return moment( dateTime )?.tz( currentTimeZone );
 };
 
 export const setItemInSessionStorage = (key, item) => {
   if ( item === null || item === "" ) return;
+  if ( isEqual( sessionStorage.getItem(key), item ) ) return;
   sessionStorage.setItem(key, JSON.stringify(item));
 };
 

@@ -23,5 +23,8 @@
         "react-hooks/exhaustive-deps": "warn",
         "semi": ["warn", "always"],
         "no-unexpected-multiline": "warn"
-    }
+    },
+    "plugins": [
+        "json5"
+    ]
 }

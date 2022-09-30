@@ -36,10 +36,22 @@ const notesSchema = new Schema ({
         type: String, 
         required: false,
     },
+    operatorBusinessName: { 
+        type: String, 
+        required: false,
+    },
     eventId: {
         type: String, 
         required: false  
     }, 
+    outcomeId: {
+        type: String, 
+        required: false  
+    },
+    color: {
+        type: String, 
+        required: false  
+    },
     noteType: {
         type: String, 
         required: false  

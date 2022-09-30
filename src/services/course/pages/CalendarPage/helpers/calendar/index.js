@@ -1,15 +1,5 @@
-import {
-eventEnum,
-studentsOption } from 'services/course/pages/CalendarPage/helpers';
-
-import {
-iconStyleMain } from './inlineStyles';
-
-import { 
-role } from 'services/course/helpers/PageHelpers';
-
-import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
-import NotesIcon from '@material-ui/icons/Notes';
+import { eventEnum } from 'services/course/pages/CalendarPage/helpers';
+import { role } from 'services/course/helpers/PageHelpers';
 import FullCalendar from '@fullcalendar/react';
 import rrulePlugin from "@fullcalendar/rrule";
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -23,36 +13,14 @@ import OnlineTutoringRequestForm from 'services/course/pages/CalendarPage/compon
 import Forms from 'services/course/pages/CalendarPage/components/Forms';
 import Scheduling from 'services/course/pages/CalendarPage/components/Scheduling/index.js';
 import LessonNavigationComponent from 'services/course/pages/CalendarPage/components/LessonNavigationComponent';
-import BoardEditorComponent from 'services/course/pages/Lessons/LessonPlan/components/BoardEditorComponent';
 import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/list/main.css";
 import './style.css';
 
 export function renderSwitch( renderSwitchProps ) {
-
-    let {
-        operatorBusinessName,
-        isModalOpen,
-        closeModal,
-        calendarSlotInfo,
-        addNewCalendarEvent,
-        user,
-        users,
-        courses,
-        scheduledStudents,
-        setScheduledStudents,
-        studentsOption,
-        events, 
-        userId, 
-        publishedForms, 
-        calendarEventType, 
-        calendarId, 
-        addNewFormBuilder,
-        eventDataObj,
-        component,
-        handleEventClick,
-        handleSelect,
-        renderEventContent
+    let { operatorBusinessName, isModalOpen, closeModal, calendarSlotInfo, addNewCalendarEvent, user, users, courses, scheduledStudents,
+        setScheduledStudents, studentsOption, events, userId, publishedForms, calendarEventType, calendarId, addNewFormBuilder, eventDataObj,
+        component, handleEventClick, handleSelect, renderEventContent
     } = renderSwitchProps;
 
     switch ( component ) {
@@ -154,7 +122,7 @@ export function renderSwitch( renderSwitchProps ) {
                         }}
                         weekNumbers={true}
                         initialView='dayGridMonth'
-                        // eventContent={renderEventContent}
+                        eventContent={renderEventContent}
                         editable={true}
                         selectable={true}
                         selectMirror={true}
@@ -171,5 +139,6 @@ export function renderSwitch( renderSwitchProps ) {
                         initialView='listWeek' 
                     />
                 </div>;
+
     }
 }

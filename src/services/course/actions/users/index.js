@@ -1,5 +1,5 @@
 import { 
-setItemInSessionStorage } from 'services/course/helpers/ServerHelper';
+setItemInSessionStorage } from 'services/course/helpers/ServerHelper/index.js';
 
 import {
 update,
@@ -14,7 +14,7 @@ getLoggedInUsers,
 purchase,
 remove,
 updateInvitationUrl,
-getPagedData } from 'services/course/api';
+getPagedData } from 'services/course/api/index.js';
 
 export const LOGIN_BEGIN = "LOGIN BEGIN";
 export const LOGIN_SUCCESS = "LOGIN SUCCESS";

@@ -1,15 +1,9 @@
-import { 
-getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
-
-import { 
-role } from 'services/course/helpers/PageHelpers';
-
-import { 
-formTypes } from 'services/course/pages/FormBuilder/helpers';
+import { getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
+import { role } from 'services/course/helpers/PageHelpers';
+import { formTypes } from 'services/course/pages/FormBuilder/helpers';
 
 export const navContent = ( user, operatorBusinessName, currentRole, role, permissionDeniedGroup ) => { 
    operatorBusinessName = ( !operatorBusinessName ) ? getItemFromSessionStorage('operatorBusinessName') : operatorBusinessName;
-
 
    return { 
       users: permissionDeniedGroup?.includes(operatorBusinessName) 
@@ -26,8 +20,8 @@ export const navContent = ( user, operatorBusinessName, currentRole, role, permi
 };
        
 function getNavigationLinksBasedOnRoles( userRole, user, operatorBusinessName ){
-
    switch (userRole) {
+
       case role.Tutor:
          return  [
             { id: 0, hrefValue: `/${operatorBusinessName}/users` , item: 'Tutors' }, 
@@ -41,5 +35,6 @@ function getNavigationLinksBasedOnRoles( userRole, user, operatorBusinessName ){
          ];
       default:
          break;
+         
    }
 };

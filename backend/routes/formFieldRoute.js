@@ -43,6 +43,10 @@ formFieldRoute.put('/:formFieldId', putRoute( formFieldModel, 'formFieldId' ), (
     return res.status(200).json(res?.savedResult);
 });
 
+formFieldRoute.put('/content/:formFieldId', putRoute( formFieldModel, 'formFieldId' ), (req, res) => {
+    return res.status(200).json(res?.savedResult);
+});
+
 formFieldRoute.delete('/:formFieldId', deleteRoute(formFieldModel, 'formFieldId'), (req, res) => {
     return res.status(200).json(res?.newResult);
 });

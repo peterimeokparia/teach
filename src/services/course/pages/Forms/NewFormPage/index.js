@@ -1,41 +1,14 @@
-import { 
-useState, 
-useEffect, 
-useRef } from 'react';
-
-import { 
-connect } from 'react-redux';
-
-import { 
-loadFormBuilders,
-addNewFormBuilder } from 'services/course/actions/formbuilders';
-
-import { 
-loadLessons } from 'services/course/actions/lessons';
-
-import { 
-Validations } from  'services/course/helpers/Validations';
-
-import { 
-toast } from 'react-toastify';
-
-import {
-v4 as uuidv4 } from 'uuid';
-
-import { 
-formTypeCollection } from 'services/course/pages/FormBuilder/helpers';
-
-import { 
-role,
-roleTypeCollection } from 'services/course/helpers/PageHelpers';
-
-import {
-elementMeta } from 'services/course/pages/QuestionsPage/helpers';
-
-import { 
-getOperatorFromOperatorBusinessName,    
-getCoursesByOperatorId } from 'services/course/selectors';
-
+import { useState, useEffect, useRef } from 'react';
+import { connect } from 'react-redux';
+import { loadFormBuilders, addNewFormBuilder } from 'services/course/actions/formbuilders';
+import { loadLessons } from 'services/course/actions/lessons';
+import { Validations } from  'services/course/helpers/Validations';
+import { toast } from 'react-toastify';
+import { v4 as uuidv4 } from 'uuid';
+import { formTypeCollection } from 'services/course/pages/FormBuilder/helpers';
+import { roleTypeCollection } from 'services/course/helpers/PageHelpers';
+import { elementMeta } from 'services/course/pages/QuestionsPage/helpers';
+import { getOperatorFromOperatorBusinessName } from 'services/course/selectors';
 import Select from 'react-select'; 
 import './style.css';
 
@@ -65,14 +38,10 @@ const NewFormPage = ({
 
     // change to hook
     useEffect(() => {
-
         if ( course ){
-
             dispatch( loadLessons( course?.value?._id ) );
-
         }
-
-    }, [ course ])
+    }, [ course, dispatch ]);
 
     if ( onSaveError ) {
         toast.error(`There was a problem while adding the new form: ${ formDisplayName }: ${ onSaveError?.message }`);
@@ -80,6 +49,7 @@ const NewFormPage = ({
 
     const generateUuid = () => {
         const uuid = uuidv4();
+
         return uuid;
     };
 
@@ -87,7 +57,6 @@ const NewFormPage = ({
         e.preventDefault(); 
         
         if ( (Validations.checkFormInputString("Form Name", formDisplayName))) {        
-        
             let dateTime = Date.now();
             let uuid = generateUuid();
             let formUuId = uuid;    
@@ -118,8 +87,7 @@ const NewFormPage = ({
 
             dispatch( addNewFormBuilder( newBuilder ) );
 
-            dispatch( loadFormBuilders() );
-            
+            dispatch( loadFormBuilders() ); 
         }
     };
 

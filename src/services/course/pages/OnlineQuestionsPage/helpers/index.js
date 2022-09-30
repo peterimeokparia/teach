@@ -1,44 +1,26 @@
-import {
-elementMeta } from 'services/course/pages/QuestionsPage/helpers';
-
-import {
-getSortedRecords } from 'services/course/selectors';
-
-import { 
-forceReload,
-setItemInSessionStorage,
-getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
+import { getSortedRecordsByPosition } from 'services/course/selectors';
+import { setItemInSessionStorage, getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
 
 export const upload_url = "/api/v1/fileUploads", editor_upload_url = '/api/v1/fileUploads/editor?fileName=';
  
 export function uploadImageUrl( file, imageBlock, fileUploadMeta, selectedElement, saveAction ) {
-
     const fileData = file, blobUrl = getItemFromSessionStorage('fileUploadBlobUrl');
 
     if ( fileData && blobUrl ) {
-
-    let markDownContentKey = getItemFromSessionStorage('markDownType') === 'main' ? 'markDownContent' : 'answerExplanationMarkDownContent';
-
     let fileNotUploaded = handleNewFileUpload( file, fileUploadMeta );
 
     if ( fileNotUploaded ){
-
-      let markDownContent = selectedElement[ markDownContentKey ];
-
       let savedMarkedDownData = getItemFromSessionStorage('markDownContent');
 
       saveAction({ ...selectedElement, markDownContent: savedMarkedDownData });
-     
     }
   }
 };
 
 function handleNewFileUpload( file, fileUploadMeta ) {
-
   const isFileUploaded = file?.data?.fileCollection?.includes(file?.data?.file);
 
   setItemInSessionStorage('filename', `http://localhost:3000/files/${ file?.data?.file }`);
-
   fileUploadMeta({ imageUploaded: isFileUploaded ? false : true, blobUrl: undefined, fileName: file?.data?.file, markDownType: null }); 
   
   return isFileUploaded;
@@ -55,64 +37,41 @@ export function Linkssss( selectedStudents, courseId ){
 };
 
 export function getOnlineQuestion( onlineQuestionsConfig ){
-
     let {
-      formType, 
       formName,
-      formUuId,
-      formBuilderStatus,
-      courseId, 
       onlineQuestionId,
       onlineQuestions,
     } = onlineQuestionsConfig;
 
-    if ( onlineQuestionId ) {
-      
+    if ( onlineQuestionId ) { 
       return onlineQuestions?.filter(question => question?._id === onlineQuestionId);
-
     }
 
-    if ( elementMeta.state.Manage === formBuilderStatus && !onlineQuestionId ) {
-
-        let questions =  onlineQuestions?.filter( question => 
-                          question?.formType === formType 
-                            && question?.formName === formName 
-                              && question?.formUuId === formUuId );
-
-        return getSortedRecords( questions, 'position' );
-    }
-
-    return onlineQuestions?.
-              filter( question => question?.formType === formType && question?.formName === formName );
-
+    return getSortedRecordsByPosition( onlineQuestions?.filter( question => question?.formName === formName ) );
 };
 
 
 export function handleChange( element, actionType, route, saveActionMw ){
-  const duration = 5000;
-
-  const timeHandler = setTimeout(() => {
-
-    if ( element?._id ) {
-      saveActionMw({ element, actionType, route });
-    }
-     clearTimeout( timeHandler );
-  }, duration );
+  if ( element?._id ) {
+    saveActionMw({ element, actionType, route });
+  }
 }
 
 export const addQuestionConfig = ( props ) => {
-
   let {
     typeOfInput,
     formId,
     formType,
     formName,
     courseId,
+    lessonId,
     formUuId, 
     onlineQuestionId,
     currentUser,
     operator,
     position,
+    outcomeId,
+    linkId,
     inputFieldOptions
   } = props;
 
@@ -121,7 +80,10 @@ export const addQuestionConfig = ( props ) => {
       formType,
       formName,
       courseId,
+      lessonId,
       formUuId, 
+      outcomeId,
+      linkId,
       onlineQuestionId,
       position,
       inputType: typeOfInput,

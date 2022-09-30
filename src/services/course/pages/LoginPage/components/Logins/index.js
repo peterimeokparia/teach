@@ -1,32 +1,21 @@
-import {
-useEffect,
-useState } from 'react';
-
-import {
-connect } from 'react-redux';
-
-import { 
-loadLoginSessions,
-loadPagedLoginSessions } from 'services/course/actions/logins';
-
+import { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { loadPagedLoginSessions } from 'services/course/actions/logins';
 import Pagination from 'services/course/pages/components/Pagination';
 import './style.css';
 
 const Logins = ({ 
     studentId, 
     logins,
-    operatorBusinessName,
     currentUser,
-    loadLoginSessions,
     loadPagedLoginSessions }) => {      
-
+    let updateOnLoginChange = ( logins?.results?.length === 0 || logins?.results?.length === undefined );
+    
     useEffect(() => {
-
         if ( studentId ) {
             loadPagedLoginSessions( studentId, logins?.page ? logins.page : 1, 10 );
         }
-
-    }, [ logins?.results?.length === 0 || logins?.results?.length === undefined ] );
+    }, [ updateOnLoginChange, loadPagedLoginSessions, studentId, logins?.page ] );
     
 return (   
 <div  className="logins" >
@@ -71,4 +60,4 @@ const mapState = (state, ownProps)   => {
     };
 };
 
-export default connect(mapState, { loadPagedLoginSessions, loadLoginSessions } )(Logins);
+export default connect(mapState, { loadPagedLoginSessions } )(Logins);

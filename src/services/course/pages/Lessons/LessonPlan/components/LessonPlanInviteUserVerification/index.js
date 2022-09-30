@@ -1,35 +1,17 @@
-import { 
-  useState,
-  useEffect } from 'react';
-  
-  import { 
-  connect } from 'react-redux';
-  
-  import { 
-  Redirect } from '@reach/router';
-  
-  import {
-  loadUsers,   
-  createUser,
-  loginUser } from 'services/course/actions/users';
-  
-  import { 
-  getOperatorFromOperatorBusinessName, 
-  getUsersByOperatorId,
-  getCoursesByOperatorId } from 'services/course/selectors';
-  
-  import LessonPlanSignUpComponent from 'services/course/pages/Lessons/LessonPlan/components/LessonPlanSignUpComponent';
-  import SiteUser from 'services/course/helpers/SiteUser';
-  import './style.css';
+import { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from '@reach/router';
+import { loadUsers, createUser, loginUser } from 'services/course/actions/users';
+import { getOperatorFromOperatorBusinessName, getUsersByOperatorId, getCoursesByOperatorId } from 'services/course/selectors';
+import LessonPlanSignUpComponent from 'services/course/pages/Lessons/LessonPlan/components/LessonPlanSignUpComponent';
+import SiteUser from 'services/course/helpers/SiteUser';
+import './style.css';
   
   const LessonPlanInviteUserVerification = ({ 
     operatorBusinessName,
     operator,
     classRoomId,
     users,  
-    courseId,  
-    lessonId, 
-    lessonTitle,
     currentUser,
     studyHallOwner,
     studyHallName,
@@ -63,7 +45,7 @@ import {
             }
           }).catch( error => error );
       }
-    }, [ userCredentials ]);
+    }, [ userCredentials, createUser, loadUsers, loginUser, operator?._id, users ]);
     
     if ( currentUser?.userIsValidated && currentUser?.userIsVerified ) {
       if ( studyHallName ) {

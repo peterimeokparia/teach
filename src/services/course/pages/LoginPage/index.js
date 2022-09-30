@@ -1,65 +1,18 @@
 import React from 'react';
-
-import { 
-connect } from 'react-redux';
-
-import { 
-navigate,
-Redirect } from '@reach/router';
-
-import { 
-loginUser, 
-createUser, 
-loadUsers,
-lastLoggedInUser, 
-loginPageError, 
-loadUserByEmail } from 'services/course/actions/users';
-
-import { 
-loadMeetingsByMeetingId,  
-loadMeetings,
-saveMeeting  } from 'services/course/actions/meetings';
-
-import {
-autoRenewSessionPackages,  
-loadSessions } from 'services/course/actions/sessions';
-
-import {
-loadSubscribedPushNotificationUsers, 
-subscribePushNotificationUser,
-savePushNotificationUser } from 'services/course/actions/notifications';
-
-import {
-setOperator,
-setOperatorBusinessName } from 'services/course/actions/operator';
-
-import {
-encryptData,
-decryptData } from 'services/course/actions/config';
-
-import { 
-getOperatorFromOperatorBusinessName, 
-getUsersByOperatorId,
-getCoursesByOperatorId,
-getPushNotificationUsersByOperatorId } from 'services/course/selectors';
-
-import {
-handlePushNotificationSubscription } from 'services/course/helpers/PageHelpers';
-
-import {
-setUpNewUser,
-directUserNavigation,
-validateUseCredentialsOnlogin,
-handleUserMeetingsOnLogin,
-logUserSignInTime } from 'services/course/pages/LoginPage/helpers';
-
-import {
-addNewLoginSession } from 'services/course/actions/logins';
-  
+import { connect } from 'react-redux';
+import { navigate } from '@reach/router';
+import { loginUser, createUser, loadUsers, lastLoggedInUser, loginPageError, loadUserByEmail } from 'services/course/actions/users';
+import { loadMeetingsByMeetingId,  loadMeetings, saveMeeting  } from 'services/course/actions/meetings';
+import { autoRenewSessionPackages, loadSessions } from 'services/course/actions/sessions';
+import { loadSubscribedPushNotificationUsers, subscribePushNotificationUser, savePushNotificationUser } from 'services/course/actions/notifications';
+import { getOperatorFromOperatorBusinessName, getUsersByOperatorId, getCoursesByOperatorId, getPushNotificationUsersByOperatorId } from 'services/course/selectors';
+import { handlePushNotificationSubscription } from 'services/course/helpers/PageHelpers';
+import { setUpNewUser, directUserNavigation,validateUseCredentialsOnlogin, handleUserMeetingsOnLogin, logUserSignInTime } from 'services/course/pages/LoginPage/helpers';
+import { addNewLoginSession } from 'services/course/actions/logins';
+import { coursePackageRenewal } from 'services/course/pages/Packages/helpers';
 import useLoginPageHook from 'services/course/pages/LoginPage/hooks/useLoginPageHook';
 import LoginForm from 'services/course/pages/LoginPage/components/LoginForm';
 import RegistrationForm from 'services/course/pages/SignUp/RegistrationForm';
-import CoursePackageRenewal from 'services/course/pages/Packages/CoursePackageRenewal';
 import SiteUser from 'services/course/helpers/SiteUser';
 import Swal from 'sweetalert2';
 import './style.css';
@@ -68,10 +21,6 @@ const LoginPage = ({
   operatorBusinessName,
   operator,
   operators,
-  encryptData,
-  decryptData,
-  setOperator,
-  setOperatorBusinessName,
   error, 
   loading, 
   loginUser,
@@ -99,18 +48,7 @@ const LoginPage = ({
   savePushNotificationUser,
   addNewLoginSession }) => {
   let loginPageProps = {
-    operatorBusinessName,
-    operator,
-    loading,
-    error,
-    user,
-    sessions,
-    lessonsLoading,
-    lessons,
-    courses,
-    autoRenewSessionPackages, 
-    loadSessions, 
-    loadUsers
+    operatorBusinessName, operator, loading, error,user, sessions, lessonsLoading, lessons, courses, autoRenewSessionPackages, loadSessions, loadUsers
   };
 
   let { 
@@ -148,7 +86,7 @@ function handleLoginUser( email, password ) {
                 logUserSignInTime( addNewLoginSession, currentUser );
                 handlePushNotificationSubscription(pushNotificationSubscribers, currentUser, subscribePushNotificationUser, savePushNotificationUser ); 
                 handleUserMeetingsOnLogin( currentUser, operatorBusinessName, loadMeetingsByMeetingId, saveMeeting, lastLoggedInUser );
-                CoursePackageRenewal( currentUser, sessions, autoRenewSessionPackages, loadSessions, loadUsers );
+                coursePackageRenewal( currentUser, sessions, autoRenewSessionPackages, loadSessions, loadUsers );
                 directUserNavigation( currentUser, operatorBusinessName );
               }
           }).catch( error => { 
@@ -168,7 +106,6 @@ async function getCurrentUser( email, password ){
       return error;
   });
 };
-
 
 function setUserSignUpOrLoginInPreferenceValue () {  
   setSignUpOrLoginInPreference( !signUpOrLoginPreference ); 
@@ -199,10 +136,6 @@ return ( <div className="LoginPage">
 };
 
 const mapDispatch = { 
-  setOperator,
-  setOperatorBusinessName,
-  encryptData,
-  decryptData,
   loginUser, 
   createUser, 
   loadUsers,

@@ -1,0 +1,100 @@
+
+  .editorTest {
+    width: 93vw;
+    max-height: 25vh;
+    height: 23vh;
+    text-align: left;
+    box-sizing: border-box;
+    cursor: text;
+    margin-left: 3em;
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: left;
+    background-color: #fff;
+  }
+  .editorTest :global(.public-DraftEditor-content) {
+    max-height: 1px;
+  }
+  .insertImageWrapper {
+    display: inline-block;
+  }
+  .insertImageButton {
+    background: #fbfbfb;
+    color: #888;
+    font-size: 18px;
+    border: 0;
+    padding-top: 5px;
+    vertical-align: bottom;
+    height: 34px;
+    width: 36px;
+  }
+  .insertImageButton:hover {
+    background: #f3f3f3;
+  }
+  .insertImageButton:focus {
+    background: #f3f3f3;
+  }
+  
+  .draftJsFocusPlugin__unfocused__1Wvrs:hover {
+    cursor: default;
+    box-shadow: 0 0 0 3px #d2e3f7;
+  }
+  
+  .draftJsFocusPlugin__focused__3Mksn {
+    cursor: default;
+    /* border-radius: 2px; */
+    box-shadow: 0 0 0 3px #accef7;
+  }
+  .toolbar-visible {
+    visibility: visible;
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 2s;
+    margin-left: 50px;
+  }
+  .toolbar-hidden {
+    opacity: 0;
+    animation-name: fadeOutOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-out;
+    animation-duration: 2s;
+    margin-left: 50px;
+  }
+  .toolbar-no-show {
+     visibility: hidden;
+  }
+
+  @keyframes spinBall {
+      100% {
+        transform: rotate(360deg);
+      }
+}
+
+/* .fade-in { // keep commented
+	opacity: 1;
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 2s;
+} */
+
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeOutOpacity {
+	0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

@@ -1,26 +1,9 @@
-import { 
-useState, 
-useEffect } from "react";
-
-import {
-useDispatch } from 'react-redux';
-
-import { 
-addTime,
-saveTime } from 'services/course/actions/countdowntimer';
-
-import { 
-role } from "services/course/helpers/PageHelpers";
-
-import {
-setItemInSessionStorage } from 'services/course/helpers/ServerHelper';
-
-import {
-elementMeta } from 'services/course/pages/QuestionsPage/helpers';
-
+import { useState } from "react";
+import { useDispatch } from 'react-redux';
+import { addTime, saveTime } from 'services/course/actions/countdowntimer';
+import { role } from "services/course/helpers/PageHelpers";
 import Countdown from "react-countdown";
 import Swal from 'sweetalert2';
-
 
 function useTimerHook( props ) {
     const dispatch = useDispatch();
@@ -28,16 +11,11 @@ function useTimerHook( props ) {
 
     let {
         currentUser, 
-        currentUserTimer,
-        editing,
         timer,
         formType, 
         formName, 
         formUuId,
-        formBuilderStatus,
-        previewMode,
         allTimers,
-        studentsCummulativePointsReceived
     } = props;
 
     const [ currentTimer, setCurrentUserTimer ] = useState( allTimers?.find( timer => timer?.formName === formName && timer?.userId === currentUser?._id ) );
@@ -96,14 +74,17 @@ function countDownTimer(){
     return <Countdown 
                 date={ Date.now() + testTime}
                 renderer={renderer}
-            />
-}
+            />;
+};
 
 return {
+    testStatus,
     countDown: () => countDownTimerTest,
     setAddTime,
     resetTimer,
-    saveTestTimer
+    saveTestTimer,
+    setCurrentUserTimer,
+    setCountDownTimerTest
 }; };
 
 export default useTimerHook;

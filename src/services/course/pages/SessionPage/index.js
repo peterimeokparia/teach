@@ -1,22 +1,9 @@
-import {
-useEffect } from 'react';
-
-import {
-connect } from 'react-redux';
-
-import { 
-loadSessions,
-saveSession } from 'services/course/actions/sessions';
-
-import {
-getSessionsByOperatorId } from 'services/course/selectors';
-
-import {
-Link } from '@reach/router';
-
-import {
-role } from 'services/course/helpers/PageHelpers';
-
+import { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { loadSessions, saveSession } from 'services/course/actions/sessions';
+import { getSessionsByOperatorId } from 'services/course/selectors';
+import { Link } from '@reach/router';
+import { role } from 'services/course/helpers/PageHelpers';
 import Roles from 'services/course/pages/components/Roles';
 import ListItem from 'services/course/pages/components/ListItem';
 import EditSessionComponent from './component/EditSessionComponent';
@@ -29,10 +16,11 @@ const SessionPage = ({
     saveSession,
     loadSessions,
     sessions }) => {
+    let updateSessions = sessions?.length === 0;
 
     useEffect(() => {
         loadSessions();
-    }, [ sessions?.length === 0]);
+    }, [ updateSessions, loadSessions]);
 
 function onMatchListItem( match, listItem ) {
     if ( match ){
@@ -42,7 +30,6 @@ function onMatchListItem( match, listItem ) {
 return (    
     <div className="session">    
         {( sessions ) && <ListItem
-                            // collection={Object.values(sessions?.filter(session => session?.userId === studentId && session?.courseId === courseId))}
                             collection={sessions?.filter(session => session?.userId === studentId && session?.courseId === courseId)}
                             onMatchListItem={onMatchListItem}
                             path={"student"}
@@ -113,7 +100,6 @@ const mapState = (state, ownProps)  => {
     currentUser: state?.users?.user,
     sessions: getSessionsByOperatorId(state, ownProps),
     lesson: state?.lessons?.lessons[ownProps?.courseId]
-    // lesson: state?.lessons?.lessons[ownProps.lessonId]
     };
 };
 

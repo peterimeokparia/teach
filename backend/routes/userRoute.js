@@ -15,6 +15,7 @@ import userModel from '../model/userModel.js';
 
 import { 
 verifyRoute,
+generateSignOnCredentialToken,
 logRouteInfo,
 paginatedResults } from '../middleWare/index.js';
 
@@ -88,6 +89,7 @@ userRoute.post('/', (req, res) => {
   });
 });
 
+userRoute.use(generateSignOnCredentialToken);
 userRoute.post('/register', async (req, res) => {
   let userData = getPostData( req ); 
 
@@ -127,6 +129,7 @@ userRoute.get('/pagedRoute', paginatedResults( userModel, 'userId' ), (req, res)
   res.json(res?.paginatedResults);
 });
 
+userRoute.use(generateSignOnCredentialToken);
 userRoute.put('/reset/:userId', async (req, res) => {
    resetUserPassword(req, res, userModel, req.params.userId)
     .then( data => {
@@ -138,6 +141,7 @@ userRoute.put('/reset/:userId', async (req, res) => {
     });
 });
 
+userRoute.use(generateSignOnCredentialToken);
 userRoute.put('/login/:userId', async (req, res) => {
    saveUpdateUserOnLogin(req, res, userModel, req.params.userId)
     .then( data => {

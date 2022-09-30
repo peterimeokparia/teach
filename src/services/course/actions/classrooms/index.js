@@ -3,7 +3,7 @@ add,
 update,
 remove,
 get,
-updateUser } from 'services/course/api';
+updateUser } from 'services/course/api/index.js';
 
 export const RESET_CLASSROOM_USER_ERROR = "RESET CLASSROOM USER ERROR";
 export const ADD_CLASSROOM_BEGIN = "ADD CLASSROOM BEGIN";
@@ -87,7 +87,7 @@ export const unSubscribe = ( currentUser, itemId ) => {
 
 export const enableTeachPlatform = ( meeting ) => {
     return dispatch => {
-        dispatch( { type: ENABLE_TEACH_PLATFORM , payload: meeting });
+        dispatch( { type: ENABLE_TEACH_PLATFORM, payload: meeting });
     };
 };
 

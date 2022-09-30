@@ -1,9 +1,5 @@
-import {
-updateTimeLineItems } from 'services/course/middleware/events/helpers';
-
-import {
-automateEventCreation } from 'services/course/pages/CalendarPage/helpers/events';
-
+import { updateTimeLineItems } from 'services/course/middleware/events/helpers';
+import { automateEventCreation } from 'services/course/pages/CalendarPage/helpers/events';
 import moment from "moment";
 
 let nonRecurringEvent = {

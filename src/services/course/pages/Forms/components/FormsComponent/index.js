@@ -1,56 +1,24 @@
-import { 
-useEffect, 
-useRef, 
-useState } from 'react';
-
-import { 
-connect } from 'react-redux';
-
-import { 
-navigate } from '@reach/router';
-
-import { 
-loadFormBuilders,
-saveFormBuilder,
-deleteFormBuilder } from 'services/course/actions/formbuilders';
-
-import { 
-getUsersByOperatorId } from 'services/course/selectors';
-
-import { 
-forceReload } from 'services/course/helpers/ServerHelper';
-
-import {
-elementMeta } from 'services/course/pages/QuestionsPage/helpers';
-
-import { 
-role,
-roleTypeCollection } from 'services/course/helpers/PageHelpers';
-
+import { useEffect, useRef, useState } from 'react';
+import { connect } from 'react-redux';
+import { navigate } from '@reach/router';
+import { loadFormBuilders, saveFormBuilder, deleteFormBuilder } from 'services/course/actions/formbuilders';
+import { forceReload } from 'services/course/helpers/ServerHelper';
+import { elementMeta } from 'services/course/pages/QuestionsPage/helpers';
+import { role, roleTypeCollection } from 'services/course/helpers/PageHelpers';
 import Roles from 'services/course/pages/components/Roles';
-import Loading from 'services/course/pages/components/Loading';
-import NavLinks from 'services/course/pages/components/NavLinks';
 import Swal from 'sweetalert2';
-import MiniSideBarMenu from 'services/course/pages/components/SubscriptionComponent/MiniSideBarMenu';
-import UnsubscribeIcon from '@material-ui/icons/Unsubscribe';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import Select from 'react-select';
 import './style.css';
 
 const FormsComponent = ({
     operatorBusinessName,
-    selectedTutorId,
     user,
-    users, 
     forms,
-    formBuildersLoading,
-    onFormBuildersLoadingError,
     loadFormBuilders,
     saveFormBuilder, 
     deleteFormBuilder,
-    unSubscribeFromCourse,
     setSelectedForm }) => {
     const inputRef = useRef();
     const [ editing, setEditing ] = useState(false);
@@ -59,7 +27,6 @@ const FormsComponent = ({
     const [ deleting, setDelete ] = useState(false);
 
     useEffect(() => {
-
         loadFormBuilders();
 
         if ( editing ) {
@@ -69,8 +36,7 @@ const FormsComponent = ({
         if ( deleting ) {
             setDelete(false);
         }
-
-    }, [ editing, deleting  ]);
+    }, [ editing, deleting, loadFormBuilders  ]);
 
     const beginEditing = ( selectedForm ) => {
         setForm( selectedForm );
@@ -98,7 +64,6 @@ const FormsComponent = ({
     const roleTypeOption = ( roleTypes ) => roleTypes?.map( item => ( { value: item,  label: item } ) );
 
     const performDelete = ( form ) => {
-        
         performValidation('Delete ?', 'warning', "You are about to delete:", form?.formDisplayName )
         .then( (response) => {
             if ( response?.value ) {
@@ -127,9 +92,8 @@ function performValidation( title, icon, htmlTitle, itemName ) {
 }
 
 function navigateToSelectedForm(selectValue){
-    
    if ( !setSelectedForm && selectValue?.createdBy === user?._id ) {
-        navigate(`/${operatorBusinessName}/formEventBuilder/${selectValue?.formType}/${selectValue?.formName}/${selectValue?.formUuId}/${selectValue?.userId}/${elementMeta.state.Manage}/000`)
+        navigate(`/${operatorBusinessName}/formEventBuilder/${selectValue?.formType}/${selectValue?.formName}/${selectValue?.formUuId}/${selectValue?.userId}/${elementMeta.state.Manage}/000`);
         return;
    }
 
@@ -203,10 +167,7 @@ return  editing
 
 const mapState = ( state, ownProps) => ({
     user: state?.users?.user,
-    users: getUsersByOperatorId(state, ownProps),
-    onSaveError: null,
-    formBuildersLoading: state?.formBuilders?.formBuilders,
-    onFormBuildersLoadingError: state?.formBuilders?.onFormBuildersLoadingError
+    onSaveError: null
 });
 
 export default connect(mapState, { loadFormBuilders, saveFormBuilder, deleteFormBuilder } )(FormsComponent);

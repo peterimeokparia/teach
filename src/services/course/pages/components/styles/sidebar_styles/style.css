@@ -1,0 +1,44 @@
+.sidebar_list::-webkit-scrollbar  {
+    display: none;
+    overflow-y: none;
+}
+.sidebar_list {
+    height: 95vh;
+    width: 31.5vh;
+    padding: 5px;
+    margin-top: -10%;
+    list-style: none;
+    -ms-overflow-style: none;  
+    scrollbar-width: none; 
+    overflow-y: scroll; 
+}
+.sidebar_list .sidebar_list_body {
+    padding: 10px;
+    padding-top: 25px;
+    margin-top: 45px;
+    height: 220px;
+    vertical-align: middle;
+    transform: perspective(1px) translateZ(0);
+    transition-duration: 0.5s;
+    height: 230px;
+    transform: perspective(1px) translateZ(0);
+    transition-duration: 0.5s; 
+} 
+.sidebar_list .sidebar_list_body .lessonMultiColor {
+    text-transform: capitalize;
+    background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 1px 1px black;
+}
+.sidebar_list .sidebar_list_body .sidebar_list_body_items {
+    padding-top: 10px;
+    color: white;
+    border-radius: 3px;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.5rem;
+}

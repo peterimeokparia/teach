@@ -1,0 +1,871 @@
+.OnlineListItems{
+  height: auto;
+  min-height: 50vh;
+  width: 100.5%;
+  background-color: white;
+  padding-bottom: 10px;
+  font-family: 'ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji !important';
+  color: black;
+  text-rendering: optimizeLegibility;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #212529;
+  text-align: left;
+  background-color: #fff;
+  display: flex; 
+  flex-direction: column;
+}
+.OnlineListItems .sideburgerMenu{
+  padding-left: -505px;
+  margin-bottom: -300px;
+}
+.OnlineListItems .input{
+  margin-left: 0%;
+}
+.OnlineListItems .editor{
+  margin-left: 0%;
+}
+.OnlineListItems .editor-taking{
+  margin-left: 0%;
+  margin-top: 100px;
+}
+.OnlineListItems video {
+ border-width: 1px;
+ margin-right: 100%;
+ border-radius: 2em;
+ width: 700px;
+ padding-left: 0px;
+}
+/* Grow */
+.OnlineListItems .question-card-top-right {
+  margin-left: 90%; 
+}
+.OnlineListItems .mainvVideoSection-recordingStopped {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  margin-bottom: -50%;
+}
+.OnlineListItems .mainVideoSection-recording {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transform: scale(1.9);
+  transform: scale(1.9);
+  top: 20%;
+  margin-top: -11%;
+  margin-left: 20%; 
+}
+.mainVideoSection-recordingNotVisible {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+.mainvVideoSection-recordingStopped {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    margin-bottom: -50%;
+  }
+  .mainVideoSection-recording {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transform: scale(1.9);
+    transform: scale(1.9);
+    top: 30%;
+    margin-top: 5%;
+    margin-left: 45%; 
+  }
+  .OnlineListItems .mainVideoSection-recordingNotVisible {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  .OnlineListItems .videoSection--- {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    height: 10px;
+    width: 10px
+  }
+  .videoPlayer {
+    visibility: hidden;
+    border: 0px solid #999;
+    width: 0%;
+    max-width: 0px; 
+    width: 0px;
+    height: 0px;
+    max-width: 700px;
+    max-height: 500px;
+    margin-right: -100%;
+}
+.form-builder-btn, .input-field-builder-btn {
+  font-size: 10px;
+  cursor: pointer;
+  padding-left: 30px;
+  margin-top: 15px;
+  padding-right: 30px;
+  margin-left: 25px;
+  box-shadow: 10px 10px;
+  border-radius: 20%;
+  transition: all 0.2s;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+}
+.form-builder-btn {
+  color: #ab47bc;
+  margin-bottom: 10px;
+}
+.input-field-builder-btn {
+    color: #ec407a;
+    margin-bottom: 20px;
+}
+.form-builder-btn:hover, .form-builder-btn:focus, .form-builder-btn:active {
+  -webkit-transform: scale(0.8);
+  transform: scale(0.8);
+  -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+  transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+}
+.input-field-builder-btn:hover, .input-field-builder-btn:focus, .input-field-builder-btn:active {
+  -webkit-transform: scale(0.8);
+  transform: scale(0.8);
+  -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+  transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+}
+.input-field-builder-selector {
+  background-color: #673ab7;
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  text-align: center;
+  margin-top: 55px;
+  font-size: xx-large;
+  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+}
+.input-field-builder-selector-content .top {
+  padding-bottom: 10px;
+}
+.userBio {
+    margin-top: 30px;
+}
+.addAnswerFieldCollection {
+    margin-top: 30px;
+}
+.moreInfo .popup {
+  visibility: visible;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  }
+  /* The actual popup */
+  .moreInfo .popup .popuptext {
+    visibility: hidden;
+    width: 360px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+  }
+  /* Popup arrow */
+  .moreInfo .popup .popuptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+  }
+  .moreInfo .popup .popuptext {
+    visibility: visible;
+  }
+  .moreInfo .popup .popuptext-hidden {
+    visibility: hidden;
+    width: 360px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+  }
+  .show {
+    visibility: visible;
+  }
+  .hide {
+    visibility: hidden;
+  }
+  .videoComponents .video {
+    margin-left: 0px;
+    border-radius: 2em;
+  }
+
+  .builder .content .listItem ol {
+    list-style: none;
+    counter-reset:li; /* Initiate a counter */
+    margin-left:0; /* Remove the default left margin */
+    padding-left:0; /* Remove the default left padding */
+  }
+  .builder .content .listItem ol > li { 
+    position:relative; /* Create a positioning context */
+    margin:0 0 6px 2em; /* Give each list item a left margin to make room for the numbers */
+    padding:4px 58px; /* Add some spacing around the content */
+    list-style:none; /* Disable the normal item numbering */
+    border-top:2px solid #666;
+    background:#f6f6f6;
+  }
+  .builder .content .listItem ol > li:before {
+    content:counter(li); /* Use the counter as content */
+	  counter-increment:li; /* Increment the counter by 1 */
+	/* Position and style the number */
+    position:absolute;
+    top: 3.5px;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    box-sizing:border-box;
+    width:3em;
+	/* Some space between the number and the content in browsers that support
+	   generated content but not positioning it (Camino 2 is one example) */
+    margin-right:8px;
+    padding:4px;
+    border-top:2px solid black;
+    color: black;
+    background:#d2e3f7;
+    /* background:#87ceeb; */
+    font-size: 20px; 
+    font-weight:bold;
+    font-family:"Helvetica Neue", Arial, sans-serif;
+    text-align:center;
+  } 
+  li ol, li ul {margin-top:6px;} ol ol li:last-child {margin-bottom:0;}
+  .builder .content .listItem .lessons {
+    list-style: none;
+  }
+  .builder .content .listItem .lessons .editor-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 4px;
+    position: relative;
+    text-decoration: none;
+    margin-left: 220px;
+  }
+  .builder .content .listItem .lessons .taking .editor-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  @media only screen and (min-width: 638px) { 
+    .OnlineListItems {
+      height: auto;
+      min-height: 1vh;
+      background-color: white;
+      font-family: 'ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji !important';
+      color: black;
+      text-rendering: optimizeLegibility;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: #212529;
+      text-align: left;
+      background-color: #fff;
+      display: flex; 
+      flex-direction: column;
+    }
+    .OnlineListItems ol {
+      font-size: 1.5rem;
+    }
+    .builder .content .listItem ol {
+      list-style: none;
+      counter-reset:li; /* Initiate a counter */
+      margin-left:0; /* Remove the default left margin */
+      padding-left:0; /* Remove the default left padding */
+    }
+    .builder .content .listItem ol > li { 
+      position:relative; /* Create a positioning context */
+      margin:0 0 6px 2em; /* Give each list item a left margin to make room for the numbers */
+      padding:4px 58px; /* Add some spacing around the content */
+      list-style:none; /* Disable the normal item numbering */
+      border-top:2px solid #666;
+      background:#f6f6f6;
+    }
+    .builder .content .listItem ol > li:before {
+      content:counter(li); /* Use the counter as content */
+      counter-increment:li; /* Increment the counter by 1 */
+    /* Position and style the number */
+      position:absolute;
+      top: 3.5px;
+      -moz-box-sizing:border-box;
+      -webkit-box-sizing:border-box;
+      box-sizing:border-box;
+      width:3em;
+    /* Some space between the number and the content in browsers that support
+       generated content but not positioning it (Camino 2 is one example) */
+      margin-right:8px;
+      padding:4px;
+      border-top:2px solid black;
+      color: black;
+      background:#d2e3f7;
+      font-size: 20px; 
+      font-weight:bold;
+      font-family:"Helvetica Neue", Arial, sans-serif;
+      text-align:center;
+    } 
+    li ol, li ul {margin-top:6px;} ol ol li:last-child {margin-bottom:0;}
+    .builder .content .listItem .lessons {
+      list-style: none;
+    }
+    .builder .content .listItem .lessons .editor-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 4px;
+      position: relative;
+      text-decoration: none;
+    }
+    .builder .content .listItem .lessons .taking .editor-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  @media (min-width: 1281px) {
+    /* CSS */
+    .OnlineListItems {
+      height: auto;
+      min-height: 1vh;
+      background-color: white;
+      font-family: 'ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji !important';
+      color: black;
+      text-rendering: optimizeLegibility;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: #212529;
+      text-align: left;
+      background-color: #fff;
+      display: flex; 
+      flex-direction: column;
+    }
+
+    .OnlineListItems ol {
+      font-size: 1.5rem;
+    }
+
+    .builder .content .listItem ol {
+      list-style: none;
+      counter-reset:li; /* Initiate a counter */
+      margin-left:0; /* Remove the default left margin */
+      padding-left:0; /* Remove the default left padding */
+    }
+    .builder .content .listItem ol > li { 
+      position:relative; /* Create a positioning context */
+      margin:0 0 6px 2em; /* Give each list item a left margin to make room for the numbers */
+      padding:4px 58px; /* Add some spacing around the content */
+      list-style:none; /* Disable the normal item numbering */
+      border-top:2px solid #666;
+      background:#f6f6f6;
+    }
+    .builder .content .listItem ol > li:before {
+      content:counter(li); /* Use the counter as content */
+      counter-increment:li; /* Increment the counter by 1 */
+      position:absolute;
+      top: 3.5px;
+      -moz-box-sizing:border-box;
+      -webkit-box-sizing:border-box;
+      box-sizing:border-box;
+      width:3em;
+      margin-right:8px;
+      padding:4px;
+      border-top:2px solid black;
+      color: black;
+      background:#d2e3f7;
+      font-size: 20px; 
+      font-weight:bold;
+      font-family:"Helvetica Neue", Arial, sans-serif;
+      text-align:center;
+    } 
+    li ol, li ul {margin-top:6px;} ol ol li:last-child {margin-bottom:0;}
+    .builder .content .listItem .lessons {
+      list-style: none;
+    }
+    .builder .content .listItem .lessons .editor-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 4px;
+      position: relative;
+      text-decoration: none;
+    }
+    .builder .content .listItem .lessons .taking .editor-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    } 
+  }
+  /* 
+    ##Device = Laptops, Desktops
+    ##Screen = B/w 1025px to 1280px
+  */
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    /* CSS */
+    .OnlineListItems {
+      height: auto;
+      min-height: 1vh;
+      background-color: white;
+      font-family: 'ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji !important';
+      color: black;
+      text-rendering: optimizeLegibility;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: #212529;
+      text-align: left;
+      background-color: #fff;
+      display: flex; 
+      flex-direction: column;
+    }
+    .OnlineListItems ol {
+      font-size: 1.5rem;
+    }
+    .builder .content .listItem ol {
+      list-style: none;
+      counter-reset:li; /* Initiate a counter */
+      margin-left:0; /* Remove the default left margin */
+      padding-left:0; /* Remove the default left padding */
+    }
+    .builder .content .listItem ol > li { 
+      position:relative; /* Create a positioning context */
+      margin:0 0 6px 2em; /* Give each list item a left margin to make room for the numbers */
+      padding:4px 58px; /* Add some spacing around the content */
+      list-style:none; /* Disable the normal item numbering */
+      border-top:2px solid #666;
+      background:#f6f6f6;
+    }
+    .builder .content .listItem ol > li:before {
+      content:counter(li); /* Use the counter as content */
+      counter-increment:li; /* Increment the counter by 1 */
+      position:absolute;
+      top: 3.5px;
+      -moz-box-sizing:border-box;
+      -webkit-box-sizing:border-box;
+      box-sizing:border-box;
+      width:3em;
+      margin-right:8px;
+      padding:4px;
+      border-top:2px solid black;
+      color: black;
+      background:#d2e3f7;
+      font-size: 20px; 
+      font-weight:bold;
+      font-family:"Helvetica Neue", Arial, sans-serif;
+      text-align:center;
+    } 
+    li ol, li ul {margin-top:6px;} ol ol li:last-child {margin-bottom:0;}
+    .builder .content .listItem .lessons {
+      list-style: none;
+    }
+    .builder .content .listItem .lessons .editor-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 4px;
+      position: relative;
+      text-decoration: none;
+    }
+    .builder .content .listItem .lessons .taking .editor-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  /* 
+    ##Device = Tablets, Ipads (portrait)
+    ##Screen = B/w 768px to 1024px
+  */
+  @media (min-width: 768px) and (max-width: 1024px) {
+    /* CSS */
+    .OnlineListItems {
+      height: auto;
+      min-height: 1vh;
+      background-color: white;
+      font-family: 'ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji !important';
+      color: black;
+      text-rendering: optimizeLegibility;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: #212529;
+      text-align: left;
+      background-color: #fff;
+      display: flex; 
+      flex-direction: column;
+    }
+    .OnlineListItems ol {
+      font-size: 1.5rem;
+    }
+    .videoComponents {
+      margin-left: -55%;
+    }
+    .builder .content .listItem ol {
+      list-style: none;
+      counter-reset:li; /* Initiate a counter */
+      margin-left:0; /* Remove the default left margin */
+      padding-left:0; /* Remove the default left padding */
+    }
+    .builder .content .listItem ol > li { 
+      position:relative; /* Create a positioning context */
+      margin:0 0 6px 2em; /* Give each list item a left margin to make room for the numbers */
+      padding:4px 58px; /* Add some spacing around the content */
+      list-style:none; /* Disable the normal item numbering */
+      border-top:2px solid #666;
+      background:#f6f6f6;
+    }
+    .builder .content .listItem ol > li:before {
+      content:counter(li); /* Use the counter as content */
+      counter-increment:li; /* Increment the counter by 1 */
+    /* Position and style the number */
+      position:absolute;
+      top: 3.5px;
+      -moz-box-sizing:border-box;
+      -webkit-box-sizing:border-box;
+      box-sizing:border-box;
+      width:3em;
+      margin-right:8px;
+      padding:4px;
+      border-top:2px solid black;
+      color: black;
+      background:#d2e3f7;
+      font-size: 20px; 
+      font-weight:bold;
+      font-family:"Helvetica Neue", Arial, sans-serif;
+      text-align:center;
+    } 
+    li ol, li ul {margin-top:6px;} ol ol li:last-child {margin-bottom:0;}
+    .builder .content .listItem .lessons {
+      list-style: none;
+    }
+    .builder .content .listItem .lessons .editor-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 4px;
+      position: relative;
+      text-decoration: none;
+    }
+    .builder .content .listItem .lessons .editor-header::before {
+      display: flex;
+      align-items: right;
+      justify-content: right;
+      content: "";
+      position: absolute;
+      top: 100%;
+      width: 45%;
+      left: 0;
+      height: 5px;
+      border-radius: 2px;
+      background: linear-gradient(111.3deg, #9c27b0 9.6%, #00bcd4 93.6%);
+    }
+    .builder .content .listItem .lessons .taking .editor-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  /* 
+    ##Device = Tablets, Ipads (landscape)
+    ##Screen = B/w 768px to 1024px
+  */
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    /* CSS */
+    .OnlineListItems {
+      height: auto;
+      min-height: 1vh;
+      background-color: white;
+      font-family: 'ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji !important';
+      color: black;
+      text-rendering: optimizeLegibility;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: #212529;
+      text-align: left;
+      background-color: #fff;
+      display: flex; 
+      flex-direction: column;
+    }
+
+    .OnlineListItems ol {
+      font-size: 1.5rem;
+    }
+    
+    .videoComponents {
+      margin-left: -55%;
+    }
+
+    .builder .content .listItem ol {
+      list-style: none;
+      counter-reset:li; /* Initiate a counter */
+      margin-left:0; /* Remove the default left margin */
+      padding-left:0; /* Remove the default left padding */
+    }
+    .builder .content .listItem ol > li { 
+      position:relative; /* Create a positioning context */
+      margin:0 0 6px 2em; /* Give each list item a left margin to make room for the numbers */
+      padding:4px 58px; /* Add some spacing around the content */
+      list-style:none; /* Disable the normal item numbering */
+      border-top:2px solid #666;
+      background:#f6f6f6;
+    }
+    .builder .content .listItem ol > li:before {
+      content:counter(li); /* Use the counter as content */
+      counter-increment:li; /* Increment the counter by 1 */
+      position:absolute;
+      top: 3.5px;
+      -moz-box-sizing:border-box;
+      -webkit-box-sizing:border-box;
+      box-sizing:border-box;
+      width:3em;
+      margin-right:8px;
+      padding:4px;
+      border-top:2px solid black;
+      color: black;
+      background:#d2e3f7;
+      font-size: 20px; 
+      font-weight:bold;
+      font-family:"Helvetica Neue", Arial, sans-serif;
+      text-align:center;
+    } 
+    li ol, li ul {margin-top:6px;} ol ol li:last-child {margin-bottom:0;}
+    .builder .content .listItem .lessons {
+      list-style: none;
+    }
+    .builder .content .listItem .lessons .editor-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 4px;
+      position: relative;
+      text-decoration: none;
+    }
+    .builder .content .listItem .lessons .taking .editor-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  /* 
+    ##Device = Low Resolution Tablets, Mobiles (Landscape)
+    ##Screen = B/w 481px to 767px
+  */
+  
+  @media (min-width: 481px) and (max-width: 767px) {    
+    /* CSS */
+    .videoComponents {
+      margin-left: -25%;
+    }
+    .OnlineListItems{
+      height: auto;
+      min-height: 50vh;
+      background-color: white;
+      padding-bottom: 10px;
+      font-family: 'ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji !important';
+      color: black;
+      text-rendering: optimizeLegibility;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: #212529;
+      text-align: left;
+      background-color: #fff;
+      display: flex; 
+      flex-direction: column;
+    }
+   .OnlineListItems .question-card-top-right {
+      margin-left: 90%; 
+    }
+    .builder .content .listItem ol {
+      list-style: none;
+      counter-reset:li; /* Initiate a counter */
+      margin-left:0; /* Remove the default left margin */
+      padding-left:0; /* Remove the default left padding */
+    }
+    .builder .content .listItem ol > li { 
+      position:relative; /* Create a positioning context */
+      margin:0 0 6px 2em; /* Give each list item a left margin to make room for the numbers */
+      padding:4px 58px; /* Add some spacing around the content */
+      list-style:none; /* Disable the normal item numbering */
+      border-top:2px solid #666;
+      background:#f6f6f6;
+    }
+    .builder .content .listItem ol > li:before {
+      content:counter(li); /* Use the counter as content */
+      counter-increment:li; /* Increment the counter by 1 */
+    /* Position and style the number */
+      position:absolute;
+      top: 3.5px;
+      -moz-box-sizing:border-box;
+      -webkit-box-sizing:border-box;
+      box-sizing:border-box;
+      width:3em;
+    /* Some space between the number and the content in browsers that support
+       generated content but not positioning it (Camino 2 is one example) */
+      margin-right:8px;
+      padding:4px;
+      border-top:2px solid black;
+      color: black;
+      background:#d2e3f7;
+      font-size: 20px; 
+      font-weight:bold;
+      font-family:"Helvetica Neue", Arial, sans-serif;
+      text-align:center;
+    } 
+    li ol, li ul {margin-top:6px;} ol ol li:last-child {margin-bottom:0;}
+    .builder .content .listItem .lessons {
+      list-style: none;
+    }
+  }
+  /* 
+    ##Device = Most of the Smartphones Mobiles (Portrait)
+    ##Screen = B/w 320px to 479px
+  */
+  @media (min-width: 320px) and (max-width: 480px) {
+    /* CSS */
+    .OnlineListItems {
+      height: auto;
+      min-height: 1vh;
+      background-color: white;
+      font-family: 'ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji !important';
+      color: black;
+      text-rendering: optimizeLegibility;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: #212529;
+      text-align: left;
+      background-color: #fff;
+      display: flex; 
+      flex-direction: column;
+    }
+
+    .OnlineListItems ol {
+      font-size: 1.5rem;
+    }
+    .videoComponents {
+      margin-left: -43%;
+    }
+    .OnlineListItems video {
+      border-width: 1px;
+      margin-right: 100%;
+      border-radius: 2em;
+      width: 360px;
+      padding-left: 0px;
+     }
+
+     .builder .content .listItem ol {
+      list-style: none;
+      counter-reset:li; /* Initiate a counter */
+      margin-left:0; /* Remove the default left margin */
+      padding-left:0; /* Remove the default left padding */
+    }
+    .builder .content .listItem ol > li { 
+      position:relative; /* Create a positioning context */
+      margin:0 0 6px 2em; /* Give each list item a left margin to make room for the numbers */
+      padding:4px 58px; /* Add some spacing around the content */
+      list-style:none; /* Disable the normal item numbering */
+      border-top:2px solid #666;
+      background:#f6f6f6;
+    }
+    .builder .content .listItem ol > li:before {
+      content:counter(li); /* Use the counter as content */
+      counter-increment:li; /* Increment the counter by 1 */
+    /* Position and style the number */
+      position:absolute;
+      top: 3.5px;
+      -moz-box-sizing:border-box;
+      -webkit-box-sizing:border-box;
+      box-sizing:border-box;
+      width:3em;
+    /* Some space between the number and the content in browsers that support
+       generated content but not positioning it (Camino 2 is one example) */
+      margin-right:8px;
+      padding:4px;
+      border-top:2px solid black;
+      color: black;
+      background:#d2e3f7;
+      font-size: 20px; 
+      font-weight:bold;
+      font-family:"Helvetica Neue", Arial, sans-serif;
+      text-align:center;
+    } 
+    li ol, li ul {margin-top:6px;} ol ol li:last-child {margin-bottom:0;}
+    .builder .content .listItem .lessons {
+      list-style: none;
+    }
+  }
+

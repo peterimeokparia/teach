@@ -1,0 +1,40 @@
+/* https://stackoverflow.com/questions/16670931/hide-scroll-bar-but-while-still-being-able-to-scroll */
+.equations {
+    font: normal 1.11em KaTeX_Main,Times New Roman,serif;
+    font-family: KaTeX_Main, Times New Roman, serif;
+    height: 70vh;
+    width: 30.5vw;
+    background: #87ceeb;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border: black;
+    border-style: solid;
+    border-radius: 5px;
+
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+.equations::-webkit-scrollbar  {
+    display: none;
+}
+.equations .basic-editor {
+    font: normal 1.11em KaTeX_Main,Times New Roman,serif;
+    font-family: KaTeX_Main, Times New Roman, serif;
+    width: 30vw;
+    max-width: 95vw;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: left;
+    border-radius: 25px;
+    border-style: solid;
+    border-width: 3px;
+    box-shadow: 0 0 0 5px #d2e3f7;
+    margin-bottom: 10px;
+    list-style: none;
+    background: white;
+    padding: 10px 5px 15px 20px;
+}
+.equations h5 {
+    text-align: center;
+}

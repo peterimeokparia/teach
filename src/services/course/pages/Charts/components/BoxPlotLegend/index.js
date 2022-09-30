@@ -1,12 +1,8 @@
-import {
-React} from 'react';
-
-import { 
-connect } from 'react-redux';
+import { React} from 'react';
+import { connect } from 'react-redux';
 import './style.css';
 
 const BoxPlotLegend = ({ data }) => {
-
   if ( ! data) {
     return<div></div>;
   }

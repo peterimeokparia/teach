@@ -14,7 +14,6 @@ SAVE_QUESTION_ERROR,
 RESET_QUESTION_ERROR, 
 DELETE_QUESTION_SUCCESS, 
 SET_QUESTION_MARKDOWN,
-SET_EXPLANATION_ANSWER_MARKDOWN,
 SET_MARKDOWN_EDITOR  } from '../../actions/questions';
 
 const initialState = {
@@ -67,11 +66,6 @@ const reducer = produce((draft, action) => {
              draft.questionsLoading = false;
         return; 
         case SET_QUESTION_MARKDOWN:
-             if ( draft.questions[action.payload.teachObject?._id] ) {
-                draft.questions[action.payload.teachObject?._id].markDownContent = action.payload.markDownContent; 
-             }    
-        return;
-        case SET_EXPLANATION_ANSWER_MARKDOWN:
              if ( draft.questions[action.payload.teachObject?._id] ) {
                 draft.questions[action.payload.teachObject?._id].markDownContent = action.payload.markDownContent; 
              }    

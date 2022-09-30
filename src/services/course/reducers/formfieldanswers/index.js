@@ -1,5 +1,7 @@
 import produce from 'immer';
 
+import { saveEditorMarkDownContent } from 'services/course/reducers/helpers/editor';
+
 import { 
 ADD_FORMFIELDANSWERS_BEGIN,
 ADD_FORMFIELDANSWERS_SUCCESS,            
@@ -16,13 +18,20 @@ DELETE_FORMFIELDANSWERS_SUCCESS,
 DELETE_FORMFIELDANSWERS_ERROR, 
 SET_FORMFIELDANSWERS_MARKDOWN,
 STUDENTS_TOTAL_ANSWER_POINTS,
-SAVE_FORMFIELDANSWERS_WITH_POINTS_SUCCESS } from 'services/course/actions/formfieldanswers';
+SAVE_FORMFIELDANSWERS_SUCCESS_SKIP_MW,
+SAVE_FORMFIELDANSWERS_WITH_POINTS_SUCCESS,
+SAVE_FORMFIELD_DRAGGABLE_ANSWERS_POINTS_BEFORE_MOVE,
+SAVE_FORMFIELD_DRAGGABLE_ANSWERS_POINTS_AFTER_MOVE,
+SAVE_DRAGGABLE_ANSWER } from 'services/course/actions/formfieldanswers';
 
 const initialState = {
     formFieldAnswers: {},
+    draggableFormFieldAnswers: [],
     latestFormFieldAnswers:{},
     formFieldExplanationAnswers:{},
     studentsCummulativePointsRecieved:{},
+    draggaleAnswerPointsBeforeMove: {},
+    draggaleAnswerPointsAfterMove: {},
     saveInProgress: false,
     onSaveError: null,
     formFieldAnswersLoading: false,
@@ -39,6 +48,7 @@ const reducer = produce((draft, action) => {
         return;
         case ADD_FORMFIELDANSWERS_SUCCESS:
         case SAVE_FORMFIELDANSWERS_SUCCESS:    
+        case SAVE_FORMFIELDANSWERS_SUCCESS_SKIP_MW:
         case SAVE_FORMFIELDANSWERS_WITH_POINTS_SUCCESS:
              draft.formFieldAnswers[action.payload._id] = action.payload; 
              draft.saveInProgress = false;
@@ -66,13 +76,17 @@ const reducer = produce((draft, action) => {
              draft.formFieldAnswersLoading = false;
         return; 
         case SET_FORMFIELDANSWERS_MARKDOWN:
-             if ( draft.formFieldAnswers[action.payload.teachObject?._id] ) {
-                draft.formFieldAnswers[action.payload.teachObject?._id].markDownContent = action.payload.markDownContent; 
-             }    
+             saveEditorMarkDownContent( draft.formFieldAnswers, action );
         return;
         case STUDENTS_TOTAL_ANSWER_POINTS:
-             draft.studentsCummulativePointsRecieved[ action.payload?.userId ] = action.payload
+             draft.studentsCummulativePointsRecieved[ action.payload?.userId ] = action.payload;
         return;
+        case SAVE_FORMFIELD_DRAGGABLE_ANSWERS_POINTS_BEFORE_MOVE:
+          draft.draggaleAnswerPointsBeforeMove = action.payload;
+        return;
+        case SAVE_FORMFIELD_DRAGGABLE_ANSWERS_POINTS_AFTER_MOVE:
+             draft.draggaleAnswerPointsAfterMove[ action.payload?.formUuId ][  action.payload?.userId  ] = action.payload.points;
+     return;
         case RESET_FORMFIELDANSWERS_ERROR:
              draft.onSaveError = null;
        return; 
@@ -82,7 +96,22 @@ const reducer = produce((draft, action) => {
        case DELETE_FORMFIELDANSWERS_ERROR:
              draft.onFormFieldAnswersLoadingError = action.error;
              draft.formFieldAnswersLoading = false;
-        return;     
+        return; 
+        case SAVE_DRAGGABLE_ANSWER:  
+          let temp = [ ...draft?.draggableFormFieldAnswers ];
+          let existingCopy = temp?.find( item => item?._id === action.payload?._id );
+
+          if ( existingCopy ) {
+               let copyIndex = temp?.findIndex( item => item?._id === action.payload?._id );
+
+          if ( copyIndex >= 0 ) {
+               temp.splice( copyIndex, 1, action.payload );
+          }
+          } else {
+               temp = [ ...temp, action.payload ];
+          }
+          draft.draggableFormFieldAnswers = temp;
+       return;    
        default:
     return;
 

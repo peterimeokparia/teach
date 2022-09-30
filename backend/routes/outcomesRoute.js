@@ -20,7 +20,15 @@ outcomesRoute.get('/', getRoute( outcomesModel ),  (req, res) => {
     return res.status(200).json(res?.newResult);
 });
 
+outcomesRoute.get('/', getByObjectIdRoute( outcomesModel, 'outcomeId' ),  (req, res) => {
+    return res.status(200).json(res?.newResult);
+});
+
 outcomesRoute.get('/', getByIdRoute( outcomesModel, 'parentId' ),  (req, res) => {
+    return res.status(200).json(res?.newResult);
+});
+
+outcomesRoute.get('/', getByIdRoute( outcomesModel, 'lessonId' ),  (req, res) => {
     return res.status(200).json(res?.newResult);
 });
 

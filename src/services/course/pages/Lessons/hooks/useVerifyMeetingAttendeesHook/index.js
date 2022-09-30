@@ -1,41 +1,14 @@
-import { 
-useState, 
-useEffect } from 'react';
-
-import { 
-useDispatch,
-useSelector } from 'react-redux';
-
-import { 
-navigate, 
-Redirect } from '@reach/router';
-
-import{
-loadMeetings, 
-loadMeetingsByMeetingId,
-saveMeeting } from 'services/course/actions/meetings';
-
-import{
-incrementSessionCount } from 'services/course/actions/sessions';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadMeetings, saveMeeting } from 'services/course/actions/meetings';
+import { incrementSessionCount } from 'services/course/actions/sessions';
+import { endMeetingWithPromoMessage } from 'services/course/middleware/classrooms/helpers/meetings';
+import { getselectedTutor } from 'services/course/pages/ClassRoomPage/components/CourseLessonDropDownComponent/helpers';
+import { role } from 'services/course/helpers/PageHelpers';
+import { loadUsers } from 'services/course/actions/users';
+import { updateUserInvitationUrl } from 'services/course/actions/users';
     
-import {
-endMeetingWithPromoMessage } from 'services/course/middleware/classrooms/helpers/meetings';
-
-import { 
-getselectedTutor } from 'services/course/pages/ClassRoomPage/components/CourseLessonDropDownComponent/helpers';
-
-import { 
-role } from 'services/course/helpers/PageHelpers';
-
-import{
-loadUsers, 
-updateCurrentUser } from 'services/course/actions/users';
-
-import {
-updateUserInvitationUrl } from 'services/course/actions/users';
-    
-function useVerifyMeetingAttendeesHook( meetingProps ) {
-
+function useVerifyMeetingAttendeesHook( meetingProps ){
     let {
         operatorBusinessName,
         currentUser, 
@@ -52,27 +25,21 @@ function useVerifyMeetingAttendeesHook( meetingProps ) {
     let tutor = ( currentUser?.role === role.Tutor ) ? currentUser : getselectedTutor( users, selectedUserId );
     let meetings = useSelector( state => state.meetings.meetings );
     let meetingUrl = `/${operatorBusinessName}/LessonPlan/classRoom/${tutor?._id}`;
-    let lessonUrl = currentUser?.inviteeSessionUrl;
-    let meetingAttendeesId = meetingAttendees?.map( meetingUser => { return meetingUser?._id });
-    let usersWhoAttendedMeeting = meeting?.invitees?.filter( meetingUser => meetingAttendeesId.includes( meetingUser?._id ));
-   
-    useEffect(() => {
 
+    useEffect(() => {
     dispatch( loadUsers() ); 
     dispatch( loadMeetings() ); 
 
     if ( meetingId && meetings?.length > 0 ) {
         let currentMeeting = Object.values( meetings )?.find( meeting => meeting?._id === meetingId );
+
         if ( currentMeeting ) {
             setCurrentMeeting( currentMeeting );
         }
     }    
-    }, [  loadUsers, loadMeetings, setCurrentMeeting, meetingId, meeting ]);
+    }, [ setCurrentMeeting, meetingId, meeting, dispatch, meetings ]);
 
-    ;
-
-function handleSubmit( meetingAttendees ){
-    
+function handleSubmit( meetingAttendees ){    
     let usersWhoJoinedTheMeeting = [ ...meetingAttendees, currentUser ];
 
     setMeetingAttendees( meetingAttendees );
@@ -89,8 +56,7 @@ function handleSubmit( meetingAttendees ){
                 }) );
                 endMeetingWithPromoMessage( meetingUrl );
             }
-            }).catch( error => { console.log( error ); })
-            
+            }).catch( error => { console.log( error ); });
         }
     } catch (error) {
          console.log( error );
@@ -101,7 +67,6 @@ function incrementSessionCountForMeetingUsers( meetingUsers, currentUser, meetin
     let setInvitationUrl = "", nameOfLessonInProgress = "", lessonInProgress = false, meetingId = "", lesson="", course="";
 
     if ( meeting && currentUser?.role === role.Tutor ) { 
-
         let _currentUser = { 
             ...currentUser, 
             timeMeetingEnded: Date.now() , 
@@ -133,6 +98,8 @@ function handleIncrementingSessionCountForMeetingInvitees( session ){
 
 return {
     meeting,
+    meetingAttendees,
+    paidSessions,
     handleSubmit: ( value ) => handleSubmit( value )
 }; }
 

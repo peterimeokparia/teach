@@ -1,13 +1,8 @@
-import {
-add,
-update,
-remove,
-get,
-getById,
-getPagedData } from 'services/course/api';
+import { add, update, remove, get, getById, getPagedData } from 'services/course/api';
 
 export const ADD_FORMBUILDER_BEGIN = "ADD FORMBUILDER BEGIN";
 export const ADD_FORMBUILDER_SUCCESS = "ADD FORMBUILDER SUCCESS";
+export const ADD_FORMBUILDER_SUCCESS_NO_REDIRECT = "ADD FORMBUILDER SUCCESS NO REDIRECT";
 export const ADD_FORMBUILDER_ERROR = "ADD FORMBUILDER ERROR";
 export const LOAD_FORMBUILDER_BEGIN = "LOAD FORMBUILDER BEGIN";
 export const LOAD_FORMBUILDER_SUCCESS = "LOAD FORMBUILDER SUCCESS";
@@ -18,8 +13,12 @@ export const DELETE_FORMBUILDER_SUCCESS = "DELETE FORMBUILDER SUCCESS";
 export const SAVE_FORMBUILDER_BEGIN = "SAVE FORMBUILDER BEGIN";
 export const SAVE_FORMBUILDER_ERROR = "SAVE FORMBUILDER ERROR";
 export const SAVE_FORMBUILDER_SUCCESS = "SAVE FORMBUILDER SUCCESS";
+export const SAVE_FORMBUILDER_SUCCESS_NO_REDIRECT = "SAVE FORMBUILDER SUCCESS NO REDIRECT";
+export const TOGGLE_FORMBUILDER_MODAL = "TOGGLE FORMBUILDER MODAL";
+export const TOGGLE_MAX_QUESTION_DIALOG = "TOGGLE MAX QUESTION DIALOG";
+export const TOGGLE_MAX_FIELD_DIALOG = "TOGGLE MAX FIELD DIALOG";
    
-export const addNewFormBuilder = formBuiler => {
+export const addNewFormBuilder = ( formBuiler ) => {
     return dispatch => {
         dispatch({ type: ADD_FORMBUILDER_BEGIN });
         return add( formBuiler, '/formbuilder')
@@ -60,7 +59,7 @@ export const loadFormBuilderByFormBuilderId = ( formBuilderId ) => {
          dispatch({ type: LOAD_FORMBUILDER_BEGIN });
          return getById( formBuilderId, `/formbuilder/builder?formBuilderId=`)
           .then( builder  => { 
-                dispatch({ type: LOAD_FORMBUILDER_SUCCESS, payload: builder })
+                dispatch({ type: LOAD_FORMBUILDER_SUCCESS, payload: builder });
            }).catch( error => {
                 dispatch({ type: LOAD_FORMBUILDER_ERROR , error });
            });       
@@ -103,3 +102,16 @@ export const deleteFormBuilder = formbuilder => {
         });
     };
 };
+
+export const toggleNewFormBuilderModal = () => ({
+    type: TOGGLE_FORMBUILDER_MODAL
+});
+
+export const setIsMaxQuestionDialogOpen = ( isMaxQuestionDialogOpen ) => ({
+    type: TOGGLE_MAX_QUESTION_DIALOG, payload: isMaxQuestionDialogOpen
+});
+
+export const setIsMaxFieldDialogOpen = ( isMaxFieldDialogOpen ) => ({
+    type: TOGGLE_MAX_FIELD_DIALOG, payload: isMaxFieldDialogOpen
+});
+

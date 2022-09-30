@@ -1,77 +1,25 @@
-import { 
-connect } from 'react-redux';
-
-import{
-saveLesson,
-setLessonInProgressStatus,
-toggleTeachBoardOrEditor } from 'services/course/actions/lessons';
-
-import {
-LESSONNOTES, 
-STUDENTNOTES } from 'services/course/actions/notes';
-
-import{
-inviteStudentsToLearningSession } from 'services/course/actions/users';
-
-import { 
-getEventByEventId,  
-getStudentsLessonUserNotesByLessonId,
-getLessonByLessonIdSelector,
-getOperatorFromOperatorBusinessName, 
-getUsersByOperatorId } from 'services/course/selectors';
-
-import {
-addNotes,
-loadAllNotes,
-saveNotes,
-SET_NOTES_MARKDOWN } from 'services/course/actions/notes';
-
-import { 
-loadMeetingsByMeetingId } from 'services/course/actions/meetings';
-
-import { 
-getUrls } from 'services/course/pages/Lessons/LessonPlan/helpers';
-
-import { 
-Validations } from 'services/course/helpers/Validations';
-
-import {
-getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
-
-import {
-permission,
-SiteFunctionalityGroup,
-Organization }from 'services/course/pages/components/SiteFunctionalityGroup';
-
-import { 
-role } from 'services/course/helpers/PageHelpers';
-
-import {
-editor_upload_url,
-handleChange } from 'services/course/pages/OnlineQuestionsPage/helpers';
-
-import { 
-saveEditorMarkDownObjectToMw } from 'services/course/actions/editor'; 
-
-import BoardEditorComponent from 'services/course/pages/Lessons/LessonPlan/components/BoardEditorComponent';
-import Meeting from 'services/course/pages/Meeting';
-  
-import {
-iconStyleMain,
-videoCallIcon,
-//adjustRoomIcon,
-videoMeta } from 'services/course/pages/Lessons/LessonPlan/inlineStyles.js';
-
-import { 
-adjustRoomSize } from 'services/course/pages/Lessons/LessonPlan/helpers';
-
+import { connect } from 'react-redux';
+import { saveLesson, setLessonInProgressStatus } from 'services/course/actions/lessons';
+import { inviteStudentsToLearningSession } from 'services/course/actions/users';
+import { SET_NOTES_MARKDOWN } from 'services/course/actions/notes';
+import { loadMeetingsByMeetingId } from 'services/course/actions/meetings';
+import { permission, SiteFunctionalityGroup } from 'services/course/pages/components/SiteFunctionalityGroup'; // refactor 
+import { editor_upload_url, handleChange } from 'services/course/pages/OnlineQuestionsPage/helpers';
+import { saveEditorMarkDownObjectToMw } from 'services/course/actions/editor'; 
+import { setInSession, setHideMeetingStage, setFullMeetingStage, setVideoModalMode, setIconOnColor } from 'services/course/actions/sessions'; 
+import { videoMeta } from 'services/course/pages/Lessons/LessonPlan/inlineStyles.js';
+import { adjustRoomSize } from 'services/course/pages/Lessons/LessonPlan/helpers';
+import { mapDispatch, mapState } from 'services/course/pages/Lessons/LessonPlan/connectors';
+import { PageObject, testGroup } from 'services/course/pages/Lessons/LessonPlan/permissions'; // refactor move to db
 import EditorComponent from 'services/course/pages/components/EditorComponent';
-import Roles from 'services/course/pages/components/Roles';
+import useNoteSelectionHook from 'services/course/pages/Lessons/hooks/useNoteSelectionHook'; 
 import useLessonSelectionHook from 'services/course/pages/Lessons/hooks/useLessonSelectionHook'; 
 import useTeachMeetingSettingsHook  from 'services/course/pages/Lessons/hooks/useTeachMeetingSettingsHook';
 import useEndMeetingHook  from 'services/course/pages/Lessons/hooks/useEndMeetingHook';
 import MaterialUiRecorderComponent from 'services/course/pages/components/MaterialUiRecorderComponent';
 import NavLinks  from 'services/course/pages/components/NavLinks';
+import BoardEditorComponent from 'services/course/pages/Lessons/LessonPlan/components/BoardEditorComponent';
+import Meeting from 'services/course/pages/Meeting';
 import './style.css';
 
 const LessonPlan = ({ 
@@ -79,123 +27,64 @@ const LessonPlan = ({
   operator,  
   courseId,
   lessonId,
-  currentTutor,
   meetingId,
   meetingEndingPromo,
-  classRoomGroupId,
-  classRoomGroupName,
   classRoomId,
-  classRoomName,
   courses,  
   lessons,
+  lessonNotes,
   note,
   saveLesson,
   eventId,
   lesson,
-  user,
-  users,
   currentUser,
   selectedCourseFromLessonPlanCourseDropDown,
   selectedLessonFromLessonPlanDropDown,
   loadMeetingsByMeetingId,
-  toggleTeachBoardOrEditor,
-  saveEditorMarkDownObjectToMw }) => {
-
+  saveEditorMarkDownObjectToMw,
+  hideMeetingStage, 
+  fullMeetingStage, 
+  videoModalModeOn, 
+  inSession, 
+  iconOnColor, 
+  meetingPanel,
+  setVideoModalMode, 
+  setIconOnColor }) => {
   let useLessonSelectionProps = {
-    selectedCourseFromLessonPlanCourseDropDown, 
-    selectedLessonFromLessonPlanDropDown, 
-    courses, 
-    lessons, 
-    courseId, 
-    lessonId,
-    classRoomId
+    operatorBusinessName, currentUser, selectedCourseFromLessonPlanCourseDropDown, selectedLessonFromLessonPlanDropDown, 
+    courses, lessons, courseId, lessonId, classRoomId, lessonNotes, note, meetingId, loadMeetingsByMeetingId, hideMeetingStage, 
+    fullMeetingStage, videoModalModeOn, inSession, iconOnColor, meetingPanel
   };
 
   let {
-    selectedCourse,
-    selectedLesson
+    selectedCourse, selectedLesson,
   } = useLessonSelectionHook( useLessonSelectionProps );
-                       
-  let useTeachMeetingProps = {
-    meetingId, 
-    currentUser, 
-    classRoomId, 
-    selectedCourse, 
-    selectedLesson, 
-    loadMeetingsByMeetingId
-  };
 
   let {
-    currentMeetingId,
-    hideMeetingStage,
-    videoModalModeOn,
-    meetingPanel,
-    session,
-    roomSize, 
-    setVideoModalMode,
-    toggleMeetingPanel,
-    toggleTeach,
-    toggleRoomSize,
-    resetAllStartSettings,
-    resetAllStopSettings, 
-    hidePopUpWindow,
-    iconOnColor,
-    setIconOnColor,
-  } = useTeachMeetingSettingsHook( useTeachMeetingProps );
+    selectedNote, toggleDisplayedNotes, noteDetailPageLink, noteTitle
+  } = useNoteSelectionHook( {...useLessonSelectionProps, selectedLesson } );
+                       
+  let {
+    roomSize, toggleTeach, resetAllStartSettings, resetAllStopSettings,
+  } = useTeachMeetingSettingsHook({...useLessonSelectionProps, selectedCourse, selectedLesson });
 
   useEndMeetingHook( meetingEndingPromo, classRoomId );
 
-  let videoProps = {
-    element: selectedLesson,
-    videoMeta: videoMeta( selectedLesson ),
-    resetAllStartSettings,
-    resetAllStopSettings,
-    VideoModalMode: videoModalModeOn,
-    saveVideoRecording
-  };
+function saveVideoRecording( element ){
+  saveLesson( element );
+};
 
-  function saveVideoRecording( element ){
-    saveLesson( element );
-  };
-
-  const urls = getUrls(currentUser, selectedCourse?._id, selectedLesson?._id, classRoomId); 
-  const editor = {
-    height: "900px",
-    width: "380px",
-    url: urls?.privateEditor,
-    scrolling: "yes",
-    allow: "camera;microphone",
-    frameBorder: "0" 
-  };
- 
 function toggleCurrentMeetingSession(){ 
   toggleTeach();
-  setIconOnColor( !iconOnColor )
+  setIconOnColor( !iconOnColor );
 };
-
-const PageObject = {
-  LessonPlan_MaterialUiVideoComponent: 'LessonPlan_MaterialUiVideoComponent',
-  LessonPlan_VideoCallIcon: 'LessonPlan_VideoCallIcon'
-};
-
-let testGroup = [ // refactor create groups, permissions etc
-  {   page: 'Users',
-      operatorBusinessName: [Organization.Teach, Organization.Boomingllc ],
-      pageObject: [ 
-          { name: PageObject?.LessonPlan_MaterialUiVideoComponent, allowed: [ Organization.Teach ]},
-          { name: PageObject?.LessonPlan_VideoCallIcon, allowed: [ Organization.Teach, Organization.Boomingllc ]},
-      ]  
-  }
-];
-
 return (
     <div className="MeetingPlan"> 
      <div className={operatorBusinessName}>
      <header> 
         <h1>
-          <NavLinks to={`/${operatorBusinessName}/classroomgroups/${classRoomGroupId}/${classRoomGroupName}/classroom/${classRoomId}`}> 
-            {classRoomName}   
-          </NavLinks>
+          <div></div>
+         <div title={lesson?._id} className="lessonMultiColor">{ selectedLesson?.title } </div>        
         </h1>
         <div className="lesson-item"> 
         <div className="div-btns"/>
@@ -227,15 +116,9 @@ return (
                     <div className="sidebarThree">
                       <div className={adjustRoomSize( roomSize ).containerStyle}>   
                         <div className={`meeting-stage-${(hideMeetingStage) ? 'hidden' : 'visible'}`}>
-                        {/* The room name is the lesson userId for lessons. The lesson userId by should be the current tutor. */}
-                         {/* 1. There are situations in which we may need to replace a tutor or course created by user in the middle of the
-                            current term. 
-                         2. Using the lesson creator, we are current with regards to the current tutor as well as the meeting room id for external
-                            users e.g parents connecting to view their kid's live session etc.  */}
-                        { ( session  ) && 
+                        { ( inSession  ) && 
                             <Meeting
                               userName={currentUser?.firstname}   
-                              // roomName={selectedLesson?._id} 
                               roomName={ classRoomId ? classRoomId : selectedLesson?.userId } 
                               resizedHeight={"900px"}
                               resizedWidth={"480px"}
@@ -258,6 +141,7 @@ return (
                         eventId={eventId}
                         courseId={courseId}
                         lessonId={selectedLesson?._id}
+                        lesson={selectedLesson}
                         classRoomId={classRoomId}
                         operatorBusinessName={operatorBusinessName}
                         saveIconVisible={true}
@@ -265,69 +149,44 @@ return (
                     </div>
                   </SiteFunctionalityGroup>
               </div>
-              <Roles role={currentUser?.role === role.Student }>
+              {/* <Roles role={currentUser?.role === role.Student }> */}
               <div class="col col-lg-2"> 
-              <div className="sidebarTwo">   
-                <div>   
-                  { <label>
-                      <NavLinks to={`/${operatorBusinessName}/notes/${note?._id}/noteType/${STUDENTNOTES}/course/${courseId}/lesson/${lessonId}/user/${currentUser?._id}`}> 
-                          <label className="navLink"><h3>{selectedLesson?.title}</h3></label>
-                      </NavLinks> 
-                    </label>     
-                  }
-                  </div> 
+              <div className="sidebarTwoHeader">
+              <div onClick={toggleDisplayedNotes}>   
+                { <label>
+                    <NavLinks to={noteDetailPageLink}>
+                        <label className="navLink"><h3>{noteTitle}</h3></label>
+                    </NavLinks> 
+                  </label>     
+                }
+                {
+                  <div> <label className="title-date">
+                    <h5>{`${new Date().toLocaleString()}` }</h5>
+                  </label></div>   
+                }
+              </div>        
+              </div>
+              <div className="sidebarTwo">  
                   <div className="children-subsection">
                     <div className="notes-title">
-                        <label className="title-date">
-                            <h5>{`${new Date().toLocaleString()}` }</h5>
-                        </label>
                     </div>
                     <br></br> <br></br>
                      <EditorComponent  
                         upload_url={editor_upload_url} 
-                        handleChange={(editor) => handleChange({ ...note, markDownContent: editor }, SET_NOTES_MARKDOWN, `/notes/`, saveEditorMarkDownObjectToMw )}
-                        content={ note?.markDownContent }
+                        handleChange={(editor) => handleChange({ ...selectedNote, markDownContent: editor }, SET_NOTES_MARKDOWN, `/notes/`, saveEditorMarkDownObjectToMw )}
+                        content={ selectedNote?.markDownContent }
                      /> 
                 </div>
+                
               </div>
               </div>
-              </Roles>
+              {/* </Roles> */}
+              <div className="sidebarTwoHeader"/>
           </div>
         </div>
       </div>
       </div>
       );
-};
-
-const mapDispatch = {
-  setLessonInProgressStatus,  
-  inviteStudentsToLearningSession,
-  saveLesson,
-  loadMeetingsByMeetingId,
-  toggleTeachBoardOrEditor,
-  saveEditorMarkDownObjectToMw
-};
-
-const mapState = ( state, ownProps )   => {
-  return {
-    operator: getOperatorFromOperatorBusinessName(state, ownProps),
-    users: getUsersByOperatorId(state, ownProps),
-    currentUser: state.users.user,
-    courses: Object.values(state.lessons.lessons),
-    lessons: Object.values(state.lessons.lessons),
-    lessonStarted: state.lessons.lessonStarted,
-    currentTutor: state.classrooms?.currentTutor,
-    setVideoCapture: state.streams.setVideoCapture,
-    invitees: state.users.invitees,
-    onSessionRenewal: state.sessions.autoRenewedPackageSuccess,
-    allSessions: Object.values(state?.sessions?.sessions),
-    selectedCourseFromLessonPlanCourseDropDown: state.courses.selectedCourseFromLessonPlanCourseDropDown,
-    selectedLessonFromLessonPlanDropDown: state.lessons.selectedLessonFromLessonPlanDropDown,
-    user: state?.users?.user,
-    note: getStudentsLessonUserNotesByLessonId(state, ownProps),
-    event: getEventByEventId(state, ownProps),
-    lesson: getLessonByLessonIdSelector( state, ownProps )
-  };
 };
 
 export default connect(mapState, mapDispatch )(LessonPlan);

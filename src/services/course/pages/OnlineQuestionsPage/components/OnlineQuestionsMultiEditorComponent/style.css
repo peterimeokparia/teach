@@ -1,30 +1,55 @@
 .builder {
+    height: auto;
+    background-size: 400px 400px;
     display: flex;
     flex-direction: column;
     text-align: left;
-    background-color: #ffffff;
     list-style: none;
 }
 .builder header {
-    background-color: #673ab7;
+    /* background-color: #673ab7;
     color: #fff;
     display: flex;
     flex-direction: row;
+    align-items: center; */
+    /* New */
+    /* color: #fff;
+    display: flex;
+    flex-direction: row;
     align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px 20px;
+    background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red); */
 }
-.builder .content {
-    background-image: url(../../../../images/geometry2.png);
+.builder .form-display-name {
+    font-family: cursive, fantasy;
+    text-transform: capitalize;
+    padding-bottom: 0px;
+    align-items: center;
+    justify-content: center;
+    margin-left: -150px;
+}
+.builder .help-icon {
+    align-items: center;
+    justify-content: center;
+}
+.builder .main {
     background-size: 400px 400px;
-    /* display: flex; */
     flex-direction: row;
     align-items: center;
     justify-content: space-between; 
     overflow-y: hidden; /* Hide vertical scrollbar */
     overflow-x: hidden; /* Hide horizontal scrollbar */
-    padding: 19px 50px 50px 0px;
 }
-.builder .content .sidebar {
-    margin-bottom: 100px;
+.builder .content {
+    background-image: url(../../../../images/geometry2.png);
+    background-size: 300px 300px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between; 
+    overflow-y: hidden; /* Hide vertical scrollbar */
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+    height: 100%;
 }
 .builder iframe{
    height: 400px;
@@ -42,7 +67,6 @@
   padding-bottom: 25px;   
 }
 .multipleChoiceQuestion{
-    /* display: flex; */
     width: 100vw;
     border-style: inset;
     padding-left: 10px;
@@ -115,7 +139,6 @@
     right: 5px;
     font-size: 10px;
     cursor: pointer;
-    /* padding-left: 30px; */
     padding-left: 50%;
     margin-bottom: 20px;
     margin-top: 30px;
@@ -131,63 +154,154 @@
     list-style: none;
     padding-left: 0px;
 }
-.updatedOrderedQuestions .explanation-content {
-    background-color: whitesmoke;
+.react-page-editable .react-page-cell-insert-new {
+    visibility: visible;
 }
-
+.react-page-controls-mode-toggle-control-group {
+    z-index: 1000;
+    position: fixed;
+    margin-left:-2000px;
+}
+.builder .content .outcomes {
+    height: 50vh;
+    width: 45vw;
+    margin-left: -46%;
+    border: 2px solid black;
+    position: fixed;
+    background-color: white;
+    z-index: 1; 
+    left: 47%;
+    top: 5%;
+}
+.builder .content .outcomes .outcomes-text {
+    margin-left: 15rem;
+}
+.builder .content .outcomes .outcomes-exit {
+    margin-left: 53.25rem;
+    margin-top: -24px;
+}
 @media only screen and (max-width: 637px) {
-   
+    .builder .content .sidebartest2 {
+        display: flex;
+      flex-direction: column;
+      width: 0px;
+      height: 100%;
+      box-sizing: border-box;
+      text-align: center;
+      flex-grow: 1;
+    }
+    .builder .form-display-name {
+        font-family: cursive, fantasy;
+        text-transform: capitalize;
+        padding-bottom: 0px;
+        margin-left: -150px;
+    }
 }
-
 /* 
   ##Device = Desktops
   ##Screen = 1281px to higher resolution desktops
 */
-
 @media (min-width: 1281px) {
-  
+    .builder .content .sidebartest2 {
+        display: flex;
+        flex-direction: column;
+        width: 0px;
+        height: 100%;
+        box-sizing: border-box;
+        text-align: center;
+        flex-grow: 1;
+    }
+    .builder .form-display-name {
+        font-family: cursive, fantasy;
+        text-transform: capitalize;
+        padding-bottom: 0px;
+        margin-left: -150px;
+    }
 }
-
 /* 
   ##Device = Laptops, Desktops
   ##Screen = B/w 1025px to 1280px
 */
-
 @media (min-width: 1025px) and (max-width: 1280px) {
-  
-  
+    .builder .content .sidebartest2 {
+        display: flex;
+        flex-direction: column;
+        width: 0px;
+        height: 100%;
+        box-sizing: border-box;
+        text-align: center;
+        flex-grow: 1;
+    }
+    .builder .form-display-name {
+        font-family: cursive, fantasy;
+        text-transform: capitalize;
+        padding-bottom: 0px;
+        margin-left: -150px;
+    }
 }
-
 /* 
   ##Device = Tablets, Ipads (portrait)
   ##Screen = B/w 768px to 1024px
 */
-
 @media (min-width: 768px) and (max-width: 1024px) {
-  
- 
+    .builder .content .sidebartest2 {
+        display: flex;
+      flex-direction: column;
+      width: 0px;
+      height: 100%;
+      box-sizing: border-box;
+      text-align: center;
+      flex-grow: 1;
+    }
+    .builder .form-display-name {
+        font-family: cursive, fantasy;
+        text-transform: capitalize;
+        padding-bottom: 0px;
+        margin-left: -150px;
+    }
 }
-
 /* 
   ##Device = Tablets, Ipads (landscape)
   ##Screen = B/w 768px to 1024px
 */
-
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-
+    .builder .content .sidebartest2 {
+        display: flex;
+        flex-direction: column;
+        width: 0px;
+        height: 100%;
+        box-sizing: border-box;
+        text-align: center;
+        flex-grow: 1;
+    }
+    .builder .form-display-name {
+        font-family: cursive, fantasy;
+        text-transform: capitalize;
+        padding-bottom: 0px;
+        margin-left: -150px;
+    }
 }
-
-
-
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-  
+    .builder .content .sidebartest2 {
+        display: flex;
+        flex-direction: column;
+        width: 0px;
+        height: 100%;
+        box-sizing: border-box;
+        text-align: center;
+        flex-grow: 1;
+    }
+    .builder .form-display-name {
+        font-family: cursive, fantasy;
+        text-transform: capitalize;
+        padding-bottom: 0px;
+        margin-left: -150px;
+    }
 }
-
 /* 
   ##Device = Low Resolution Tablets, Mobiles (Landscape)
   ##Screen = B/w 481px to 767px
 */
-
 @media (min-width: 481px) and (max-width: 767px) {
     .builder {
         display: flex;
@@ -212,8 +326,17 @@
         justify-content: space-between; 
         overflow-y: hidden; /* Hide vertical scrollbar */
         overflow-x: hidden; /* Hide horizontal scrollbar */
-        padding: 19px 50px 50px 0px;
         margin-left: -50px;
+        padding: 19px 50px 50px 0px;
+    }
+    .builder .content .sidebartest2 {
+      display: flex;
+      flex-direction: column;
+      width: 0px;
+      height: 100%;
+      box-sizing: border-box;
+      text-align: center;
+      flex-grow: 1;
     }
     .builder iframe{
        height: 400px;
@@ -231,7 +354,6 @@
       padding-bottom: 25px;   
     }
     .multipleChoiceQuestion{
-        /* display: flex; */
         width: 100vw;
         border-style: inset;
         padding-left: 10px;
@@ -304,7 +426,6 @@
         right: 5px;
         font-size: 10px;
         cursor: pointer;
-        /* padding-left: 30px; */
         padding-left: 50%;
         margin-bottom: 20px;
         margin-top: 30px;
@@ -320,7 +441,6 @@
         list-style: none;
         padding-left: 0px;
     }
-  
 }
 /* 
   ##Device = Most of the Smartphones Mobiles (Portrait)
@@ -344,7 +464,6 @@
     .builder .content {
         background-image: url(../../../../images/geometry2.png);
         background-size: 400px 400px;
-        /* display: flex; */
         flex-direction: row;
         align-items: center;
         justify-content: space-between; 
@@ -352,6 +471,15 @@
         overflow-x: hidden; /* Hide horizontal scrollbar */
         padding: 19px 50px 50px 0px;
         margin-left: -107px;
+    }
+    .builder .content .sidebartest2 {
+      display: flex;
+      flex-direction: column;
+      width: 0px;
+      height: 100%;
+      box-sizing: border-box;
+      text-align: center;
+      flex-grow: 1;
     }
     .builder iframe{
        height: 400px;
@@ -369,7 +497,6 @@
       padding-bottom: 25px;   
     }
     .multipleChoiceQuestion{
-        /* display: flex; */
         width: 100vw;
         border-style: inset;
         padding-left: 10px;
@@ -442,7 +569,6 @@
         right: 5px;
         font-size: 10px;
         cursor: pointer;
-        /* padding-left: 30px; */
         padding-left: 50%;
         margin-bottom: 20px;
         margin-top: 30px;
@@ -458,5 +584,4 @@
         list-style: none;
         padding-left: 0px;
     }
-  
 }

@@ -1,0 +1,149 @@
+import { connect } from 'react-redux';
+import {  getOperatorFromOperatorBusinessName } from 'services/course/selectors';
+import { styleMap, getBlockStyle } from "services/course/editor/components/blockStyles/BlockStyleToolbar";
+import { mediaBlockRenderer } from 'services/course/editor/components/Link/entities/mediaBlockRenderer';
+import { displayLatexEditorModal } from 'services/course/editor/MyEditorTest2/helpers';
+import TemporaryDrawer from 'services/course/pages/FormBuilder/FormBuilderStepWizard/SelectExistingFormBuilderComponent/FormFields/component/TemporaryDrawer';
+import LinearProgressBar from 'services/course/pages/components/LinearProgressBar';
+import Editor from "@draft-js-plugins/editor";
+import useEditorHook from 'services/course/editor/hooks/useEditorHook';
+import useEditorPluginsHook from 'services/course/editor/hooks/useEditorPluginsHook';
+import ImageAdd from 'services/course/editor/components/ImageAdd';
+import VideoAdd from 'services/course/editor/components/VideoAdd';
+import MenuButtons from 'services/course/editor/components/MenuButtons';
+import Equations from 'services/course/pages/Equations';
+import ContextMenu from 'services/course/pages/components/ContextMenu'; 
+import "@draft-js-plugins/static-toolbar/lib/plugin.css";
+import './editorStyles.css'
+import '@draft-js-plugins/focus/lib/plugin.css';
+import '@draft-js-plugins/image/lib/plugin.css';
+import '@draft-js-plugins/alignment/lib/plugin.css';
+import { placeHolder } from 'services/course/helpers/EditorHelpers';
+
+
+const MyEditorTest2 = ({
+    operator,
+    user,
+    users,
+    readOnly,
+    chemicalEquations,
+    showMenuButtons,
+    handleSavingContentProgressBar,
+    placeHolder,
+    element,
+    content,
+    setElementContentFromEditorState,
+}) => {
+    let { editorState, enableEditor, showMenu, editor, editorContextMenuRef, mathScienceProps, mathLatexEditor,
+         handleMockUpload, setShowMenu, handleEditorState, handleKeyCommand, insertChemicalEquation
+    } = useEditorHook({ content, element, setElementContentFromEditorState });
+
+    let { imagePlugin, videoPlugin, extendedBlockRenderMap, plugins, AlignmentTool , InsertButton, Toolbar
+    } = useEditorPluginsHook({ handleMockUpload });
+
+    function testTempDrawer(){
+        let { openDrawer } = mathScienceProps;
+        return  <TemporaryDrawer  
+            anchor='right'
+            setToggleDrawer={openDrawer} 
+          >
+           <div>
+            {
+            <Equations insertInto={ insertChemicalEquation } equations={chemicalEquations} />
+            }
+           </div>
+          </TemporaryDrawer>
+    }
+
+    function testContextMenu(){
+        let { openDrawer, setOpenDrawer } = mathScienceProps;
+        
+        return <div>
+            <button onClick={() => setOpenDrawer( !openDrawer )}> {`Toggle Chemistry Drawer`}</button>
+        </div>
+    }
+
+    return (
+        <div className="editorTest" onDoubleClick={ () => setShowMenu( !showMenu ) } ref={editorContextMenuRef}>
+            <div></div>
+            {/* {
+                <LinearProgressBar showBar={ handleSavingContentProgressBar }/> 
+            } */}
+            { ( showMenuButtons && showMenu ) && <div className={''}> 
+                <MenuButtons props={ {...mathScienceProps, videoPlugin} } />
+                </div>
+            }
+            { ( mathLatexEditor ) && 
+                displayLatexEditorModal( mathScienceProps, insertChemicalEquation, setShowMenu )
+            }
+            { ( enableEditor ) && 
+                <>           
+                <AlignmentTool /> 
+                <Editor 
+                    ref={(element) => {
+                        editor.current = element;
+                    }}
+                    blockRendererFn={ mediaBlockRenderer }
+                    blockStyleFn={ getBlockStyle }
+                    customStyleMap={ styleMap }
+                    editorState={ editorState } 
+                    handleKeyCommand={ handleKeyCommand }
+                    onChange={ editorState => handleEditorState( editorState ) } 
+                    plugins={ plugins }
+                    //blockRenderMap={ extendedBlockRenderMap }
+                    placeholder={placeHolder}
+                    spellCheck={ ( showMenuButtons && showMenu ) ? false : true }
+                    readOnly={ ( showMenuButtons && showMenu ) ? false : true }
+                    // handlePastedText
+                    // handlePastedFiles
+                    // handleDroppedFiles
+                    // handleDrop
+                />
+                </>
+            }
+            {
+                <AlignmentTool />
+            }
+         
+            {/* {  ( showMenuButtons && showMenu ) && <ContextMenu editorRef={editorContextMenuRef}> { <Equations insertInto={ insertChemicalEquation } equations={chemicalEquations} /> } </ContextMenu>} */}
+            {  ( showMenuButtons && showMenu ) && <ContextMenu editorRef={editorContextMenuRef}> { () => testContextMenu() } </ContextMenu>}
+            { ( showMenuButtons && showMenu ) && 
+                <> 
+                <ImageAdd 
+                    editorState={ editorState }
+                    setEditorState={ editorState => handleEditorState( editorState ) } 
+                    modifier={imagePlugin.addImage }
+                /> 
+                <VideoAdd
+                    editorState={ editorState }
+                    onChange={ editorState => handleEditorState( editorState ) }
+                    modifier={ videoPlugin.addVideo }
+                />
+                </>
+            }
+        </div>
+    );
+};
+
+const mapState = (state, ownProps)   => {
+    return {
+      operator: getOperatorFromOperatorBusinessName(state, ownProps),
+      previewMode: state.app.previewMode,
+      users: state.users.users,
+      user: state.users.user,
+      chemicalEquations: state?.equations?.equations
+    };
+};
+
+export default connect( mapState, null )( MyEditorTest2 );
+
+
+   {/* style={ {"marginTop": "-100px", top: "100%"} } */}
+        {/* <Fab sx={ {
+            position: 'absolute',
+            bottom: 16,
+            right: 560,
+          }}>
+          <VideoFileIcon />
+        </Fab> */}
+        {/* <VideoFileIcon className="mui-headerStyleDropdownButtons" onClick={this.addVideo}/> */}

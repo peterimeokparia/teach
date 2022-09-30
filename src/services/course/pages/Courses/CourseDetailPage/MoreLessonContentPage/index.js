@@ -9,8 +9,10 @@ addNewLesson,
 saveLesson,
 setLessonPlanUrl,
 setCurrentLesson, 
-loadLessons,
-SET_LESSON_MARKDOWN} from 'services/course/actions/lessons';
+loadLessons } from 'services/course/actions/lessons';
+
+import {
+SET_NOTES_MARKDOWN } from 'services/course/actions/notes';
 
 import {
 editor_upload_url,
@@ -23,7 +25,8 @@ import {
 saveEditorMarkDownObjectToMw } from 'services/course/actions/editor';
 
 import { 
-getUsersByOperatorId,    
+getUsersByOperatorId,  
+getTutorsLessonUserNotesByLessonId,  
 getCoursesByCreatedByIdSelector } from 'services/course/selectors';
 
 import EditorComponent  from 'services/course/pages/components/EditorComponent';
@@ -31,24 +34,11 @@ import MaterialUiVideoComponent from 'services/course/pages/components/MaterialU
 import './style.css';
 
 const MoreLessonContentPage = ({
-    previewMode,
-    saveLesson,
     saveEditorMarkDownObjectToMw,
-    addNewLesson,
-    setVideoUrl,
     lessonId,
     courseId,
-    selectedTutorId,
-    currentVideoUrl,
-    setLessonPlanUrl,
-    setCurrentLesson,
-    course,
     lessons,
-    togglePreviewMode,
-    operatorBusinessName,
-    operator,
-    currentUser, 
-    selectedLessonPlanLesson
+    note,
 }) => {
     useEffect(() => {
         loadLessons(courseId);
@@ -72,8 +62,6 @@ return <div className="builder3">
             < MaterialUiVideoComponent 
                 className={"onlineQuestionVideoComponent"} 
                 element={ lesson } 
-                // videoMeta={videoMeta( lessonTest )}
-                // saveRecording={saveRecording}
                 extendedMeetingSettings={false} 
             />
             </div>
@@ -81,8 +69,8 @@ return <div className="builder3">
                 <div className="lesson2">        
                     { 
                         <EditorComponent
-                            handleChange={(editor) => handleChange({ ...lesson, markDownContent: editor }, SET_LESSON_MARKDOWN, `/lessons/`, saveEditorMarkDownObjectToMw )}
-                            content={ lesson?.markDownContent }
+                            handleChange={(editor) => handleChange({ ...note, markDownContent: editor }, SET_NOTES_MARKDOWN, `/notes/`, saveEditorMarkDownObjectToMw )}
+                            content={ note?.markDownContent }
                             upload_url={editor_upload_url}
                         /> 
                     }            
@@ -122,6 +110,7 @@ const mapState = (state, ownProps) => {
         lessonStarted: state.lessons.lessonStarted,
         sessions: Object.values(state?.sessions?.sessions)?.filter(session => session?.courseId === ownProps?.courseId),
         onSessionRenewal: state.sessions.autoRenewedPackageSuccess, 
+        note: getTutorsLessonUserNotesByLessonId(state, ownProps),
     };
 };
 

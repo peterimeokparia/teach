@@ -1,39 +1,18 @@
 import {
 courseOption,     
 newCalendarEventData,
-transformDateTime } from 'services/course/pages/CalendarPage/helpers';
+ } from 'services/course/pages/CalendarPage/helpers';
 
 import useConsultationFormHook from 'services/course/pages/CalendarPage/hooks/useConsultationFormHook';
 import useSimpleEventHook from 'services/course/pages/CalendarPage/hooks/useSimpleEventHook';
 import Select from 'react-select';
 
-const ConsultationForm = ({
-    handleSubmit,    
-    saveInProgress,
-    onSaveError,
-    courses,
-    slotInfo }) => {
-
-    let {
-        firstName, 
-        setFirstName,
-        lastName, 
-        setLastName,
-        studentsName, 
-        setStudentsName, 
-        email, 
-        setEmail,
-        phone, 
-        setPhone,
-        coursesInterestedIn, 
-        setCoursesInterestedIn,
-        inputRef
+const ConsultationForm = ({handleSubmit, saveInProgress, onSaveError, courses, slotInfo }) => {
+    let { firstName, setFirstName, lastName, setLastName, studentsName, setStudentsName, email, 
+        setEmail, phone, setPhone, coursesInterestedIn, setCoursesInterestedIn, inputRef
     } = useConsultationFormHook();
 
-    let {
-        start,
-        end,
-        duration
+    let { start, end, duration 
     } = useSimpleEventHook(slotInfo);
 
     if ( saveInProgress ) {

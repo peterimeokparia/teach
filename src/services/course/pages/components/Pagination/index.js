@@ -1,30 +1,22 @@
-import {
-dispatch,
-useEffect,
-useState } from 'react';
-
-import {
-connect } from 'react-redux';
-
+import { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import './style.css';
             
 const Pagination = ({ 
-    currentUser,
     page,
     setButtonFilterCount,
     pagingLimit,
     filterBy,
-    loadPagedSessionData  }) => {
-
+    loadPagedSessionData }) => {
     const totalButtonFilterCount=setButtonFilterCount, limit=pagingLimit, firstPage=1, lastPage=page?.pages, totalPageCount=page?.pages;
     const [ pageNumber, setPageNumber ] = useState( firstPage );
     const [ userLoginSessions, setUserLoginSessions ] = useState([]);
     const [ totalPagesButtonSet, setTotalPagesButtonSet ] = useState( totalButtonFilterCount );
     const [ pageSet, setPageSet ] = useState( undefined );
 
- 
-    useEffect(() => {
+    let userHasNoSessions = ( userLoginSessions?.length === 0 );
 
+    useEffect(() => {
         if ( filterBy ) {
             loadPagedSessionData( filterBy, pageNumber, limit );
         }
@@ -34,10 +26,9 @@ const Pagination = ({
         }
 
         if ( !pageSet ){
-            setPageSet( Math.ceil( totalPageCount / totalButtonFilterCount)  )
+            setPageSet( Math.ceil( totalPageCount / totalButtonFilterCount)  );
         }
-
-    }, [ ( userLoginSessions?.length === 0 ), pageNumber ]);
+    }, [ userHasNoSessions, pageNumber, filterBy, limit, loadPagedSessionData, page, pageSet, totalButtonFilterCount, totalPageCount ]);
 
     const handleButtonSetCurrentValue = ( currentValue, currentIndex ) => {
         setPageNumber( currentValue );
@@ -58,16 +49,18 @@ const Pagination = ({
     };
 
     const handleLastPage = () => {
-        const pageSetTest = Math.ceil( totalPageCount / totalButtonFilterCount)
+        const pageSetTest = Math.ceil( totalPageCount / totalButtonFilterCount);
+
         setPageNumber( lastPage );
         setTotalPagesButtonSet( totalButtonFilterCount * (pageSetTest) ); 
     };
 
     const handlePageNumberSet = () => {
         const totalPageSet =  [ ...Array( totalPageCount).keys() ].slice(( totalPagesButtonSet - totalButtonFilterCount ), totalPagesButtonSet );
+        
         return totalPageSet.map((val, idx) => {
-        return <span> <button className="page"  onClick={() => handleButtonSetCurrentValue( (val + 1) , idx )}> {( val + 1 )} </button></span> 
-        })
+        return <span> <button className="page"  onClick={() => handleButtonSetCurrentValue( (val + 1) , idx )}> {( val + 1 )} </button></span>; 
+        });
     };
 
     const handlePagination = () => {
@@ -75,24 +68,24 @@ const Pagination = ({
             return <span> {handlePageNumberSet()} 
             <button className="elipsis" onClick={() => handleMagicElipsisIncrement()}>{'...'}</button> 
             <button className="page" onClick={() => handleLastPage()}> { lastPage } </button> 
-            </span>
+            </span>;
         else if (totalPagesButtonSet >= totalButtonFilterCount && totalPagesButtonSet < lastPage )
             return <span> <button className="page" onClick={() => handleFirstPage()}>{ firstPage }</button>
             <span>&nbsp;</span>
             <button className="elipsis"  onClick={() => handleMagicElipsisDecrement() }> { '...'}</button> 
             {handlePageNumberSet()} 
             <button className="elipsis" onClick={() => handleMagicElipsisIncrement()}>{'...'}</button> 
-            <button className="page" onClick={() => handleLastPage()}> { lastPage }  </button></span> 
+            <button className="page" onClick={() => handleLastPage()}> { lastPage }  </button></span>; 
         else if (totalPagesButtonSet >= lastPage )
             return <span> <button className="page" onClick={() => handleFirstPage()}>{ firstPage }</button>
             <span>&nbsp;</span>
             <button className="elipsis"  onClick={() => handleMagicElipsisDecrement() }> { '...'}</button> 
-            {handlePageNumberSet()}  </span> 
+            {handlePageNumberSet()}  </span>; 
         else if ( lastPage === pageNumber  )
             return <span> <button className="page" onClick={() => handleFirstPage()}>{ firstPage }</button>
             <span>&nbsp;</span>
             <button className="elipsis"  onClick={() => handleMagicElipsisDecrement() }> { '...'}</button> 
-            {handlePageNumberSet()}  </span> 
+            {handlePageNumberSet()}  </span>; 
     };
         
 return (   
@@ -102,10 +95,4 @@ return (
     );
 };
 
-const mapState = (state, ownProps)   => {
-    return {
-    currentUser: state.users.user
-    };
-};
-
-export default connect(mapState, null)(Pagination);
+export default connect(null, null)(Pagination);

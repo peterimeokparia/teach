@@ -17,9 +17,6 @@ setCurrentLesson } from 'services/course/actions/lessons';
 import { 
 togglePreviewMode } from 'services/course/actions/app';
 
-import { 
-setMarkDown } from 'services/course/helpers/EditorHelpers'; 
-    
 import {
 role } from 'services/course/helpers/PageHelpers';
 
@@ -58,7 +55,6 @@ const CourseLessonListComponent = ({
     props,
     previewMode,
     saveLesson,
-    setMarkDown,
     addNewLesson,
     onLessonError,
     courseId,
@@ -135,7 +131,6 @@ return (
 const mapDispatch = {
     addNewLesson, 
     saveLesson, 
-    setMarkDown,
     setLessonPlanUrl,
     setCurrentLesson,
     togglePreviewMode,

@@ -1,13 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'react-redux';
-
-import { 
-withStyles } from '@material-ui/core/styles';
-
-import { 
-Rnd } from 'react-rnd';
-
-import Paper from '@mui/material/Paper';
+import { withStyles } from '@material-ui/core/styles';
+import { Rnd } from 'react-rnd';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -29,12 +23,19 @@ const StickyHeaderTable = ({ columns, rows, onRowSelectedHandler }) =>  {
     const [ selectedColumn, setSelectedColumn ]  = React.useState(null);
     const [ isDragging, setIsDragging ]  = React.useState(false);
     const [ newColumns, setNewColumns ]  = React.useState( columns );
+    const [ rowCount, setRowCount ] = React.useState( 0 );
+
+    React.useEffect(() => {
+      if ( rows && rows?.length > 0 ){
+        setRowCount( rows?.length );
+      }
+    }, []);
 
     React.useEffect(() => {
       if ( isDragging ){
         setIsDragging( false );
       }
-    });
+    }, [ isDragging ]);
     
     React.useEffect(() => {
     }, [ changeLabelClassName, startColumnIndex, destinationColumnIndex, removedColumnInfo ]);
@@ -143,10 +144,10 @@ const StickyHeaderTable = ({ columns, rows, onRowSelectedHandler }) =>  {
               .map((row) => {
                 return (
                   <StyledTableRow hover role="checkbox" 
-                    tabIndex={-1} key={row?.code} 
-                     sx={{ maxWidth: 5000 }, { cursor: 'pointer' }} onClick={() => onRowSelectedHandler( row )}>
+                    tabIndex={-1} key={row?.code} sx={{ maxWidth: 5000, cursor: 'pointer' }} onClick={() => onRowSelectedHandler( row )}>
                     {newColumns?.map((column) => {
                       const value = row[column?.id];
+                      
                       return (
                         <TableCell key={column?.id} align={column?.align}>
                           {column?.format && typeof value === 'number'
@@ -164,7 +165,7 @@ const StickyHeaderTable = ({ columns, rows, onRowSelectedHandler }) =>  {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={rows?.length}
+        count={rowCount}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
@@ -172,6 +173,6 @@ const StickyHeaderTable = ({ columns, rows, onRowSelectedHandler }) =>  {
       />
       </>
   );
-}
+};
 
 export default Redux.connect( null, null )(StickyHeaderTable);

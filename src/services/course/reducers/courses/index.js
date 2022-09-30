@@ -6,8 +6,7 @@ ADD_COURSE_SUCCESS,
 ADD_COURSE_ERROR, 
 LOAD_COURSES_BEGIN, 
 LOAD_COURSES_SUCCESS, 
-OPEN_NEW_COURSE_MODAL, 
-CLOSE_NEW_COURSE_MODAL, 
+TOGGLE_COURSE_MODAL, 
 LOAD_COURSES_ERROR,
 SAVE_COURSE_BEGIN,
 SAVE_COURSE_SUCCESS, 
@@ -62,14 +61,8 @@ const reducer = produce((draft, action) => {
              draft.onCoursesError = action.error;
              draft.coursesLoading = false;
         return;
-        case OPEN_NEW_COURSE_MODAL:
-             draft.isModalOpen = true;
-             draft.saveInProgress = false;
-             draft.onSaveError = null;
-        return;
-        case CLOSE_NEW_COURSE_MODAL:
-             draft.isModalOpen = false;
-             draft.onSaveError = null;
+        case TOGGLE_COURSE_MODAL:
+             draft.isModalOpen = !draft.isModalOpen;
         return;
         case UPDATE_CURRENT_CLASSROOM_TUTOR:
              draft.courseTutor = action.payload;   

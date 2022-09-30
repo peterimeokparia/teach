@@ -114,4 +114,5 @@ export const videoMeta = element => {
   videoMetaDataExternalId:'name',
   objectId: element?._id,
   displaySavedRecording: true
-}}; 
+ };
+}; 

@@ -1,32 +1,13 @@
-import { 
-useState, 
-useEffect } from 'react';
-
-import { 
-useDispatch } from 'react-redux';
-    
-import { 
-addNewOnlineAnswer,
-loadOnlineAnswers,
-deleteOnlineAnswer } from 'services/course/actions/onlineanswers';
-
-import { 
-navigate } from '@reach/router';
-
-import {
-elementMeta,  
-editorContentType } from 'services/course/pages/QuestionsPage/helpers';
-
-import {
-manageEditorsFieldCollection } from 'services/course/pages/QuestionsPage/helpers';
-
-import {
-pageNavigationHelper } from 'services/course/pages/OnlineQuestionsPage/components/ManageEditors/helpers';
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { addNewOnlineAnswer, loadOnlineAnswers, deleteOnlineAnswer } from 'services/course/actions/onlineanswers';
+import { navigate } from '@reach/router';
+import { elementMeta, editorContentType } from 'services/course/pages/QuestionsPage/helpers';
+import { manageEditorsFieldCollection } from 'services/course/pages/QuestionsPage/helpers';
+import { pageNavigationHelper } from 'services/course/pages/OnlineQuestionsPage/components/ManageEditors/helpers';
 
 function useManageEditorsHook( answers, question, currentUser, operatorBusinessName, courseId ){
-  
     const dispatch = useDispatch();
-
     const [ contentChanged, setContentChanged ] = useState( undefined );
 
     useEffect(() => { 
@@ -34,7 +15,7 @@ function useManageEditorsHook( answers, question, currentUser, operatorBusinessN
             dispatch(loadOnlineAnswers());
             setContentChanged( false );
         }
-    }, [ answers?.length, loadOnlineAnswers, contentChanged, setContentChanged ] );   
+    }, [ answers?.length, contentChanged, setContentChanged, dispatch ] );   
 
 const addNewEditor = () => {
   let config = {

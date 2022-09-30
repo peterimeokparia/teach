@@ -19,6 +19,7 @@ export const DELETE_NOTE_BEGIN = "DELETE NOTE BEGIN";
 export const DELETE_NOTE_SUCCESS = "DELETE NOTE SUCCESS";
 export const DELETE_NOTE_ERROR = "DELETE NOTE ERROR";
 export const SET_NOTES_MARKDOWN = "SET NOTES MARKDOWN";
+export const BUILD_LESSON_NOTES = "BUILD_LESSON_NOTES";
 export const LESSONNOTES = "lessonNotes";
 export const STUDENTNOTES = "studentNotes";
 
@@ -109,3 +110,11 @@ export const loadNotesByUserId = ( user ) => {
         });
     };
 };
+
+export const buildLessonNotes = ( noteProps ) => {     
+    return dispatch => {
+        dispatch({ type: BUILD_LESSON_NOTES, payload: noteProps });
+    };
+};
+
+

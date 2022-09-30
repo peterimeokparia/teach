@@ -55,11 +55,15 @@
 .comment-round-button-10 { 
   background: transparent
 }
+.comment-round-button-11 { 
+  background: #d2e3f7
+}
  .comment-round-button-1, .comment-round-button-2, 
  .comment-round-button-3, .comment-round-button-4, 
  .comment-round-button-5, .comment-round-button-6, 
  .comment-round-button-7, .comment-round-button-8, 
- .comment-round-button-9, .comment-round-button-10 {
+ .comment-round-button-9, .comment-round-button-10,
+ .comment-round-button-11 {
    align-self: flex-end; 
    width:70px;
    height:60px;
@@ -73,62 +77,68 @@
 }
 .comment-round-button-1:hover
  {
-  background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
-  background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  transform: translateY(4px);
+  box-shadow: 5px 5px #999;
   cursor: pointer;
 }
 .comment-round-button-2:hover
  {
-  background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
-  background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  transform: translateY(4px);
+  box-shadow: 5px 5px #999;
   cursor: pointer;
 }
 .comment-round-button-3:hover
  {
-  background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
-  background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  transform: translateY(4px);
+  box-shadow: 5px 5px #999;
   cursor: pointer;
 }
 .comment-round-button-4:hover
  {
-  background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
-  background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  transform: translateY(4px);
+  box-shadow: 5px 5px #999;
   cursor: pointer;
 }
 .comment-round-button-5:hover
  {
-  background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
-  background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  transform: translateY(4px);
+  box-shadow: 5px 5px #999;
   cursor: pointer;
 }
 .comment-round-button-6:hover
  {
-  background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
-  background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  transform: translateY(4px);
+  box-shadow: 5px 5px #999;
   cursor: pointer;
 }
 .comment-round-button-7:hover
  {
-  background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
-  background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  transform: translateY(4px);
+  box-shadow: 5px 5px #999;
   cursor: pointer;
 }
 .comment-round-button-8:hover
  {
-  background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
-  background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  transform: translateY(4px);
+  box-shadow: 5px 5px #999;
   cursor: pointer;
 }
 .comment-round-button-9:hover
  {
-  background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
-  background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  transform: translateY(4px);
+  box-shadow: 5px 5px #999;
   cursor: pointer;
 }
 .comment-round-button-10:hover
  {
-  background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
-  background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  transform: translateY(4px);
+  box-shadow: 5px 5px #999;
+  cursor: pointer;
+}
+.comment-round-button-11:hover
+ {
+  transform: translateY(4px);
+  box-shadow: 5px 5px #999;
   cursor: pointer;
 }
 .hideDiv{

@@ -1,61 +1,19 @@
-
-import {
-useEffect } from 'react';
-
-import { 
-connect } from 'react-redux';
-
-import { 
-formNames } from 'services/course/pages/CalendarPage/helpers';
-
-import {
-iconStyleMain } from './inlineStyles';
-
-import { 
-navigate,
-Redirect } from '@reach/router';
-
-import { 
-role } from 'services/course/helpers/PageHelpers';
-
+import { connect } from 'react-redux';
+import { formNames } from 'services/course/pages/CalendarPage/helpers';
+import { iconStyleMain } from './inlineStyles';
 import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
-import NotesIcon from '@material-ui/icons/Notes';
 import useSimpleEventHook from 'services/course/pages/CalendarPage/hooks/useSimpleEventHook';
 import useAddEventToCalendarHook from 'services/course/pages/CalendarPage/hooks/useAddEventToCalendarHook';
-import FormsComponent from 'services/course/pages/Forms/components/FormsComponent';
-
 import './style.css';
 
 const LessonNavigationComponent = ({ props }) => {
-
     let {
-        operatorBusinessName,
-        operatorId,
-        isModalOpen,
-        closeModal,
         calendarSlotInfo,
-        addNewCalendarEvent,
         user,
-        users,
         courses,
         lessons,
-        scheduledStudents,
-        setScheduledStudents,
-        studentsOption,
-        events, 
-        userId, 
-        publishedForms, 
-        calendarEventType, 
-        calendarId, 
-        addNewFormBuilder,
-        eventDataObj,
-        component,
-        handleEventClick,
-        handleSelect,
         courseId,
-        lessonId, 
-        classRoomId,
-        addNotes
+        lessonId
     } = props;
 
     let {
@@ -93,7 +51,6 @@ const LessonNavigationComponent = ({ props }) => {
     };
 
     function addLessonEventToCalendar( lessonCalendarProps ) {
-  
         let event = {
             title: lessonCalendarProps?.title,
             backgroundColor: lessonCalendarProps?.backgroundColor,

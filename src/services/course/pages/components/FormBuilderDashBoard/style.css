@@ -4,7 +4,7 @@
     z-index: 1;
     margin-left: 15%;
     top: 50px;
-    width: 356px;
+    width: 3px;
     height: 100px;
 }
 .clock .digital {
@@ -13,24 +13,57 @@
     font-size: 100px;
     top: 130px;
     margin-left: -60%; 
-  
 }
 .clock .digital .publish {
     cursor: pointer;
 }
+.formbuilder-round-button-1 { 
+    background: orange;
+  }
+  .formbuilder-round-button-2 { 
+    background: yellowgreen
+  }
+  .formbuilder-round-button-3 { 
+    background: red
+  }
+  .formbuilder-round-button-4 { 
+  background: skyblue
+  }
+  .formbuilder-round-button-1, .formbuilder-round-button-2, .formbuilder-round-button-3, .formbuilder-round-button-4 {
+   border-radius: 50%;
+   box-shadow: 10px 10px black;
+  }
+  .formbuilder-round-button-1:hover
+  {
+    transform: translateY(4px);
+    box-shadow: 5px 5px #999;
+    cursor: pointer;
+  }
+  .formbuilder-round-button-2:hover
+  {
+    transform: translateY(4px);
+    box-shadow: 5px 5px #999;
+    cursor: pointer;
+  }
+  .formbuilder-round-button-3:hover
+  {
+    transform: translateY(4px);
+    box-shadow: 5px 5px #999;
+    cursor: pointer;
+  }
+  .formbuilder-round-button-4:hover
+  {
+    transform: translateY(4px);
+    box-shadow: 5px 5px #999;
+    cursor: pointer;
+  }
 @media only screen and (min-width: 638px) {
     .clock {
-        /* position: fixed;
-        z-index: 1;
-        margin-left: 0%;
-        top: 500px;
-        width: 356px;
-        height: 100px; */
         position: fixed;
         z-index: 1;
         margin-left: 15%;
         top: 50px;
-        width: 356px;
+        width: 3px;
         height: 100px;
     }
     .clock .digital {
@@ -43,22 +76,14 @@
     .clock .digital .publish {
         cursor: pointer;
     }
-   
 }
-
   @media only screen and (max-width: 637px) {
     .clock {
-        /* position: fixed;
-        z-index: 1;
-        margin-left: 0%;
-        top: 500px;
-        width: 356px;
-        height: 100px; */
         position: fixed;
         z-index: 1;
         margin-left: 15%;
         top: 50px;
-        width: 356px;
+        width: 3px;
         height: 100px;
     }
     .clock .digital {
@@ -80,17 +105,11 @@
   
   @media (min-width: 1281px) {
     .clock {
-        /* position: fixed;
-        z-index: 1;
-        margin-left: 0%;
-        top: 500px;
-        width: 356px;
-        height: 100px; */
         position: fixed;
         z-index: 1;
         margin-left: 15%;
         top: 50px;
-        width: 356px;
+        width: 3px;
         height: 100px;
     }
     .clock .digital {
@@ -99,6 +118,7 @@
         font-size: 100px;
         top: 130px;
         margin-left: 0%; 
+        width: 3px;
     }
     .clock .digital .publish {
         cursor: pointer;
@@ -112,17 +132,11 @@
   
   @media (min-width: 1025px) and (max-width: 1280px) {
     .clock {
-        /* position: fixed;
-        z-index: 1;
-        margin-left: 0%;
-        top: 500px;
-        width: 356px;
-        height: 100px; */
         position: fixed;
         z-index: 1;
         margin-left: -15%;
         top: 50px;
-        width: 356px;
+        width: 3px;
         height: 100px;
     }
     .clock .digital {
@@ -155,17 +169,11 @@
   
   @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
     .clock {
-        /* position: fixed;
-        z-index: 1;
-        margin-left: 0%;
-        top: 500px;
-        width: 356px;
-        height: 100px; */
         position: fixed;
         z-index: 1;
         margin-left: -15%;
         top: 50px;
-        width: 356px;
+        width: 3px;
         height: 100px;
     }
     .clock .digital {
@@ -184,17 +192,11 @@
   
   @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
     .clock {
-        /* position: fixed;
-        z-index: 1;
-        margin-left: 0%;
-        top: 500px;
-        width: 356px;
-        height: 100px; */
         position: fixed;
         z-index: 1;
         margin-left: -105%;
         top: 50px;
-        width: 356px;
+        width: 3px;
         height: 100px;
     }
     .clock .digital {
@@ -222,7 +224,7 @@
         z-index: 1;
         margin-left: -85%;
         top: 50px;
-        width: 356px;
+        width: 3px;
         height: 100px;
     }
     .clock .digital {
@@ -248,7 +250,7 @@
         z-index: 1;
         margin-left: -105%;
         top: 50px;
-        width: 356px;
+        width: 3px;
         height: 100px;
     }
     .clock .digital {

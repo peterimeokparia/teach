@@ -1,8 +1,6 @@
-import {
-serviceWorkerSupported,
-send } from '../PushNotifications';
-
+import { serviceWorkerSupported, send } from '../PushNotifications';
 import randomColor from 'randomcolor';
+import Swal from 'sweetalert2';
 
 export const newSiteUser = {
     firstname:"", 
@@ -80,9 +78,7 @@ export const handlePushNotificationSubscription = ( subscribedUsers, user,  newS
     if ( serviceWorkerSupported() ) {
         subscription = send();
     }
-
     if ( subscription ) {
-
         subscription
         .then(
             response => {
@@ -91,16 +87,12 @@ export const handlePushNotificationSubscription = ( subscribedUsers, user,  newS
                 if  ( subscribedUser && (! endpointExists ) ) {
                     addDeviceToExistingSubscriptionAction( { ...subscribedUser, subscriptions: [ ...subscribedUser?.subscriptions,  response ] } );
                 } 
-                
                 if ( !subscribedUser ) {
                     newSubscriptionAction( { userId: user?._id,  subscriptions: [ response ],  operatorId: user?.operatorId } );
                 }
             }
-
         ).catch( error => console.error( error ));   
-
     }
-
 };
 
 export const validateOperatorBusinessName = () => <div>{"Please verify the url"}</div> ;
@@ -121,7 +113,6 @@ export function passwordValidator(password){
         {regex: "[0-9]", message: passwordFailedValidationMessages?.number, points: 20}, 
         {regex: "[ $@$!%*#?& ]", message: passwordFailedValidationMessages?.symbol, points: 20},
         {regex: ".{8,20}", message: passwordFailedValidationMessages?.length, points: 20},
-        // {regex: ".{,20}", message: passwordFailedValidationMessages?.maxLength, points: 10}
     ];
 
     try {
@@ -163,9 +154,8 @@ export const getItemColor = ( items ) => {
     let color = null;
     let existingColor = null;
     
-    color = generateRandomColor();
-
     do {
+        color = generateRandomColor();
         existingColor = items?.find( item => item?.color === color );
         
         if ( !existingColor ) {
@@ -177,4 +167,41 @@ export const getItemColor = ( items ) => {
 
 export const generateRandomColor = () => {
   return randomColor({ luminosity: 'light',  hue: 'random' });
+};
+
+export function getLessonOutComeLinks( link ) {
+    getYoutubeLinks( link );
+}
+
+export function getLinkedItemHref( title, link ) {
+ return <a href={link}><span style={{border:'1px solid blue'}}>{title}</span></a>;
+}
+
+export function getYoutubeLinks( link ){
+    let youtubeEmbedLink = null; 
+
+    if ( !link?.includes('youtube') ) return;
+    if ( link?.includes?.('embed') ) return link;
+    return ( youtubeEmbedLink = rewriteYoutubeLinks( link ), youtubeEmbedLink );
+}
+
+function rewriteYoutubeLinks( link ){
+    if ( link.includes('watch') ) {
+        return `https://www.youtube.com/embed/${link?.split('=')[1]}`;
+    }
+    return link.includes('youtu.be') ? `${link?.replace('youtu.be', 'www.youtube.com/embed')}` : ''; 
+}
+
+export const setSwalInput = async ( title, inputPlaceholder, confirmButtonColor ) => {
+    const { value: text } = await Swal.fire({
+        title,
+        input: 'text',
+        inputPlaceholder,
+        confirmButtonColor
+      })
+      
+      if ( text ) {
+       return text;
+      } 
+      return undefined;
 };

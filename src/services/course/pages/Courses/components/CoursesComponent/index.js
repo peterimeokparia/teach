@@ -1,220 +1,38 @@
-import { 
-useEffect, 
-useRef, 
-useState } from 'react';
-
-import { 
-connect } from 'react-redux';
-
-import { 
-saveCourse, 
-deleteCourse, 
-loadCourses, 
-unSubscribeFromCourse } from 'services/course/actions/courses';
-
-import { 
-setCurrentLesson } from 'services/course/actions/lessons';
-
-import { 
-getUsersByOperatorId,
-getCalendarsByOperatorId,
-getCalendarByCalendarEventType,
-getOperatorFromOperatorBusinessName } from 'services/course/selectors';
-
-import { 
-addCalendar } from 'services/course/actions/calendar';
-
-import {
-role } from 'services/course/helpers/PageHelpers';
-
-import {
-handleAddPushNotificationSubscriptionToEntity,
-handleEmailNotificationSubscriptionToEntity,
-handleSavingEntityAction } from 'services/course/pages/components/SubscriptionComponent/MiniSideBarMenu/helper';
-
-import { 
-forceReload } from 'services/course/helpers/ServerHelper';
-
-import {
-eventEnum,
-getCalendarColor } from 'services/course/pages/CalendarPage/helpers';
-
-import {
-goToCalendar } from 'services/course/pages/Users/helpers';
-
+import { connect } from 'react-redux';
+import { saveCourse, deleteCourse, loadCourses, unSubscribeFromCourse } from 'services/course/actions/courses';
+import { setCurrentLesson } from 'services/course/actions/lessons';
+import { getUsersByOperatorId, getCalendarsByOperatorId, getCalendarByCalendarEventType, getOperatorFromOperatorBusinessName } from 'services/course/selectors';
+import { addCalendar } from 'services/course/actions/calendar';
+import { role } from 'services/course/helpers/PageHelpers';
+import { handleAddPushNotificationSubscriptionToEntity, handleEmailNotificationSubscriptionToEntity, handleSavingEntityAction } from 'services/course/pages/components/SubscriptionComponent/MiniSideBarMenu/helper';
+import { eventEnum } from 'services/course/pages/CalendarPage/helpers';
+import { goToCalendar } from 'services/course/pages/Users/helpers';
 import HelpIcon from '@material-ui/icons/Help';
 import Roles from 'services/course/pages/components/Roles';
-import Loading from 'services/course/pages/components/Loading';
 import NavLinks from 'services/course/pages/components/NavLinks';
-import Swal from 'sweetalert2';
 import MiniSideBarMenu from 'services/course/pages/components/SubscriptionComponent/MiniSideBarMenu';
 import UnsubscribeIcon from '@material-ui/icons/Unsubscribe';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import useCourseComponentHook from 'services/course/pages/Courses/hooks/useCourseComponentHook';
 import './style.css';
 
 const CoursesComponent = ({
-    operatorBusinessName,
-    selectedTutorId,
-    user,
-    users, 
-    operator,
-    courses,
-    calendars,
-    calendar,
-    coursesLoading,
-    onCoursesError,
-    addCalendar,
-    lessons,
-    saveCourse,
-    deleteCourse,
-    unSubscribeFromCourse,
-    selectedLessonPlanLesson,
-    setCurrentLesson,
-    sessions }) => {
-    const inputRef = useRef();
-    const [ editing, setEditing ] = useState(false);
-    const [ name, setNewName ] = useState('');
-    const [ currentName, setCurrentName ] = useState('');
-    const [ description, setNewDescription ] = useState('');
-    const [ currentDescription, setCurrentDescription ] = useState('');
-    const [ currentCourse, setCurrentCourse ] = useState({});
-    const [ deleting, setDelete ] = useState(false);
+    operatorBusinessName, user, users, operator, courses, calendars,
+    calendar, coursesLoading, onCoursesError, addCalendar, saveCourse, selectedLessonPlanLesson, sessions 
+}) => {
+    let props = { selectedLessonPlanLesson, courses, coursesLoading, onCoursesError,
+        users, user, sessions, calendars, calendar, operatorBusinessName, operator
+    };
 
-    useEffect(() => {
-
-        loadCourses();
-
-        if ( editing ) {
-            inputRef.current.focus();
-        }
-
-        if ( deleting ) {
-            setDelete(false);
-        }
-
-        if ( selectedLessonPlanLesson?._id ) {
-            setCurrentLesson({});
-        }
-        
-    }, [ editing, courses, deleting ]);
-
-    if ( coursesLoading ) {
-        return <Loading />;
-    }
-
-    if ( onCoursesError ) {
-        return <div> { onCoursesError.message } </div>; 
-    }
-
-const beginEditing = ( course ) => {
-    setCurrentCourse(course);
-    setCurrentName(course?.name);
-    setCurrentDescription(course?.description);
-    setEditing(true);
-};
-
-const submitForm = (e) => {
-    e.preventDefault();
-    saveCourse({
-        ...currentCourse, 
-        name: (name === "") ? currentName : name, 
-        description: (description === "") ? currentDescription : description 
-    })
-    .then(reset)
-    .catch( error => {
-        setEditing(false);
-        setEditing(true);
-    });
-};
-
-const reset = () => {
-    setEditing(false);
-    forceReload();
-};
-
-const performDelete = ( course ) => {
-    let courseSubscribers = users?.filter(user => user?.courses?.includes(course?._id) && user?.role === "Student");
-    let session = sessions.find(session => session?.courseId === course?._id && session?.userId === user?._id);
-
-    if ( courseSubscribers?.length > 0 ) {
-        Swal.fire({
-            title: "Denied! Subscriptions exist!",
-            icon: 'warning',
-            html:  `<div> Subscribed Users: </div> <div><ul>${
-                courseSubscribers?.map( subsribeduser => (
-                    `<li> ${subsribeduser?.firstname}</li>`       
-                ))
-            }</ul></div>`,
-            confirmButtonText: 'Ok',
-            confirmButtonColor: '#673ab7',
-            })
-            .then( response => {
-                if ( response?.value ) { 
-                    return;
-                } 
-            });
-        return;
-    }
-
-    performCourseValidation('Delete ?', 'warning', "You are about to delete:", course)
-    .then( (response) => {
-        if ( response?.value ) {
-            if ( user?.role === "Tutor" ) {
-                deleteCourse(course);
-                unSubscribeFromCourse( user, course?._id, session?._id );
-            }
-            setDelete(true);
-            return;
-        } else {
-            return;
-        }
-    })
-    .catch( error => { console.log( error ); });
-};
-
-const updateSubscription = ( course ) => {
-    let session = sessions.find(session => session?.courseId === course?._id && session?.userId === user?._id);
-
-    performCourseValidation('Unsubscribe ?', 'warning', "You are about to unsubscribe from:", course)
-    .then( (response) => {
-        if ( response?.value ) {
-            unSubscribeFromCourse( user, course?._id, session?._id );
-            return;
-        } else {
-            return;
-        }
-    })
-    .catch( error => { console.log( error ); });
-};
-
-function performCourseValidation( title, icon, htmlTitle, course ) {
-    return Swal.fire({
-        title,
-        icon,
-        html:   `<div>${htmlTitle} ${course?.name}</div>`,
-        showCancelButton: true,
-        confirmButtonText: 'Yes',
-        confirmButtonColor: '#673ab7',
-        cancelButtonText: 'No'
-    });
-}
-
-const calendarProps = {
-    users,
-    calendars,
-    calendar,
-    addCalendar,
-    operatorBusinessName,
-    operator
-};
-
+    let { editing, submitForm, inputRef, name, setNewName, currentName, description,
+        setNewDescription, currentDescription, beginEditing, performDelete, updateSubscription
+    } = useCourseComponentHook( props );
+    
 return  editing 
     ? ( <div>
-            <form
-                onSubmit={submitForm}
-            >
+            <form onSubmit={submitForm}>
             <input
                 name="courseTitle"
                 ref={inputRef}
@@ -224,16 +42,14 @@ return  editing
             >
             </input> 
             </form>
-            <form
-                onSubmit={submitForm}
-            > 
-                <input
-                    name="courseName"
-                    value={description}
-                    onChange={e => setNewDescription(e.target.value)}
-                    placeholder={currentDescription}
-                >
-                </input> 
+            <form onSubmit={submitForm}> 
+            <input
+                name="courseName"
+                value={description}
+                onChange={e => setNewDescription(e.target.value)}
+                placeholder={currentDescription}
+            >
+            </input> 
             </form>
         </div>) 
     : ( <div className="ComponentCourseListItem">
@@ -288,15 +104,15 @@ return  editing
                             handleSaving={() => handleSavingEntityAction( course, course?.savedQuestions, user,  saveCourse, 'savedQuestions' ) }
                         >
                             {( key, handleMouseDown, menuVisible ) => (
-                                 <NotificationsIcon 
-                                    id="NotificationsIcon"
-                                    key={ key }
-                                    data-cy={`${(course?.createdBy)?.toLowerCase()}NotificationsIcon`}
-                                    className="round-button-2"
-                                    mouseDown={ handleMouseDown }
-                                    onClick={handleMouseDown }
-                                    navMenuVisible={ menuVisible } 
-                                />
+                            <NotificationsIcon 
+                                id="NotificationsIcon"
+                                key={ key }
+                                data-cy={`${(course?.createdBy)?.toLowerCase()}NotificationsIcon`}
+                                className="round-button-2"
+                                mouseDown={ handleMouseDown }
+                                onClick={handleMouseDown }
+                                navMenuVisible={ menuVisible } 
+                            />
                             )}
                         </MiniSideBarMenu>    
                         </span>
@@ -317,7 +133,7 @@ return  editing
                             id="QuizzIcon"
                             data-cy={`${(course?.createdBy)?.toLowerCase()}QuizzIcon`}
                             className="round-button-2"
-                            onClick={() => goToCalendar( calendarProps, user, eventEnum?.QuizzForms )}
+                            onClick={() => goToCalendar({ users, calendars, calendar, operatorBusinessName, operator, addCalendar }, user, eventEnum?.QuizzForms )}
                         />
                         </span>     
                         )}       
@@ -342,7 +158,6 @@ const mapState = ( state, ownProps) => ({
     selectedLessonPlanLesson: state.lessons.selectedLessonPlanLesson,
     coursesLoading: state.courses.coursesLoading,
     onCoursesError: state.courses.onCoursesError,
-    lessons: Object.values(state.lessons.lessons),
     sessions: Object.values(state.sessions.sessions)
 });
 

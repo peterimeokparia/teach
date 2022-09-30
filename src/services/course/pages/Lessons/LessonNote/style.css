@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css?family=Orbitron');
+.lessonNote-header  {
+    /* hide scrollbar but allow scrolling */
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    width: 1200px; 
+    min-width: 1400px;
+    margin-top: 2%;
+    overflow:hidden; 
+    overflow-y: auto;
+    background-color: whitesmoke;
+    scrollbar-width: none; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px;
+    font-weight: 400;
+    font-size: 2.125rem;
+    line-height: 1.235;
+
+
+    font-family: 'Orbitron';
+    
+  }
+  .lessonNote-header-inner  {
+    /* hide scrollbar but allow scrolling */
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    width: 1200px; 
+    min-width: 1395px;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-left: 2%;
+    margin-right: 2%;
+    overflow:hidden; 
+    overflow-y: auto;
+    background-color: white;
+    scrollbar-width: none; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Orbitron';
+  }
+  .lessonNote-header-inner .lessonNote-header-inner-date-time {
+    font-family: 'Orbitron';
+    color: green;
+    font-size: 20px;
+    margin-left: 50%;
+    margin-left: 1px;
+  }

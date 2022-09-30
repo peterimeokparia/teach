@@ -5,7 +5,7 @@ remove,
 get,
 incrementSession,
 decrementSessionCount,
-autoRenew } from 'services/course/api';
+autoRenew } from 'services/course/api/index.js';
 
 export const DECREMENT_SESSION_COUNT_FOR_PACKAGE_OPTIONS = "DECREMENT SESSION COUNT FOR PACKAGE OPTIONS"; 
 export const INCREMENT_SESSION_COUNT = "INCREMENT SESSION COUNT";
@@ -26,6 +26,12 @@ export const DELETE_SESSION_ERROR = "DELETE SESSION ERROR";
 export const AUTO_RENEW_PACKAGE_SUCCESS = "AUTO RENEW PACKAGE SUCCESS";
 export const AUTO_RENEW_PACKAGE_ERROR = "AUTO RENEW PACKAGE ERROR";
 export const LAST_LOGGEDIN_USER = "LAST_LOGGEDIN_USER"; 
+export const SET_IN_SESSION = "SET IN SESSION";
+export const SET_HIDE_MEETING_STAGE = "SET HIDE MEETING STAGE";
+export const SET_FULL_MEETING_STAGE = "SET FULL MEETING STAGE";
+export const SET_VIDEO_MODAL_MODE_ON = "SET VIDEO MODAL MODE ON";
+export const SET_ICON_ON_COLOR = "SET ICON ON COLOR";
+export const TOGGLE_MEETING_PANEL = "TOGGLE MEETING PANEL";
 
 export const addNewSession = (session) => {
     return dispatch => {
@@ -120,4 +126,32 @@ export const autoRenewSessionPackages = ( currentUser, session ) => {
     };
 };
 
+export const setInSession = inSession => ({
+    type: SET_IN_SESSION,
+    payload: inSession
+});
+
+export const setHideMeetingStage = hideMeetingStage => ({
+    type: SET_HIDE_MEETING_STAGE,
+    payload: hideMeetingStage
+});
+
+export const setFullMeetingStage = fullMeetingStage => ({
+    type: SET_FULL_MEETING_STAGE,
+    payload: fullMeetingStage
+});
+
+export const setVideoModalMode = videoModalModeOn => ({
+    type: SET_VIDEO_MODAL_MODE_ON,
+    payload: videoModalModeOn
+});
+
+export const setIconOnColor = iconOnColor => ({
+    type: SET_ICON_ON_COLOR,
+    payload: iconOnColor
+});
+
+export const toggleMeetingPanel = () => ({
+    type: TOGGLE_MEETING_PANEL
+});
 

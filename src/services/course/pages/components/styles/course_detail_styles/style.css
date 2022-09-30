@@ -1,0 +1,52 @@
+.course_detail_list::-webkit-scrollbar  {
+    display: none;
+    overflow-y: none;
+}
+.course_detail_list {
+    height: 81vh;
+    width: 31.5vh;
+    padding: 5px;
+    margin-top: 2%;
+    /* display: flex; */
+    /* flex-direction: column; */
+    list-style: none;
+    -ms-overflow-style: none;  
+    scrollbar-width: none; 
+    overflow-y: scroll; 
+}
+.course_detail_list .course_detail_list_body {
+    border-radius: 25px;
+    background: whitesmoke;
+    text-decoration: underline burlywood;
+    padding: 10px;
+    padding-top: 25px;
+    margin-top: 45px;
+    height: 220px;
+    box-shadow: 10px 10px;
+    box-shadow: 10px 10px;
+    box-shadow: 0 6px rgb(255 0 0), 0 9px rgb(0 255 0), 0 9px rgb(255 174 0);
+    vertical-align: middle;
+    transform: perspective(1px) translateZ(0);
+    transition-duration: 0.5s;
+} 
+.course_detail_list .course_detail_list_body .lessonMultiColor {
+    text-transform: capitalize;
+
+        /* background-image: linear-gradient(to left, violet, indigo, green, blue, yellow, orange, red); */
+    /* background-image: linear-gradient(to left, violet, red, white, yellow, orange, red); */
+    background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 1px 1px black;
+}
+.course_detail_list .course_detail_list_body .course_detail_list_body_items {
+    padding-top: 10px;
+    color: white;
+    border-radius: 3px;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.5rem;
+}

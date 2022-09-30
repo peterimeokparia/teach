@@ -1,82 +1,48 @@
-import React from 'react';
-
-import { 
-connect } from 'react-redux';
-
-import {
-editor_upload_url,
-handleChange } from 'services/course/pages/OnlineQuestionsPage/helpers';
-
-import { 
-formTypes } from 'services/course/pages/FormBuilder/helpers';
-
-import {
-deleteQuestionIconStyle,
-videoMeta } from 'services/course/pages/OnlineQuestionsPage/components/OnlineListItems/inlineStyles.js';
-
-import {
-inputType } from 'services/course/pages/QuestionsPage/helpers';
-
-import {
-elementMeta } from 'services/course/pages/QuestionsPage/helpers';
-
-import { 
-role } from 'services/course/helpers/PageHelpers';
-
-import { 
-loadOnlineQuestions,  
-saveOnlineQuestions } from 'services/course/actions/onlinequestions';
-
-import { 
-saveEditorMarkDownObjectToMw } from 'services/course/actions/editor';
-
-import { 
-SET_ONLINEQUESTION_MARKDOWN,
-SET_EXPLANATION_ANSWER_MARKDOWN } from 'services/course/actions/onlinequestions';
-
-import { 
-handleChangedValue } from 'services/course/pages/FormBuilder/FormFields/helpers';
-
+import React, { useRef, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { deleteQuestionIconStyle, videoMeta } from 'services/course/pages/OnlineQuestionsPage/components/OnlineQuestionDetailPage/OnlineListItems/inlineStyles.js';
+import { inputType } from 'services/course/pages/QuestionsPage/helpers';
+import { elementMeta } from 'services/course/pages/QuestionsPage/helpers';
+import { role } from 'services/course/helpers/PageHelpers';
+import { QUESTION_MARKDOWN } from 'services/course/actions/onlinequestions';
+import { EXPLAINER_MARKDOWN } from 'services/course/actions/onlinequestionexplainanswer';
+import { formTypes } from 'services/course/pages/FormBuilder/helpers';
+import useSectionPageRef from 'services/course/helpers/Hooks/useSectionPageRef';
 import Roles from 'services/course/pages/components/Roles';
 import MaterialUiVideoComponent from 'services/course/pages/components/MaterialUiVideoComponent';
-import EditorComponent from 'services/course/pages/components/EditorComponent';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MiniSideBarMenu from 'services/course/pages/components/SubscriptionComponent/MiniSideBarMenu';
 import MiniSideBarButton from 'services/course/pages/components/SubscriptionComponent/MiniSideBarButton';
 import Basic from 'services/course/pages/components/SubscriptionComponent/MiniSideBarMenu/helper/formTypeSelector/Basic';  
-import MathScience from 'services/course/pages/OnlineQuestionsPage/components/MathScience';
-    
+import QuestionComponent from 'services/course/pages/OnlineQuestionsPage/components/OnlineQuestionsMultiEditorComponent/OnlineQuestionEditorComponent/components/QuestionComponent';
+
 function OnlineQuestionEditorComponent({ 
   props,
   element,
+  explainAnswer,
+  selectedOnlineQuestion,
   deleteQuestion,
   saveRecording,
-  inputValue,
-  setInputValue,
-  saveOnlineQuestions,
-  loadOnlineQuestions,
-  saveEditorMarkDownObjectToMw }){
+  outcomes 
+}){
+  let { formType, currentUser, formBuilderState, formBuilderStatus, displayVideoComponent, previewMode } = props;
 
-    let {
-      formType,
-      currentUser,
-      formBuilderStatus,
-      displayVideoComponent,
-      previewMode,
-      addNewMathScienceFormInputField
-    } = props;
+  const inputRef = useRef( null );
+  const questionOutcome = outcomes?.find( outcome => outcome?.links.find( link => link.uniqueId === element?.uniqueId ) );
+  const { title } = Object(questionOutcome);
+
+  let { setPageSectionRef } = useSectionPageRef( (selectedOnlineQuestion?._id === element?._id), inputRef );
 
 return (
-  <div className={"OnlineListItems"}
-    id={ element?._id }
-  >
-    <div> 
-    <Roles role={ currentUser?.role === role.Tutor && formBuilderStatus === elementMeta.state.Manage }>
-    <div className={"sideburgerMenu"}>  
-    <span>
+  <div className='OnlineListItems' id={ element?._id }>
+    <div className='listItem'> 
+      <div className='lessons'>
+    <Roles role={ currentUser?.role === role.Tutor && formBuilderState === elementMeta.state.Manage }>
+     <div className={"sideburgerMenu"}>  
+      <span>
     <MiniSideBarMenu question={ element } formType={formType}>
-      {( handleMouseDown, menuVisible ) => (
-        <>
+    {( handleMouseDown, menuVisible ) => (
+      <>
         <MiniSideBarButton
           mouseDown={ handleMouseDown }
           navMenuVisible={ menuVisible } 
@@ -84,8 +50,8 @@ return (
         <div id="sideFlyoutMenu" className={ menuVisible ? "show" : "hide" } >
         { <Basic question={ element }/> }
         </div>
-        </>
-      )}
+      </>
+    )}
     </MiniSideBarMenu>
     </span>  
     </div> 
@@ -99,72 +65,29 @@ return (
     }
     </span> 
     </Roles>  
-    <div className={ (formBuilderStatus === elementMeta.state.Taking ) ? 'editor-taking' : 'editor'  }>
-    {(element?.inputType === inputType.MathScienceQuestion) &&
-      <div className=""> 
-      <MathScience 
-        className={'editor-main'}
-        previewMode={previewMode?.isPreviewMode} 
-        formElement={element}
-        saveMathScienceFormField={saveOnlineQuestions}
-        loadMathScienceFormField={loadOnlineQuestions}
-      />
-        { (formType !== formTypes?.report) &&
-          <div className="explanation-content"> 
-            <EditorComponent
-              id={element?._id}
-              className={'editor-main'}
-              name={element?.name}
-              content={ element?.answerExplanationMarkDownContent }
-              handleChange={(editor) => handleChange({ ...element, answerExplanationMarkDownContent: editor }, SET_EXPLANATION_ANSWER_MARKDOWN, `/onlinequestions/`, saveEditorMarkDownObjectToMw )}
-              upload_url={editor_upload_url}
-              readOnly={( currentUser?._id && element?.userId === currentUser?._id && currentUser?.role === role.Tutor) ? false : true}
-            /> 
-          </div>
-        }
-          </div>
-        }
-        {(element?.inputType === inputType.MainBodyTableColumnQuestion && 
-          previewMode?.isPreviewMode  ) &&
-          <div className="input"> 
-            <input
-              type={"text"}
-              // value={ inputValue }
-              value={ element?.markDownContent ? element?.markDownContent : inputValue }
-              onChange={e => handleChangedValue( e.target.value, setInputValue, { ...element, markDownContent: e.target.value }, saveOnlineQuestions ) }
-              placeholder={""}
-            />  
-          </div>
-        }
-        {(element?.inputType === inputType.MainBodyTableColumnQuestion && 
-          !previewMode?.isPreviewMode  ) &&
-          <div className=""> 
-            {element?.markDownContent }
-          </div>
-        }
-        { (element?.inputType === inputType.MainBodyQuestion) &&
-          <div>    
-            <EditorComponent
-              id={element?._id}
-              className={'editor-main'}
-              name={element?.name}
-              upload_url={editor_upload_url} 
-              content={ element?.markDownContent }
-              handleChange={(editor) => handleChange({ ...element, markDownContent: editor }, SET_ONLINEQUESTION_MARKDOWN, `/onlinequestions/`, saveEditorMarkDownObjectToMw )}
-              readOnly={( currentUser?._id && element?.userId === currentUser?._id && currentUser?.role === role.Tutor) ? false : true}
-            /> 
-            {(formType !== formTypes?.report) &&
-            <div className="explanation-content"> 
-              <EditorComponent
-                id={element?._id}
-                className={'editor-main'}
-                name={element?.name}
-                upload_url={editor_upload_url}
-                content={ element?.answerExplanationMarkDownContent }
-                handleChange={(editor) => handleChange({ ...element, answerExplanationMarkDownContent: editor }, SET_EXPLANATION_ANSWER_MARKDOWN, `/onlinequestions/`, saveEditorMarkDownObjectToMw )}
-                readOnly={( currentUser?._id && element?.userId === currentUser?._id && currentUser?.role === role.Tutor) ? false : true}
-              /> 
-            </div>
+    <div className={ 'editor'  }> 
+    {( formType === formTypes?.furtherstudy ) && <div className='editor-header'>
+      <h1>{ title }</h1>
+      </div>}
+      { (element?.inputType === inputType.MainBodyQuestion) &&
+          <div className="">
+            <QuestionComponent
+              question={ element }
+              editorMarkDownContentType={ QUESTION_MARKDOWN }
+              formBuilderState={ formBuilderState }
+              previewMode={ previewMode } 
+              readOnly={ false }
+              placeHolder={'Write question...'}
+            />
+          { ( formBuilderState !== elementMeta?.state.Taking || [ elementMeta?.status.Submitted, elementMeta?.status.Reviewed  ].includes( formBuilderStatus  )  ) && 
+              <QuestionComponent
+                question={ explainAnswer }
+                editorMarkDownContentType={ EXPLAINER_MARKDOWN }
+                previewMode={ previewMode } 
+                formBuilderState={ formBuilderState }
+                readOnly={ false }
+                placeHolder={'Write answer and explanation...'}
+              />
           }
           { ( displayVideoComponent ) && 
               < MaterialUiVideoComponent 
@@ -175,14 +98,18 @@ return (
                 extendedMeetingSettings={false} 
               />
           }
-          </div> 
-        }
+          {
+            setPageSectionRef( (selectedOnlineQuestion?._id === element?._id), inputRef )
+          }
+        </div> 
+      }
     </div>
+   </div> 
     </div>
   </div>
- )
+ );
 }
 
-export default connect( null, { loadOnlineQuestions, saveOnlineQuestions, saveEditorMarkDownObjectToMw })(OnlineQuestionEditorComponent);
+export default connect( null, null )(OnlineQuestionEditorComponent);
     
     

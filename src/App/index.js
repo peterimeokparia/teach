@@ -1,12 +1,7 @@
-import { 
-connect } from 'react-redux';
-
-import { 
-logOut } from 'services/course/actions/users';
-
-import { 
-Beforeunload } from 'react-beforeunload';
-
+import { connect } from 'react-redux';
+import { logOut } from 'services/course/actions/users';
+import { Beforeunload } from 'react-beforeunload';
+import { FormBuilderQuestionsWizard } from './FormStepWizardRoutes';
 import MainRoute from './MainRoute';
 import './style.css';
 import dotenv from 'dotenv';
@@ -15,7 +10,11 @@ dotenv.config();
 const App = ({logOut, user}) => {  
   return(
     <div>
+      {/* <nav>
+      <Link to="/">Home</Link> <Link to="dashboard">Dashboard</Link>
+      </nav> */}
        <MainRoute/>
+       <FormBuilderQuestionsWizard />
     </div>
     // <div>
     //    <Beforeunload onBeforeunload={(ev) => { 

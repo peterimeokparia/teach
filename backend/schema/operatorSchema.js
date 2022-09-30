@@ -8,6 +8,10 @@ const operatorSchema = new Schema ({
         type: String, 
         required: true  
     },
+    type: { 
+        type: String, 
+        required: true  
+    },
     firstName: { 
         type: String, 
         required: true  

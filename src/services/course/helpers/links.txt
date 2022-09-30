@@ -553,6 +553,9 @@ https://www.youtube.com/watch?v=oxFr7we3LC8
 React Context Menu
 -------------------
 https://www.pluralsight.com/guides/how-to-create-a-right-click-menu-using-react 
+https://blog.logrocket.com/creating-context-menu-react/
+https://szhsin.github.io/react-menu/
+
 
 
 React-Image-Marker
@@ -575,3 +578,251 @@ https://github.com/JedWatson/classnames
 Animate - Rotate - axis - perspective effect
 ---------------------------------------------
 https://css-tricks.com/how-css-perspective-works/
+
+Hide Scroll Bars
+https://blog.hubspot.com/website/hide-scrollbar-css
+
+Animate - blinking effect
+https://www.w3docs.com/snippets/css/how-to-create-a-blinking-effect-with-css3-animations.html
+https://www.w3docs.com/tools/code-editor/13719
+
+Git
+https://www.w3docs.com/learn-git.html
+
+More Css
+https://www.w3docs.com/learn-css.html
+
+More Js
+https://www.w3docs.com/learn-javascript.html
+
+chemistry
+https://codepen.io/josdea/pen/eBdYpo
+
+mathjax
+---------
+https://www.npmjs.com/package/mathjax-react
+https://www.npmjs.com/package/react-mathjax
+
+Math/Latex/Chem package
+https://ctan.math.illinois.edu/macros/latex/contrib/mhchem/mhchem.pdf
+https://codepen.io/josdea/pen/eBdYpo
+https://mhchem.org/222/222PPT/pdf222/III1301Chapter13CG.pdf
+https://tex.stackexchange.com/questions/36505/chemistry-molecular-structure-drawing-programs
+
+https://www.youtube.com/watch?v=3MZisT78ALQ
+
+https://docs.moodle.org/400/en/Chemistry_notation_using_mhchem
+
+https://web.chemdoodle.com/
+
+https://bl.ocks.org/mbostock/3037015
+
+Ketcher
+--------
+https://github.com/epam/ketcher
+https://lifescience.opensource.epam.com/ketcher/demo.html
+https://lifescience.opensource.epam.com/ketcher/demo/ketcher_2_3_remote.html
+https://github.com/epam/ketcher#readme
+https://github.com/epam/ketcher/tree/master/packages/ketcher-react
+https://github.com/epam/miew/tree/master/packages/miew-react
+https://www.npmjs.com/package/@aelgasser/react-molecule-sketcher?activeTab=readme
+
+MarkDownPreview
+-----------------
+https://shd101wyy.github.io/markdown-preview-enhanced/#/
+
+
+https://i.upmath.me/g/%24%24%5Cvec%7BA%7D%20%3D%20%7B%5Cvec%7B%5Cmathfrak%7Bm%7D%7D%0A%5Ctimes%20%5Cvec%7BR%7D_0%20%5Cover%20R_0%5E3%7D.%24%24
+https://latex.org/forum/viewtopic.php?t=34805&p=117340
+
+https://algebra.js.org/
+
+https://npm.io/package/@jupyterlab/latex
+
+https://npm.io/search/keyword:LaTex
+
+https://npm.io/package/mathlive
+
+physics
+https://www.reactphysics.com/
+
+https://gojs.net/latest/index.html?gclid=EAIaIQobChMI7f-Ag4KJ-AIVAr_ICh1W5gONEAMYASAAEgJ04PD_BwE
+https://towardsdatascience.com/implementing-2d-physics-in-javascript-860a7b152785
+https://github.com/MartinHeinz/physics-visual
+
+
+https://github.com/MartinHeinz/physics-visual/blob/5440a8cf3b0e936045c45b1bcad08cd093fd0a4e/index.js#L36 
+
++ 
+
+https://i.upmath.me/g/%24%24%5Cusepackage%7Bchemfig%7D%20%0A%5Cchemfig%7BC(-%5B%3A0%5DH)(-%5B%3A90%5DH)(-%5B%3A180%5DH)(-%5B%3A270%5DH)%7D%5Cchemfig%7BC(-%5B%3A0%5DH)(-%5B%3A90%5DH)(-%5B%3A180%5DH)(-%5B%3A270%5DH)%7D%24%24%0A%20%0A%0A%24%24%5Cvec%7BA%7D%20%3D%20%7B%5Cvec%7B%5Cmathfrak%7Bm%7D%7D%0A%5Ctimes%20%5Cvec%7BR%7D_0%20%5Cover%20R_0%5E3%7D.%24%24
+
+TikZit
+---------
+https://tikzit.github.io/
+
+physics
+https://www.ck12.org/physics/velocity/lesson/Velocity-Middle-School-dup-handle-tbd/
+
+https://codesandbox.io/s/dn4m9?file=/src/components/QuestionBox.js
+
+DraftJS packages - Katex - Mathjax - plugins
+// https://stackoverflow.com/questions/36499858/draft-js-persist-editorcontent-to-database
+//https://javascript.plainenglish.io/send-draft-js-data-to-a-server-and-fetch-it-with-react-hooks-735f20cc2b5c
+//https://www.geeksforgeeks.org/spinning-ball-animation-with-glow-effect-using-css/
+//https://codesandbox.io/s/damp-haze-2srcj?file=/src/Editor.js:142-207
+//https://draftjs.org/docs/api-reference-editor/
+//https://stackoverflow.com/questions/51665544/how-retrieve-text-from-draftjs
+//https://npmmirror.com/package/draft-js-highlight-plugin
+//https://gist.github.com/paulinep/ac5a9bc63862835fe95c353f81138557
+//https://codesandbox.io/s/uezo3?file=/src/index.js:4040-4053
+//https://javascript.hotexamples.com/site/file?hash=0xf13c7789d2df18c901ac3e0faf3ee217dd4b62a0221817916d947d274dc92485&fullName=draft-js-plugins-master/stories/align-drag-focus-and-resize-images/App.js&project=draft-js-plugins/draft-js-plugins
+
+//https://daveteu.medium.com/draftjs-insert-paste-images-into-your-content-820159025258
+//https://stackoverflow.com/questions/63747816/adding-image-draft-js-image-plugin
+//https://www.freecodecamp.org/news/how-to-paste-images-directly-into-an-article-in-draft-js-e23ed3e0c834/
+
+//https://gist.github.com/sisodiaa/d2c5e31e52d486887d5e42a73e7cc50d 
+
+//https://codesandbox.io/s/pcjpk
+//https://jpuri.github.io/react-draft-wysiwyg/#/docs
+//https://stackoverflow.com/questions/46320355/upload-and-render-image-in-draft-js-based-editor
+//https://github.com/facebook/draft-js
+//https://codesandbox.io/embed/oq8zxjp7zq?codemirror=1
+//https://github.com/ignitionworks/draft-js-video-plugin
+
+//https://codesandbox.io/s/1p2rq?file=/src/Component/Editor.js  image alignment
+
+//https://codesandbox.io/s/bn1ze?file=/VideoAdd/index.js:1058-1104
+
+// https://codesandbox.io/s/uezo3?file=/src/index.js
+// https://formik.org/
+// https://github.com/jaredpalmer/formik
+
+///https://project-awesome.org/nikgraf/awesome-draft-js
+// https://codesandbox.io/s/3snmu?file=/src/index.js:5409-5426
+
+//https://www.npmjs.com/package/immutable
+
+//https://codesandbox.io/s/qw1rqjbll?file=/index.js
+// https://latex-tutorial.com/absolute-value-symbol/
+// https://codesandbox.io/s/3snmu?file=/src/index.js
+//https://codesandbox.io/s/0m86mwzp2p
+//https://codesandbox.io/s/still-sun-ktc3k
+
+DrafjtJS-alignment
+--------------------
+https://codesandbox.io/s/oq8zxjp7zq
+
+Slate
+https://codesandbox.io/s/yt8jc
+
+Mhchem - 
+--------
+https://codepen.io/josdea/pen/eBdYpo
+
+DraftJS
+----------
+Image upload / paste
+--------------------
+https://daveteu.medium.com/draftjs-insert-paste-images-into-your-content-820159025258
+
+Custom RadioButtons
+https://markheath.net/post/customize-radio-button-css
+
+Styling Lists
+---------------
+https://www.456bereastreet.com/archive/201105/styling_ordered_list_numbers/
+https://css-tricks.com/numbering-in-style/
+
+DraftJS - alignment
+--------
+https://stackoverflow.com/questions/25477765/the-text-align-center-isnt-working-in-a-span-element
+https://medium.com/@ibraheems.ali95/text-alignment-in-draftjs-and-using-with-statetohtml-caecd0138251
+https://stackoverflow.com/questions/39262994/how-to-align-text-in-draft-js
+
+DraftJS - Blocks, styles
+------------
+https://draftjs.org/docs/advanced-topics-block-styling
+https://dev.to/rose/draft-js-introduction-custom-styles-highlighted-text-and-have-formatting-buttons-show-whether-they-are-on-or-off-4f9p
+https://dev.to/rose/draft-js-simple-content-manipulation-b7a
+https://www.geeksforgeeks.org/how-to-create-horizontal-scrollable-sections-using-css/
+https://www.geeksforgeeks.org/how-to-create-horizontal-scrollable-sections-using-css/
+https://stackoverflow.com/questions/50307326/how-to-insert-html-in-draft-js
+
+
+
+Smooth scrolling effect
+------------------------
+https://www.w3schools.com/howto/howto_css_smooth_scroll.asp#section1
+
+Step Wizard Form
+------------------
+https://codesandbox.io/s/qlf9w?file=/src/Result.js
+
+Dotenv-webpack.config issue
+https://stackoverflow.com/questions/59911706/module-not-found-error-cant-resolve-fs-in-node-modules-dotenv-lib
+
+https://github.com/graphql/graphql-js/issues/2721
+
+Absolute imports / qualified
+------------------------------
+https://www.bezkoder.com/absolute-import-react/
+
+https://www.thecodingcouple.com/uncaught-typeerror-util-inherits-is-not-a-function/
+
+
+--Webpack 5 error - Uncaught ReferenceError: require is not defined
+https://stackoverflow.com/questions/72619156/webpack-5-error-uncaught-referenceerror-require-is-not-defined
+
+https://bobbyhadz.com/blog/javascript-referenceerror-require-is-not-defined
+
+https://learn.coderslang.com/0021-nodejs-require-is-not-defined-error/
+
+https://bobbyhadz.com/blog/react-referenceerror-process-not-defined
+
+https://stackoverflow.com/questions/41359504/webpack-bundle-js-uncaught-referenceerror-process-is-not-defined
+
+https://bobbyhadz.com/blog/react-referenceerror-process-not-defined
+
+https://github.com/panva/jose/discussions/160
+
+
+https://thomasstep.com/blog/a-guide-to-using-jwt-in-javascript
+
+
+https://security.stackexchange.com/questions/177171/security-tokens-for-external-exposure-uuid-or-hmac-jwt-hash
+
+https://rajaraodv.medium.com/securing-react-redux-apps-with-jwt-tokens-fcfe81356ea0
+
+https://stackoverflow.com/questions/70855672/cant-use-jsonwebtoken-with-latest-version-of-react
+
+https://www.npmjs.com/package/react-jwt
+
+https://security.stackexchange.com/questions/177171/security-tokens-for-external-exposure-uuid-or-hmac-jwt-hash
+
+https://stackoverflow.com/questions/70855672/cant-use-jsonwebtoken-with-latest-version-of-react
+
+https://dev.to/lowla/create-react-app-with-a-previous-version-of-react-4g03
+
+typography: nice graph
+https://mui.com/material-ui/customization/typography/
+
+destructuring undefined || null
+https://stackoverflow.com/questions/48433008/js-es6-destructuring-of-undefined
+
+Custom Select Component
+//https://towardsdev.com/how-to-create-an-accessible-custom-select-dropdown-in-react-9d9858415f10
+
+Toppr
+https://www.toppr.com/ask/question/rubbing-alcohol-used-for-rubdowns-on-its-evaporation-reduces-fever/
+
+Mui-Buttons
+https://mui.com/material-ui/react-menu/
+
+Draftjs insert issue
+https://stackoverflow.com/questions/59832152/draft-js-editor-does-not-update-its-content-when-its-value-changed-by-parent-co
+
+Understanding ZIndex & positioning
+-------------------------------------
+https://developer.mozilla.org/en-US/docs/Web/CSS/z-index

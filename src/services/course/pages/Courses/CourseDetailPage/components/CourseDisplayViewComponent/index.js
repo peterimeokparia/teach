@@ -1,74 +1,17 @@
-import { 
-connect } from 'react-redux';
-
-import { 
-Link, navigate } from '@reach/router';
-
-import {
-role } from 'services/course/helpers/PageHelpers';
-
-import { 
-addNewLesson, 
-saveLesson,
-setLessonPlanUrl,
-setCurrentLesson, 
-startLesson } from 'services/course/actions/lessons';
-
-import { 
-togglePreviewMode } from 'services/course/actions/app';
-
-import { 
-setMarkDown } from 'services/course/helpers/EditorHelpers'; 
-    
-import { 
-deleteFileByFileName } from 'services/course/api';
-
-import { 
-getUsersByOperatorId,    
-getCoursesByCreatedByIdSelector,
-getOperatorFromOperatorBusinessName, 
-getCalendarByCalendarEventType, 
-getCalendarsByOperatorId,
-getEventByCourseIdLessonIdUserId, 
-getTutorsLessonUserNotesByLessonId,
-getStudentsLessonUserNotesByLessonId } from 'services/course/selectors';
-
-import { 
-addCalendar } from 'services/course/actions/calendar';
-
-import {
-addNotes,
-loadAllNotes } from 'services/course/actions/notes';
-
-import { 
-setItemInSessionStorage } from 'services/course/helpers/ServerHelper';
-
-import { 
-Markup } from 'interweave';
-
-import { 
-deleteQuestionIconStyle,
-sideBarEditIconStyle,
-sideBarDeleteIconStyle,
-sideBarHomeWorkIconStyle,
-sideBarHelpIconStyle,
-swapHorizIconStyle,
-calendarStyle } from '../inlineStyles';
-
-import {
-formTypes } from 'services/course/pages/FormBuilder/helpers';
-
-import {
-eventEnum } from 'services/course/pages/CalendarPage/helpers';
-
-import {
-goToCalendar } from 'services/course/pages/Users/helpers';
-
-import {
-incrementDisplayedItemCount,
-toggleDisplayedItems } from 'services/course/pages/Courses/CourseDetailPage/components/CourseDisplayViewComponent/helpers';
-
-import LessonOutComesComponent from 'services/course/pages/Courses/CourseDetailPage/components/CourseDisplayViewComponent/LessonOutComesComponent';
+import { connect } from 'react-redux';
+import { role } from 'services/course/helpers/PageHelpers';
+import { deleteFileByFileName } from 'services/course/api';
+import { setItemInSessionStorage } from 'services/course/helpers/ServerHelper';
+import { lessonHeaderEditIconStyle ,sideBarEditIconStyle,sideBarDeleteIconStyle,sideBarHomeWorkIconStyle,sideBarHelpIconStyle,
+    swapHorizIconStyle, calendarStyle, sideBarFurtherStudyIconStyle } from '../inlineStyles';
+import {formTypes } from 'services/course/pages/FormBuilder/helpers';
+import { eventEnum } from 'services/course/pages/CalendarPage/helpers';
+import { goToCalendar } from 'services/course/pages/Users/helpers';
+import { incrementDisplayedItemCount, toggleDisplayedItems } from 'services/course/pages/Courses/CourseDetailPage/components/CourseDisplayViewComponent/helpers';
+import { mapState, mapDispatch } from './connector';
+import { setSelectedOutcome, toggleConcepts } from 'services/course/actions/outcomes';
+import { restrictTextLength } from 'services/course/pages/Courses/helpers';
+import { Link } from '@reach/router';
 import useCourseDisplayHook from 'services/course/pages/Courses/hooks/useCourseDisplayHook';
 import SportsScoreIcon from '@mui/icons-material/SportsScore';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
@@ -77,19 +20,23 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import HelpIcon from '@material-ui/icons/Help';
 import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import MainMenu from 'services/course/pages/components/MainMenu';
 import NewLessonPage from 'services/course/pages/Lessons/NewLessonPage';
 import LoginLogout from 'services/course/pages/LoginPage/components/LoginLogout';
 import Roles from 'services/course/pages/components/Roles';
 import ListItem from 'services/course/pages/components/ListItem';
-//https://mui.com/material-ui/react-card/
+import FullTextSearchComponentTest from 'services/course/pages/components/FullTextSearchComponentTest';
+import QuestionOutcomeComponent from 'services/course/pages/FormBuilder/FormQuestions/components/QuestionOutcomeComponent';
+import  'services/course/pages/components/styles/course_detail_styles/style.css';
+import  'services/course/pages/components/styles/course_detail_outcome_styles/style.css';
+import  'services/course/pages/components/styles/sidebar_styles/style.css';
 
 const CourseDisplayViewComponent = ({
-    props,
+    saveFormBuilder,
     previewMode,
     saveLesson,
     outcomes,
-    setMarkDown,
     addNewLesson,
     startLesson,
     onLessonError,
@@ -100,113 +47,87 @@ const CourseDisplayViewComponent = ({
     addCalendar,
     addNotes,
     loadAllNotes,
+    allNotes,
     users,
     courses,
-    setVideoUrl,
     selectedTutorId,
-    currentVideoUrl,
     setLessonPlanUrl,
     setCurrentLesson,
     course,
     lessons,
     togglePreviewMode,
+    toggleQuestionModal,
+    searchItem,
     operatorBusinessName,
     operator,
     courseDetailChildren,
     currentUser, 
     selectedLessonPlanLesson,
     event,
+    concepts,
+    selectedOutcome,
+    toggleConcepts,
+    setSelectedOutcome,
     allEvents,
     studentsNote,
     tutorsNote }) => {
-
     let courseDisplayProps = {
-        operatorBusinessName,
-        currentUser,
-        course, 
-        courses,
-        lessons,
-        selectedTutorId,
-        setCurrentLesson,
-        setLessonPlanUrl,
-        previewMode,
-        selectedLessonPlanLesson,
-        togglePreviewMode,
-        saveLesson,
-        setItemInSessionStorage,
-        deleteFileByFileName,
-        togglePreviewMode,
-        saveLesson,
-        startLesson,
-        users,
-        calendars,
-        calendar,
-        addCalendar,
-        operatorBusinessName,
-        operator,
-        courseId,
-        lessonId,
-        event,
-        allEvents,
-        addNotes,
-        loadAllNotes,
-        studentsNote,
-        tutorsNote
-        // lessonItem,
-        // setFileToRemove,
-        // setLessonItem,
-        // fileToRemove
+        currentUser, course, courses, lessons, selectedTutorId, setCurrentLesson, searchItem,
+        setLessonPlanUrl, previewMode, selectedLessonPlanLesson, togglePreviewMode, saveLesson, setItemInSessionStorage,
+        deleteFileByFileName, startLesson, users, calendars, calendar, addCalendar, operatorBusinessName, concepts,
+        operator, courseId, lessonId, event, allEvents, addNotes, loadAllNotes, allNotes, studentsNote, tutorsNote,
     };
-
     let {
-        onMatchListItem, 
-        setPreviewEditMode,
-        navigationContent,
-        selectedCourse,
-        lessonsByCourseId,
-        fileToRemove,
-        lessonItem,
-        setFileToRemove,
-        setLessonItem,
-        toggleLessonItemDisplayCount, 
-        setToggleLessonItemDisplayCount,
-        calendarProps,
-        lessonProps,
-        formProps, 
-        startLessonSession
+        onMatchListItem, setPreviewEditMode, navigationContent, selectedCourse, 
+        lessonItem, toggleLessonItemDisplayCount, setToggleLessonItemDisplayCount, 
+        lessonsByCourseId, startLessonSession, calendarProps, formProps, searchItemCollection, 
+        handleSearch, resetSelectedSearchItem
     } = useCourseDisplayHook( courseDisplayProps );
-    
+   
+    const updateQuestionOutcomeId = ( outcome ) => {
+        setSelectedOutcome( outcome );
+    }
 
 return (
     <div className="CourseDetail"> 
         <header>
             <div>
-            <MainMenu 
-                navContent={navigationContent}
-            />
+            <MainMenu navContent={navigationContent} />
              <div className="multiColor"> { ( courseId ) ? selectedCourse?.name : course?.name} </div>
             </div>
-                <Roles
-                    role={  currentUser?.role === role.Tutor }
-                >
-                    <EditIcon 
-                        onClick={setPreviewEditMode}
-                        color="action"
-                        className="comment-round-button-1"
-                        style={ deleteQuestionIconStyle() }
-                    />
-                </Roles>
-                <LoginLogout
-                    operatorBusinessName={operatorBusinessName}
-                    user={currentUser} 
-                    operator={operator}
+            <>
+            { courseDetailChildren }
+            </>
+            <Roles role={ currentUser?.role === role.Tutor }>
+                <EditIcon 
+                    onClick={setPreviewEditMode}
+                    color="action"
+                    className="comment-round-button-1"
+                    style={ lessonHeaderEditIconStyle() }
                 />
+            </Roles>
+            <LoginLogout
+                operatorBusinessName={operatorBusinessName}
+                user={currentUser} 
+                operator={operator}
+            />
         </header>
-        <div className="content"> 
+        <div className={'content'}> 
                 <div className="sidebar"> 
+                <div className="sidebar-search">
+                <FullTextSearchComponentTest 
+                    searchContent={lessonsByCourseId}
+                    searchKeysPropArray={[ 'title', 'introduction' ]}
+                    handleSearch={handleSearch}
+                    searchKeys={[ 'title', 'introduction', 'markDownContent' ]}
+                    width={300}                  
+                />
+                </div>
                 <ListItem
-                    collection={lessonsByCourseId}
+                    collection={ searchItem ? searchItemCollection : lessonsByCourseId }
                     onMatchListItem={onMatchListItem}
+                    ul={'course_detail_list'}
+                    li={'course_detail_list_body'}
                     path={"lessons"}
                 >
                     {( lesson ) => (
@@ -220,8 +141,10 @@ return (
                         >
                         { (edit, remove, forms) => (
                            <div>
-                            <div>
-                                <Link to={`lessons/${lesson._id}`}> <span title={lesson?._id} className="lessonMultiColor">{ lesson?.title } </span> </Link> 
+                            <div onClick={resetSelectedSearchItem}>
+                            {
+                              <Link to={`lessons/${lesson._id}`}> <span title={lesson?._id} className="lessonMultiColor">{ restrictTextLength( lesson?.title, 10, 10 ) }</span></Link>
+                            } 
                             </div>
                             <div className="row justify-content-center"> 
                                 <span>
@@ -241,9 +164,7 @@ return (
                             </div>
                             <div className="row justify-content-center">
                             <span> 
-                            <Roles
-                                role={ currentUser?.role === role.Tutor }
-                            >
+                            <Roles role={ currentUser?.role === role.Tutor }>
                                 <EditIcon 
                                     onClick={() => { edit(lesson.title); } }
                                     color="action"
@@ -251,9 +172,7 @@ return (
                                     style={ sideBarEditIconStyle() }
                                 />
                             </Roles>
-                            <Roles
-                                role={currentUser?.role === role.Tutor }
-                            >
+                            <Roles role={currentUser?.role === role.Tutor }>
                                 <DeleteIcon 
                                     onClick={remove}
                                     color="action"
@@ -261,51 +180,40 @@ return (
                                     style={ sideBarDeleteIconStyle() }
                                 />
                             </Roles>
-                            {/* <Roles
-                                role={currentUser?.role === role.Tutor  ||  currentUser?.role === role.Student}
-                            > */}
                                 <HelpIcon 
-                                    onClick={() => { forms( lesson, formTypes.quizzwithpoints, formProps ) } }
+                                    onClick={() => { forms( lesson, formTypes.quizzwithpoints, formProps ); } }
                                     color="action"
                                     className="comment-round-button-2"
                                     style={ sideBarHelpIconStyle(currentUser) }
                                 />
-                            {/* </Roles> */}
-                            {/* <Roles
-                            role={currentUser?.role === role.Tutor  ||  currentUser?.role === role.Student}
-                            > */}
                                 <HomeOutlinedIcon 
-                                    onClick={() => { forms( lesson, formTypes.homework, formProps ) } }
+                                    onClick={() => { forms( lesson, formTypes.homework, formProps ); } }
                                     color="action"
                                     className="comment-round-button-4"
                                     style={ sideBarHomeWorkIconStyle() }
                                 />
-                            {/* </Roles> */}
-                            {/* <Roles
-                                role={currentUser?.role === role.Tutor  ||  currentUser?.role === role.Student}
-                            >  */}
+                                <AutoStoriesIcon
+                                    onClick={() => { forms( lesson, formTypes.furtherstudy, formProps ); } }
+                                    color="action"
+                                    className="comment-round-button-9"
+                                    style={ sideBarFurtherStudyIconStyle() }
+                                />
                                 <SwapHorizIcon 
                                     onClick={() => incrementDisplayedItemCount(  toggleLessonItemDisplayCount, setToggleLessonItemDisplayCount ) }
                                     color="action"
                                     className="comment-round-button-6"
                                     style={ swapHorizIconStyle() }
                                 />
-                            {/* </Roles> */}
                             </span> 
                             </div>   
-                 
                         </div>
-                         
                         )}
                         </NewLessonPage> 
                     )}
                 </ListItem>    
-                <Roles
-                    role={currentUser?.role === role.Tutor }
-                >
+                <Roles role={currentUser?.role === role.Tutor } >
                     < NewLessonPage 
                         className="add-lesson-button"
-                        // onSubmit={title => addNewLesson(title, title, courseId, Date.now(), selectedTutorId)} 
                         onSubmit={title => addNewLesson(title, title, courseId, Date.now(), currentUser?._id)} 
                         lessons={lessonsByCourseId}
                         courseId={courseId}
@@ -323,74 +231,50 @@ return (
                     </NewLessonPage>
                 </Roles>
                 {/*SIDE BAR 1 */}
-                </div>
+                </div>     
                 <div className="lesson-content"> 
-                    <div className="lesson2">   
-
-                    { courseDetailChildren }
-
-                    {
-                        <div> 
-                            <h5>
-                                <Markup content={selectedLessonPlanLesson?.introduction} />
-                            </h5>
-                               
-                        </div>
-                    }
-                    </div> 
+                    <div className="lesson2"/>   
                     <div className="toggleItems"> 
                     {
-                       lessonItem && toggleDisplayedItems( toggleLessonItemDisplayCount, selectedLessonPlanLesson ?? lessonItem, courseDisplayProps )  
+                       lessonItem && 
+                       toggleDisplayedItems( toggleLessonItemDisplayCount, selectedLessonPlanLesson ?? lessonItem, 
+                            courseDisplayProps, outcomes.filter(lessonOutcome => lessonOutcome?.lessonId === lessonItem?._id)
+                        )  
                     }
                     </div> 
-                </div> 
+                </div>
+                <div className="sidebar-2"> 
+                { concepts &&
+                <div>
+                    <ListItem
+                        collection={ outcomes.filter(lessonOutcome => lessonOutcome?.lessonId === lessonItem?._id  ) }
+                        onMatchListItem={onMatchListItem}
+                        ul={'sidebar_list'}
+                        li={'sidebar_list_body'}
+                        path={"lessons"}
+                    >
+                        {( outcome, index ) => (
+                        <QuestionOutcomeComponent 
+                            outcome={outcome}
+                            index={index}
+                            handleOnBlur={() => toggleConcepts}
+                        >
+                        {( outcome ) => 
+                            <HelpIcon 
+                                onClick={() => { updateQuestionOutcomeId(outcome) }}
+                                color="action"
+                                className="comment-round-button-4"
+                            /> 
+                        }
+                        </QuestionOutcomeComponent>  
+                        )}
+                    </ListItem>  
+                </div>       
+                }
+            </div>            
         </div>
     </div>
     );
 };
 
-const mapDispatch = {
-    addNewLesson, 
-    saveLesson, 
-    setMarkDown,
-    setLessonPlanUrl,
-    setCurrentLesson,
-    togglePreviewMode,
-    addCalendar,
-    startLesson,
-    addNotes,
-    loadAllNotes
-};
-
-const mapState = (state, ownProps) => {
-    return {
-        operator: getOperatorFromOperatorBusinessName(state, ownProps),
-        users: getUsersByOperatorId(state, ownProps),
-        calendar: getCalendarByCalendarEventType(state, ownProps),
-        calendars: getCalendarsByOperatorId(state, ownProps),
-        courseTutor: state.courses.courseTutor,
-        currentUser: state.users.user,
-        user: state.users.user,
-        previewMode: state.app.previewMode,
-        isLessonsLoading:state.lessons.lessonsLoading,
-        videoUrl: state.lessons.videoUrl,
-        lessonPlanUrl: state.lessons.lessonPlanUrl,
-        selectedLessonPlanLesson: state.lessons.selectedLessonPlanLesson,
-        course: state.courses.selectedCourseFromLessonPlanCourseDropDown,
-        onLessonError: state.lessons.onSaveLessonError,
-        courses: Object.values( state.courses.courses ),
-        lessons: Object.values(state.lessons.lessons),
-        coursesByTutor: getCoursesByCreatedByIdSelector( state, ownProps ),
-        currentVideoUrl: state.lessons.currentVideoUrl,
-        studentsSubscribedToThisCourse : getUsersByOperatorId(state, ownProps)?.filter(user => user?.role === "Student" && user?.courses?.includes(ownProps?.courseId)),
-        lessonStarted: state.lessons.lessonStarted,
-        sessions: Object.values(state?.sessions?.sessions)?.filter(session => session?.courseId === ownProps?.courseId),
-        onSessionRenewal: state.sessions.autoRenewedPackageSuccess,
-        event: getEventByCourseIdLessonIdUserId(state, ownProps),
-        allEvents: Object.values( state.events.events),
-        studentsNote: getStudentsLessonUserNotesByLessonId( state, ownProps ),
-        tutorsNote: getTutorsLessonUserNotesByLessonId( state, ownProps )
-    };
-};
-
-export default connect( mapState, mapDispatch )(CourseDisplayViewComponent);
+export default connect( mapState, mapDispatch )(CourseDisplayViewComponent); 

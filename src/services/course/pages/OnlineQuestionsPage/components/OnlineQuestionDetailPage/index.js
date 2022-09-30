@@ -11,8 +11,8 @@ const OnlineQuestionDetailPage = ({
 useEffect(() => {}, []);
 
 return (
-    <div className="">
-      <div className="stage" id="stage"> 
+    <div>
+      <div> 
         <div>
             <NavLinks to={`/${operatorBusinessName}/homework/askquestion/000111`}>
                 <span className="navlink-text"> {"Chemistry..."} </span>

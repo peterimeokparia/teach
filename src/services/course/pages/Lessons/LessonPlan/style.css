@@ -9,6 +9,7 @@
     overflow: hidden;
     overflow-y: hidden;
   }
+  
   .MeetingPlan .sidebarOne {
     padding-right: 10px;
     margin-left: -3110px;
@@ -16,28 +17,79 @@
     flex-direction: column;
     color: #673ab7;
   }
+  .MeetingPlan .sidebarTwoHeader {
+    background: lightyellow;
+    width: 370px;
+    margin-left: -8px;
+    border: darkblue;
+    border-style: dotted;
+  }
   .MeetingPlan .sidebarTwo {
-    background: #fbf9ff;
     border-right: 1px solid #bba0ea;
-    position: relative;
-    background: lightpink;
-    min-width: 500px;
-    height: 1200px;
-    width: 200px;
+    border: darkblue;
+    border-style: dotted;
+    /* position: relative; */
+    position: fixed;
+    background: lightyellow;
+    min-width: 370px;
+    height: 72vh;
+    width: 100px;
+    margin-top: 50px;
+    margin-left: -8px;
     box-sizing: border-box;
     text-align: center;
-
-    padding-right: 100px;
-    margin-left: -10px;
+    text-decoration: black;
     display: flex;
     flex-direction: column;
-    color: #673ab7;
+    color: darkblue;
+    overflow-y: scroll;
+
+    background-color: lightyellow;
+    font-family: 'ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji !important';
+    letter-spacing: 0.01rem;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.20rem;
+    line-height: 1.9;
+    color: #4a4a4a;
+    text-rendering: optimizeLegibility;
+
+    
+  }
+  .MeetingPlan .children-subsection .sidebarTwoFooter{
+    background: lightpink;
+    width: 400px;
+    margin-left: -50px;
+  }
+  .MeetingPlan .sidebarTwo .react-page-controls-mode-toggle-control-group {
+      visibility: hidden;
+      top: 350px;
+    /* margin-left: 50%; */
+    /* position: absolute;  */
+    /* z-index: 10001;  */
+    /* bottom: auto;  */
+    /* right: -533.833px;  */
+    /* display: flex;  */
+    /* max-height: 100%;  */
+    /* top: 500px; */
+    /* visibility: hidden; */
   } 
-  .MeetingPlan .sidebarTwo .navLink:hover {
+  .MeetingPlan .sidebarTwo .react-page-controls-mode-toggle-control-group-hidden {
+    visibility: hidden;
+  /* margin-left: 50%; */
+  /* position: absolute;  */
+  /* z-index: 10001;  */
+  /* bottom: auto;  */
+  /* right: -533.833px;  */
+  /* display: flex;  */
+  /* max-height: 100%;  */
+  /* top: 500px; */
+  /* visibility: hidden; */
+}
+  .MeetingPlan .navLink:hover {
     cursor: -webkit-grab; cursor: grab;
     cursor: -webkit-grabbing; cursor: grabbing;
   }
-
   /* .MeetingPlan .sidebarTwo .children-subsection .notes-title .title-date {
     /* padding-top: 100px; */
   /* } */
@@ -55,7 +107,6 @@
     flex-basis: 300px;  
     background: #fbf9ff;
     border-right: 1px solid #bba0ea;
-
     position: relative;
     background: aquamarine;
     min-width: 200px;
@@ -63,7 +114,6 @@
     width: 500px;
     box-sizing: border-box;
     text-align: center;
-
     padding-left: 10px;
     padding-right: 10px;
     margin-left: -320px;
@@ -76,21 +126,22 @@
     flex-basis: 300px;  
     background: #fbf9ff;
     border-right: 1px solid #bba0ea;
-
     position: relative;
     background: aquamarine;
-    min-width: 200px;
+    min-width: 385px;
     height: 1200px;
-    width: 500px;
+    width: 70px;
     box-sizing: border-box;
     text-align: center;
-
     padding-left: 10px;
     padding-right: 10px;
-    margin-left: -210px;
+    margin-left: -70px;
     display: flex;
     flex-direction: column;
     color: aquamarine;
+       border-right: 1px solid #bba0ea;
+    border: darkblue;
+    border-style: dotted;
   }
   .sidebarFour {
     flex-basis: 300px;  
@@ -166,12 +217,14 @@
     background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
   }
   .MeetingPlan header h1 {
-    background-color: #673ab7;
-    margin: 0;
-    font-size: 24px;
+    /* background-color: #673ab7; */
+    /* font-size: 24px; */
+    /* background-color: transparent; */
+    background: transparent;
     text-transform: uppercase;
     letter-spacing: 0.5rem;
     font-weight: bold;
+    margin-left: 6px;
   }
   .MeetingPlan header .current-lesson {
     margin: 0;
@@ -816,7 +869,3 @@
     resize: both;
     overflow: auto;
   }
-
-
-
-  

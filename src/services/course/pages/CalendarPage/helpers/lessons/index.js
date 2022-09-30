@@ -1,46 +1,17 @@
-import {
-eventEnum,
-studentsOption } from 'services/course/pages/CalendarPage/helpers';
-
-import {
-iconStyleMain } from './inlineStyles';
-
-import { 
-role } from 'services/course/helpers/PageHelpers';
-
-import {
-LESSONNOTES,
-STUDENTNOTES } from 'services/course/actions/notes';
-
-import { 
-navigate } from '@reach/router';
-
+import { iconStyleMain } from './inlineStyles';
+import { LESSONNOTES, STUDENTNOTES } from 'services/course/actions/notes';
+import { navigate } from '@reach/router';
 import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 import NotesIcon from '@material-ui/icons/Notes';
 import VideoCallIcon from '@material-ui/icons/VideoCall';
 import PlayLessonIcon from '@mui/icons-material/PlayLesson';
 import SchoolIcon from '@mui/icons-material/School';
-import FullCalendar from '@fullcalendar/react';
-import rrulePlugin from "@fullcalendar/rrule";
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
-import listWeek from "@fullcalendar/list";
-import ConsultationForm from 'services/course/pages/CalendarPage/components/ConsultationForm';
 import Modal from "react-modal";
-import SessionScheduling from 'services/course/pages/CalendarPage/components/TimeLines/SessionScheduling';
-import OnlineTutoringRequestForm from 'services/course/pages/CalendarPage/components/OnlineTutoringRequestForm';
-import Forms from 'services/course/pages/CalendarPage/components/Forms';
-import Scheduling from 'services/course/pages/CalendarPage/components/Scheduling/index.js';
-import LessonNavigationComponent from 'services/course/pages/CalendarPage/components/LessonNavigationComponent';
-import moment from "moment";
-import BoardEditorComponent from 'services/course/pages/Lessons/LessonPlan/components/BoardEditorComponent';
 import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/list/main.css";
 import './style.css';
 
 export function handleLessons( renderSwitchProps  ){
-
     const lesson = {
         lesson: 'Lesson',
         lessonNotes: 'LessonNotes',
@@ -54,62 +25,27 @@ export function handleLessons( renderSwitchProps  ){
         operatorBusinessName,
         isModalOpen,
         closeModal,
-        calendarSlotInfo,
-        addNewCalendarEvent,
-        user,
-        users,
-        courses,
-        scheduledStudents,
-        setScheduledStudents,
-        studentsOption,
-        events, 
         userId, 
-        publishedForms, 
-        calendarEventType, 
-        calendarId, 
-        addNewFormBuilder,
-        eventDataObj,
-        component,
-        formNames,
-        handleEventClick,
-        handleSelect,
         courseId,
         lessonId, 
-        classRoomId,
-        renderEventContent,
         lessonProps
     } = renderSwitchProps;
 
-    let {
-        allNotes,
-        currentEventId,
-        formName,
-        selectedUser,
-        currentUser,
-        title,
-        markDownContent,
-        content,
-        noteDate,
-        operatorId,
-        eventId,
-        addNotes,
-        loadAllNotes
-    } = lessonProps;
+    let { allNotes } = lessonProps;
 
-    const course = courses?.find( course => course?._id === courseId ); 
     const lessonNote = allNotes?.find( note => note?.lessonId === lessonId && note?.noteType === LESSONNOTES );
     const myNote = allNotes?.find( note => note?.lessonId === lessonId && note?.noteType === STUDENTNOTES );
     const goToPage = ( url ) => { window.location.href = url; };
 
     function handlePageNavigation( page ) {
-
         switch ( page ) {
+
             case lesson.lesson:
                 navigate(`/${operatorBusinessName}/lessonplan/course/${courseId}/lesson/${lessonId}`);
-                return 
+                return; 
             case lesson.lessonNotes:
                 navigate(`/${operatorBusinessName}/notes/${lessonNote?._id}/noteType/${LESSONNOTES}/course/${courseId}/lesson/${lessonId}`);
-                return
+                return;
              case lesson.myNotes:
                 navigate(`/${operatorBusinessName}/notes/${myNote?._id}/noteType/${STUDENTNOTES}/course/${courseId}/lesson/${lessonId}/user/${userId}`);
                 return;
@@ -117,7 +53,8 @@ export function handleLessons( renderSwitchProps  ){
                 navigate(`/${operatorBusinessName}/meetings/course/${courseId}/lesson/${lessonId}`);
                 return;
             case lesson.recordedSession:
-                const url = `http://localhost:3000/videos/LessonVideo_${lessonId}.webm`
+                const url = `http://localhost:3000/videos/LessonVideo_${lessonId}.webm`;
+
                 goToPage( url );
                 return;
             case lesson.whiteBoard:
@@ -125,6 +62,7 @@ export function handleLessons( renderSwitchProps  ){
                 return;
             default:
                 break;
+
         }
     }
 
@@ -192,5 +130,5 @@ export function handleLessons( renderSwitchProps  ){
                 </form>
                 </div>
             </div>    
-    </Modal>)    
+    </Modal>);   
 }

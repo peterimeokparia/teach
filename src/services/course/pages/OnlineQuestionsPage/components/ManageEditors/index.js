@@ -1,31 +1,10 @@
-import { 
-connect } from 'react-redux';
-
-import { 
-addNewOnlineAnswer,
-saveOnlineAnswer,
-loadOnlineAnswers,
-deleteOnlineAnswer } from 'services/course/actions/onlineanswers';
-
-import {
-editor_upload_url,
-handleChange } from 'services/course/pages/OnlineQuestionsPage/helpers';
-
-import {
-SET_ONLINEANSWERS_MARKDOWN } from 'services/course/actions/onlineanswers';
-
-import { 
-saveEditorMarkDownObjectToMw } from 'services/course/actions/editor';
-
-import { 
-getSelectedOnlineAnswersByCourseId } from 'services/course/selectors';
-
-import {
-videoMeta,
-plusOneIconStyle,
-iconStyleMain,
-iconStyle } from './inlineStyles';
-
+import { connect } from 'react-redux';
+import { addNewOnlineAnswer, saveOnlineAnswer, loadOnlineAnswers, deleteOnlineAnswer } from 'services/course/actions/onlineanswers';
+import { editor_upload_url, handleChange } from 'services/course/pages/OnlineQuestionsPage/helpers';
+import { SET_ONLINEANSWERS_MARKDOWN } from 'services/course/actions/onlineanswers';
+import { saveEditorMarkDownObjectToMw } from 'services/course/actions/editor';
+import { getSelectedOnlineAnswersByCourseId } from 'services/course/selectors';
+import { videoMeta, plusOneIconStyle, iconStyleMain, iconStyle } from './inlineStyles';
 import useManageEditorsHook from 'services/course/pages/OnlineQuestionsPage/hooks/useManageEditorsHook';
 import MaterialUiVideoComponent from 'services/course/pages/components/MaterialUiVideoComponent';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
@@ -48,12 +27,11 @@ const ManageEditors = ({
   answers,
   deleteOnlineAnswer,
   videoComponentMeta,
-  children }) => {
-    
+  children
+}) => {    
   let {
     addNewEditor,
     onhandleSelected,
-    goToBlackBoard,
     saveRecording,
   } = useManageEditorsHook( answers, question, currentUser, operatorBusinessName, courseId );
 
@@ -119,20 +97,6 @@ return (
                       />
                       </span>
                       </span>
-                      {/* <span className="cols">
-                          <NoteAddTwoToneIcon
-                            style={ iconStyleMain() }
-                            className="comment-round-button-1"
-                            onClick={() => goToBlackBoard( element )} 
-                          />
-                      {( element?.boardVideoUrl  ) &&
-                          <NotesIcon
-                              style={ iconStyleMain() }
-                              className="comment-round-button-2"
-                              onClick={() => window.open(`${element.boardVideoUrl}`)}
-                          />
-                      }    
-                      </span> */}
                       <span>
                       </span>
                       </div>

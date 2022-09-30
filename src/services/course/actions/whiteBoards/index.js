@@ -4,7 +4,7 @@ add,
 update,
 get,
 remove,
-getById } from 'services/course/api';
+getById } from 'services/course/api/index.js';
 
 export const ADD_WHITEBOARD_JSONDATA_BEGIN = "ADD WHITEBOARD JSONDATA BEGIN";
 export const ADD_WHITEBOARD_JSONDATA_SUCCESS = "ADD WHITEBOARD JSONDATA SUCCESS";

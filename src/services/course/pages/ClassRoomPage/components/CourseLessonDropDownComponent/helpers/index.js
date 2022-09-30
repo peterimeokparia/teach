@@ -1,11 +1,5 @@
-import { 
-navigate } from '@reach/router';
-
-import { 
-role } from 'services/course/helpers/PageHelpers';
-
-import { 
-toast } from 'react-toastify';
+import { navigate } from '@reach/router';
+import { toast } from 'react-toastify';
 
 export const sendEmailMessage = ( listOfStudents, url, sendEmailAction ) => {
     listOfStudents?.forEach( student => {

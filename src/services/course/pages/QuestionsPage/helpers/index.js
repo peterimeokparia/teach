@@ -1,25 +1,45 @@
-import {
-role } from 'services/course/helpers/PageHelpers';
+import { role } from 'services/course/helpers/PageHelpers';
+
+export const labelEnum = {
+  Roman: 'Roman',
+  Numbers: 'Numbers',
+  Alphabet: 'Alphabet'
+};
+
+export const getLabelType = ( labelType ) => {
+  switch ( labelType ) {
+
+    case labelEnum.Roman:
+      return ["_", "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix", "x" ];
+    case labelEnum.Numbers: 
+      return ["_",  "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" ];    
+    case labelEnum.Alphabet: 
+      return ["_",  "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" ];       
+    default:
+      return ["_",  "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" ];
+    
+  }
+};
 
 export const labelValue = ( labelType, index ) => {
-  let alphabet = [ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" ];  
-  let roman = [ "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix", "x" ];
-  let number = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" ];
   let selectedValue = null;
 
   try {      
       switch ( labelType ) {
 
-        case "roman":
-          selectedValue = roman[ index-1 ];    
+        case labelEnum.Roman:
+          selectedValue = getLabelType( labelType )[ index];    
         break;
-        case "numbers": 
-          selectedValue = number[ index-1 ];    
+        case labelEnum.Numbers: 
+          selectedValue = getLabelType( labelType )[ index ];    
+        break;    
+        case labelEnum.Alphabet: 
+          selectedValue = getLabelType( labelType )[ index ];    
         break;    
         default:
-          selectedValue = alphabet[ index-1 ];
+          selectedValue = getLabelType( labelType )[ index ];
         break;
-        
+
       }
       return selectedValue;    
   } catch (error) {
@@ -83,8 +103,8 @@ export const elementMeta = {
   questionPushNotificationSubscribers: 'questionPushNotificationSubscribers',
   questionEmailNotificationSubscribers: 'questionEmailNotificationSubscribers',
   savedQuestions: 'savedQuestions', 
-  status: { Editing: 'editing', NotEditing: 'notediting', InProgress:'InProgress', Submitted:'Submitted', Pending:'Pending', Published:'Published' },
-  state: { Manage: 'Manage', Taking: 'Taking', Submitted: 'Submitted' }
+  status: { Editing: 'editing', NotEditing: 'notediting', InProgress:'InProgress', Submitted:'Submitted', Pending:'Pending', Published:'Published', Review:'Review', Reviewing:'Reviewing', Reviewed:'Reviewed' },
+  state: { Manage: 'Manage', Taking: 'Taking' }
 };
 
 export const inputType = {
@@ -97,7 +117,6 @@ export const inputType = {
   MathTextArea: "mathtextarea",
   Video: "video",
   Email: "email",
-  Number: "number",
   Phone: "phone", 
   Date: "date",
   Time: "time",
@@ -117,7 +136,9 @@ export const inputType = {
   NumberPosition: "numberposition",
   NumberPercentage: "numberpercentage",
   FileUpload: "fileupload",
-  MathScienceRadioButton: "mathscienceradiobutton"
+  MathScienceRadioButton: "mathscienceradiobutton",
+  ExplanationAnswerEditor: "explanationanswereditor",
+  DraggableListItem: 'draggablelistitem'
 };
 
 export const labelType = {
@@ -234,6 +255,7 @@ export function onlineMarkDownEditorFieldCollection( config ){
     formType: config?.formType,
     formName: config?.formName,
     courseId: config?.courseId,
+    lessonId: config?.lessonId,
     formUuId: config?.formUuId, 
     onlineQuestionId: config?.onlineQuestionId,
     userId: config?.userId,
@@ -252,7 +274,9 @@ export function onlineMarkDownEditorFieldCollection( config ){
     columnMinWidth: config?.columnMinWidth,
     columnMinHeight: config?.columnMinHeight,
     columnAlign: config?.columnAlign,
-    position: config?.position
+    position: config?.position,
+    outcomeId: config?.outcomeId,
+    linkId: config?.linkId
   };   
 };
 
@@ -351,4 +375,5 @@ function updateMarkDownEditorOnEventNotification( fields, markDownEditorFieldNam
     updateMarkDownEditor( { data: fields, fieldName: markDownEditorFieldName } ); 
   };
 };
+
 

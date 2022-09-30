@@ -1,4 +1,3 @@
-import react from 'react';
 import './style.css';
 
 const DigitalClock = ({ digits }) => {

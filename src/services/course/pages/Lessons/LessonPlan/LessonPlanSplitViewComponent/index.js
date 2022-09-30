@@ -1,22 +1,8 @@
-import { 
-connect } from 'react-redux';
-
-import {
-SPLIT_VIEW_ORIENTATION } from '../../../components/SplitViewComponent/helpers';
-
-import { 
-adjustRoomSize } from 'services/course/pages/Lessons/LessonPlan/helpers';
-
-import {
-saveMeetingNote } from 'services/course/actions/meetingNotes';
-  
-import { 
-getOperatorFromOperatorBusinessName, 
-getUsersByOperatorId} from 'services/course/selectors';
-
-import { 
-role } from 'services/course/helpers/PageHelpers';
-  
+import { connect } from 'react-redux';
+import { SPLIT_VIEW_ORIENTATION } from '../../../components/SplitViewComponent/helpers';
+import { adjustRoomSize } from 'services/course/pages/Lessons/LessonPlan/helpers';
+import { getOperatorFromOperatorBusinessName, getUsersByOperatorId } from 'services/course/selectors';
+import { role } from 'services/course/helpers/PageHelpers';
 import Roles from 'services/course/pages/components/Roles';
 import SplitViewComponent from 'services/course/pages/components/SplitViewComponent';
 import ResizePanel from 'services/course/pages/components/SplitViewComponent/components/ResizePanel';
@@ -33,10 +19,8 @@ const LessonPlanSplitViewComponent = ({
     courseId,
     lessonId,
     roomSize,
-    saveMeetingNote,
     operatorBusinessName,
     hideMeetingStage }) => {
-
 return (
     <div className="MeetingPlan">       
       <SplitViewComponent 
@@ -119,10 +103,6 @@ return (
   );
 };
 
-const mapDispatch = {
-  saveMeetingNote,
-};
-
 const mapState = ( state, ownProps )   => {
   return {
     operators: state.operators.operators,
@@ -145,5 +125,5 @@ const mapState = ( state, ownProps )   => {
   };
 };
 
-export default connect(mapState, mapDispatch )(LessonPlanSplitViewComponent);
+export default connect(mapState, null )(LessonPlanSplitViewComponent);
 

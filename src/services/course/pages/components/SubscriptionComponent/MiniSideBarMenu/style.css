@@ -3,11 +3,13 @@
     height: 35vh;
     background-color: white;
     border: 5px solid #673ab7;
-    /* position: fixed; */
+    position: relative;
     left: 0;
     text-transform: uppercase;
     letter-spacing: 0.5rem;
     padding: 2rem 1rem;
+    font-size: 10px;
+    color: black;
     font-weight: bold;
     transition: color 0.3s linear;
     transition: transform .3s

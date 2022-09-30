@@ -7,8 +7,8 @@ saveOnlineAnswer,
 loadOnlineAnswers,
 deleteOnlineAnswer } from 'services/course/actions/onlineanswers';
 
-import { 
-saveEditorMarkDownObjectToMw } from 'services/course/helpers/EditorHelpers'; 
+// import { 
+// saveEditorMarkDownObjectToMw } from 'services/course/helpers/EditorHelpers'; 
   
 import {
 SET_ONLINEANSWERS_MARKDOWN } from 'services/course/actions/onlineanswers';
@@ -100,7 +100,7 @@ return (
                     className={"answerEditor"}
                     id={ element?._id }
                     name={ element?.name } 
-                    handleChange={(editor) => handleChange({ ...element, markDownContent: editor }, SET_ONLINEANSWERS_MARKDOWN, `/onlineanswers/`, saveEditorMarkDownObjectToMw )}
+                    // handleChange={(editor) => handleChange({ ...element, markDownContent: editor }, SET_ONLINEANSWERS_MARKDOWN, `/onlineanswers/`, saveEditorMarkDownObjectToMw )}
                     content={ element?.markDownContent }
                     upload_url={ editor_upload_url }
                     readOnly={ false }

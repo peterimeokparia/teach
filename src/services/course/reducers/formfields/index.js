@@ -1,5 +1,7 @@
 import produce from 'immer';
 
+import { saveEditorMarkDownContent } from 'services/course/reducers/helpers/editor'; 
+
 import { 
 ADD_FORMFIELDS_BEGIN,
 ADD_FORMFIELDS_SUCCESS,            
@@ -14,10 +16,13 @@ SAVE_FORMFIELDS_ERROR,
 RESET_FORMFIELDS_ERROR, 
 DELETE_FORMFIELDS_SUCCESS, 
 DELETE_FORMFIELDS_ERROR, 
-SET_FORMFIELDS_MARKDOWN } from 'services/course/actions/formfields';
+SET_FORMFIELDS_MARKDOWN,
+SET_SELECTED_FORMFIELD } from 'services/course/actions/formfields';
 
 const initialState = {
     formFields: {},
+    formField: {},
+    selectedFormField: {},
     latestFormFields:{},
     saveInProgress: false,
     onSaveError: null,
@@ -43,13 +48,16 @@ const reducer = produce((draft, action) => {
              draft.saveInProgress = false;    
              draft.onSaveError = action.error;
         return;
+        case SET_SELECTED_FORMFIELD:
+             draft.selectedFormField = action.payload;
+        return;
         case LOAD_FORMFIELDS_BEGIN:
              draft.formFieldsLoading = true;
         return;
         case LOAD_FORMFIELDS_SUCCESS:
              draft.formFieldsLoading = false;
              action.payload?.forEach( field => {
-                draft.formFields[ field._id ] = field;
+               draft.formFields[ field._id ] = field;
               });  
         return;
         case LOAD_LATEST_FORMFIELDS_SUCCESS:
@@ -61,9 +69,7 @@ const reducer = produce((draft, action) => {
              draft.formFieldsLoading = false;
         return; 
         case SET_FORMFIELDS_MARKDOWN:
-             if ( draft.formFields[action.payload.teachObject?._id] ) {
-                draft.formFields[action.payload.teachObject?._id].markDownContent = action.payload.markDownContent; 
-             }    
+             saveEditorMarkDownContent( draft.formFields, action );
         return;
         case RESET_FORMFIELDS_ERROR:
              draft.onSaveError = null;

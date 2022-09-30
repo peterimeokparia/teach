@@ -1,49 +1,33 @@
-import { 
-useState } from 'react';
-
-import {
-inputType } from 'services/course/pages/QuestionsPage/helpers';
-      
-import {
-v4 as uuidv4 } from 'uuid';
-
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSelectedOnlineQuestion } from 'services/course/actions/onlinequestions';
+import { inputType } from 'services/course/pages/QuestionsPage/helpers';      
+import { v4 as uuidv4 } from 'uuid';
+  
 function useInputTypeSelectorMaxDialogHook( props ) {
-
-  let { 
-    addNewFormInputField,
-    addNewQuestion,
-    selectedQuestion,
-    setSelectedQuestion,
-    collection,
-  } =  props;
+  let { addNewFormInputField, addNewQuestion, isMaxDialogOpen, setIsMaxDialogOpen } =  props;
 
   const [ contentChanged, setContentChanged ] = useState( undefined );
-  const [ isMaxDialogOpen, setIsMaxDialogOpen ] = useState(false);
-    
+  const selectedOnlineQuestion = useSelector( state => state.onlineQuestions.selectedOnlineQuestion );
+  const dispatch = useDispatch();
+
 function addFormField( typeOfInput ){
-  selectInputAction( typeOfInput )
+  selectInputAction( typeOfInput );
   setContentChanged( true );
 }
 
   let modalProps = {
-    isOpen: isMaxDialogOpen, 
-    collection,
-    dialogTitle:'Select input type',
-    InputLabel: 'type',
-    handleClose: () => toggleFormFieldSelector( selectedQuestion ), 
-    selectEventChangeHandler: addFormField,
-  }
+    isOpen: isMaxDialogOpen, dialogTitle:'Select input type', InputLabel: 'type',
+    handleClose: () => toggleFormFieldSelector( selectedOnlineQuestion ), selectEventChangeHandler: addFormField,
+  };
 
 function selectInputAction( typeOfInput ){
   const uuid = uuidv4();
   
     switch ( typeOfInput ) {
+
       case inputType.MainBodyQuestion: 
       case inputType.MainBodyTableColumnQuestion:
-      case inputType.MathScienceQuestion:   
-
-      case inputType.MathTextArea:
-      case inputType.Latex:
         addNewQuestion( typeOfInput );
         break; 
       case inputType.Text: 
@@ -61,36 +45,30 @@ function selectInputAction( typeOfInput ){
       case inputType.NumberPercentage:
       case inputType.DataObjectSelector:
       case inputType.FileUpload:  
-      case inputType.MathScience:
-      case inputType.LatexField:
-      case inputType.MathScienceRadioButton:
-
-      case inputType.MathTextArea:
-      case inputType.Latex:
-        addNewFormInputField( typeOfInput, uuid);
+      case inputType.ExplanationAnswerEditor:
+      case inputType.DraggableListItem:
+        addNewFormInputField( typeOfInput, uuid );
         break; 
       default:
         break;
+
     }
 }
 
 function toggleFormFieldSelector( question ) {
-
   if ( isMaxDialogOpen ){
-   
     setIsMaxDialogOpen( false );
   } else {
     setIsMaxDialogOpen( true );
   }
-  
+
   if ( question ) {
-    setSelectedQuestion( question );
+    dispatch( setSelectedOnlineQuestion( question ) );
   }
 };
 
 return {
     modalProps,
-    selectedQuestion,
     contentChanged,
     setContentChanged,  
     addFormField,

@@ -1,21 +1,9 @@
 import { useEffect, useState } from 'react';
-
-import {  
-navigate } from '@reach/router';
-
-import { 
-connect } from 'react-redux';
-
-import {
-updateCurrentUser,     
-loginUser } from 'services/course/actions/users';
-
-import { 
-getOperatorFromOperatorBusinessName } from 'services/course/selectors';
-
-import {
-pageNavigationHelper } from 'services/course/pages/SignUp/AccountVerificationForm/helpers';
-
+import {  navigate } from '@reach/router';
+import { connect } from 'react-redux';
+import { updateCurrentUser, loginUser } from 'services/course/actions/users';
+import { getOperatorFromOperatorBusinessName } from 'services/course/selectors';
+import { pageNavigationHelper } from 'services/course/pages/SignUp/AccountVerificationForm/helpers';
 import Swal from 'sweetalert2';
 import './style.css';
 
@@ -32,8 +20,7 @@ const AccountVerificationForm = ({
       updateCurrentUser( { _id: userId } );
     }
   },  [ updateCurrentUser, userId, users ]);   
-  // },  [])   
-
+    
   const [ passWordValue, setPasswordValue ] = useState("");
 
 const handleLoginUser = (event) => {   

@@ -1,20 +1,12 @@
-import {
-useState,
-useEffect,
-useRef } from 'react';
-
-import {
-SPLIT_VIEW_ORIENTATION } from './helpers';
-
+import { useState, useEffect, useRef } from 'react';
+import { SPLIT_VIEW_ORIENTATION } from './helpers';
 import './style.css';
 
 const SplitViewComponent = ({ 
-  left,
   left_top, 
   right_bottom, 
   className,
   orientation }) => {
-
   const [ leftWidthTopHeight, setLeftWidthTopHeight ] = useState( (orientation === SPLIT_VIEW_ORIENTATION?.HEIGHT) ? 450 : 1500);
   const [ rightWidthBottomHeight, setRightWidthBottomHeight ] = useState( (orientation === SPLIT_VIEW_ORIENTATION?.HEIGHT) ? 450 : 500);
   const [ separatorPosition, setSeparatorPosition ] = useState(0);
@@ -46,25 +38,20 @@ const SplitViewComponent = ({
 
   const MIN_LENGTH = 10;
   const onMove = ( clientAxis ) => {
-
     if ( !dragging ) {
       return;
     }
 
     if ( mouseDown && dragging && leftWidthTopHeight && rightWidthBottomHeight && separatorPosition ) {
-
       let newleftWidthTopHeight = leftWidthTopHeight + ( clientAxis - separatorPosition );
       let newrightWidthBottomHeight = rightWidthBottomHeight + ( separatorPosition - clientAxis );
 
       setSeparatorPosition( clientAxis  );
-
       if ( newleftWidthTopHeight < MIN_LENGTH ) {
         setLeftWidthTopHeight( MIN_LENGTH );
         return;
       }
-
       if ( splitViewRef ) {
-
         const splitViewWidth = ( orientation === SPLIT_VIEW_ORIENTATION?.HEIGHT )  
                                 ? splitViewRef?.current?.clientHeight 
                                 : splitViewRef?.current?.clientWidth;

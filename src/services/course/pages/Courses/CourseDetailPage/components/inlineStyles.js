@@ -15,10 +15,20 @@ export const saveIconStyle = ( id, selectedId ) => {
   };
 };
 
+export const lessonHeaderEditIconStyle = () => {
+  return {
+    fontSize: 25,
+    "marginTop": "-51%",
+    "marginLeft": "-27%",
+    "top": "10%",
+  };
+};
+
 export const deleteQuestionIconStyle = () => {
   return {
     fontSize: 25,
     "marginTop": "-51%",
+    "marginLeft": "-7%",
     "top": "10%",
   };
 };
@@ -26,7 +36,7 @@ export const deleteQuestionIconStyle = () => {
 export const sideBarEditIconStyle = () => {
   return {
     fontSize: 25,
-    "marginLeft": "-4%"
+    "marginLeft": "2%"
   };
 };
 
@@ -47,14 +57,21 @@ export const sideBarHelpIconStyle = ( currentUser ) => {
 export const sideBarHomeWorkIconStyle = () => {
   return {
     fontSize: 25,
-    "marginLeft": "-14%"
+    "marginLeft": "-15%"
+  };
+};
+
+export const sideBarFurtherStudyIconStyle = () => {
+  return {
+    fontSize: 25,
+    "marginLeft": "-16%"
   };
 };
 
 export const swapHorizIconStyle = () => {
   return {
     fontSize: 25,
-    "marginLeft": "-37px"
+    "marginLeft": "-50px"
     // "top": "10%",
   };
 };

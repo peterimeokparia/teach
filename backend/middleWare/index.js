@@ -1,13 +1,9 @@
+import { getPostData, saveUpdatedData } from '../helpers/storageHelper.js';
+import { FORMFIELDROUTE, handleBackEndLogs } from '../helpers/logHelper.js';
 import Jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-//export const privateKey = "secret_nsa_key"; 
-import {
-getPostData,    
-saveUpdatedData } from '../helpers/storageHelper.js';
 
-import { 
-FORMFIELDROUTE,
-handleBackEndLogs } from '../helpers/logHelper.js';
+export const privateKey = "secret_nsa_key"; 
 
 export function verifyRoute( req, res, next ){
     if( req.headers['authorization'] ) {
@@ -27,15 +23,34 @@ export function verifyRoute( req, res, next ){
     }
 };
 
+export function generateSignOnCredentialToken( req, res, next ){
+    const emailField = req.body['email'];
+    const passwordField = req.body['unHarshedPassword'];
+
+    if( emailField && passwordField ) {
+        try {       
+            req.body['token'] = tokenGenerator({username: emailField, password: passwordField}, privateKey, { expiresIn: '1h' });
+            return next(); 
+        } catch (error) {
+            return res.status(403).json({ error: 'Token generation - failed.' });
+        }
+    } else {
+        return res.status(401).json({ error: 'Token generation - username and password not set.'});
+    }
+};
+
+export const tokenGenerator = ( user, key ) => {
+    const token = Jwt.sign({  user }, key);
+    return token;
+};
+
 export async function hashPasswordField( req, res, next ){
     const passwordField = req.body['password'];
     if( req.body['password'] ) {
         try {
-
             const salt = await bcrypt.genSalt();
-
+            
             req.body['password'] = await bcrypt.hash( passwordField, salt );
-           
         } catch (error) {
             return res.status(403).json({ error });
         }
@@ -65,12 +80,10 @@ export function logRouteInfo( req, res, next ){
     next();
 };
 
-
 // MyModel.find({$text: {$search: searchString}})
 //        .skip(20)
 //        .limit(10)
 //        .exec(function(err, docs) { ... });
-
 export function paginatedSearchResults( model, Id ){
     return async ( req, res, next ) => {
     
@@ -181,6 +194,9 @@ export function getByObjectIdRoute(model, param){
     return async ( req, res, next ) => {
 
         let id = { _id: req.query[ param ] }
+
+        console.log('@@@@@@@IDIDIDIDIDDI')
+        console.log(JSON.stringify(id))
 
         try {
             let result = await model.findById(id);

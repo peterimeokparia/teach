@@ -1,9 +1,4 @@
-import {
-add,
-get,
-remove,
-update,
-getById } from 'services/course/api';
+import { add, get, remove, update, getById } from 'services/course/api';
 
 export const ADD_NEW_OUTCOME_BEGIN = "ADD NEW OUTCOME BEGIN";
 export const ADD_NEW_OUTCOME_SUCCESS = "ADD NEW OUTCOME SUCCESS";
@@ -19,6 +14,10 @@ export const DELETE_OUTCOME_SUCCESS = "DELETE OUTCOME SUCCESS";
 export const DELETE_OUTCOME_BEGIN = "DELETE OUTCOME BEGIN";
 export const DELETE_OUTCOME_ERROR = "DELETE OUTCOME ERROR";
 export const SET_OUTCOME_MARKDOWN = "SET OUTCOME MARKDOWN";
+export const SET_OUTCOME_LINK = "SET OUTCOME LINK"; 
+export const SET_SELECTED_OUTCOME = "SET SELECTED OUTCOME";
+export const TOGGLE_CONCEPTS = "TOGGLE CONCEPTS";
+export const TOGGLE_FURTHER_STUDY_MODAL = "TOGGLE FURTHER STUDY MODAL";
 
 export const addNewOutcome = ( outcome ) => {
     return dispatch => {
@@ -47,10 +46,38 @@ export const saveOutcome = ( outcome ) => {
    };
 };
 
-export const loadOutcomes = ( parentId ) => {
+export const loadOutcomes = () => {
     return dispatch => {
         dispatch({ type: LOAD_OUTCOMES_BEGIN });
         return get('/outcomes')
+            .then( resp => {
+                dispatch({ type: LOAD_OUTCOMES_SUCCESS, payload: resp });
+                return resp;
+            })
+            .catch( error => {
+                dispatch({ type: LOAD_OUTCOMES_ERROR , error });
+        });
+    };
+};
+
+export const loadOutcomeByOutcomeId = ( outcomeId ) => {
+    return dispatch => {
+        dispatch({ type: LOAD_OUTCOMES_BEGIN });
+        return getById( outcomeId, `/outcomes?outcomeId=`)
+            .then( resp => {
+                dispatch({ type: LOAD_OUTCOMES_SUCCESS, payload: resp });
+                return resp;
+            })
+            .catch( error => {
+                dispatch({ type: LOAD_OUTCOMES_ERROR , error });
+        });
+    };
+};
+
+export const loadOutcomesByLessonId = ( lessonId ) => {
+    return dispatch => {
+        dispatch({ type: LOAD_OUTCOMES_BEGIN });
+        return getById( lessonId, `/outcomes?lessonId=`)
             .then( resp => {
                 dispatch({ type: LOAD_OUTCOMES_SUCCESS, payload: resp });
                 return resp;
@@ -85,4 +112,20 @@ export const deleteOutcome = outcome => {
             dispatch({ type: DELETE_OUTCOME_ERROR , error  });
         });
     };
-}
+};
+
+export const setOutcomeLink = outcomeLink => ({ 
+     type: SET_OUTCOME_LINK, payload: outcomeLink  
+});
+
+export const toggleOutComeFurtherStudyModal = () => ({
+    type: TOGGLE_FURTHER_STUDY_MODAL
+});
+
+export const setSelectedOutcome = outcome => ({ 
+    type: SET_SELECTED_OUTCOME, payload: outcome  
+});
+
+export const toggleConcepts = () => ({
+    type: TOGGLE_CONCEPTS
+});

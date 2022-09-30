@@ -1,7 +1,4 @@
-import { 
-Router, 
-Redirect } from '@reach/router';
-
+import { Router, Redirect } from '@reach/router';
 import MyCoursesPage from 'services/course/pages/Courses/MyCoursesPage';
 import ShowMeeting from 'services/course/pages/Meeting/components/ShowMeeting';
 import CourseListPage from 'services/course/pages/Courses/CourseListPage';
@@ -57,51 +54,52 @@ import Notes from 'services/course/pages/Notes';
 import MultiSelectSearchComponent from 'services/course/pages/components/MultiSelectSearchComponent';
 import MissedQuestionsComponent from 'services/course/pages/FormBuilder/FormQuestions/components/MissedQuestionsComponent';
 import LatexEditor from 'services/course/pages/LatexEditor';
-import Bible from 'services/course/pages/Test001/components/Bible';
-import Test002 from 'services/course/pages/Test002';
 import Dividers from 'services/course/pages/Dividers';
-import EditorTest from 'services/course/pages/EditorTest';
 import SearchPage from 'services/course/pages/SearchPage';
-import Test003 from 'services/course/pages/Test003';
+import MyEditorTest2 from 'services/course/editor/MyEditorTest2';
+import LabelSelector from 'services/course/pages/FormBuilder/FormBuilderStepWizard/SelectExistingFormBuilderComponent/FormFields/component/LabelSelector';
+import Equations from 'services/course/pages/Equations';
+import OutcomesFormBuilderComponent from 'services/course/pages/FormBuilder/FormBuilderStepWizard/OutcomesFormBuilderComponent';
+import QuestionBuilder from 'services/course/pages/components/QuestionBuilder';
+import LessonNote from 'services/course/pages/Lessons/LessonNote';
+
+//import Bible from 'services/course/pages/Test001/components/Bible/index.txt';
+//import Test002 from 'services/course/pages/Test002';
+//import Test003 from 'services/course/pages/Test003/index.txt';
+//import Test004 from 'services/course/pages/Test004/index.txt';
 
 const MainRoute = () => {
     return (
         <Router>
             <Redirect noThrow from="/" to="/main" />
-             <ClassRoomPage path="/:operatorBusinessName/classroomgroups/:groupId/:classRoomName"  />
-
-             <ClassRoomPage path="/:operatorBusinessName/classroom/:selectedUserId" /> 
-             <CourseListPage path="/:operatorBusinessName/courses"/>
-             
-             <CourseDetailPage path="/:operatorBusinessName/tutor/:selectedTutorId/courses/:courseId">   
+            <ClassRoomPage path="/:operatorBusinessName/classroomgroups/:groupId/:classRoomName"  />
+            <ClassRoomPage path="/:operatorBusinessName/classroom/:selectedUserId" /> 
+            <CourseListPage path="/:operatorBusinessName/courses"/>
+            <CourseDetailPage path="/:operatorBusinessName/tutor/:selectedTutorId/courses/:courseId">   
                 <LessonPage path="lessons/:lessonId" /> 
-             </CourseDetailPage>
-             
-             <SalesPage  path="/:operatorBusinessName/courses/:courseId/buy">
+            </CourseDetailPage>
+            <SalesPage  path="/:operatorBusinessName/courses/:courseId/buy">
                 <Cart path="/:operatorBusinessName/cart" />
                 <CourseRatingsPage path="course/:courseId/user/:userId/review" />
-              </SalesPage>
-
-              <StudentDetailPage path="/:operatorBusinessName/student/:studentId/course/:courseId" >
-                    <OnlineQuestionsSavedAnswersPage path="student/:studentId/savedanswers">
-                        <OnlineQuestionsSavedAnswersDetailPage path="student/:studentId/course/:courseId"/> 
-                    </OnlineQuestionsSavedAnswersPage>
-                    <SessionPage path="student/:studentId/sessions/courseId/:courseId"/>
-                    <GradesPage path="student/:studentId/grades"/> 
-                    <AttendancePage path="student/:studentId/attendance"/>
-                    <Logins path="student/:studentId/logins"/>
-              </StudentDetailPage>
-
-              <StudentDetailPage path="/:operatorBusinessName/student/:studentId" >
-                   <OnlineQuestionsSavedAnswersPage path="student/:studentId/savedanswers">
-                    < OnlineQuestionsSavedAnswersDetailPage path="student/:studentId/course/:courseId"/> 
-                   </ OnlineQuestionsSavedAnswersPage>
-                   <SessionPage path="student/:studentId/sessions/courseId/:courseId"/>
-                   <GradesPage path="student/:studentId/grades"/>
-                   <AttendancePage path="student/:studentId/attendance"/>
-                   <Logins path="student/:studentId/logins"/>
-              </StudentDetailPage>
-
+            </SalesPage>
+            <StudentDetailPage path="/:operatorBusinessName/student/:studentId/course/:courseId" >
+            <OnlineQuestionsSavedAnswersPage path="student/:studentId/savedanswers">
+                <OnlineQuestionsSavedAnswersDetailPage path="student/:studentId/course/:courseId"/> 
+            </OnlineQuestionsSavedAnswersPage>
+            <SessionPage path="student/:studentId/sessions/courseId/:courseId"/>
+            <GradesPage path="student/:studentId/grades"/> 
+            <AttendancePage path="student/:studentId/attendance"/>
+            <Logins path="student/:studentId/logins"/>
+            </StudentDetailPage>
+            <StudentDetailPage path="/:operatorBusinessName/student/:studentId" >
+                <OnlineQuestionsSavedAnswersPage path="student/:studentId/savedanswers">
+                < OnlineQuestionsSavedAnswersDetailPage path="student/:studentId/course/:courseId"/> 
+                </ OnlineQuestionsSavedAnswersPage>
+                <SessionPage path="student/:studentId/sessions/courseId/:courseId"/>
+                <GradesPage path="student/:studentId/grades"/>
+                <AttendancePage path="student/:studentId/attendance"/>
+                <Logins path="student/:studentId/logins"/>
+            </StudentDetailPage>
              <PasswordReset path="/:operatorBusinessName/passwordreset/:userId"/>
              <AccountVerificationForm path="/:operatorBusinessName/accountverification/:userId" />
              <UpdateCart path="/:operatorBusinessName/updatecart/:courseId"/>
@@ -139,7 +137,9 @@ const MainRoute = () => {
              <OnlineQuestionsCourseListPage path="/:operatorBusinessName/homework/askquestion/course"/>
              <MoreLessonContentPage path="/lessons/:lessonId/more" />
              <Notes path="/:operatorBusinessName/notes/:noteId/noteType/:noteType/course/:courseId/lesson/:lessonId/user/userId" />
+             <Notes path="/:operatorBusinessName/notes/:noteId/course/:courseId/lesson/:lessonId" />
              <Notes path="/:operatorBusinessName/notes/:noteId/noteType/:noteType/course/:courseId/lesson/:lessonId" />
+             <LessonNote path="/:operatorBusinessName/lessonnotes/:noteId/noteType/:noteType/course/:courseId/lesson/:lessonId/outcome/:outcomeId" />
              <SiteEntryComponent path="/main"/>
              <SiteEntryComponent path="/:operatorBusinessName"/>
              <SiteEntryComponent path="/main/:operatorBusinessName"/>
@@ -147,17 +147,18 @@ const MainRoute = () => {
              <Students path="/:operatorBusinessName/students"/>
              <Booming path="/boomingllc" />
              <Logins path="/:operatorBusinessName/logins/student/:studentId" />
-             <LessonPlanSplitViewComponent path="/:operatorBusinessName/:calendarEventType/boardeditor/:calendarId/:userId/:meetingId"/>
-             <FormQuestions path="/:operatorBusinessName/formBuilder/:formType/:formName/:formId/:formUuId/:userId/:formBuilderStatus"/>
-             <FormQuestions path="/:operatorBusinessName/formBuilder/:formType/:formName/:courseId/:formUuId/:userId/:formBuilderStatus/:eventId"/>
-             <FormQuestions path="/:operatorBusinessName/formBuilder/:formType/:formName/:courseId/:lessonId/:formUuId/:userId/:formBuilderStatus/:eventId"/>
-             <FormQuestions path="/:operatorBusinessName/formBuilder/:formType/:formName/:formUuId/:userId/:formBuilderStatus"/> 
-             <FormQuestions path="/:operatorBusinessName/formEventBuilder/:formType/:formName/:formUuId/:userId/:formBuilderStatus/:eventId"/> 
-             {/* Survey - Routes */}
+             <LessonPlanSplitViewComponent path="/:operatorBusinessName/:calendarEventType/boardeditor/:calendarId/:userId/:meetingId"/>             
+             <FormQuestions path="/:operatorBusinessName/formBuilder/:formType/:formName/:formId/:formUuId/:userId/:formBuilderState/:formBuilderStatus"/>
+             <FormQuestions path="/:operatorBusinessName/formBuilder/:formType/:formName/:courseId/:formUuId/:userId/:formBuilderState/:formBuilderStatus/:eventId"/>
+             <FormQuestions path="/:operatorBusinessName/formBuilder/:formType/:formName/course/:courseId/lesson/:lessonId/:formUuId/user/:userId/state/:formBuilderState/status/:formBuilderStatus/event/:eventId/outcome/:outcomeId/linkId/:linkId"/> 
+             <FormQuestions path="/:operatorBusinessName/formBuilder/:formType/:formName/course/:courseId/lesson/:lessonId/:formUuId/user/:userId/state/:formBuilderState/status/:formBuilderStatus/event/:eventId/outcome/:outcomeId"/>           
+             <FormQuestions path="/:operatorBusinessName/formBuilder/:formType/:formName/:formUuId/:userId/:formBuilderState/:formBuilderStatus"/> 
+             <FormQuestions path="/:operatorBusinessName/formEventBuilder/:formType/:formName/:formUuId/:userId/:formBuilderState/:formBuilderStatus/:eventId"/> 
+             <FormBuilder path="/:operatorBusinessName/:formType/formname/:formName/courseid/:courseId/lessonid/:lessonId/user/:userId"/>   
+             <FormBuilder path="/:operatorBusinessName/:formType/courseid/:courseId/lessonid/:lessonId/user/:userId"/>  
              <FormBuilder path="/:operatorBusinessName/:formType/:formName/:formUuId/:userId"/>        
              <FormBuilder path="/:operatorBusinessName/:formType/:formName/:formId/:formUuId/:userId"/>
              <FormBuilder path="/:operatorBusinessName/formEvent/:formType/:formName/:formUuId/:userId/:eventId"/> 
-             {/* <FormBuilder path="/:operatorBusinessName/:formType/:formName/:formId/:formUuId/:userId/:eventId"/> */}
              <FormTables path="/:operatorBusinessName/:formName" />
              <FormListPage path="/:operatorBusinessName/forms"/>
              <FormListPage path="/:operatorBusinessName/forms/:formType"/>
@@ -167,12 +168,17 @@ const MainRoute = () => {
              <MissedQuestionsComponent path="/:operatorBusinessName/questions/missedQuestions/:formType/:formName"/>
              <FormQuestions path="/:operatorBusinessName/formBuilder/:formType/:formName/:courseId/:formUuId/:userId/:formBuilderStatus/:eventId/:onlineQuestionId"/>
              <LatexEditor path="/latex/editor" />
-             <Bible path="/teach/bible" />
-             <Test002 path="/teach/dividertest" />
+             {/* <Bible path="/teach/bible" /> */}
+             {/* <Test002 path="/teach/dividertest" /> */}
              <Dividers path="/teach/dividers" />
-             <EditorTest path="/teach/editor" />
              <SearchPage path="/teach/search"/>
-             <Test003 path="/:operatorBusinessName/animate" />
+             {/* <Test003 path="/:operatorBusinessName/animate" /> */}
+             {/* <Test004 path="/:operatorBusinessName/dnd" /> */}
+             <MyEditorTest2 path="/teach/editor2" />
+             <LabelSelector path="/teach/labeltest" />
+             <Equations path="/:operatorBusinessName/equations"/>
+             <OutcomesFormBuilderComponent path="/:operatorBusinessName/:formType/formname/:formName/courseid/:courseId/lessonid/:lessonId/user/:userId/stepone" />
+             <QuestionBuilder path="/:operatorBusinessName/formBuilder/:formType/outcomeType/:outcomeType/outcomeName/:formName/state/:formBuilderState/status/:formBuilderStatus/courseid/:courseId/lessonid/:lessonId/outcomeId/:outcomeId" />
         </Router>
     );
 };

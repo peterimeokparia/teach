@@ -1,0 +1,88 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DraggableListItemComponent renders as expected 1`] = `
+<div>
+  <div
+    className="listItem"
+  >
+    <ol
+      className="lessons"
+      data-rbd-droppable-context-id="0"
+      data-rbd-droppable-id="updatedOrderedQuestions"
+    >
+      <li
+        aria-describedby="rbd-hidden-text-0-hidden-text-0"
+        className="lesson-item2"
+        data-rbd-drag-handle-context-id="0"
+        data-rbd-drag-handle-draggable-id="001"
+        data-rbd-draggable-context-id="0"
+        data-rbd-draggable-id="001"
+        draggable={false}
+        id="001"
+        onDragStart={[Function]}
+        onTransitionEnd={null}
+        role="button"
+        style={
+          Object {
+            "transform": null,
+            "transition": null,
+          }
+        }
+        tabIndex={0}
+      >
+        <div>
+          001
+        </div>
+      </li>
+      <li
+        aria-describedby="rbd-hidden-text-0-hidden-text-0"
+        className="lesson-item2"
+        data-rbd-drag-handle-context-id="0"
+        data-rbd-drag-handle-draggable-id="002"
+        data-rbd-draggable-context-id="0"
+        data-rbd-draggable-id="002"
+        draggable={false}
+        id="002"
+        onDragStart={[Function]}
+        onTransitionEnd={null}
+        role="button"
+        style={
+          Object {
+            "transform": null,
+            "transition": null,
+          }
+        }
+        tabIndex={0}
+      >
+        <div>
+          002
+        </div>
+      </li>
+      <li
+        aria-describedby="rbd-hidden-text-0-hidden-text-0"
+        className="lesson-item2"
+        data-rbd-drag-handle-context-id="0"
+        data-rbd-drag-handle-draggable-id="003"
+        data-rbd-draggable-context-id="0"
+        data-rbd-draggable-id="003"
+        draggable={false}
+        id="003"
+        onDragStart={[Function]}
+        onTransitionEnd={null}
+        role="button"
+        style={
+          Object {
+            "transform": null,
+            "transition": null,
+          }
+        }
+        tabIndex={0}
+      >
+        <div>
+          003
+        </div>
+      </li>
+    </ol>
+  </div>
+</div>
+`;

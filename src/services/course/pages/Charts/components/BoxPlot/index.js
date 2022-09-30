@@ -1,29 +1,16 @@
-import {
-React,
-useRef,
-useEffect,
-useState,
-useMemo } from "react";
-
-import { 
-connect } from 'react-redux';
-    
+import { React, useRef, useEffect, useState } from "react";
+import { connect } from 'react-redux';
 import * as d3 from "d3";
 import BoxPlotLegend from 'services/course/pages/Charts/components/BoxPlotLegend';
 import './style.css';
-
+// refactor 
 const BoxPlot = ({ data = [], groupMedian = 0  }) => {
-
     groupMedian = 60; // delete
-
-    const margin = {top: 10, right: 30, bottom: 30, left: 80},
-        width = 400,
-        height = 500;
-
+    const width = 400;
+    const height = 500;
     // Get DOM object in useRef
     const svgRef = useRef( null );
     // const { width, height, margin } = dimensions;
-
     // Set svg container size
     const svgWidth = width;
     const svgHeight = height;
@@ -40,14 +27,14 @@ const BoxPlot = ({ data = [], groupMedian = 0  }) => {
     const [ min, setMin ] = useState( undefined );
     const [ max, setMax ] = useState( undefined );
 
-    let xScale = null, yScale = null;
-
     useEffect(() => {
+    const margin = { top: 10, right: 30, bottom: 30, left: 80 };
 
+    let xScale = null, yScale = null;
     // Create root container
     const svgEl = d3.select(svgRef.current);
-    svgEl.selectAll("*").remove(); // Clear svg content before adding new dom elements.
 
+    svgEl.selectAll("*").remove(); // Clear svg content before adding new dom elements.
     // Add an svg group 
     const svg = svgEl.append("g").attr("transform", `translate(${margin.left}, ${margin.top})`);
 
@@ -77,8 +64,8 @@ const BoxPlot = ({ data = [], groupMedian = 0  }) => {
     // Boxplot features
     const center = 200;
     const boxwidth = 100;
-
     // Set the Y scale axis
+
     svg.call(d3.axisLeft(yScale));
 
     svg.append("g")
@@ -168,8 +155,7 @@ const BoxPlot = ({ data = [], groupMedian = 0  }) => {
         setMin( min );
         setMax( max );
         setInterQuantile( interQuantileRange );
-
-}, [ data, xScale, yScale, margin ]);
+}, [ data, groupMedian, heightLabelOffset  ]);
 
 
 const legend = [

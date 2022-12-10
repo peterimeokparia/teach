@@ -1,0 +1,673 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
+import { data, buildCourseLessonOutcomeData } from 'services/course/pages/Charts/components/CustomGroupedBarChart/helpers';
+import { loadStudentQuestionInsightByFormType } from 'services/course/actions/studentQuestionInsights';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+import './style.css';
+
+const topLabels = {
+  id: 'topLabels',
+  afterDraw: function (chart, args, pluginOptions) {
+    const { ctx, scales: { x, y } } = chart;
+    const dataSetMax = chart.data.datasets?.length - 1, offSet = 25;
+
+    chart.data.datasets[0].data?.forEach((datapoint, index) => {
+      const datasetArray = [];
+
+      chart.data.datasets?.forEach((dataset) => {
+        datasetArray.push(dataset.data[index])
+      });
+
+      function totalSum(total, values) {
+        return total + values;
+      }
+
+      let sum = datasetArray?.reduce(totalSum, 0);
+
+      ctx.font = 'bold 20px san-serif';
+      ctx.fillStyle = 'rgba(255, 26, 104, 1)';
+      ctx.textAlign = 'center';
+      ctx.fillText(sum, x?.getPixelForValue(index), chart?.getDatasetMeta( dataSetMax )?.data[index]?.y - offSet );
+    });
+  }
+};
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ChartDataLabels,
+  topLabels
+);
+
+export const options = {
+  plugins: {
+    maintainAspectRatio: false,
+    title: {
+      display: true,
+      text: 'Chart.js Bar Chart - Grouped',
+    },
+    datalabels: {
+      color: 'black',
+      font: {
+        size: 18
+    }
+    },
+    legend: {
+      display: true,
+      title: {
+          display: true,
+          color: 'rgb(255, 99, 132)',
+      },
+      labels: {
+          // color: 'rgb(255,255,255)',
+          font: {
+              size: 15
+          }
+      },
+  },
+  },
+  responsive: true,
+  scales: {
+    x: {
+      stacked: false,
+      beginAtZero: true,
+      suggestedMin: 0,
+      // suggestedMax: 100
+      
+    },
+    y: {
+      stacked: false,
+      beginAtZero: true,
+      suggestedMin: 0,
+      // suggestedMax: 100
+    },
+  },
+  layout: {
+    padding: 20
+}
+};
+
+const CustomGroupedBarChart = ({ groupedBarChartProps }) => {
+        // const courseId = "COURSE001"; 
+        // const lessonOne = "LESSON001";
+        // const lessonTwo = "LESSON002";
+        // const lessonThree = "LESSON003";
+        // const outcomeOne = "OUTCOME001";
+        // const outcomeTwo = "OUTCOME002";
+        // const outcomeThree = "OUTCOME003";
+        // const insightsOne = "INSIGHTS001";
+        // const insightsTwo = "INSIGHTS002";
+        // const insightsThree = "INSIGHTS003";
+
+        // let lessons = [
+        //     {
+        //         title: "The moon.",
+        //         courseId,
+        //         _id: lessonOne
+        //     },
+        //     {
+        //         title: "The stars.",
+        //         courseId,
+        //         _id: lessonTwo
+        //     },
+        //     {
+        //         title: "The universe.",
+        //         courseId,
+        //         _id: lessonThree
+        //     }
+        // ];
+
+        // let courseOutcomes = [
+        //     {
+        //         title: "Building blocks.",
+        //         courseId,
+        //         lessonId: lessonOne,
+        //         _id: outcomeOne
+
+        //     },
+        //     {
+        //         title: "Gaseous illumination.",
+        //         courseId,
+        //         lessonId: lessonOne,
+        //         _id: outcomeTwo
+        //     },
+        //     {
+        //         title: "Elemental moon crater",
+        //         courseId,
+        //         lessonId: lessonOne,
+        //         _id: outcomeThree
+        //     },
+        //     {
+        //         title: "Building blocks.",
+        //         courseId,
+        //         lessonId: lessonTwo,
+        //         _id: outcomeOne
+
+        //     },
+        //     {
+        //         title: "Gaseous illumination.",
+        //         courseId,
+        //         lessonId: lessonTwo,
+        //         _id: outcomeTwo
+        //     },
+        //     {
+        //         title: "Elemental moon crater",
+        //         courseId,
+        //         lessonId: lessonTwo,
+        //         _id: outcomeThree
+        //     },
+
+        //     {
+        //         title: "Building blocks.",
+        //         courseId,
+        //         lessonId: lessonThree,
+        //         _id: outcomeOne
+
+        //     },
+        //     {
+        //         title: "Gaseous illumination.",
+        //         courseId,
+        //         lessonId: lessonThree,
+        //         _id: outcomeTwo
+        //     },
+        //     {
+        //         title: "Elemental moon crater",
+        //         courseId,
+        //         lessonId: lessonThree,
+        //         _id: outcomeThree
+        //     }
+        // ];
+
+        // let outcomeInsights = [
+        //     {
+        //         courseId,
+        //         lessonId: lessonOne,
+        //         outcomeId: outcomeOne,
+        //         percentageNumberOfQuestionsPassedOutcome: 50,
+        //         _id: insightsOne
+        //     },
+        //     {
+        //         courseId,
+        //         lessonId: lessonOne,
+        //         outcomeId: outcomeTwo,
+        //         percentageNumberOfQuestionsPassedOutcome: 51,
+        //         _id: insightsTwo
+        //     },
+        //     {
+        //         courseId,
+        //         lessonId: lessonOne,
+        //         outcomeId: outcomeThree,
+        //         percentageNumberOfQuestionsPassedOutcome: 49,
+        //         _id: insightsThree
+        //     },
+        //     {
+        //         courseId,
+        //         lessonId: lessonTwo,
+        //         outcomeId: outcomeOne,
+        //         percentageNumberOfQuestionsPassedOutcome: 50,
+        //         _id: insightsOne
+        //     },
+        //     {
+        //         courseId,
+        //         lessonId: lessonTwo,
+        //         outcomeId: outcomeTwo,
+        //         percentageNumberOfQuestionsPassedOutcome: 51,
+        //         _id: insightsTwo
+        //     },
+        //     {
+        //         courseId,
+        //         lessonId: lessonTwo,
+        //         outcomeId: outcomeThree,
+        //         percentageNumberOfQuestionsPassedOutcome: 49,
+        //         _id: insightsThree
+        //     },
+        //     {
+        //         courseId,
+        //         lessonId: lessonThree,
+        //         outcomeId: outcomeOne,
+        //         percentageNumberOfQuestionsPassedOutcome: 50,
+        //         _id: insightsOne
+        //     },
+        //     {
+        //         courseId,
+        //         lessonId: lessonThree,
+        //         outcomeId: outcomeTwo,
+        //         percentageNumberOfQuestionsPassedOutcome: 51,
+        //         _id: insightsTwo
+        //     },
+        //     {
+        //         courseId,
+        //         lessonId: lessonThree,
+        //         outcomeId: outcomeThree,
+        //         percentageNumberOfQuestionsPassedOutcome: 49,
+        //         _id: insightsThree
+        //     }
+        // ];
+        // lesson, lessonOutcomes, studentInsights percentageNumberOfQuestionsPassedOutcome
+        // { lessons, courseOutcomes, outcomeInsights, scoreProp:'percentageNumberOfQuestionsPassedOutcome'  }
+  let { labels, datasets } = buildCourseLessonOutcomeData( groupedBarChartProps ); 
+
+  return <div style={{height:"70vh", width:"100vw",marginBottom:"1%", padding:"1%"}}>
+          {/* <button onClick={loadStudentQuestionInsightByFormType('lessoninsights')}>{'test'}</button> */}
+        <Bar options={options} data={data( labels, datasets )} />;
+  </div>  
+}
+
+export default connect( null, { loadStudentQuestionInsightByFormType })(CustomGroupedBarChart);
+
+//https://www.youtube.com/watch?v=dIFLeum2WQY
+
+
+
+import { buildBackGroundColor } from 'services/course/pages/Charts/components/OutcomeChartLanding/helpers';
+import { resultProp, getTheNumberOfQuestionsResultForAttemptedOutcomes } from 'services/course/middleware/outcomeInsight/helpers';
+import { isEmptyObject } from 'services/course/helpers/Validations';
+
+export function buildCourseLessonOutcomeData( props  ) {
+
+    if ( isEmptyObject( props ) ) return;
+
+     // lesson, lessonOutcomes, studentInsights percentageNumberOfQuestionsPassedOutcome
+    let { lessons, courseOutcomes, outcomeInsights, scoreProp } = props; 
+
+        let collection = [], labelCollection = [];
+
+        lessons.forEach( ( lesson, index ) => {
+            getLabels( labelCollection, lesson?.title );
+            let labels = getLessonLabelTitle( lesson );
+            let id = getLessonLabelTitle( lesson );
+            let currentLessonIndex = index;
+            let lessonOutcomes = getLessonOutcomes( lesson, courseOutcomes );
+            
+            lessonOutcomes.forEach(( outcome, index ) => { 
+                let currentOutcomeIndex = index;
+                // let passRate = outcomeInsights?.find(insights => insights?.outcomeId === outcome?._id )[scoreProp];
+                // let passRate = outcomeInsights?.find(insights => insights?.outcomeId === outcome?._id )[scoreProp];
+                let passRateCollection = outcomeInsights?.filter(insights => insights?.outcomeId === outcome?._id );
+                let { numberOfQuestionsPassedOutcome, percentageNumberOfQuestionsPassedOutcome } = getTheNumberOfQuestionsResultForAttemptedOutcomes( passRateCollection, resultProp.numberOfQuestionsPassed );
+
+                collection.push({
+                    labels,
+                    label: getLessonOutcomeLabelTitle( outcome ),
+                    data: assignValueToArray( currentLessonIndex, percentageNumberOfQuestionsPassedOutcome ),// fix
+                    borderColor: getBorderColor( outcome ), 
+                    backgroundColor: getBackGroundColor( percentageNumberOfQuestionsPassedOutcome ), 
+                    barThickness: getBarThickness(),
+                    borderWidth: 1,
+                    stack: getStackValue( currentOutcomeIndex ),
+                    id
+                });
+
+            });
+        });
+
+    return { labels: labelCollection, datasets: collection };
+}
+
+function getLessonOutcomes( lesson, courseOutcomes ) {
+    return courseOutcomes?.filter( outcome => outcome?.lessonId === lesson?._id );
+}
+
+function getLessonLabelTitle( lesson ) {
+    return lesson?.title;
+}
+
+function getLessonOutcomeLabelTitle( outcome ) {
+    return outcome?.title
+}
+
+function getBorderColor( outcome ) {
+    return outcome?.color;
+}
+
+function getBackGroundColor( passRate ) {
+    return buildBackGroundColor( passRate );
+}
+
+function getBarThickness() {
+    return 25;
+}
+
+function getStackValue( index ) {
+    return `Stack ${index}`;
+}
+
+function assignValueToArray( iterator, value ) {
+    let collection = [];
+
+    if ( typeof( iterator ) === 'number' && typeof( value ) === 'number' ) {
+        if ( iterator > 0 ) {
+            for ( let i = 0; i < iterator; ++i ) {
+              collection[i] = null;
+            }
+        }
+        
+        collection.splice(iterator, 1, value)
+    }
+    return collection;
+  }
+
+  function getLabels( labelCollection, labelTitle ) {
+    labelCollection.push( labelTitle );
+  }
+  
+  export const data  = ( labels, datasets ) =>  {
+    return {
+        labels, 
+        datasets
+    }
+  };
+
+
+
+
+
+
+
+
+  import React, { useRef } from 'react';
+import { connect } from 'react-redux';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { isEmptyObject } from 'services/course/helpers/Validations';
+import { Chart,  getDatasetAtEvent, getElementAtEvent, getElementsAtEvent } from 'react-chartjs-2';
+import { data, buildCourseLessonOutcomeData } from 'services/course/pages/Charts/components/CustomGroupedBarChart/helpers';
+import { loadStudentQuestionInsightByFormType } from 'services/course/actions/studentQuestionInsights';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+import './style.css';
+
+const topLabels = {
+  id: 'topLabels',
+  afterDraw: function (chart, args, pluginOptions) {
+    const { ctx, scales: { x, y } } = chart;
+    const dataSetMax = chart.data.datasets?.length - 1, offSet = 25;
+
+    chart.data.datasets[0].data?.forEach((datapoint, index) => {
+      const datasetArray = [];
+
+      chart.data.datasets?.forEach((dataset) => {
+        datasetArray.push(dataset.data[index])
+      });
+
+      function totalSum(total, values) {
+        return total + values;
+      }
+
+      let sum = datasetArray?.reduce(totalSum, 0);
+      let avg = ( sum / datasetArray?.length );
+
+      ctx.font = 'bold 20px san-serif';
+      ctx.fillStyle = 'rgba(255, 26, 104, 1)';
+      ctx.textAlign = 'center';
+      ctx.fillText(avg, x?.getPixelForValue(index), chart?.getDatasetMeta( dataSetMax )?.data[index]?.y - offSet );
+    });
+  }
+};
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ChartDataLabels,
+  topLabels
+);
+
+export const options = {
+  plugins: {
+    tooltip: {
+      callbacks: {
+          label: function(context) {
+            alert('context')
+            alert(Object.keys(context))
+            alert(context?.label)
+    
+            alert(JSON.stringify(context?.element))
+            alert(JSON.stringify(context?.raw))
+            alert(JSON.stringify(context?.formattedValue))
+            // alert(data.datasets[datasetIndex].label)
+              // 
+              // let label = context.dataset;
+              let label = context.parsed;
+              alert(JSON.stringify(label))
+
+              if (label) {
+                  label += ': ';
+              }
+              if (context.parsed.y !== null) {
+                  label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
+              }
+              return label;
+          }
+      }
+  },
+    maintainAspectRatio: false,
+    title: {
+      display: true,
+      text: 'Course Lesson Outcomes',
+      font: {
+        size: 18
+    }
+    },
+    datalabels: {
+      color: 'black',
+      font: {
+        size: 18
+    }
+    },
+    legend: {
+      display: true,
+      title: {
+          display: true,
+          color: 'rgb(255, 99, 132)',
+      },
+      labels: {
+          font: {
+              size: 15
+          }
+      },
+    },
+  },
+  listeners: {
+        enter: function(context) {
+          alert('enter')
+          alert(JSON.stringify(context))
+          console.log('enter', context);
+        },
+        leave: function(context) {
+          alert('leave')
+          alert(JSON.stringify(context))
+          console.log('leave', context);
+        },
+        click: function(context) {
+          alert('clicked clicked')
+          alert(JSON.stringify(context))
+          console.log('click', context);
+        }
+  },
+  responsive: true,
+  categoryPercentage: 1,
+  barPercentage: 1,
+  scales: {
+    x: {
+      stacked: false,
+      beginAtZero: true,
+      suggestedMin: 0,
+      // suggestedMax: 100
+      
+    },
+    y: {
+      stacked: false,
+      beginAtZero: true,
+      suggestedMin: 0,
+      suggestedMax: 100
+    },
+  },
+  layout: {
+    padding: 20 
+  }
+};
+
+const CustomGroupedBarChart = ({ groupedBarChartProps }) => {    
+
+  if ( isEmptyObject( groupedBarChartProps ) ) return null;
+
+  const chartRef = useRef( null );
+
+  let { labels, datasets } = buildCourseLessonOutcomeData( groupedBarChartProps ); 
+  
+  let { getOutcomeIdFromChartCallBack } = groupedBarChartProps;
+
+  const printElementAtEvent = ( element ) => {
+    if (!element.length) return;
+  
+    const { datasetIndex, index } = element[0];
+
+    getOutcomeIdFromChartCallBack( datasets[datasetIndex].label )
+  };
+    
+  const onClick = (event) => {
+    const { current: chart } = chartRef;
+  
+    if (!chart) {
+      return;
+    }
+  
+   printElementAtEvent(getElementAtEvent(chart, event));
+  };
+
+  return <div style={{height:"70vh", width:"100vw",marginBottom:"0%", padding:"1%"}}>
+      <Chart ref={chartRef} type={'bar'}  options={options}  data={data( labels, datasets )} onClick={onClick}/>
+  </div> 
+}
+
+export default connect( null, { loadStudentQuestionInsightByFormType })(CustomGroupedBarChart);
+
+
+
+
+
+
+
+// const topLabels = {
+//   id: 'topLabels',
+//   afterDraw: function (chart, args, pluginOptions) {
+
+//     const { ctx, scales: { x, y } } = chart;
+//     const dataSetMax = chart.data.datasets?.length - 1, offSet = 25;
+
+//     chart.data.datasets[0].data?.forEach((datapoint, index) => {
+//       const datasetArray = [];
+
+//       chart.data.datasets?.forEach((dataset) => {
+//         datasetArray.push(dataset.data[index])
+//       });
+
+//       function totalSum(total, values) {
+//         return total + values;
+//       }
+
+//       let sum = datasetArray?.reduce(totalSum, 0);
+//       let avg = Math.round( ( sum / datasetArray?.length ) );
+
+//       ctx.font = 'bold 20px san-serif';
+//       ctx.fillStyle = 'rgba(255, 26, 104, 1)';
+//       ctx.textAlign = 'center';
+//       ctx.fillText(avg, x?.getPixelForValue(index), chart?.getDatasetMeta( dataSetMax )?.data[index]?.y - offSet );
+//     });
+//   }
+// };
+
+   // let testLine ={
+        //     type: 'line',
+        //     borderColor: 'rgb(255, 99, 132)',
+        //     borderWidth: 2,
+        //     fill: false,
+        //     data: [67, 67 ],
+        // };
+
+const topLabels = {
+  id: 'topLabels',
+  afterDraw: function (chart, args, pluginOptions) {
+
+    const { ctx, scales: { x, y } } = chart;
+    const dataSetMax = chart.data.datasets?.length - 1, offSet = 25;
+
+    let lessonTitles = [...new Set(chart.data.datasets?.map(data => data?.labels))];
+
+      const lineChartData = [];
+
+      lessonTitles.forEach((lesson, index) => {
+
+      const datasetArray = [];
+
+      let dataSetItems = chart.data?.datasets.filter(item=>item?.labels === lesson);
+
+        dataSetItems.forEach((dataset) => {
+          let value = dataset.data[index];
+          datasetArray.push(value);
+        });
+
+      function totalSum(total, values) {
+        return total + values;
+      }
+
+      let sum = datasetArray?.reduce(totalSum, 0);
+ 
+      let avg = Math.round( ( sum / datasetArray?.length ) );
+
+      ctx.font = 'bold 20px san-serif';
+      ctx.fillStyle = 'rgba(255, 26, 104, 1)';
+      ctx.textAlign = 'center';
+      ctx.fillText(avg, x?.getPixelForValue(index), chart?.getDatasetMeta( dataSetMax )?.data[1]?.y - offSet );
+
+      // build line chart data
+      // lineChartData.push(avg);
+      //chart.data.datasets = [{"type":"bar","labels":"Atoms","fill":false,"label":"Atoms as building blocks ","data":[67],"borderColor":"#1F51FF","borderWidth":3,"backgroundColor":"rgb(60, 179, 113)","barThickness":23,"stack":"Stack lessoninsights_0","id":"Atoms"},{"type":"bar","labels":"Atoms","fill":false,"label":"Atomic structure ","data":[67],"borderColor":"#1F51FF","borderWidth":3,"backgroundColor":"rgb(60, 179, 113)","barThickness":23,"stack":"Stack lessoninsights_1","id":"Atoms"},{"type":"bar","labels":"Atoms","fill":false,"label":"Atomic models ","data":[33],"borderColor":"#1F51FF","borderWidth":3,"backgroundColor":"rgb(255, 0, 0)","barThickness":23,"stack":"Stack lessoninsights_2","id":"Atoms"},{"type":"bar","labels":"Bonds","fill":false,"label":"Covalent bonds ","data":[null,67],"borderColor":"#1F51FF","borderWidth":3,"backgroundColor":"rgb(60, 179, 113)","barThickness":23,"stack":"Stack lessoninsights_0","id":"Bonds"},{"type":"line","borderColor":"rgb(255, 99, 132)","borderWidth":2,"fill":false,"data":[56,67]}];
+
+    });
+
+    // alert('dataset b4')
+    // alert(JSON.stringify(chart.data.datasets))
+
+    // chart.data.datasets = [ ...chart.data?.datasets, {
+    //       // type: 'line',
+    //       borderColor: 'rgb(255, 99, 132)',
+    //       borderWidth: 2,
+    //       fill: false,
+    //       data: lineChartData,
+    //   }]
+
+      // alert('updated dataset')
+      // alert(JSON.stringify(chart.data.datasets))
+
+      // chart.data.datasets = [{"type":"bar","labels":"Atoms","fill":false,"label":"Atoms as building blocks ","data":[67],"borderColor":"#1F51FF","borderWidth":3,"backgroundColor":"rgb(60, 179, 113)","barThickness":23,"stack":"Stack lessoninsights_0","id":"Atoms"},{"type":"bar","labels":"Atoms","fill":false,"label":"Atomic structure ","data":[67],"borderColor":"#1F51FF","borderWidth":3,"backgroundColor":"rgb(60, 179, 113)","barThickness":23,"stack":"Stack lessoninsights_1","id":"Atoms"},{"type":"bar","labels":"Atoms","fill":false,"label":"Atomic models ","data":[33],"borderColor":"#1F51FF","borderWidth":3,"backgroundColor":"rgb(255, 0, 0)","barThickness":23,"stack":"Stack lessoninsights_2","id":"Atoms"},{"type":"bar","labels":"Bonds","fill":false,"label":"Covalent bonds ","data":[null,67],"borderColor":"#1F51FF","borderWidth":3,"backgroundColor":"rgb(60, 179, 113)","barThickness":23,"stack":"Stack lessoninsights_0","id":"Bonds"},{"type":"line","borderColor":"rgb(255, 99, 132)","borderWidth":2,"fill":false,"data":[56,67]}];
+
+  }
+
+  // chart.data.datasets = [{"type":"bar","labels":"Atoms","fill":false,"label":"Atoms as building blocks ","data":[67],"borderColor":"#1F51FF","borderWidth":3,"backgroundColor":"rgb(60, 179, 113)","barThickness":23,"stack":"Stack lessoninsights_0","id":"Atoms"},{"type":"bar","labels":"Atoms","fill":false,"label":"Atomic structure ","data":[67],"borderColor":"#1F51FF","borderWidth":3,"backgroundColor":"rgb(60, 179, 113)","barThickness":23,"stack":"Stack lessoninsights_1","id":"Atoms"},{"type":"bar","labels":"Atoms","fill":false,"label":"Atomic models ","data":[33],"borderColor":"#1F51FF","borderWidth":3,"backgroundColor":"rgb(255, 0, 0)","barThickness":23,"stack":"Stack lessoninsights_2","id":"Atoms"},{"type":"bar","labels":"Bonds","fill":false,"label":"Covalent bonds ","data":[null,67],"borderColor":"#1F51FF","borderWidth":3,"backgroundColor":"rgb(60, 179, 113)","barThickness":23,"stack":"Stack lessoninsights_0","id":"Bonds"},{"type":"line","borderColor":"rgb(255, 99, 132)","borderWidth":2,"fill":false,"data":[56,67]}];
+};
+

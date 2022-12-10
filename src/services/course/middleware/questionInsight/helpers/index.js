@@ -1,85 +1,78 @@
 import { addNewQuestionInsight, saveQuestionInsight, loadQuestionInsights } from 'services/course/actions/questioninsights';
-import { loadOnlineQuestionsByQuestionId } from 'services/course/actions/onlinequestions';
-import { loadStudentQuestionInsights } from 'services/course/actions/studentQuestionInsights';
 import { inputType } from 'services/course/pages/QuestionsPage/helpers';
 
-export function handleAddingQuestionInsight( store, questionInsight  ) {
-    
-    let { questionId } = questionInsight;
+export function handleAddingQuestionInsight( store, form ) {
 
-    store.dispatch( loadStudentQuestionInsights() );
+    let { formName, formType, courseId, lessonId, operatorId } = form;
 
-    let numberOfStudentsCollection = Object.values( store.getState()?.studentQuestionInsights?.studentQuestionInsights )?.filter( item => item?.questionId === questionInsight?.questionId );
+    let studentQuestionInsightCollection = Object.values(store.getState()?.studentQuestionInsights?.studentQuestionInsights)?.
+        filter(item => item?.formType === formType && item?.formName === formName );
 
-    numberOfStudentsCollection = initializeStudentCollection( store, numberOfStudentsCollection, questionInsight );
+    store.dispatch( loadQuestionInsights() );
 
-    store.dispatch( loadOnlineQuestionsByQuestionId( questionInsight?.questionId ) );
+    studentQuestionInsightCollection.map( questionInsight => {
+                
+        if ( questionInsight ) {
 
-    let question = Object.values( store.getState()?.onlineQuestions?.onlineQuestions  ).find(item => item?._id === questionInsight?.questionId );
-  
-    let {  numberOfStudents } = getNumberOfStudentsAttemptedQuestion( question, numberOfStudentsCollection );
-    
-    let { passed, fail, unanswered } = getStudentQuestionInsights( question, numberOfStudentsCollection );
+            let { questionId, outcomeId } = questionInsight;
+            
+            let questionInsightsCollection = studentQuestionInsightCollection?.filter(item => item?.questionId === questionId );
+            let { numberOfSubmittedAssignments } = getNumberOfSubmittedAssignment( questionInsightsCollection );
+            let { numberOfStudents } = getNumberOfStudentsAttemptedQuestion( questionInsightsCollection );
+            let { passed, fail, unanswered } = getStudentQuestionInsights( questionInsightsCollection );
+        
+            const totalNumberOfSubmittedAssignments = numberOfSubmittedAssignments;
+            const totalNumberOfStudents = numberOfStudents;
+            const numberOfStudentsAttemptedQuestion = ( numberOfStudents - unanswered );
+            const numberOfStudentsPassedQuestion = passed;
+            const numberOfStudentsFailedQuestion = fail;
+            const numberOfStudentsUnAttemptedQuestion = unanswered;
+            const passPercentRate = ( ( numberOfStudentsPassedQuestion / totalNumberOfSubmittedAssignments ) * 100 );
+            const { unAttemptedPercentRate,  failurePercentRate } = handleFailureRate( numberOfStudentsFailedQuestion, numberOfStudentsUnAttemptedQuestion, totalNumberOfSubmittedAssignments );
+            
+            let questionInsightsObj = {
+                formType,
+                formName,            
+                questionId,
+                courseId, 
+                lessonId, 
+                operatorId,
+                outcomeId,
+                totalNumberOfSubmittedAssignments,
+                totalNumberOfStudents,
+                numberOfStudentsAttemptedQuestion,
+                numberOfStudentsUnAttemptedQuestion,
+                numberOfStudentsPassedQuestion,
+                numberOfStudentsFailedQuestion,
+                passPercentRate,
+                failurePercentRate,
+                unAttemptedPercentRate
+            };
 
-    let { formName, formType, outcomeId, courseId, lessonId, operatorId } = question;
-
-    const totalNumberOfStudents = numberOfStudents;
-    const numberOfStudentsAttemptedQuestion = ( numberOfStudents - unanswered );
-    const numberOfStudentsPassedQuestion = passed;
-    const numberOfStudentsFailedQuestion = fail;
-    const numberOfStudentsUnAttemptedQuestion = unanswered;
-    const passPercentRate = ( ( numberOfStudentsPassedQuestion / totalNumberOfStudents ) * 100 );
-    const failurePercentRate = ( ( numberOfStudentsFailedQuestion / totalNumberOfStudents ) * 100 );
-    const unAttemptedPercentRate = ( ( numberOfStudentsUnAttemptedQuestion / totalNumberOfStudents ) * 100 );
-
-    if ( questionInsight ) {
-        let questionInsightsObj = {
-            formType,
-            formName,            
-            questionId,
-            courseId, 
-            lessonId, 
-            operatorId,
-            outcomeId,
-            totalNumberOfStudents,
-            numberOfStudentsAttemptedQuestion,
-            numberOfStudentsUnAttemptedQuestion,
-            numberOfStudentsPassedQuestion,
-            numberOfStudentsFailedQuestion,
-            passPercentRate,
-            failurePercentRate,
-            unAttemptedPercentRate
-        };
-
-       handleAddingNewQuestionInsight( handleSavingQuestionInsights( store, questionInsight, questionInsightsObj ), store, questionInsightsObj );
-    }
-}
-
-function initializeStudentCollection( store, studentCollection, questionInsight ) {
-    let updateInsight = studentCollection?.find(item => item?.questionId === questionInsight?.questionId && 
-        item?.formUuId === questionInsight?.formUuId  &&
-            item?.formName === questionInsight?.formName && item?.userId === questionInsight?.userId  );
-
-    if ( updateInsight ) {
-        let insightIndex = studentCollection?.findIndex(item => item?.questionId === questionInsight?.questionId && 
-            item?.formUuId === questionInsight?.formUuId  &&
-                item?.formName === questionInsight?.formName  && item?.userId === questionInsight?.userId  );
-
-        if ( typeof(insightIndex) === 'number' ) {
-            studentCollection.splice( insightIndex, 1, questionInsight );
+            handleAddingNewQuestionInsight( handleSavingQuestionInsights( store,  questionInsightsObj ), store, questionInsightsObj );
         }
-        return studentCollection;
-    }
-    return [ ...studentCollection, questionInsight ];
+    }); 
 }
 
-function handleSavingQuestionInsights( store, answer, questionInsightsObj ) {
+function handleFailureRate( numberOfStudentsFailedQuestion, numberOfStudentsUnAttemptedQuestion, totalNumberOfSubmittedAssignments ) {
+    let unAttemptedPercentRate, failurePercentRate;
+
+    if ( numberOfStudentsFailedQuestion === numberOfStudentsUnAttemptedQuestion ) {
+        unAttemptedPercentRate = ( ( numberOfStudentsUnAttemptedQuestion / totalNumberOfSubmittedAssignments ) * 100 );
+    } else {
+        failurePercentRate = ( ( numberOfStudentsFailedQuestion / totalNumberOfSubmittedAssignments ) * 100 );
+    }
+    return { unAttemptedPercentRate,  failurePercentRate };    
+}
+
+function handleSavingQuestionInsights( store, questionInsightsObj ) {
     let { questionId, formName, formType, outcomeId} = questionInsightsObj;
 
     let existingQuestionInsight = Object.values(store.getState()?.questionInsights?.questionInsights)?.
         find(insight => insight?.formName === formName && insight?.formType === formType && insight.questionId === questionId );
 
     if ( existingQuestionInsight ) {
+
         store.dispatch( saveQuestionInsight( { ...existingQuestionInsight, ...questionInsightsObj } ));
         return true;
     }
@@ -92,21 +85,25 @@ function handleAddingNewQuestionInsight( insight, store, questionInsight ) {
     store.dispatch( addNewQuestionInsight( questionInsight ) );
 }
 
-export function getStudentQuestionInsights( question, questionInsightsStudentCollection ) {
-    if ( !question ) return;
-
+export function getStudentQuestionInsights( questionInsightsStudentCollection ) {
     let passed = questionInsightsStudentCollection?.filter(item => item?.passed === true )?.length; 
-
     let fail = questionInsightsStudentCollection?.filter(item => item?.fail === true )?.length; 
-
     let unanswered = questionInsightsStudentCollection?.filter(item => item?.unanswered === true )?.length; 
     
     return { passed, fail, unanswered }; 
 }
 
-export function getNumberOfStudentsAttemptedQuestion( question, questionInsightsStudentCollection ) {
-    if ( !question ) return;
+export function getNumberOfSubmittedAssignment( questionInsightsStudentCollection ) {
+    let numberOfSubmittedAssignments = [];
 
+    if ( questionInsightsStudentCollection?.length > 0 ) {
+        numberOfSubmittedAssignments = [ ...new Set( questionInsightsStudentCollection?.map( item => item?.formUuId )) ];
+    }
+
+   return { numberOfSubmittedAssignments: numberOfSubmittedAssignments?.length };
+}
+
+export function getNumberOfStudentsAttemptedQuestion( questionInsightsStudentCollection ) {
     let numberOfStudentsCollection = [];
 
     if ( questionInsightsStudentCollection?.length > 0 ) {
@@ -128,9 +125,9 @@ export function handleQuestion( question ) {
     }
 };
 
-export function getTotalPointsReceived( formFields ) {
+export function getTotalPointsReceived( formFields, answer ) {
     if ( formFields?.length === 0 ) return;
-    return calcAnsPoints( formFields )
+    return calcAnsPoints( formFields, answer );
 };
 
 export function calcPoints( collection ){
@@ -142,7 +139,7 @@ export function calcPoints( collection ){
     return totalPoints;
 }
 
-export function calcAnsPoints( collection ){
+export function calcAnsPoints( collection, answer ){
     let totalPoints = 0;
 
     collection.map( item => {
@@ -150,5 +147,5 @@ export function calcAnsPoints( collection ){
             totalPoints += item?.points;
         } 
     });
-    return totalPoints;
+    return ( answer?.inputType === inputType.ExplanationAnswerEditor && totalPoints !== answer?.points ) ? answer?.points : totalPoints;
 }

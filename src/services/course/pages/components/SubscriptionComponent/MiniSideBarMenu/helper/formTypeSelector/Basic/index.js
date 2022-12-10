@@ -1,17 +1,24 @@
 import { connect } from 'react-redux';
 import { handleAddPushNotificationSubscriptionToEntity, handleEmailNotificationSubscriptionToEntity, handleSavingEntityAction } from 'services/course/pages/components/SubscriptionComponent/MiniSideBarMenu/helper';
-import { saveOnlineQuestions } from 'services/course/actions/onlinequestions';
+import { saveOnlineQuestions, addNewOnlineQuestionFromExisting } from 'services/course/actions/onlinequestions';
+import { onlineMarkDownEditorFieldCollection, inputType } from 'services/course/pages/QuestionsPage/helpers';
+import { addQuestionConfig } from 'services/course/pages/OnlineQuestionsPage/helpers';
 import { elementMeta } from 'services/course/pages/QuestionsPage/helpers';
 import ToggleButton from 'services/course/pages/components/ToggleButton';
+import './style.css';
 
 const Basic = ({
     question, 
     currentUser,
-    saveOnlineQuestions }) => {
+    onlineQuestionProperties,
+    saveOnlineQuestions,
+    isCopyingExistingQuestionInProgress,
+    addNewOnlineQuestionFromExisting }) => {
+        
 return (
     <div>
         {   <span>
-            <span  className={ "navlinkItem" }>
+            <span className={ "navlinkItem" }>
                 <label> Receive push notifications. </label>
                 <ToggleButton
                     className={ "toggleButton" }
@@ -40,6 +47,20 @@ return (
                     placeHolder="save" 
                 />
                 </span>
+                <>
+                {( isCopyingExistingQuestionInProgress ) && 
+                    <span  className={ "toggleButton" }>
+                      <label> Copy question. </label>
+                      <div>
+                      <button
+                        className={'copy-question'}
+                        onClick={ () => addNewOnlineQuestionFromExisting({ ...onlineMarkDownEditorFieldCollection( question ), markDownContent: question?.markDownContent, answerExplanationMarkDownContent: question?.answerExplanationMarkDownContent,  ...onlineQuestionProperties }, {...onlineQuestionProperties, oldQuestionId: question?._id } ) } 
+                      />
+                      </div>
+                      </span>
+                } 
+                </>
+              
             {/* Don't delete questions when there are answers and comments. */}
             </span>
         } 
@@ -48,11 +69,14 @@ return (
 };
 
 const mapDispatch = {
-    saveOnlineQuestions
+    saveOnlineQuestions,
+    addNewOnlineQuestionFromExisting
 };
 
 const mapState = ( state, ownProps ) => {
     return {
+      isCopyingExistingQuestionInProgress:  state?.onlineQuestions?.copyOnlineQuestionProperties,
+      onlineQuestionProperties: state?.onlineQuestions?.copyOnlineQuestionProperties,
       currentUser: state.users.user,
       courses: Object.values( state?.courses?.courses )
     };

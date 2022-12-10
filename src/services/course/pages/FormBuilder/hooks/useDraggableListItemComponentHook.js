@@ -17,9 +17,6 @@ function useDraggableListItemComponentHook( fieldProps, handleDraggableFormField
   const [ formAnswers, setFormAnswers ] = useState([]);
   const [ fieldMoved, setFieldMoved ] = useState( undefined );
   const dispatch = useDispatch();
-  let formFieldsExist = DraggableListItemFormFields?.length > 0;
-  let formAnswersExist = formAnswers?.length > 0;
-  let checkForFormAnswers = !formAnswers || formAnswers?.length === 0;
 
   useEffect(() => {
     if ( formFields?.filter(item => item?.questionId === question?._id)?.length > 0 ) {
@@ -69,6 +66,8 @@ function useDraggableListItemComponentHook( fieldProps, handleDraggableFormField
     };
   };
 
+  buildNewDraggableFormFieldAnswers();
+
   const handleAddingNewFormFieldAnswer = (field, answerFields) => {
     let ans = answerFields?.find(ans => ans?.fieldId === field?._id )
 
@@ -83,25 +82,6 @@ function useDraggableListItemComponentHook( fieldProps, handleDraggableFormField
     } 
   };
 
-  useEffect(() => {
-    let questionFields = formFields?.filter(item => item?.questionId === question?._id);
-
-    let answerFields = formFieldAnswers?.filter( field => field?.questionId === question?._id  && 
-      field?.inputType === inputType.DraggableListItem && 
-        field?.formUuId === formUuId &&
-          field?.userId === currentUser?._id );
-
-    if ( formBuilderState === elementMeta.state.Taking && questionFields?.length > 0  && (!formAnswers || formAnswers?.length === 0 ) ) {
-
-      questionFields.map( field =>  handleAddingNewFormFieldAnswer(field, answerFields));
-
-      setFormAnswers( answerFields?.filter( field => field?.questionId === question?._id  && 
-        field?.inputType === inputType.DraggableListItem && 
-          field?.formUuId === formUuId &&
-            field?.userId === currentUser?._id ) );
-    }
-  }, [ formFields?.filter(item => item?.questionId === question?._id)?.length > 0 && (!formAnswers || formAnswers?.length === 0 ) ]);
-
   useEffect(() => { 
     if ( formBuilderState === elementMeta.state.Manage && fields?.length > 0  ) {
       loadFormFieldsByQuestionId( question?._id );
@@ -115,6 +95,27 @@ function useDraggableListItemComponentHook( fieldProps, handleDraggableFormField
             field?.userId === currentUser?._id ) );
     }
   }, [ itemMoved ] );   
+
+  function buildNewDraggableFormFieldAnswers() {
+    useEffect(() => {
+      let questionFields = formFields?.filter(item => item?.questionId === question?._id);
+  
+      let answerFields = formFieldAnswers?.filter( field => field?.questionId === question?._id  && 
+        field?.inputType === inputType.DraggableListItem && 
+          field?.formUuId === formUuId &&
+            field?.userId === currentUser?._id );
+  
+      if ( formBuilderState === elementMeta.state.Taking && questionFields?.length > 0  && (!formAnswers || formAnswers?.length === 0 ) ) {
+  
+        questionFields.map( field =>  handleAddingNewFormFieldAnswer(field, answerFields));
+  
+        setFormAnswers( answerFields?.filter( field => field?.questionId === question?._id  && 
+          field?.inputType === inputType.DraggableListItem && 
+            field?.formUuId === formUuId &&
+              field?.userId === currentUser?._id ) );
+      }
+    }, [ formFields?.filter(item => item?.questionId === question?._id)?.length > 0 && (!formAnswers || formAnswers?.length === 0 ) ]);
+  }
 
   function handleDraggableOnElementMove( element ) {
     dispatch( loadFormFieldPoints() );

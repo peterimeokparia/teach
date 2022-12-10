@@ -1,0 +1,181 @@
+.course-main-bar-visible {
+    width: 100vw; 
+    /** Overlay**/
+    position: absolute;
+    z-index: 2000;
+    width: 1900px;
+    height: 100vh;
+    min-height: 100vh;
+    top: 5px;
+    right: 25px;
+    background-color:white;
+    color: white;
+    cursor: pointer;   
+    visibility: visible;
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 2s;
+    margin-left: 50px;
+}
+.course-tertiary-select {
+    width: 550px;
+    min-width: 570px;
+    margin-left: 39%;
+    padding-right: 10px;
+    right: 0;
+    background-color: transparent;
+    cursor: pointer;
+    margin-bottom: 70px;
+    color: black;
+    border: 2px solid #f5f5f5;
+    border-radius: 0%; 
+    box-shadow: 5px 5px 5px black;
+    cursor: pointer;
+}
+.course-bar-tertiary-sidepanel {
+    width: 1500px;
+    height: auto;
+    min-height: 1px;
+    margin-left: 10.9%;
+    padding-right: 10px;
+    right: 0;
+    background-color: transparent;
+    cursor: pointer;
+    margin-bottom: 10%;
+    border: 2px solid #f5f5f5;
+    border-radius: 0%; 
+    box-shadow: 5px 5px 5px black;
+    cursor: pointer;
+}
+.course-bar-tertiary-sidepanel .course-insights-data {
+    margin-top: 3px;
+}
+.course-bar-tertiary-sidepanel .course-insights-data .course-insights-data-title {
+    align-items: center;
+    justify-content: center;
+    margin-top: 13px;
+    box-shadow: 5px 5px 5px black;
+    text-transform: capitalize;
+    color: black;
+}
+.course-bar-tertiary-sidepanel .course-insights-data .course-insights-data-title:hover {
+    align-items: center;
+    justify-content: center;
+    margin-top: 13px; 
+    background-color: gray;
+    color: white;
+    box-shadow: 5px 5px 5px black;
+}
+.course-bar-tertiary-sidepanel .course-insights-data .course-insights-data-title h4{
+    margin-left: 40%;
+    margin-bottom: 1%;
+    color: black;
+}
+.course-bar-tertiary-sidepanel .course-insights-data .course-insights-data-title h4:hover{
+    margin-left: 40%;
+    margin-bottom: 1%;
+    color: white;
+}
+.course-bar-tertiary-sidepanel .course-insights-data .col-data {
+    margin-top: 13px;
+}
+.course-bar-tertiary-sidepanel .course-insights-data .row-data {
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-left: 80px;
+    margin-bottom: 33px;
+    padding-left: 27px;
+}
+.course-tertiary-sidepanel {
+    width: 1500px;
+    height: auto;
+    min-height: 1px;
+    margin-left: 10.9%;
+    padding-right: 10px;
+    right: 0;
+    background-color: transparent;
+    cursor: pointer;
+    margin-bottom: 10%;
+    border: 2px solid #f5f5f5;
+    border-radius: 0%; 
+    box-shadow: 5px 5px 5px black;
+    cursor: pointer;
+}
+.course-tertiary-sidepanel .course-insights-data {
+    margin-top: 3px;
+}
+.course-tertiary-sidepanel .course-insights-data .course-insights-data-title {
+    align-items: center;
+    justify-content: center;
+    margin-top: 13px;
+    box-shadow: 5px 5px 5px black;
+    color: black;
+}
+.course-tertiary-sidepanel .course-insights-data .course-insights-data-title:hover {
+    align-items: center;
+    justify-content: center;
+    margin-top: 13px; 
+    background-color: gray;
+    color: white;
+    box-shadow: 5px 5px 5px black;
+}
+.course-tertiary-sidepanel .course-insights-data .course-insights-data-title h4{
+    margin-left: 40%;
+    margin-bottom: 1%;
+    color: black;
+}
+.course-tertiary-sidepanel .course-insights-data .course-insights-data-title h4:hover{
+    margin-left: 40%;
+    margin-bottom: 1%;
+    color: white;
+}
+.course-tertiary-sidepanel .course-insights-data .col-data {
+    margin-top: 13px;
+}
+.course-tertiary-sidepanel .course-insights-data .row-data {
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-left: 80px;
+    margin-bottom: 33px;
+    padding-left: 27px;
+}
+.course-main-bar-visible .toggleButton2 {
+    position: absolute;
+    z-index: 2;
+    background: white;
+    width: 30px;
+    height: 30px;
+    border: 2px solid #f5f5f5;
+    border-radius: 50%; 
+    top: 0%;
+    margin-top: 15px;
+    margin-left: 96%;
+    transition: transform .0s ease-in-out;
+    box-shadow: 5px 5px black;
+}
+.course-main-bar-visible .toggleButton2:hover
+ {
+  transform: translateY(4px);
+  background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+}
+@keyframes fadeInOpacity {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes fadeOutOpacity {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}

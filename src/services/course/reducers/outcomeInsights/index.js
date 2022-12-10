@@ -14,7 +14,10 @@ DELETE_OUTCOME_INSIGHT_SUCCESS,
 DELETE_OUTCOME_INSIGHT_ERROR,
 TOGGLE_OUTCOME_INSIGHT_MODAL,
 TOGGLE_MAX_OUTCOME_DIALOG, 
-TOGGLE_MAX_FIELD_DIALOG } from 'services/course/actions/outcomeInsights';
+TOGGLE_MAX_FIELD_DIALOG,
+TOGGLE_LESSON_OUTCOME_INSIGHT_MODAL,
+TOGGLE_COURSE_OUTCOME_INSIGHT_MODAL,
+TOGGLE_COURSE_OUTCOME_FORM_OPTIONS } from 'services/course/actions/outcomeInsights';
 
 const initialState = {
      outcomeInsights:{}, 
@@ -24,7 +27,10 @@ const initialState = {
      onOutcomeInsightsLoadingError: null,
      isOutcomeInsightsModalOpen: false,
      isMaxOutcomeDialogOpen: false,
-     isMaxFieldDialogOpen: false
+     isMaxFieldDialogOpen: false,
+     lessonOutcomeInsightModal: false,
+     courseOutcomesSidePanelDisplay: false,
+     courseOutcomesFormOptionsDisplay: false
 };
 
 const reducer = produce((draft, action) => {
@@ -74,6 +80,15 @@ const reducer = produce((draft, action) => {
      case TOGGLE_MAX_FIELD_DIALOG:
           draft.isMaxFieldDialogOpen = action.payload; 
      return; 
+     case TOGGLE_LESSON_OUTCOME_INSIGHT_MODAL:
+          draft.lessonOutcomeInsightModal = !draft.lessonOutcomeInsightModal; 
+     return; 
+     case TOGGLE_COURSE_OUTCOME_INSIGHT_MODAL:
+          draft.courseOutcomesSidePanelDisplay = !draft.courseOutcomesSidePanelDisplay;
+     return;
+     case TOGGLE_COURSE_OUTCOME_FORM_OPTIONS:
+          draft.courseOutcomesFormOptionsDisplay = !draft.courseOutcomesFormOptionsDisplay;
+     return;
      default:
     return;
 

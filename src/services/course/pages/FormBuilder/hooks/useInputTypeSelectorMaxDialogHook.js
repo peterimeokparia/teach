@@ -25,7 +25,7 @@ function selectInputAction( typeOfInput ){
   const uuid = uuidv4();
   
     switch ( typeOfInput ) {
-
+      case inputType.CopyExistingQuestion: 
       case inputType.MainBodyQuestion: 
       case inputType.MainBodyTableColumnQuestion:
         addNewQuestion( typeOfInput );
@@ -50,6 +50,7 @@ function selectInputAction( typeOfInput ){
         addNewFormInputField( typeOfInput, uuid );
         break; 
       default:
+       console.log(`Problem with finding case for ${typeOfInput}`)
         break;
 
     }

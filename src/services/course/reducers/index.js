@@ -47,8 +47,10 @@ import draggableFormFields from './draggableFormFields/index.js';
 import onlineQuestionsExplainerAnswers from './onlinequestionexplainanswer/index.js';
 import questionInsights from './questioninsights/index.js';
 import outcomeInsights from './outcomeInsights/index.js';
+import courseOutcomeInsights from './courseOutcomeInsights/index.js'
 import studentQuestionInsights from './studentQuestionInsights/index.js';
 import insights from './insights/index.js';
+import teachBotProps from './teachbot/index.js';
 
 let reducers = { 
     courses, 
@@ -100,7 +102,9 @@ let reducers = {
     questionInsights,
     outcomeInsights,
     studentQuestionInsights,
-    insights
+    insights,
+    courseOutcomeInsights,
+    teachBotProps
 };
 
 export default combineReducers( reducers );

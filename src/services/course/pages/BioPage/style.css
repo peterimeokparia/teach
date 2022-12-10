@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
    text-align: center;
-  background-image: url(../../images/geometry2.png);
+  background-image: url(../../../../Images/geometry2.png);
   background-size: 300px 300px;
 }
 .MyBios .items{

@@ -13,6 +13,7 @@ export const DELETE_FORMBUILDER_SUCCESS = "DELETE FORMBUILDER SUCCESS";
 export const SAVE_FORMBUILDER_BEGIN = "SAVE FORMBUILDER BEGIN";
 export const SAVE_FORMBUILDER_ERROR = "SAVE FORMBUILDER ERROR";
 export const SAVE_FORMBUILDER_SUCCESS = "SAVE FORMBUILDER SUCCESS";
+export const HANDLE_FORMBUILDER_SUCCESS = "HANDLE FORMBUILDER SUCCESS";
 export const SAVE_FORMBUILDER_SUCCESS_NO_REDIRECT = "SAVE FORMBUILDER SUCCESS NO REDIRECT";
 export const TOGGLE_FORMBUILDER_MODAL = "TOGGLE FORMBUILDER MODAL";
 export const TOGGLE_MAX_QUESTION_DIALOG = "TOGGLE MAX QUESTION DIALOG";
@@ -52,7 +53,11 @@ export const loadFormBuilders = () => {
             dispatch({ type: LOAD_FORMBUILDER_ERROR , error });
         });       
     };
-  };
+};
+
+export const handleExistingFormBuilder = ( formbuilder ) => ({
+    type: HANDLE_FORMBUILDER_SUCCESS, payload: formbuilder
+});
 
 export const loadFormBuilderByFormBuilderId = ( formBuilderId ) => {
     return dispatch => {

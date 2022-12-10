@@ -4,7 +4,7 @@
     align-items: center;
     flex-direction: column;
     font-family: 'Courier New', Courier, monospace;
-    background-image: url(../../../../images/geometry2.png);
+    background-image: url(../../../../../../Images/geometry2.png);
 }
 .event-details header {
     color: #fff;
@@ -13,8 +13,6 @@
     align-items: center;
     justify-content: space-between;
     padding: 10px 900px;
-    /* padding: 10px 900px; */
-    /* padding: 10px 1000px; */
     background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
   }
 .event-details .events-body {

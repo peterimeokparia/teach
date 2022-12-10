@@ -115,7 +115,7 @@ export function markDownEditorFieldCollection(config){
       userId: config?.userId
     };
   };
-    
+  
   export function setFieldCollection(config, setMultipleChoiceValue, setMultipleChoiceLabelValue){
     return { 
       questionNumber: config?.questionNumber,
@@ -190,6 +190,7 @@ export function markDownEditorFieldCollection(config){
   }
 
   export  const questionInputCollection = [ 
+    inputType.CopyExistingQuestion,
     inputType.MainBodyQuestion,
     inputType.MainBodyHeader,
     inputType.MainBodyTableColumnQuestion

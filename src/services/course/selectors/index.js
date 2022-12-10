@@ -22,6 +22,7 @@ const getParsedUserId = state => state.users.user?._id;
 const getUserId = ( state, props ) => props?.userId;
 const getQuestionId = ( state, props ) => props?.questionId;
 const getOnlineQuestionsFormName = ( state, props ) => props?.onlineQuestionProps?.formName;
+const getOnlineQuestionsFormType = ( state, props ) => props?.onlineQuestionProps?.formType;
 const getOnlineQuestionsOnlineQuestionId = ( state, props ) => props?.onlineQuestionProps?.onlineQuestionId;
 const getFormFieldElementQuestionId = ( state, props ) => props?.formFieldElement?.questionId;
 const getFormFieldElementId = ( state, props ) => props?.formFieldElement?._id;
@@ -247,13 +248,31 @@ export const getCalendarsByOperatorId = createSelector(
          Object.values(calendars).filter(calendar => calendar?.operatorId === Object.values(operators).find(operator =>  operator.businessName === operatorBusinessName)?._id)       
 );
 
+// export const getEventsByOperatorId = createSelector( 
+//     getOperators,
+//     getOperatorBusinessName,
+//     getEvents,
+//     getCalendarEventType,
+//     (operators , operatorBusinessName, events, calendarEventType) => 
+//          Object.values(events).filter(event => event?.operatorId === Object.values(operators).find(operator =>  operator.businessName === operatorBusinessName)?._id && event.calendarEventType === calendarEventType )       
+// );
+
+// export const getEventsByOperatorId = createSelector( 
+//     getOperators,
+//     getOperatorBusinessName,
+//     getEvents,
+//     getCalendarEventType,
+//     (operators , operatorBusinessName, events, calendarEventType) => 
+//          Object.values(events).filter(event => event?.operatorId === Object.values(operators).find(operator =>  operator.businessName === operatorBusinessName)?._id )       
+// );
+
 export const getEventsByOperatorId = createSelector( 
     getOperators,
     getOperatorBusinessName,
     getEvents,
     getCalendarEventType,
     (operators , operatorBusinessName, events, calendarEventType) => 
-         Object.values(events).filter(event => event?.operatorId === Object.values(operators).find(operator =>  operator.businessName === operatorBusinessName)?._id && event.calendarEventType === calendarEventType )       
+         Object.values(events)        
 );
 
 export const getEventsByUserIdSelector = createSelector( 
@@ -276,11 +295,13 @@ export const getOnlineQuestions = createSelector(
     getQuestions,
     getOnlineQuestionsFormName,
     getOnlineQuestionsOnlineQuestionId,
-    ( onlineQuestions, formName, onlineQuestionId ) => {
+    getOnlineQuestionsFormType,
+    ( onlineQuestions, formName, onlineQuestionId, formType ) => {
         if ( onlineQuestionId ) {
             return  Object.values( onlineQuestions )?.filter(question => question?._id === onlineQuestionId);
         }
-        return getSortedRecordsByPosition(  Object.values( onlineQuestions )?.filter( question => question?.formName === formName ));
+        return getSortedRecordsByPosition(  Object.values( onlineQuestions )?.filter( question => question?.formName === formName 
+            && question?.formType === formType ));
 });
 
 export const getSelectedOnlineAnswers = createSelector(

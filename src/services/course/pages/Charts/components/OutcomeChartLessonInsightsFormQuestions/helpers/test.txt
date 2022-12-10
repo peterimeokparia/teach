@@ -1,0 +1,84 @@
+import { connect } from 'react-redux';
+import { dataPieChart1, dataPieChart2, dataPieChart3, getTertiarySectionData  } from 'services/course/pages/Charts/components/OutcomeChartLessonInsightsFormQuestions/helpers';
+import { isEmptyObject } from 'services/course/helpers/Validations';
+import { setSelectedOnlineQuestion } from 'services/course/actions/onlinequestions';
+import { saveFormBuilder } from 'services/course/actions/formbuilders';
+import { setSelectedOutcome } from 'services/course/actions/outcomes';
+import { togglePreviewMode, toggleModal } from 'services/course/actions/app';
+import CustomPieChart from 'services/course/pages/Charts/components/CustomPieChart';
+import MissedQuestionComponent from 'services/course/pages/FormBuilder/FormQuestions/components/MissedQuestionsComponent';
+import OutComesRecommenderForm from 'services/course/pages/Courses/CourseDetailPage/components/CourseDisplayViewComponent/OutComesRecommenderForm';
+import useLessonOutComesHook from 'services/course/pages/Courses/hooks/useLessonOutComesHook';
+import './style.css';
+
+const OutcomeChartLessonInsightsFormQuestions = ({ 
+  pieChartData, 
+  lessonOutcomes, 
+  questionPropsData, 
+  currentUser, 
+  outcomes,
+  isFormModalOpen,
+  toggleQuestionModal,
+  toggleModal,
+  lessons }) => {
+  
+  if ( isEmptyObject( pieChartData ) ) return null;
+
+  let { pieChart, questionInsightsDetails, getOutcomeIdFromChartCallBack, mainHeaderOutcomeTitle, missedQuestions } = pieChartData;
+
+  let { operatorBusinessName, lessonId, courseId, formType, formName } = questionPropsData;
+
+  let lesson = lessons?.find( lesson => lesson?._id === lessonId );
+
+  let { cardItemProps } = useLessonOutComesHook({ operatorBusinessName, lesson, courseId, outcomeType: 'lesson', currentUser, 
+      outcomes, toggleModal, toggleQuestionModal, formType, formName, isFormModalOpen, saveFormBuilder });
+
+  let selectedOutcome = outcomes?.find(item => item?._id === '62d96c2789c2a6149386e907'); // refactor
+
+  {/* {( formBuilderStatus === elementMeta.status.Reviewed || formBuilderStatus === elementMeta.status.Review) && 
+    <MissedQuestionComponent display={ true } questionProps={ questionProps() } setMissedQuestions={ handleMissedQuestions } />
+  } */}
+return <div className='row main-visible' >
+    <div className='col primary'>
+      <div className='row primary-row'>
+        <div className='col'> 
+         <CustomPieChart data={ dataPieChart3(pieChart, lessonOutcomes)} getOutcomeIdFromChartCallBack={getOutcomeIdFromChartCallBack }/> 
+        </div>
+        <div className='col missed-questions'> 
+          <MissedQuestionComponent display={ true } missedQuestions={missedQuestions} mainHeaderOutcomeTitle={mainHeaderOutcomeTitle}/>
+        </div>
+      </div>
+    </div>
+    <div className='col secondary'>
+      <div className='row secondary-row'>{'delete'}</div>
+    </div>
+    <div className={`row tertiary-sidepanel`}>  
+      <p className={'insights-data'}>
+          {
+            `${mainHeaderOutcomeTitle}` 
+          }
+        <div className='row justify-content-center'>
+          {
+            <OutComesRecommenderForm outCome={ selectedOutcome } cardItemProps={cardItemProps} currentUser={currentUser} openRecommenderModal={true}/> 
+          }
+        </div>
+      </p>
+    </div>
+    <div className={`row tertiary-sidepanel`}>  
+      <p className={'insights-data'}>      
+        { questionInsightsDetails?.map(( data ) =>  getTertiarySectionData( data ) ) }
+      </p>
+    </div>
+  </div>
+};
+const mapState = (state, ownProps) => ({
+  currentUser: state?.users?.user,
+  outcomes: Object?.values(state?.outcomes?.outcomes),
+  outcomeInsights: Object?.values(state?.outcomeInsights?.outcomeInsights),
+  toggleLessonOutcomeInsightModal: state?.outcomeInsights?.lessonOutcomeInsightModal,
+  toggleQuestionModal: state.app.toggleModal,
+  isFormModalOpen: state?.formBuilders?.isFormModalOpen,
+  lessons: Object.values( state?.lessons?.lessons )
+});
+
+export default connect(mapState, { toggleModal })(OutcomeChartLessonInsightsFormQuestions);

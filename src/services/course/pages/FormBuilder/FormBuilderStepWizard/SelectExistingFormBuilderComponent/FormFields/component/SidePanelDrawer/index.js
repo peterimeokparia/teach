@@ -5,8 +5,10 @@ import { saveFormFieldAnswer, saveFormFieldAnswerWithPoints } from 'services/cou
 import { getFormFieldAnswersByQuestionId } from 'services/course/selectors';
 import { saveOnlineQuestions } from 'services/course/actions/onlinequestions';
 import { handleChangedValue } from 'services/course/pages/FormBuilder/FormBuilderStepWizard/SelectExistingFormBuilderComponent/FormFields/helpers';
-import { renderExplanationSidePanelFields, renderDraggableSidePanelFields, renderDropDownSidePanelFields,
-  renderInputSidePanelFields } from 'services/course/pages/FormBuilder/FormBuilderStepWizard/SelectExistingFormBuilderComponent/FormFields/component/SidePanelDrawer/helpers';
+import renderExplanationSidePanelFields from 'services/course/pages/FormBuilder/FormBuilderStepWizard/SelectExistingFormBuilderComponent/FormFields/component/SidePanelDrawer/helpers/renderExplanationSidePanelFields';
+import renderDraggableSidePanelFields from 'services/course/pages/FormBuilder/FormBuilderStepWizard/SelectExistingFormBuilderComponent/FormFields/component/SidePanelDrawer/helpers/renderDraggableSidePanelFields';
+import renderDropDownSidePanelFields from 'services/course/pages/FormBuilder/FormBuilderStepWizard/SelectExistingFormBuilderComponent/FormFields/component/SidePanelDrawer/helpers/renderDropDownSidePanelFields';
+import renderInputSidePanelFields from 'services/course/pages/FormBuilder/FormBuilderStepWizard/SelectExistingFormBuilderComponent/FormFields/component/SidePanelDrawer/helpers/renderInputSidePanelFields';
 import FormFieldPanel from 'services/course/pages/FormBuilder/FormBuilderStepWizard/SelectExistingFormBuilderComponent/FormFields/component/FormFieldPanel';
 import useAssignPointsHook from 'services/course/pages/FormBuilder/hooks/useAssignPointsHook';
 import useHandleMarkDownEditorHook from 'services/course/pages/FormBuilder/hooks/useHandleMarkDownEditorHook';

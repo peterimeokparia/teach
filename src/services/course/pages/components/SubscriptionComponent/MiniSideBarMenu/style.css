@@ -22,11 +22,9 @@
     transform: translate3d(-15vw, 0, 0);
   }
   #sideFlyoutMenu.show {
-    /* position: fixed; */
     transform: translate3d(0vw, 0, 0);
     overflow: hidden;
     width: 20vw;
-    /* padding: 2rem 2rem; */
   }
   #sideFlyoutMenu h2 a {
     color: #333;

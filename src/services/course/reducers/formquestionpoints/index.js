@@ -67,6 +67,7 @@ const reducer = produce((draft, action) => {
        return; 
        case DELETE_FORMFIELDPOINTS_SUCCESS:
             delete draft.formFieldPoints[action.payload?._id];  
+            delete draft.studentsCummulativePointsRecieved[ action.payload?.userId ];   
        return; 
        case DELETE_FORMFIELDPOINTS_ERROR:
              draft.onFormFieldPointsLoadingError = action.error;

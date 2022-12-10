@@ -1,16 +1,12 @@
-import { saveStudentsAnswerPoints, saveFormFieldAnswer, loadFormFieldAnswersByQuestionId } from "services/course/actions/formfieldanswers";
+import { saveStudentsAnswerPoints, loadFormFieldAnswersByQuestionId } from "services/course/actions/formfieldanswers";
 import { saveOnlineQuestions } from "services/course/actions/onlinequestions";
-import { addNewFormFieldPoint, saveFormFieldPoint } from "services/course/actions/formquestionpoints";
+import { saveFormFieldPoint } from "services/course/actions/formquestionpoints";
 import { saveFormField } from "services/course/actions/formfields";
 import { inputType } from 'services/course/pages/QuestionsPage/helpers';
 import isEqual from "react-fast-compare";
 
-const pointHelper = {
-  Points : "points",
-  CummulativePoints : "cummulativePoints"
-};
+const pointHelper = { Points : "points", CummulativePoints : "cummulativePoints" };
 
-// cascade delete user's points when deleting form field answers
 export function assignPointsToQuestionForCorrectAnswer(  store, answerFormInputField ) {
   if ( !answerFormInputField || ( answerFormInputField?.inputType === inputType.RadioButton && !answerFormInputField['selected'] )  ) return;
    
@@ -28,13 +24,9 @@ export function assignPointsToQuestionForCorrectAnswer(  store, answerFormInputF
   const points = getPointsForStudentAnswers( currentFormField, answerFormInputField );
 
   handleToggleAnswers( studentsPointsObject, answerFormInputField, currentFormField, points );
-
   handleCheckBoxAnswers( studentsPointsObject, answerFormInputField, currentFormField, points );
-
   handleRadioButtonAnswers( studentsPointsObject, answerFormInputField, points );
-
   handleInputFieldAnswers( studentsPointsObject, answerFormInputField, points );
-
   handleExplanationEditorAnswers( studentsPointsObject, answerFormInputField, points );
 
   function handleToggleAnswers( studentsPointsObject, answerFormInputField, currentFormField, points ) {
@@ -182,17 +174,6 @@ function handleAnswers( props ) {
 
   let currentPoints = ( !getStudentPoints( props ) ) ? points : getStudentPoints( props );
 
-  // if ( currentPoints ) {
-  //   if ( !persistedPointsObject?.userId ) {
-  //     store.dispatch(addNewFormFieldPoint({ userId: answerFormInputField?.userId, cummulativePoints: currentPoints, formUuId: answerFormInputField?.formUuId, formName: answerFormInputField?.formName }));
-  //   }
-  // }
-
-  // if ( !currentPoints ) {
-  //   if ( !persistedPointsObject?.userId ) {
-  //     store.dispatch(addNewFormFieldPoint({ userId: answerFormInputField?.userId, cummulativePoints: points, formUuId: answerFormInputField?.formUuId, formName: answerFormInputField?.formName }));
-  //   }
-  // } 
   store.dispatch(saveStudentsAnswerPoints({ userId: answerFormInputField?.userId, cummulativePoints: currentPoints, formUuId: answerFormInputField?.formUuId, formName: answerFormInputField?.formName }));
  
   return currentPoints;
@@ -207,11 +188,13 @@ function getStudentPoints( props ) {
     answerFormInputField,
   } = props;
 
+  let { userId, courseId, formType, formUuId, formName } = answerFormInputField;
+
   if ( !studentsPointsObject?.userId ) return undefined;
   if ( persistedPointsObject?.userId ) {
-    store.dispatch(saveFormFieldPoint({ ...persistedPointsObject, userId: answerFormInputField?.userId, cummulativePoints, formUuId: answerFormInputField?.formUuId }));
+    store.dispatch(saveFormFieldPoint({ ...persistedPointsObject, userId, cummulativePoints, formUuId, formType, courseId, formName }));
   }
-  store.dispatch(saveStudentsAnswerPoints({ userId: answerFormInputField?.userId, cummulativePoints, formUuId: answerFormInputField?.formUuId, formName: answerFormInputField?.formName }));
+  store.dispatch(saveStudentsAnswerPoints({ userId, cummulativePoints, formUuId, formType, courseId, formName  }));
   
   return cummulativePoints;
 }
@@ -223,7 +206,6 @@ function getPointsForStudentAnswers( question, answer ){
         question?.answerKey === null  )
 
   return 0;
-
   return getPointsForCorrectAnswer( question, answer );
 }
 
@@ -249,35 +231,26 @@ function hydrateCurrentCummulativePointsFromPersistence( store, persistedPointsO
 }
 
 export function handleFormFieldPoints( store, formField  ){ 
-
   let { element, pointValue, question } = formField;
-  
   let points = pointValue;
 
-  if ( typeof(pointValue) === 'string' ) { 
-
-    points = parseInt( pointValue, 10 );
-  }
+  if ( typeof(pointValue) === 'string' ) points = parseInt( pointValue, 10 );
 
   store.dispatch( saveFormField({ ...element, points }) );
 
   let currentFormFields = Object.values( store.getState().formFields?.formFields )?.filter( field => field?.formFieldGroupId ===  element?.formFieldGroupId );
-
   let pointsAssigned = getCummulativePoints( element, currentFormFields, points );
 
   store.dispatch( saveOnlineQuestions({...question, pointsAssigned }));
 }
 
 function getCummulativePoints( formField, formFields, currentPoint ){
-
   let fields = formFields.filter(field => field?._id != formField?._id );
 
   try {
 
     let formFieldPoints = fields.map(x => x?.points);
-
     let formFieldPointsToNumber = formFieldPoints.map(Number);
-
     let cummulativePoints = currentPoint;
     
     formFieldPointsToNumber.forEach(element => {
@@ -289,5 +262,4 @@ function getCummulativePoints( formField, formFields, currentPoint ){
   } catch (error) {
     console.warn('problem with point value')
   }
-
 }

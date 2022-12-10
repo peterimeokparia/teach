@@ -128,7 +128,26 @@
 	animation-timing-function: ease-in;
 	animation-duration: 2s;
 } */
-
+ .toolbar-visible {
+    visibility: visible;
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 2s;
+    margin-left: 50px;
+  }
+  .toolbar-hidden {
+    opacity: 0;
+    animation-name: fadeOutOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-out;
+    animation-duration: 2s;
+    margin-left: 50px;
+  }
+  .toolbar-no-show {
+     visibility: hidden;
+  }
 @keyframes fadeInOpacity {
 	0% {
 		opacity: 0;

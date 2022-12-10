@@ -8,6 +8,10 @@ import { handleLessonNotes } from 'services/course/pages/Notes/helpers';
 import { setSelectedSearchItem } from 'services/course/actions/fulltextsearches';
 import { toggleConcepts } from 'services/course/actions/outcomes';
 import { LESSONNOTES, STUDENTNOTES } from 'services/course/actions/notes';
+import { enableTeachPlatform } from 'services/course/actions/classrooms';
+import { getLessonPlanUrls, getselectedTutor, getStudentsSubscribedToCoursesByThisTutor, toggleBetweenAttendanceGradeDisplay,
+  emailInputOptions, emailMessageOptions } from  'services/course/pages/ClassRoomPage/components/CourseLessonDropDownComponent/helpers'; 
+import { toggleLessonOutcome } from 'services/course/actions/outcomeInsights';
 import Swal from 'sweetalert2';
 import moment from 'moment';
 
@@ -16,26 +20,28 @@ function useCourseDisplayHook( props ) {
   const [ lessonItem, setLessonItem  ] = useState( undefined );
   const [ lessonNote, setLessonNote ] = useState( undefined );
   const [ studentsNote, setStudentsNote ] = useState( undefined );
+  const [ listOfStudents, setListOfStudents ] = useState( [] );
   const [ toggleLessonItemDisplayCount, setToggleLessonItemDisplayCount ] = useState( 0 );
   const [ searchItemCollection, setSearchItemCollection ] = useState( undefined );
   const dispatch = useDispatch();
 
-  let { currentUser, course, courses, lessons, setCurrentLesson, setLessonPlanUrl,
-      previewMode, selectedLessonPlanLesson, saveLesson, setItemInSessionStorage, deleteFileByFileName,
-      togglePreviewMode, users, calendars, calendar, addCalendar, operatorBusinessName, operator,
-      courseId, startLesson, event, allEvents, allNotes, addNotes,loadAllNotes, searchItem, concepts } = props;
+  let { currentUser, course, courses, lessons, setCurrentLesson, selectLessonFromLessonPlanDropDown, setLessonPlanUrl, toggleLessonOutcomeInsightModal,
+      previewMode, selectedLessonPlanLesson, saveLesson, setItemInSessionStorage, deleteFileByFileName, sessions, setSelectedOutcome,
+      selectCourseFromLessonPlanCourseDropDown, togglePreviewMode, users, calendars, calendar, addCalendar, operatorBusinessName, operator,
+      courseId, startLesson, event, allEvents, allNotes, addNotes,loadAllNotes, searchItem, concepts, selectedTutorId } = props;
 
-  useEffect( () => 
-  { 
-  }, []);
+  useEffect( () => { 
+    if ( currentUser?.role === role.Tutor ) {
+      let studentsSubscribedToCourse = getStudentsSubscribedToCoursesByThisTutor( users, courses, selectedTutorId )?.filter(student => student.courses.includes(courseId));
 
-  useEffect( () => 
-  { 
+      setListOfStudents( studentsSubscribedToCourse );
+  }}, []);
+
+  useEffect( () => { 
     loadAllNotes();   
   }, [ loadAllNotes ]);
 
-  useEffect( () => 
-  { 
+  useEffect( () => { 
     if ( allNotes?.length > 0 && lessonItem?._id && currentUser?._id ) {
       setStudentsNote( allNotes?.find( note => note?.lessonId === lessonItem?._id && note?.userId === currentUser?._id && note?.noteType === STUDENTNOTES ) ); 
     }
@@ -50,18 +56,27 @@ function useCourseDisplayHook( props ) {
     }
   }, [ searchItem ]);
 
+  useEffect(() => {
+    if ( !toggleLessonOutcomeInsightModal ) {
+      setSelectedOutcome( undefined );
+    }
+  }, [ toggleLessonOutcomeInsightModal ])
+
   const onMatchListItem = ( match, listItem ) => {
     if( match ){
-        setLessonItem( listItem );
-        setCurrentLesson( listItem );
-        setLessonPlanUrl(`/${operatorBusinessName}/LessonPlan/${course?._id}/${listItem._id}/${listItem.title}`);
-        setItemInSessionStorage('currentLesson', listItem);
-        if ( previewMode && (currentUser?.role === role.Tutor) && (!listItem?.introduction || listItem?.introduction === "") ) {
-            const msg = "Please enter a lesson introduction.";
-            
-            Swal.fire(msg);
-            return false;
-        }
+      setLessonItem( listItem );
+      setCurrentLesson( listItem );
+      selectLessonFromLessonPlanDropDown( listItem );
+      selectCourseFromLessonPlanCourseDropDown( course );
+      setLessonPlanUrl(`/${operatorBusinessName}/LessonPlan/${courseId}/${listItem._id}/${listItem.title}`);
+      setItemInSessionStorage('currentLesson', listItem);
+      
+      if ( previewMode && ( currentUser?.role === role.Tutor ) && ( !listItem?.introduction || listItem?.introduction === "" ) ) {
+          const msg = "Please enter a lesson introduction.";
+          
+          Swal.fire(msg);
+          return false;
+      }
     }
 }; 
 
@@ -76,8 +91,9 @@ const setPreviewEditMode = () => {
 const lessonSelectionNavigationMessage = () => {
     if ( !lessonItem?._id ) {
         toast.error("Please click on the lesson link.");
-        return;  
+        return false;  
     }
+    return true;
 };
 
 if ( fileToRemove ) {
@@ -89,7 +105,6 @@ if ( fileToRemove ) {
 const navigationContent = navContent( currentUser, operatorBusinessName, currentUser?.role,  "Student" ).users;  
 const selectedCourse =  courses?.find(course => course?._id === courseId );
 const lessonsByCourseId = lessons?.filter( lesson => lesson?.courseId === courseId );
-
 const calendarProps = {
   selectedCourse,
   lessonsByCourseId,
@@ -102,12 +117,10 @@ const calendarProps = {
   operatorBusinessName,
   operator
 };
-
 const formProps = {
   operatorBusinessName,
   currentUser,
 };
-
 const lessonProps = {
   operatorBusinessName,
   currentUser,
@@ -129,35 +142,19 @@ const lessonProps = {
   testAdminUsers: [ currentUser?._id, '603d37814967c605df1bb450', '6039cdc8560b6e1314d7bccc' ], // refactor - create admin groups & roles etc
 };
 
-const lessonNoteProps = {
-    currentUser,
-    title: lessonItem?.title,
-    courseId,
-    lessonId: lessonItem?._id,
-    userId: currentUser?._id,
-    operatorId: currentUser?.operatorId,
-    eventId: event?._id,
-    addNotes,
-    loadAllNotes
+const updateQuestionOutcomeId = ( outcome ) => {
+  setSelectedOutcome( outcome );
 };
 
-function startLessonSession(){
-  lessonSelectionNavigationMessage();
+function startLessonSession(){ // refactor
+  if ( !lessonSelectionNavigationMessage() ) return;
 
   const currentEvent = allEvents?.find( event => event?.courseId === courseId 
                           && event?.lessonId === lessonItem?._id 
                           && event?.userId === currentUser?._id);
 
-  if ( !currentEvent ) {
-    startLesson( lessonProps );
-  }
-
-  if ( currentUser?.role === role.Student && !studentsNote ) {
-    handleLessonNotes( lessonNoteProps );
-  }
-  navigate(`/${operatorBusinessName}/lessonplan/course/${courseId}/lesson/${lessonItem?._id}`);
+  dispatch( enableTeachPlatform( { listOfStudents, selectedTutorId, operatorBusinessName, sessions, operator } ) );
 }
-
 
 const handleSearch = (lesson) => {
     if ( lesson ) {
@@ -175,10 +172,13 @@ const resetSelectedSearchItem = () => {
 }
 
 return {
-  onMatchListItem, setPreviewEditMode,lessonsByCourseId, fileToRemove, lessonItem, navigationContent,
-  toggleLessonItemDisplayCount, setToggleLessonItemDisplayCount, selectedCourse,
-  calendarProps, setFileToRemove, setLessonItem, handleSearch,  resetSelectedSearchItem, setSearchItemCollection, 
-  lessonProps, formProps, lessonNote, lessonSelectionNavigationMessage, startLessonSession, searchItemCollection, 
-}; }
-
+  displayProps: {
+    setPreviewEditMode,lessonsByCourseId, fileToRemove, lessonItem, navigationContent,
+    toggleLessonItemDisplayCount, setToggleLessonItemDisplayCount, selectedCourse, updateQuestionOutcomeId,
+    calendarProps, setFileToRemove, setLessonItem, handleSearch,  resetSelectedSearchItem, setSearchItemCollection, 
+    lessonProps, formProps, lessonNote, lessonSelectionNavigationMessage, startLessonSession, searchItemCollection, 
+   },
+   onMatchListItem
+ }; 
+}
 export default useCourseDisplayHook;

@@ -62,6 +62,13 @@ import Equations from 'services/course/pages/Equations';
 import OutcomesFormBuilderComponent from 'services/course/pages/FormBuilder/FormBuilderStepWizard/OutcomesFormBuilderComponent';
 import QuestionBuilder from 'services/course/pages/components/QuestionBuilder';
 import LessonNote from 'services/course/pages/Lessons/LessonNote';
+import OutcomeChartLanding from 'services/course/pages/Charts/components/OutcomeChartLanding';
+import OutcomeChartSidePanel from 'services/course/pages/Charts/components/OutcomeChartSidePanel';
+import OutcomeBoxPlotLanding from 'services/course/pages/Charts/components/OutcomeBoxPlotLanding';
+import CustomHorizontalBarChart from 'services/course/pages/Charts/components/CustomHorizontalBarChart';
+import CustomStackedBarChart from 'services/course/pages/Charts/components/CustomChart'; // fix
+import CustomGroupedBarChart from 'services/course/pages/Charts/components/CustomChart';
+import TeachChatbot  from 'services/course/pages/TeachChatbot';
 
 //import Bible from 'services/course/pages/Test001/components/Bible/index.txt';
 //import Test002 from 'services/course/pages/Test002';
@@ -179,6 +186,13 @@ const MainRoute = () => {
              <Equations path="/:operatorBusinessName/equations"/>
              <OutcomesFormBuilderComponent path="/:operatorBusinessName/:formType/formname/:formName/courseid/:courseId/lessonid/:lessonId/user/:userId/stepone" />
              <QuestionBuilder path="/:operatorBusinessName/formBuilder/:formType/outcomeType/:outcomeType/outcomeName/:formName/state/:formBuilderState/status/:formBuilderStatus/courseid/:courseId/lessonid/:lessonId/outcomeId/:outcomeId" />
+             <OutcomeChartLanding path="/teach/pie"/> 
+             <OutcomeBoxPlotLanding path='/teach/boxplot'/>
+             <OutcomeChartSidePanel path="/teach/sidepanel/pie" />
+             <CustomHorizontalBarChart path="/teach/barchart" />
+             <CustomStackedBarChart path="/teach/stackedbarchart" />
+             <CustomGroupedBarChart path="/teach/groupedbarchart" />
+             <TeachChatbot path="/teach/chatbot"/>
         </Router>
     );
 };

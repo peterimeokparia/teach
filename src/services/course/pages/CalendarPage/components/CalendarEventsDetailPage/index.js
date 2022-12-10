@@ -1,27 +1,10 @@
-import { 
-connect } from 'react-redux';
-
-import { 
-Link } from '@reach/router';
-
-import {
-saveEvent } from 'services/course/actions/event';
-
-import {
-eventEnum,
-courseOption,     
-updatedCurrentEvent } from 'services/course/pages/CalendarPage/helpers';
-
-import {
-getUsersByOperatorId,
-getOperatorFromOperatorBusinessName,
-getEventsByOperatorId,    
-getCalendarByCalendarEventType,
-getPushNotificationUsersByOperatorId } from 'services/course/selectors';
-
-import {
-role } from 'services/course/helpers/PageHelpers';
-
+import { connect } from 'react-redux';
+import { Link } from '@reach/router';
+import { saveEvent } from 'services/course/actions/event';
+import { eventEnum, courseOption, updatedCurrentEvent } from 'services/course/pages/CalendarPage/helpers';
+import { getUsersByOperatorId, getOperatorFromOperatorBusinessName, getEventsByOperatorId,    
+getCalendarByCalendarEventType, getPushNotificationUsersByOperatorId } from 'services/course/selectors';
+import { role } from 'services/course/helpers/PageHelpers';
 import Select from 'react-select';
 import Roles from 'services/course/pages/components/Roles';
 import EventListItems from 'services/course/pages/CalendarPage/components/EventListItems';

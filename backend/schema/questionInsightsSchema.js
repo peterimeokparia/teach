@@ -55,6 +55,10 @@ const questionInsightsSchema = new Schema ({
         type: Boolean, 
         required: false,
     },
+    totalNumberOfSubmittedAssignments: { 
+        type: Number, 
+        required: false,
+    },
     totalNumberOfStudents: { 
         type: Number, 
         required: false,
@@ -70,9 +74,7 @@ const questionInsightsSchema = new Schema ({
     numberOfStudentsFailedQuestion: { 
         type: Number, 
         required: false,
-    },
-    // what question(s) does this answer for the administrators and teachers? // insufficient time // teaching & learning gaps // question clarity // wording of question // style of question 
-    // remedies...questionnaire: difficulty level... questions not answered:- lack of time, difficult, clarity, 
+    }, 
     numberOfStudentsUnAttemptedQuestion: {
         type: Number, 
         required: false,

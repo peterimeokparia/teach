@@ -16,12 +16,14 @@ SET_OUTCOME_MARKDOWN,
 TOGGLE_FURTHER_STUDY_MODAL,
 TOGGLE_CONCEPTS,
 SET_SELECTED_OUTCOME,
-SET_OUTCOME_LINK } from 'services/course/actions/outcomes';
+SET_OUTCOME_LINK,
+SET_CURRENT_OUTCOME } from 'services/course/actions/outcomes';
 
 const initialState = {
     outcomes: {},
     outcomeLink:{},
-    selectedOutcome:{},
+    selectedOutcome:{}, //check
+    currentOutcome:{},
     concepts: false,
     saveOutcomeInProgress: false,
     onSaveOutcomeError: null,
@@ -80,7 +82,10 @@ const reducer = produce((draft, action) => {
             draft.concepts = !draft.concepts;
         return;
         case SET_SELECTED_OUTCOME:
-            draft.selectedOutcome = action?.payload;
+        case SET_CURRENT_OUTCOME:    
+            let selected = action?.payload;
+            draft.selectedOutcome = selected;
+            draft.currentOutcome = selected;
         return;
         case TOGGLE_FURTHER_STUDY_MODAL:
             draft.furtherStudyModal = !draft.furtherStudyModal;

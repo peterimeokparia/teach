@@ -3,6 +3,7 @@ import { addNewOutcome, saveOutcome, loadOutcomes, deleteOutcome } from 'service
 import { togglePreviewMode, toggleModal } from 'services/course/actions/app';
 import { getUsersByOperatorId, getOperatorFromOperatorBusinessName, getTutorsLessonUserNotesByLessonId } from 'services/course/selectors';
 import { saveFormBuilder } from 'services/course/actions/formbuilders';
+import { formTypes } from 'services/course/pages/FormBuilder/helpers';
 import useLessonOutComesHook from 'services/course/pages/Courses/hooks/useLessonOutComesHook';
 import OutComesRecommenderForm from 'services/course/pages/Courses/CourseDetailPage/components/CourseDisplayViewComponent/OutComesRecommenderForm';
 import OutComesCardItem from 'services/course/pages/Courses/CourseDetailPage/components/CourseDisplayViewComponent/OutComesCardItem';
@@ -28,18 +29,18 @@ const OutComesComponent = ({
   selectedOutcome,
   questions,
   lessonNotes, 
-  lessonId
+  lessonId, 
 }) => {
   let { cardItemProps
-  } = useLessonOutComesHook({ operatorBusinessName, lessonNotes, lesson, courseId, outcomeType, currentUser, 
-    outcomes, toggleModal, toggleQuestionModal, formType, formName, isFormModalOpen, questions, saveFormBuilder });
+  } = useLessonOutComesHook({ operatorBusinessName, lesson, courseId, outcomeType, currentUser, 
+    outcomes, toggleModal, toggleQuestionModal, formType, formName, isFormModalOpen, saveFormBuilder });
 
   let { setEditButton } = cardItemProps;
 
-return  (  ( concepts ) 
+return  ( ( concepts ) 
             ? <OutComesRecommenderForm outCome={ selectedOutcome } cardItemProps={cardItemProps} currentUser={currentUser} openRecommenderModal={concepts}/>  
             : <div className="row outcomes" onBlur={() => setEditButton( false )}>
-                <OutComesCardItem outcomes={outcomes} currentUser={currentUser} cardItemProps={cardItemProps} lessonNotes={lessonNotes}/> 
+                <OutComesCardItem outcomes={outcomes} currentUser={currentUser} cardItemProps={cardItemProps} lessonNotes={lessonNotes} /> 
                 <AddOutComeComponent outcomes={outcomes} buttonText={buttonText} cardItemProps={cardItemProps}/>  
               </div>);
     };
@@ -73,3 +74,4 @@ const mapState = (state, ownProps) => {
 };
 
 export default connect( mapState, mapDispatch )(OutComesComponent);
+

@@ -20,19 +20,18 @@ import { loadOnlineAnswers } from 'services/course/actions/onlineanswers/index.j
 import { loadOnlineComments } from 'services/course/actions/onlinecomments/index.js';
 import { calendar } from 'services/course/middleware/calendar/index.js';
 import { classrooms } from 'services/course/middleware/classrooms/index.js';
-import { courses } from 'services/course/middleware/courses/index.js';
+import { courses } from 'services/course/middleware/courseInsights/courses/index.js';
 import { events } from 'services/course/middleware/events/index.js';
 import { users } from 'services/course/middleware/users/index.js';
 import { sessions } from 'services/course/middleware/sessions/index.js';
 import { grades } from 'services/course/middleware/grades/index.js';
 import { builder } from 'services/course/middleware/builder/index.js';
 import { editor } from 'services/course/middleware/editor/index.js';
-import { questionInsight } from 'services/course/middleware/questionInsight/index.js';
-import { outcomeInsight } from 'services/course/middleware/outcomeInsight/index.js';
 import { fullTextSearches } from 'services/course/middleware/fullTextSearches/index.js';
 import { pageSpecificSearch } from 'services/course/middleware/fullTextSearches/pageSpecificSearch/index.js';
 import { lessons } from 'services/course/middleware/lessons/index.js';
 import { notes } from 'services/course/middleware/notes/index.js';
+import { onlineQuestions } from 'services/course/middleware/onlineQuestions/index.js';
 import { loadWhiteBoardData } from "services/course/actions/whiteBoards/index.js";
 import { loadMeetingNotes } from "services/course/actions/meetingNotes/index.js";
 import { loadLoginSessions } from "services/course/actions/logins/index.js";
@@ -52,6 +51,7 @@ import { loadQuestionInsights } from 'services/course/actions/questioninsights/i
 import { loadStudentQuestionInsights } from 'services/course/actions/studentQuestionInsights/index.js';
 import { loadOutcomeInsights } from 'services/course/actions/outcomeInsights/index.js';
 import { loadInsights } from 'services/course/actions/insights/index.js';
+import { loadCourseOutcomeInsights } from 'services/course/actions/courseOutcomeInsights';
 // import { // subscriptions } from 'services/course/middleware/subscriptions/index.js';
 // import { // loadFailedPushNotifications } from 'services/course/actions/failedpushnotifications/index.js';
 // import {// loadFailedEmailNotifications } from 'services/course/actions/failedemailnotifications/index.js';
@@ -89,8 +89,7 @@ export const enhancer = composeEnhancers(
     pageSpecificSearch,
     lessons,
     notes,
-    questionInsight,
-    outcomeInsight
+    onlineQuestions,
     //subscriptions, 
     )
   // other store enhancers if any
@@ -101,45 +100,48 @@ export const store = createStore(
   enhancer
 );
 
-store?.dispatch(loadExplainerOnlineQuestionAnswers());
-store?.dispatch(loadOutcomes());
-store?.dispatch(loadFullTextSearchContent());
-store?.dispatch(loadAllNotes());
-store?.dispatch(loadCourses());
-store?.dispatch(loadInstitutions());
-store?.dispatch(loadFormBuilders());
-store?.dispatch(loadTestTimers());
-store?.dispatch(loadFormFieldPoints());
-store?.dispatch(loadFormFieldAnswers());
-store?.dispatch(loadFormFields());
-store?.dispatch(loadLoginSessions());
-store?.dispatch(loadMeetingNotes());
-store?.dispatch(loadWhiteBoardData());
-store.dispatch(loadOnlineComments());
-store.dispatch(loadLogs());
-store.dispatch(loadOnlineAnswers());
-store.dispatch(loadOnlineQuestions());
-store.dispatch(loadAllEvents());
-store.dispatch(loadTimeLines());
-store.dispatch(loadSubscribedPushNotificationUsers());
-store.dispatch(loadQuestions());
-store.dispatch(loadMeetings());
-store.dispatch(loadAttendance());
-store.dispatch(loadGrades());
-store.dispatch(loadOperators());
-store.dispatch(loadUsers());
-store.dispatch(lastLoggedInUser());
-store.dispatch(loadLessons());
-store.dispatch(loadSessions());
-store.dispatch(loadClassRooms());
-store.dispatch(loadAllCalendars());
-store.dispatch(loadEquations());
-store.dispatch(loadQuestionInsights());
-store.dispatch(loadStudentQuestionInsights());
-store.dispatch(loadInsights());
-store.dispatch(loadOutcomeInsights());
-//store.dispatch(loadFailedPushNotifications());
-//store.dispatch(loadFailedEmailNotifications());
+let { dispatch } = store;
+
+dispatch(loadExplainerOnlineQuestionAnswers());
+dispatch(loadOutcomes());
+dispatch(loadFullTextSearchContent());
+dispatch(loadAllNotes());
+dispatch(loadCourses());
+dispatch(loadInstitutions());
+dispatch(loadFormBuilders());
+dispatch(loadTestTimers());
+dispatch(loadFormFieldPoints());
+dispatch(loadFormFieldAnswers());
+dispatch(loadFormFields());
+dispatch(loadLoginSessions());
+dispatch(loadMeetingNotes());
+dispatch(loadWhiteBoardData());
+dispatch(loadOnlineComments());
+dispatch(loadLogs());
+dispatch(loadOnlineAnswers());
+dispatch(loadOnlineQuestions());
+dispatch(loadAllEvents());
+dispatch(loadTimeLines());
+dispatch(loadSubscribedPushNotificationUsers());
+dispatch(loadQuestions());
+dispatch(loadMeetings());
+dispatch(loadAttendance());
+dispatch(loadGrades());
+dispatch(loadOperators());
+dispatch(loadUsers());
+dispatch(lastLoggedInUser());
+dispatch(loadLessons());
+dispatch(loadSessions());
+dispatch(loadClassRooms());
+dispatch(loadAllCalendars());
+dispatch(loadEquations());
+dispatch(loadQuestionInsights());
+dispatch(loadStudentQuestionInsights());
+dispatch(loadInsights());
+dispatch(loadOutcomeInsights());
+dispatch(loadCourseOutcomeInsights());
+//dispatch(loadFailedPushNotifications());
+//dispatch(loadFailedEmailNotifications());
 
 Modal.setAppElement('#root');
 //const portalRoot = document.getElementById("portal");

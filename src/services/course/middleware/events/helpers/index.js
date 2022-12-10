@@ -70,6 +70,7 @@ function updateTimeLineEvents( calendarEvent ) {
     return timeLineItems;
 };
 
+// fix event push notifications 
 export const sendUpdatesAfterAddingNewCalendarEvents = ( calendarEvent, store ) => {
     try {
         // store?.dispatch(sendPushNotificationMessage( 
@@ -88,10 +89,15 @@ export const sendUpdatesAfterAddingNewCalendarEvents = ( calendarEvent, store ) 
         //         calendarEvent?.eventConfig?.currentUser?._id
         //     );
         // });
+
+        let calendarEvents = [ ...calendarEvent?.eventConfig?.currentUser?.calendarEvents, 
+            calendarEvent?.eventConfig?.calendarEventData?._id ];
+            
+            calendarEvents = calendarEvents.map( item => item );
+
         let currentUser = { 
             ...calendarEvent?.eventConfig.currentUser, 
-            calendarEvents:[ ...calendarEvent?.eventConfig?.currentUser?.calendarEvents, 
-            calendarEvent?.eventConfig?.calendarEventData?._id ]  
+            calendarEvents
         };
         
         updateUser( currentUser  )

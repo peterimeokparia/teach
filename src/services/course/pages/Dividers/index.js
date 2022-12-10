@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import ResizePanel from "react-resize-panel";
 import style from './style.css';
 import classNames from 'classnames/bind';
-import '../../images/geometry2.png';
+import '../../../../Images/geometry2.png';
   
   let cx = classNames.bind(style);
   

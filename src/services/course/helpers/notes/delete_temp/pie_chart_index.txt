@@ -1,0 +1,299 @@
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Pie } from 'react-chartjs-2';
+import './style.css';
+ChartJS.register(ArcElement, Tooltip, Legend);
+//https://stackoverflow.com/questions/37292423/chart-js-label-color
+//https://codesandbox.io/s/vn2k3?file=/src/DemoPages/Charts/index.js
+//https://www.chartjs.org/docs/latest/configuration/legend.html
+// https://www.chartjs.org/docs/latest/configuration/legend.html
+//https://www.chartjs.org/docs/latest/configuration/interactions.html
+//https://www.chartjs.org/docs/latest/getting-started/integration.html
+//https://react-chartjs-2.js.org/docs/working-with-events/
+//https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#anchoring
+
+//https://stackoverflow.com/questions/26257268/click-events-on-pie-charts-in-chart-js
+
+
+// 25
+
+// Working fine chartJs sector onclick
+
+// ChartJS : pie Chart - Add options "onclick"
+
+//               options: {
+//                     legend: {
+//                         display: false
+//                     },
+//                     'onClick' : function (evt, item) {
+//                         console.log ('legend onClick', evt);
+//                         console.log('legd item', item);
+//                     }
+//                 }
+
+
+const CustomPieChart = ({ data, chartRef }) => {
+    if ( !data ) return null;
+   let { height, width, title } = data;
+
+   const options = {
+    onClick: function(event, chartElements){
+        if(chartElements){
+            alert('@@@@@@@#@')
+            //alert(JSON.stringify( Object.entries(event) ))
+
+            alert(JSON.stringify( Object.entries(chartElements) ))
+           // console.log(chartElements[0].label);
+        }
+    },
+    // onClick:function(chartElements) {
+    //     alert('@@@@@@@#@')
+    //    alert(JSON.stringify( [...chartElements] ))
+    //     //alert(JSON.stringify( chartElements[0].label))
+    //     //alert(JSON.stringify( event))
+       
+    //     // alert(JSON.stringify( context.dataIndex))
+    //     // alert(JSON.stringify( context.dataset.data[ context.dataIndex ] ))
+    // //     alert(Object.entries(context))
+    // //     alert('test')
+
+    // //     let { type, chart, native, x, y, offsetX, offsetY } = context;
+    // //     alert(JSON.stringify(type))
+    // //     alert(JSON.stringify([...chart ]))
+    // //     // alert(chart[0])
+    // //     // alert(chart[1])
+    // //    // alert(JSON.stringify(Object.entries(chart)))
+    // //     alert(JSON.stringify(native))
+    // //     alert(JSON.stringify(x))
+    // //     alert(JSON.stringify(offsetX))
+    // //     alert(JSON.stringify(offsetY))
+
+
+    //     //alert(JSON.stringify(context))
+    //     // log('enter', context);
+    //   },
+    // onClick: ( e, chartRef ) => {
+    //     alert('test test')
+    //    // alert(JSON.stringify( chartRef ))
+    //     // const canvasPosition = Chart.helpers.getRelativePosition(e, chart);
+    //     // // Substitute the appropriate scale IDs
+    //     // const dataX = chart.scales.x.getValueForPixel(canvasPosition.x);
+    //     ///const dataY = chart.scales.y.getValueForPixel(canvasPosition.y);
+    // },
+    // listeners: {
+    //     enter: function(context) {
+    //       log('enter', context);
+    //     },
+    //     leave: function(context) {
+    //       log('leave', context);
+    //     },
+    //     click: function(context) {
+    //       log('click', context);
+    //     }
+    //   },
+    responsive: true,
+    plugins: {
+        tooltip: {
+            callbacks: {
+                label: function(context) {
+                    // 
+                    // let label = context.dataset;
+                    let label = context.parsed;
+                    alert(JSON.stringify(label))
+
+                    if (label) {
+                        label += ': ';
+                    }
+                    if (context.parsed.y !== null) {
+                        label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
+                    }
+                    return label;
+                }
+            }
+        },
+        // datalabels: {
+        //     backgroundColor: function(context) {
+        //       return context.dataset.backgroundColor;
+        //     },
+        //     color: 'white',
+        //     font: {
+        //       weight: 'bold'
+        //     },
+        //     offset: 8,
+        //     padding: 6,
+        //     formatter: Math.round,
+        //     listeners: {
+        //       enter: function(context) {
+        //         log('enter', context);
+        //       },
+        //       leave: function(context) {
+        //         log('leave', context);
+        //       },
+        //       click: function(context) {
+        //         log('click', context);
+        //       }
+        //     }
+        //   },
+        legend: {
+            display: true,
+            title: {
+                display: true,
+                color: 'rgb(255, 99, 132)',
+                // text: 'Chart.js Bar Chart',
+            },
+            labels: {
+                // color: 'rgb(255, 99, 132)',
+                color: 'rgb(255,255,255)',
+                font: {
+                    size: 18
+                }
+            },
+            // onClick: function(event, chartElements){
+            //     alert('test@@@@@@ chartElements')
+            //     // alert(JSON.stringify(event))
+            //     // alert(JSON.stringify(chartElements))
+            //     // alert(JSON.stringify(test))
+            //     if(chartElements){
+
+            //         // alert('chartElements')
+            //         alert(JSON.stringify(chartElements))
+            //         console.log(chartElements[0].label);
+            //     }
+            // },
+        },
+        // onClick: function(event, chartElements, test){
+        //     alert('test2')
+        //     alert(JSON.stringify(event))
+        //     alert(JSON.stringify(chartElements))
+        //     alert(JSON.stringify(test))
+        //     if(chartElements){
+        //         alert('chartElements')
+        //         alert(JSON.stringify(chartElements))
+        //         console.log(chartElements[0].label);
+        //     }
+        // },
+        // onClick:function(e){
+        //     alert('rererrerer')
+        //     // var activePoints = myChart.getElementsAtEvent(e);
+        //     // var selectedIndex = activePoints[0]._index;
+        //     // alert(this.data.datasets[0].data[selectedIndex]);
+        // }
+      }
+    };
+    return <div className='chart' style={ {height: height, width: width }}>
+                <>
+                <label>
+                    {title}
+                </label> 
+                <Pie options={options} data={data} />
+                </>
+            </div>
+};
+export default CustomPieChart;
+
+
+
+
+
+
+
+
+
+import React, { useRef } from 'react';
+import { Chart as ChartJS, ArcElement, CategoryScale, LinearScale, Title, Tooltip, Legend } from 'chart.js';
+import { Chart, Pie, getDatasetAtEvent, getElementAtEvent, getElementsAtEvent } from 'react-chartjs-2';
+import { isEmptyObject } from 'services/course/helpers/Validations';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+import './style.css';
+
+ChartJS.register(
+  ArcElement, 
+  Tooltip, 
+  Legend, 
+  CategoryScale, 
+  LinearScale, 
+  Title, 
+  Tooltip, 
+  Legend, 
+  ChartDataLabels 
+);
+
+const CustomPieChart = ({ data, getOutcomeIdFromChartCallBack, handleSelectedFormType, selectedFormType, formTypeCollection }) => {
+
+    if ( isEmptyObject( data ) ) return null;
+    
+    let { height, width, title } = data;
+
+    const chartRef = useRef( null );
+
+   const options = {
+    responsive: true,
+    plugins: {
+        legend: {
+            display: true,
+            position: "top",
+            align: "start",
+            title: {
+                display: true,
+                color: 'rgb(255, 99, 132)',
+            },
+            labels: {
+                usePointStyle: true,
+                color: 'rgb(255,255,255)',
+                font: {
+                  size: 18
+                }
+            },
+        },
+      }
+    };
+
+    const printDatasetAtEvent = ( datasetCollection ) => {
+        if (!datasetCollection.length) return;
+    
+        const datasetIndex = datasetCollection[0].datasetIndex;
+
+        getOutcomeIdFromChartCallBack( data.datasets[datasetIndex].label );
+      };
+    
+      const printElementAtEvent = ( element ) => {
+        if (!element.length) return;
+    
+        const { datasetIndex, index } = element[0];
+
+         getOutcomeIdFromChartCallBack( data.labels[index] );
+        //  getOutcomeIdFromChartCallBack( data.datasets[datasetIndex].data[index] );
+        // alert(data.labels[index], data.datasets[datasetIndex].data[index]);
+      };
+    
+      const printElementsAtEvent = ( elements ) => {
+        if (!elements.length) return;
+
+        getOutcomeIdFromChartCallBack( elements.length );
+      };
+    
+      const onClick = (event) => {
+        alert('click on')
+        const { current: chart } = chartRef;
+    
+        if (!chart) {
+          return;
+        }
+    
+      //printDatasetAtEvent(getDatasetAtEvent(chart, event));
+       printElementAtEvent(getElementAtEvent(chart, event));
+      //printElementsAtEvent(getElementsAtEvent(chart, event));
+      };
+      
+    return <div className='chart' style={ {height: height, width: width }}>
+            <>
+            <label>{title}</label> 
+             {( formTypeCollection?.length > 0 ) && 
+                <form>
+                  <select value={selectedFormType} onChange={handleSelectedFormType}>{formTypeCollection.map(formType => (<option value={formType}> { formType } </option> ))}</select>
+                </form> 
+              }
+            <Chart ref={chartRef} type={'pie'}options={options} data={data} onClick={onClick} />
+            </>
+            </div>
+};
+export default CustomPieChart;

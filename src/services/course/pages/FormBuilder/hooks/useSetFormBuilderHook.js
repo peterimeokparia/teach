@@ -13,10 +13,12 @@ function useSetFormBuilderHook( formType, currentUser, loadFormBuilders,  loadTe
   const [ userSubmittedFormsForCreatorReviewInTakingState, setUserSubmittedFormsForCreatorReviewInTakingState ] = useState([]);
   const [ formsInBuildState, setFormsInBuildState ] = useState([]); 
   const [ formsInUse, setFormsInUse ] = useState([]); 
+
   // there are duplicates...to fix
   // If there are submitted tests we can't modify the form. Create copy... but we can modify reports, surveys etc
+  // filter by user Id appropriately
 
-  useEffect(() => { // filter by user Id appropriately
+  useEffect(() => { 
     loadFormBuilders();
     loadTestTimers();
     let formBuildersInBuildState = formBuilders?.filter(form => form?.formType === formType && form?.state === elementMeta.state.Manage && form?.status === elementMeta.status.Pending && form?.createdBy === currentUser?._id && form?.userId === currentUser?._id );
@@ -75,7 +77,6 @@ function useSetFormBuilderHook( formType, currentUser, loadFormBuilders,  loadTe
       setFormsInUse( formsInUse );
     }
   }, []);
-  // }, [ currentUser?._id, formBuilders, formType, loadFormBuilders, loadTestTimers ]);
     
 return {
   creatorReviewedUserSubmittedFormsInTakingState,

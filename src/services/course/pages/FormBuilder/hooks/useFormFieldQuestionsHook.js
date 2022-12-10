@@ -6,10 +6,13 @@ import { addPoints } from 'services/course/pages/FormBuilder/helpers';
 import { addNewFormField } from 'services/course/actions/formfields';
 import { manageFormFieldCollection } from 'services/course/pages/FormBuilder/helpers/formFieldHelpers';
 import { addFormFieldConfig } from 'services/course/pages/FormBuilder/FormBuilderStepWizard/SelectExistingFormBuilderComponent/FormFields/helpers';
-import { toggleContentChanged,setSelectedOnlineQuestion, loadOnlineQuestions } from 'services/course/actions/onlinequestions';
+import { toggleContentChanged, setSelectedOnlineQuestion, loadOnlineQuestions } from 'services/course/actions/onlinequestions';
+import { isEmptyObject } from "services/course/helpers/Validations";
+
 
 function useFormFieldQuestionsHook( props ) {
-  let { saveOnlineQuestion, currentUser, formId, formName, formUuId, studentsTotalPointsReceived, studentsTotalPointsReceivedFromPersistence } = props;
+  let { saveOnlineQuestion, currentUser, formId, formName, formUuId, formType, courseId, 
+      lessonId, studentsTotalPointsReceived, studentsTotalPointsReceivedFromPersistence } = props;
 
   const [ previewMode, togglePreviewMode ] = useState({ question: undefined, isPreviewMode: false });
   const [ enableAddPointsToQuestionInputField, setEnableAddPointsToQuestionInputField ] = useState(false);
@@ -22,10 +25,11 @@ function useFormFieldQuestionsHook( props ) {
   let noStudentsPoints = studentsTotalPointsReceived?.cummulativePoints === 0;
 
   useEffect(() => {
-    if ( !studentsTotalPointsReceivedFromPersistence?.cummulativePoints ) {
+
+    if ( isEmptyObject( studentsTotalPointsReceivedFromPersistence ) ) {
       let cummulativePoints = studentsTotalPointsReceived?.cummulativePoints ? studentsTotalPointsReceived?.cummulativePoints : 0;
 
-      dispatch( addNewFormFieldPoint({ userId: currentUser?._id, cummulativePoints, formUuId, formName }) );
+      dispatch( addNewFormFieldPoint({ userId: currentUser?._id, cummulativePoints, formUuId, formName, formType, courseId, lessonId }) );
     }
 
     dispatch( loadFormFieldPointsByUserId( currentUser?._id ) );
@@ -80,18 +84,21 @@ function addNewFormInputField( typeOfInput, uuid ){
 }
 
 return {
-  previewMode,  
-  studentsTotalPointsReceived,
-  enableAddPointsToQuestionInputField,
-  questionPoint,
-  studentsCummulativePointsReceived: getPoints(),
-  editing,
-  missedQuestions,
-  addNewFormInputField,
-  handleMissedQuestions,
-  toggleSetPreviewMode,
-  toggleQuestionPointField,
-  addPoints: ( pointValue, element ) => addPoints( pointValue, element, saveOnlineQuestion, setQuestionPoints ) ,
-}; };
+   formFieldQuestionProps: {
+    previewMode,  
+    studentsTotalPointsReceived,
+    enableAddPointsToQuestionInputField,
+    questionPoint,
+    studentsCummulativePointsReceived: getPoints(),
+    editing,
+    missedQuestions,
+    addNewFormInputField,
+    handleMissedQuestions,
+    toggleSetPreviewMode,
+    toggleQuestionPointField,
+    addPoints: ( pointValue, element ) => addPoints( pointValue, element, saveOnlineQuestion, setQuestionPoints )
+   }
+  }; 
+};
 
 export default useFormFieldQuestionsHook;

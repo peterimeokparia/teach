@@ -35,6 +35,7 @@ const CourseDetailPage = ({
     selectedLessonPlanLesson,
     studentsSubscribedToThisCourse,
     sessions,
+    currentOutcome,
     setLessonCourse,
     onLessonError,
     children }) => {
@@ -74,6 +75,7 @@ function userOwnsCourse(user, courseTutor,  courseId){
 return ( 
     <div>    
         {Validations.setErrorMessageContainer()} 
+        
         <CourseDisplayViewComponent
             operatorBusinessName={operatorBusinessName}
             courseId={courseId} 

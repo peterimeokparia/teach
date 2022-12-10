@@ -9,16 +9,20 @@ import { Validations } from 'services/course/helpers/Validations';
 import { getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
 
 function useTeachMeetingSettingsHook( teachMeetingProps ) {
-  let { currentMeetingId, currentUser, classRoomId, selectedCourse, selectedLesson, loadMeetingsByMeetingId, 
-    hideMeetingStage, fullMeetingStage, videoModalModeOn, inSession, iconOnColor, meetingPanel } = teachMeetingProps;
+
+  let { currentMeetingId, currentUser, classRoomId, selectedCourse, selectedLesson, 
+    loadMeetingsByMeetingId, hideMeetingStage, fullMeetingStage, videoModalModeOn, 
+    inSession, iconOnColor, meetingPanel, meetings, currentMeeting } = teachMeetingProps;
 
   const dispatch = useDispatch();
 
   let [ roomSize, setRoomSize ] = useState(1);  
   let existingTutor = Object.values( useSelector( state => state.users.users ) )?.find( usr => usr?._id === classRoomId );
   let tutor = getCurrentTutor(  existingTutor );
-  let meetings = useSelector( state => state.meetings.meetings );
-  let meeting = Object.values( meetings )?.find( meeting => meeting?._id === tutor?.meetingId );
+
+  let { id, userId, courseId, lessonId } = currentMeeting;
+
+  let meeting = meetings?.find( meeting => meeting?._id === ( userId === tutor?._id) ? id : tutor?.meetingId );
   let meetingId = meeting?._id;
   let currentCourse = Object.values( useSelector( state => state?.courses?.courses ) )?.find( course => course?._id === meeting?.courseId );
   let currentLesson = Object.values( useSelector( state => state?.lessons?.lessons ) )?.find( lesson => lesson?._id === meeting?.lessonId );
@@ -40,24 +44,27 @@ function useTeachMeetingSettingsHook( teachMeetingProps ) {
       selectedCourse, selectedLesson, tutor, currentCourse, meeting
     };
 
-     dispatch(handleCurrentLessonItems( payload ));
-  }, [currentCourse, currentLesson, dispatch, meeting, selectedCourse, selectedLesson, tutor ]);
+    dispatch(handleCurrentLessonItems( payload ));
 
-  useEffect(() => {
-    dispatch( loadUsers() ); 
+  }, [ currentCourse, currentLesson, meeting, selectedCourse, selectedLesson, tutor ]);
 
+  useEffect(() => { 
     let payload = {
       currentUser, classRoomId, operatorBusinessName, allUsersPaidSessions, tutor, meetingId, inSession
     };
 
-     dispatch(handleCurrentLessonMeeting( payload ))
-  }, [ checkTutorsMeetingId, dispatch ]);
+    dispatch( loadUsers() ); 
+    dispatch(handleCurrentLessonMeeting( payload ));
+
+  }, [ checkTutorsMeetingId ]);
 
 function getCurrentTutor( currentTutor ){
   let tutor = currentTutor;
 
-  if ( !tutor?._id ){
-     return tutor[0];
+  if ( !tutor ) return;
+
+  if ( tutor && Array.isArray( tutor ) ){
+    return tutor[0];
   }
   return tutor;
 }

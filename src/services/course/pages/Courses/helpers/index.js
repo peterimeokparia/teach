@@ -15,13 +15,6 @@ export const emailInputOptions = {
     placeHolder:"Invite your friends!"
 };
 
-export const restrictTextLength = ( text, limit, size ) => {
-    if ( !text ) return 'test test test test';
-    return ( text.length > limit ) 
-            ? `${text.slice(0, size)}...`
-            : text;
-}
-
 export function courseDetailPageComponentConfig(
     course,
     courseId,

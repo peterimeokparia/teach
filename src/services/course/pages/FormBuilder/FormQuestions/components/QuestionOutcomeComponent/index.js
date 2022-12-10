@@ -24,9 +24,9 @@ const QuestionOutcomeComponent = ({ outcome, index, outcomes, children, handleOn
                 }
                 </Typography>
             </CardContent>
-                {
-                    children(outcome) 
-                }
+            {
+                children(outcome) 
+            }
             <CardActions>
             </CardActions>
         </Card>  

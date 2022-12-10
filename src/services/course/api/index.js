@@ -21,9 +21,9 @@ export const updateUser = ( user ) => {
   return putData(PREFIX + `/users/${ user._id }`, user );
 };
 
-export const updateInvitationUrl = ( userId,  user) => {
-  return putData(PREFIX + `/users/${ userId }`, user);
-};
+// export const updateInvitationUrl = ( userId,  user) => {
+//   return putData(PREFIX + `/users/${ userId }`, user);
+// };
 
 export const autoRenew = (currentUser, session) => {
   let autoRenewStatus = {};

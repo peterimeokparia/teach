@@ -7,19 +7,7 @@
     list-style: none;
 }
 .builder header {
-    /* background-color: #673ab7;
-    color: #fff;
-    display: flex;
-    flex-direction: row;
-    align-items: center; */
-    /* New */
-    /* color: #fff;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px 20px;
-    background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red); */
+    padding: 0px 0px 0px;
 }
 .builder .form-display-name {
     font-family: cursive, fantasy;
@@ -42,7 +30,7 @@
     overflow-x: hidden; /* Hide horizontal scrollbar */
 }
 .builder .content {
-    background-image: url(../../../../images/geometry2.png);
+    background-image: url(../../../../../../Images/geometry2.png);
     background-size: 300px 300px;
     flex-direction: row;
     align-items: center;
@@ -318,7 +306,7 @@
         align-items: center;
     }
     .builder .content {
-        background-image: url(../../../../images/geometry2.png);
+        background-image: url(../../../../../../Images/geometry2.png);
         background-size: 400px 400px;
         /* display: flex; */
         flex-direction: row;
@@ -462,7 +450,7 @@
         align-items: center;
     }
     .builder .content {
-        background-image: url(../../../../images/geometry2.png);
+        background-image: url(../../../../../../Images/geometry2.png);
         background-size: 400px 400px;
         flex-direction: row;
         align-items: center;

@@ -12,6 +12,9 @@ import Select from '@mui/material/Select';
 import Switch from '@mui/material/Switch';
 
 const MaxWidthDialog = ({ modalProps, collection,  children }) => {
+
+    if ( ! collection?.length || collection?.length === 0 ) return null;
+
     let {
       isOpen, 
       handleClose,
@@ -65,7 +68,7 @@ return (
                 id: 'max-width',
               }}
             >
-              { collection.map(( item, index) => (
+              { collection?.map(( item, index) => (
                     children( item )
                 ))
               }

@@ -1,13 +1,14 @@
 import { elementMeta } from 'services/course/pages/QuestionsPage/helpers';
 
 export const handleRadioButtonSelection = ( e, props ) => {  
+
     let { formFieldElement, radioButtonAnsGroup, setCheckedRadioButton, radioButtonGroup, handleSelectorFormFieldAnswers,
          currentUser, setInputValue, setStudentsAnswers, studentAnswerByQuestionId, formBuilderState
     } = props;
 
-    if ( formBuilderState === elementMeta?.state.Taking && studentAnswerByQuestionId?.selected === e?.target.checked ) return;
+    if ( formBuilderState === elementMeta?.state.Taking && studentAnswerByQuestionId && studentAnswerByQuestionId?.selected === e?.target.checked ) return;
 
-    if ( formBuilderState === elementMeta?.state.Manage && formFieldElement?.selected === e?.target.checked ) return;
+    if ( formBuilderState === elementMeta?.state.Manage && formFieldElement && formFieldElement?.selected === e?.target.checked ) return;
 
      let subtractPrevCorrectAnsPoints = subtractPointsForPreviouslyCorrectAnswer(radioButtonGroup, radioButtonAnsGroup);
 
@@ -21,17 +22,17 @@ export const handleRadioButtonSelection = ( e, props ) => {
 
        if ( radioButtonGroup?.length > 0 ) {
           radioButtonGroup?.forEach(element => {
+            
             let points = ( !element?.answerKey ) ? 0 : element?.points;
 
             if ( element?._id === formFieldElement?._id && selectedRadioButton && input && input !== "") {
-                setStudentsAnswers({...formFieldElement, selected: selectedRadioButton });
-                handleSelectorFormFieldAnswers( element, element?.inputValue, input, selectedRadioButton, (subtractPrevCorrectAnsPoints > 0 ) ? subtractPrevCorrectAnsPoints : points );  
+     
+              setStudentsAnswers({...formFieldElement, selected: selectedRadioButton });
+              handleSelectorFormFieldAnswers( element, element?.inputValue, input, selectedRadioButton, (subtractPrevCorrectAnsPoints > 0 ) ? subtractPrevCorrectAnsPoints : points );  
             } else { 
-                let selected = false, answerKey = null; 
-                // let currentField = formFields?.find( field => field?._id === element?._id );
+              let selected = false, answerKey = null; 
 
-                handleSelectorFormFieldAnswers( { ...element, answerKey, points: 0 }, element?.inputValue, "", selected, points );
-                
+              handleSelectorFormFieldAnswers( { ...element, answerKey, selected, points: 0 }, element?.inputValue, "", selected, points );                
             }
           });
        }

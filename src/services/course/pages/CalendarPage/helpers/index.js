@@ -1,10 +1,6 @@
-import { 
-role,
-generateRandomColor } from 'services/course/helpers/PageHelpers';
-
-import {
-getTimeZoneDateTime } from 'services/course/helpers/ServerHelper';
-
+// refactor page...
+import { role, generateRandomColor } from 'services/course/helpers/PageHelpers';
+import { getTimeZoneDateTime } from 'services/course/helpers/ServerHelper';
 import moment from "moment";
 
 export const formNames = { 
@@ -107,7 +103,7 @@ export const days = weekDays.map(item => ( { value: item,  label: item } )  );
 
 export const studentsOption = ( currentUsers ) => currentUsers?.filter(user => user?.role === role?.Student ).map(item => ( { value: item,  label: item?.firstname } )  );
 
-export const tutorsOption = ( currentUsers ) => currentUsers?.filter(user => user?.role === role?.Tutor ).map(item => ( { value: item,  label: item?.firstname } )  );
+export const tutorsOption = ( currentUsers ) => currentUsers?.filter(user => user?.role === role?.Tutor ).map(item => ( { value: item,  label: item?.firstname } ) );
 
 export const courseOption = ( courses ) => courses?.map(item => ( { value: item,  label: item?.name } ));
 

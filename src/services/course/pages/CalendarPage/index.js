@@ -7,6 +7,7 @@ import { getCoursesByOperatorId, getEventsByOperatorId, getPushNotificationUsers
     getOperatorFromOperatorBusinessName, getUsersByOperatorId, getCalendarsByOperatorId, getTimeLinesByOperatorId,
     getPublishedForms, getLessonsByCourseIdSelector} from 'services/course/selectors';
 import { eventEnum, studentsOption, getCalendarPageHeading, userCanAddOrEditEvent, formNames } from 'services/course/pages/CalendarPage/helpers';
+import { navigateOnCalendarClickEvent  } from 'services/course/pages/CalendarPage/helpers/calendar/helpers';
 import { addNotes, loadAllNotes } from 'services/course/actions/notes';
 import { saveEventData  } from "services/course/pages/CalendarPage/helpers/events";
 import { renderSwitch  } from "services/course/pages/CalendarPage/helpers/calendar";
@@ -56,11 +57,22 @@ const CalendarPage = ({
     };
 
     const operatorId = operator?._id;
+
+    const calendarEventProps = {
+        userId,
+        courseId,
+        lessonId,
+        calendarEventType, 
+        events, 
+        courses,
+        calendarId, 
+        user
+    };
         
     let {
         eventDataObj, isModalOpen, component, scheduledStudents,
         calendarSlotInfo, handleSelect, setModalOpen, setScheduledStudents,
-    } = useBuildEventDataHook( calendarEventType, events, calendarId, user );
+    } = useBuildEventDataHook( calendarEventProps );
 
     let {
         renderLessonModal, setRenderLessonModal, lessonProps, setLessonProps
@@ -83,28 +95,15 @@ const closeModal = () => {
     setModalOpen(false);
 };
 
+let props = {
+    operatorBusinessName, events, calendarEventType, addNewFormBuilder, formBuilders,
+    calendarId, user, events, calendarEventType, addNewFormBuilder, 
+    formBuilders, userId, users,  formNames, allNotes, courseId, lessonId, 
+    addNotes, loadAllNotes, operatorId, setLessonProps, setModalOpen, setRenderLessonModal 
+};
+
 const handleEventClick = ( info ) => {
-    switch ( calendarEventType ) {
-
-        case eventEnum.Lessons:
-            navigateToLessonPage( info );  
-            return;
-        case eventEnum.ReportForms:
-        case eventEnum.QuizzForms:
-            navigateToFormDetailsPage( info );  
-            return;
-        case eventEnum.NewEvent: 
-            navigateToPersonalCalendarEventDetailsPage( info );
-            return;
-        case eventEnum.ConsultationForm:  
-        case eventEnum.SessionScheduling:
-        case eventEnum.TutorCalendar:
-            navigateToSchedulingEventDetailsPage( info );
-            return;
-        default:
-            break;
-
-    }
+    navigateOnCalendarClickEvent( calendarEventType, info, props ); 
 };
 
 function renderEventContent( eventInfo ){
@@ -114,74 +113,6 @@ function renderEventContent( eventInfo ){
             <img src={eventInfo?.event?.url} alt=''></img>
         </div>
     );
-}
-
-function navigateToFormDetailsPage( info ){
-    const calendarInfo = getCalendarInfo( info );
-    const currentEventId = calendarInfo?.currentEventId; 
-    const formName = calendarInfo?.formName;
-    const selectedUser = calendarInfo?.selectedUser;
-    const currentUser = calendarInfo?.currentUser;
-
-    let formProps = {
-        operatorBusinessName, formName, events, currentUser, selectedUser,
-        currentEventId, calendarEventType, addNewFormBuilder, formBuilders
-    };
-
-    goToForms( formProps );
-}
-
-function navigateToPersonalCalendarEventDetailsPage( info ){
-    let meetingId = info?.event?.title?.split('_')[1];
-
-    navigate( `/${operatorBusinessName}/${calendarEventType}/boardeditor/${calendarId}/${user?._id}/${meetingId}`); 
-}
-
-function navigateToSchedulingEventDetailsPage( info ){
-    if ( userCanAddOrEditEvent( info, user ) ) {
-        navigate( `/${operatorBusinessName}/${calendarEventType}/calendar/${calendarId}/${user._id}/${info?.event?.id}`);
-    }
-}
-
-function getCalendarInfo( info ){
-    const currentEventId = info?.event?.id; 
-    const currentEventObject = events?.find( event => event?._id === currentEventId );
-    const selectedFormBuilderObject = currentEventObject?.schedulingData[0];
-    const formName = selectedFormBuilderObject?.formName;
-    const selectedUserId = userId;
-    const selectedUser = users?.find( user => user?._id === selectedUserId );
-    const currentUser = user;
-
-    return {
-        currentEventId,
-        currentEventObject,
-        selectedFormBuilderObject,
-        formName,
-        selectedUserId,
-        selectedUser,
-        currentUser
-    };
-}
-
-function navigateToLessonPage( info ){
-    const calendarInfo = getCalendarInfo( info );
-    const currentEventId = calendarInfo?.currentEventId; 
-    const formName = calendarInfo?.formName;
-    const selectedUser = calendarInfo?.selectedUser;
-    const currentUser = calendarInfo?.currentUser;
-    const title = calendarInfo?.formName;
-
-    let lessonProps = {
-        formNames, allNotes, currentEventId, formName, selectedUser, currentUser,
-        title, courseId, lessonId, userId: currentUser?._id, markDownContent: null,
-        content: null, noteDate: Date.now, operatorId, eventId: currentEventId,
-        operatorBusinessName, addNotes, loadAllNotes
-    };
-
-    setLessonProps( lessonProps );
-    setModalOpen( true );
-    setRenderLessonModal( true );
-    return;
 }
 
 function handleCalendarModalReloadOnClose(){

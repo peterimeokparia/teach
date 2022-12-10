@@ -3,18 +3,20 @@ import { useDispatch } from 'react-redux';
 import { loadOnlineQuestions, toggleContentChanged } from 'services/course/actions/onlinequestions';
 import { loadFormBuilders } from 'services/course/actions/formbuilders';
 import { loadExplainerOnlineQuestionAnswers } from 'services/course/actions/onlinequestionexplainanswer';
+import { getNewlyAddedQuestions, compareObjectsBeforeReload, handleSingleQuestionForms } from 'services/course/pages/OnlineQuestionsPage/hooks/useSortOnlineQuestionsHook/helpers';
 
 function useSortOnlineQuestionsHook( onlineQuestionsConfig ){
     const dispatch = useDispatch();
     const [ currentFormBuilders, setCurrentFormBuilders ] = useState(undefined);
    
     let { 
-        currentCourseQuestions, saveFormBuilder, formName, formUuId, formBuilderState, formBuilderStatus, formBuilders, contentUpdated, onlineQuestionId,
+        currentCourseQuestions, saveFormBuilder, formName, formType, formUuId, formBuilderState, formBuilderStatus, formBuilders, contentUpdated, onlineQuestionId,
     } = onlineQuestionsConfig;
 
     const [ currentQuestions, setCurrentQuestions ] = useState(currentCourseQuestions);
     
-    let currentFormBuilder = formBuilders?.find( builder => builder?.formName === formName && builder?.state === formBuilderStatus && builder?.formUuId === formUuId);
+    let currentFormBuilder = formBuilders?.find( builder => builder?.formName === formName && builder?.state === formBuilderStatus && builder?.formUuId === formUuId &&
+        builder?.formType === formType );
 
     const getExistingSortedOrderQuestions = useCallback(( currentCourseQuestions, currentFormBuilderOrderedFormQuestions ) => {
         let tempQuestions = [];
@@ -65,48 +67,6 @@ function useSortOnlineQuestionsHook( onlineQuestionsConfig ){
             setCurrentFormBuilders( currentFormBuilder );
         }
     }, [ contentUpdated, currentCourseQuestions, currentFormBuilder,  getExistingSortedOrderQuestions, dispatch ]);
-       
-    function getNewlyAddedQuestions(item, savedPinnedOrderedQuestions){
-        if ( !item ) return;
-
-        if ( savedPinnedOrderedQuestions?.length === 0 ) return;
-        
-        let savedIds = savedPinnedOrderedQuestions?.map( saved => saved?._id );
-
-        if ( savedIds?.length > 0 ){
-            if ( !savedIds?.includes( item?._id ) ) {
-                return item;
-             } else {
-                return; 
-            }   
-        }
-    }
-
-    function compareObjectsBeforeReload( array1, array2 ){
-        let result = [];
-
-        if ( !array2 || !array1 ) return false;
-
-        if ( array1?.length !== array2?.length ) return false;
-
-            for( let index = 0; index < array1?.length; index++ ){
-                 if ( array1[ index ]?._id === array2[ index ]?._id ){
-                    result.push( true );
-                 } else {
-                    result.push( false );
-                 }
-            };
-
-        let tempResult = ( result?.includes( false ) === false );
-
-        return tempResult;
-    }
-
-    function handleSingleQuestionForms( onlineQuestionId, currentCourseQuestions, setCurrentQuestions ) {
-        if ( ! ( onlineQuestionId && currentCourseQuestions?.length === 1 )) return false;
-        setCurrentQuestions( currentCourseQuestions );
-        return true;
-    }
 
 return {
     questions: currentQuestions,

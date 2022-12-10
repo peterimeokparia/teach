@@ -1,5 +1,6 @@
 .answer-content {
     margin-bottom: 105px;
+    margin-left: 100px;
 }
 .answer-content .editorTest { 
     font: normal 1.11em KaTeX_Main,Times New Roman,serif;
@@ -117,4 +118,8 @@
     .custom-answer input[type="radio"]:focus + label {
         border: 2px dashed #444;
     }
+}
+
+.explanation-answer-sidepanel {
+    margin-right: 1000px;
 }

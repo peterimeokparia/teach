@@ -4,7 +4,7 @@
     display: flex;
     flex-direction: column;
     text-align: center;
-    background-image: url(../../../../images/geometry2.png);
+    background-image: url(../../../../../../Images/geometry2.png);
     font-family: 'Courier New', Courier, monospace;
     overflow: hidden;
     overflow-y: hidden;
@@ -506,8 +506,8 @@
   @media (min-width: 320px) and (max-width: 480px) {
     .BoardNotes {
       height: 300vh; 
-      background-image: url(../../../../images/geometry2.png);
-    }
+      background-image: url(../../../../../../Images/geometry2.png);   
+     }
     .BoardNotes .content {
       height: 100%;
    
@@ -557,8 +557,4 @@
     right:0;
     top:0;
     cursor:move;
-  }
-  .testResize{
-    resize: both;
-    overflow: auto;
   }

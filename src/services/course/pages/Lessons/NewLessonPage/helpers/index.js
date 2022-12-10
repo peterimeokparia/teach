@@ -31,6 +31,9 @@ function buildFormBuilderRoute( lesson, typeOfForm, formProps ){
         case formTypes.furtherstudy: 
             handleFurtherStudy(props);
             break;    
+        case formTypes.lessoninsights: 
+            handleLessonInsights(props);
+            break;    
         default:
             break;     
     };
@@ -41,7 +44,7 @@ function handleQuizz(props){
      operatorBusinessName, uuid, userId, courseId, lessonId, lesson
     } = props;
 
-    let formName = `${lesson?.title}-quizz_${uuid}`;
+    let formName = getFormName(lesson,formTypes?.quizzwithpoints,uuid);
     let formType = formTypes?.quizzwithpoints;
     let navProps = { operatorBusinessName, formType, formName, courseId, lessonId, userId };
 
@@ -53,7 +56,7 @@ function handleHomeWork(props){
         operatorBusinessName, uuid, userId, courseId, lessonId, lesson
     } = props;
 
-    let formName = `${lesson?.title}-${formTypes?.homework}_${uuid}`; 
+    let formName = getFormName(lesson, formTypes?.homework, uuid);
     let formType = formTypes?.homework; 
     let navProps = { operatorBusinessName, formType, formName, courseId, lessonId, userId };
 
@@ -65,11 +68,27 @@ function handleFurtherStudy(props){
         operatorBusinessName, uuid, userId, courseId, lessonId, lesson 
     } = props;
 
-    let formName = `${lesson?.title}-${formTypes?.furtherstudy}_${uuid}`;
+    let formName = getFormName(lesson, formTypes?.furtherstudy, uuid);
     let formType = formTypes.furtherstudy; 
     let navProps = { operatorBusinessName, formType, formName, courseId, lessonId, userId };
 
     handleFormNavigation(navProps);
+}
+
+function handleLessonInsights(props){
+    let { 
+     operatorBusinessName, uuid, userId, courseId, lessonId, lesson
+    } = props;
+
+    let formName = getFormName(lesson, formTypes?.lessoninsights, uuid);
+    let formType = formTypes?.lessoninsights;
+    let navProps = { operatorBusinessName, formType, formName, courseId, lessonId, userId };
+
+    handleFormNavigation(navProps);
+}
+
+function getFormName(currentLesson, type, formUniqueId){
+    return `${currentLesson?.title}-${type}_${formUniqueId}`
 }
 
 function handleFormNavigation(navProps){

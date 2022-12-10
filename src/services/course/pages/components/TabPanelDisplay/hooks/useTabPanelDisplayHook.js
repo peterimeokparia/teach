@@ -7,6 +7,7 @@ import { formToTableConverter } from 'services/course/pages/FormBuilder/FormTabl
 import { useTheme } from '@mui/material/styles';
 import { a11yProps, fabStyle, fabGreenStyle, fabDeepOrangeStyle } from 'services/course/pages/components/TabPanelDisplay/helper';
 import { addNewFormBuilderDialog } from 'services/course/pages/components/TabPanelDisplay/helper';
+import { handleFormBuilder } from 'services/course/pages/FormBuilder/FormBuilderStepWizard/helpers';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import AddIcon from '@mui/icons-material/Add';
@@ -18,7 +19,7 @@ const useTabPanelDisplayHook = ( props ) => {
   const {
     operatorBusinessName, formType, formName, courseId, lessonId, formId, currentUser, eventId, addNewFormBuilder, saveFormBuilder, addTime, saveTime,
     allTimers, loadTestTimers, onlineQuestions, reportFormFieldAnswers, formBuilders, timer, userId, pendingFormsInBuildState, publishedFormsInBuildState, inProgressFormsInTakingState,
-    userSubmittedFormsForCreatorReviewInTakingState,allUserSubmittedFormsForCreatorReviewInTakingState,formsInBuildState
+    userSubmittedFormsForCreatorReviewInTakingState,allUserSubmittedFormsForCreatorReviewInTakingState,formsInBuildState, handleExistingFormBuilder
   } = props;
 
     const [ headerValue, setHeaderValue ] = React.useState(currentUser?.role === role.Student ? 1 : 0);
@@ -82,8 +83,17 @@ const useTabPanelDisplayHook = ( props ) => {
         courseId: selectValue?.courseId, lessonId: selectValue?.lessonId, formUuId, formId: selectValue?.formId, createDateTime: selectValue?.createDateTime, outcomeId: selectValue?.outcomeId,
         takingDateTime: Date.now(), createdBy: selectValue?.createdBy, userId: currentUser?._id, status: elementMeta.status.InProgress, state: elementMeta.state.Taking, eventId
       };
+
+      let existingFormBuilder = formBuilders?.find( builder => builder?.formType === selectValue?.formType && builder?.formName === selectValue?.formName && 
+        builder?.userId === currentUser?._id );
       
-      addNewFormBuilder( newBuilder );
+      let formBuilderProps = { addNewFormBuilder, saveFormBuilder, handleExistingFormBuilder, currentUser, existingFormBuilder };
+      
+      if ( existingFormBuilder ) {
+        handleFormBuilder( formType, newBuilder, formBuilderProps );
+      } else {
+        addNewFormBuilder( newBuilder );
+      }
    
       if ( !currentTimer?._id && timer?._id ){
         addTime({ ...timer, userId, role: currentUser?.role });

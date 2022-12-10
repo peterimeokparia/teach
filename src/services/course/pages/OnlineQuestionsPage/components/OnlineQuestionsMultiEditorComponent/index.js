@@ -1,19 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addNewOnlineQuestion, toggleContentChanged, setSelectedOnlineQuestion } from 'services/course/actions/onlinequestions';
-import { saveFormBuilder, setIsMaxQuestionDialogOpen } from 'services/course/actions/formbuilders';
-import { getOperatorFromOperatorBusinessName, 
-  getPushNotificationUsersByOperatorId, getOnlineQuestions, getLessonOutcomesByLessonId, getQuestionExplainerAnswers } from 'services/course/selectors';
 import { helpIconStyle } from './inlineStyles';
 import { role } from 'services/course/helpers/PageHelpers';
 import { questionInputCollection } from 'services/course/pages/FormBuilder/helpers/formFieldHelpers';
 import { elementMeta } from 'services/course/pages/QuestionsPage/helpers';
 import { formTypes } from 'services/course/pages/FormBuilder/helpers';
-import { navContent } from 'services/course/pages/components/NavigationHelper';
+import { mapState, mapDispatch } from './connector';
+import Header from 'services/course/pages/components/Header';
 import MeasurableOutcome from 'services/course/pages/components/MeasurableOutcome';
 import OnlineQuestionEditorComponent from 'services/course/pages/OnlineQuestionsPage/components/OnlineQuestionsMultiEditorComponent/OnlineQuestionEditorComponent';
 import OnlineQuestionReportComponent from 'services/course/pages/OnlineQuestionsPage/components/OnlineQuestionsMultiEditorComponent/OnlineQuestionReportComponent';
-import useOnlineQuestionsHook from 'services/course/pages/OnlineQuestionsPage/hooks/useOnlineQuestionsHook';
+import useOnlineQuestionOutcomeHook from 'services/course/pages/OnlineQuestionsPage/hooks/useOnlineQuestionOutcomeHook';
+import useOnlineQuestionsHook from 'services/course/pages/OnlineQuestionsPage/hooks/useOnlineQuestionsHook'; 
 import useSortOnlineQuestionsHook from 'services/course/pages/OnlineQuestionsPage/hooks/useSortOnlineQuestionsHook';
 import useExplainAnswerHook from 'services/course/pages/OnlineQuestionsPage/hooks/useExplainAnswerHook';
 import useInputTypeSelectorMaxDialogHook from 'services/course/pages/FormBuilder/hooks/useInputTypeSelectorMaxDialogHook';
@@ -22,13 +20,8 @@ import OnlineListItems from 'services/course/pages/OnlineQuestionsPage/component
 import HelpIcon from '@material-ui/icons/Help';
 import Roles from 'services/course/pages/components/Roles';
 import MaxWidthDialog from 'services/course/pages/components/MaxWidthDialog';
-import TemporaryDrawer from 'services/course/pages/FormBuilder/FormBuilderStepWizard/SelectExistingFormBuilderComponent/FormFields/component/TemporaryDrawer';
-import QuestionOutcomeComponent from 'services/course/pages/FormBuilder/FormQuestions/components/QuestionOutcomeComponent';
-import ListItem from 'services/course/pages/components/ListItem';
+import OnlineQuestionsOutcomeComponent from 'services/course/pages/OnlineQuestionsPage/components/OnlineQuestionsMultiEditorComponent/OnlineQuestionEditorComponent/components/OnlineQuestionsOutcomeComponent';
 import MenuItem from '@mui/material/MenuItem';
-import MainMenu from 'services/course/pages/components/MainMenu';
-import LoginLogout from 'services/course/pages/LoginPage/components/LoginLogout';
-import Typography from '@mui/material/Typography';
 import './style.css';
 
 const OnlineQuestionsMultiEditorComponent = ( {
@@ -56,217 +49,136 @@ const OnlineQuestionsMultiEditorComponent = ( {
   onlineQuestionProperties,
   setSelectedOnlineQuestion,
   explainAnswers,
-  children  } ) => {
+  children  }) => {
   let { 
     previewMode, onlineQuestionId, displayVideoComponent, formBuilderState, formBuilderStatus,
-    operatorBusinessName, formType, formName, formId, formUuId, userId, eventId, outcomeId, courseId,
-    linkId
-    // missedQuestions 
-  } = onlineQuestionProps; // fix
+    operatorBusinessName, formType, formName, formId, formUuId, eventId, outcomeId, courseId,
+    linkId, missedQuestions } = onlineQuestionProps;
   
   let onlineQuestionsConfig = {
     onlineQuestionProps, onlineQuestionId, operator, operatorBusinessName, saveFormBuilder, formBuilders, formType, updateOnDelete, 
     formId, formName, formUuId, formBuilderState, formBuilderStatus, eventId, courseId, lessonId, failedOnlineQuestionNotifications, 
     currentUser, pushNotificationUsers, toggleContentChanged, addNewOnlineQuestion, contentUpdated, onlineQuestions, formFields,
-    previewMode, displayVideoComponent, outcomes,  currentCourseQuestions, outcomeId, linkId, onlineQuestionProperties
+    previewMode, displayVideoComponent, outcomes, currentCourseQuestions, outcomeId, linkId, onlineQuestionProperties
   };
 
-  if ( onSaveError ) { 
-    console.warn(`problem saving onlinequestion ${onSaveError?.messsage}`);
-  }
   let {
-    selectedOutcomes,
-    selectedQuestion, 
-    isDrawerOpen, 
-    displayName,
-    inputValue,
-    onMatchListItem,
-    setIsDrawerOpen,
-    updateQuestionOutcomeId,
-    addNewQuestion,
-    saveRecording,
-    deleteQuestion,
-    setInputValue,
-  } = useOnlineQuestionsHook( onlineQuestionsConfig );
+    verifyOutcome, updateQuestionOutcomeId, toggleConcepts
+  } = useOnlineQuestionOutcomeHook( onlineQuestionsConfig );
+
+  let {
+    selectedQuestion, isDrawerOpen, displayName, inputValue, setQuestionOutcome,
+    addNewQuestion, saveRecording, deleteQuestion, setInputValue, onMatchListItem, setIsDrawerOpen
+  } = useOnlineQuestionsHook( { ...onlineQuestionsConfig, verifyOutcome } );
 
   let { 
-    questions, 
-    formBuilder
+    questions, formBuilder
   } = useSortOnlineQuestionsHook( onlineQuestionsConfig );
 
   useExplainAnswerHook();
 
   let { 
-    modalProps,
+    modalProps
   } = useInputTypeSelectorMaxDialogHook({ addNewQuestion, isMaxDialogOpen: isMaxQuestionDialogOpen, setIsMaxDialogOpen: setIsMaxQuestionDialogOpen  });
 
   useLoadQuestionsOnUpdatedQuestionContentHook( contentUpdated );
 
-  function toggleConcepts(){}
-
+  if ( onSaveError ) console.warn(`problem saving onlinequestion ${onSaveError?.messsage}`);
+  
   return(
     <div className="builder"> 
-        <header>
-          <div className='row'>          
-            <div className='col align-self-start'> 
-              <MainMenu navContent={navContent( currentUser, operatorBusinessName, currentUser?.role,  "Student" ).users} />
-            </div>
-            <div className='col align-self-center col-md-5 offset-md-5'> 
-            <div className="form-display-name"> 
-             {
-               <h3>{`${ displayName }`}</h3>
-             }
-            </div>
-            </div>
-            <div className='col align-self-end'> 
-                <LoginLogout
-                  operatorBusinessName={operatorBusinessName}
-                  user={currentUser} 
-                  operator={operator}
-                />
-            </div>
+      <Header operatorBusinessName={ operatorBusinessName }> 
+        {( displayName ) &&
+          <div className='col align-self-center col-md-5 offset-md-5'> 
+            <div className="form-display-name"> <h3>{`${ displayName }`}</h3> </div>
           </div>
-        </header>
-          <div className="content">  
-          { <TemporaryDrawer  
-              anchor='right'
-              setToggleDrawer={isDrawerOpen} 
-            >
-              <div>
-              { 
-              <ListItem
-                collection={ outcomes.filter(outcome => outcome?.lessonId === lessonId ) }
-                onMatchListItem={() => onMatchListItem}
-                ul={'sidebar_list'}
-                li={'sidebar_list_body'}
-                path={"lessons"}
-              >
-              {( outcome, index ) => (
-                  <QuestionOutcomeComponent 
-                    outcome={outcome}
-                    index={index}
-                    handleOnBlur={() => toggleConcepts}
-                  >
-                  {( outcome ) => 
-                    <HelpIcon 
-                      onClick={() => { updateQuestionOutcomeId(outcome) }}
-                      color="action"
-                      className="comment-round-button-4"
-                    /> 
-                  }
-                  </QuestionOutcomeComponent>  
-              )}
-              </ListItem>  
-              }
-              </div>
-            </TemporaryDrawer>
-          }
+        }   
+      </Header>
+      <div className="content">  
+        { 
+          <OnlineQuestionsOutcomeComponent 
+            onlineQuestionsConfig={onlineQuestionsConfig}
+            isDrawerOpen={isDrawerOpen}
+            onMatchListItem={onMatchListItem}
+            setIsDrawerOpen={setIsDrawerOpen}
+            setQuestionOutcome={setQuestionOutcome}
+            toggleConcepts={toggleConcepts}
+            updateQuestionOutcomeId={updateQuestionOutcomeId}
+          />
+        }
+        <div> 
+        {
           <div> 
-          {
-            <div> 
-              <MaxWidthDialog modalProps={modalProps} collection={questionInputCollection}>
-              {
-                ( item, index ) => {
-                  return <MenuItem key={`${index}`} value={item}>{ item }</MenuItem>;
-                }
+          <MaxWidthDialog modalProps={modalProps} collection={questionInputCollection}>
+            {( item, index ) => {
+                return <MenuItem key={`${index}`} value={item}>{ item }</MenuItem>;
               }
-              </MaxWidthDialog> 
-                <OnlineListItems 
-                  currentCourseQuestions={questions} 
-                  formBuilder={formBuilder} 
-                  formName={formName} 
-                  builderStatus={formBuilderStatus}
-                  builderState={formBuilderState}
-                >
-                { ( element ) => {
-                  return <div> 
-                  { ( formType !== formTypes?.report ) && 
-                    <OnlineQuestionEditorComponent 
-                      props={{...onlineQuestionsConfig }}
-                      outcomes={ outcomes.filter(outcome => outcome?.lessonId === lessonId ) }
-                      element={element}
-                      explainAnswer={Object.values(explainAnswers)?.find( explainer => explainer?.parentId === element?._id )}
-                      selectedOnlineQuestion={selectedOnlineQuestion}
-                      saveRecording={saveRecording}
-                      deleteQuestion={deleteQuestion}
-                      inputValue={inputValue}
-                      setInputValue={setInputValue}
-                    />
-                  }
-                  { ( formType === formTypes?.report ) &&
-                    <OnlineQuestionReportComponent 
-                      props={{...onlineQuestionsConfig }}
-                      element={element}
-                      selectedOnlineQuestion={selectedOnlineQuestion}
-                      saveRecording={saveRecording}
-                      deleteQuestion={deleteQuestion}
-                      inputValue={inputValue}
-                      setInputValue={setInputValue}
-                    />
-                  }
-                  {
-                    children( element, courseId )
-                  }
-                  </div>;
-                  }
-                }
-              </OnlineListItems > 
-            </div>
-          }
-          <div> <br></br> </div>
-          {
-            <Roles role={ currentUser?.role === role.Tutor && formBuilderState === elementMeta.state.Manage }>
-              <span>
-              <HelpIcon 
-                style={helpIconStyle()}
-                className="comment-round-button-11"
-                onClick={() => setIsDrawerOpen( !isDrawerOpen )}
+            }
+          </MaxWidthDialog> 
+          <OnlineListItems 
+            currentCourseQuestions={questions} 
+            formBuilder={formBuilder} 
+            formName={formName} 
+            builderStatus={formBuilderStatus}
+            builderState={formBuilderState}
+          >
+          { ( element ) => {
+            return <div> 
+            { ( formType !== formTypes?.report ) && 
+              <OnlineQuestionEditorComponent 
+                props={{...onlineQuestionsConfig }}
+                outcomes={ outcomes.filter(outcome => outcome?.lessonId === lessonId ) }
+                element={element}
+                explainAnswer={Object.values(explainAnswers)?.find( explainer => explainer?.parentId === element?._id )}
+                selectedOnlineQuestion={selectedOnlineQuestion}
+                saveRecording={saveRecording}
+                deleteQuestion={deleteQuestion}
+                inputValue={inputValue}
+                setInputValue={setInputValue}
               />
-              {/* { ( previewMode?.isPreviewMode &&  formType !== formTypes?.report ) &&
-                  <MeasurableOutcome 
-                    lessonId={ lessonId }
-                    selectedQuestion={ selectedQuestion }
-                  />
-              } */}
-              </span>
-            </Roles>
+            }
+            { ( formType === formTypes?.report ) &&
+              <OnlineQuestionReportComponent 
+                props={{...onlineQuestionsConfig }}
+                element={element}
+                selectedOnlineQuestion={selectedOnlineQuestion}
+                saveRecording={saveRecording}
+                deleteQuestion={deleteQuestion}
+                inputValue={inputValue}
+                setInputValue={setInputValue}
+              />
+            }
+            {
+              children( element, courseId )
+            }
+            </div>;
+            }
           }
-          <div>
-        </div>
-    </div>
-    </div>
-    </div> 
+          </OnlineListItems > 
+          </div>
+        }
+        {
+          <Roles role={ currentUser?.role === role.Tutor && formBuilderState === elementMeta.state.Manage }>
+          <span>
+          import HelpIcon from '@material-ui/icons/Help';
+            <HelpIcon 
+              style={helpIconStyle()}
+              className="comment-round-button-11"
+              onClick={() => setIsDrawerOpen( !isDrawerOpen )}
+            />
+            {/* { ( previewMode?.isPreviewMode &&  formType !== formTypes?.report ) &&
+                <MeasurableOutcome 
+                  lessonId={ lessonId }
+                  selectedQuestion={ selectedQuestion }
+                />
+            } */}
+            </span>
+          </Roles>
+        }
+  </div>
+  </div>
+  </div> 
   );
-};
-
-const mapDispatch = { 
-  addNewOnlineQuestion, saveFormBuilder,
-  toggleContentChanged,setIsMaxQuestionDialogOpen,
-  setSelectedOnlineQuestion
-};
-
-const mapState = ( state, ownProps ) => {
-  return {
-    operator: getOperatorFromOperatorBusinessName(state, ownProps),
-    users: Object.values( state.users.users ),
-    currentUser: state.users.user,
-    currentCourseQuestions: getOnlineQuestions( state, ownProps ),
-    onSaveError: state.onlineQuestions.onSaveError,
-    pushNotificationUsers: getPushNotificationUsersByOperatorId(state, ownProps),
-    failedOnlineQuestionNotifications: Object.values( state?.failedNotifications.failedPushNotifications ),
-    courses: Object.values( state?.courses?.courses ),
-    contentUpdated: state?.onlineQuestions?.contentUpdated,
-    hasRecordingStarted: state.hasRecordingStarted.hasRecordingStarted,
-    formFields: Object.values(state.formFields.formFields).filter( field => field?.formId === ownProps?.onlineQuestionProps?.courseId),
-    formBuilders: Object?.values( state?.formBuilders?.formBuilders ),
-    isMaxQuestionDialogOpen: state.formBuilders?.isMaxQuestionDialogOpen,
-    outcomes: getLessonOutcomesByLessonId(state, ownProps),
-    onlineQuestionProperties: state.onlineQuestions.onlineQuestionProperties, 
-    updateOnDelete: state.onlineQuestions.updateOnDelete,
-    selectedOnlineQuestion: state.onlineQuestions.selectedOnlineQuestion,
-    explainAnswers: state.onlineQuestionsExplainerAnswers.onlineQuestionsExplainerAnswers
-    // explainAnswers: getQuestionExplainerAnswers( state, ownProps )
-  };
 };
 
 export default connect( mapState, mapDispatch )(OnlineQuestionsMultiEditorComponent);

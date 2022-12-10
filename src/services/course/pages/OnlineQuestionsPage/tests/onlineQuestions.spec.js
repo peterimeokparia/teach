@@ -5,12 +5,13 @@ SAVE_ONLINEQUESTION_BEGIN,
 SAVE_ONLINEQUESTION_SUCCESS,
 LOAD_ONLINEQUESTIONS_BEGIN,
 LOAD_ONLINEQUESTIONS_SUCCESS,
-DELETE_ONLINEQUESTION_SUCCESS } from 'services/course/actions/onlinequestions';
+DELETE_ONLINEQUESTION_BEGIN,
+DELETE_QUESTION_SUCCESS } from 'services/course/actions/onlinequestions';
 
 import {
 loadOnlineQuestions,
 addNewOnlineQuestion,
-saveOnlineQuestion,
+saveOnlineQuestions,
 deleteOnlineQuestion } from 'services/course/actions/onlinequestions'; 
 
 jest.mock('../../../Api');
@@ -67,7 +68,7 @@ describe('OnlineQuestions', () => {
 
     const mockDispatch = jest.fn();
 
-    await saveOnlineQuestion( newQuestion )(mockDispatch)
+    await saveOnlineQuestions( newQuestion )(mockDispatch)
 
     expect(mockDispatch.mock.calls.length).toBe(3);
     expect(mockDispatch.mock.calls[0][0]).toEqual({
@@ -103,9 +104,10 @@ it('Removes An Online Question', async () =>  {
   await deleteOnlineQuestion(questionToRemove)(mockDispatch);
 
   console.log('DELETE ONLINE QUESTION',  mockDispatch.mock.calls);
-  expect(mockDispatch.mock.calls.length).toBe(1);  
+  expect(mockDispatch.mock.calls.length).toBe(2);  
   console.log(mockDispatch.mock.calls[0][0])
-  expect(mockDispatch.mock.calls[0][0].type).toEqual(DELETE_ONLINEQUESTION_SUCCESS);
+  expect(mockDispatch.mock.calls[0][0].type).toEqual(DELETE_ONLINEQUESTION_BEGIN);
+  expect(mockDispatch.mock.calls[1][0].type).toEqual(DELETE_QUESTION_SUCCESS);
 });
 });
   

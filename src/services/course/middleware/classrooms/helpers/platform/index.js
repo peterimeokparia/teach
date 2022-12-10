@@ -1,5 +1,6 @@
 import { setLessonInProgressStatus } from 'services/course/actions/lessons';
 import { role } from 'services/course/helpers/PageHelpers';
+import { navigate } from '@reach/router';
 import { loadMeetingsByMeetingId, addNewMeeting, saveMeeting } from 'services/course/actions/meetings'; 
 import { updateCurrentTutor } from 'services/course/actions/classrooms';
 import { goToMeetingWithPromoMessage } from 'services/course/middleware/classrooms/helpers/meetings';
@@ -10,35 +11,27 @@ import { setItemInSessionStorage, getItemFromSessionStorage } from 'services/cou
 import { getMeetingInvitees } from 'services/course/pages/Meeting/helpers';
 
 export function directUsersToMeeting( enablePlatformProps, meetingProps  ){
-   let { selectedTutorId, selectedTutor, currentUser, operatorBusinessName, store } = enablePlatformProps;
-
     try {
-        switch ( selectedTutor?.role ) {  // change 
-            case role.Tutor:    
-                handleMeeting( store, enablePlatformProps, meetingProps );  
-                return;
-            case role.Student:
-                enablePlatformForStudentRole( enablePlatformProps  );
-                store.dispatch(updateCurrentTutor( selectedTutor ));
-                return;
-            default:
-                waitingForMeetingToStartBeforeJoining( { currentUser, operatorBusinessName, selectedTutorId, selectedTutor, store } );
-                store.dispatch(updateCurrentTutor( selectedTutor )); 
-                return;   
-        };
+        enablePlatformForTutor( enablePlatformProps, meetingProps );  
+        enablePlatformForStudent( enablePlatformProps  );
     } catch (error) {
         throw Error(` enableTeachPlatform ${error}`);    
     }
 }
 
-function handleMeeting( store, enablePlatformProps, meetingProps ){
-    let { operator } = enablePlatformProps;
+function enablePlatformForTutor( enablePlatformProps, meetingProps ){
+
+    let { store, operator, currentUser  } = Object(enablePlatformProps);
+
+    if ( currentUser?.role !== role.Tutor ) return;
 
     store.dispatch(setLessonInProgressStatus());
+
     let meeting = inviteUsersToLearningSession( enablePlatformProps, store ); 
 
-    if( meeting ) {
-        store?.dispatch(addNewMeeting( { ...meetingProps, invitees: meeting?.invitees, currentUser: meeting?.tutor, operatorId: operator?._id }));
+    if ( meeting ) {
+        store?.dispatch(addNewMeeting( { ...meetingProps, invitees: meeting?.invitees, 
+            currentUser: meeting?.tutor, operatorId: operator?._id }));
     }
 }
 
@@ -51,6 +44,7 @@ function inviteUsersToLearningSession( props, store ){
     let invitees = [], meetingConfig = undefined;  let url = getLessonPlanUrls( operatorBusinessName, selectedTutorId );
 
     try {
+
         if ( currentUser?.role === role.Tutor  ) {
             meetingConfig = inviteUsersToLearningSessionConfig( sessions, currentUser, url?.lessonPageUrl, selectedLessonFromLessonPlanDropDown );   
 
@@ -61,13 +55,12 @@ function inviteUsersToLearningSession( props, store ){
                 lesson: selectedLessonFromLessonPlanDropDown?._id,
                 course: selectedCourseFromLessonPlanCourseDropDown?._id 
             };
-    
+
             store.dispatch(updateUserInvitationUrl(_currentUser));
             handleUserInvitation( listOfStudents, props, invitees );
         }
     } catch (error) {
-        alert(`Error: enableTeachPlatform - inviteUsersToLearningSession - ${error}`);
-        console.error(`Error: enableTeachPlatform - inviteUsersToLearningSession - ${error}`);
+          console.error(`Error: enableTeachPlatform - inviteUsersToLearningSession - ${error}`);
     }
     return { 
         tutor: meetingConfig?.user,  invitees 
@@ -78,10 +71,11 @@ function handleUserInvitation( listOfStudents, props, invitees ) {
     let { sessions, selectedTutorId, operatorBusinessName, store,  pushNotificationSubscribers,
         selectedLessonFromLessonPlanDropDown, selectedCourseFromLessonPlanCourseDropDown } = props;
 
-        let url = getLessonPlanUrls( operatorBusinessName, selectedTutorId );
+    let url = getLessonPlanUrls( operatorBusinessName, selectedTutorId );
 
     listOfStudents?.forEach(( invitee ) => { 
-        let currentSession = inviteUsersToLearningSessionConfig( sessions, invitee, url?.lessonPageUrl, selectedLessonFromLessonPlanDropDown );    
+        let currentSession = inviteUsersToLearningSessionConfig( sessions, invitee, url?.lessonPageUrl, 
+            selectedLessonFromLessonPlanDropDown );    
 
         if ( ! currentSession?.userHasExhaustedPackageSessions ) {
             invitees.push( currentSession.user ); 
@@ -94,52 +88,55 @@ function handleUserInvitation( listOfStudents, props, invitees ) {
             };
 
             store.dispatch(updateUserInvitationUrl(_currentUser));  
-            let pushNotificationSubscriber = pushNotificationSubscribers?.filter( pushuser => pushuser?.userId === invitee?.value?._id );
 
-            store.dispatch(sendPushNotificationMessage( pushNotificationSubscriber, { title:`${currentSession.nameOfLessonInProgress} is in progress!`, body:`Click to join: ${ currentSession.nameOfLessonInProgress }` })); 
+            let pushNotificationSubscriber = pushNotificationSubscribers?.
+                filter( pushuser => pushuser?.userId === invitee?.value?._id );
+
+            store.dispatch(sendPushNotificationMessage( pushNotificationSubscriber, 
+                { title:`${currentSession.nameOfLessonInProgress} is in progress!`, 
+                body:`Click to join: ${ currentSession.nameOfLessonInProgress }` })
+            ); 
         }
     });
 }
 
 let newMeetingTimerHandle = null;
 
-async function enablePlatformForStudentRole( props ){
-    let { selectedTutorId, selectedTutor, currentUser, operatorBusinessName, store } = props;
+function enablePlatformForStudent( props ){
 
-    store.dispatch(loadUserByEmail(currentUser)).then(user => { // change this... return object is not what I need??
-        if ( user?.meetingId !== "") {
-            loadMeetings( props );
-        } else {
-            waitingForMeetingToStartBeforeJoining( { currentUser: user, operatorBusinessName, selectedTutorId, selectedTutor, store } );
-            return;            
-        }          
-    }).catch(error => {
-        throw Error(` enablePlatformForStudentRole. ${error}`); 
-    }); 
+    let { currentUser, store } =  Object(props);;
+
+    if ( currentUser?.role !== role.Student ) return;
+
+    if ( currentUser?.meetingId && currentUser?.meetingId !== "" ) {
+        store.dispatch( loadMeetingsByMeetingId(currentUser?.meetingId) );
+    }
+
+    loadMeetings( props, currentUser ); 
 };
 
-function loadMeetings( props ) {
-    let { selectedTutorId, selectedTutor, currentUser, operatorBusinessName, store } = props;
+function loadMeetings( props, currentUser ) {
+    let { selectedTutorId, selectedTutor, operatorBusinessName, store } = Object(props);
 
-    store.dispatch(loadMeetingsByMeetingId( currentUser?.meetingId )).then(meeting => {
-        let inMeeting = joinMeeting( currentUser, meeting, newMeetingTimerHandle, store ); 
+    let url = getLessonPlanUrls( operatorBusinessName, selectedTutorId );
 
-        if ( !inMeeting ) {
-            waitingForMeetingToStartBeforeJoining( { currentUser, operatorBusinessName, selectedTutorId, selectedTutor,  store } );
-        }
-    }).catch( error => { 
-        console.error( `There was a problem finding the meeting. Please wait for meeting to start before joining.${ error} ` );
-        waitingForMeetingToStartBeforeJoining( { currentUser, operatorBusinessName, selectedTutorId, selectedTutor, store } );
-    });
+    if ( !currentUser?.meetingId ) {
+        waitingForMeetingToStartBeforeJoining( { currentUser, operatorBusinessName, selectedTutorId, selectedTutor,  store } );
+        return;
+    } 
+
+    let currentMeeting = Object.values( store.getState()?.meetings?.meetings )?.find( meeting => meeting?._id === currentUser?.meetingId );
+
+    if ( currentMeeting ) {
+        joinMeeting( currentUser, currentMeeting, newMeetingTimerHandle, url?.lessonPlanUrl, store );
+    }
 }
 
-function joinMeeting(user, currentMeeting, updateCurrentUserTimerHandle, store){
+function joinMeeting(user, currentMeeting, updateCurrentUserTimerHandle, lessonPlanUrl, store){
     let inviteeToUpdate = getMeetingInvitees( user, currentMeeting, updateCurrentUserTimerHandle );
 
-    if ( !(user?.meetingId === currentMeeting?._id) ) return false;
-        store?.dispatch(saveMeeting( inviteeToUpdate?.meetingId, { ...currentMeeting, usersWhoJoinedTheMeeting:[ ...currentMeeting?.usersWhoJoinedTheMeeting, user?._id ]}));
-        store.dispatch(lastLoggedInUser( { ...user, meetingId: currentMeeting?._id } ));
-        return true;
+    store?.dispatch(saveMeeting( inviteeToUpdate?.meetingId, { ...currentMeeting, usersWhoJoinedTheMeeting:[ ...currentMeeting?.usersWhoJoinedTheMeeting, user?._id ]}));
+    navigate(`${lessonPlanUrl}/${currentMeeting?._id}`);
 }
 
 export function waitingForMeetingToStartBeforeJoining( props ){
@@ -150,9 +147,12 @@ export function waitingForMeetingToStartBeforeJoining( props ){
     if ( getItemFromSessionStorage( 'newMeetingTimerHandle' )) {
         clearTimeout( getItemFromSessionStorage( 'newMeetingTimerHandle' ) );
     }
+
     setItemInSessionStorage( 'newMeetingTimerHandle', setInterval( updateCurrentUserAfterASetInterval, timeOutPeriod, url, currentUser, selectedTutor, store ));
-    if ( currentUser && currentUser?.role === role.Student && !getItemFromSessionStorage('meetingId') ) {
-        goToMeetingWithPromoMessage( url?.lessonPlanUrl, "" );
+
+    if ( currentUser && currentUser?.role === role.Student ) {
+        goToMeetingWithPromoMessage( url?.lessonPlanUrl, currentUser?.meetingId );
+        return;
     }
 };
 

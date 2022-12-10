@@ -20,6 +20,8 @@ export const TOGGLE_MAX_QUESTION_DIALOG = "TOGGLE MAX QUESTION DIALOG";
 export const TOGGLE_MAX_FIELD_DIALOG = "TOGGLE MAX FIELD DIALOG";
    
 export const addNewQuestionInsight = ( insights ) => {
+    alert('addNewQuestionInsight')
+    alert(JSON.stringify(insights))
     return dispatch => {
         dispatch({ type: ADD_QUESTION_INSIGHT_BEGIN });
         return add( insights, '/questioninsights')

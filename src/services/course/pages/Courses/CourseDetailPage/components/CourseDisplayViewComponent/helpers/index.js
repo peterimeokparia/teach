@@ -1,8 +1,12 @@
+// refactor
 import { FormFileUpload } from 'services/course/pages/components/FormFileUpload';
 import { lessonFileViewer } from 'services/course/pages/Courses/helpers';
+import { isEmptyObject } from 'services/course/helpers/Validations';
 import BoardEditorComponent from 'services/course/pages/Lessons/LessonPlan/components/BoardEditorComponent';
 import LessonPlanIframeComponent from 'services/course/pages/Lessons/LessonPlan/components/LessonPlanIframeComponent';
 import OutComesComponent from 'services/course/pages/Courses/CourseDetailPage/components/CourseDisplayViewComponent/OutComesComponent';
+import OutcomeChartLanding from 'services/course/pages/Charts/components/OutcomeChartLanding';
+
 const fileUploadUrl =  "/api/v1/fileUploads";
 
 export const incrementDisplayedItemCount = ( toggleLessonItemDisplayCount, setToggleLessonItemDisplayCount ) => {
@@ -13,18 +17,25 @@ export const incrementDisplayedItemCount = ( toggleLessonItemDisplayCount, setTo
     setToggleLessonItemDisplayCount( toggleLessonItemDisplayCount + 1 );
 };
 
-export const toggleDisplayedItems = ( key, selectedlesson, courseDisplayProps, lessonOutcomes ) => {
-    let {
-        previewMode,
+export const toggleDisplayedItems = ( toggleDisplayItemProps ) => {
+    let { key, 
+        selectedlesson, 
+        courseDisplayProps, 
+        lessonOutcomes, 
+        courseOutcomes,
+        lessonPieChartData
+    } = toggleDisplayItemProps;
+
+    let { previewMode,
         setFileToRemove,
         saveLesson,
         operatorBusinessName,
         courseId,
-        selectedTutorId
+        selectedTutorId,
+        toggleLessonOutcomeInsightModal
     } = courseDisplayProps;
 
  switch (key) {
-
      case 1: 
      return <div className="lesson-video">
                 < LessonPlanIframeComponent
@@ -62,14 +73,20 @@ export const toggleDisplayedItems = ( key, selectedlesson, courseDisplayProps, l
             //     fileViewer={lessonFileViewer}
             //  />;
      default:
-        return <OutComesComponent
-                    operatorBusinessName={operatorBusinessName} 
-                    buttonText={ 'Add New Lesson Outcome' }
-                    outcomeType={'lesson'}
-                    outcomes={lessonOutcomes }
-                    courseId={ courseId }
-                    lesson={ selectedlesson }
-                    lessonId={ selectedlesson?._id }
-                />;               
+    return  <>
+            { ( selectedlesson && !toggleLessonOutcomeInsightModal ) &&
+                !isEmptyObject(lessonPieChartData) && 
+                <OutcomeChartLanding pieChartData={lessonPieChartData}/>
+            }
+            <OutComesComponent
+                operatorBusinessName={operatorBusinessName} 
+                buttonText={ 'Add New Lesson Outcome' }
+                outcomeType={'lesson'}
+                outcomes={lessonOutcomes }
+                courseId={ courseId }
+                lesson={ selectedlesson }
+                lessonId={ selectedlesson?._id }
+            />;              
+            </>      
  }
 };

@@ -32,25 +32,19 @@
     justify-content: center;
 }
 .quizzWithPointsBuilder .answerEditorBuilder .editorTest {
-    /* font: normal 1.71em KaTeX_Main,Times New Roman,serif;
-    height: auto;
-    min-height: 5vh;
-    width: 1070px;
-    text-align: left; */
-
     max-width: 95vw;
-display: flex;
-flex-direction: column;
-font-family: 'Courier New', Courier, monospace;
-text-align: left;
-border-radius: 25px;
-border-style: solid;
-border-width: 3px;
-box-shadow: 0 0 0 5px #d2e3f7;
-padding-bottom: 90px;
-list-style: none;
-background: white;
-padding: 10px 5px 15px 20px;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: left;
+    border-radius: 25px;
+    border-style: solid;
+    border-width: 3px;
+    box-shadow: 0 0 0 5px #d2e3f7;
+    padding-bottom: 90px;
+    list-style: none;
+    background: white;
+    padding: 10px 5px 15px 20px;
 }
 .quizzWithPointsBuilder .answerEditorBuilder .editorTest-preview {
     height: auto;

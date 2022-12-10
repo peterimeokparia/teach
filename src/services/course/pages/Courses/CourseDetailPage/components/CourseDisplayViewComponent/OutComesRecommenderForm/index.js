@@ -24,7 +24,7 @@ const OutComesRecommenderForm = ({
     outCome, outcomes, cardItemProps, currentUser, openRecommenderModal, saveOutcome, 
     loadOutcomes, loadOutcomeByOutcomeId, questions, saveFormBuilder
  }) => {
-    let { isFormModalOpen } = cardItemProps;
+    let { isFormModalOpen } = Object( cardItemProps );
 
     const lessonOutcome = outcomes?.find( outcome => outcome?._id === outCome?._id);
 
@@ -200,8 +200,7 @@ const mapState = (state, ownProps) => {
         toggleQuestionModal: state.app.toggleModal,
         isFormModalOpen: state?.formBuilders?.isFormModalOpen,
         outcomes: Object.values( state.outcomes.outcomes ),
-        questions: Object.values( state.onlineQuestions.onlineQuestions ),
-        onlineQuestionProperties: state?.onlineQuestions?.onlineQuestionProperties 
+        questions: Object.values( state.onlineQuestions.onlineQuestions )
     };
 };
 

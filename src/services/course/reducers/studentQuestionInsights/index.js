@@ -38,10 +38,30 @@ const reducer = produce((draft, action) => {
           draft.onSaveError = null;
      return;
      case ADD_STUDENT_QUESTION_INSIGHT_SUCCESS:   
-     case SAVE_STUDENT_QUESTION_INSIGHT_SUCCESS:
-          draft.studentQuestionInsights[action.payload._id] = action.payload; 
+     // let insights = Object.values( draft.studentQuestionInsight );
+     // let existingInsights = insights?.find(item => item?.questionId === action.payload.questionId);
+
+     // if ( existingInsights ) {
+     //      let insightIndex = insights?.findIndex(item => item?.questionId === action.payload.questionId);
+          
+     //      insights?.splice( insightIndex, 1, action.payload );
+     // } else {
+     //      draft.studentQuestionInsights[action.payload.questionId] = action.payload; 
+     // }
+     // draft.saveInProgress = false;
+          draft.studentQuestionInsights[action.payload.questionId] = action.payload; 
           draft.saveInProgress = false;
      return;
+     case SAVE_STUDENT_QUESTION_INSIGHT_SUCCESS:
+          // draft.studentQuestionInsights[action.payload._id] = action.payload; 
+          draft.studentQuestionInsights[action.payload.questionId] = action.payload; 
+          draft.saveInProgress = false;
+     return;
+     // case ADD_STUDENT_QUESTION_INSIGHT_SUCCESS:   
+     // case SAVE_STUDENT_QUESTION_INSIGHT_SUCCESS:
+     //      draft.studentQuestionInsights[action.payload._id] = action.payload; 
+     //      draft.saveInProgress = false;
+     // return;
      case ADD_STUDENT_QUESTION_INSIGHT_ERROR:
      case SAVE_STUDENT_QUESTION_INSIGHT_ERROR:
           draft.saveInProgress = false;    
@@ -52,7 +72,8 @@ const reducer = produce((draft, action) => {
      return;
      case LOAD_STUDENT_QUESTION_INSIGHT_SUCCESS:
           action.payload?.forEach( builder => {
-               draft.studentQuestionInsights[ builder._id ] = builder;
+               // draft.studentQuestionInsights[ builder._id ] = builder;
+               draft.studentQuestionInsights[ builder.questionId ] = builder;
           });  
           draft.studentQuestionInsightsLoading = false;
      return;

@@ -23,12 +23,17 @@ export const LOAD_SINGLE_MEETING_SUCCESS = "LOAD SINGLE MEETING SUCCESS";
 export const START_NEW_MEETING = "START NEW MEETING";
 export const WAIT_FOR_MEETING_TO_START = "WAIT FOR MEETING TO START";
 export const END_MEETING = "END MEETING";
+export const SET_TUTORS_MEETING = "SET TUTORS MEETING";
 
 export const addNewMeeting = ( meetingConfig ) => {
     return dispatch => {
         dispatch({ type: ADD_NEW_MEETING_BEGIN }); 
         return add( meetingConfig, '/meetings')
             .then( meeting => { 
+                let { _id, userId, courseId, lessonId } = meeting;
+                let currentMeeting = { id: _id, userId, courseId, lessonId };
+
+                dispatch({ type: SET_TUTORS_MEETING, payload: currentMeeting });
                 dispatch({type: ADD_NEW_MEETING_SUCCESS, payload: meeting }); 
                 return meeting;
             }).catch( error => {

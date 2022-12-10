@@ -31,8 +31,7 @@ function useDropDownSelectorHook( props ) {
       dispatch( saveFormField({ ...formFieldElement, dropDownOptions: dropDownSelectorValues }) );
       dispatch( loadFormFieldsByFormFieldId( formFieldElement?._id) );
     } catch (error) {
-      alert('error')
-      alert(JSON.stringify( error ));
+      console.log(error);
     }
   };
 

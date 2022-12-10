@@ -28,6 +28,10 @@ studentQuestionInsightsRoute.get('/builder', getByIdRoute( studentQuestionInsigh
     return res.status(200).json(res?.newResult);
 });
 
+studentQuestionInsightsRoute.get('/formType', getByIdRoute( studentQuestionInsightsModel, 'formType' ),  (req, res) => {
+    return res.status(200).json(res?.newResult);
+});
+
 studentQuestionInsightsRoute.get('/answer', getByIdRoute( studentQuestionInsightsModel, 'answerId' ),  (req, res) => {
     return res.status(200).json(res?.newResult);
 });

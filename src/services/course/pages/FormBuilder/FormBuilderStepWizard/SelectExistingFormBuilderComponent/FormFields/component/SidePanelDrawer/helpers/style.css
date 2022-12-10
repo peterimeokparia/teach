@@ -3,12 +3,12 @@
     width: 100px;
 }
 .explanation-field-input {
-    margin-left: 220px;
+    padding-top: 25px;
     width: 100px;
 }
 .explanation-field-input input{
     font-weight: bold;
-    margin-left: -200px;
+    margin-left: 1px;
     border-radius: 50%;
     width: 60px;
     background: white;

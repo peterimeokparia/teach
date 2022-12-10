@@ -1,3 +1,4 @@
+// rename
 import { serviceWorkerSupported, send } from '../PushNotifications';
 import randomColor from 'randomcolor';
 import Swal from 'sweetalert2';
@@ -204,4 +205,17 @@ export const setSwalInput = async ( title, inputPlaceholder, confirmButtonColor 
        return text;
       } 
       return undefined;
+};
+
+export function capitalizeFirstLetterOfString(word){
+    if ( !word ) return;
+    if ( word[0].toUpperCase() === word[0] ) return;
+    return `${word[0].toUpperCase()}${word.slice(1)} `
+}
+
+export const restrictTextLength = ( text, limit, size ) => {
+    if ( !text ) return 'test test test test';
+    return ( text.length > limit ) 
+            ? `${text.slice(0, size)}...`
+            : text;
 };

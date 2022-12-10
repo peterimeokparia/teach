@@ -1,5 +1,9 @@
 import * as React from 'react';
 import { Box, ThemeProvider, createTheme } from '@mui/system';
+import Icon from '@mui/material/Icon';
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
+import { deepOrange, deepPurple } from '@mui/material/colors';
 
 const theme = createTheme({
   palette: {
@@ -19,7 +23,7 @@ const theme = createTheme({
   },
 });
 
-export default function MeasurableOutcomeResult({header, rate, passFailRate}) {
+export default function MeasurableOutcomeResult({ header, rate, title, passFailRate, minWidth=250, width=250, iconColor, avatarText}) {
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -28,14 +32,14 @@ export default function MeasurableOutcomeResult({header, rate, passFailRate}) {
           boxShadow: 1,
           borderRadius: 2,
           p: 2,
-          minWidth: 300,
+          minWidth: minWidth,
+          width: width
         }}
       >
+        <Stack direction="row" spacing={2}> <Avatar sx={{ bgcolor: iconColor }}>{avatarText}</Avatar> </Stack>
         <Box sx={{ color: 'text.secondary' }}>{ header }</Box>
         <Box sx={{ color: 'text.primary', fontSize: 34, fontWeight: 'medium' }}>
-          {/* 98.3 K */}
-          {`${rate} Students`}
-          {/* <link>{ 'generate list of students'}</link> */}
+          {`${rate} ${title}`}
         </Box>
         <Box
           sx={{
@@ -47,12 +51,8 @@ export default function MeasurableOutcomeResult({header, rate, passFailRate}) {
           }}
         >
           {`historical average ${passFailRate}`} 
-          {/* +18.77% */}
-          {/* >historical average */}
-          {/* <link>{'histogram'}</link> */}
         </Box>
         <Box sx={{ color: 'text.secondary', display: 'inline', fontSize: 14 }}>
-          {/* vs. last week */}
         </Box>
       </Box>
     </ThemeProvider>

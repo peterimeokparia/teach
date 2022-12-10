@@ -1,8 +1,10 @@
 import { saveStudentsAnswerPoints } from "services/course/actions/formfieldanswers";
 import { addNewFormFieldPoint, saveFormFieldPoint, loadFormFieldPoints } from "services/course/actions/formquestionpoints";
 import { inputType } from 'services/course/pages/QuestionsPage/helpers';
+import { isEmptyObject } from "services/course/helpers/Validations";
 
-export function assignPointsToQuestionForDraggableFormFieldAnswers(  store, answerFormInputField, pointsAfter ) {
+export function assignPointsToQuestionForDraggableFormFieldAnswers( store, answerFormInputField, pointsAfter ) {
+
   if ( !answerFormInputField || ( answerFormInputField?.inputType === inputType.RadioButton && !answerFormInputField['selected'] )  ) return;
 
   store.dispatch( loadFormFieldPoints() );
@@ -11,42 +13,48 @@ export function assignPointsToQuestionForDraggableFormFieldAnswers(  store, answ
     && ans?.formUuId === answerFormInputField?.formUuId && ans?.formName === answerFormInputField?.formName );
 
   let persistedPointsObject = Object?.values( store?.getState().formFieldPoints?.studentsCummulativePointsRecieved )?.find( ans => ans?.userId === answerFormInputField?.userId 
-    && ans?.formUuId === answerFormInputField?.formUuId  && ans?.formName === answerFormInputField?.formName );
+    && ans?.formUuId === answerFormInputField?.formUuId && ans?.formName === answerFormInputField?.formName );
 
   if ( !studentsPointsObject?.userId ) {
     studentsPointsObject = hydrateCurrentCummulativePointsFromPersistence( store, persistedPointsObject );
   }
 
-  let currentFormField = Object.values( store.getState().formFields?.formFields )?.find( field => field?._id ===  answerFormInputField?.fieldId );
   let cummulativePointsFromPersistence = persistedPointsObject?.cummulativePoints;
   let pointsBefore = store?.getState().formFieldAnswers?.draggaleAnswerPointsBeforeMove;
   let calcPoints = (( cummulativePointsFromPersistence - pointsBefore) + pointsAfter?.points);
   let cummulativePoints = calcPoints < 0 ? 0 : calcPoints;
-  
-  handleDraggableAnswers( studentsPointsObject, answerFormInputField, currentFormField );
 
-  function handleDraggableAnswers( studentsPointsObject, answerFormInputField, currentFormField ) {
+  handleDraggableAnswers( answerFormInputField );
+
+  function handleDraggableAnswers( answerFormInputField ) {
+
+    if ( isEmptyObject( answerFormInputField ) ) return;
     if ( answerFormInputField?.inputType !== inputType.DraggableListItem ) return; 
     if ( !answerFormInputField?.selected ) return; 
 
-    // if ( !persistedPointsObject?.userId ) {
-    //   store.dispatch(addNewFormFieldPoint({ userId: answerFormInputField?.userId, cummulativePoints, formUuId: answerFormInputField?.formUuId, formName: answerFormInputField?.formName }));
+    let { userId, courseId, lessonId, formType, formUuId, formName } = answerFormInputField;
+
+    // need to initialize points if first question is a draggable....how?
+    // if ( !persistedPointsObject?.userId ) { 
+    //   store.dispatch(addNewFormFieldPoint({ userId, cummulativePoints, formUuId, formName, formType, courseId }));
     // }
 
-    if ( persistedPointsObject?.userId ) {
-      store.dispatch(saveFormFieldPoint({ ...persistedPointsObject, userId: answerFormInputField?.userId, cummulativePoints, formUuId: answerFormInputField?.formUuId }));
+    if ( !isEmptyObject(persistedPointsObject) ) {
+      store.dispatch(saveFormFieldPoint({ ...persistedPointsObject, userId, cummulativePoints, formUuId, formType, courseId, lessonId }));
     }
 
-    store.dispatch(saveStudentsAnswerPoints({ userId: answerFormInputField?.userId, cummulativePoints, formUuId: answerFormInputField?.formUuId, formName: answerFormInputField?.formName }));
+    store.dispatch( saveStudentsAnswerPoints({ userId, cummulativePoints, formUuId, formName, formUuId, formType, courseId, lessonId }) );
     store.dispatch( loadFormFieldPoints() );
     return;
   }
 };
 
 function hydrateCurrentCummulativePointsFromPersistence( store, persistedPointsObject ){
-  if ( persistedPointsObject ) {
-    store.dispatch(saveStudentsAnswerPoints({ userId: persistedPointsObject?.userId, cummulativePoints: persistedPointsObject?.cummulativePoints, formUuId: persistedPointsObject?.formUuId, formName: persistedPointsObject?.formName }));
-  };
+  if ( isEmptyObject( persistedPointsObject ) ) return; 
+  
+    let { userId, cummulativePoints, formUuId,  formName  } = persistedPointsObject;
 
-  return { userId: persistedPointsObject?.userId, cummulativePoints: persistedPointsObject?.cummulativePoints, formUuId: persistedPointsObject?.formUuId, formName: persistedPointsObject?.formName };
+    store.dispatch( saveStudentsAnswerPoints({ userId, cummulativePoints, formUuId, formName }) );
+  
+  return { userId, cummulativePoints, formUuId, formName };
 }

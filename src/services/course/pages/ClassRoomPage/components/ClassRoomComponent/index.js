@@ -8,8 +8,9 @@ import { navContent } from 'services/course/pages/components/NavigationHelper';
 import {  getUsersByOperatorId, getOperatorFromOperatorBusinessName, getPushNotificationUsersByOperatorId, 
     getCoursesByOperatorId,getSortedRecordsByDate } from 'services/course/selectors';
 import { getLessonPlanUrls, getselectedTutor, getStudentsSubscribedToCoursesByThisTutor, toggleBetweenAttendanceGradeDisplay,
-    emailInputOptions, emailMessageOptions } from  '../CourseLessonDropDownComponent/helpers';
+    emailInputOptions, emailMessageOptions } from  'services/course/pages/ClassRoomPage/components/CourseLessonDropDownComponent/helpers'; 
 import { toggleCourseModal } from 'services/course/actions/courses';
+import { components } from 'react-select';
 import { helpIconStyle } from './inlineStyles';    
 import NewCoursePage from 'services/course/pages/Courses/NewCoursePage';
 import useClassRoomComponentHook from '../../hooks/useClassRoomComponentHook';

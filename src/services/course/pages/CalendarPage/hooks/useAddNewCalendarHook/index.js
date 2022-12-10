@@ -1,21 +1,9 @@
-import { 
-useState, 
-useEffect } from "react";
-
-import { 
-useDispatch } from 'react-redux';
-
-import { 
-loadUsers } from "services/course/actions/users";
-
-import { 
-loadAllCalendars } from 'services/course/actions/calendar';
-
-import {   
-loadAllEvents } from 'services/course/actions/event';
-
-import {
-loadSubscribedPushNotificationUsers } from 'services/course/actions/notifications';
+import { useState, useEffect } from "react";
+import { useDispatch } from 'react-redux';
+import { loadUsers } from "services/course/actions/users";
+import { loadAllCalendars } from 'services/course/actions/calendar';
+import { loadAllEvents } from 'services/course/actions/event';
+import { loadSubscribedPushNotificationUsers } from 'services/course/actions/notifications';
 
 function useAddNewCalendarHook(){
     const [ selectedTutors,  setSelctedTutors ] = useState([]);

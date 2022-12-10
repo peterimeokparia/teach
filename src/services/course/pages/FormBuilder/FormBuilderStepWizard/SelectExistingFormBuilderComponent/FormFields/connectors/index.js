@@ -43,7 +43,7 @@ export const mapDispatch = {
       fields: Object.values( state?.formFields?.formFields ).filter( field => field?.questionId === ownProps?.form?.question?._id ),
       formFieldsLoading: state?.formFields?.formFieldsLoading,
       onFormFieldsLoadingError: state?.formFields?.onFormFieldsLoadingError,
-      formFieldAnswers: Object.values( state?.formFieldAnswers?.formFieldAnswers ).filter( field => field?.questionId === ownProps?.form?.question?._id ),
+      formFieldAnswers: Object.values( state?.formFieldAnswers?.formFieldAnswers ).filter( field => field?.questionId === ownProps?.form?.question?._id && field?.formUuId === ownProps?.form?.formUuId ),
       formFieldAnswersError: state?.formFieldAnswers?.onSaveError,
       formFieldAnswersLoading: state?.formFieldAnswers?.formFieldAnswersLoading,
       onFormFieldAnswersLoadingError: state?.formFieldAnswers?.onFormFieldAnswersLoadingError,

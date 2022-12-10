@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { saveLesson } from 'services/course/actions/lessons';
-import { restrictTextLength } from 'services/course/pages/Courses/helpers';
+import { restrictTextLength } from 'services/course/helpers/PageHelpers';
 import { role } from 'services/course/helpers/PageHelpers';
 import NavLinks from 'services/course/pages/components/NavLinks';
 import './style.css';

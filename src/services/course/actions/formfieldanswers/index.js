@@ -43,7 +43,7 @@ export const saveFormFieldAnswer = ( formfields ) => {
         dispatch({ type: SAVE_FORMFIELDANSWERS_BEGIN });
         return update( formfields, `/formfieldanswers/` )
             .then( formfields => {  
-             dispatch({ type: SAVE_FORMFIELDANSWERS_SUCCESS, payload: formfields }); 
+             dispatch({ type: SAVE_FORMFIELDANSWERS_SUCCESS, payload: formfields });
             }).catch( error => {
             dispatch({ type: SAVE_FORMFIELDANSWERS_ERROR , error });
         });  
@@ -51,7 +51,7 @@ export const saveFormFieldAnswer = ( formfields ) => {
 };
 
 let timerHandle = null;
-
+// delete this
 export const setMarkDown = ( teachObject, markDownContent, teachObjectType, actionType, saveAction, duration  ) => {
     return ( dispatch, getState )  => {
         dispatch({ type: actionType, payload: {   
@@ -87,16 +87,7 @@ export const saveDraggableFormFieldAnswer = ( formfields ) => {
                 dispatch({ type: SAVE_FORMFIELDANSWERS_SUCCESS_SKIP_MW, payload: formfields }); 
                 getById( formfields?.questionId, `/formfieldanswers/question?questionId=`)
                     .then( draggableFormfields  => { 
-                        let pointsAfter = draggableFormfields?.map(item => item?.points)?.reduce((previousVal, currentVal) => previousVal + currentVal, 0);
-
-                        dispatch({ 
-                            type: SAVE_FORMFIELD_DRAGGABLE_ANSWERS_POINTS_AFTER_MOVE, 
-                            payload: {
-                                formUuId: formfields?.formUuId,
-                                userId: formfields?.userId,
-                                points: pointsAfter,
-                                answerFormInputField: formfields
-                            }});
+                        getDraggableFormFieldPoints( dispatch, formfields, draggableFormfields );
                 }).catch( error => {
                     dispatch({ type: LOAD_FORMFIELDANSWERS_ERROR , error });
                 });       
@@ -197,7 +188,6 @@ export const saveFormFieldAnswerWithPoints = ( formfields ) => {
 export const saveDraggableFormFieldAnswersPointsBeforeMove =  ( payload ) => {
     return dispatch => {
         dispatch({ type: SAVE_FORMFIELD_DRAGGABLE_ANSWERS_POINTS_BEFORE_MOVE, payload  });
-        //return payload;
  }; 
 };
 
@@ -207,3 +197,21 @@ export const saveStudentsAnswerPoints =  ( answerPoints ) => {
             return answerPoints;
  }; 
 };
+
+function getDraggableFormFieldPoints( dispatch, formfields, draggableFormfields ) {
+
+    let draggableFormFieldObj = draggableFormfields.filter( item => item?.formName === formfields?.formName &&
+        item?.userId === formfields?.userId &&
+            item?.formUuId === formfields?.formUuId);
+
+            let pointsAfter = draggableFormFieldObj?.map(item => item.points).reduce((previousVal, currentVal) => previousVal + currentVal, 0);
+
+            dispatch({ 
+                type: SAVE_FORMFIELD_DRAGGABLE_ANSWERS_POINTS_AFTER_MOVE, 
+                payload: {
+                    formUuId: formfields?.formUuId,
+                    userId: formfields?.userId,
+                    points: pointsAfter,
+                    answerFormInputField: formfields
+            }});   
+}

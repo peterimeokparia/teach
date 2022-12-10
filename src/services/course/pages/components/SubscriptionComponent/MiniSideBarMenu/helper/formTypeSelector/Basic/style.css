@@ -1,0 +1,33 @@
+.copy-question {
+    border-radius: 34px;
+    background-color: #ccc;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5rem;
+    font-size: 10px;
+    color: black;
+    font-weight: bold;
+    position: relative;
+    display: inline-block;
+    padding-top: 0px;
+    margin-top: 1px;
+    width: 400px;
+    height: 45px;
+}
+
+.copy-question:hover {
+    border-radius: 34px;
+    background-color: #007bff;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5rem;
+    font-size: 10px;
+    color: black;
+    font-weight: bold;
+    position: relative;
+    display: inline-block;
+    padding-top: 0px;
+    margin-top: 1px;
+    width: 400px;
+    height: 45px;
+}

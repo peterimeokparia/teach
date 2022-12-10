@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { connect } from 'react-redux';
 import { deleteQuestionIconStyle, videoMeta } from 'services/course/pages/OnlineQuestionsPage/components/OnlineQuestionDetailPage/OnlineListItems/inlineStyles.js';
 import { inputType } from 'services/course/pages/QuestionsPage/helpers';
@@ -38,8 +38,8 @@ return (
     <div className='listItem'> 
       <div className='lessons'>
     <Roles role={ currentUser?.role === role.Tutor && formBuilderState === elementMeta.state.Manage }>
-     <div className={"sideburgerMenu"}>  
-      <span>
+    <div className={"sideburgerMenu"}>  
+    <span>
     <MiniSideBarMenu question={ element } formType={formType}>
     {( handleMouseDown, menuVisible ) => (
       <>
@@ -66,11 +66,15 @@ return (
     </span> 
     </Roles>  
     <div className={ 'editor'  }> 
-    {( formType === formTypes?.furtherstudy ) && <div className='editor-header'>
-      <h1>{ title }</h1>
-      </div>}
-      { (element?.inputType === inputType.MainBodyQuestion) &&
-          <div className="">
+      {( formType === formTypes?.furtherstudy ) && 
+        <>
+        <div className='editor-header'>
+          <div> <h1>{ title }</h1> </div> 
+        </div>
+        </> 
+      }
+      {(element?.inputType === inputType.MainBodyQuestion) &&
+        <div className="">
             <QuestionComponent
               question={ element }
               editorMarkDownContentType={ QUESTION_MARKDOWN }

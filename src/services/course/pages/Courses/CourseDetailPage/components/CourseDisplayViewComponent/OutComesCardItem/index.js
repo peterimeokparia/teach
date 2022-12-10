@@ -2,8 +2,10 @@
 import { connect } from 'react-redux';
 import { role } from 'services/course/helpers/PageHelpers';
 import { buildLessonNotes } from 'services/course/actions/notes';
+import { setCurrentOutcome } from 'services/course/actions/outcomes';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import HelpIcon from '@material-ui/icons/Help';
 import Roles from 'services/course/pages/components/Roles';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -12,15 +14,15 @@ import Button from '@mui/material/Button';
 import NotesIcon from '@mui/icons-material/Notes';
 import Typography from '@mui/material/Typography';
 
-const OutComesCardItem = ({ buildLessonNotes, lessonNotes, outcomes, currentUser, selectedOutcome, cardItemProps }) => {
+const OutComesCardItem = ({ buildLessonNotes, lessonNotes, outcomes, currentUser, selectedOutcome, cardItemProps, setCurrentOutcome }) => {
     let {
         editOutcomeTitle, resetEditingOutcomeTitle, editingOutcome,
         handleRecommendations,handleDeleteOutcome, handleEditingOutcomeTitleOnSubmit,
         setOutcomeTitle, outcomeTitle, inputRef, toggleQuestionModal, formType,
-        formName, courseId, lesson, operatorBusinessName, isFormModalOpen } = cardItemProps;
+        formName, courseId, lesson, operatorBusinessName, buildLessonInsights, isFormModalOpen } = cardItemProps;
     
     return (( outcomes ).map((outcome, index) => ( 
-                    <div className='col'> 
+                    <div className='col' onClick={() => setCurrentOutcome( outcome )}> 
                     {  <div className="cardItem">
                         { <Card sx={{ minWidth: 275, maxHeight:305, backgroundColor: outcome?.color, marginBottom:3.6, 
                             boxShadow: 9 }}  onBlur={() => resetEditingOutcomeTitle(outcome)}>
@@ -61,21 +63,31 @@ const OutComesCardItem = ({ buildLessonNotes, lessonNotes, outcomes, currentUser
                             </CardContent>
                             <Roles role={ currentUser?.role === role.Tutor }>
                                 <EditIcon 
-                                    onClick={() => { editOutcomeTitle(outcome); }}
+                                    onClick={() => editOutcomeTitle(outcome) }
                                     color="action"
                                     className="comment-round-button-1"
                                 />
                                 <DeleteIcon 
-                                    onClick={() => { handleDeleteOutcome(outcome); }}
+                                    onClick={() => handleDeleteOutcome(outcome) }
                                     color="action"
                                     className="comment-round-button-3"
                                 />
                                 <NotesIcon 
-                                    onClick={() => { buildLessonNotes({ outcome, operatorBusinessName, currentUser, lessonNotes }); }} 
+                                    onClick={() => buildLessonNotes({ outcome, operatorBusinessName, currentUser, lessonNotes }) } 
                                     color="action"
                                     className="comment-round-button-4"
                                 />
+                                <HelpIcon 
+                                    onClick={() => buildLessonInsights(outcome) }
+                                    color="action"
+                                    className="comment-round-button-5"
+                                />
                             </Roles>
+                            <HelpIcon 
+                                    onClick={() => buildLessonInsights(outcome) }
+                                    color="action"
+                                    className="comment-round-button-5"
+                            />
                             <CardActions>
                                 <Button onClick={() => handleRecommendations( outcome )} size="small">Recommend Further Study</Button>
                             </CardActions>
@@ -94,6 +106,6 @@ const mapState = (state, ownProps) => {
     };
 };
 
-export default  connect( mapState, { buildLessonNotes } )(OutComesCardItem);
+export default  connect( mapState, { buildLessonNotes, setCurrentOutcome } )(OutComesCardItem);
 
  

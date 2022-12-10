@@ -1,6 +1,5 @@
 import moment from 'moment-timezone';
 import isEqual from 'react-fast-compare';
-
 let authToken = null;
 
 export const setToken = token => {
@@ -98,38 +97,38 @@ async function fetchWithHeaders( url =``) {
 
 async function fetchWithData( url =``, data = {}, method = 'POST') {
     let responseData = null;
-
-      try {
+  
+    try {
         responseData = await fetch(url, {
-          method,
-          headers: {
-          'Content-Type': 'application/json',
-          'Authorization': authToken ? `Bearer ${authToken}` : undefined,
-        },
-          body: JSON?.stringify(data)
-          // cache: "reload",
-      } 
-    );
+              method,
+              headers: {
+              'Content-Type': 'application/json',
+              'Authorization': authToken ? `Bearer ${authToken}` : undefined,
+            },
+              body: JSON?.stringify(data)
+              // cache: "reload",
+          } 
+        );
+    
+      if ( responseData?.status >= 400 && responseData?.status < 600 ) {
+          let response = await responseData?.json();
 
-    if ( responseData?.status >= 400 && responseData?.status < 600 ) {
-        let response = await responseData?.json();
+          if ( response?.msg ) {
+            throw new Error("Bad Server Response."  + response?.msg ); 
+          } else {
+            throw new Error("Bad Server Response."  + response ); 
+          }               
+      }
 
-        if ( response?.msg ) {
-          throw new Error("Bad Server Response."  + response?.msg ); 
-        } else {
-          throw new Error("Bad Server Response."  + response ); 
-        }               
-    }
+      if ( ! responseData?.ok ) {   
+          let response = await responseData?.json();
 
-    if ( ! responseData?.ok ) {   
-        let response = await responseData?.json();
-
-        if ( response?.msg ) {
-          throw new Error( "Something went wrong"   + response?.msg ); 
-        } else {
-          throw new Error( "Something went wrong" + response ); 
-        }
-    }; 
+          if ( response?.msg ) {
+            throw new Error( "Something went wrong"   + response?.msg ); 
+          } else {
+            throw new Error( "Something went wrong" + response ); 
+          }
+      }; 
     } catch ( error ) {
       console.log( error );    
       throw Error(`${ error?.message }` );

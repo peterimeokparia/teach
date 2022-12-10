@@ -14,7 +14,9 @@ import { setSwalInput } from 'services/course/helpers/PageHelpers';
 
 function useLessonOutComesHook( props ) {
   let { operatorBusinessName, lesson, courseId, outcomeType, currentUser, toggleModal, 
-     isFormModalOpen, toggleQuestionModal, outcomes, formName, questions, lessonNotes } = props;
+     isFormModalOpen, toggleQuestionModal, outcomes, formName } = props;
+  
+  let formType = formTypes.furtherstudy;
 
   const [ title, setTitle ] = useState('');
   const [ outcomeTitle, setOutcomeTitle ] = useState('');
@@ -27,7 +29,6 @@ function useLessonOutComesHook( props ) {
   const formUuId = uuid;
   const outcomeName = `${lesson?.title}-quizz_${formTypes?.furtherstudy}_${formUuId}`;
   const lessonId = lesson?._id;
-  const formType = formTypes.furtherstudy;
   const dispatch = useDispatch();
   const inputRef = useRef();
 
@@ -58,9 +59,8 @@ function handleRecommendations(outcomeProps){
   handleSettingConceptsModal();
 }
 
-function buildQuestions( outcomeProps ){
-  dispatch(setSelectedOutcome( outcomeProps ));
-  handleModal();
+function buildLessonInsights(outcome) {
+  handleAddingFormBuilder( handleSavingFormBuilder( outcome, undefined, formTypes.lessoninsights ),  outcome, undefined, formTypes.lessoninsights );
 }
 
 function buildFurtherQuestions(outcome, link) {
@@ -69,20 +69,24 @@ function buildFurtherQuestions(outcome, link) {
   buildQuestions( outcome );
   dispatch( setIsMaxQuestionDialogOpen( false ) );
   dispatch( setOutcomeLink( link ) );
-  handleAddingFormBuilder( handleSavingFormBuilder( outcome, linkId ),  outcome, linkId );
+  handleAddingFormBuilder( handleSavingFormBuilder( outcome, linkId, formTypes.furtherstudy ),  outcome, linkId, formTypes.furtherstudy );
+}
+
+function buildQuestions( outcomeProps ){
+  dispatch(setSelectedOutcome( outcomeProps ));
+  handleModal();
 }
 
 function goToFurtherQuestions(outcome, question, e) {
   e?.preventDefault();
   buildQuestions( outcome );
   dispatch( setSelectedOnlineQuestion( question ) );
-  handleAddingFormBuilder( handleSavingFormBuilder( outcome ),  outcome );
+  handleAddingFormBuilder( handleSavingFormBuilder( outcome, undefined, formTypes.furtherstudy ),  outcome, undefined, formTypes.furtherstudy );
 }
 
-function handleAddingFormBuilder( formbuilder, outcome, linkId ){
-
+function handleAddingFormBuilder( formbuilder, outcome, linkId, formType ){
   let newFormBuilder = {
-    operatorBusinessName, formType, formName: outcome?.outcomeName, courseId,lessonId,formId:lessonId,formUuId,createDateTime: Date.now(),
+    operatorBusinessName, formType, formName: outcome?.outcomeName, courseId, lessonId, formId:lessonId,formUuId,createDateTime: Date.now(),
     takingDateTime: Date.now(), createdBy:currentUser?._id, userId:currentUser?._id, status:formBuilderStatus, 
     state:formBuilderState, eventId:'000', outcomeId:outcome?._id, linkId
   };
@@ -96,18 +100,20 @@ function handleAddingFormBuilder( formbuilder, outcome, linkId ){
   }
 
   if ( !formbuilder && currentUser?.role === role.Tutor ) {
-    setSwalInput('Enter a display name', 'Enter display name', outcome?.color)
-    .then( formDisplayName => {  
-      if ( formDisplayName ) {
-        dispatch( addNewFormBuilder({ ...newFormBuilder, formDisplayName,  state: formBuilderState, status: formBuilderStatus  }) );
-      }
-    })
-    .catch(error => { alert( `There was problem saving the display name. ${JSON.stringify( error )}` ) });
+      setSwalInput('Enter a display name', 'Enter display name', outcome?.color)
+      .then( formDisplayName => {  
+        if ( formDisplayName ) {
+          dispatch( addNewFormBuilder({ ...newFormBuilder, formDisplayName,  state: formBuilderState, status: formBuilderStatus  }) );
+        }
+      })
+      .catch(error => { console.log( `There was problem saving the display name. ${JSON.stringify( error )}` ) });
   }
 }
 
-function handleSavingFormBuilder(outcome, linkId) {
-  let formBuilder = formBuilders?.find( builder => builder?.formName === outcome?.outcomeName && builder?.userId === currentUser?._id );
+function handleSavingFormBuilder( outcome, linkId, formType ) {
+  let formBuilder = formBuilders?.find( builder => builder?.formName === outcome?.outcomeName && 
+      builder?.userId === currentUser?._id && 
+        builder?.formType === formType );
 
   if ( formBuilder ) {
     dispatch( saveFormBuilder({ ...formBuilder, linkId, state: formBuilderState, status: formBuilderStatus  }) );
@@ -172,7 +178,7 @@ return {
     addNewOutcome, setEditButton, resetEditingOutcomeTitle, operatorBusinessName, isFormModalOpen, handleSettingConceptsModal,
     handleEditingOutcomeTitleOnSubmit, setOutcomeTitle, handleDeleteOutcome, editButton, handleModal, handleModalClose,
     setTitle, title, handleAddNewOutcomeOnSubmit, inputRef, editingOutcome, toggleQuestionModal, courseId, currentUser,
-    goToFurtherQuestions
+    goToFurtherQuestions, buildLessonInsights
   }
  }; 
 }

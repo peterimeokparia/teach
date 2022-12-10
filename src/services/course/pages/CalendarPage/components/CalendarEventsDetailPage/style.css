@@ -2,7 +2,7 @@
       display: flex;
       flex-direction: column;
       text-align: center;
-      background-image: url(../../../../images/geometry2.png);
+      background-image: url('../../../../../../Images/geometry2.png');
     }
     .CalendarComponentEventList header {
       background-color: #673ab7;
@@ -120,7 +120,6 @@
     }
     .CalendarComponentEventList .list-items {
       padding-top: 10px;
-      /* margin-bottom: 5px; */
       border-style: outset;
       border-radius: 3px;
       font-size: 20px; 
@@ -130,7 +129,6 @@
       color: blueviolet;
       border-radius: 3px;
       font-size: 18px;
-      /* text-transform: uppercase; */
       font-weight: bold;
     }
     .CalendarComponentEventList .event-list-items img {
@@ -214,7 +212,6 @@
     }
     .Login-LogOut-btn {
       padding-left: 1280px; 
-      /* align-self: flex-end; */
       color: #fff;
       font-size: 16px;
       font-family: 'Source Sans Pro', helvetica, sans-serif;
@@ -262,7 +259,6 @@
     text-align: center;
     border-radius: 6px;
     padding: 5px 0;
-  
     /* Position the tooltip */
     position: absolute;
     z-index: 1;
@@ -278,7 +274,5 @@
     animation: backandforth 2s ease 0s;
     animation-iteration-count:infinite;
   }
-  
   @-webkit-keyframes backandforth {0%{left:0;} 50%{left:58%;} 100%{left:0;}}
-  
   @keyframes backandforth {0%{left:0;} 50%{left:100%;} 100%{left:0;}}

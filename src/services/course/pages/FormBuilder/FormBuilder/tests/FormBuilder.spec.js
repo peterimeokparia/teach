@@ -1,8 +1,5 @@
-import {
-getSortedRecords } from 'services/course/selectors';
-
-import {
-rePositionRecords } from 'services/course/pages/FormBuilder/FormQuestions/helper';
+import { getSortedRecords } from 'services/course/selectors';
+import { rePositionRecords } from 'services/course/pages/FormBuilder/FormQuestions/helper';
 
 describe('Form Builder', () =>  {  
   let formQuestions = [

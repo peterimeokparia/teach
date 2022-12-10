@@ -8,12 +8,15 @@ class CalendarEvent {
             calendarEventType, 
             courseId,
             lessonId,
+            meetingId,
             operatorId, 
             pushNotificationSubscribers, 
             user, 
             users,
             color
          } = calendarEventConfig;
+
+         
 
         let emailAddresses = Object.values(users)?.filter(user => testAdminUsers.includes(user?._id))?.map(user => user?.email);
 
@@ -24,6 +27,7 @@ class CalendarEvent {
         this.schedulingData = calendarEventData?.schedulingData;
         this.consultation = calendarEventData?.consultation;
         this.calendarEventType = calendarEventType;
+        this.meetingId = meetingId;
         this.courseId = courseId;
         this.lessonId = lessonId;
         this.operatorId = operatorId;
@@ -48,6 +52,7 @@ class CalendarEvent {
                 calendarEventType: this.calendarEventType,
                 courseId: this.courseId,
                 lessonId: this.lessonId,
+                meetingId: this.meetingId,
                 operatorId: this.operatorId,
                 color: this.color 
             }

@@ -57,6 +57,7 @@ import questionInsightsRoute from '../routes/questionInsightsRoute.js';
 import studentQuestionInsightsRoute from '../routes/studentQuestionInsightsRoute.js';
 import insightsRoute from '../routes/insightsRoute.js'
 import outcomeInsightsRoute from '../routes/outcomeInsightsRoute.js';
+import courseOutcomeInsightsRoute  from '../routes/courseOutcomeInsightsRoute.js'
 
 // import dotenv from 'dotenv';
 // dotenv.config({ path: '../../backend/.env' });
@@ -170,6 +171,8 @@ app.use('/api/v1/equations', equationRoute);
 app.use('/api/v1/questioninsights', questionInsightsRoute);
 
 app.use('/api/v1/outcomeinsights', outcomeInsightsRoute);
+
+app.use('/api/v1/courseoutcomeinsights', courseOutcomeInsightsRoute);
 
 app.use('/api/v1/studentquestioninsights', studentQuestionInsightsRoute);
 

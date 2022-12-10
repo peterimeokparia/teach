@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { connect } from 'react-redux';
 import { setElementContentFromEditorState } from 'services/course/editor/MyEditorTest2/helpers';
-import { FORMFIELD_MARKDOWN  } from 'services/course/actions/formfields';
 import { FORMFIELD_ANSWER_MARKDOWN, SET_FORMFIELDANSWERS_MARKDOWN } from 'services/course/actions/formfieldanswers';
 import { addNewFormFieldAnswer, loadFormFieldAnswersByQuestionId  } from 'services/course/actions/formfieldanswers';
 import { getFormFieldAnswersByQuestionId } from 'services/course/selectors';
@@ -76,30 +75,33 @@ return (
                 { 
                  <div>
                   {  
-                    <SidePanelDrawer
-                      fieldProps={fieldProps} 
-                      previewMode={ previewMode } 
-                      formFieldElement={formFieldElement}
-                      selectedQuestion={selectedQuestion}
-                      inputValue={inputValue}
-                      setInputValue={setInputValue}
-                      handleAnswerPoints={handleAnswerPoints}
-                    />
+                    <div className="explanation-answer-sidepanel"> 
+                      <SidePanelDrawer
+                        fieldProps={fieldProps} 
+                        previewMode={ previewMode } 
+                        formFieldElement={formFieldElement}
+                        selectedQuestion={selectedQuestion}
+                        inputValue={inputValue}
+                        setInputValue={setInputValue}
+                        handleAnswerPoints={handleAnswerPoints}
+                      />
+                    </div>
                   }  
                   <div className="answer-content"> 
                   { ( studentAnswerByQuestionId ) 
-                      ?  <MyEditorTest2  
+                      ? <MyEditorTest2  
                           element={ studentAnswerByQuestionId } 
                           content={ studentAnswerByQuestionId?.markDownContent } 
                           readOnly={ false } // form builder status is manage
                           showMenuButtons={ true } 
                           setElementContentFromEditorState={ editorState => handleFormEditorAnswer( editorState, studentAnswerByQuestionId ) }
+                          placeHolder={`in your own words...`}
                         />   
                       : <button 
-                          style={{width: 1000, height: 100, marginLeft: 170 }} 
+                          style={{width: 800, height: 100, marginLeft: 37,  marginBottom: 35 }} 
                           onClick={() => displayEditor( formFieldElement )}
                         >
-                          {'Answer Question'}
+                          {'Answer in your own words'}
                         </button>
                   }
                   </div> 

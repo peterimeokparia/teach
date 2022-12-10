@@ -128,6 +128,7 @@ export const inputType = {
   MathScience: "mathscience",
   Latex: "latex",
   LatexField: "latexfield",
+  CopyExistingQuestion: "copyexistingquestion",
   MainBodyQuestion: "mainbodyquestion",
   MathScienceQuestion: "mathsciencequestion",
   MainBodyHeader: "mainbodyheader",

@@ -79,14 +79,9 @@ return (
                 type="radio" id={ formFieldElement?._id } 
                 name="radioFruit" value={ formFieldElement?.inputValue } 
                 onChange={ e => handleRadioButtonSelection( e, handleRadionButtonSelectionProps ) } 
-                //checked={ (  studentsAnswers && ( formBuilderState === elementMeta?.state.Taking || (formBuilderStatus === elementMeta?.status?.Reviewed || formBuilderStatus === elementMeta?.status?.Review ) ) ) ? studentsAnswers?.selected  : ( formBuilderState === elementMeta?.state.Manage && checkedRadioButton?.id === formFieldElement?._id ) && checkedRadioButton?.isChecked }
-                // checked={ ( currentUser?.role === role.Student && studentsAnswers ) ? studentsAnswers?.selected : formFieldElement?.selected}
                 />                
               </>
               <> 
-              {/* <a href="#" onClick="window.open('example.html', '', 'toolbar=no,menubar=no')">Click</a> */}
-              {/* onClick={() => window.open(`${element.boardVideoUrl}`)} */}
-              {/* window.open(`${file}`); */}
               <div className={( currentUser.role === role.Student ) ? "answer-content-overlay": ""}/> 
               <div className="answer-content"> 
                 <MyEditorTest2  

@@ -185,6 +185,7 @@ export const formTypes = {
   templatedpageweb: "templatedpageweb",
   report: "report",
   basic: "basic",
+  lessoninsights:'lessoninsights'
 };
 
 export const formTypeCollection = [ 

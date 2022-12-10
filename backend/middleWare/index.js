@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 
 export const privateKey = "secret_nsa_key"; 
 
-export function verifyRoute( req, res, next ){
+export function verifyRoute( req, res, next ){ // deprecated...?
     if( req.headers['authorization'] ) {
         try {
             let authorizationHeader = req.headers['authorization'].split(" ");
@@ -29,7 +29,7 @@ export function generateSignOnCredentialToken( req, res, next ){
 
     if( emailField && passwordField ) {
         try {       
-            req.body['token'] = tokenGenerator({username: emailField, password: passwordField}, privateKey, { expiresIn: '1h' });
+            req.body['token'] = tokenGenerator({ username: emailField, password: passwordField }, privateKey, { expiresIn: '1h' });
             return next(); 
         } catch (error) {
             return res.status(403).json({ error: 'Token generation - failed.' });
@@ -40,7 +40,7 @@ export function generateSignOnCredentialToken( req, res, next ){
 };
 
 export const tokenGenerator = ( user, key ) => {
-    const token = Jwt.sign({  user }, key);
+    const token = Jwt.sign({ user }, key);
     return token;
 };
 
@@ -62,12 +62,12 @@ export async function hashPasswordField( req, res, next ){
 
 export async function verifyToken( token, key ){
   let verificationResult = Jwt.verify(token, key, (err, data) => {
-      if (err) {
-          console.log(err);
-      }
-      else {
-          console.log(data);
-      }
+    if (err) {
+        console.log(err);
+    }
+    else {
+        console.log(data);
+    }
   });   
    return verificationResult
 };
@@ -86,7 +86,7 @@ export function logRouteInfo( req, res, next ){
 //        .exec(function(err, docs) { ... });
 export function paginatedSearchResults( model, Id ){
     return async ( req, res, next ) => {
-    
+
         const searchString = req.query[Id];
         const page = parseInt( req.query.page );
         const limit = parseInt( req.query.limit );
@@ -129,7 +129,6 @@ export function paginatedResults( model, Id ){
 
         const startIndex = (( page - 1 ) * limit );
         const endIndex = ( page * limit );
-
         const result = {};
 
         if ( endIndex < await model.find( id )?.countDocuments().exec() ) {
@@ -171,15 +170,11 @@ export function getRoute(model){
 
 export function getByIdRoute(model, param){
     return async ( req, res, next ) => {
-
-        let field = {};
-
-        field[param] = req.query[ param ];
-
-        //let id = { param: req.query[ param ] }
-
         try {
-            let result = await model.find(field);      
+            let field = {};
+            field[param] = req.query[ param ];
+
+            let result = await model.find(field);   
             res.newResult = result;
             next();
         } catch (error) {
@@ -192,13 +187,8 @@ export function getByIdRoute(model, param){
 
 export function getByObjectIdRoute(model, param){
     return async ( req, res, next ) => {
-
-        let id = { _id: req.query[ param ] }
-
-        console.log('@@@@@@@IDIDIDIDIDDI')
-        console.log(JSON.stringify(id))
-
         try {
+            let id = { _id: req.query[ param ] }
             let result = await model.findById(id);
             res.newResult = result;
             next();
@@ -212,17 +202,13 @@ export function getByObjectIdRoute(model, param){
 
 export function postRoute(model){
     return async ( req, res, next ) => {
-
-        let formData = getPostData(req);
-        let form = new model( formData );
-
         try {
+            let formData = getPostData(req);
+            let form = new model( formData );
             let savedResult = await form.save();
             res.newResult = savedResult;
             next();
         } catch (error) {
-            console.log('@@@@@ERROR@@@@@')
-            console.log(error);
             const collectionName = model.collection.collectionName;
             handleBackEndLogs(collectionName, error );
             res.status(500).json({ message: error.message });
@@ -232,16 +218,9 @@ export function postRoute(model){
 
 export function putRoute(model, param){
     return async ( req, res, next ) => {
-
-        let Id = req.params[ param ];
-
-            console.log('putRoute putRoute')
-            console.log(JSON.stringify(req?.body))
-       
         try {
+            let Id = req.params[ param ];
             let savedResult = await saveUpdatedData(req, model, Id);
-            console.log('await saveUpdatedData')
-            console.log(JSON.stringify(savedResult))
             res.savedResult = savedResult;
             next();
         } catch (error) {
@@ -254,14 +233,10 @@ export function putRoute(model, param){
 
 export function deleteRoute(model, param){
     return async ( req, res, next ) => {
-
-        let id = { _id: req.params[ param ] }
-
         try {
+            let id = { _id: req.params[ param ] }
             let result = await model.remove(id);
             res.newResult = result;
-            console.log(' delete route ')
-            console.log(JSON.stringify(result))
             next();
         } catch (error) {
             console.log( error?.message )

@@ -35,7 +35,6 @@ function HeaderPanelTake({
    } = props;
 
 return (
-   
     <TabPanel value={headerValue} index={1} dir={theme.direction}  className='secondary-toolbars-take'>
     <AppBar position="static" color="default">
       <Tabs
@@ -58,7 +57,7 @@ return (
       index={headerValueSub}
       onChangeIndex={handleChangeIndexSub}
     >
-       <div className="sticky-header-tab-panel"> 
+      <div className="sticky-header-tab-panel"> 
       <TabPanel value={headerValueSub} index={0} dir={theme.direction}>
       <div className="sticky-header-table-take">
       <StickyHeaderTable columns={columnsQuizz} rows={ publishedForms } onRowSelectedHandler={ takeExistingFormBuilderForm }/>
@@ -71,6 +70,7 @@ return (
       </div>
       </TabPanel>
       </div>
+
       <div className="sticky-header-tab-panel"> 
       <TabPanel value={headerValueSub} index={1} dir={theme.direction}>
       <div className="sticky-header-table-progress">
@@ -101,7 +101,6 @@ return (
       </TabPanel>   
       </div> 
       
-
       <div className="sticky-header-tab-panel"> 
       <TabPanel value={headerValueSub} index={3} dir={theme.direction}>
       <div className="sticky-header-table-take-submitted"> 

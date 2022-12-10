@@ -18,7 +18,7 @@ export const SET_OUTCOME_LINK = "SET OUTCOME LINK";
 export const SET_SELECTED_OUTCOME = "SET SELECTED OUTCOME";
 export const TOGGLE_CONCEPTS = "TOGGLE CONCEPTS";
 export const TOGGLE_FURTHER_STUDY_MODAL = "TOGGLE FURTHER STUDY MODAL";
-
+export const SET_CURRENT_OUTCOME = "SET CURRENT OUTCOME";
 export const addNewOutcome = ( outcome ) => {
     return dispatch => {
         dispatch({ type: ADD_NEW_OUTCOME_BEGIN });
@@ -113,6 +113,10 @@ export const deleteOutcome = outcome => {
         });
     };
 };
+
+export const setCurrentOutcome = outcome => ({ 
+    type: SET_CURRENT_OUTCOME, payload: outcome  
+});
 
 export const setOutcomeLink = outcomeLink => ({ 
      type: SET_OUTCOME_LINK, payload: outcomeLink  

@@ -95,7 +95,7 @@ export function goToCalendar( props, user, eventType ) {
           navigateToCalendar( props, eventType, calendar, user );
         }
       })
-      .catch( error => { console.log( error ); alert( JSON.stringify( error ) ); } );
+      .catch( error => { console.log( error ); } );
       return;
   } 
 

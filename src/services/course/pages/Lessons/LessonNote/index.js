@@ -65,14 +65,36 @@ return (<div>
                         </div>
                         </p>
 
+                       {/* map items here */}
                         <p className={'linked-articles'}>   
                         <div className='row justify-content-center'>
                         <div className='row'>
                             <div className='col'>
-                                <MeasurableOutcomeResult header={'Pass'} rate={'20'} passFailRate={'15'}/>
+                                <MeasurableOutcomeResult header={'#Questions'} rate={'7sjfkljdskfjlksdjdfj'} passFailRate={'15lkjsdkfljldsfdsjf'} title={''}/>
                             </div>
                             <div className='col'>
-                                <MeasurableOutcomeResult header={'Coaching Plan'} rate={'2'} passFailRate={'2'}/>
+                                <MeasurableOutcomeResult header={'#Pass'} rate={'7jfsjdklfjdsfjds'} passFailRate={'15jfsdjklfjsdklfjldksf'} title={''}/>
+                            </div>
+                            <div className='col'>
+                                <MeasurableOutcomeResult header={'#Fail'} rate={'7jsdfkldsjflsdjfklsdjfl'} passFailRate={'15sflksdflsdjfsdjfkljf'} title={''}/>
+                            </div>
+                            <div className='col'>
+                                <MeasurableOutcomeResult header={'%Pass'} rate={'20klfjkljfsdlkfjdkslfj'} passFailRate={'15jsjfkldsjflksdjfsdf'} title={''}/>
+                            </div>
+                            <div className='col'>
+                                <MeasurableOutcomeResult header={'%Fail'} rate={'7sjfjdsfdsfjsdjfkldsjfkl'} passFailRate={'15lksjfkljdslfjdskf'} title={''}/>
+                            </div>
+                            <div className='col'>
+                                <MeasurableOutcomeResult header={'#Attempted Fail'} rate={'7jslkdfjklsdfjldsfjsdljf'} passFailRate={'15jsklfjlsdkjflkfj'} title={''}/>
+                            </div>
+                            <div className='col'>
+                                <MeasurableOutcomeResult header={'#Unattempted Fail'} rate={'7jlsfkljdsfjsdklfjs'} passFailRate={'15sjkfjlksjfkld'} title={''}/>
+                            </div>
+                            <div className='col'>
+                                <MeasurableOutcomeResult header={'%Unattempted Fail In Total Failure Rate'} rate={'7sjdflkjdskfdslkf'} passFailRate={'15jklsdfjklsdjfklsdf'} title={''}/>
+                            </div>
+                            <div className='col'>
+                                <MeasurableOutcomeResult header={'Coaching'} rate={'2lsjflkjsdkfjkldsfj'} passFailRate={'2ljsdlkfjdsfldsfjl'} title={''}/>
                             </div>
                         </div> 
                         </div>

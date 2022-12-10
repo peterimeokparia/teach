@@ -1,8 +1,14 @@
-import { 
-ToastContainer, 
-toast } from 'react-toastify';
-
+import { ToastContainer, toast } from 'react-toastify';
 import Swal from 'sweetalert2';
+
+export const isEmptyObject = ( objectToCheck ) => {
+    if ( typeof( objectToCheck ) !== 'object' ) return true;
+
+    for ( const property in objectToCheck ) {
+        if ( objectToCheck?.hasOwnProperty( property ) ) return false;
+    }
+    return true;
+};
 
 export const Validations = {
     checkFormInputString: function ( fieldName, inputValue ) {

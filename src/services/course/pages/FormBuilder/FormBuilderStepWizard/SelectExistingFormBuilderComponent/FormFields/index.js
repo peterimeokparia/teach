@@ -91,7 +91,7 @@ const FormFields = ({
   studentsTotalPointsReceivedFromPersistence
 }) => {
 
-  let { userId, formUuId, formId, question, formType,formName, formBuilderState, formBuilderStatus, eventId } = form; 
+  let { userId, formUuId, formId, question, formType, formName, formBuilderState, formBuilderStatus, eventId } = form; 
 
   let fieldProps = { selectedFormField, draggableFormFields, setDraggableFormFields, loadOnlineQuestionsByQuestionId, loadFormFields, 
     loadFormFieldAnswersByQuestionId, loadFormFieldsByQuestionId, loadFormFieldsByFormFieldId, addNewFormField, saveFormField, deleteFormField,

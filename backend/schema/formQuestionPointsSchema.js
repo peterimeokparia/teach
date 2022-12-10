@@ -19,6 +19,18 @@ const formQuestionPointsSchema = new Schema ({
     cummulativePoints: { 
         type: Number, 
         required: false,
+    },
+    formType:{
+        type: String,
+        required: false,
+    },
+    courseId:{
+        type: String,
+        required: false,
+    },
+    lessonId:{
+        type: String,
+        required: false,
     }
 });
 

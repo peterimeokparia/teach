@@ -43,6 +43,8 @@ export const mapState = ( state, ownProps )   => {
       videoModalModeOn:state?.sessions?.videoModalModeOn, 
       inSession:state?.sessions?.inSession, 
       iconOnColor:state?.sessions?.iconOnColor, 
-      meetingPanel:state?.sessions?.meetingPanel
+      meetingPanel:state?.sessions?.meetingPanel,
+      currentMeeting: state?.meetings?.currentMeeting,
+      meetings: Object.values( state?.meetings?.meetings )
     };
   };

@@ -23,7 +23,6 @@ function useFormFieldHook( fieldProps ) {
 
   const [ contentChanged, setContentChanged ] = useState( undefined );
   const [ moveInputField, setMoveInputField ] = useState( false );
-  const dispatch = useDispatch();
   const boundryRef = useRef( null );
   const saveContentInterVal = 7000;
 
@@ -95,7 +94,7 @@ function handleMarkDownEditorAnswersPoints( element, prevPoints, editorProps ){
   let props = {
     element, existingAnswer, answer: null, prevPoints, formState: formBuilderState, formStatus: formBuilderStatus, addNewFormFieldAnswer, 
     saveFormFieldAnswer, saveFormField, selected: null, question, currentUser, formUuId, eventId, getFormFieldAnswers, 
-    ...editorProps
+    answerKeyPoints: question?.pointsAssigned?.toString(), ...editorProps
   };
 
   const form = new Form( props );

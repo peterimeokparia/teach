@@ -38,6 +38,8 @@ const LessonPlan = ({
   eventId,
   lesson,
   currentUser,
+  currentMeeting,
+  meetings,
   selectedCourseFromLessonPlanCourseDropDown,
   selectedLessonFromLessonPlanDropDown,
   loadMeetingsByMeetingId,
@@ -53,7 +55,7 @@ const LessonPlan = ({
   let useLessonSelectionProps = {
     operatorBusinessName, currentUser, selectedCourseFromLessonPlanCourseDropDown, selectedLessonFromLessonPlanDropDown, 
     courses, lessons, courseId, lessonId, classRoomId, lessonNotes, note, meetingId, loadMeetingsByMeetingId, hideMeetingStage, 
-    fullMeetingStage, videoModalModeOn, inSession, iconOnColor, meetingPanel
+    fullMeetingStage, videoModalModeOn, inSession, iconOnColor, meetingPanel, currentMeeting, meetings
   };
 
   let {
@@ -170,12 +172,12 @@ return (
                   <div className="children-subsection">
                     <div className="notes-title">
                     </div>
-                    <br></br> <br></br>
-                     <EditorComponent  
+                   {/*  refactor Refactor */}
+                     {/* <EditorComponent  
                         upload_url={editor_upload_url} 
                         handleChange={(editor) => handleChange({ ...selectedNote, markDownContent: editor }, SET_NOTES_MARKDOWN, `/notes/`, saveEditorMarkDownObjectToMw )}
                         content={ selectedNote?.markDownContent }
-                     /> 
+                     />  */}
                 </div>
                 
               </div>

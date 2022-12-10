@@ -23,7 +23,7 @@ export default function TabPanelDisplay({ props }) {
   let { 
     pendingFormsInBuildState, publishedFormsInBuildState, inProgressFormsInTakingState,
     userSubmittedFormsForCreatorReviewInTakingState, allUserSubmittedFormsForCreatorReviewInTakingState, formsInBuildState
-  } = useSetFormBuilderHook( formType, currentUser, loadFormBuilders, loadTestTimers, formBuilders );
+  } = useSetFormBuilderHook( formType, currentUser, loadFormBuilders, loadTestTimers, formBuilders, formName );
 
   let {
     headerPanelProps
@@ -46,7 +46,7 @@ return (
       className="formbuilder"
     >
       <AppBar position="static" color="default" >
-          {toggleHeaderTabs( headerValue, `Create ${ formType }`, `Take ${ formType }`, `Review User Submitted ${ formType }`, "Tables")
+        { toggleHeaderTabs( headerValue, `Create ${ formType }`, `Take ${ formType }`, `Review User Submitted ${ formType }`, "Tables")
         } 
       </AppBar>
       <SwipeableViews
@@ -63,7 +63,6 @@ return (
             />
           </Roles>
         }
-
         {
           <HeaderPanelTake
             props={ headerPanelProps }  
@@ -72,7 +71,6 @@ return (
             formType={ formType }
           />
         }
-
         { <Roles role={ currentUser?.role === role.Tutor}>
           <HeaderPanelReview
             props={ headerPanelProps }  
@@ -82,7 +80,6 @@ return (
           />
           </Roles>
         } 
-
         {<Roles role={ currentUser?.role === role.Tutor}>
           <HeaderPanelTable
             props={ headerPanelProps }  
@@ -92,7 +89,6 @@ return (
           />
           </Roles>
         }
-
       </SwipeableViews>
       {fabs.map((fab, index) => (
         <Zoom

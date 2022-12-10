@@ -4,30 +4,32 @@ import { elementMeta } from 'services/course/pages/QuestionsPage/helpers';
 import { addMissedAnswers } from 'services/course/actions/missedanswers';
 import { setIsMaxQuestionDialogOpen } from 'services/course/actions/formbuilders';
 import { setQuestionProperties } from 'services/course/actions/onlinequestions';
+import { isEmptyObject } from 'services/course/helpers/Validations';
 
 export function handleRedirection( store, actionType, formData ) {
     try {
         let formBuilderQuestionProperties = getFormBuilderProperties( store, actionType, formData );
     
         let { formType } = formBuilderQuestionProperties;
-    
-        store?.dispatch( setQuestionProperties( formBuilderQuestionProperties ) );
-    
+      
         switch (formType) {
-          case formTypes?.survey:
+          case formTypes.survey:
             handleSurveys( formBuilderQuestionProperties, store, actionType, formData );
             break;
-          case formTypes?.report:  
+          case formTypes.report:  
             handleReports( formBuilderQuestionProperties, store, actionType, formData );
             break;
-          case formTypes?.quizzwithpoints:
-          case formTypes?.homework:  
+          case formTypes.quizzwithpoints:
+          case formTypes.homework:  
             handleQuizz( formBuilderQuestionProperties, store, actionType, formData );
             break;
-          case formTypes?.furtherstudy:
+          case formTypes.furtherstudy:
             handleFurtherStudy( formBuilderQuestionProperties, store, actionType, formData );
             break;  
-          case formTypes?.examwithpoints:
+          case formTypes.lessoninsights:
+            handleLessonInsights( formBuilderQuestionProperties, store, actionType, formData );
+            break; 
+          case formTypes.examwithpoints:
             handleExams( formBuilderQuestionProperties, store, actionType, formData );
             break;
           default:
@@ -92,6 +94,21 @@ function handleFurtherStudy( navProps, store, actionType, formData ){
     navigate(`/${operatorBusinessName}/formBuilder/${formType}/${formName}/course/${courseId}/lesson/${lessonId}/${formUuId}/user/${userId}/state/${formBuilderState}/status/${formBuilderStatus}/event/${eventId}/outcome/${outcomeId}/linkId/${linkId}`);
 }
 
+function handleLessonInsights( navProps, store, actionType, formData ){
+  let {
+      operatorBusinessName, formType, formName, formUuId, outcomeId,
+      userId, formBuilderStatus, formBuilderState, eventId, courseId, lessonId
+  } = navProps;
+
+  let props = { formType,
+    formName, formUuId, courseId, lessonId,outcomeId, userId
+};
+
+  handleMissedAnswers( store, props );
+  store.dispatch( setIsMaxQuestionDialogOpen(false) );
+  navigate(`/${operatorBusinessName}/formBuilder/${formType}/${formName}/course/${courseId}/lesson/${lessonId}/${formUuId}/user/${userId}/state/${formBuilderState}/status/${formBuilderStatus}/event/${eventId}/outcome/${outcomeId}`);
+}
+
 function handleExams( navProps, store, actionType, formData ){
     let {
         operatorBusinessName, formType, formName, formUuId, outcomeId,
@@ -140,4 +157,13 @@ export function getFormBuilderProperties( store, actionType, formData ){
     }
   
     return { courseId: lesson?.courseId, lessonId: lesson?._id };
+  }
+
+
+  export const handleSettingQuestionProperties = (store, actionType, formData ) => {
+    let formBuilderQuestionProperties = getFormBuilderProperties( store, actionType, formData );
+
+    if ( !isEmptyObject( formBuilderQuestionProperties ) ) {
+      store.dispatch( setQuestionProperties( formBuilderQuestionProperties ) );
+    }
   }

@@ -14,7 +14,7 @@ class Form {
         this.answer = props?.answer; this.answerKey = props.answerKey; this.markDownContent = props?.markDownContent; this.handleEditor = props?.handleEditor; 
         this.editorState = props?.editorState;  this.formFieldElement = props?.formFieldElement; this.selectedFormFieldElement = props?.selectedFormFieldElement;
         this.saveContentInterVal = props?.saveContentInterVal; this.setElementContentFromEditorState = props?.setElementContentFromEditorState; this.position = props?.position;
-        this.saveDraggableFormFieldAnswer = props?.saveDraggableFormFieldAnswer;
+        this.saveDraggableFormFieldAnswer = props?.saveDraggableFormFieldAnswer; this.answerKeyPoints = props?.answerKeyPoints;
     }
 
     handleDraggableFormFieldInManageState() { 
@@ -53,7 +53,7 @@ class Form {
             if ( this.currentUser?.role !== role.Tutor ) return;
             if ( this.formStatus !== elementMeta.status.Reviewing ) return;
             if ( !this.existingAnswer ) return;
-                this.saveFormFieldAnswer( { ...this.existingAnswer, points: this.prevPoints, answer: this.prevPoints?.toString() } );  
+                this.saveFormFieldAnswer( { ...this.existingAnswer, points: this.prevPoints, answer: this.prevPoints?.toString(), answerKey: this.answerKeyPoints?.toString() } );  
             } catch (error) {
                 console.log(`value: ${this.value} formState: ${this.formState}`);
         }
@@ -150,7 +150,7 @@ class Form {
     }
 
     handleFormSelectExistingAnswerInTakingState() {
-        if ( !this.existingAnswer ) return false;
+        if ( !this.existingAnswer ) return false; 
             this.saveFormFieldAnswer( { ...this.existingAnswer, formUuId: this.formUuId, answerKey: this.answerKey, points: this.prevPoints, answer: this.answer, inputValue: this.value, selected: this.selected  } );
         
         return true;

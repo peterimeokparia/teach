@@ -23,7 +23,7 @@ export async function addContent( url, data = {}  ){
 }
 
 export async function updateContent( url, data = {}  ){
-   return axios.put(url, data)
+  return axios.put(url, data)
     .then(resp => { 
        console.log(resp);
        return resp;
@@ -46,7 +46,9 @@ export function getPostData( req ) {
 export async function resetUserPassword( req,  resp,  model, id ) {
   const salt = await bcrypt.genSalt();
   let existingUser = await model.findById(mongoose.Types.ObjectId( id ));
+
    if ( existingUser ) {   
+
       try {
           existingUser[ 'password' ] = await bcrypt.hash( req.body.newUserPassword, salt );
         } catch (error) {
@@ -57,15 +59,17 @@ export async function resetUserPassword( req,  resp,  model, id ) {
 }
 
 export async function saveUpdateUserOnLogin( req,  resp,  model, id ) {
-  console.log('Debug: saveUpdateUserOnLogin')
-  console.log(id)
   let existingUser = await model.findById( mongoose.Types.ObjectId(id) );
   let harshedPassword = existingUser[ 'password' ];
+
    if ( existingUser ) {
       const isMatch = await bcrypt.compare(req.body?.unHarshedPassword, harshedPassword);
+
     if ( !isMatch ) {
       return resp.status(400).json({ msg: err?.message });
+
     } else {
+
       try {
             let bodyData = Object.keys(req.body);
             bodyData?.forEach(element => { 
@@ -84,25 +88,18 @@ export async function saveUpdateUserOnLogin( req,  resp,  model, id ) {
 
 export async function verifyUser( existingUser, unHarshedPassword ) {
    let isMatch = false;
+
     if ( existingUser ) {
-        isMatch = await bcrypt.compare(unHarshedPassword, existingUser?.password);
+      isMatch = await bcrypt.compare(unHarshedPassword, existingUser?.password);
     }
     return isMatch;   
 }
 
-export async function saveUpdatedData( req, model, id ){
-  console.log('saveUpdatedData')
-  console.log(JSON.stringify(req.body));  
-  let tempResponse = null;
+export async function saveUpdatedData( req, model, id ){ 
+        let tempResponse = null;
+
   try {
-        const documentObjectToUpdate = await model.findById(mongoose.Types.ObjectId(id));
-
-        if ( documentObjectToUpdate ) {
-          console.log('found document documentObjectToUpdate')
-          console.log(JSON.stringify(documentObjectToUpdate));  
-        }
-
-        console.log(`documentObjectToUpdate${ documentObjectToUpdate }`);  
+        const documentObjectToUpdate = await model?.findById(mongoose.Types.ObjectId(id));
 
         if ( documentObjectToUpdate === null || documentObjectToUpdate === undefined ) {
           return Error(`Problem with update operation: documentObjectToUpdate is null || undefined`);
@@ -111,7 +108,6 @@ export async function saveUpdatedData( req, model, id ){
         let bodyData = Object.keys(req.body);
 
         bodyData?.forEach(element => {
-
           let arrg = ['_id', '__v'];
 
            if ( !arrg.includes(element)  ) {
@@ -122,9 +118,8 @@ export async function saveUpdatedData( req, model, id ){
           }             
       });
 
-      console.log(`after documentObjectToUpdate:${JSON.stringify(documentObjectToUpdate)}`);  
-      tempResponse = await documentObjectToUpdate.save();
-     
+      tempResponse = await documentObjectToUpdate?.save();
+  
     } catch ( error ) {
       return Error(`Problem with update operation: ${error?.message} ${error}`);
   }
@@ -207,6 +202,7 @@ export const getVideoFileMeta = ( request ) => {
      return requestData; 
  }
  
+ // refactor this - lesson plan
  export function sendResponseToStorage( response, meta, config ){ 
   let videoUrl, boardVideoUrl, markDownEditors, currentEditorId, currentFieldId;
 
@@ -236,7 +232,6 @@ export const getVideoFileMeta = ( request ) => {
      break;
 
      case "QuestionVideoMarkDownEditors": 
-     console.log('QuestionVideoMarkDownEditors')
      videoUrl = config.videoUrl     
      markDownEditors = response.data[0];
      currentEditorId = meta?.questionInputMeta?.inputFieldId;                
@@ -297,8 +292,11 @@ export async function updateFileData( req, model, id ){
   try {
         const documentObjectToUpdate = await model?.findById(mongoose.Types.ObjectId(id));
         let bodyData = Object.keys(req.body);
+
         bodyData?.forEach(element => { 
+
         let arrg = ['_id', '__v'];
+
         if ( !arrg.includes(element)  ) {
             documentObjectToUpdate[element] = req.body[element] 
         }  
@@ -313,6 +311,7 @@ export async function updateFileData( req, model, id ){
 export async function updatedData( req, model, id ){
     let bodyData = Object.keys(req.body);
     let tempObject = {};
+
     bodyData?.forEach(element => {
     tempObject[element] = req.body[element] 
   });
@@ -346,11 +345,9 @@ export async function sendSubscriptions( user, request, payload, response ){
      await user?.subscriptions?.forEach(  subscription => { 
       let result = webPushSendNotification( subscription, request, payload, response );
          try {
-
           if ( result ) {
             responseDataCollection.push( result );
           }
-
          } catch (error) {
           responseDataCollection.push( error );
          }
@@ -358,11 +355,13 @@ export async function sendSubscriptions( user, request, payload, response ){
      return responseDataCollection;
 }
 
+// refactor when fixing push
 export async function webPushSendNotification( subscription, request, payload, response ){
  let resultAsObject = {};
 
  try {
      let sentNotification = await webpush.sendNotification(subscription, payload);
+
      if ( sentNotification ) {
          request.body.messages = [ ...request?.body?.messages, request?.body?.message ];
          let saveUpdate = await saveUpdatedData(request, notificationModel, request?.params?.Id);
@@ -373,7 +372,6 @@ export async function webPushSendNotification( subscription, request, payload, r
  } catch ( error ) {
       getContent( `${url.BackeEndServerLessonPrefix}/notifications/subscribedUser/byId?userId=${request.params?.Id}` )
        .then( resp => { 
-
           let subscriberInfo = resp?.data;
           let subscriptions =  subscriberInfo?.subscriptions.filter(sub => sub.endpoint !== error?.endpoint )
 

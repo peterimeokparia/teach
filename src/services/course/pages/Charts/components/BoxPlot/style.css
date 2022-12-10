@@ -1,3 +1,5 @@
+/* https://css-tricks.com/almanac/properties/s/stroke-dasharray/ */
+
 .bar {
     fill: steelblue;
 }
@@ -12,4 +14,8 @@
  }
  .median{
     stroke-dasharray: 5,5; 
+    height: auto;
+ }
+ .legend{
+     margin-left: 200px;
  }

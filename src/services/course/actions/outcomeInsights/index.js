@@ -17,6 +17,10 @@ export const SAVE_OUTCOME_INSIGHT_SUCCESS_NO_REDIRECT = "SAVE OUTCOME INSIGHT SU
 export const TOGGLE_OUTCOME_INSIGHT_MODAL = "TOGGLE OUTCOME INSIGHT MODAL";
 export const TOGGLE_MAX_OUTCOME_DIALOG = "TOGGLE MAX OUTCOME DIALOG";
 export const TOGGLE_MAX_FIELD_DIALOG = "TOGGLE MAX FIELD DIALOG";
+export const BUILD_QUESTION_INSIGHTS = "BUILD QUESTION INSIGHTS";
+export const TOGGLE_LESSON_OUTCOME_INSIGHT_MODAL = "TOGGLE LESSON OUTCOME INSIGHT MODAL";
+export const TOGGLE_COURSE_OUTCOME_INSIGHT_MODAL = "TOGGLE COURSE OUTCOME INSIGHT MODAL";
+export const TOGGLE_COURSE_OUTCOME_FORM_OPTIONS = "TOGGLE COURSE OUTCOME FORM OPTIONS";
    
 export const addNewOutcomeInsight = ( insights ) => {
     return dispatch => {
@@ -114,6 +118,23 @@ export const deleteOutcomeInsight = insights => {
         });
     };
 };
+
+export const handleUnAnsweredQuestions = form => ({
+    type: BUILD_QUESTION_INSIGHTS,
+    payload: form
+});
+
+export const toggleLessonOutcome = () => ({
+    type: TOGGLE_LESSON_OUTCOME_INSIGHT_MODAL
+});
+
+export const toggleCourseOutcome = () => ({
+    type: TOGGLE_COURSE_OUTCOME_INSIGHT_MODAL
+});
+
+export const toggleCourseOutcomesFormOptionsDisplay = () => ({
+    type: TOGGLE_COURSE_OUTCOME_FORM_OPTIONS
+}); 
 
 export const toggleNewFormBuilderModal = () => ({
     type: TOGGLE_OUTCOME_INSIGHT_MODAL

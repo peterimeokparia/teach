@@ -1,95 +1,57 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { addMissedAnswers } from "services/course/actions/missedanswers";
-import { navigate } from '@reach/router';
-import MyEditorTest2 from 'services/course/editor/MyEditorTest2';
+import { setSelectedOnlineQuestion } from 'services/course/actions/onlinequestions';
+import MyEditorTest3 from 'services/course/editor/MyEditorTest3';
+import './style.css';
    
 const MissedQuestionsComponent = ( { 
   display,
-  setMissedQuestions,
-  questionProps,
-  addMissedAnswers,
-  onlineQuestions, 
-  formFields,
-  formFieldAnswers, 
   missedQuestions,
-  answerFormType,
-  answerFormName,
-  answerFormUuId,
-  answerFormUserId,
-  operatorBusinessName
+  mainHeaderOutcomeTitle,
+  setSelectedOnlineQuestion,
 } ) => {
-  useEffect( () => {
-    let missedQuestionProps = { ...questionProps, onlineQuestions, formFields, formFieldAnswers, operatorBusinessName };
 
-    addMissedAnswers( missedQuestionProps );
-  }, [ addMissedAnswers, questionProps, onlineQuestions, formFields, formFieldAnswers, operatorBusinessName ]);
-
-  let noMissedQuestions = missedQuestions?.length === 0;
-
-  useEffect(() => {
-    if ( missedQuestions?.length > 0 ) {
-      setMissedQuestions( missedQuestions );
-    }
-  }, [ noMissedQuestions, setMissedQuestions, missedQuestions ]);
-        
+  if ( !missedQuestions?.length || missedQuestions?.length === 0 ) return null;
+      
   const handleSelectedQuestion = ( question ) => {
     if ( ! question ) return;
-    // I broke this...?
-    navigate(`/${operatorBusinessName}/formBuilder/${answerFormType}/${answerFormName}/${question?.courseId}/${answerFormUuId}/${answerFormUserId}/Taking/000/#${question?._id}`);
-    //http://localhost:3000/undefined/formBuilder/quizzwithpoints/Bonds-quizz_94c32d6d-0bff-40c3-be94-03d18bd445f7/613ac665f6ca0ce27d863330/d29dd2f7-f285-4b27-8fc4-0ac569f187a2/62908a073b7d8b2455d1d7cb/Taking/000/#628c566b4ea5f18296124ef3
+    setSelectedOnlineQuestion( question );
   };
 
 return(
-    <>
+  <div className="missed-questions-list">
     {
       // missedQuestions?.assignedOutcomes.map => Met / Unmet? = Lesson Plan = ToDo => Videos, H/w, Schedule session, Verify that unmet outcome has been satisfied e.g student now grasps concepts etc - in progress
     }
-    {
-    <div className="missed-questions">
     { missedQuestions?.length > 0 && display && <div> { "Missed Questions." } </div> &&
       [ ...new Set( missedQuestions ) ]?.map(question => (
         <div>
-          <div 
-            className="explanation-content" 
-            onClick={() => handleSelectedQuestion( question )} 
-          > 
+          <div onClick={() => handleSelectedQuestion( question )}> 
           {
-            `OutcomeId: ${question?.outcomeId}`
+            `Missed Questions.`
           }
-            {
-              <MyEditorTest2  
-                element={ question } 
-                content={ question?.markDownContent } 
-                readOnly={ true } // form builder status is manage
-                showMenuButtons={ false  } 
-             />
-            }
+          { <div> 
+            {/* {'delete'} */}
+              {mainHeaderOutcomeTitle}
+              {/* {`OutcomeId: ${question?.outcomeId} `}  */}
+            </div> 
+          }
+          {
+            <div className="missed-questions-item">
+            <MyEditorTest3  
+              element={ question } 
+              content={ question?.markDownContent } 
+              readOnly={ true } // form builder status is manage
+              showMenuButtons={ false  } 
+            />
+            </div>
+          }
         </div>
         </div>
       ))
     }
     </div>
-    }
-    </>
     );
 };
 
-const mapDispatch = { addMissedAnswers };
-  
-const mapState = ( state, ownProps ) => { 
-  return {
-    onlineQuestions: Object.values(state?.onlineQuestions?.onlineQuestions),
-    formFields: Object.values( state?.formFields?.formFields ).filter( field => field?.formType === ownProps?.formType && 
-      field?.formName === ownProps?.formName ),
-    formFieldAnswers: Object.values( state?.formFieldAnswers?.formFieldAnswers ).filter( field => field?.formType === ownProps?.formType && 
-      field?.formName === ownProps?.formName ),
-    missedQuestions: state?.missedQuestions?.missedQuestions,
-    answerFormType:state?.missedQuestions?.answerFormType,
-    answerFormName: state?.missedQuestions?.answerFormName,
-    answerFormUuId: state?.missedQuestions?.answerFormUuId,
-    answerFormUserId: state?.missedQuestions?.answerFormUserId
-  };
-};
-
-export default connect( mapState, mapDispatch )(MissedQuestionsComponent);
+export default connect(null, { setSelectedOnlineQuestion })(MissedQuestionsComponent);

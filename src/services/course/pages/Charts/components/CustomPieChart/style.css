@@ -1,0 +1,18 @@
+.chart {
+    display: block;
+    box-sizing: border-box;
+    text-transform: capitalize;
+}
+.chart label {
+    margin-bottom: 1.6em;
+    display: block;
+    color: #ffff;
+    text-transform: capitalize;
+}
+.chart form {
+    margin-bottom: 1.6em;
+    display: block;
+    color: black;
+    text-transform: capitalize;
+    z-index: 3000;
+}

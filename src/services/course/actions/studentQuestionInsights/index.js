@@ -22,9 +22,10 @@ export const DRAGGABLE_ITEM = "DRAGGABLE ITEM";
 export const addNewStudentQuestionInsight = ( insights ) => {
     return dispatch => {
         dispatch({ type: ADD_STUDENT_QUESTION_INSIGHT_BEGIN });
+        dispatch({ type: ADD_STUDENT_QUESTION_INSIGHT_SUCCESS, payload: insights }); // check draggables
         return add( insights, '/studentquestioninsights')
         .then(insights => {
-            dispatch({ type: ADD_STUDENT_QUESTION_INSIGHT_SUCCESS, payload: insights });
+            dispatch({ type: SAVE_STUDENT_QUESTION_INSIGHT_SUCCESS, payload: insights });
         }).catch( error => {
             dispatch({ type: ADD_STUDENT_QUESTION_INSIGHT_ERROR , error });
         });
@@ -54,6 +55,18 @@ export const loadStudentQuestionInsights = () => {
         });       
     };
   };
+
+  export const loadStudentQuestionInsightByFormType = ( formType ) => {
+    return dispatch => {
+         dispatch({ type: LOAD_STUDENT_QUESTION_INSIGHT_BEGIN });
+         return getById( formType, `/studentquestioninsights/formType?formType=`)
+          .then( insights  => { 
+                dispatch({ type: LOAD_STUDENT_QUESTION_INSIGHT_SUCCESS, payload: insights });
+           }).catch( error => {
+                dispatch({ type: LOAD_STUDENT_QUESTION_INSIGHT_ERROR , error });
+           });       
+    };
+};
 
 export const loadStudentQuestionInsightByQuestionInsightId = ( questionInsightsId ) => {
     return dispatch => {

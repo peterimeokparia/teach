@@ -55,11 +55,11 @@ export function handleCurrentLesson( meetingProps, store ) {
             sessionStorage.removeItem( 'meetingId' );
         }
 
-        store?.dispatch( addMeetingEventToUsersCalendar( meetingProps ) );
+        //store?.dispatch( addMeetingEventToUsersCalendar( meetingProps ) );
         return;
     };
   
-    if ( waitingForTheCurrentMeetingToStart() ) {
+    if ( waitingForTheCurrentMeetingToStart( meetingProps ) ) {
         store?.dispatch(waitForMeetingToStartBeforeJoining({
             currentUser, 
             operatorBusinessName, 

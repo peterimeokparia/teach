@@ -3,6 +3,7 @@ import produce from 'immer';
 import { 
   LOAD_MEETINGS_BEGIN,  
   ADD_NEW_MEETING_SUCCESS,
+  SET_TUTORS_MEETING,
   LOAD_MEETINGS_SUCCESS,
   LOAD_SINGLE_MEETING_SUCCESS,  
   SAVE_MEETING_SUCCESS,  
@@ -12,7 +13,8 @@ const initialState = {
     meetingsLoaded:false,
     onMeetingFail:null,
     meetings:{},
-    meeting:{}  
+    meeting:{},
+    currentMeeting:{}  
 };
 
 const reducer =  produce( (draft, action) => {
@@ -31,7 +33,10 @@ const reducer =  produce( (draft, action) => {
         case LOAD_MEETINGS_SUCCESS:
              draft.meetings = action.payload;
         return;
-        case LOAD_SINGLE_MEETING_SUCCESS:
+        case SET_TUTORS_MEETING:
+            draft.currentMeeting = action.payload;
+       return;
+       case LOAD_SINGLE_MEETING_SUCCESS:
              if ( action?.payload === null ) return;
              draft.meetings[action.payload?._id] = action.payload;
              draft.meeting[action.payload?._id] = action.payload;

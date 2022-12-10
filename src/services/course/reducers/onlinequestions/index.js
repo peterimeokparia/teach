@@ -26,7 +26,10 @@ TOGGLE_CONTENT_CHANGED,
 SET_SELECTED_QUESTION,
 SET_QUESTION_PROPERTIES,
 ADD_EXPLAINER_ANSWER,
-SAVE_ONLINEQUESTION_INSIGHTS_SUCCESS } from '../../actions/onlinequestions';
+SAVE_ONLINEQUESTION_INSIGHTS_SUCCESS,
+ADD_NEW_QUESTION_FROM_EXISTING_SUCCESS,
+SET_COPY_EXISTING_QUESTION,
+SET_COPYING_EXISTING_QUESTION_PROPERTIES } from '../../actions/onlinequestions';
 
 const initialState = {
     onlineQuestions: {},
@@ -45,8 +48,10 @@ const initialState = {
     togglePreviewMode: false,
     contentUpdated: false,
     onlineQuestionProperties: {},
+    copyOnlineQuestionProperties: {},
     markDownContentTest: {}, 
-    updateOnDelete: false
+    updateOnDelete: false,
+    copyExistingQuestion: false
 };
 
 const reducer = produce((draft, action) => {
@@ -63,9 +68,12 @@ const reducer = produce((draft, action) => {
         case ADD_EXPLAINER_ANSWER:       
              draft.onlineQuestions[action.payload._id] = action.payload; 
              draft.saveInProgress = false;
+        return; 
+        case ADD_NEW_QUESTION_FROM_EXISTING_SUCCESS:       
+             draft.onlineQuestions[action.payload?.response?._id] = action.payload?.response; 
+             draft.saveInProgress = false;
         return;
         case SAVE_ONLINEQUESTION_INSIGHTS_SUCCESS:
-             alert(JSON.stringify( action.payload ))
              draft.onlineQuestionInsights[action.payload?.questionId][action.payload?.formUuId][action.payload?.userId] = action.payload; 
         return;
         case SET_SELECTED_QUESTION:
@@ -123,7 +131,12 @@ const reducer = produce((draft, action) => {
              draft.updateOnDelete = !draft.updateOnDelete;  
        break;
        case SET_QUESTION_PROPERTIES:
-             draft.onlineQuestionProperties = action.payload; 
+            draft.onlineQuestionProperties = action.payload; 
+       break;
+       case SET_COPYING_EXISTING_QUESTION_PROPERTIES:
+            draft.copyOnlineQuestionProperties = action.payload; 
+       case SET_COPY_EXISTING_QUESTION:
+            draft.copyExistingQuestion = action.payload; 
        break;
        default:
     return;

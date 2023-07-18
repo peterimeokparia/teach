@@ -20,11 +20,7 @@ const App = ({logOut, user}) => {
       {/* <nav>
       <Link to="/">Home</Link> <Link to="dashboard">Dashboard</Link>
       </nav> */}
-      {/* <nav>
-      <Link to="/">Home</Link> <Link to="dashboard">Dashboard</Link>
-      </nav> */}
        <MainRoute/>
-       <FormBuilderQuestionsWizard />
        <FormBuilderQuestionsWizard />
     </div>
     // <div>

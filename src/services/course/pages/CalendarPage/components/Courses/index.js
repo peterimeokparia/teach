@@ -1,19 +1,8 @@
-import {
-newCalendarEventData, 
-eventEnum } from 'services/course/pages/CalendarPage/helpers';
-
-import { 
-navigate } from '@reach/router';
-
-import { 
-generateUuid } from 'services/course/pages/Users/helpers';
-
-import {
-elementMeta } from 'services/course/pages/QuestionsPage/helpers';
-
-import { 
-formTypes } from 'services/course/pages/FormBuilder/helpers';
-
+import { newCalendarEventData, eventEnum } from 'services/course/pages/CalendarPage/helpers';
+import { navigate } from '@reach/router';
+import { generateUuid } from 'services/course/pages/Users/helpers';
+import { elementMeta } from 'services/course/pages/QuestionsPage/helpers';
+import { formTypes } from 'services/course/pages/FormBuilder/helpers';
 import TutorCourseLessonListComponent from 'services/course/pages/CalendarPage/components/Courses/components/TutorCourseLessonListComponent';
 import useSimpleEventHook from 'services/course/pages/CalendarPage/hooks/useSimpleEventHook';
 import './style.css';

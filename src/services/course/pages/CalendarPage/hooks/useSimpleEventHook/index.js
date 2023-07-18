@@ -1,5 +1,4 @@
-import {
-transformDateTime } from 'services/course/pages/CalendarPage/helpers';
+import {transformDateTime } from 'services/course/pages/CalendarPage/helpers';
 
 function useSimpleEventHook(  slotInfo ){
     const [ start, end, allDay ] = Object.entries(slotInfo);
@@ -10,7 +9,7 @@ function useSimpleEventHook(  slotInfo ){
         start: dateTimeString?.resStartStr,
         end: dateTimeString?.resEndStr,
         duration: ( new Date( dateTimeString?.resEndStr ) - new Date( dateTimeString?.resStartStr ) )
-    }
+    };
 }
 
 export default useSimpleEventHook;

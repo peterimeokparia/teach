@@ -1,11 +1,4 @@
-import {
-add,
-update,
-updateWithId,
-remove,
-get,
-getById } from 'services/course/api';
-
+import { add, update, updateWithId, remove, get, getById } from 'services/course/api';
 
 export const ADD_FORMFIELDANSWERS_BEGIN = "ADD FORMFIELDANSWERS BEGIN";
 export const ADD_FORMFIELDANSWERS_SUCCESS = "ADD FORMFIELDANSWERS SUCCESS";
@@ -21,11 +14,17 @@ export const RESET_FORMFIELDANSWERS_ERROR = "RESET FORMFIELDANSWERS ERROR";
 export const SAVE_FORMFIELDANSWERS_BEGIN = "SAVE FORMFIELDANSWERS BEGIN";
 export const SAVE_FORMFIELDANSWERS_ERROR = "SAVE FORMFIELDANSWERS ERROR";
 export const SAVE_FORMFIELDANSWERS_SUCCESS = "SAVE FORMFIELDANSWERS SUCCESS";
+export const SAVE_FORMFIELDANSWERS_SUCCESS_SKIP_MW = 'SAVE FORMFIELDANSWERS SUCCESS SKIP MW';
 export const SET_FORMFIELDANSWERS_MARKDOWN = "SET FORMFIELDANSWERS MARKDOWN";
-export const SET_EXPLANATION_ANSWER_MARKDOWN = "SET EXPLANATION ANSWER MARKDOWN";
 export const ADD_ANSWER_POINTS = "ADD ANSWER POINTS";
 export const STUDENTS_TOTAL_ANSWER_POINTS = "STUDENTS TOTAL ANSWER POINTS";
 export const SAVE_FORMFIELDANSWERS_WITH_POINTS_SUCCESS = "SAVE FORMFIELDANSWERS WITH POINTS SUCCESS";
+export const SAVE_DRAGGABLE_ANSWER = "SAVE DRAGGABLE ANSWER";
+export const SAVE_DRAGGABLE_ANSWERS_SUCCESS = "SAVE DRAGGABLE ANSWERS SUCCESS";
+export const UPDATE_ANSWER = "UPDATE ANSWER";
+export const FORMFIELD_ANSWER_MARKDOWN = "FORMFIELD ANSWER MARKDOWN";
+export const SAVE_FORMFIELD_DRAGGABLE_ANSWERS_POINTS_BEFORE_MOVE = "SAVE FORMFIELD DRAGGABLE ANSWERS POINTS BEFORE MOVE";
+export const SAVE_FORMFIELD_DRAGGABLE_ANSWERS_POINTS_AFTER_MOVE = "SAVE FORMFIELD DRAGGABLE ANSWERS POINTS AFTER MOVE";
 
 export const addNewFormFieldAnswer = newFormField => {
     return dispatch => {
@@ -44,7 +43,54 @@ export const saveFormFieldAnswer = ( formfields ) => {
         dispatch({ type: SAVE_FORMFIELDANSWERS_BEGIN });
         return update( formfields, `/formfieldanswers/` )
             .then( formfields => {  
-             dispatch({ type: SAVE_FORMFIELDANSWERS_SUCCESS, payload: formfields }); 
+             dispatch({ type: SAVE_FORMFIELDANSWERS_SUCCESS, payload: formfields });
+            }).catch( error => {
+            dispatch({ type: SAVE_FORMFIELDANSWERS_ERROR , error });
+        });  
+    };
+};
+
+let timerHandle = null;
+// delete this
+export const setMarkDown = ( teachObject, markDownContent, teachObjectType, actionType, saveAction, duration  ) => {
+    return ( dispatch, getState )  => {
+        dispatch({ type: actionType, payload: {   
+            teachObject,
+            markDownContent
+          }});
+          
+        if ( timerHandle ){
+            clearTimeout( timerHandle );
+        };
+
+        timerHandle = setTimeout(() => {
+            const latestTeachObjectData = getState()[teachObjectType.propNameOne][teachObjectType.propNameTwo][ teachObject?._id ]; 
+    
+            if ( latestTeachObjectData !== undefined  ) {
+                saveAction( latestTeachObjectData );
+            }
+        }, duration);  
+    };
+};
+
+export const saveDraggableFormFieldAnswer = ( formfields ) => {
+    return (dispatch, getState) => {    
+        dispatch({ type: SAVE_FORMFIELDANSWERS_BEGIN });
+        return update( formfields, `/formfieldanswers/` )
+            .then( formfields => {  
+                dispatch({ type: SAVE_DRAGGABLE_ANSWER, payload: formfields });
+
+                let draggableListItems =  getState()?.formFieldAnswers.draggableFormFieldAnswers;
+                let answer = formfields;
+
+                dispatch({ type: SAVE_DRAGGABLE_ANSWERS_SUCCESS, payload:{ answer, draggableListItems }  });
+                dispatch({ type: SAVE_FORMFIELDANSWERS_SUCCESS_SKIP_MW, payload: formfields }); 
+                getById( formfields?.questionId, `/formfieldanswers/question?questionId=`)
+                    .then( draggableFormfields  => { 
+                        getDraggableFormFieldPoints( dispatch, formfields, draggableFormfields );
+                }).catch( error => {
+                    dispatch({ type: LOAD_FORMFIELDANSWERS_ERROR , error });
+                });       
             }).catch( error => {
             dispatch({ type: SAVE_FORMFIELDANSWERS_ERROR , error });
         });  
@@ -139,8 +185,33 @@ export const saveFormFieldAnswerWithPoints = ( formfields ) => {
     };
 };
 
+export const saveDraggableFormFieldAnswersPointsBeforeMove =  ( payload ) => {
+    return dispatch => {
+        dispatch({ type: SAVE_FORMFIELD_DRAGGABLE_ANSWERS_POINTS_BEFORE_MOVE, payload  });
+ }; 
+};
+
 export const saveStudentsAnswerPoints =  ( answerPoints ) => {
     return dispatch => {
-        dispatch({ type: STUDENTS_TOTAL_ANSWER_POINTS, payload: answerPoints })
+        dispatch({ type: STUDENTS_TOTAL_ANSWER_POINTS, payload: answerPoints });
             return answerPoints;
-} };
+ }; 
+};
+
+function getDraggableFormFieldPoints( dispatch, formfields, draggableFormfields ) {
+
+    let draggableFormFieldObj = draggableFormfields.filter( item => item?.formName === formfields?.formName &&
+        item?.userId === formfields?.userId &&
+            item?.formUuId === formfields?.formUuId);
+
+            let pointsAfter = draggableFormFieldObj?.map(item => item.points).reduce((previousVal, currentVal) => previousVal + currentVal, 0);
+
+            dispatch({ 
+                type: SAVE_FORMFIELD_DRAGGABLE_ANSWERS_POINTS_AFTER_MOVE, 
+                payload: {
+                    formUuId: formfields?.formUuId,
+                    userId: formfields?.userId,
+                    points: pointsAfter,
+                    answerFormInputField: formfields
+            }});   
+}

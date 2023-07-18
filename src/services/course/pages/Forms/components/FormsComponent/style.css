@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   text-align: center;
-  background-image: url(../../../../images/geometry2.png);
+  background-image: url(../../../../../../Images/geometry2.png);
   background-size: 300px 300px;
 }
 .CoursesComponent .items{
@@ -36,8 +36,6 @@
 }
 .CoursesComponent header h3 {
   background-color: #673ab7;
-  /* padding-top: 200px;
-  margin-bottom: 300px; */
   font-size: 24px;
   text-align: center;
   color: white;
@@ -63,7 +61,6 @@
     align-items: center;
     justify-content: space-between;
     padding-bottom: 10px;
-    /* padding: 20px 800px; */
   } 
   .ComponentCourseListItem h1 {
     font-family: 'Bebas Neue', 'Helvetica Neue', arial,
@@ -85,7 +82,6 @@
   }
   .ComponentCourseListItem .component-seconday-list-body, .component-secondary-list-body-one {
     border-radius: 25px;
-    /* background: #673ab7; */
     background: whitesmoke;
     text-decoration: underline burlywood;
     padding: 10px;
@@ -134,7 +130,6 @@
   }
   .ComponentCourseListItem .list-items {
     padding-top: 10px;
-    /* margin-bottom: 5px; */
     border-style: outset;
     border-radius: 3px;
     font-size: 20px; 
@@ -147,16 +142,11 @@
     text-transform: uppercase;
     font-weight: bold;
     letter-spacing: 0.5rem;
-    /* letter-spacing: 0.5rem;
-    padding: 2rem 0;
-    font-weight: bold; */
   }
   .ComponentCourseListItem .user-list-items img {
     border-radius: 5px;
   }
   .ComponentCourseListItem .user-list-items .multicolortext {
-    /* background-image: linear-gradient(to left, violet, indigo, green, blue, yellow, orange, red); */
-    /* background-image: linear-gradient(to left, violet, red, white, yellow, orange, red); */
     background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
     -webkit-background-clip: text;
     -moz-background-clip: text;
@@ -222,7 +212,6 @@
 }
 .ComponentCourseListItem .user-list-items .round-button-1 { 
     background: orange;
-    /* box-shadow: 10px 10px black; */
   }
   .ComponentCourseListItem .user-list-items .round-button-2 { 
     background: green
@@ -310,7 +299,6 @@
   }
   .Login-LogOut-btn {
     padding-left: 1280px; 
-    /* align-self: flex-end; */
     color: #fff;
     font-size: 16px;
     font-family: 'Source Sans Pro', helvetica, sans-serif;
@@ -377,9 +365,6 @@
   /* Position the tooltip */
   position: absolute;
   z-index: 1;
-
-  /* top: -5px;
-  right: 105%; */
 }
 .component-list-items:hover .tooltiptext {
   visibility: visible;
@@ -392,7 +377,5 @@
   animation: backandforth 2s ease 0s;
   animation-iteration-count:infinite;
 }
-
 @-webkit-keyframes backandforth {0%{left:0;} 50%{left:58%;} 100%{left:0;}}
-
 @keyframes backandforth {0%{left:0;} 50%{left:100%;} 100%{left:0;}}

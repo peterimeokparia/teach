@@ -1,0 +1,125 @@
+.answer-content {
+    margin-bottom: 105px;
+    margin-left: 100px;
+}
+.answer-content .editorTest { 
+    font: normal 1.11em KaTeX_Main,Times New Roman,serif;
+    width: 93vw;
+    max-width: 95vw;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: left;
+    border-radius: 25px;
+    border-style: solid;
+    border-width: 3px;
+    box-shadow: 0 0 0 5px #d2e3f7;
+    padding-bottom: 90px;
+    list-style: none;
+    background: white;   
+    padding:10px 5px 15px 20px; 
+} 
+.mui-headerStyleDropdownButtons {
+    background-color: white;
+    border-style: dotted;
+    margin-right: 10px;
+    align-self: flex-end; 
+    border: 2px solid #f5f5f5;
+    border-radius: 50%; 
+    transition: transform .7s ease-in-out;
+    box-shadow: 10px 10px black;
+    margin-top: "-1%"
+}
+.custom-answer input[type="radio"] {
+    opacity: 0;
+    position: fixed;
+    width: 0;
+}
+.custom-answer label {
+    display: inline-block;
+    background-color: #ddd;
+    padding: 10px 20px;
+    font-family: sans-serif, Arial;
+    font-size: 16px;
+    border: 2px solid #444;
+    border-radius: 4px;
+    margin-left: -200px;
+}
+
+.custom-answer label:hover {
+    background-color: #dfd;
+  }
+
+.custom-answer input[type="radio"]:checked + label {
+    background-color:#bfb;
+    border-color: #4c4;
+}
+
+.custom-answer input[type="radio"]:focus + label {
+    border: 2px dashed #444;
+}
+
+@media only screen and (min-width: 638px) { 
+    .answer-content {
+        margin-bottom: 105px;
+        width: 5vw;
+        max-width: 5vw;
+    }
+    .answer-content .editorTest { 
+        font: normal 1.11em KaTeX_Main,Times New Roman,serif;
+        width: 93vw;
+        max-width: 95vw;
+        display: flex;
+        flex-direction: column;
+        font-family: 'Courier New', Courier, monospace;
+        text-align: left;
+        border-radius: 25px;
+        border-style: solid;
+        border-width: 3px;
+        box-shadow: 0 0 0 5px #d2e3f7;
+        padding-bottom: 90px;
+        list-style: none;
+        background: white;   
+        padding:10px 5px 15px 20px; 
+    } 
+    .mui-headerStyleDropdownButtons {
+        background-color: white;
+        border-style: dotted;
+        margin-right: 10px;
+        align-self: flex-end; 
+        border: 2px solid #f5f5f5;
+        border-radius: 50%; 
+        transition: transform .7s ease-in-out;
+        box-shadow: 10px 10px black;
+        margin-top: "-1%"
+    }
+    .custom-answer input[type="radio"] {
+        opacity: 0;
+        position: fixed;
+        width: 0;
+    }
+    .custom-answer label {
+        display: inline-block;
+        background-color: #ddd;
+        padding: 10px 20px;
+        font-family: sans-serif, Arial;
+        font-size: 16px;
+        border: 2px solid #444;
+        border-radius: 4px;
+        margin-left: -200px;
+    }
+    .custom-answer label:hover {
+        background-color: #dfd;
+    }
+    .custom-answer input[type="radio"]:checked + label {
+        background-color:#bfb;
+        border-color: #4c4;
+    }
+    .custom-answer input[type="radio"]:focus + label {
+        border: 2px dashed #444;
+    }
+}
+
+.explanation-answer-sidepanel {
+    margin-right: 1000px;
+}

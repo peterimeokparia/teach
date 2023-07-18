@@ -1,0 +1,130 @@
+.main-sidepanel {
+    display: block;
+    box-sizing: border-box; 
+    width: 100vw; 
+    height: 130vw; 
+    margin-left: 50%;
+    /** Overlay**/
+    position: absolute;
+    z-index: 2;
+    width: 25vw;
+    top: 40px;
+    right: 0;
+    bottom: 105px;    
+    background-color: rgba(0, 0, 0, 0.8);
+    cursor: pointer;   
+}
+.main-sidepanel-visible {
+    /** Overlay**/
+    align-items: center;
+    text-align: center;
+    z-index: 2;
+    width: 20.8vw; 
+    height:auto;  
+    background-color: rgba(0, 0, 0, 0.8);
+    cursor: pointer;  
+    visibility: visible;
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 2s;
+}
+.main-sidepanel-hidden {
+    display: block;
+    box-sizing: border-box; 
+    width: 100vw; 
+    height:150vw; 
+    /** Overlay**/
+    position: absolute;
+    z-index: 2;
+    width: 25vw;
+    height: 100vh;
+    top: 40px;
+    left: 110px;
+    right: 0;
+    bottom: 105px;    
+    background-color: rgba(0, 0, 0, 0.8);
+    cursor: pointer; 
+    opacity: 0;
+    animation-name: fadeOutOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-out;
+    animation-duration: 2s;
+    margin-left: 50px;
+}
+.primary-sidepanel {
+    margin-top: 0%;
+    margin-left: 2%;
+    margin-bottom: 3%;
+}
+.primary-sidepanel .primary-row-sidepanel {
+    align-items: center;
+    text-align: center;
+    margin-left: 1%;
+    margin-bottom: 5%;
+}
+.secondary-sidepanel {
+    margin-top: 27%;
+    margin-left: 4%;
+}
+.secondary-sidepanel .secondary-row-sidepanel {
+    align-items: center;
+    text-align: center;
+    margin-left: 5%;
+}
+.tertiary-select {
+    padding-top: 37%;
+    width: 1500px;
+    height: auto;
+    margin-left: 44%;
+    padding-right: 10px;
+    right: 0;
+    background-color: transparent;
+    cursor: pointer;
+    margin-bottom: 1%;
+    cursor: pointer;
+}
+.toggleButton3 {
+    position: absolute;
+    z-index: 2;
+    background: white;
+    width: 30px;
+    height: 30px;
+    border: 2px solid #f5f5f5;
+    border-radius: 50%; 
+    bottom: 88%;
+    margin-left: 18.2%;
+    transition: transform .0s ease-in-out;
+    box-shadow: 5px 5px black;
+}
+.toggleButton3:hover
+ {
+  transform: translateY(4px);
+  background-image: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+  background: linear-gradient(to left, violet, red,  green, white, green, yellow, orange, red);
+}
+@keyframes fadeInOpacity {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes fadeOutOpacity {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+.title-header {
+    text-transform: capitalize;
+    color: white;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin-left: 15%;
+}

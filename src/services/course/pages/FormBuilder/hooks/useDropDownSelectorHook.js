@@ -1,134 +1,74 @@
-import { 
-useState, 
-useEffect } from "react";
-
-import { 
-getPreviouslySelectedDropDownAnswer } from "services/course/pages/FormBuilder/FormFields/component/DropDown/helpers";
-
-import Latex from "react-latex";
+import { useState  } from "react";
+import { useDispatch } from "react-redux";
+import { getPreviouslySelectedDropDownAnswer } from "services/course/pages/FormBuilder/FormBuilderStepWizard/SelectExistingFormBuilderComponent/FormFields/component/DropDown/helpers";
+import { loadFormFieldAnswersByFormFieldId } from 'services/course/actions/formfieldanswers';
+import { loadFormFieldsByFormFieldId, saveFormField } from 'services/course/actions/formfields';
+import { generateUuid } from 'services/course/pages/Users/helpers';
 
 function useDropDownSelectorHook( props ) {
-
   let {
-    userId,
-    formUuId,
-    dropDownValues,
     handleFormFieldAnswers,
     studentAnswerByQuestionId,
-    saveFormField,
-    loadFormFieldAnswers,
-    saveFormFieldAnswer,
     formFieldElement,
-    formFieldAnswers,
-    currentUser,
-    previewMode
+    currentUser
   } = props;
 
-  const [ input, setInput ] = useState("");
-  const [ dropDownOptions,  setDropDownOptions ] = useState([...formFieldElement?.dropDownOptions]);
   const [ inputValue,  setInputValue ] = useState( null );
   const [ mathModalOpen, setMathModalOpen ] = useState(false);
+  const [ editorState,  setEditorState ] = useState(null);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
+  const handleInputValue = ( selectedOption ) => {
+    setInputValue( selectedOption );
+    handleDropDownSelection( selectedOption );
+  };
 
-  if ( previewMode ) {
+  const addOptionValue = () => {    
+    try {
+      const uuid = generateUuid();
+      let dropDownSelectorValues = [ ...formFieldElement?.dropDownOptions, { markDownContent: editorState, id: uuid } ];
 
-    setInput( formFieldElement?.inputValue );
-
-  }
-
-  }, [ mathModalOpen ]);
-
- 
-  useEffect(() => {
-
-    loadFormFieldAnswers();
-
-    if ( studentAnswerByQuestionId && roleTypeCollection?.length > 0 ) {
-
-      if ( roleTypeCollection?.find( val => val.item === studentAnswerByQuestionId?.answer)?.item ) {
-
-          setInputValue(   { value: studentAnswerByQuestionId?.answer, item: studentAnswerByQuestionId?.answer, label: <Latex>{`$${studentAnswerByQuestionId?.answer}$`}</Latex> } ) ;
-      }
-        
+      dispatch( saveFormField({ ...formFieldElement, dropDownOptions: dropDownSelectorValues }) );
+      dispatch( loadFormFieldsByFormFieldId( formFieldElement?._id) );
+    } catch (error) {
+      console.log(error);
     }
-
-  }, []);
-
-  useEffect(() => {
-
-    if ( dropDownOptions?.length === dropDownValues?.length ) {
-
-        return;     
-
-    } else if ( dropDownValues?.length > dropDownOptions?.length ) {
-
-      saveFormField({ ...formFieldElement, dropDownOptions: dropDownValues });
-
-    } else {
-
-      saveFormField({ ...formFieldElement, dropDownOptions });
-
-    }
-
-  }, [ dropDownOptions?.length > dropDownValues?.length ]);
-
-
-  const addOptionValue = () => {
-          
-    if ( input !== "" ) {
-
-      let dropDownValues = [ ...dropDownOptions, input ];
-
-      setDropDownOptions( dropDownValues );  
-
-      saveFormField({ ...formFieldElement, dropDownOptions: dropDownValues });
-
-    } 
   };
 
   const deleteOptionValue = () => {
-    
-    if ( input !== "" ) {
+    if ( inputValue ) {
+      let dropDownSelectorValues = formFieldElement?.dropDownOptions?.filter( option => option?.id !== inputValue?.id );
 
-      let dropDownValues = dropDownOptions?.filter( option => option?.id !== inputValue?.id );
-
-      saveFormField({ ...formFieldElement, dropDownOptions: dropDownValues });
+      dispatch( saveFormField({ ...formFieldElement, dropDownOptions: dropDownSelectorValues }) );
+      dispatch( loadFormFieldsByFormFieldId( formFieldElement?._id) );
     } 
   };
 
   const handleDropDownSelection = ( value ) => {
-
     const prevPoints = getPreviouslySelectedDropDownAnswer( studentAnswerByQuestionId, formFieldElement?.questionId, formFieldElement?._id ); 
-
     if ( !currentUser?._id ) return;
-
-      let points = ( !formFieldElement?.answerKey || value?.value !== formFieldElement?.answerKey ) ? 0 : formFieldElement['points'];
+      let points = ( !formFieldElement?.answerKey || value?.id !== formFieldElement?.answerKey ) ? 0 : formFieldElement['points'];
 
       setInputValue( value  );
-
       points = prevPoints > 0 ? prevPoints : points;
-
-
-      handleFormFieldAnswers( formFieldElement, value?.value, points );
-
-
+      handleFormFieldAnswers( formFieldElement, value?.id, points );
+      dispatch( loadFormFieldAnswersByFormFieldId( studentAnswerByQuestionId?._id) );
     };
 
-let roleTypeCollection = dropDownValues.map(item =>  { return  { value: item, item, label: <Latex>{`$${item}$`}</Latex> } } );
-    
+ function setEditorStateTest( markDownContent ){
+  setEditorState( markDownContent );
+ }
+
 return {
-  input, 
   inputValue,  
-  mathModalOpen, 
+  mathModalOpen,  
+  setEditorStateTest,
   setMathModalOpen,
   setInputValue,
-  setInput,
+  handleInputValue,
   handleDropDownSelection,
   addOptionValue,
-  deleteOptionValue,
-  roleTypeCollection
-  
+  deleteOptionValue
 }; };
 
 export default useDropDownSelectorHook;

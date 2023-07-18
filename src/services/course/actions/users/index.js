@@ -1,5 +1,5 @@
 import { 
-setItemInSessionStorage } from 'services/course/helpers/ServerHelper';
+setItemInSessionStorage } from 'services/course/helpers/ServerHelper/index.js';
 
 import {
 update,
@@ -14,7 +14,7 @@ getLoggedInUsers,
 purchase,
 remove,
 updateInvitationUrl,
-getPagedData } from 'services/course/api';
+getPagedData } from 'services/course/api/index.js';
 
 export const LOGIN_BEGIN = "LOGIN BEGIN";
 export const LOGIN_SUCCESS = "LOGIN SUCCESS";
@@ -309,12 +309,13 @@ export const inviteStudentsToLearningSession = ( invitees ) => {
 
 export const updateUserInvitationUrl = (user) => {
     return dispatch  => {
-      try{
-        updateInvitationUrl( user?._id, user );
-        dispatch({ type: UPDATE_INVITEE_SESSION_URL, payload: { ...user } });
-        } catch (error) {
-        dispatch({ type: FAILED_INVITATION, error });
-      };
+        return updateUser( user, user )
+        .then( resp =>  {
+            dispatch({ type: UPDATE_INVITEE_SESSION_URL, payload: { ...resp } });
+        })
+        .catch( error => {
+            dispatch({ type: FAILED_INVITATION, error });
+        })       
     };
 };
 

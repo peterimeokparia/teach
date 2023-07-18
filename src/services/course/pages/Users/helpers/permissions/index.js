@@ -1,7 +1,6 @@
-import {
-Organization }from 'services/course/pages/components/SiteFunctionalityGroup';
+import { organization }from 'services/course/pages/components/SiteFunctionalityGroup';
 
-export const PageObject = {
+export const pageObject = {
     Users_Course_Count: 'Users_Course_Count',
     Users_SchoolIcon: 'Users_SchoolIcon',
     Users_BookIcon: 'Users_BookIcon',
@@ -16,18 +15,18 @@ export const PageObject = {
 
 export let group = [
     {   page: 'Users',
-        operatorBusinessName: [ Organization.Teach, Organization.Boomingllc ],
+        operatorBusinessName: [ organization.Teach, organization.Boomingllc ],
         pageObject: [ 
-            { name: PageObject.Users_SideBarNavigation, allowed:[ Organization.Teach ] }, 
-            { name: PageObject.Users_Course_Count, allowed:[ Organization.Teach ] },
-            { name: PageObject.Users_SchoolIcon, allowed:[ Organization.Teach ]},
-            { name: PageObject.Users_BookIcon, allowed:[ Organization.Teach ] },
-            { name: PageObject.Users_ScheduleIcon, allowed:[ Organization.Teach, Organization.Boomingllc ] },
-            { name: PageObject.Users_CalendarTodayIcon, allowed:[ Organization.Teach, Organization.Boomingllc ] },
-            { name: PageObject.Users_ForumIcon, allowed:[ Organization.Teach ]},
-            { name: PageObject.Users_TimelineIcon, allowed:[ Organization.Teach, Organization.Boomingllc ]}, 
-            { name: PageObject.Users_VideoCallIcon, allowed:[ Organization.Teach, Organization.Boomingllc ]}, 
-            { name: PageObject.Users_PollIcon, allowed:[ Organization.Teach, Organization.Boomingllc ]}, 
+            { name: pageObject.Users_SideBarNavigation, allowed:[ organization.Teach ] }, 
+            { name: pageObject.Users_Course_Count, allowed:[ organization.Teach ] },
+            { name: pageObject.Users_SchoolIcon, allowed:[ organization.Teach ]},
+            { name: pageObject.Users_BookIcon, allowed:[ organization.Teach ] },
+            { name: pageObject.Users_ScheduleIcon, allowed:[ organization.Teach, organization.Boomingllc ] },
+            { name: pageObject.Users_CalendarTodayIcon, allowed:[ organization.Teach, organization.Boomingllc ] },
+            { name: pageObject.Users_ForumIcon, allowed:[ organization.Teach ]},
+            { name: pageObject.Users_TimelineIcon, allowed:[ organization.Teach, organization.Boomingllc ]}, 
+            { name: pageObject.Users_VideoCallIcon, allowed:[ organization.Teach, organization.Boomingllc ]}, 
+            { name: pageObject.Users_PollIcon, allowed:[ organization.Teach, organization.Boomingllc ]}, 
         ]  
     }
 ];

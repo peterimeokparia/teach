@@ -1,64 +1,12 @@
-import { 
-useEffect,
-useState } from 'react';
-  
-import { 
-connect } from 'react-redux';
-
-import { 
-loadAllNotes,
-addNotes, 
-saveNotes,
-SET_NOTES_MARKDOWN } from 'services/course/actions/notes';
-
-import { 
-togglePreviewMode } from 'services/course/actions/app';
-
-import {
-editor_upload_url,
-handleChange } from 'services/course/pages/OnlineQuestionsPage/helpers';
-
-import { 
-saveEditorMarkDownObjectToMw } from 'services/course/actions/editor'; 
-    
-import { 
-getUsersByOperatorId,    
-getCoursesByCreatedByIdSelector, 
-getLessonByLessonIdSelector,
-getLessonUserNotesByEventId 
-} from 'services/course/selectors';
-
+import { connect } from 'react-redux';
+import { getCoursesByCreatedByIdSelector, getLessonByLessonIdSelector } from 'services/course/selectors';
 import Meeting from 'services/course/pages/Meeting';
 
 const ShowMeeting = ({
-    previewMode,
-    saveLesson,
-    saveEditorMarkDownObjectToMw,
-    addNewLesson,
-    setVideoUrl,
-    loadAllNotes,
-    addNotes, 
-    saveNotes,
     lessonId,
-    courseId,
-    noteId,
-    notes,
-    allNotes,
-    selectedTutorId,
-    currentVideoUrl,
-    setLessonPlanUrl,
-    setCurrentLesson,
-    course,
-    lessons,
     lesson,
-    note,
-    togglePreviewMode,
-    operatorBusinessName,
-    operator,
-    currentUser, 
-    selectedLessonPlanLesson
+    currentUser
 }) => {
-
   return <div className="builder3"> 
         <header>
         {
@@ -89,31 +37,17 @@ const ShowMeeting = ({
     </div>;
 };
 
-const mapDispatch = {
-    loadAllNotes,
-    addNotes, 
-    saveNotes,
-    saveEditorMarkDownObjectToMw,
-    togglePreviewMode
-};
-
 const mapState = (state, ownProps) => {
     return {
-        operator: state.operators.opeator,
-        operatorBusinessName: state?.operator?.operatorBusinessName,
         courseTutor: state.courses.courseTutor,
         currentUser: state.users.user,
-        previewMode: state.app.previewMode,
         isLessonsLoading:state.lessons.lessonsLoading,
         lessonPlanUrl: state.lessons.lessonPlanUrl,
-        selectedLessonPlanLesson: state.lessons.selectedLessonPlanLesson,
         course: state.lessons.course,
         onLessonError: state.lessons.onSaveLessonError,
-        lessons: Object.values(state.lessons.lessons),
         coursesByTutor: getCoursesByCreatedByIdSelector( state, ownProps ),
-        lesson: getLessonByLessonIdSelector( state, ownProps ),
-       //note: getLessonUserNotesByEventId( state, ownProps )
+        lesson: getLessonByLessonIdSelector( state, ownProps )
     };
 };
 
-export default connect( mapState, mapDispatch )(ShowMeeting);
+export default connect( mapState, null )(ShowMeeting);

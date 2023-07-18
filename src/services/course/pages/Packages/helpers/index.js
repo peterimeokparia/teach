@@ -109,3 +109,12 @@ export function sendEmailToAdministrator( currentUser ){
     );
     Swal.fire( msg );
 }
+
+export const coursePackageRenewal = ( currentUser, sessions, autoRenewSessionPackagesAction, refreshSessions, refreshUsers ) => {
+    if ( currentUser?.role === "Tutor" ) return; 
+    let expiredPackages = checkIfPackageIsSetToAutoRenew( currentUser, sessions );
+    
+    handleAutoRenewPackageSessions( currentUser,  expiredPackages, autoRenewSessionPackagesAction );
+    refreshSessions();
+    refreshUsers();
+};

@@ -1,49 +1,17 @@
-import { 
-connect } from 'react-redux';
-
-import { 
-markAttendance } from 'services/course/actions/attendance';
-
-import {
-addNewGrade } from 'services/course/actions/grades';
-
-import{
-enableTeachPlatform } from 'services/course/actions/classrooms';
-
-import { 
-addNewGradesForSelectedStudents } from 'services/course/pages/GradesPage/components/AddStudentGrade/helpers';
-
-import { 
-markAttendanceForSelectedStudents } from 'services/course/pages/AttendancePage/components/MarkAttendanceComponent/helpers';
-
-import { 
-role } from 'services/course/helpers/PageHelpers';
-
-import { 
-navContent } from 'services/course/pages/components/NavigationHelper';
-
-import {  
-getUsersByOperatorId,    
-getOperatorFromOperatorBusinessName,
-getPushNotificationUsersByOperatorId,
-getCoursesByOperatorId,
-getSortedRecordsByDate } from 'services/course/selectors';
-
-import { 
-getLessonPlanUrls,
-getselectedTutor, 
-getStudentsSubscribedToCoursesByThisTutor, 
-toggleBetweenAttendanceGradeDisplay,
-emailInputOptions, 
-emailMessageOptions } from  '../CourseLessonDropDownComponent/helpers';
-
-import { 
-openNewCourseModal, 
-closeNewCourseModal } from 'services/course/actions/courses';
-
-import { 
-helpIconStyle } from './inlineStyles';
-    
+import { connect } from 'react-redux';
+import { markAttendance } from 'services/course/actions/attendance';
+import { addNewGrade } from 'services/course/actions/grades';
+import { addNewGradesForSelectedStudents } from 'services/course/pages/GradesPage/components/AddStudentGrade/helpers';
+import { markAttendanceForSelectedStudents } from 'services/course/pages/AttendancePage/components/MarkAttendanceComponent/helpers';
+import { role } from 'services/course/helpers/PageHelpers';
+import { navContent } from 'services/course/pages/components/NavigationHelper';
+import {  getUsersByOperatorId, getOperatorFromOperatorBusinessName, getPushNotificationUsersByOperatorId, 
+    getCoursesByOperatorId,getSortedRecordsByDate } from 'services/course/selectors';
+import { getLessonPlanUrls, getselectedTutor, getStudentsSubscribedToCoursesByThisTutor, toggleBetweenAttendanceGradeDisplay,
+    emailInputOptions, emailMessageOptions } from  'services/course/pages/ClassRoomPage/components/CourseLessonDropDownComponent/helpers'; 
+import { toggleCourseModal } from 'services/course/actions/courses';
+import { components } from 'react-select';
+import { helpIconStyle } from './inlineStyles';    
 import NewCoursePage from 'services/course/pages/Courses/NewCoursePage';
 import useClassRoomComponentHook from '../../hooks/useClassRoomComponentHook';
 import MainMenu from 'services/course/pages/components/MainMenu';
@@ -57,11 +25,9 @@ import MarkAttendanceComponent from 'services/course/pages/AttendancePage/tests/
 import MultiInputEmailComponent from 'services/course/pages/Email/MultiInputEmailComponent';
 import Modal from 'react-modal';
 import PostAddIcon from '@material-ui/icons/PostAdd';
-import Swal from 'sweetalert2';
 import './style.css';
 
 const ClassRoomComponent = ({
-    enableTeachPlatform,
     selectedUserId,
     operator,
     operatorBusinessName,
@@ -76,42 +42,14 @@ const ClassRoomComponent = ({
     pushNotificationSubscribers,
     selectedCourseFromLessonPlanCourseDropDown, 
     isModalOpen,
-    openNewCourseModal,
-    closeNewCourseModal }) => {
+    toggleCourseModal }) => {
     const selectedUser = getselectedTutor( users, selectedUserId );
     const currentGrades = grades?.filter(grd => grd?.courseId === selectedCourseFromLessonPlanCourseDropDown?._id);
     const url = getLessonPlanUrls( operatorBusinessName, selectedUserId );
     const sessions = allSessions?.filter( usersession => usersession?.courseId === selectedCourseFromLessonPlanCourseDropDown?._id);
 
-    let {
-        setListOfStudents,
-        setDropDownDisplayOption,
-        dropDownDisplayOption, 
-        listOfStudents,
-    } = useClassRoomComponentHook(operatorBusinessName, selectedUser, operator );
-
-    const pushNotificationUsers = pushNotificationSubscribers?.filter(pushuser => listOfStudents?.find(student => student?._id === pushuser?.userId));
-    
-    function enableTeachCoursePlatform( ) {
-        if ( ( !listOfStudents ) || ( listOfStudents?.length === 0 ) ) {
-            Swal.fire({
-                title: `Please invite students before starting a new teaching session.`,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Invite.',
-                confirmButtonColor: '#673ab7',
-                cancelButtonText: 'Not now.'
-            }).then( (response) => {
-              if ( response?.value ) {
-                  return;
-              } else { 
-                  enableTeachPlatform({ listOfStudents, selectedTutorId: selectedUserId, operatorBusinessName, sessions, operator } );
-              }
-            }); 
-    } else {
-        enableTeachPlatform({ listOfStudents, selectedTutorId: selectedUserId, operatorBusinessName, sessions, operator });
-    }
-};
+    let { setListOfStudents, setDropDownDisplayOption, dropDownDisplayOption, listOfStudents, enableTeachCoursePlatform, pushNotificationUsers
+    } = useClassRoomComponentHook( operatorBusinessName, selectedUser, operator, selectedUserId, sessions, pushNotificationSubscribers );
 
 return (
     <div className="ClassRoomDetail"> 
@@ -162,10 +100,10 @@ return (
                             <PostAddIcon 
                                 style={helpIconStyle()}
                                 className="comment-round-button-5"
-                                onClick={openNewCourseModal}
+                                onClick={toggleCourseModal}
                             />
                         }
-                        <Modal isOpen={isModalOpen} onRequestClose={closeNewCourseModal}> <NewCoursePage user={currentUser} operator={operator}/> </Modal>
+                        <Modal isOpen={isModalOpen} onRequestClose={toggleCourseModal}> <NewCoursePage user={currentUser} operator={operator}/> </Modal>
                      </div> 
                     : <div>
                         {( dropDownDisplayOption === "Courses" || 
@@ -226,9 +164,7 @@ return (
 };
 
 const mapDispatch = {
-    enableTeachPlatform,
-    openNewCourseModal,
-    closeNewCourseModal,
+    toggleCourseModal,
     markAttendance, 
     addNewGrade,
 };

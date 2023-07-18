@@ -15,6 +15,7 @@ import userModel from '../model/userModel.js';
 
 import { 
 verifyRoute,
+generateSignOnCredentialToken,
 logRouteInfo,
 paginatedResults } from '../middleWare/index.js';
 
@@ -88,65 +89,8 @@ userRoute.post('/', (req, res) => {
   });
 });
 
-userRoute.post('/register', async (req, res) => {
-  let userData = getPostData( req ); 
-
-  if( ! userData || !userData?.password || !userData?.email ){ return res.status(400).json({msg: "Please provide a valid email address & password."});}
-
-  const salt = await bcrypt.genSalt();
-    userData = {
-      ...userData,
-      email: userData.email.toLowerCase(),
-      password: await bcrypt.hash( userData?.password, salt )
-  }
-  userModel.find( { email: req.body.email } )
-   .then( resp => { resp 
-      if ( resp?.length > 0 ) {
-        return res.status(400).json({msg: "An account with this email address already exists."});
-      }
-    })
-    .catch( err => { 
-      if ( err ) {
-        handleBackEndLogs(USERROUTE, error );
-        return res.status(400).json({ msg: err.message });
-      }
-    })
-    try {
-      let user = new userModel(userData);  
-      let savedUserData =  await user.save();
-        if ( savedUserData ) {
-          return res.status(200).json(savedUserData);
-        }
-    } catch (error) {
-        handleBackEndLogs(USERROUTE, error );
-        return res.status(400).json({ msg: error.message });
-    }
-});
-
 userRoute.get('/pagedRoute', paginatedResults( userModel, 'userId' ), (req, res) => {
   res.json(res?.paginatedResults);
-});
-
-userRoute.put('/reset/:userId', async (req, res) => {
-   resetUserPassword(req, res, userModel, req.params.userId)
-    .then( data => {
-      return res.status(200).json(data);
-    })
-    .catch( error => {
-      handleBackEndLogs(USERROUTE, error );
-      return res.status(400).json({ error })
-    });
-});
-
-userRoute.put('/login/:userId', async (req, res) => {
-   saveUpdateUserOnLogin(req, res, userModel, req.params.userId)
-    .then( data => {
-      return res.status(200).json(data);
-    })
-    .catch( error => {
-      handleBackEndLogs(USERROUTE, error );
-      return res.status(400).json({ error });
-    });
 });
 
 userRoute.put('/:userId', (req, res) => {
@@ -170,6 +114,66 @@ userRoute.delete('/:userId', (req, res) => {
       handleBackEndLogs(USERROUTE, error );
       return res.status(400).json({ error });
     }); 
+});
+
+
+userRoute.use(generateSignOnCredentialToken);
+userRoute.put('/reset/:userId', async (req, res) => {
+   resetUserPassword(req, res, userModel, req.params.userId)
+    .then( data => {
+      return res.status(200).json(data);
+    })
+    .catch( error => {
+      handleBackEndLogs(USERROUTE, error );
+      return res.status(400).json({ error })
+    });
+});
+
+userRoute.put('/login/:userId', async (req, res) => {
+   saveUpdateUserOnLogin(req, res, userModel, req.params.userId)
+    .then( data => {
+      return res.status(200).json(data);
+    })
+    .catch( error => {
+      handleBackEndLogs(USERROUTE, error );
+      return res.status(400).json({ error });
+    });
+});
+
+userRoute.post('/register', async (req, res) => {
+  let userData = getPostData( req ); 
+
+  if( ! userData || !userData?.password || !userData?.email ){ return res.status(400).json({msg: "Please provide a valid email address & password."});}
+
+  const salt = await bcrypt.genSalt();
+    userData = {
+      ...userData,
+      email: userData.email.toLowerCase(),
+      password: await bcrypt.hash( userData?.password, salt )
+  };
+  
+  userModel.find( { email: req.body.email } )
+   .then( resp => { resp 
+      if ( resp?.length > 0 ) {
+        return res.status(400).json({msg: "An account with this email address already exists."});
+      }
+    })
+    .catch( err => { 
+      if ( err ) {
+        handleBackEndLogs(USERROUTE, error );
+        return res.status(400).json({ msg: err.message });
+      }
+    })
+    try {
+      let user = new userModel(userData);  
+      let savedUserData =  await user.save();
+        if ( savedUserData ) {
+          return res.status(200).json(savedUserData);
+        }
+    } catch (error) {
+        handleBackEndLogs(USERROUTE, error );
+        return res.status(400).json({ msg: error.message });
+    }
 });
 
 export default userRoute;

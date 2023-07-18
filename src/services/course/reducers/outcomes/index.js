@@ -12,14 +12,24 @@ SAVE_OUTCOME_BEGIN,
 SAVE_OUTCOME_ERROR, 
 RESET_OUTCOME_ERROR, 
 DELETE_OUTCOME_SUCCESS,  
-SET_OUTCOME_MARKDOWN } from 'services/course/actions/outcomes';
+SET_OUTCOME_MARKDOWN,
+TOGGLE_FURTHER_STUDY_MODAL,
+TOGGLE_CONCEPTS,
+SET_SELECTED_OUTCOME,
+SET_OUTCOME_LINK,
+SET_CURRENT_OUTCOME } from 'services/course/actions/outcomes';
 
 const initialState = {
     outcomes: {},
+    outcomeLink:{},
+    selectedOutcome:{}, //check
+    currentOutcome:{},
+    concepts: false,
     saveOutcomeInProgress: false,
     onSaveOutcomeError: null,
     outcomesLoading: false,
-    onOutcomesLoadingError: null
+    onOutcomesLoadingError: null,
+    furtherStudyModal:false
 };
 
 const reducer = produce((draft, action) => {
@@ -47,27 +57,41 @@ const reducer = produce((draft, action) => {
             draft.onOutcomesLoadingError = null;
         return;
         case LOAD_OUTCOMES_SUCCESS:
-             draft.outcomesLoading = false;
-             draft.onOutcomesLoadingError = null;
-             action.payload?.forEach( lesson => {
+            draft.outcomesLoading = false;
+            draft.onOutcomesLoadingError = null;
+            action.payload?.forEach( lesson => {
                 draft.outcomes[lesson._id] = lesson;
-             });  
+            });  
         return;
         case LOAD_OUTCOMES_ERROR:
-             draft.onOutcomesLoadingError = action.error;
-             draft.outcomesLoading = false;
+            draft.onOutcomesLoadingError = action.error;
+            draft.outcomesLoading = false;
         return; 
         case SET_OUTCOME_MARKDOWN:
-             if ( draft.outcomes[action.payload.teachObject?._id] ) {
+            if ( draft.outcomes[action.payload.teachObject?._id] ) {
                 draft.outcomes[action.payload.teachObject?._id].markDownContent = action.payload.markDownContent; 
-             }
+            }
         return;
+        case SET_OUTCOME_LINK:
+            draft.outcomeLink = action?.payload;
+        return;  
         case RESET_OUTCOME_ERROR:
-             draft.onSaveOutcomeError = null;
-       return; 
-       case DELETE_OUTCOME_SUCCESS:
+            draft.onSaveOutcomeError = null;
+        return; 
+        case TOGGLE_CONCEPTS:
+            draft.concepts = !draft.concepts;
+        return;
+        case SET_SELECTED_OUTCOME:
+        case SET_CURRENT_OUTCOME:    
+            let selected = action?.payload;
+            draft.selectedOutcome = selected;
+            draft.currentOutcome = selected;
+        return;
+        case TOGGLE_FURTHER_STUDY_MODAL:
+            draft.furtherStudyModal = !draft.furtherStudyModal;
+        case DELETE_OUTCOME_SUCCESS:
             delete draft.outcomes[action.payload?._id];
-       return; 
+        return;
      default:
           
     }

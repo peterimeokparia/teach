@@ -1,0 +1,167 @@
+.answer-content {
+    width: 5px;
+    margin-bottom: 105px;
+
+    position: relative;
+z-index: 1;
+}
+.answer-content .editorTest { 
+    font: normal 1.11em KaTeX_Main,Times New Roman,serif;
+    width: 93vw;
+    max-width: 95vw;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: left;
+    box-shadow: 0 0 0 5px #d2e3f7;
+    padding-bottom: 90px;
+    list-style: none;
+    background: white;   
+    padding:10px 5px 15px 20px; 
+} 
+.mui-headerStyleDropdownButtons {
+    background-color: white;
+    border-style: dotted;
+    margin-right: 10px;
+    align-self: flex-end; 
+    border: 2px solid #f5f5f5;
+    border-radius: 50%; 
+    transition: transform .7s ease-in-out;
+    box-shadow: 10px 10px black;
+    margin-top: "-1%"
+}
+.custom-answer input[type="checkbox"] {
+    opacity: 0;
+    position: fixed;
+    width: 0;
+}
+
+.custom-answer label {
+    display: inline-block;
+    background-color: #ddd;
+    padding: 10px 20px;
+    font-family: sans-serif, Arial;
+    font-size: 16px;
+    border: 2px solid #444;
+    border-radius: 4px;
+    margin-left: -200px;
+}
+
+.custom-answer label:hover {
+    background-color: #dfd;
+    margin-left: -200px;
+  }
+
+.custom-answer input[type="checkbox"]:checked + label {
+    background-color:#bfb;
+    border-color: #4c4;
+}
+
+.custom-answer input[type="checkbox"]:focus + label {
+    border: 2px dashed #444;
+}
+
+@media only screen and (min-width: 638px) { 
+    .answer-content {
+        width: 5px;
+        margin-top: -55px;
+        
+        position: relative;
+z-index: 1;
+    }
+    .answer-content .editorTest { 
+        font: normal 1.11em KaTeX_Main,Times New Roman,serif;
+        width: 93vw;
+        max-width: 95vw;
+        display: flex;
+        flex-direction: column;
+        font-family: 'Courier New', Courier, monospace;
+        text-align: left;
+        border-radius: 25px;
+        border-style: solid;
+        border-width: 3px;
+        box-shadow: 0 0 0 5px #d2e3f7;
+        padding-bottom: 90px;
+        list-style: none;
+        background: white;   
+        padding:10px 5px 15px 20px; 
+    } 
+    .mui-headerStyleDropdownButtons {
+        background-color: white;
+        border-style: dotted;
+        margin-right: 10px;
+        align-self: flex-end; 
+        border: 2px solid #f5f5f5;
+        border-radius: 50%; 
+        transition: transform .7s ease-in-out;
+        box-shadow: 10px 10px black;
+        margin-top: "-1%"
+    }
+    .custom-answer input[type="checkbox"] {
+        opacity: 0;
+        position: fixed;
+        width: 0;
+    }
+    
+    .custom-answer label {
+        display: inline-block;
+        background-color: #ddd;
+        padding: 10px 20px;
+        font-family: sans-serif, Arial;
+        font-size: 16px;
+        border: 2px solid #444;
+        border-radius: 4px;
+        margin-left: -200px;
+    }
+    
+    .custom-answer label:hover {
+        background-color: #dfd;
+        margin-left: -200px;
+      }
+    
+    .custom-answer input[type="checkbox"]:checked + label {
+        background-color:#bfb;
+        border-color: #4c4;
+    }
+    
+    .custom-answer input[type="checkbox"]:focus + label {
+        border: 2px dashed #444;
+    }
+}
+
+.field-input-checkbox input{
+    font-weight: bold;
+    margin-left: -20px;
+    border-radius: 5%;
+    width: 60px;
+    background: white;
+    box-shadow: 10px 10px black;
+    cursor: context-menu;
+}
+.field-input-checkbox-selected input{
+    font-weight: bold;
+    margin-left: -20px;
+    border-radius: 5%;
+    width: 60px;
+    color: white;
+    background: green;
+    box-shadow: 10px 10px black;
+    cursor: context-menu;
+}
+.field-input-checkbox  .labels-position {
+    margin-left: 1200px; 
+    margin-top: 155px; 
+}
+.field-input-checkbox  .labels-position .labelSelector{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+    width: 360px;
+    height: 160px;
+    background-color: #555;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 7771;
+    top: 20%;
+}

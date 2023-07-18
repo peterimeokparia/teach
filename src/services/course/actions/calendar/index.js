@@ -4,7 +4,7 @@ get,
 update,
 remove, 
 getById,
-getCalendarsByUserId } from 'services/course/api';
+getCalendarsByUserId } from 'services/course/api/index.js';
 
 export const ADD_NEW_CALENDAR_BEGIN = "ADD NEW CALENDAR BEGIN";
 export const ADD_NEW_CALENDAR_SUCCESS = "ADD NEW CALENDAR SUCCESS";

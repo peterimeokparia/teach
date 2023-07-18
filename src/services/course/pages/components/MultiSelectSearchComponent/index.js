@@ -4,9 +4,7 @@ import Stack from '@mui/material/Stack';
 import Autocomplete from '@mui/material/Autocomplete';
 import RadioButtonComponent from 'services/course/pages/components/RadioButtonComponent';
 
-// const options = ['Option 1', 'Option 2'];
-
-const top100Films = [
+export const top100Films = [
     { title: 'The Shawshank Redemption', year: 1994 },
     { title: 'The Godfather', year: 1972 },
     { title: 'The Godfather: Part II', year: 1974 },
@@ -136,22 +134,20 @@ const top100Films = [
 export default function MultiSelectSearchComponent({
   searchOptions,
   optionValue
-}) {
-
+ }) {
     const [ selectedCheckedItem, setSelectedCheckedItem ] = React.useState([]);
     const [ value, setValue ] = React.useState([]);
     
     const handleValue = ( value ) => {
-    }
-
+      setValue( value ); // check
+    };
 
     const handleSelectedValue = ( value ) => {
         setSelectedCheckedItem( value );
-    }
+    };
 
     return (
       <Stack spacing={2} sx={{ width: 300 }}>
-
         <RadioButtonComponent setSelectedItem={handleSelectedValue} />
         <Autocomplete
           id="free-solo-demo"
@@ -161,45 +157,9 @@ export default function MultiSelectSearchComponent({
             handleValue(newValue);
           }}
           options={selectedCheckedItem.map((option) => option['title'])}
-          //options={top100Films.map((option) => option?.title)}
           renderInput={(params) => <TextField {...params} label="freeSolo" />}
         />
       </Stack>
     );
   }
-
-
-
-
-
-
-
-// export default function ControllableStates() {
-//   const [value, setValue] = React.useState(options[0]);
-//   const [inputValue, setInputValue] = React.useState('');
-
-//   return (
-//     <div>
-//       <div>{`value: ${value !== null ? `'${value}'` : 'null'}`}</div>
-//       <div>{`inputValue: '${inputValue}'`}</div>
-//       <br />
-//       <Autocomplete
-//         value={value}
-//         onChange={(event, newValue) => {
-//           setValue(newValue);
-//         }}
-//         inputValue={inputValue}
-//         onInputChange={(event, newInputValue) => {
-//           setInputValue(newInputValue);
-//         }}
-//         id="controllable-states-demo"
-//         options={options}
-//         sx={{ width: 300 }}
-//         renderInput={(params) => <TextField {...params} label="Controllable" />}
-//       />
-//     </div>
-//   );
-// }
-
-
 

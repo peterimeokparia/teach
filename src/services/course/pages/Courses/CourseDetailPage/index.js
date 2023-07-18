@@ -1,42 +1,15 @@
-import { 
-useEffect } from 'react';
-
-import { 
-connect } from 'react-redux';
-
-import { 
-Redirect } from '@reach/router';
-
-import { 
-setCurrentLesson,
-getLessonVideoUrl,
-setLessonCourse,
-loadLessons,
-addNewLesson, 
-saveLesson } from 'services/course/actions/lessons';
-
-import { 
-loadSessions } from 'services/course/actions/sessions';
-
-import { 
-getUsersByOperatorId,    
-getLessonsByCourseIdSelector, 
-getCoursesByCourseIdSelector,
-getCoursesByCreatedByIdSelector,
-getOperatorFromOperatorBusinessName } from 'services/course/selectors';
-
-import { 
-getLastUsersState } from 'services/course/api';
-
-import { 
-role } from 'services/course/helpers/PageHelpers';
-
-import { 
-toast } from 'react-toastify';
-
-import { 
-Validations } from  'services/course/helpers/Validations';
-
+import { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from '@reach/router';
+import { setCurrentLesson, getLessonVideoUrl, setLessonCourse, 
+    loadLessons, addNewLesson,  saveLesson } from 'services/course/actions/lessons';
+import { loadSessions } from 'services/course/actions/sessions';
+import { getUsersByOperatorId, getLessonsByCourseIdSelector, getCoursesByCourseIdSelector,
+ getCoursesByCreatedByIdSelector, getOperatorFromOperatorBusinessName } from 'services/course/selectors';
+import { getLastUsersState } from 'services/course/api';
+import { role } from 'services/course/helpers/PageHelpers';
+import { toast } from 'react-toastify';
+import { Validations } from  'services/course/helpers/Validations';
 import NotFoundPage from 'services/course/pages/components/NotFoundPage';
 import Loading from 'services/course/pages/components/Loading';
 import CourseDisplayViewComponent from 'services/course/pages/Courses/CourseDetailPage/components/CourseDisplayViewComponent';
@@ -62,6 +35,7 @@ const CourseDetailPage = ({
     selectedLessonPlanLesson,
     studentsSubscribedToThisCourse,
     sessions,
+    currentOutcome,
     setLessonCourse,
     onLessonError,
     children }) => {
@@ -95,12 +69,13 @@ function userOwnsCourse(user, courseTutor,  courseId){
         return true;
     }
     return ( user?.courses?.includes(courseId) || 
-            courseTutor?.courses?.includes(courseId) );
+        courseTutor?.courses?.includes(courseId) );
 };
 
 return ( 
     <div>    
         {Validations.setErrorMessageContainer()} 
+        
         <CourseDisplayViewComponent
             operatorBusinessName={operatorBusinessName}
             courseId={courseId} 
@@ -109,7 +84,6 @@ return (
             courseDetailChildren={children}
         />     
     </div>   
-    
 ); };
 
 const mapDispatch = {
@@ -140,7 +114,7 @@ const mapState = (state, ownProps) => {
         studentsSubscribedToThisCourse : getUsersByOperatorId(state, ownProps)?.filter(user => user?.role === role.Student && user?.courses?.includes(ownProps?.courseId)),
         lessonStarted: state.lessons.lessonStarted,
         sessions: Object.values(state?.sessions?.sessions)?.filter(session => session?.courseId === ownProps?.courseId),
-        onSessionRenewal: state.sessions.autoRenewedPackageSuccess, 
+        onSessionRenewal: state.sessions.autoRenewedPackageSuccess
     };
 };
 

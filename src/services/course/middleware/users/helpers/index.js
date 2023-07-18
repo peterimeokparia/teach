@@ -1,25 +1,9 @@
-import {
-add,
-updateUser,
-sendEmail } from 'services/course/api';
-
-import {
-getHostName } from 'services/course/helpers/PageHelpers';
-
-import {
-RESET_USERS_CART,
-LAST_LOGGEDIN_USER } from 'services/course/actions/users';
-
-import {
-addNewLoginSession,
-saveLoginSession } from 'services/course/actions/logins';
-
-import {
-getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
-
-import { 
-addTime,
-saveTime } from 'services/course/actions/countdowntimer';
+import { add, updateUser, sendEmail } from 'services/course/api';
+import { getHostName } from 'services/course/helpers/PageHelpers';
+import { RESET_USERS_CART, LAST_LOGGEDIN_USER } from 'services/course/actions/users';
+import { saveLoginSession } from 'services/course/actions/logins';
+import { getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
+import { addTime, saveTime } from 'services/course/actions/countdowntimer';
 
 const emailMessageConfig = {
     sendersEmailAddress: "teachpadsconnect247@gmail.com",
@@ -29,7 +13,6 @@ const emailMessageConfig = {
 const routePrefix = getHostName() ? "http://localhost:3000" : `https://ravingfanstudents.com`;
 
 export const logLogOutTime = ( loginSession, store ) => {
-
     let currentLoginSession = loginSession;
 
     let loginConfig = { 
@@ -56,7 +39,6 @@ export const handleCartOnPurchase = ( user, store ) => {
 
 export const handleSignUpSuccess = ( user, store ) => {
     if (!user) return;
-
     let currentState = store?.getState();
 
     let operatorBusinessName = (currentState?.operators?.operators[user?.operatorId])?.businessName;
@@ -69,7 +51,6 @@ export const handleSignUpSuccess = ( user, store ) => {
             `Kindly verify your account ${routePrefix}/${operatorBusinessName}/accountverification/${user?._id}`,
             user?._id
         );
-        
         sendEmail(
             emailMessageConfig?.sendersEmailAddress,
             user?.email, 
@@ -135,13 +116,10 @@ export const handleFormBuilderTimer = (store) => {
     if ( !timer ) {
         return Error('no form builder timer set');
     }
-
     if ( timer && timer?._id ){
-       
         store?.dispatch( saveTime( timer  ) );
         return;
     } 
-
     store?.dispatch( addTime( { formType: timer?.formType, formName: timer?.formName, formUuId: timer?.formUuId, userId: timer?.userId, testTime: timer?.testTime, role: timer?.role } ) );
-}
+};
 

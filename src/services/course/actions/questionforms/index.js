@@ -22,7 +22,6 @@ export const QUESTIONFORM_META = "QUESTIONFORM META";
 export const QUESTIONFORM_COURSEID = "QUESTIONFORM COURSEID";
 export const SET_QUESTIONFORMS_MARKDOWN = "SET QUESTIONFORMS MARKDOWN";
 export const SET_MULTIPLECHOICE_EXPLANATION_ANSWER_MARKDOWN = "SET MULTIPLECHOICE EXPLANATION ANSWER MARKDOWN";
-export const SET_EXPLANATION_ANSWER_MARKDOWN = "SET EXPLANATION ANSWER MARKDOWN";
 
 export const addNewFormQuestion = ( question ) => {
     return dispatch => {
@@ -109,23 +108,3 @@ export const questionFormCourseId = courseId => ({
      payload: courseId
 })
 
-let timerHandle = null;
-
-export const setMarkDown = ( teachObject, markDownContent, teachObjectType="", actionType, saveAction  ) => {
-    return ( dispatch, getState )  => {
-        dispatch({ type: actionType, payload: {   
-            teachObject,
-            markDownContent
-          }});
-
-        if ( timerHandle ){
-            clearTimeout( timerHandle );
-        }
-        timerHandle = setTimeout(() => {
-            console.log("...saving markdown text"); 
-            const latestTeachObjectData = getState()[teachObjectType][teachObjectType][ teachObject?._id ]; 
-            
-            dispatch(saveAction( latestTeachObjectData ));
-        }, 2000);  
-    };
-};

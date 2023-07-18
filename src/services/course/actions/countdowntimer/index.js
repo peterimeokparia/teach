@@ -4,7 +4,7 @@ update,
 updateWithId,
 remove,
 get,
-getById } from 'services/course/api';
+getById } from 'services/course/api/index.js';
 
 export const ADD_TIME_BEGIN = "ADD TIME BEGIN";
 export const ADD_TIME_SUCCESS = "ADD TIME SUCCESS";

@@ -1,19 +1,7 @@
-import { 
-useState, 
-useEffect, 
-useRef } from 'react';
-
-import {
-newCalendarEventData,
-frequencyCollection,
-days,
-transformDateTime,
-datePatternIncludesTimeSequence,
-getDate,
-getTime } from 'services/course/pages/CalendarPage/helpers';
-
-import { 
-Validations } from 'services/course/helpers/Validations';
+import { useState, useEffect, useRef } from 'react';
+import { newCalendarEventData, frequencyCollection, days, transformDateTime, datePatternIncludesTimeSequence, 
+    getDate, getTime } from 'services/course/pages/CalendarPage/helpers';
+import { Validations } from 'services/course/helpers/Validations';
 
 function useSchedulingHook(
     handleSubmit,
@@ -39,6 +27,7 @@ function useSchedulingHook(
     const [ endTimeDateTime, setEndTimeDateTime ] = useState(  startTimeDateTime );
     const [ freqCollectionData, setFreqCollectionData ] = useState(frequencyCollection); 
     const inputRef = useRef();
+
     useEffect (() => {
         if ( inputRef ) {
             inputRef.current.focus();
@@ -194,7 +183,8 @@ return {
     setWeekDays: (val) => setWeekDays(val),   
     setEndDate: (val) => setEndDate(val),  
     setEndTimeDateTime: (val) => setEndTimeDateTime(val),  
-    submit: (val) => submit(val)
+    submit: (val) => submit(val),
+    setFreqCollectionData
 }; };
 
 export default useSchedulingHook;

@@ -36,6 +36,9 @@ notesRoute.put('/:noteId', putRoute( notesModel, 'noteId' ), (req, res) => {
     return res.status(200).json(res?.savedResult);
 });
 
+notesRoute.put('/content/:noteId', putRoute( notesModel, 'noteId' ), (req, res) => {
+});
+
 notesRoute.delete('/:noteId', deleteRoute(notesModel, 'noteId'), (req, res) => {
     return res.status(200).json(res?.newResult);
 });

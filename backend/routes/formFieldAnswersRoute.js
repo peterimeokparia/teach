@@ -32,6 +32,10 @@ formFieldAnswersRoute.get('/formfield/user', getByIdRoute( formFieldAnswerModel,
     return res.status(200).json(res?.newResult);
 });
 
+formFieldAnswersRoute.put('/content/:formFieldId', putRoute( formFieldAnswerModel, 'formFieldId' ), (req, res) => {
+    return res.status(200).json(res?.savedResult);
+});
+
 formFieldAnswersRoute.get('/videos', getByIdRoute( formFieldAnswerModel, '_id' ),  (req, res) => {
     return res.status(200).json(res?.newResult);
 });

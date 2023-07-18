@@ -1,0 +1,210 @@
+.Recommender  {
+  /* hide scrollbar but allow scrolling */
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+  /* overflow-y: scroll; */
+  /* margin-left: 10%; */
+  width: 96%;
+  /* height: 90%; */
+  margin-top: 2%;
+  margin-left: 2%;
+  overflow:hidden; 
+  overflow-y: auto;
+  background-color: whitesmoke;
+  scrollbar-width: none; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 20px;
+}
+.Recommender::-webkit-scrollbar  {
+  display: none;
+  scrollbar-width: none; /* for Firefox */
+  overflow-y: scroll;
+}
+.Recommender .linked-articles {
+  margin-top: -15px;
+  margin-bottom: 35px;
+  padding-left: 7px;
+}
+.Recommender .title {
+  position: absolute;
+  z-index: 1000;
+  margin-top: -120px;
+  padding-bottom: 100px;
+  font-size: 50px;
+  text-transform: uppercase;
+  letter-spacing: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  letter-spacing: 0.5rem;
+  font-weight: bold;
+}
+.Recommender .form-display .questions-outcome {
+  color: black;
+  background-color: #b2eff7;
+  border-bottom: none;
+  margin-top: 2px;
+  box-shadow: 10px 10px black;
+  font-size: 16px;
+  padding-top: 0px;
+  /* padding-left: 7px;
+  margin-right: 15px; */
+  border: 10px dashed #bb9eec;
+  /* margin-left: -5px; */
+  border-radius: 22px;
+  width: 2px;
+  height: 25px;
+  display: block;
+  border: none;
+  border-bottom: 1px solid #673ab7;
+}
+.Recommender h1{
+  font-size: 28px;
+  text-align: center;
+  text-transform: capitalize;
+}
+.Recommender h3 {
+  margin-bottom: 25px;
+}
+.Recommender h5 {
+  text-align: center;
+}
+.Recommender p {
+  text-align: center;
+  align-items: center;
+}
+.Recommender .form-display {
+  /* margin-left: 25%; */
+  align-items: center;
+}
+.Recommender .form-display form {
+  max-width: 600px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  /* margin: 0 auto; */
+  margin-top: 22px;
+  /* margin-left: 30%; */
+  align-items: center;
+}
+.Recommender .form-display form input, select {
+  width: 120%;
+  /* border: 1px solid #c244d8; */
+  outline: none;
+  transition: box-shadow 0.2s;
+  margin-bottom: 20px;
+  margin-left: -40px;
+  text-align: center;
+  text-transform: capitalize;
+  border: 0px solid #5d2faf;
+}
+.Recommender .form-display form input:focus {
+  box-shadow: 0 0 0px #c244d8;
+  border: 0px solid #5d2faf;
+}
+.Recommender .form-display form label {
+  margin-bottom: 0.6em;
+  display: block;
+  text-transform: capitalize;
+  cursor: pointer;
+}
+.Recommender .form-display form button {
+  color: #fff;
+  background-color: #c244d8;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 2px;
+  width: 200px;
+  margin: 0 auto;
+  display: block;
+  border: none;
+  border-bottom: 3px solid #673ab7;
+  transition: all 0.2s;
+}
+.Recommender  .form-display form button:focus {
+  outline: none;
+  box-shadow: 0 0 4px #673ab7;
+}
+.Recommender  .form-display form button:active {
+  border-bottom: none;
+  margin-top: 2px;
+  box-shadow: 0 2px 0 #673ab7 inset;
+}
+.Recommender  .form-display form button:disabled {
+  background-color: #dec5e2;
+  border-bottom: 2px solid #f0e9fd;
+}
+.Recommender .quizz-icon {
+  cursor: pointer;
+}
+.Recommender a {
+  cursor: pointer;
+}
+.Recommender label {
+  margin-bottom: 0.6em;
+}
+.Recommender button {
+  /* color: #fff; */
+  /* background-color: #c244d8; */
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 2px;
+  width: 200px;
+  margin: 0 auto;
+  margin-top: 0.6em;
+  margin-right: 0em;
+  display: block;
+  border: none;
+  border-bottom: 3px solid;
+  transition: all 0.2s;
+}
+.Recommender .button-left {
+  /* margin-left: 22%; */
+  margin-top: 25px;
+}
+.Recommender .button-right {
+  /* margin-right: 26%; */
+  margin-top: 25px;
+}
+.Recommender button:focus {
+  outline: none;
+  box-shadow: 0 0 4px #673ab7;
+}
+.Recommender button:active {
+  border-bottom: none;
+  margin-top: 2px;
+  box-shadow: 0 2px 0 #673ab7 inset;
+}
+.Recommender button:disabled {
+  background-color: #dec5e2;
+  border-bottom: 2px solid #f0e9fd;
+}
+.Recommender .links-question {
+  text-align: center;
+  align-items: center;
+  margin-left: 70px;
+}
+.Recommender .links-delete {
+  text-align: center;
+  align-items: center;
+  margin-left: 1px;
+}
+
+.Recommender .space-between-select {
+  width: 90%;
+  border: 1px solid #c244d8;
+  outline: none;
+  transition: box-shadow 0.2s;
+  margin-bottom: 20px;
+  text-align: center;
+  text-transform: capitalize;
+}
+.Recommender .link-label {
+  display: block;
+  width: 380px;
+  text-align: center;
+  align-items: center;
+  margin-left: 90px;
+}

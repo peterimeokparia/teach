@@ -4,7 +4,7 @@ import {
 RECORDING_STATUS_RECORDING_STARTED, 
 RECORDING_STATUS_RECORDING_ENDED, 
 RECORDING_DIALOG_OPEN,
-RECORDING_DIALOG_CLOSED } from '../../actions/video';
+RECORDING_DIALOG_CLOSED } from '../../actions/video/index.js';
 
 const initialState = {
     hasRecordingStarted: false,

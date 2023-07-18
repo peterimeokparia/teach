@@ -19,6 +19,10 @@ const onlineQuestionSchema = new Schema ({
         type: String,
         required: false,
     },
+    parentId: { 
+        type: String, 
+        required: false,
+    },
     type: { 
         type: String, 
         required: false,
@@ -52,6 +56,10 @@ const onlineQuestionSchema = new Schema ({
         type: String, 
         required: false,
     },
+    lessonId: { 
+        type: String, 
+        required: false,
+    },
     answerKey: { 
         type: String, 
         required: false,
@@ -77,6 +85,14 @@ const onlineQuestionSchema = new Schema ({
         required: false,
     },
     examId: { 
+        type: String, 
+        required: false,
+    },
+    outcomeId: {
+        type: String, 
+        required: false, // will mark as required
+    },
+    linkId: { 
         type: String, 
         required: false,
     },

@@ -56,7 +56,7 @@
 }
 
 .CourseDetail header {
-  background-color: #673ab7;
+  /* background-color: #673ab7; */
   color: #fff;
   display: flex;
   flex-direction: row;
@@ -111,15 +111,32 @@
   display: flex;
   height: 100vh;
 }
+.CourseDetail .content-not-visible {
+  visibility: hidden;
+}
 .CourseDetail .sidebar {
-  padding-right: 0px;
-  padding-left: 1px;
   display: flex;
   flex-direction: column;
+  width: 0px;
+  height: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  flex-grow: 1;
 }
-
+.CourseDetail .sidebar .sidebar-search {
+  position: absolute;
+  z-index: 1000;
+  margin-left: -38.7%;
+  width: 2px;
+}
+.CourseDetail .sidebar .lessons::-webkit-scrollbar {
+  display: none;
+  overflow-y: scroll;
+}
 .CourseDetail .sidebar .lessons {
   list-style: none;
+  height: 80vh;
+  width: 31.5vh;
   margin: 0;
   padding: 0;
   top: 50%;
@@ -127,7 +144,96 @@
   margin-right: 1%;
   margin-left: 0%;
   margin-top: 2%;
+  -ms-overflow-style: none;  
+  scrollbar-width: none; 
+  overflow-y: scroll; 
 }
+.CourseDetail .sidebar .lessons div {
+  /* display: none; */
+  -ms-overflow-style: none;  
+  scrollbar-width: none; 
+  overflow-y: scroll;
+}
+.CourseDetail .sidebar .lessons div::-webkit-scrollbar {
+  display: none;
+  overflow-y: scroll;
+  -ms-overflow-style: none;  
+  scrollbar-width: none; 
+  overflow-y: scroll; 
+}
+
+.CourseDetail .sidebar-outcomes {
+  display: flex;
+  flex-direction: column;
+  width: 0px;
+  height: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.CourseDetail .sidebar-outcomes .lessons::-webkit-scrollbar {
+  display: none;
+  overflow-y: scroll;
+}
+.CourseDetail .sidebar-outcomes .lessons {
+  list-style: none;
+  height: 80vh;
+  width: 31.5vh;
+  margin: 0;
+  padding: 0;
+  top: 50%;
+  left: 10%;
+  margin-right: 1%;
+  margin-left: 0%;
+  margin-top: 2%;
+  -ms-overflow-style: none;  
+  scrollbar-width: none; 
+  overflow-y: scroll; 
+}
+.CourseDetail .sidebar-outcomes .lessons div {
+  -ms-overflow-style: none;  
+  scrollbar-width: none; 
+  overflow-y: scroll;
+}
+.CourseDetail .sidebar-outcomes .lessons div::-webkit-scrollbar {
+  display: none;
+  overflow-y: scroll;
+  -ms-overflow-style: none;  
+  scrollbar-width: none; 
+  overflow-y: scroll; 
+}
+.CourseDetail .sidebar-2 {
+  display: flex;
+  flex-direction: column;
+  width: 0px;
+  height: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  flex-grow: 1;
+  margin-left: 65%;
+}
+
+.CourseDetail .sidebar-3 {
+  display: flex;
+  flex-direction: column;
+  width: 0px;
+  height: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  flex-grow: 1;
+  margin-left: 1%;
+  /* display: flex;
+  flex-direction: column;
+  width: 0px;
+  height: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  flex-grow: 1;
+  margin-left: 90%; */
+}
+
+
 .lessons .lessonMultiColor{
   background-color: #673ab7;
   margin: 0;
@@ -147,7 +253,7 @@
 }
 .CourseDetail .content .lesson-content {
   margin-top: -1%;
-  margin-left: -62%;
+  margin-left: -52%;
   /* margin-left: 0%; update for production - 0 */
   width: 50vh; 
 } 
@@ -203,17 +309,66 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* width: 1000px; */
   max-width: 1000px; 
   margin-left: auto; 
-  /* margin-left:1542px; */
-  /* dev  margin-left: 0px;  */
 } 
 .CourseDetail .content .lesson-content .toggleItems {
   /* margin-left: 130px; development */
   /* margin-left: 1642px; */
-  margin-left: 130px;
+  margin-top: 25px;
+  margin-left: 220%; 
 } 
+.CourseDetail .content .lesson-content .toggleItems .lesson-video { 
+  /* margin-left: 130px; development */
+  /* margin-left: 1642px; */
+  margin-left: 130px; 
+} 
+.CourseDetail .content .lesson-content .toggleItem .outcomes {
+  margin-left: 10px; 
+} 
+.CourseDetail .content .lesson-content .toggleItems .outcomes .add-new-outcome-button {
+  margin-left: 0px; 
+} 
+.CourseDetail .content .lesson-content .toggleItems .outcomes .add-new-outcome-form-animate {
+  margin-left: 400px;
+} 
+.CourseDetail .content .lesson-content .toggleItems .outcomes .add-new-outcome-form {
+  margin-left: 0px;
+} 
+.CourseDetail .content .lesson-content .toggleItems .outcomes .add-new-outcome-button-animate {
+  margin-left: 400px; 
+  color: red;
+  background-color: red;
+  animation: blink-animation 1s steps(5, start) infinite;
+  -webkit-animation: blink-animation 1s steps(5, start) infinite;
+  @keyframes blink-animation {
+    to {
+      visibility: hidden;
+    }
+  }
+  @-webkit-keyframes blink-animation {
+    to {
+      visibility: hidden;
+    }
+  }
+} 
+.CourseDetail .content .lesson-content .toggleItems .outcomes .add-new-outcome-button-animate:hover {
+  margin-left: 400px; 
+  color: red;
+  background-color: red;
+  animation: blink-animation 0s steps(5, start) infinite;
+  -webkit-animation: blink-animation 0s steps(5, start) infinite;
+  @keyframes blink-animation {
+    to {
+      visibility: hidden;
+    }
+  }
+  @-webkit-keyframes blink-animation {
+    to {
+      visibility: hidden;
+    }
+  }
+}
 .CourseDetail .content .lesson-content .toggleItems .sidebar{
   /* margin-left: 130px; development */
   /* margin-left: 1642px; */
@@ -416,25 +571,109 @@ a:hover {
     flex-direction: row;
     height: 100%;
   }
+  .CourseDetail .content-not-visible {
+    visibility: hidden;
+  }
   .CourseDetail .sidebar {
-    flex-basis: 300px;
-    /* background: #fbf9ff; */
-    background: transparent;
-    /* border-right: 1px solid #bba0ea; */
-    border-right: 1px solid transparent;
+    overflow-y: scroll;     
+    width: 0px;
+    box-sizing: border-box;
+    text-align: center;
+    flex-grow: 1;
+  }
+  .CourseDetail .sidebar-outcomes {
+    display: flex;
+    flex-direction: column;
+    width: 0px;
+    height: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    flex-grow: 1;
+    margin-left: -50%;
+  }
+  
+  .CourseDetail .sidebar-outcomes .lessons::-webkit-scrollbar {
+    display: none;
+    overflow-y: scroll;
+  }
+  .CourseDetail .sidebar-outcomes .lessons {
+    list-style: none;
+    height: 80vh;
+    width: 31.5vh;
+    margin: 0;
+    padding: 0;
+    top: 50%;
+    left: 10%;
+    margin-right: 1%;
+    margin-left: 0%;
+    margin-top: 2%;
+    -ms-overflow-style: none;  
+    scrollbar-width: none; 
+    overflow-y: scroll; 
+  }
+  .CourseDetail .sidebar-outcomes .lessons div {
+    /* display: none; */
+    -ms-overflow-style: none;  
+    scrollbar-width: none; 
+    overflow-y: scroll;
+  }
+  .CourseDetail .sidebar-outcomes .lessons div::-webkit-scrollbar {
+    display: none;
+    overflow-y: scroll;
+    -ms-overflow-style: none;  
+    scrollbar-width: none; 
+    overflow-y: scroll; 
   }
   .CourseDetail .lesson {
     flex: 1;
+  }
+  .CourseDetail .sidebar-2 {
+    overflow-y: scroll;     
+    width: 0px;
+    box-sizing: border-box;
+    text-align: center;
+    flex-grow: 1;
+  }
+  .CourseDetail .sidebar-3 {
+    display: flex;
+    flex-direction: column;
+    width: 0px;
+    height: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    flex-grow: 1;
+    margin-left: 1%;
   }
 }
 @media only screen and (max-width: 637px) {
   .CourseDetail .content {
     flex-direction: column;
   }
+  .CourseDetail .content-not-visible {
+    visibility: hidden;
+  }
   .CourseDetail .sidebar {
     background: #fbf9ff;
     border-bottom: 1px solid #bba0ea;
     min-height: 50px;
+    /* height: 10vh; */
+    overflow-y: scroll; 
+  }
+  .CourseDetail .sidebar-2 {
+    background: #fbf9ff;
+    border-bottom: 1px solid #bba0ea;
+    min-height: 50px;
+    overflow-y: scroll; 
+  }
+  .CourseDetail .sidebar-3 {
+    display: flex;
+    flex-direction: column;
+    width: 0px;
+    height: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    flex-grow: 1;
+    margin-left: 1%;
   }
   .CourseDetail .lesson {
     flex: 1;

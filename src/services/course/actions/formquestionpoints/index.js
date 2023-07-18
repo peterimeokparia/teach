@@ -1,11 +1,10 @@
-// formquestionpoints
 import {
 add,
 update,
 updateWithId,
 remove,
 get,
-getById } from 'services/course/api';
+getById } from 'services/course/api/index.js';
 
 export const ADD_FORMFIELDPOINTS_BEGIN = "ADD FORMFIELDPOINTS BEGIN";
 export const ADD_FORMFIELDPOINTS_SUCCESS = "ADD FORMFIELDPOINTS SUCCESS";
@@ -28,7 +27,6 @@ export const addNewFormFieldPoint = newFormField => {
         return add( newFormField, '/formquestionpoints')
         .then(inputfield => {
             dispatch({ type: ADD_FORMFIELDPOINTS_SUCCESS, payload: inputfield });
-            // if I have to dispatch a unique action to addNewFormFielAnswer and not addNewFormField without the middleware
         }).catch( error => {
             dispatch({ type: ADD_FORMFIELDPOINTS_ERROR , error });
         });

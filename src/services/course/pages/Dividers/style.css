@@ -9,11 +9,6 @@
     display: flex;
     width: 100vw;
     height: 100vh;
-    /* margin-left: -50px; */
-    /* width: 100%; */
-    /* display: flex;
-    flex-flow: nowrap column;
-    overflow:hidden; */
 }
 
 .panel {    
@@ -52,7 +47,6 @@
     color: white;
     padding: 10px
 }
-
 .body {
     background: gray;
     flex-grow: 3;
@@ -63,37 +57,16 @@
 .sideBarResizeContainer {
     width: 30%;
 }
-
-.sidebar {
-    /* background: lightpink;
-    min-width: 200px;
-    width: 400px;
-    width:100%;
-    box-sizing: border-box;
-    text-align: center;
-    flex-grow: 1; */
-
-    position: relative;
-    background: lightpink;
-    /* min-width: 200px; */
-    height: 200px;
-    width: 400px;
-    box-sizing: border-box;
-    text-align: center;
-    /* flex-grow: 1; */
-}
-
 .withMargin {
     margin: 0px;
     box-sizing: border-box;
     border: solid #00FFFF 2px;
-    /* border: solid #5B6DCD 2px; */
 }
 
 .content {
     flex-grow: 2;  
     background: white; 
-    background-image: url(../../images/geometry2.png);
+    background-image: url(../../../../Images/geometry2.png);
     background-size: 500px 500px;
 }
 

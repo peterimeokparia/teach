@@ -84,28 +84,20 @@ function handleFormSelection( form, type ){
     switch (type) {
         case FormType.Tutor:  
             if ( form ){
-                alert('in tutor')
-                alert(JSON.stringify(form))
                 setSelectedTutor( form );
                 setSelectedForm({ type: FormType.Course, payload: courses })
             }
             break;
         case FormType.Course:
             if ( form ){
-                alert('in Course')
-                alert(JSON.stringify(form))
                 setSelectedTutor( form );
-
                 let selectedCourseLessons = lessons?.filter( item => item?.courseId === form?._id );
-                alert('lessons')
-                alert(JSON.stringify(selectedCourseLessons))
+    
                 setSelectedForm({ type: FormType.Lesson, payload: selectedCourseLessons })
             }  
             break;
         case FormType.Lesson:  
         if ( form ){
-            alert('in Lesson')
-            alert(JSON.stringify(form))
             setSelectedTutor( form );
             setSelectedForm({ type: FormType.Tutor, payload: tutors })
         }  

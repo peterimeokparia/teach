@@ -22,6 +22,7 @@ const initialState = {
 
 const reducer = produce((draft, action) => {
     switch(action.type){
+         
      case ADD_CLASSGRADE_BEGIN:
      case SAVE_CLASSGRADE_BEGIN:
           draft.saveInProgress = true;

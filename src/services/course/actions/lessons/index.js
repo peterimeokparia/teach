@@ -27,6 +27,8 @@ export const LESSONPLAN_URL = "LESSONPLAN URL";
 export const LESSONPLAN_COURSE = "LESSONPLAN COURSE";
 export const LESSONPLAN_DROPDOWN_LESSON = "LESSONPLAN DROPDOWN LESSON";
 export const START_NEW_LESSON_SUCCESS = "START NEW LESSON SUCCESS";
+export const HANDLE_CURRENT_LESSON_MEETING = "HANDLE CURRENT LESSON MEETING";
+export const HANDLE_CURRENT_LESSON_ITEMS = "HANDLE CURRENT LESSON ITEMS";
 
 export const addNewLesson = ( title, introduction,  courseId, lessonDate, userId ) => {
     return dispatch => {
@@ -122,4 +124,14 @@ export const setLessonCourse = course => ({
 export const startLesson = startLessonProps => ({
     type: START_NEW_LESSON_SUCCESS,
     payload: startLessonProps
+});
+
+export const handleCurrentLessonMeeting = meetingProps => ({
+    type: HANDLE_CURRENT_LESSON_MEETING,
+    payload: meetingProps
+});
+
+export const handleCurrentLessonItems = lessonProps => ({
+    type: HANDLE_CURRENT_LESSON_ITEMS,
+    payload: lessonProps
 });

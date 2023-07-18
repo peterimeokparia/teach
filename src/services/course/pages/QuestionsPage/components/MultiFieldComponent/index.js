@@ -364,10 +364,12 @@ return(
 
 const mapState = ( state, ownProps ) => {
   return {
-    questions: Object.values(state.questions.questions),
+    // questions: Object.values(state.questions.questions),
+    questions: Object.values(state.onlineQuestions.onlineQuestions),
     currentUser: state.users.user,
     video: state.hasRecordingStarted.recording,
-    questions: Object.values(state.questions.questions),
+    // questions: Object.values(state.questions.questions),
+    questions: Object.values(state.onlineQuestions.onlineQuestions),
     latestQuestion: state.questions.latestQuestion,
     lessons: Object.values(state.lessons.lessons),
     markDownEditors: state.questions.markDownEditors,

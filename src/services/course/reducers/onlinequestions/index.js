@@ -1,5 +1,7 @@
 import produce from 'immer';
 
+import { saveEditorMarkDownContent } from 'services/course/reducers/helpers/editor'; 
+
 import { 
 ADD_ONLINEQUESTION_BEGIN,
 ADD_ONLINEQUESTION_SUCCESS,            
@@ -16,16 +18,26 @@ DELETE_ONLINEQUESTION_BEGIN,
 DELETE_ONLINEQUESTION_SUCCESS, 
 DELETE_QUESTION_SUCCESS,
 SET_ONLINEQUESTION_MARKDOWN,
-SET_EXPLANATION_ANSWER_MARKDOWN,
 SET_ONLINEQUESTION_FILE_UPLOAD_META,
 QUESTION_META, 
+UPDATE_ON_DELETE,
 ONLINE_QUESTION_COURSEID,
-TOGGLE_CONTENT_CHANGED } from '../../actions/onlinequestions';
+TOGGLE_CONTENT_CHANGED,
+SET_SELECTED_QUESTION,
+SET_QUESTION_PROPERTIES,
+ADD_EXPLAINER_ANSWER,
+SAVE_ONLINEQUESTION_INSIGHTS_SUCCESS,
+ADD_NEW_QUESTION_FROM_EXISTING_SUCCESS,
+SET_COPY_EXISTING_QUESTION,
+SET_COPYING_EXISTING_QUESTION_PROPERTIES } from '../../actions/onlinequestions';
 
 const initialState = {
     onlineQuestions: {},
+    onlineQuestion: {},
+    onlineQuestionInsights: {},
     latestOnlineQuestions: {},
     onlineQuestionCourseId: {},
+    selectedOnlineQuestion: {},
     questionMarkDown: {},
     questionMeta: {},
     fileUploadMeta: {},
@@ -34,7 +46,12 @@ const initialState = {
     onlineQuestionsLoading: false,
     onQuestionsLoadingError: null,
     togglePreviewMode: false,
-    contentUpdated: false
+    contentUpdated: false,
+    onlineQuestionProperties: {},
+    copyOnlineQuestionProperties: {},
+    markDownContentTest: {}, 
+    updateOnDelete: false,
+    copyExistingQuestion: false
 };
 
 const reducer = produce((draft, action) => {
@@ -47,9 +64,20 @@ const reducer = produce((draft, action) => {
              draft.onSaveError = null;
         return;
         case ADD_ONLINEQUESTION_SUCCESS:
-        case SAVE_ONLINEQUESTION_SUCCESS:        
+        case SAVE_ONLINEQUESTION_SUCCESS:
+        case ADD_EXPLAINER_ANSWER:       
              draft.onlineQuestions[action.payload._id] = action.payload; 
              draft.saveInProgress = false;
+        return; 
+        case ADD_NEW_QUESTION_FROM_EXISTING_SUCCESS:       
+             draft.onlineQuestions[action.payload?.response?._id] = action.payload?.response; 
+             draft.saveInProgress = false;
+        return;
+        case SAVE_ONLINEQUESTION_INSIGHTS_SUCCESS:
+             draft.onlineQuestionInsights[action.payload?.questionId][action.payload?.formUuId][action.payload?.userId] = action.payload; 
+        return;
+        case SET_SELECTED_QUESTION:
+             draft.selectedOnlineQuestion = action.payload;
         return;
         case ADD_ONLINEQUESTION_ERROR:
         case SAVE_ONLINEQUESTION_ERROR:
@@ -74,14 +102,7 @@ const reducer = produce((draft, action) => {
              draft.onlineQuestionsLoading = false;
         return; 
         case SET_ONLINEQUESTION_MARKDOWN:
-             if ( draft.onlineQuestions[action.payload.teachObject?._id] ) {
-                draft.onlineQuestions[action.payload.teachObject?._id].markDownContent = action.payload.markDownContent; 
-             }    
-        return;
-        case SET_EXPLANATION_ANSWER_MARKDOWN:
-             if ( draft.onlineQuestions[action.payload.teachObject?._id] ) {
-                draft.onlineQuestions[action.payload.teachObject?._id].answerExplanationMarkDownContent = action.payload.markDownContent; 
-             }    
+             saveEditorMarkDownContent( draft.onlineQuestions, action );
         return;
         case DELETE_QUESTION_SUCCESS:
              delete draft.onlineQuestions[action?.payload?._id];
@@ -95,7 +116,7 @@ const reducer = produce((draft, action) => {
             draft.saveInProgress = false;
        return; 
        case QUESTION_META:
-            draft.questionMeta = action.payload;    // onlineQuestionId, seletedCourseId
+            draft.questionMeta = action.payload;
        return; 
        case SET_ONLINEQUESTION_FILE_UPLOAD_META:
             draft.fileUploadMeta = action.payload;   
@@ -104,7 +125,19 @@ const reducer = produce((draft, action) => {
             draft.onlineQuestionCourseId = action.payload;
        return;
        case TOGGLE_CONTENT_CHANGED:
-             draft.contentUpdated = !draft.contentUpdated;      
+             draft.contentUpdated = !draft.contentUpdated;  
+       break;
+       case UPDATE_ON_DELETE:
+             draft.updateOnDelete = !draft.updateOnDelete;  
+       break;
+       case SET_QUESTION_PROPERTIES:
+            draft.onlineQuestionProperties = action.payload; 
+       break;
+       case SET_COPYING_EXISTING_QUESTION_PROPERTIES:
+            draft.copyOnlineQuestionProperties = action.payload; 
+       case SET_COPY_EXISTING_QUESTION:
+            draft.copyExistingQuestion = action.payload; 
+       break;
        default:
     return;
     

@@ -1,12 +1,6 @@
-import { 
-connect } from 'react-redux';
-
-import {
-timerHeader } from 'services/course/pages/FormBuilder/FormFields/inlineStyles';
-
-import { 
-role } from 'services/course/helpers/PageHelpers';
-  
+import { connect } from 'react-redux';
+import { timerHeader } from 'services/course/pages/FormBuilder/FormBuilderStepWizard/SelectExistingFormBuilderComponent/FormFields/inlineStyles';
+import { role } from 'services/course/helpers/PageHelpers';
 import React from "react";
 import useTimerHook from 'services/course/pages/FormBuilder/hooks/useTimerHook';
 import Tooltip from '@mui/material/Tooltip';
@@ -19,11 +13,9 @@ const CountDownTimer = ({
   allTimers,
   currentUserTimer,
   currentUser }) => {
-
   let {
     previewMode,
   } = props;
-
   let {
     countDown,
     setAddTime,
@@ -33,7 +25,7 @@ const CountDownTimer = ({
  
 return (
     <div className="clock">
-        <div className="digital"> 
+        <div className="digital-header"> 
         { countDown() }
         {
           <> 

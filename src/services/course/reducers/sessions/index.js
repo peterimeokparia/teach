@@ -17,7 +17,13 @@ INCREMENT_SESSION_COUNT,
 ERROR_DECREMENT_SESSION_COUNT_FOR_PACKAGE_OPTIONS, 
 ERROR_INCREMENTING_SESSION_COUNT,
 AUTO_RENEW_PACKAGE_SUCCESS,
-AUTO_RENEW_PACKAGE_ERROR } from '../../actions/sessions';
+AUTO_RENEW_PACKAGE_ERROR,
+SET_IN_SESSION,
+SET_HIDE_MEETING_STAGE,  
+SET_FULL_MEETING_STAGE, 
+SET_VIDEO_MODAL_MODE_ON, 
+SET_ICON_ON_COLOR, 
+TOGGLE_MEETING_PANEL } from '../../actions/sessions';
 
 const initialState = {
     sessions:{},
@@ -26,7 +32,13 @@ const initialState = {
     saveInProgress: false,
     onSaveError: false,
     autoRenewedPackageSuccess: false,
-    autoRenewPackageError: null 
+    autoRenewPackageError: null,
+    inSession: false,
+    hideMeetingStage: false, 
+    fullMeetingStage: false,
+    videoModalModeOn: false, 
+    iconOnColor: false,
+    meetingPanel: false
 };
 
 const reducer =  produce( (draft, action) => {
@@ -81,6 +93,24 @@ const reducer =  produce( (draft, action) => {
         case AUTO_RENEW_PACKAGE_ERROR:   
             draft.onSessionsError = action.payload.error;  
         return; 
+        case SET_IN_SESSION:   
+            draft.inSession = action.payload;  
+        return;
+        case SET_HIDE_MEETING_STAGE:   
+            draft.hideMeetingStage = action.payload;  
+        return;
+        case SET_FULL_MEETING_STAGE:   
+            draft.fullMeetingStage = action.payload;  
+        return;
+        case SET_VIDEO_MODAL_MODE_ON:   
+            draft.videoModalModeOn = action.payload;  
+        return;
+        case SET_ICON_ON_COLOR:   
+            draft.iconOnColor = action.payload;  
+        return;
+        case TOGGLE_MEETING_PANEL:   
+            draft.meetingPanel = !draft.meetingPanel;  
+        return;
         default:
         return;
 

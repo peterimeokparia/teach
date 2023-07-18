@@ -2,7 +2,7 @@ import {
 SENDGRID,
 NODEMAILER } from '../emailclient/providers/index.js';
 import NodeMailer from 'nodemailer';
-import sgMail from '@sendgrid/mail';
+// import sgMail from '@sendgrid/mail';
 
 export function emailClient( mailOptions, emailProvider ) {
     const fromEmail = "teachpadsconnect247@gmail.com";

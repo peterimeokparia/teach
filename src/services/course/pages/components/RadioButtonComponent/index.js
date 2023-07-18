@@ -8,25 +8,19 @@ const options = [
 ];
 
 export default function RadioButtonComponent({setSelectedItem}) {
-
       const [ selectedCheckedItem, setSelectedCheckedItem ] = React.useState([]);
 
       const handleChecked = ( event ) => {
          if ( event?.target?.checked & event?.target?.value !== "" ) {
-           setSelectedCheckedItem([ event?.target?.value ])
-           setSelectedItem( options?.find( opt => opt?.title === event?.target?.value )?.collection )
+           setSelectedCheckedItem([ event?.target?.value ]);
+           setSelectedItem( options?.find( opt => opt?.title === event?.target?.value )?.collection );
          }
-
          if ( !event?.target?.checked & event?.target?.value !== "" ) {
-
           let item = selectedCheckedItem?.filter( opt => opt !== event?.target?.value );
 
           setSelectedCheckedItem( item );
-
           setSelectedItem( [] );
         }
-
-
       };
 
     return (

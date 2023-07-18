@@ -1,0 +1,65 @@
+.chartWrapperMain {
+    width: 1700px;
+    height: 650px;
+    margin-right: 100px;
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    overflow-y: scroll; 
+}
+.chartWrapperSub {
+    position: relative;
+    min-width: 2500px;
+    width: auto;
+    height: 1250px;
+    margin-left: 30px;
+    overflow-y: hidden;
+}
+._chartWrapperMain {
+    width: 1000px;
+    height: 400px;
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    overflow-y: scroll; 
+}
+._chartWrapperSub {
+    position: relative;
+    margin-left: 20px;
+    min-width: 1500px;
+    width: auto;
+    height: 950px;
+    overflow-y: hidden;
+}
+.chartWrapperMainSidePanel {
+    width: 1840px;
+    height: 365px;
+    margin-left: 10px;
+    margin-bottom: 100px;
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    overflow-y: hidden; 
+    /* overflow-y: scroll;  */
+}
+.chartWrapperSubSidePanel {
+    position: relative;
+    min-width: 650px;
+    width: auto;
+    height: 1250px;
+    overflow-y: hidden;
+}
+._chartWrapperMain {
+    width: 1700px;
+    height: 650px;
+    margin-right: 100px;
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    overflow-y: scroll; 
+}
+._chartWrapperSub {
+    position: relative;
+    /* margin: auto; */
+    min-width: 2500px;
+    width: auto;
+    height: 1250px;
+    overflow-y: hidden;
+}
+/* https://codepen.io/chartjs/pen/YVWZbz */

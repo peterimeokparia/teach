@@ -20,7 +20,6 @@ export const SAVE_ANSWERFORMS_BEGIN = "SAVE ANSWERFORMS BEGIN";
 export const SAVE_ANSWERFORMS_ERROR = "SAVE ANSWERFORMS ERROR";
 export const SAVE_ANSWERFORMS_SUCCESS = "SAVE ANSWERFORMS SUCCESS";
 export const SET_ANSWERFORMS_MARKDOWN = "SET ANSWERFORMS MARKDOWN";
-export const SET_EXPLANATION_ANSWER_MARKDOWN = "SET EXPLANATION ANSWER MARKDOWN";
 
 export const addNewFormAnswer = ( answer ) => {
     return dispatch => {
@@ -111,21 +110,3 @@ export const deleteOnlineAnswer = answer => {
     };
 };
 
-let timerHandle = null;
-
-export const setMarkDown = ( teachObject, markDownContent, teachObjectType="", actionType, saveAction  ) => {
-    return ( dispatch, getState )  => {
-        dispatch({ type: actionType, payload: {   
-            teachObject,
-            markDownContent
-          }});
-
-        if ( timerHandle ){
-            clearTimeout( timerHandle );
-        }
-        timerHandle = setTimeout(() => {
-            console.log("...saving markdown text"); 
-           dispatch(saveAction( getState()[teachObjectType][teachObjectType][ teachObject?._id ] ));
-        }, 2000);  
-    };
-};

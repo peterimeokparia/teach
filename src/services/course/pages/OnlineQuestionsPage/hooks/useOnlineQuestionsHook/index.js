@@ -1,163 +1,86 @@
-import { 
-useState, 
-useEffect } from 'react';
-
-import { 
-useDispatch } from 'react-redux';
-
-import {
-loadSubscribedPushNotificationUserByUserId, 
-retryPushNotificationMessage,
-subscribePushNotificationUser,
-savePushNotificationUser } from 'services/course/actions/notifications';
-
-import { 
-onlineQuestionCourseId,
-deleteOnlineQuestion,
-saveOnlineQuestions,
-loadOnlineQuestions } from 'services/course/actions/onlinequestions';
-
-import {
-deleteFormField } from 'services/course/actions/formfields';
-
-import {
-getSortedRecords } from 'services/course/selectors';
-
-import { 
-setItemInSessionStorage } from 'services/course/helpers/ServerHelper';
-
-import {
-onlineMarkDownEditorFieldCollection } from 'services/course/pages/QuestionsPage/helpers';
-
-import {
-addQuestionConfig } from 'services/course/pages/OnlineQuestionsPage/helpers';
-    
-import Swal from 'sweetalert2';
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { onlineQuestionCourseId, saveOnlineQuestions, loadOnlineQuestions } from 'services/course/actions/onlinequestions';
+import { loadExplainerOnlineQuestionAnswers } from 'services/course/actions/onlinequestionexplainanswer';
+import { restrictTextLength } from 'services/course/helpers/PageHelpers';
+import { forceReload } from 'services/course/helpers/ServerHelper';
+import { ADD_ONLINEQUESTION_MW, DELETE_ONLINEQUESTION_MW } from 'services/course/actions/onlinequestions';
 
 function useOnlineQuestionsHook( onlineQuestionsConfig ){
     const dispatch = useDispatch();
     const [ inputValue, setInputValue ] = useState("");
     const [ savedMarkDown, setSavedMarkDown ] = useState("");
-    const [ selectedQuestion, setSelectedQuestion ] = useState(null);
+    const [ isDrawerOpen, setIsDrawerOpen ] = useState( false );
+    const [ questionOutcome, setQuestionOutcome ] = useState( undefined );
+    const [ matchedItem, setMatchedItem ] = useState( undefined );
 
     let {
-        courseId, 
-        failedOnlineQuestionNotifications, 
-        currentUser, 
-        pushNotificationUsers,
-        toggleContentChanged,
-        addNewOnlineQuestion,
-        formFields,
-        formUuId,
-        formId,
-        formType,
-        formName,
-        onlineQuestionId,
-        formBuilderStatus,
-        onlineQuestions,
-        operator,
+        courseId, failedOnlineQuestionNotifications, currentUser, pushNotificationUsers,
+        formUuId, formId, formType, formName, onlineQuestionId,
+        currentCourseQuestions, operator, linkId, onlineQuestionProps, verifyOutcome,
+        onlineQuestionProperties, formBuilders, updateOnDelete
     } = onlineQuestionsConfig;
 
-    useEffect(() => { 
+   let { lessonId } = onlineQuestionProps;
 
-        if ( courseId ) {
-            dispatch(onlineQuestionCourseId( courseId ));
+    useEffect(() => {
+        if ( updateOnDelete ) {
+            let formQuestionCount = currentCourseQuestions?.filter( question => question.formUuId === formUuId ).length;
+
+            dispatch( loadOnlineQuestions() );
+            dispatch( loadExplainerOnlineQuestionAnswers() );
+
+            if ( formQuestionCount === 1 ) forceReload();
         }
+    }, [ updateOnDelete ] );
 
-    }, [ failedOnlineQuestionNotifications, currentUser, pushNotificationUsers, 
-            retryPushNotificationMessage, subscribePushNotificationUser, savePushNotificationUser, deleteOnlineQuestion,
-            onlineQuestionCourseId, loadSubscribedPushNotificationUserByUserId, courseId ]);
+    useEffect(() => { 
+        if ( courseId ) dispatch(onlineQuestionCourseId( courseId ));
+
+    }, [ failedOnlineQuestionNotifications, currentUser, pushNotificationUsers, courseId, dispatch ]);
                   
     const saveRecording = ( selectedQuestion ) => {
         dispatch(saveOnlineQuestions( selectedQuestion ));
     };
 
-    const getFormFieldsToDelete = ( selectedQuestion ) => {
-        
-        let fieldsToDelete = formFields?.filter( field => field?.questionId === selectedQuestion?._id );
-
-        if ( fieldsToDelete?.length === 0 || undefined ) return;
-
-        try {
-
-            fieldsToDelete?.forEach(element => {
-                dispatch(deleteFormField( element ));
-            });
-            
-        } catch ( error ) {
-            throw Error(`There was problem deleting formfields for question: ${ selectedQuestion?._id, selectedQuestion }`)
-        }
-    }
-
     const deleteQuestion = ( selectedQuestion ) => {
-        Swal.fire({
-            title: 'Confirm Delete',
-            icon: 'warning',
-            showCancelButton: true,
-            showConfirmButton: ( true ),
-            confirmButtonText: 'Ok',
-            confirmButtonColor: '#673ab7',
-            cancelButtonText: 'No'
-            })
-            .then( (response) => {
-                if ( response?.value ) {
-                    getFormFieldsToDelete( selectedQuestion );
-                    dispatch( deleteOnlineQuestion( selectedQuestion ) );
-
-                    let currentQuestions = onlineQuestions?.filter( question => question?.formUuId === formUuId && question?._id !== selectedQuestion?._id );
-
-                    let sortedItems = getSortedRecords( currentQuestions, 'position' );
-
-                        sortedItems.forEach( ( element, index ) => {
-                            let repositionedItem = { ...element, position: ( index + 1) };
-
-                            dispatch( saveOnlineQuestions( repositionedItem ) );
-                        });
-
-                    loadOnlineQuestions();
-                    toggleContentChanged();
-                } else {
-                    return;
-
-            } }).catch(error =>{   
-                    throw Error(`Failed to delete question. ${error}`);
-            });
+        dispatch({ type: DELETE_ONLINEQUESTION_MW, payload: selectedQuestion });
     };
 
-    function addNewQuestion( typeOfInput ){
-        let formQuestions = onlineQuestions?.filter( question => question?.formUuId === formUuId );
-        let sortedRecords = getSortedRecords( formQuestions, 'position' );
-        let sortedRecordsLength = sortedRecords?.length;
-        let position = (formQuestions?.length === 0 || undefined ) ? 1 : (sortedRecords[ sortedRecordsLength-1 ]?.position)+1;
-        
+    const addNewQuestion = ( typeOfInput ) => {
         let config = {
-          typeOfInput,
-          formId,
-          formType,
-          formName,
-          courseId,
-          formUuId, 
-          onlineQuestionId,
-          currentUser,
-          operator,
-          position
+            typeOfInput, formId, formType, formName, courseId, lessonId, formUuId, linkId,
+            onlineQuestionId, currentUser, operator,  outcomeId: onlineQuestionProperties?.outcomeId
         };
-      
-        addNewOnlineQuestion( onlineMarkDownEditorFieldCollection( addQuestionConfig( config ) ) );
-        toggleContentChanged(); 
-      } 
 
-return {
-    inputValue,
-    savedMarkDown, 
-    selectedQuestion, 
-    setSelectedQuestion,
-    addNewQuestion,
-    setSavedMarkDown, 
-    setInputValue: (val) => setInputValue( val ),
-    saveRecording:(val) => saveRecording( val ),
-    deleteQuestion:(val) => deleteQuestion( val )
-}; };
+        let payload = { typeOfInput, currentCourseQuestions, config, questionOutcome, 
+            onlineQuestionProperties, onlineQuestionsConfig, verifyOutcome
+        };
+
+        dispatch({ type: ADD_ONLINEQUESTION_MW, payload })
+    }
+
+    const onMatchListItem = ( match, listItem ) => {
+        setMatchedItem( listItem );
+    };
+
+    const displayName = `${restrictTextLength( formBuilders?.find( form => (form?.formDisplayName !== null || form?.formDisplayName !== undefined || form?.formDisplayName !== '') &&  form?.formName === formName )?.formDisplayName, 15, 15 )}`;
+
+    return {
+        inputValue,
+        savedMarkDown, 
+        isDrawerOpen, 
+        displayName,
+        onMatchListItem,
+        setQuestionOutcome,
+        setIsDrawerOpen,
+        addNewQuestion,
+        setSavedMarkDown, 
+        setInputValue: (val) => setInputValue( val ),
+        saveRecording:(val) => saveRecording( val ),
+        deleteQuestion:(val) => deleteQuestion( val )
+    }; 
+};
 
 export default useOnlineQuestionsHook;
 

@@ -1,25 +1,16 @@
-import { 
-createSelector}  from 'reselect';
-
-import { 
-setItemInSessionStorage } from 'services/course/helpers/ServerHelper';
-
-import { 
-elementMeta } from "services/course/pages/QuestionsPage/helpers";
-
-import { 
-role } from '../helpers/PageHelpers';
-
-import {
-LESSONNOTES,
-STUDENTNOTES } from  "services/course/actions/notes";
+import { createSelector }  from 'reselect';
+import { setItemInSessionStorage } from 'services/course/helpers/ServerHelper';
+import { elementMeta } from "services/course/pages/QuestionsPage/helpers";
+import { LESSONNOTES, STUDENTNOTES } from  "services/course/actions/notes";
 
 const getUsers = state => state?.users?.users;
-const getTutors = state => Object.values(state?.users?.users).filter(user => user?.role === role.Tutor);
 const getCurrentUser = state => state.users.user;
 const getLessonOutcomes = state => state.outcomes.outcomes;
 const getLessons = state => state.lessons.lessons;
+const getQuestions = state => state?.onlineQuestions?.onlineQuestions;
+const getExplainerAnswers = state => state.onlineQuestionsExplainerAnswers.onlineQuestionsExplainerAnswers;
 const getLessonId = (state, props) => props?.lessonId;
+const getOutcomeId = (state, props) => props?.outcomeId; 
 const getCalendars = state => state?.calendar?.calendars;
 const getEvents = state => state?.events?.events;
 const getEventId = (state, props) => props.eventId;
@@ -27,9 +18,12 @@ const getNoteType = (state, props) => props.noteType;
 const getNoteId = (state, props) => props.noteId;
 const getParsedCalendarId = ( state, props ) => props.calendarId;
 const getParsedCourseId = ( state, props ) => props?.courseId;
-const getParsedUserId = ( state, props ) => props?.currentUser?._id;
+const getParsedUserId = state => state.users.user?._id;
 const getUserId = ( state, props ) => props?.userId;
 const getQuestionId = ( state, props ) => props?.questionId;
+const getOnlineQuestionsFormName = ( state, props ) => props?.onlineQuestionProps?.formName;
+const getOnlineQuestionsFormType = ( state, props ) => props?.onlineQuestionProps?.formType;
+const getOnlineQuestionsOnlineQuestionId = ( state, props ) => props?.onlineQuestionProps?.onlineQuestionId;
 const getFormFieldElementQuestionId = ( state, props ) => props?.formFieldElement?.questionId;
 const getFormFieldElementId = ( state, props ) => props?.formFieldElement?._id;
 const getFormFieldElementFormName = ( state, props ) => props?.formFieldElement?.formName;
@@ -51,11 +45,6 @@ const getFailedEmailNotifications = state => state?.failedNotifications.failedEm
 const getFormFieldAnswers = state =>  state?.formFieldAnswers?.formFieldAnswers;
 const getFormBuilders = state =>  state?.formBuilders?.formBuilders;
 const getNotes = state => state?.notes?.notes;
-// const getCurrentOperatorId = ( state, props ) => props?.operatorId;
-// const parseCourseId = (state, props) => props.courseId;
-// const getCurrentUser = state => state.users.user;
-// const getParsedCourseId = ( state, props ) => parseInt( props.courseId, 10 );
-// const parseCourseId = (state, props) => parseInt(props.courseId, 10);
 
 export const failedOnlineQuestionNotificationQueueHasMessages = createSelector(
     getCurrentUser,
@@ -70,12 +59,32 @@ export const failedOnlineQuestionNotificationQueueHasMessages = createSelector(
     }
 );
 
-export const getSortedRecords = (collection, itemKey) => {
+export function getSortedRecords(collection, itemKey){
+    if ( collection?.length === 0 || collection?.length === undefined ) return;
+
     return collection?.sort((a, b) => {
         if( (b[itemKey] > a[itemKey]) ){
             return  -1;
         }
         else if( (b[itemKey] < a[itemKey]) ){
+            return 1;
+        }
+        else{
+            return 0;
+        } 
+    });
+};
+
+export function getSortedRecordsByPosition(collection){
+    if ( !collection ) return;
+
+    if ( collection?.length === 0 || collection?.length === undefined ) return;
+
+    return collection?.sort((a, b) => {
+        if( (b?.position > a?.position) ){
+            return  -1;
+        }
+        else if( (b?.position < a?.position) ){
             return 1;
         }
         else{
@@ -196,7 +205,7 @@ export const getSessionsByOperatorId = createSelector(
     (operators , operatorBusinessName, sessions) => 
     {
         if ( sessions ) {
-            return Object.values(sessions)?.filter(session => session?.operatorId === Object.values(operators).find(operator =>  operator.businessName === operatorBusinessName)?._id)  
+            return Object.values(sessions)?.filter(session => session?.operatorId === Object.values(operators).find(operator =>  operator.businessName === operatorBusinessName)?._id);  
         }
     }       
 );
@@ -239,13 +248,31 @@ export const getCalendarsByOperatorId = createSelector(
          Object.values(calendars).filter(calendar => calendar?.operatorId === Object.values(operators).find(operator =>  operator.businessName === operatorBusinessName)?._id)       
 );
 
+// export const getEventsByOperatorId = createSelector( 
+//     getOperators,
+//     getOperatorBusinessName,
+//     getEvents,
+//     getCalendarEventType,
+//     (operators , operatorBusinessName, events, calendarEventType) => 
+//          Object.values(events).filter(event => event?.operatorId === Object.values(operators).find(operator =>  operator.businessName === operatorBusinessName)?._id && event.calendarEventType === calendarEventType )       
+// );
+
+// export const getEventsByOperatorId = createSelector( 
+//     getOperators,
+//     getOperatorBusinessName,
+//     getEvents,
+//     getCalendarEventType,
+//     (operators , operatorBusinessName, events, calendarEventType) => 
+//          Object.values(events).filter(event => event?.operatorId === Object.values(operators).find(operator =>  operator.businessName === operatorBusinessName)?._id )       
+// );
+
 export const getEventsByOperatorId = createSelector( 
     getOperators,
     getOperatorBusinessName,
     getEvents,
     getCalendarEventType,
     (operators , operatorBusinessName, events, calendarEventType) => 
-         Object.values(events).filter(event => event?.operatorId === Object.values(operators).find(operator =>  operator.businessName === operatorBusinessName)?._id && event.calendarEventType === calendarEventType )       
+         Object.values(events)        
 );
 
 export const getEventsByUserIdSelector = createSelector( 
@@ -263,6 +290,19 @@ export const getTimeLinesByOperatorId = createSelector(
     (operators , operatorBusinessName, timeLines) => 
          Object.values(timeLines).filter(timeline => timeline?.operatorId === Object.values(operators).find(operator =>  operator.businessName === operatorBusinessName)?._id)       
 );
+
+export const getOnlineQuestions = createSelector(
+    getQuestions,
+    getOnlineQuestionsFormName,
+    getOnlineQuestionsOnlineQuestionId,
+    getOnlineQuestionsFormType,
+    ( onlineQuestions, formName, onlineQuestionId, formType ) => {
+        if ( onlineQuestionId ) {
+            return  Object.values( onlineQuestions )?.filter(question => question?._id === onlineQuestionId);
+        }
+        return getSortedRecordsByPosition(  Object.values( onlineQuestions )?.filter( question => question?.formName === formName 
+            && question?.formType === formType ));
+});
 
 export const getSelectedOnlineAnswers = createSelector(
     getOperators,
@@ -291,11 +331,9 @@ export const getFormFieldAnswersByQuestionId = createSelector(
     getFormFieldElementFieldPropsUserId,
     getParsedUserId,
     ( formFieldElementAnswers, fieldElementQuestionId, fieldElementId, fieldElementFormName, fieldPropsFormUuid, fieldPropsFormUserId, userId ) => 
-         Object.values(formFieldElementAnswers).filter( answer => answer?.questionId === fieldElementQuestionId ).
-          find( field =>  field?.fieldId ===  fieldElementId && field?.formName === fieldElementFormName && 
+         Object.values(formFieldElementAnswers).filter( answer => answer?.questionId === fieldElementQuestionId ).find( field =>  field?.fieldId ===  fieldElementId && field?.formName === fieldElementFormName && 
             field?.formUuId === fieldPropsFormUuid && field?.userId === (fieldPropsFormUserId ? fieldPropsFormUserId : userId ))       
 );
-
 
 export const getSelectedOnlineAnswersByCourseId = createSelector(
     getCourseId,
@@ -344,18 +382,33 @@ export const getEventByEventId = createSelector(
         Object.values(events).find(event => event?._id === eventId)       
 );
 
+export const getNoteByNoteId = createSelector(
+    getNotes,
+    getNoteId,
+    ( notes, noteId ) => 
+        Object.values(notes).find(note => note?._id === noteId )       
+);
+
 export const getTutorsLessonUserNotesByLessonId = createSelector(
     getNotes,
     getLessonId,
     ( notes, lessonId ) => 
-        Object.values(notes).find(note => note?.lessonId === lessonId && note?.noteType === LESSONNOTES)       
+        Object.values(notes).filter(note => note?.lessonId === lessonId && note?.noteType === LESSONNOTES)       
+);
+
+export const getTutorsLessonNotesByLessonIdOutcomeId = createSelector(
+    getNotes,
+    getLessonId,
+    getOutcomeId,
+    ( notes, lessonId, outcomeId ) => 
+        Object.values(notes).find(note => note?.lessonId === lessonId && note?.outcomeId === outcomeId && note?.noteType === LESSONNOTES)       
 );
 
 export const getStudentsLessonUserNotesByLessonId = createSelector(
     getParsedUserId,
     getNotes,
     getLessonId,
-    ( userId, notes, lessonId  ) => 
+    ( userId, notes, lessonId ) => 
         Object.values(notes).find(note => note?.lessonId === lessonId && note?.userId === userId && note?.noteType === STUDENTNOTES)       
 );
 
@@ -373,4 +426,10 @@ export const getLessonOutcomesByLessonId = createSelector(
     getLessonId,
     ( lessonOutcomes, lessonId ) => 
         Object.values(lessonOutcomes).filter(outcome => outcome?.lessonId === lessonId )       
+);
+
+export const getQuestionExplainerAnswers = createSelector(
+    getExplainerAnswers, 
+    ( explainerAnswers ) => 
+        Object.values( explainerAnswers )
 );

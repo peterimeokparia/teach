@@ -1,44 +1,16 @@
-import {
-newCalendarEventData, 
-eventEnum } from 'services/course/pages/CalendarPage/helpers';
-
-import { 
-navigate } from '@reach/router';
-
-import { 
-generateUuid } from 'services/course/pages/Users/helpers';
-
-import {
-elementMeta } from 'services/course/pages/QuestionsPage/helpers';
-
-import { 
-formTypes } from 'services/course/pages/FormBuilder/helpers';
-
+import { newCalendarEventData, eventEnum } from 'services/course/pages/CalendarPage/helpers';
+import { navigate } from '@reach/router';
+import { generateUuid } from 'services/course/pages/Users/helpers';
+import { elementMeta } from 'services/course/pages/QuestionsPage/helpers';
+import { formTypes } from 'services/course/pages/FormBuilder/helpers';
 import useSimpleEventHook from 'services/course/pages/CalendarPage/hooks/useSimpleEventHook';
 import FormsComponent from 'services/course/pages/Forms/components/FormsComponent';
 import './style.css';
 
-const Forms = ({ 
-    reportProps,
-    handleSubmit,
-    operatorBusinessName,
-    slotInfo,
-}) => {
+const Forms = ({ reportProps, handleSubmit, operatorBusinessName, slotInfo }) => {
+    let { events, currentUser, selectedUserId, publishedForms, calendarEventType, calendarId, addNewFormBuilder } = reportProps;
 
-    let {
-        events, 
-        currentUser,
-        selectedUserId,
-        publishedForms, 
-        calendarEventType,
-        calendarId,
-        addNewFormBuilder
-    } = reportProps;
-
-    let {
-        start,
-        end,
-        duration
+    let { start, end, duration
     } = useSimpleEventHook( slotInfo );
 
 function handleSelectedForm( selectedForm ){
@@ -54,11 +26,9 @@ function handleSelectedForm( selectedForm ){
     const formCalendarEventExists = ( formEventSchedule?._id === selectedForm?._id );
 
     if ( formCalendarEventExists ) {
-
             let formUuId = generateUuid();
         
             if ( selectedForm ) {
-          
               let newBuilder = {
                 operatorBusinessName: selectedForm?.operatorBusinessName,
                 formType: selectedForm?.formType,
@@ -79,7 +49,6 @@ function handleSelectedForm( selectedForm ){
               addNewFormBuilder( newBuilder );
 
               return;
-          
             }
     };
 
@@ -95,7 +64,6 @@ function handleSelectedForm( selectedForm ){
     };
 
     handleSubmit( newCalendarEventData( event, 'location', [ selectedForm ], undefined, undefined, undefined, undefined ) );
-
     navigate(`/${operatorBusinessName}/schedule/${calendarEventType}/calendar/${calendarId}/user/${selectedUserId}`);
 }
 
@@ -111,7 +79,6 @@ return (
             operatorBusinessName={operatorBusinessName} 
             user={currentUser} 
             forms={(calendarEventType === eventEnum.ReportForms) ? publishedForms?.filter(form => form?.formType === formTypes.report) : publishedForms?.filter(form => form?.formType !== formTypes.report)}
-            //forms={publishedForms}
             setSelectedForm={handleSelectedForm}
         />  
     </div>

@@ -1,19 +1,8 @@
-import { 
-connect } from 'react-redux';
-
-import { 
-navContent } from  'services/course/pages/components/NavigationHelper';
-
-import { 
-getCoursesByOperatorId,
-getOperatorFromOperatorBusinessName } from 'services/course/selectors';
-
-import { 
-useUserVerificationHook } from 'services/course/helpers/Hooks/useUserVerificationHook';
-
-import { 
-useOnLoadingHook } from 'services/course/helpers/Hooks/useOnLoadingHook';
-
+import { connect } from 'react-redux';
+import { navContent } from  'services/course/pages/components/NavigationHelper';
+import { getCoursesByOperatorId, getOperatorFromOperatorBusinessName } from 'services/course/selectors';
+import { useUserVerificationHook } from 'services/course/helpers/Hooks/useUserVerificationHook';
+import { useOnLoadingHook } from 'services/course/helpers/Hooks/useOnLoadingHook';
 import CourseListComponent from 'services/course/pages/Courses/components/CourseListComponent';
 import LoginLogout from 'services/course/pages/LoginPage/components/LoginLogout';
 import Cart from 'services/course/pages/SalesPage/Cart';
@@ -25,10 +14,9 @@ const CourseListPage = ({
     user,
     courses,
     coursesLoading,
-    onCoursesError }) => {
-
+    onCoursesError 
+}) => {
     useUserVerificationHook( user, operatorBusinessName );
-
     useOnLoadingHook( coursesLoading , onCoursesError );
     
 return (

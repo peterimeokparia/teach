@@ -1,28 +1,10 @@
-import { 
-ADD_CLASSROOM_SUCCESS,
-ENABLE_TEACH_PLATFORM,
-ADD_MEETING_EVENT_TO_CALENDAR } from 'services/course/actions/classrooms';
-
-import {
-LOAD_MEETING_USER_SUCCESS } from 'services/course/actions/users';
-
-import {
-START_NEW_MEETING,
-WAIT_FOR_MEETING_TO_START,
-ADD_NEW_MEETING_SUCCESS,
-END_MEETING } from 'services/course/actions/meetings';
-
-import { 
-addCurentMeeting,
-endCurrentMeeting } from './helpers/meetings';
-     
-import {
-addNewClassRoomIdToStudentsAndTutors,
-addNewMeetingEventToCalendar,
-enableTeachPlatform,
-getUsersCurrentMeetingStatus,
-handleAddingNewMeeting,
-waitForMeetingBeforeJoining } from 'services/course/middleware/classrooms/helpers';
+import { ADD_CLASSROOM_SUCCESS, ENABLE_TEACH_PLATFORM, ADD_MEETING_EVENT_TO_CALENDAR } from 'services/course/actions/classrooms';
+import { LOAD_MEETING_USER_SUCCESS } from 'services/course/actions/users';
+import { START_NEW_MEETING, WAIT_FOR_MEETING_TO_START, ADD_NEW_MEETING_SUCCESS, END_MEETING } from 'services/course/actions/meetings';
+import { addCurentMeeting, endCurrentMeeting } from './helpers/meetings';
+import { addNewClassRoomIdToStudentsAndTutors, enableTeachPlatform, getUsersCurrentMeetingStatus, handleAddingNewMeeting,
+     waitForMeetingBeforeJoining } from 'services/course/middleware/classrooms/helpers';
+import { addNewMeetingEventToCalendar } from 'services/course/middleware/classrooms/helpers/meetings';
 
 export const classrooms = store => next =>  action => {
      switch(action.type){  
@@ -53,11 +35,13 @@ export const classrooms = store => next =>  action => {
                next(action);
           return;
           case ADD_MEETING_EVENT_TO_CALENDAR:  
-               addNewMeetingEventToCalendar( action.payload, store)
+               addNewMeetingEventToCalendar( action.payload, store);
                next(action);
           return;
           case ADD_NEW_MEETING_SUCCESS:
-               handleAddingNewMeeting( action?.payload, store )
+               handleAddingNewMeeting( action?.payload, store );
+               next(action);
+               break;
                default:
                next(action);
           return;

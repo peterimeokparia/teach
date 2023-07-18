@@ -1,69 +1,23 @@
-import { 
-connect } from 'react-redux';
-
-import { 
-loadAllNotes,
-addNotes, 
-saveNotes,
-SET_NOTES_MARKDOWN,
-LESSONNOTES,
-STUDENTNOTES } from 'services/course/actions/notes';
-
-import { 
-togglePreviewMode } from 'services/course/actions/app';
-
-import {
-editor_upload_url,
-handleChange } from 'services/course/pages/OnlineQuestionsPage/helpers';
-
-import { 
-saveEditorMarkDownObjectToMw } from 'services/course/actions/editor'; 
-    
-import {   
-getCoursesByCreatedByIdSelector, 
-getLessonByLessonIdSelector,
-getStudentsLessonUserNotesByLessonId,
-getTutorsLessonUserNotesByLessonId } from 'services/course/selectors';
-
+import { connect } from 'react-redux';
+import { loadAllNotes, addNotes, saveNotes, SET_NOTES_MARKDOWN, LESSONNOTES } from 'services/course/actions/notes';
+import { togglePreviewMode } from 'services/course/actions/app';
+import { editor_upload_url, handleChange } from 'services/course/pages/OnlineQuestionsPage/helpers';
+import { saveEditorMarkDownObjectToMw } from 'services/course/actions/editor'; 
+import { getLessonByLessonIdSelector, getStudentsLessonUserNotesByLessonId,
+    getTutorsLessonUserNotesByLessonId, getNoteByNoteId } from 'services/course/selectors';
 import EditorComponent  from 'services/course/pages/components/EditorComponent';
 import './style.css';
 
 const Notes = ({
-    previewMode,
-    saveLesson,
     noteType,
     saveEditorMarkDownObjectToMw,
-    addNewLesson,
-    setVideoUrl,
-    loadAllNotes,
-    addNotes, 
-    saveNotes,
-    lessonId,
-    courseId,
-    noteId,
-    notes,
-    allNotes,
-    user,
-    eventId,
-    selectedTutorId,
-    currentVideoUrl,
-    setLessonPlanUrl,
-    setCurrentLesson,
-    course,
-    lessons,
     lesson,
     privateNotes,
     tutorsLessonNote,
-    togglePreviewMode,
-    operatorBusinessName,
-    operator,
-    currentUser, 
-    selectedLessonPlanLesson
 }) => {
-
     const selectedNote = ( noteType === LESSONNOTES )
                             ? tutorsLessonNote
-                            : privateNotes
+                            : privateNotes;
 
  return <div className="builder3"> 
         <header>
@@ -104,19 +58,7 @@ const mapDispatch = {
 
 const mapState = (state, ownProps) => {
     return {
-        user: state.users.user,
-        operator: state.operators.opeator,
-        operatorBusinessName: state?.operator?.operatorBusinessName,
-        courseTutor: state.courses.courseTutor,
-        currentUser: state.users.user,
-        previewMode: state.app.previewMode,
-        isLessonsLoading:state.lessons.lessonsLoading,
-        lessonPlanUrl: state.lessons.lessonPlanUrl,
-        selectedLessonPlanLesson: state.lessons.selectedLessonPlanLesson,
-        course: state.lessons.course,
-        onLessonError: state.lessons.onSaveLessonError,
-        lessons: Object.values(state.lessons.lessons),
-        coursesByTutor: getCoursesByCreatedByIdSelector( state, ownProps ),
+        note: getNoteByNoteId( state, ownProps ),
         lesson: getLessonByLessonIdSelector( state, ownProps ),
         privateNotes: getStudentsLessonUserNotesByLessonId( state, ownProps ),
         tutorsLessonNote: getTutorsLessonUserNotesByLessonId( state, ownProps ),

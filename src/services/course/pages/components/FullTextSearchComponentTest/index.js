@@ -1,32 +1,19 @@
-import {
-useEffect,
-useState } from 'react';
-
-import {
-connect } from 'react-redux';
-
-import { 
-loadFullTextSearchContent,
-loadPagedFullTextSearchContent } from 'services/course/actions/fulltextsearches';
-
+import { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { loadFullTextSearchContent } from 'services/course/actions/fulltextsearches';
 import FuzzySearch from 'react-fuzzy';
 import './style.css';
 
 const FullTextSearchComponentTest = ({ 
     searchContent,
-    operatorBusinessName,
-    currentUser,
     loadFullTextSearchContent,
-    loadPagedFullTextSearchContent, 
     handleSearch,
     searchKeysPropArray,
-    searchKeys }) => {    
-        
+    searchKeys,
+    width = 430 }) => {    
     useEffect(() => {
-
         loadFullTextSearchContent();
-
-    }, [])
+    }, [ loadFullTextSearchContent ]);
     
 return (   
 <div className="search">
@@ -34,13 +21,14 @@ return (
     {<FuzzySearch
         list={searchContent}
         keys={searchKeysPropArray}
-        width={430}
+        width={width}
         onSelect={(newSelectedItem) => {
-            handleSearch(newSelectedItem)
+            handleSearch( newSelectedItem );
         }}
         resultsTemplate={(props, state, styles, clickHandler) => {
             return state.results.map((val, i) => {
                 const style = state.selectedIndex === i ? styles.selectedResultStyle : styles.resultsStyle;
+
                 return (
                 <div
                     key={i}
@@ -50,28 +38,21 @@ return (
                     { 
                         searchKeys.map(item => (
                             <div> 
-                                {
-                                    val[ item ]
-                                }
+                            {
+                                val[ item ]
+                            }
                             </div> 
                         ))
                     }
                 </div>
                 );
             });
-            }}
+        }}
     />
     }
-  
     </div>
 </div>
     );
 };
 
-const mapState = (state, ownProps)   => {
-    return {
-        currentUser: state.users.user,
-    };
-};
-
-export default connect(mapState, { loadPagedFullTextSearchContent, loadFullTextSearchContent } )(FullTextSearchComponentTest);
+export default connect(null, { loadFullTextSearchContent } )(FullTextSearchComponentTest);

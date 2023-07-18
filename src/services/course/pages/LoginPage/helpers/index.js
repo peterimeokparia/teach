@@ -1,19 +1,8 @@
-import { 
-navigate } from '@reach/router';
-
-import { 
-Validations } from 'services/course/helpers/Validations';
-
-import {
-role } from 'services/course/helpers/PageHelpers';
-
-import {
-joinInProgressMeeting, 
-getMeetings } from 'services/course/pages/Meeting/helpers';
-
-import {
-updateUser } from 'services/course/api';
-
+import { navigate } from '@reach/router';
+import { Validations } from 'services/course/helpers/Validations';
+import { role } from 'services/course/helpers/PageHelpers';
+import { joinInProgressMeeting, getMeetings } from 'services/course/pages/Meeting/helpers';
+import { updateUser } from 'services/course/api';
 import Swal from 'sweetalert2';
 
 export function setUpNewUser( newSiteUserProps ){

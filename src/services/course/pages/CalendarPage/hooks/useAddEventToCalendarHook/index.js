@@ -1,30 +1,11 @@
-import {
-newCalendarEventData  } from 'services/course/pages/CalendarPage/helpers';
+import { newCalendarEventData  } from 'services/course/pages/CalendarPage/helpers';
 
 function useAddEventToCalendar( props ){
-
-    let {
-        type,
-        start,
-        end,
-        duration,
-        operatorBusinessName,
-        addNewCalendarEvent,
-        user,
-        calendarEventType, 
-        calendarId, 
-        courseId,
-        lessonId, 
-        classRoomId,
-        addNotes
-    } = props;
+    let { addNewCalendarEvent, courseId, lessonId } = props;
 
     function addEventToCalendar( event, formName ) {
-
         addNewCalendarEvent( newCalendarEventData( event, 'location', [ { formName } ], undefined, undefined, courseId, lessonId ) );
-
     }
-
     return{ addEventToCalendar };
 }
 

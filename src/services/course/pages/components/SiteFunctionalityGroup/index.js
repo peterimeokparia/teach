@@ -11,8 +11,8 @@ children }) => {
     );
 };
 
-export const Organization = {
+export const organization = {
     Teach: 'teach',
     Boomingllc: 'boomingllc'
-}
+};
 

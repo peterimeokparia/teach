@@ -53,8 +53,10 @@ onlineQuestionRoute.post('/', postRoute( onlineQuestionModel ), (req, res) => {
 });
 
 onlineQuestionRoute.put('/:questionId', putRoute( onlineQuestionModel, 'questionId' ), (req, res) => {
-    console.log('saved result saved result')
-    console.log(JSON.stringify(res?.savedResult))
+    return res.status(200).json(res?.savedResult);
+});
+
+onlineQuestionRoute.put('/content/:questionId', putRoute( onlineQuestionModel, 'questionId' ), (req, res) => {
     return res.status(200).json(res?.savedResult);
 });
 

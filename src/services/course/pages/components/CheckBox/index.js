@@ -1,11 +1,6 @@
-import {
-useState } from 'react';
-
-import { 
-connect } from 'react-redux';
-
-import { 
-Validations } from  'services/course/helpers/Validations';
+import { useState } from 'react';
+import { connect } from 'react-redux';
+import { Validations } from  'services/course/helpers/Validations';
 import './style.css';
 
 const CheckBox = ({
@@ -21,17 +16,17 @@ const CheckBox = ({
     }
 
     const onChangeHandler = ( event ) => {
-
         let isChecked = event?.target?.checked;
         let value = event?.target?.value;
 
         if ( isChecked && value && itemCollection?.length > 0 ) {
-            let updatedItems = Object.values(itemCollection)?.filter(item => item[itemValueKey] === value) 
+            let updatedItems = Object.values(itemCollection)?.filter(item => item[itemValueKey] === value);
+
             setUpdatedCheckBoxItems([ ...checkBoxItems, ...updatedItems ]);
         }
-
         if ( !isChecked && value ) {
-            let updatedItems = checkBoxItems?.filter(item => item[itemValueKey] !== value) 
+            let updatedItems = checkBoxItems?.filter(item => item[itemValueKey] !== value);
+
             setUpdatedCheckBoxItems( [ ...updatedItems ] );
         }
     };
@@ -40,6 +35,7 @@ const CheckBox = ({
         submitEvent?.preventDefault();
         handleSubmit( checkBoxItems );
     };
+    
 return (
     <div class="Users"> 
         <div className="">

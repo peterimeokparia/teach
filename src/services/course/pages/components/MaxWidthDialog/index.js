@@ -8,31 +8,30 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import NotesIcon from '@material-ui/icons/Notes';
 import Select from '@mui/material/Select';
 import Switch from '@mui/material/Switch';
-import moment from "moment";
 
-const MaxWidthDialog = ({ modalProps,  children }) => {
+const MaxWidthDialog = ({ modalProps, collection,  children }) => {
+
+    if ( ! collection?.length || collection?.length === 0 ) return null;
+
     let {
       isOpen, 
       handleClose,
-      collection,
       selectEventChangeHandler,
       dialogTitle,
       InputLabel
     } = modalProps;
+
     const [fullWidth, setFullWidth] = React.useState(true);
-    const [maxWidth, setMaxWidth] = React.useState('sm');
     const selectEventChange = (event) => {
-      selectEventChangeHandler( event.target.value);
+      selectEventChangeHandler(event.target.value);
     };
 
     const handleFullWidthChange = (event) => {
-        setFullWidth(event.target.checked);
+      setFullWidth(event.target.checked);
     };
+    
 return (
     <React.Fragment>
     <Dialog
@@ -59,7 +58,9 @@ return (
             <InputLabel htmlFor="max-width">{InputLabel}</InputLabel>
             <Select
               autoFocus
-              value={maxWidth}
+              //value={selectedValue}
+              // value={'sm'}
+              value={''}
               onChange={selectEventChange}
               label="maxWidth"
               inputProps={{
@@ -67,7 +68,7 @@ return (
                 id: 'max-width',
               }}
             >
-              { collection.map(( item, index) => (
+              { collection?.map(( item, index) => (
                     children( item )
                 ))
               }
@@ -87,6 +88,7 @@ return (
       </DialogActions>
     </Dialog>
   </React.Fragment>
-)}
+ ); 
+};
     
 export default MaxWidthDialog;

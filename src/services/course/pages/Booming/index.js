@@ -1,19 +1,10 @@
-import {
-useEffect } from 'react';
-
-import { 
-Redirect,
-navigate} from '@reach/router';
-
-import {
-euphoricEffect } from 'services/course/pages/components/Euphoric';
-
+import { useEffect } from 'react';
+import { navigate} from '@reach/router';
+import { euphoricEffect } from 'services/course/pages/components/Euphoric';
 import NavLinks from 'services/course/pages/components/NavLinks';
 import DropDown from '../components/DropDown';
 
-const SiteEntryComponent = ({
-    operatorBusinessName } ) => {   
-
+const SiteEntryComponent = ({ operatorBusinessName } ) => {   
     let organizations = [
         {_id:'boomingllc',id:'boomingllc',   name:'boomingllc'}
     ];

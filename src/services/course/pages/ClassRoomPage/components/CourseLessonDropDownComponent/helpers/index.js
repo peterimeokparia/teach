@@ -1,11 +1,5 @@
-import { 
-navigate } from '@reach/router';
-
-import { 
-role } from 'services/course/helpers/PageHelpers';
-
-import { 
-toast } from 'react-toastify';
+import { navigate } from '@reach/router';
+import { toast } from 'react-toastify';
 
 export const sendEmailMessage = ( listOfStudents, url, sendEmailAction ) => {
     listOfStudents?.forEach( student => {
@@ -39,6 +33,9 @@ export const emailInputOptions = {
 const getCurrentPageUrl = () => window.location.href; 
 
 export const getLessonPlanUrls = ( operatorBusinessName, selectedUserId ) => {
+    if ( !operatorBusinessName ) return;
+    if ( !selectedUserId ) return;
+
     const lessonPlanUrl = `/${operatorBusinessName}/LessonPlan/classRoom/${selectedUserId}`;
     let prefix = "http://localhost:3000";
 

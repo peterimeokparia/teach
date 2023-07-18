@@ -1,35 +1,29 @@
-import { 
-useState, 
-useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch } from 'react-redux';
+import { eventEnum } from 'services/course/pages/CalendarPage/helpers';
+import { loadSubscribedPushNotificationUsers } from 'services/course/actions/notifications';
+import { setCalendarEventType, loadAllCalendars } from 'services/course/actions/calendar';
+import { loadAllEvents } from 'services/course/actions/event';
+import { loadCourses } from "services/course/actions/courses";
+import { role } from 'services/course/helpers/PageHelpers';
 
-import { 
-useDispatch } from 'react-redux';
+function useBuildEventDataHook( calendarEventProps ) {
 
-import {
-eventEnum } from 'services/course/pages/CalendarPage/helpers';
+    let {  userId, courseId, lessonId, calendarEventType, events, courses,  calendarId, user } = Object( calendarEventProps );
 
-import {
-loadSubscribedPushNotificationUsers } from 'services/course/actions/notifications';
-
-import { 
-setCalendarEventType,
-loadAllCalendars } from 'services/course/actions/calendar';
-
-import {  
-loadAllEvents } from 'services/course/actions/event';
-
-import { 
-loadCourses } from "services/course/actions/courses";
-
-import {
-role } from 'services/course/helpers/PageHelpers';
-
-function useBuildEventDataHook( calendarEventType, events, calendarId, user ) {
     const [ isModalOpen, setModalOpen] = useState(false);
     const [ component, setComponent] = useState(eventEnum);
     const [ calendarSlotInfo, setCalendarSlotInfo ] = useState(undefined);
+    const [ tutorId, setTutorId ] = useState(undefined);
     const [ scheduledStudents, setScheduledStudents ] = useState([]);    
     const dispatch = useDispatch();
+
+
+    useEffect(( ) => {
+     if ( courses?.length > 0 && courseId && !tutorId ) {
+        setTutorId( courses?.find(item => item?._id === courseId )?.createdBy );
+     }
+    });
 
     useEffect(( ) => {
         dispatch( loadCourses() );
@@ -37,16 +31,16 @@ function useBuildEventDataHook( calendarEventType, events, calendarId, user ) {
         dispatch( loadAllEvents() );
         dispatch( loadSubscribedPushNotificationUsers() );
         dispatch( setCalendarEventType( calendarEventType ) );
-    },[ loadAllCalendars, loadSubscribedPushNotificationUsers, loadAllEvents, loadCourses, calendarEventType, dispatch ]);
+    },[ calendarEventType, dispatch ]);
 
     let eventDataObj = null;
 
-    if ( events?.length > 0  ) {
-        let filteredEvents = events?.filter(evnt => evnt?.calendarId === calendarId );
-
-            if ( filteredEvents ) {
-                eventDataObj = filteredEvents?.map(eventData => (  getEventData( eventData )  ));
-            }
+    if ( events?.length > 0  ) { 
+        let filteredEvents = filterEventsByCalendarType( calendarEventProps );
+   
+        if ( filteredEvents ) {
+            eventDataObj = filteredEvents?.map(eventData => (  getEventData( eventData )  ));
+        }
     };
 
 function getEventData( eventData ) {
@@ -91,8 +85,41 @@ function getEventData( eventData ) {
     return eventDataObject;
 };
 
-const handleSelect = ( slotInfo ) => {
+function filterEventsByCalendarType( calendarEventProps ) { // refactor
+    let {  userId, courseId, lessonId, calendarEventType, events, calendarId, user } = Object( calendarEventProps );
 
+    let courseCreator = courses?.find(item => item?._id === courseId )?.createdBy;
+
+    switch ( calendarEventType ) {
+        case eventEnum.NewEvent:
+            return events?.filter(evnt => evnt?.calendarId === calendarId );
+        case eventEnum.ConsultationForm:
+            return events?.filter(evnt => evnt?.calendarId === calendarId );
+        case eventEnum.TutorCalendar:
+            //if ( user?.role === role.Tutor ) {// }
+            return events?.filter(evnt => evnt?.calendarId === calendarId );  
+        case eventEnum.SessionScheduling:
+            return events?.filter(evnt => evnt?.calendarId === calendarId );  
+        case eventEnum.OnlineTutoringRequest:
+            return events?.filter(evnt => evnt?.calendarId === calendarId );
+        case eventEnum.ReportForms:
+            return events?.filter(evnt => evnt?.calendarId === calendarId );     
+        case eventEnum.QuizzForms:
+            return events?.filter(evnt => evnt?.calendarId === calendarId );    
+        case eventEnum.Lessons:
+        // case eventEnum.NewEvent:
+        // alert('courseCreator')
+        // alert(courseCreator)
+        // alert(JSON.stringify(events?.filter(evnt => evnt?.courseId === courseId && evnt?.lessonId === lessonId && [ user?._id, courseCreator ].includes(evnt?.userId)  )?.length))
+            return events?.filter(evnt => evnt?.courseId === courseId && evnt?.lessonId === lessonId && [ user?._id, courseCreator, '6165117e729ccf50b9ac7e64' ].includes(evnt?.userId)  );      
+            //return events?.filter(evnt => evnt?.courseId === courseId && evnt?.lessonId === lessonId && [ user?._id ].includes(evnt?.userId)  );    
+        default:
+            return events?.filter(evnt => evnt?.calendarId === calendarId );
+
+    };
+}
+
+const handleSelect = ( slotInfo ) => {
     switch ( calendarEventType ) {
 
         case eventEnum.NewEvent:

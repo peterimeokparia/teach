@@ -106,12 +106,11 @@ export const videoMeta = element => {
   videoSectionClassNameNoRecording: "mainVideoSection-recordingStopped", 
   videoClassName: ( element?.videoUrl === "" || element?.videoUrl === undefined ) ? "" : "",
   videoName: `${element?._id}_${element?._id}_${element?._id}_${element?.type}`,
-  //videoMetaData: { inputFieldId: element?._id, currentQuestion: element },
   videoMetaData: { inputFieldId: element?._id, currentQuestion: element, name: element?._id?.toString() },
-  //deleteVideo: () => deleteVideo( element ),
   exitVideoCallIconPageName: "ManageEditors",
   videoSectionCallOut: "answerVideoSectionCallOut",
   videoMetaDataExternalId:'name',
   objectId: element?._id,
   displaySavedRecording: true
-}}; 
+  };
+}; 

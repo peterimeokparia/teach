@@ -1,59 +1,21 @@
-import { 
-connect } from 'react-redux';
-
-import{
-toggleTeachBoardOrEditor,   
-setLessonInProgressStatus } from 'services/course/actions/lessons';
-
-import{
-inviteStudentsToLearningSession } from 'services/course/actions/users';
-
-import { 
-getBoardEditorId,
-getUrls } from 'services/course/pages/Lessons/LessonPlan/helpers';
-
-import { 
-Validations } from 'services/course/helpers/Validations';
-
-import {
-iconStyleMain,
-saveIconStyle,
-savedBoardIcon } from 'services/course/pages/Lessons/LessonPlan/inlineStyles.js';
-
-import {
-SET_NOTES_MARKDOWN } from 'services/course/actions/notes';
-
-import { 
-saveEditorMarkDownObjectToMw } from 'services/course/actions/editor';
-
-import {
-loadWhiteBoardData,
-loadWhiteBoardDataByWid,
-selectSavedWhiteBoard,
-addWhiteBoardData } from 'services/course/actions/whiteBoards';
-
-import {
-getItemColor } from 'services/course/helpers/PageHelpers';
-
-import { 
-getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
-
-import { 
-getOperatorFromOperatorBusinessName, 
-getUsersByOperatorId,
-getTutorsLessonUserNotesByLessonId,  
-getSortedRecordsByDate } from 'services/course/selectors';
-
-import {
-editor_upload_url,
-handleChange } from 'services/course/pages/OnlineQuestionsPage/helpers';
-
+import { connect } from 'react-redux';
+import { toggleTeachBoardOrEditor, setLessonInProgressStatus } from 'services/course/actions/lessons';
+import { inviteStudentsToLearningSession } from 'services/course/actions/users';
+import { getBoardEditorId, getUrls } from 'services/course/pages/Lessons/LessonPlan/helpers';
+import { Validations } from 'services/course/helpers/Validations';
+import { iconStyleMain, saveIconStyle } from 'services/course/pages/Lessons/LessonPlan/inlineStyles.js';
+import { SET_NOTES_MARKDOWN } from 'services/course/actions/notes';
+import { saveEditorMarkDownObjectToMw } from 'services/course/actions/editor';
+import { loadWhiteBoardDataByWid, selectSavedWhiteBoard, addWhiteBoardData } from 'services/course/actions/whiteBoards';
+import { getItemColor } from 'services/course/helpers/PageHelpers'; 
+import { getItemFromSessionStorage } from 'services/course/helpers/ServerHelper';
+import { getOperatorFromOperatorBusinessName, getTutorsLessonUserNotesByLessonId, getSortedRecordsByDate } from 'services/course/selectors';
+import { editor_upload_url, handleChange } from 'services/course/pages/OnlineQuestionsPage/helpers';
 import EditorComponent from 'services/course/pages/components/EditorComponent';
 import useWhiteBoardHook  from 'services/course/pages/Lessons/hooks/useWhiteBoardHook';
 import MenuItem from '@mui/material/MenuItem';
 import MaxWidthDialog from 'services/course/pages/components/MaxWidthDialog';
 import LessonPlanIframeComponent  from 'services/course/pages/components/LessonPlanIframeComponent';
-import NotesIcon from '@material-ui/icons/Notes';
 import SaveIcon from '@material-ui/icons/Save';
 import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
 import HistoryIcon from '@mui/icons-material/History';
@@ -62,37 +24,28 @@ import './style.css';
 
 const BoardEditorComponent = ({ 
   note,
-  setMarkDown,
-  meetingNotes,
-  saveMeetingNote,
   operatorBusinessName,
   saveIconVisible,
   meetingId,
-  courseId,
   lessonId,
   eventId,
   classRoomId, 
   whiteBoardLessonId,
-  users,
-  user,
   operators,
   currentUser,
-  lessons,
   boardOrEditor,
   toggleTeachBoardOrEditor,
-  loadWhiteBoardData,
   loadWhiteBoardDataByWid,
   addWhiteBoardData,
   selectSavedWhiteBoard,
   whiteBoardData,
-  isModalOpen, 
-  children }) => {
-
+  saveEditorMarkDownObjectToMw,
+  children 
+}) => {
   let hideMeetingStage = false, fullMeetingStage = false;
   let Id = ( whiteBoardLessonId !== undefined ) ? whiteBoardLessonId : getBoardEditorId(lessonId, meetingId, classRoomId, eventId);
   const urls = getUrls(Id, currentUser);
   const fullScreenSize = "1150px";
-  const editorUrl = urls?.editor;
   const canvasUrl = urls.canvas; 
   const whiteBoardId = Id;
   const whiteBoard = getSortedRecordsByDate(Object.values( whiteBoardData ).filter( board => board?.wid === whiteBoardId ), 'timeSaved');
@@ -180,8 +133,8 @@ return (
                   />
                   <MaxWidthDialog modalProps={modalProps}>
                     {
-                      ( item ) => {
-                         return <MenuItem value={item}>{`version: ${ moment(item?.timeSaved)?.local().format('YYYY-MM-DD hh:mm:ss') }`}</MenuItem>
+                      ( item, index ) => {
+                        return <MenuItem key={`${index}`}  value={item}>{`version: ${ moment(item?.timeSaved)?.local().format('YYYY-MM-DD hh:mm:ss') }`}</MenuItem>;
                       }
                     }
                   </MaxWidthDialog>
@@ -218,9 +171,9 @@ return (
 
           </div>    
             <div>
-              {
-                children && children
-              }
+            {
+              children && children
+            }
             </div> 
           </div>
 
@@ -235,8 +188,8 @@ const mapDispatch = {
   inviteStudentsToLearningSession, 
   addWhiteBoardData,
   selectSavedWhiteBoard,
-  loadWhiteBoardData,
-  loadWhiteBoardDataByWid
+  loadWhiteBoardDataByWid,
+  saveEditorMarkDownObjectToMw
 };
 
 const mapState = ( state, ownProps )   => {
@@ -247,10 +200,7 @@ const mapState = ( state, ownProps )   => {
     whiteBoardDataLoading: state.whiteBoardData.whiteBoardDataLoading,
     saveInProgress: state.whiteBoardData.saveInProgress,
     operator: getOperatorFromOperatorBusinessName(state, ownProps),
-    users: getUsersByOperatorId(state, ownProps),
     currentUser: state.users.user,
-    user: state.users.user,
-    lessons: Object.values(state.lessons.lessons),
     lessonStarted: state.lessons.lessonStarted,
     boardOrEditor: state.lessons.toggleTeachBoardOrEditor,
     setVideoCapture: state.streams.setVideoCapture,
@@ -258,8 +208,6 @@ const mapState = ( state, ownProps )   => {
     onSessionRenewal: state.sessions.autoRenewedPackageSuccess,
     allSessions: Object.values(state?.sessions?.sessions),
     selectedLessonFromLessonPlanDropDown: state.lessons.selectedLessonFromLessonPlanDropDown,
-    meetingNotes: state?.meetingNotes?.meetingNotes,
-    isModalOpen: state?.courses?.isModalOpen,
     note: getTutorsLessonUserNotesByLessonId(state, ownProps),
   };
 };

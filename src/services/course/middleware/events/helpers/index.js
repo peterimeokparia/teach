@@ -1,21 +1,7 @@
-import {
-updateUser,
-sendEmail } from 'services/course/api';
-
-import {
-saveEvent,
-saveTimeLineEvents } from 'services/course/actions/event';
-
-import {
-sendPushNotificationMessage } from 'services/course/actions/notifications';
-    
-import {
-getTimeLineItems, eventEnum} from 'services/course/pages/CalendarPage/helpers';
-
-import {
-SAVE_USER_SUCCESS,
-LAST_LOGGEDIN_USER } from 'services/course/actions/users';
-import { navigate } from '@reach/router';
+import { updateUser } from 'services/course/api';
+import { saveEvent, saveTimeLineEvents } from 'services/course/actions/event';
+import { getTimeLineItems } from 'services/course/pages/CalendarPage/helpers';
+import { SAVE_USER_SUCCESS, LAST_LOGGEDIN_USER } from 'services/course/actions/users';
     
     const emailMessageConfig = {
         sendersEmailAddress: "teachpadsconnect247@gmail.com",
@@ -84,6 +70,7 @@ function updateTimeLineEvents( calendarEvent ) {
     return timeLineItems;
 };
 
+// fix event push notifications 
 export const sendUpdatesAfterAddingNewCalendarEvents = ( calendarEvent, store ) => {
     try {
         // store?.dispatch(sendPushNotificationMessage( 
@@ -102,10 +89,15 @@ export const sendUpdatesAfterAddingNewCalendarEvents = ( calendarEvent, store ) 
         //         calendarEvent?.eventConfig?.currentUser?._id
         //     );
         // });
+
+        let calendarEvents = [ ...calendarEvent?.eventConfig?.currentUser?.calendarEvents, 
+            calendarEvent?.eventConfig?.calendarEventData?._id ];
+            
+            calendarEvents = calendarEvents.map( item => item );
+
         let currentUser = { 
             ...calendarEvent?.eventConfig.currentUser, 
-            calendarEvents:[ ...calendarEvent?.eventConfig?.currentUser?.calendarEvents, 
-            calendarEvent?.eventConfig?.calendarEventData?._id ]  
+            calendarEvents
         };
         
         updateUser( currentUser  )

@@ -1,11 +1,6 @@
-import { 
-navigate } from '@reach/router';
-
-import { 
-role } from 'services/course/helpers/PageHelpers';
-
-import {
-Organization } from 'services/course/pages/components/SiteFunctionalityGroup';
+import { navigate } from '@reach/router';
+import { role } from 'services/course/helpers/PageHelpers';
+import { organization } from 'services/course/pages/components/SiteFunctionalityGroup';
 
 export function goToMeeting( operatorBusinessName, user ){
     navigate(`/${operatorBusinessName}/LessonPlan/classRoom/${user?._id}`);
@@ -33,11 +28,11 @@ export function studentDetailPage( operatorBusinessName, selectedCourse, singleU
     let course = selectedCourse?._id === undefined 
             ? operator?._id 
             : selectedCourse?._id;       
-    return `/${operatorBusinessName}/student/${singleUser?._id}/course/${course}`
+
+    return `/${operatorBusinessName}/student/${singleUser?._id}/course/${course}`;
 }
 
 export function addNewStudentSession( sessionProps, student, tutor ){
-
     let {
         addNewSession,
         operatorId,
@@ -86,19 +81,19 @@ export const PageObject = {
 
 export let group = [
     {   page: 'Users',
-        operatorBusinessName: [Organization.Boomingllc, Organization.Teach],
+        operatorBusinessName: [organization.Boomingllc, organization.Teach],
         pageObject: [ 
-            { name: PageObject.Users_SideBarNavigation, allowed: [Organization.Teach] }, 
-            { name: PageObject.Users_Course_Count, allowed: [Organization.Teach] },
-            { name: PageObject.Users_SchoolIcon, allowed: [Organization.Teach] },
-            { name: PageObject.Users_BookIcon, allowed: [Organization.Boomingllc, Organization.Teach] },
-            { name: PageObject.Users_ScheduleIcon, allowed: [Organization.Boomingllc, Organization.Teach] },
-            { name: PageObject.Users_CalendarTodayIcon, allowed: [Organization.Boomingllc, Organization.Teach] },
-            { name: PageObject.Users_ForumIcon, allowed: [Organization.Teach]},
-            { name: PageObject.Users_TimelineIcon, allowed: [Organization.Boomingllc, Organization.Teach] }, 
-            { name: PageObject.Users_VideoCallIcon, allowed: [Organization.Boomingllc, Organization.Teach]}, 
-            { name: PageObject.Users_ViewTutorsIcon, allowed: [Organization.Boomingllc, Organization.Teach]}, 
-            { name: PageObject.Users_AddSessionIcon, allowed: [Organization.Boomingllc, Organization.Teach] }
+            { name: PageObject.Users_SideBarNavigation, allowed: [organization.Teach] }, 
+            { name: PageObject.Users_Course_Count, allowed: [organization.Teach] },
+            { name: PageObject.Users_SchoolIcon, allowed: [organization.Teach] },
+            { name: PageObject.Users_BookIcon, allowed: [organization.Boomingllc, organization.Teach] },
+            { name: PageObject.Users_ScheduleIcon, allowed: [organization.Boomingllc, organization.Teach] },
+            { name: PageObject.Users_CalendarTodayIcon, allowed: [organization.Boomingllc, organization.Teach] },
+            { name: PageObject.Users_ForumIcon, allowed: [organization.Teach]},
+            { name: PageObject.Users_TimelineIcon, allowed: [organization.Boomingllc, organization.Teach] }, 
+            { name: PageObject.Users_VideoCallIcon, allowed: [organization.Boomingllc, organization.Teach]}, 
+            { name: PageObject.Users_ViewTutorsIcon, allowed: [organization.Boomingllc, organization.Teach]}, 
+            { name: PageObject.Users_AddSessionIcon, allowed: [organization.Boomingllc, organization.Teach] }
         ]  
     }
 ];

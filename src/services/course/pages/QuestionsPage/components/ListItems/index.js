@@ -1,31 +1,11 @@
-import { 
-connect } from 'react-redux';
-
-import {
-points } from 'services/course/pages/QuestionsPage/helpers';
-
-import {
-saveQuestion,
-loadQuestions,
-setMarkDownEditor } from 'services/course/actions/questions';
-
-import {
-videoComponentMeta } from 'services/course/actions/video';
-
-import {
-togglePreviewMode } from 'services/course/actions/app';
-
-import {
-handleChange,
-editor_upload_url } from 'services/course/pages/OnlineQuestionsPage/helpers';
-
-import {
-elementMeta,
-editorContentType } from 'services/course/pages/QuestionsPage/helpers';
-
-import {
-updateMarkDownEditorContent } from './helpers';
-
+import { connect } from 'react-redux';
+import { points } from 'services/course/pages/QuestionsPage/helpers';
+import { saveQuestion, loadQuestions, setMarkDownEditor } from 'services/course/actions/questions';
+import { videoComponentMeta } from 'services/course/actions/video';
+import { togglePreviewMode } from 'services/course/actions/app';
+import { handleChange, editor_upload_url } from 'services/course/pages/OnlineQuestionsPage/helpers';
+import { elementMeta, editorContentType } from 'services/course/pages/QuestionsPage/helpers';
+import { updateMarkDownEditorContent } from './helpers';
 import Interweave from 'interweave';
 import EditorComponent from 'services/course/pages/Components/EditorComponent';
 import PointsDistribution from '../PointsDistribution';
@@ -34,7 +14,7 @@ import VideoComponent from '../VideoComponent';
 import LessonPlanIframeComponent from 'services/course/pages/Lessons/LessonPlan/components/LessonPlanIframeComponent';
 import './style.css';
 
-// in progrss !!!
+// in progress !!!
 const ListItems = ({
   previewMode,
   form,
@@ -226,10 +206,12 @@ return form?.map( (element) => (
   ));
 };
 
+// this is obsolete...I have refactored this code surprised it's being called.
+
 const mapState = ( state, ownProps ) => {
   return {
     currentUser: state.users.user,
-    questions: Object.values(state.questions.questions),
+    questions:  Object.values( state.onlineQuestions.onlineQuestions ),
     latestQuestion: state.questions.latestQuestion,
     lessons: Object.values(state.lessons.lessons),
     markDownEditors: state.questions.markDownEditors,

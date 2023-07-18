@@ -1,0 +1,27 @@
+.course-question-tertiary-sidepanel-main {
+    width: 1500px;
+    height: auto;
+    min-height: 1px;
+    padding-right: 1px;
+    right: 0;
+    /* background-color: transparent; */
+    cursor: pointer;
+    margin-bottom: 10%;
+    cursor: pointer;
+}
+.course-question-tertiary-sidepanel {
+    width: 1500px;
+    height: auto;
+    min-height: 1px;
+    margin-top: 1.9%;
+    /* margin-left: 10.9%; */
+    /* padding-right: 10px; */
+    right: 0;
+    /* background-color: transparent; */
+    cursor: pointer;
+    margin-bottom: 10%;
+    /* border: 2px solid #f5f5f5;
+    border-radius: 0%;  */
+    /* box-shadow: 5px 5px 5px black; */
+    cursor: pointer;
+}

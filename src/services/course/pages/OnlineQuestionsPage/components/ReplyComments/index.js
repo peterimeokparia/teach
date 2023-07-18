@@ -1,41 +1,12 @@
 
-import { 
-connect } from 'react-redux';
-
-import { 
-getOperatorFromOperatorBusinessName,
-getSortedRecordsByDate } from 'services/course/selectors';
-
-import {
-loadOnlineComments,
-addNewOnlineComment,
-deleteOnlineComment,
-saveOnlineComment } from 'services/course/actions/onlinecomments'; 
-
-import {
-SET_ONLINECOMMENTS_MARKDOWN } from 'services/course/actions/onlinecomments'; 
-
-import {
-getCommentIdCollection } from './helpers';
-
-import { 
-Accordion, 
-AccordionSummary
-} from '@material-ui/core';
-
-import {
-handleChange,
-editor_upload_url } from 'services/course/pages/OnlineQuestionsPage/helpers';
-
-import { 
-styleObj, 
-replyIconStyle, 
-deleteIconStyle, 
-iconStyle } from './inlineStyles';
-
-import { 
-saveEditorMarkDownObjectToMw } from 'services/course/actions/editor';
-
+import { connect } from 'react-redux';
+import { getOperatorFromOperatorBusinessName, getSortedRecordsByDate } from 'services/course/selectors';
+import { SET_ONLINECOMMENTS_MARKDOWN } from 'services/course/actions/onlinecomments'; 
+import { getCommentIdCollection } from './helpers';
+import { Accordion, AccordionSummary } from '@material-ui/core';
+import { handleChange, editor_upload_url } from 'services/course/pages/OnlineQuestionsPage/helpers';
+import { styleObj, replyIconStyle,  deleteIconStyle,  iconStyle } from './inlineStyles';
+import { saveEditorMarkDownObjectToMw } from 'services/course/actions/editor';
 import useReplyCommentsHook from 'services/course/pages/OnlineQuestionsPage/hooks/useReplyCommentsHook';
 import moment from "moment";
 import EditorComponent  from '../../../components/EditorComponent';
@@ -46,42 +17,20 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import './style.css';
 
 const ReplyComments = ({ 
-  loadOnlineComments,
-  addNewOnlineComment,
-  deleteOnlineComment,
-  saveOnlineComment,
-  questionId,
   answer,
-  sortedComments,
   comment,
-  addComment,
-  parentComment,
-  onlineCommentsCollectionTest,
   operator,
   currentUser,
   currentUsers,
   comments,
   courseId, 
   question, 
-  onlineQuestionAnswerId, 
   saveEditorMarkDownObjectToMw,
-  parentComments,
-  getSortedCommentContent,
-  commentParentId }) => {
+  commentParentId
+}) => {
+  let commentsConfig = { question, answer, currentUser, operator, courseId, comments };
 
-  let commentsConfig = {
-    question, 
-    answer, 
-    currentUser, 
-    operator, 
-    courseId, 
-    comments
-  };
-
-  let {
-    addNewComment,
-    onlineComments,
-    onhandleSelected
+  let { addNewComment, onlineComments, onhandleSelected
   } = useReplyCommentsHook( commentsConfig );
 
 const getMainComment = ( comment ) => {
@@ -240,4 +189,4 @@ const mapState = ( state, ownProps ) => {
   };
 };
   
-export default connect(mapState, { saveOnlineComment, addNewOnlineComment, loadOnlineComments, deleteOnlineComment, saveEditorMarkDownObjectToMw })(ReplyComments);
+export default connect(mapState, { saveEditorMarkDownObjectToMw })(ReplyComments);

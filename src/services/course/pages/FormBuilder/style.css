@@ -6,7 +6,7 @@
     align-items: center;
     height: 100vh;
     width: 125vw;
-    background-image: url(../../images/geometry2.png);
+    background-image: url(../../../../Images/geometry2.png);
     background-size: 300px 300px;
     border-style: dotted solid dashed double;
     margin-left: -2%;
@@ -24,48 +24,7 @@
 .formbuilder-action-toolbars h2 {
       margin-left: -18%;
       margin-bottom: 50px;
-}
-@media (min-width: 1281px) {
-  
-    /* CSS */
-    
-  }
-  
-  /* 
-    ##Device = Laptops, Desktops
-    ##Screen = B/w 1025px to 1280px
-  */
-  
-  @media (min-width: 1025px) and (max-width: 1280px) {
-    
-    /* CSS */
-    
-  }
-  
-  /* 
-    ##Device = Tablets, Ipads (portrait)
-    ##Screen = B/w 768px to 1024px
-  */
-  
-  @media (min-width: 768px) and (max-width: 1024px) {
-    
-  }
-  
-  /* 
-    ##Device = Tablets, Ipads (landscape)
-    ##Screen = B/w 768px to 1024px
-  */
-  
-  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-
-    
-  }
-  
-  /* 
-    ##Device = Low Resolution Tablets, Mobiles (Landscape)
-    ##Screen = B/w 481px to 767px
-  */
-  
+}  
   @media (min-width: 481px) and (max-width: 767px) {    
     /* CSS */
     .formbuilder-action-toolbars {
@@ -76,7 +35,7 @@
       align-items: center;
       height: 100vh;
       width: 300vw;
-      background-image: url(../../images/geometry2.png);
+      background-image: url(../../../../Images/geometry2.png);
       background-size: 300px 300px;
       border-style: dotted solid dashed double;
       margin-left: -52%;
@@ -154,7 +113,7 @@
         align-items: center;
         height: 100vh;
         width: 300vw;
-        background-image: url(../../images/geometry2.png);
+        background-image: url(../../../../Images/geometry2.png);
         background-size: 300px 300px;
         border-style: dotted solid dashed double;
         margin-left: -53%;

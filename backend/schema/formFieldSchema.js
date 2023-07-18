@@ -95,6 +95,10 @@ const formFieldSchema = new Schema ({
         type: Number, 
         required: false,
     },
+    position: { 
+        type: Number, 
+        required: false,
+    },
     xAxisformFieldPosition: {
         type: Number,
         required: false

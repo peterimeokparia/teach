@@ -1,14 +1,8 @@
-import { 
-useEffect } from 'react';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { toggleContentChanged, loadOnlineQuestions } from 'services/course/actions/onlinequestions';
 
-import { 
-useDispatch } from 'react-redux';
-
-import { 
-toggleContentChanged,
-loadOnlineQuestions } from 'services/course/actions/onlinequestions';
-
-function useloadQuestionsOnUpdatedQuestionContentHook( contentUpdated ){
+function useLoadQuestionsOnUpdatedQuestionContentHook( contentUpdated ){
     const dispatch = useDispatch();
    
     useEffect(() => {
@@ -16,8 +10,8 @@ function useloadQuestionsOnUpdatedQuestionContentHook( contentUpdated ){
             dispatch( loadOnlineQuestions() );
             dispatch( toggleContentChanged() );
         }
-    }, [ contentUpdated, toggleContentChanged, loadOnlineQuestions ]);                   
+    }, [ contentUpdated ]);                   
 };
 
-export default useloadQuestionsOnUpdatedQuestionContentHook;
+export default useLoadQuestionsOnUpdatedQuestionContentHook;
 

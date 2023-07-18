@@ -1,14 +1,7 @@
-import {
-sendEmail } from 'services/course/api';
-
-import {
-saveCalendar } from 'services/course/actions/calendar';
-
-import {
-addEvent } from 'services/course/actions/event';
-
-import {
-sendPushNotificationMessage } from 'services/course/actions/notifications';
+import { sendEmail } from 'services/course/api';
+import { saveCalendar } from 'services/course/actions/calendar';
+import { addEvent } from 'services/course/actions/event';
+import { sendPushNotificationMessage } from 'services/course/actions/notifications';
 
 const emailMessageConfig = {
     sendersEmailAddress: "teachpadsconnect247@gmail.com",

@@ -72,14 +72,16 @@ function updatedCalendarEvent(events, selectedEvent, updatedEvent) {
     let localCalendarEvents = events;
     let eventToUpdate = localCalendarEvents?.find(event => event?._id === selectedEvent?._id);
 
-    eventToUpdate = {
-        ...eventToUpdate, 
-        title: updatedEvent?.event?.title,
-        start: updatedEvent?.event?.start,
-        end: updatedEvent?.event?.end,
-        allDay: updatedEvent?.event?.allDay
-    };
-    localCalendarEvents[selectedEvent?._id] = eventToUpdate;
+    if ( eventToUpdate  ) {
+        eventToUpdate = {
+            ...eventToUpdate, 
+            title: updatedEvent?.event?.title,
+            start: updatedEvent?.event?.start,
+            end: updatedEvent?.event?.end,
+            allDay: updatedEvent?.event?.allDay
+        };
+        localCalendarEvents[selectedEvent?._id] = eventToUpdate;
+    }
     return localCalendarEvents;
 }
 

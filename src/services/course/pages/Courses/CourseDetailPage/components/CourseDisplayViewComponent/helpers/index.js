@@ -1,23 +1,15 @@
-import { 
-Link, navigate } from '@reach/router';
-
-import {
-FormFileUpload } from 'services/course/pages/components/FormFileUpload';
-
-import {
-lessonFileViewer } from 'services/course/pages/Courses/helpers';
-
+// refactor
+import { FormFileUpload } from 'services/course/pages/components/FormFileUpload';
+import { lessonFileViewer } from 'services/course/pages/Courses/helpers';
+import { isEmptyObject } from 'services/course/helpers/Validations';
 import BoardEditorComponent from 'services/course/pages/Lessons/LessonPlan/components/BoardEditorComponent';
 import LessonPlanIframeComponent from 'services/course/pages/Lessons/LessonPlan/components/LessonPlanIframeComponent';
-import LessonOutComesComponent from 'services/course/pages/Courses/CourseDetailPage/components/CourseDisplayViewComponent/LessonOutComesComponent';
+import OutComesComponent from 'services/course/pages/Courses/CourseDetailPage/components/CourseDisplayViewComponent/OutComesComponent';
+import OutcomeChartLanding from 'services/course/pages/Charts/components/OutcomeChartLanding';
 
 const fileUploadUrl =  "/api/v1/fileUploads";
 
 export const incrementDisplayedItemCount = ( toggleLessonItemDisplayCount, setToggleLessonItemDisplayCount ) => {
-    //navigate(`/teach/animate`);
-    ///navigate(`/teach/search`)
-    //navigate(`/teach/editor`)
-    // navigate(`/teach/questions/missedQuestions/quizzwithpoints/Bonds-quizz_4caf799f-371a-4332-853e-7eb477e2a48e`);
     if ( toggleLessonItemDisplayCount === 2 ) {
         setToggleLessonItemDisplayCount( 0 );
         return;
@@ -25,56 +17,76 @@ export const incrementDisplayedItemCount = ( toggleLessonItemDisplayCount, setTo
     setToggleLessonItemDisplayCount( toggleLessonItemDisplayCount + 1 );
 };
 
-export const toggleDisplayedItems = ( key, selectedlesson, courseDisplayProps ) => {
+export const toggleDisplayedItems = ( toggleDisplayItemProps ) => {
+    let { key, 
+        selectedlesson, 
+        courseDisplayProps, 
+        lessonOutcomes, 
+        courseOutcomes,
+        lessonPieChartData
+    } = toggleDisplayItemProps;
 
-    let {
-        previewMode,
+    let { previewMode,
         setFileToRemove,
         saveLesson,
         operatorBusinessName,
         courseId,
-        lessonItem,
         selectedTutorId,
+        toggleLessonOutcomeInsightModal
     } = courseDisplayProps;
 
  switch (key) {
      case 1: 
-     return < LessonPlanIframeComponent
-                name="embed_readwrite" 
-                source={selectedlesson?.videoUrl}
-                width="700px"
-                height="400px"
-                allow="camera;microphone"
-                scrolling="auto"
-                frameBorder="10" 
-                className={"iframe"}
-            />;
+     return <div className="lesson-video">
+                < LessonPlanIframeComponent
+                    name="embed_readwrite" 
+                    source={selectedlesson?.videoUrl}
+                    width="700px"
+                    height="400px"
+                    allow="camera;microphone"
+                    scrolling="auto"
+                    frameBorder="10" 
+                    className={"iframe"}
+                />
+            </div>;
      case 2:
-     return <div className="boardEditorDisplay">
-             <BoardEditorComponent 
+     return <div className="boardEditorDisplay"> 
+                <div>{'Fix BoardEditor'}</div>
+             {/* <BoardEditorComponent 
                  courseId={courseId}
                  lessonId={selectedlesson?._id}
                  classRoomId={selectedTutorId}
                  operatorBusinessName={operatorBusinessName}
                  saveIconVisible={true}
-             />
-             </div>
+             /> */}
+             </div>;
      case 3:
-     return < FormFileUpload
-                 previewMode={previewMode}
-                 currentObject={selectedlesson}
-                 typeOfUpload={'userlessonfiles'}
-                 fileUploadUrl={fileUploadUrl}
-                 setFilesToRemove={setFileToRemove}
-                 msg={"Please click on the lesson link before uploading files."}
-                 saveAction={saveLesson}
-                 fileViewer={lessonFileViewer}
-             />
+     return  <div>{'Fix File Viewer'}</div>
+            // <FormFileUpload
+            //     previewMode={previewMode}
+            //     currentObject={selectedlesson}
+            //     typeOfUpload={'userlessonfiles'}
+            //     fileUploadUrl={fileUploadUrl}
+            //     setFilesToRemove={setFileToRemove}
+            //     msg={"Please click on the lesson link before uploading files."}
+            //     saveAction={saveLesson}
+            //     fileViewer={lessonFileViewer}
+            //  />;
      default:
-        return  <LessonOutComesComponent 
-                    buttonText={'Add New Lesson Outcome'}
-                    courseId={ courseId }
-                    lessonId={ selectedlesson && selectedlesson?._id }
-                />;
+    return  <>
+            { ( selectedlesson && !toggleLessonOutcomeInsightModal ) &&
+                !isEmptyObject(lessonPieChartData) && 
+                <OutcomeChartLanding pieChartData={lessonPieChartData}/>
+            }
+            <OutComesComponent
+                operatorBusinessName={operatorBusinessName} 
+                buttonText={ 'Add New Lesson Outcome' }
+                outcomeType={'lesson'}
+                outcomes={lessonOutcomes }
+                courseId={ courseId }
+                lesson={ selectedlesson }
+                lessonId={ selectedlesson?._id }
+            />;              
+            </>      
  }
 };

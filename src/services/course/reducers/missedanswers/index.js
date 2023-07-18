@@ -1,7 +1,5 @@
 import produce from 'immer';
-
-import { 
-SAVE_MISSED_ANSWERS_SUCCESS } from 'services/course/actions/missedanswers';
+import { SAVE_MISSED_ANSWERS_SUCCESS } from 'services/course/actions/missedanswers';
 
 const initialState = {
     missedQuestions: [],
@@ -13,11 +11,14 @@ const initialState = {
     answerFormType: null, 
     answerFormName: null,
     answerFormUuId: null,
-    answerFormUserId: null
+    answerFormUserId: null, 
+    courseId: null,
+    lessonId: null
 };
 
 const reducer = produce((draft, action) => {
     switch(action.type){
+
         case SAVE_MISSED_ANSWERS_SUCCESS:
           draft.missedQuestions = action?.payload?.missedQuestions;
           draft.missedQuestionIds = action?.payload?.missedQuestionIds;
@@ -28,10 +29,13 @@ const reducer = produce((draft, action) => {
           draft.answerFormType = action?.payload?.answerFormType;
           draft.answerFormName = action?.payload?.answerFormName;
           draft.answerFormUuId= action?.payload?.answerFormUuId;
-          draft.answerFormUserId= action?.payload?.answerFormUserId
+          draft.answerFormUserId= action?.payload?.answerFormUserId;
+          draft.courseId=action?.payload?.courseId;
+          draft.lessonId=action?.payload?.lessonId;
         return;
        default:
      return;
+     
     }
 }, initialState);
 

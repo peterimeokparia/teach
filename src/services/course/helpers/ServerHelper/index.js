@@ -1,5 +1,5 @@
 import moment from 'moment-timezone';
-
+import isEqual from 'react-fast-compare';
 let authToken = null;
 
 export const setToken = token => {
@@ -25,6 +25,7 @@ export function deleteData(url = ``, data = {}) {
 export const deleteFiles = ( file ) => {
     let url = routeUrl().DeleteFile;
     let formData = new FormData();
+
     formData.append('delete', file);
     return uploadContent(url, formData);
 };
@@ -44,6 +45,7 @@ export const uploadVideos = ( videoData, externalId, videoNamePrefix ) => {
   };
 
   let formData = new FormData();
+
   formData.append('id', JSON.stringify(id));
   formData.append(videoNamePrefix, videoData?.videoMetaData?.videoNamePrefix);
   formData.append('data', JSON.stringify(data));
@@ -95,42 +97,43 @@ async function fetchWithHeaders( url =``) {
 
 async function fetchWithData( url =``, data = {}, method = 'POST') {
     let responseData = null;
-
-      try {
+  
+    try {
         responseData = await fetch(url, {
-          method,
-          headers: {
-          'Content-Type': 'application/json',
-          'Authorization': authToken ? `Bearer ${authToken}` : undefined,
-        },
-          body: JSON?.stringify(data)
-          // cache: "reload",
-      } 
-    );
+              method,
+              headers: {
+              'Content-Type': 'application/json',
+              'Authorization': authToken ? `Bearer ${authToken}` : undefined,
+            },
+              body: JSON?.stringify(data)
+              // cache: "reload",
+          } 
+        );
+    
+      if ( responseData?.status >= 400 && responseData?.status < 600 ) {
+          let response = await responseData?.json();
 
-    if ( responseData?.status >= 400 && responseData?.status < 600 ) {
-        let response = await responseData?.json();
+          if ( response?.msg ) {
+            throw new Error("Bad Server Response."  + response?.msg ); 
+          } else {
+            throw new Error("Bad Server Response."  + response ); 
+          }               
+      }
 
-        if ( response?.msg ) {
-          throw new Error("Bad Server Response."  + response?.msg ); 
-        } else {
-          throw new Error("Bad Server Response."  + response ); 
-        }               
-    }
+      if ( ! responseData?.ok ) {   
+          let response = await responseData?.json();
 
-    if ( ! responseData?.ok ) {   
-        let response = await responseData?.json();
-
-        if ( response?.msg ) {
-          throw new Error( "Something went wrong"   + response?.msg ); 
-        } else {
-          throw new Error( "Something went wrong" + response ); 
-        }
-    }; 
+          if ( response?.msg ) {
+            throw new Error( "Something went wrong"   + response?.msg ); 
+          } else {
+            throw new Error( "Something went wrong" + response ); 
+          }
+      }; 
     } catch ( error ) {
       console.log( error );    
       throw Error(`${ error?.message }` );
     }
+    
     return responseData?.json();
 }
 
@@ -142,11 +145,13 @@ export const randomIdGenerator = (min, max) => {
 
 export const getTimeZoneDateTime = ( dateTime ) => {
  let currentTimeZone = sessionStorage?.getItem('timeZone');
-    return moment( dateTime )?.tz( currentTimeZone );
+
+  return moment( dateTime )?.tz( currentTimeZone );
 };
 
 export const setItemInSessionStorage = (key, item) => {
   if ( item === null || item === "" ) return;
+  if ( isEqual( sessionStorage.getItem(key), item ) ) return;
   sessionStorage.setItem(key, JSON.stringify(item));
 };
 

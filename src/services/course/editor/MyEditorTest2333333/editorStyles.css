@@ -1,0 +1,35 @@
+/* https://dev.to/tumee/how-to-style-draft-js-editor-3da2 */
+
+.editor {
+  max-height: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    cursor: text;
+    padding: 16px;
+    border-radius: 2px;
+    margin-bottom: 2em;
+    box-shadow: inset 0px 1px 8px -3px #ababab;
+    background: #fefefe;
+  }
+  
+  .editor :global(.public-DraftEditor-content) {
+    max-height: 10px;
+    /* min-height: 140px; */
+  }
+  
+  .options {
+    /* margin-bottom: 20px; */
+  }
+
+  div.DraftEditor-root {
+    border: 1px solid #000;
+    background-color: beige;
+    height: 200px;
+    width: 300px;
+    overflow-y: auto;
+  }
+  div.DraftEditor-editorContainer,
+  div.public-DraftEditor-content {
+    height: 100%;
+  }
+  

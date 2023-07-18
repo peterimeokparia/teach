@@ -1,10 +1,5 @@
-import { 
-connect } from 'react-redux';
-
-import {
-getOperatorFromOperatorBusinessName,
-getPushNotificationUsersByOperatorId } from 'services/course/selectors';
-
+import { connect } from 'react-redux';
+import { getOperatorFromOperatorBusinessName, getPushNotificationUsersByOperatorId } from 'services/course/selectors';
 import AnswerComponent from 'services/course/pages/OnlineQuestionsPage/components/AnswerComponent';
 import OnlineQuestionsMultiEditorComponent from 'services/course/pages/OnlineQuestionsPage/components/OnlineQuestionsMultiEditorComponent';
 
@@ -12,11 +7,10 @@ const OnlineQuestionsPage = ({
   operatorBusinessName, 
   onlineQuestionId, 
   courseId,
-  onlineQuestions,
+  lessonId,
   formType,
   formName,
   formUuId }) => {
-   
 let onlineQuestionProps = {
   onlineQuestionId, 
   courseId,
@@ -24,19 +18,19 @@ let onlineQuestionProps = {
   displayVideoComponent: false,
   formType,
   formName,
-  formUuId
+  formUuId,
 };
 
 return (
-    <div className="stage" id="stage">
-      <div className="" id=""> 
+    <div>
+      <div> 
         <div>
-          <OnlineQuestionsMultiEditorComponent onlineQuestionProps={ onlineQuestionProps } >
+          <OnlineQuestionsMultiEditorComponent onlineQuestionProps={ onlineQuestionProps } lessonId={lessonId}>
             {( element, courseId ) => {
                 return < AnswerComponent 
                     question={ element }
                     courseId={ courseId }
-                />            
+                />;            
               }
             } 
           </OnlineQuestionsMultiEditorComponent>
@@ -50,8 +44,6 @@ const mapState = ( state, ownProps ) => {
   return {
     operator: getOperatorFromOperatorBusinessName(state, ownProps),
     currentUser: state.users.user,
-    onlineQuestions: Object.values(state.onlineQuestions.onlineQuestions),
-    latestQuestion: state.onlineQuestions.latestOnlineQuestions,
     pushNotificationUsers: getPushNotificationUsersByOperatorId(state, ownProps),
     failedOnlineQuestionNotifications: Object.values( state?.failedNotifications.failedPushNotifications )
   };

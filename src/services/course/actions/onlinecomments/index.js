@@ -19,7 +19,6 @@ export const RESET_ONLINECOMMENTS_ERROR = "RESET ONLINECOMMENTS ERROR";
 export const SAVE_ONLINECOMMENTS_BEGIN = "SAVE ONLINECOMMENTS BEGIN";
 export const SAVE_ONLINECOMMENTS_ERROR = "SAVE ONLINECOMMENTS ERROR";
 export const SAVE_ONLINECOMMENTS_SUCCESS = "SAVE ONLINECOMMENTS SUCCESS";
-export const SET_EXPLANATION_ANSWER_MARKDOWN = "SET EXPLANATION ANSWER MARKDOWN";
 
 export const addNewOnlineComment = ( comment ) => {
     return ( dispatch, getState ) => {
@@ -109,20 +108,3 @@ export const deleteOnlineComment = comment => {
     };
 };
 
-let timerHandle = null;
- 
-export const setMarkDown = ( teachObject, markDownContent, teachObjectType="", actionType, saveAction  ) => {
-    return ( dispatch, getState )  => {
-        dispatch({ type: actionType, payload: {   
-            teachObject,
-            markDownContent
-          }});
-        if ( timerHandle ){
-            clearTimeout( timerHandle );
-        };
-        timerHandle = setTimeout(() => {
-            console.log("...saving markdown text"); 
-           dispatch(saveAction( getState()[teachObjectType][teachObjectType][ teachObject?._id ] ));
-        }, 2000);  
-    };
-};

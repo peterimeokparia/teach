@@ -67,9 +67,9 @@ export function lessonFileViewer( props  ){
         fileUploadUrl, 
         onChangeHandler, 
         currentObject, 
-        deleteFile, 
-        getFileName, 
-        openFile, 
+        // deleteFile, 
+        // getFileName, 
+        // openFile, 
         className
     } = props;
 
@@ -112,4 +112,5 @@ return(
             </div> ) 
         }
     </div> 
-)}
+ );
+}

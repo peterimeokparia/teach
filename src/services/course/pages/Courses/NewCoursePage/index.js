@@ -1,30 +1,15 @@
-import { 
-useState, 
-useEffect, 
-useRef } from 'react';
-
-import { 
-connect } from 'react-redux';
-
-import { 
-addNewCourse } from 'services/course/actions/courses';
-
-import { 
-Validations } from  'services/course/helpers/Validations';
-
-import { 
-toast } from 'react-toastify';
-        
+import { useState, useEffect, useRef } from 'react';
+import { connect } from 'react-redux';
+import { addNewCourse } from 'services/course/actions/courses';
+import { Validations } from  'services/course/helpers/Validations';
+import { toast } from 'react-toastify';
 import './style.css';
 
 const NewCoursePage = ({
     saveInProgress,
     onSaveError,
-    onCoursesError,
     user,
     courses,
-    operatorBusinessName,
-    operator,
     dispatch }) => {
     const [ courseName, setCourseName ] = useState('');
     const [ coursePrice, setCoursePrice ] = useState('');
@@ -38,7 +23,6 @@ const NewCoursePage = ({
 
     if ( onSaveError ) {
         toast.error(`There was a problem while adding the new course: ${ courseName }: ${ onSaveError?.message }`);
-        // return <div> { onCoursesError.message } </div> ;
     }
 
 const handleSubmit = e => { 
@@ -121,8 +105,7 @@ return (
 const mapState = (state, ownProps ) => ({
     courses: Object.values(state?.courses?.courses)?.filter(crs => crs?.operatorId === ownProps.operator?._id),
     saveInProgress: state.courses.saveInProgress,
-    onSaveError: state.courses.onSaveError,
-    onCoursesError: state.courses.onCoursesError,
+    onSaveError: state.courses.onSaveError
 });
 
 export default connect(mapState)(NewCoursePage);

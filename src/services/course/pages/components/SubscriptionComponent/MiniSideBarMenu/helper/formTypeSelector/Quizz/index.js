@@ -1,14 +1,6 @@
-import { 
-saveOnlineQuestion } from 'services/course/actions/onlinequestions';
-
-import {
-handleAddPushNotificationSubscriptionToEntity,
-handleEmailNotificationSubscriptionToEntity,
-handleSavingEntityAction } from 'services/course/pages/components/SubscriptionComponent/MiniSideBarMenu/helper';
-
-import {
-elementMeta } from 'services/course/pages/QuestionsPage/helpers';
-
+import { saveOnlineQuestion } from 'services/course/actions/onlinequestions';
+import { handleAddPushNotificationSubscriptionToEntity, handleEmailNotificationSubscriptionToEntity, handleSavingEntityAction } from 'services/course/pages/components/SubscriptionComponent/MiniSideBarMenu/helper';
+import { elementMeta } from 'services/course/pages/QuestionsPage/helpers';
 import ToggleButton from 'services/course/pages/components/ToggleButton';
 
 const Quizz = ({
@@ -22,8 +14,7 @@ return (
         {  <span>
             <span  className={ "navlinkItem" }>
                 {/* <label> Receive push notifications. </label> */}
-                <ToggleButton
-                    className={ "toggleButton" }
+                <ToggleButton className={ "toggleButton" }
                     // isChecked={ (question?.questionPushNotificationSubscribers?.includes( currentUser?._id ) || question?.userId === currentUser?._id) }
                     // value={ 'isRecurring' }
                     // onChange={ () => handleAddPushNotificationSubscriptionToEntity( question, question?.questionPushNotificationSubscribers, currentUser,  saveOnlineQuestion, elementMeta.questionPushNotificationSubscribers  ) }

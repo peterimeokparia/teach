@@ -1,10 +1,4 @@
-import{
-add,
-get,
-update,
-remove, 
-getById,
-getEventsByUserId } from 'services/course/api';
+import { add, get, update, remove, getById, getEventsByUserId } from 'services/course/api';
 
 export const ADD_EVENT_BEGIN = "ADD EVENT BEGIN";
 export const ADD_EVENT_SUCCESS = "ADD EVENT SUCCESS";
@@ -67,7 +61,7 @@ export const saveEvent = ( calendarEvent, currentUser, pushNotificationUser, ema
             dispatch({ type: SAVE_EVENT_ERROR , error });
             return error;
         });  
-    }
+    };  
  };
 
  export const deleteEvent = ( event, currentUser, pushNotificationUser ) => {

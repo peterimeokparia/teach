@@ -8,7 +8,7 @@ editor_upload_url,
 handleChange } from 'services/course/pages/OnlineQuestionsPage/helpers';
 
 import { 
-handleChangedValue } from 'services/course/pages/FormBuilder/FormFields/helpers';
+handleChangedValue } from 'services/course/pages/FormBuilder/FormBuilderStepWizard/SelectExistingFormBuilderComponent/FormFields/helpers';
 
 import { 
 SET_ONLINEQUESTION_MARKDOWN } from 'services/course/actions/onlinequestions'; 
@@ -32,34 +32,40 @@ import './style.css';
 const MathScience = ({
   className,
   formElement, 
+  content,
+  handleEditorState,
   previewMode, 
   currentUser,
   saveMathScienceFormField,
   loadMathScienceFormField,
-  saveEditorMarkDownObjectToMw }) => { 
+  saveEditorMarkDownObjectToMw,
+  readOnly }) => { 
+
     return (
          <div>
              { 
                 <>
                   {<div className="editor-component">
-                     <EditorComponent
+                     {/* <EditorComponent
                         className={className}
                         id={formElement?._id}
                         name={formElement?.name} 
                         handleChange={(editor) => handleChange({ ...formElement, markDownContent: editor }, SET_ONLINEQUESTION_MARKDOWN, `/onlinequestions/`, saveEditorMarkDownObjectToMw )}
                         upload_url={editor_upload_url}
                         content={ formElement?.markDownContent }
-                        readOnly={( currentUser?._id && formElement?.userId === currentUser?._id && currentUser?.role === role.Tutor) ? false : true}
-                    />     
+                        readOnly={readOnly}
+                    />      */}
                     </div>
                   }
                   {
                    <div className="latex-component"> 
                         <MathScienceLatex 
-                            previewMode={previewMode} 
-                            formElement={formElement}
-                            saveMathScienceFormField={saveMathScienceFormField}
-                            loadMathScienceFormField={loadMathScienceFormField}
+                          previewMode={!readOnly} 
+                          formElement={formElement}
+                          content={content}
+                          setElementContentFromEditorState={ editorState => handleEditorState( editorState ) }
+                          saveMathScienceFormField={saveMathScienceFormField}
+                          loadMathScienceFormField={loadMathScienceFormField}
                         />
                     </div>
                   }

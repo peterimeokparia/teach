@@ -76,9 +76,7 @@ const reducer =  produce( (draft, action) => {
                draft.onError = action.error;
           return;  
           case SET_NOTES_MARKDOWN:
-               if ( draft.notes[action.payload.teachObject?._id] ) {
-                  draft.notes[action.payload.teachObject?._id].markDownContent = action.payload.markDownContent; 
-               }    
+              draft.note = action.payload;
           return;    
           default:
                

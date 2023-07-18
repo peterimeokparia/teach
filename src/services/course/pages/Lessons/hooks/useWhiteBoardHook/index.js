@@ -1,26 +1,17 @@
-import { 
-useState, 
-useEffect } from 'react';
-
-import { 
-useDispatch,
-useSelector } from 'react-redux';
+import { useState } from 'react';
+// import { useSelector } from 'react-redux';
 
 function useWhiteBoardHook( props ) {
-
   let { 
-    // currentUsser,
-    // savedWhiteBoards,
-    //loadWhiteBoardData,
     loadWhiteBoardDataByWid,
-    toggleTeachBoardOrEditor,
+    // toggleTeachBoardOrEditor,
+    // loadWhiteBoardData,
     whiteBoardId
   } = props;
 
-  const [ savedWhiteBoardCount, setSavedWhiteBoardCount ] = useState(0);
+  // const [ savedWhiteBoardCount, setSavedWhiteBoardCount ] = useState(0);
   const [ isOpen, setIsOpen ] = useState(false);
-  const dispatch = useDispatch();
-  const whiteBoards = useSelector( state => state.whiteBoardData.whiteBoardData );
+  // const whiteBoards = useSelector( state => state.whiteBoardData.whiteBoardData );
 
 function getSavedBoards(){
   loadWhiteBoardDataByWid(whiteBoardId);
@@ -31,26 +22,27 @@ function handleClose(){
   setIsOpen(false);
 };
 
-function handleTogglingBoardEditorViewOnUpdatedWhiteBoardCount(){
-  if ( whiteBoardId ){ 
-    let whiteBoardCount = getCurrentSavedWhiteBoardCount();
+// function handleTogglingBoardEditorViewOnUpdatedWhiteBoardCount(){
+//   if ( whiteBoardId ){ 
+//     let whiteBoardCount = getCurrentSavedWhiteBoardCount();
 
-  if ( whiteBoardCount > savedWhiteBoardCount ) {
-      //loadWhiteBoardData();
-      toggleTeachBoardOrEditor();
-      toggleTeachBoardOrEditor();
-      setSavedWhiteBoardCount( whiteBoardCount );
-    }
-  }
-};
+//   if ( whiteBoardCount > savedWhiteBoardCount ) {
+//       loadWhiteBoardData();
+//       toggleTeachBoardOrEditor();
+//       toggleTeachBoardOrEditor();
+//       setSavedWhiteBoardCount( whiteBoardCount );
+//     }
+//   }
+// };
 
-function getCurrentSavedWhiteBoardCount(){
-  let usersWhiteBoard  = undefined;
-  if ( whiteBoardId ) {
-    usersWhiteBoard = Object.values( whiteBoards )?.filter( board => board?.wid === whiteBoardId );
-  }
-  return usersWhiteBoard?.length
-};
+// function getCurrentSavedWhiteBoardCount(){
+//   let usersWhiteBoard  = undefined;
+
+//   if ( whiteBoardId ) {
+//     usersWhiteBoard = Object.values( whiteBoards )?.filter( board => board?.wid === whiteBoardId );
+//   }
+//   return usersWhiteBoard?.length;
+// };
 
 return {
   isOpen,

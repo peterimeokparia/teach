@@ -1,0 +1,19 @@
+/* .item {
+    width: 500px;
+    margin-left: 600px;
+   background-color: white;
+} */
+
+li:nth-child(odd) {
+    /* width: 500px; */
+    /* margin-left: 600px; */
+    /* background-color: lightblue; */
+}
+
+
+
+/* li:nth-child(odd) {
+    width: 500px;
+    margin-left: 600px;
+    background-color: lightblue;
+} */

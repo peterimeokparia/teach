@@ -1,19 +1,8 @@
-import { 
-useState, 
-useRef, 
-useEffect } from 'react';
-
-import { 
-navigate } from '@reach/router';
-
-import { 
-loadUsers } from 'services/course/actions/users';
-
-import { 
-deleteSession } from 'services/course/actions/sessions';
-
-import { 
-useDispatch } from 'react-redux';
+import { useState, useRef, useEffect } from 'react';
+import { navigate } from '@reach/router';
+import { loadUsers } from 'services/course/actions/users';
+import { deleteSession } from 'services/course/actions/sessions';
+import { useDispatch } from 'react-redux';
 
 function useSessionHook( sessionProps ){
     const dispatch = useDispatch();
@@ -32,7 +21,7 @@ function useSessionHook( sessionProps ){
             inputRef.current.focus();
         }
         dispatch(loadUsers()); 
-    }, [ editing, loadUsers ]); 
+    }, [ editing, dispatch ]); 
     
 const reset = () => {
     setTotalNumberOfSessions(totalNumberOfSessionsInitialValue);

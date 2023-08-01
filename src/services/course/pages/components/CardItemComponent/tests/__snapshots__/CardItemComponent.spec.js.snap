@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CardItemComponent renders as expected 1`] = `
+Array [
+  <div
+    className="col"
+    onClick={[Function]}
+  >
+    <div
+      className="cardItem"
+    >
+      <div
+        className="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1emxec4-MuiPaper-root-MuiCard-root"
+        onBlur={[Function]}
+      >
+        <div
+          className="MuiCardContent-root css-46bh2p-MuiCardContent-root"
+        >
+          <div>
+             
+            testOO1
+             
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  <div
+    className="col"
+    onClick={[Function]}
+  >
+    <div
+      className="cardItem"
+    >
+      <div
+        className="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1emxec4-MuiPaper-root-MuiCard-root"
+        onBlur={[Function]}
+      >
+        <div
+          className="MuiCardContent-root css-46bh2p-MuiCardContent-root"
+        >
+          <div>
+             
+            test002
+             
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+]
+`;

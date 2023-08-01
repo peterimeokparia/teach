@@ -1,15 +1,15 @@
-import express from 'express';
+const express = require('express');
 
-import attendanceModel from '../model/attendanceModel.js';
+const attendanceModel = require('../model/attendanceModel.js');
 
-import { 
+const { 
 verifyRoute,
 getRoute,
 getByIdRoute,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo } from '../middleWare/index.js'; 
+logRouteInfo } = require('../middleWare/index.js'); 
 
 const attendanceRoute = express.Router();
 
@@ -39,4 +39,4 @@ attendanceRoute.delete('/:attendanceId', deleteRoute(attendanceModel, 'attendanc
     return res.status(200).json(res?.newResult);
 });
 
-export default attendanceRoute;
+module.exports = attendanceRoute;

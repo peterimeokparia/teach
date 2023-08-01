@@ -1,28 +1,28 @@
-import { 
-Readable } from 'stream';
+// refactor file content
 
-import axios from 'axios';
-import mongoose from 'mongoose';
-import fs from 'fs';
-import bcrypt from 'bcrypt';
-import webpush  from 'web-push';
-import notificationModel from '../model/notificationModel.js';
+const { Readable } = require('stream');
+const axios = require('axios');
+const mongoose = require('mongoose');
+const fs = require('fs');
+const bcrypt = require('bcrypt');
+const webpush = require('web-push');
+const notificationModel = require('../model/notificationModel.js');
 
-export const sendMetaData = ( url, metaData ) => {
+const sendMetaData = ( url, metaData ) => {
    return updateContent( url, metaData );
 }
  
-export async function getContent( url ){
+async function getContent( url ){
   return axios.get( url );
 }
  
-export async function addContent( url, data = {}  ){
+async function addContent( url, data = {}  ){
   return axios.post(url, data)
    .then(resp => {console.log(resp)})
     .catch(err => { console.log(err) })
 }
 
-export async function updateContent( url, data = {}  ){
+async function updateContent( url, data = {}  ){
   return axios.put(url, data)
     .then(resp => { 
        console.log(resp);
@@ -31,10 +31,10 @@ export async function updateContent( url, data = {}  ){
      .catch(err => { 
         console.log(err); 
         return err;
-      })
+  });
 }
 
-export function getPostData( req ) {
+function getPostData( req ) {
   let requestBodyParameters, requestBodyToPost = {};
   requestBodyParameters = Object.keys( req.body );
   requestBodyParameters?.forEach(element => {
@@ -43,7 +43,7 @@ export function getPostData( req ) {
   return requestBodyToPost;
 } 
 
-export async function resetUserPassword( req,  resp,  model, id ) {
+async function resetUserPassword( req,  resp,  model, id ) {
   const salt = await bcrypt.genSalt();
   let existingUser = await model.findById(mongoose.Types.ObjectId( id ));
 
@@ -58,7 +58,7 @@ export async function resetUserPassword( req,  resp,  model, id ) {
     }
 }
 
-export async function saveUpdateUserOnLogin( req,  resp,  model, id ) {
+async function saveUpdateUserOnLogin( req,  resp,  model, id ) {
   let existingUser = await model.findById( mongoose.Types.ObjectId(id) );
   let harshedPassword = existingUser[ 'password' ];
 
@@ -86,7 +86,7 @@ export async function saveUpdateUserOnLogin( req,  resp,  model, id ) {
    }
 }
 
-export async function verifyUser( existingUser, unHarshedPassword ) {
+async function verifyUser( existingUser, unHarshedPassword ) {
    let isMatch = false;
 
     if ( existingUser ) {
@@ -95,8 +95,8 @@ export async function verifyUser( existingUser, unHarshedPassword ) {
     return isMatch;   
 }
 
-export async function saveUpdatedData( req, model, id ){ 
-        let tempResponse = null;
+async function saveUpdatedData( req, model, id ){ 
+      let tempResponse = null;
 
   try {
         const documentObjectToUpdate = await model?.findById(mongoose.Types.ObjectId(id));
@@ -128,7 +128,7 @@ export async function saveUpdatedData( req, model, id ){
   return tempResponse;
 }
 
-export const getVideoFileMeta = ( request ) => {
+const getVideoFileMeta = ( request ) => {
    let requestData = { }
    let idData = JSON.parse( request?.body?.id );
    let data = JSON.parse( request?.body?.data );
@@ -203,7 +203,7 @@ export const getVideoFileMeta = ( request ) => {
  }
  
  // refactor this - lesson plan
- export function sendResponseToStorage( response, meta, config ){ 
+ function sendResponseToStorage( response, meta, config ){ 
   let videoUrl, boardVideoUrl, markDownEditors, currentEditorId, currentFieldId;
 
   switch (meta.prefix) {
@@ -280,7 +280,7 @@ export const getVideoFileMeta = ( request ) => {
   }
 }
 
-export function videoObject( backEndRoute, videoMeta, videoFileName ) {
+function videoObject( backEndRoute, videoMeta, videoFileName ) {
   return {
      url: backEndRoute + `/videos?_id=${videoMeta?.id}`, 
      videoUrl: url.frontEndServerPrefix + `/videos/${videoFileName}`,
@@ -288,7 +288,7 @@ export function videoObject( backEndRoute, videoMeta, videoFileName ) {
   }
 }
 
-export async function updateFileData( req, model, id ){
+async function updateFileData( req, model, id ){
   try {
         const documentObjectToUpdate = await model?.findById(mongoose.Types.ObjectId(id));
         let bodyData = Object.keys(req.body);
@@ -308,7 +308,7 @@ export async function updateFileData( req, model, id ){
    return;
 }
 
-export async function updatedData( req, model, id ){
+async function updatedData( req, model, id ){
     let bodyData = Object.keys(req.body);
     let tempObject = {};
 
@@ -318,7 +318,7 @@ export async function updatedData( req, model, id ){
   return await model.findOneAndUpdate( tempObject );
 }
 
-export const base64ToImageConverter = ( base64String, imageName, filePath ) => {
+const base64ToImageConverter = ( base64String, imageName, filePath ) => {
   try {
       const imageBufferData = Buffer.from( base64String, 'base64');
       let streamObj = new Readable();
@@ -340,7 +340,7 @@ async function getDocumentObjectToUpdate( requestBody, model, id ){
   return documentObjectToUpdate;
 }
 
-export async function sendSubscriptions( user, request, payload, response ){
+async function sendSubscriptions( user, request, payload, response ){
   let responseDataCollection = [];
      await user?.subscriptions?.forEach(  subscription => { 
       let result = webPushSendNotification( subscription, request, payload, response );
@@ -356,7 +356,7 @@ export async function sendSubscriptions( user, request, payload, response ){
 }
 
 // refactor when fixing push
-export async function webPushSendNotification( subscription, request, payload, response ){
+async function webPushSendNotification( subscription, request, payload, response ){
  let resultAsObject = {};
 
  try {
@@ -413,15 +413,17 @@ export async function webPushSendNotification( subscription, request, payload, r
  return resultAsObject;
 }
 
-
-export const url = {
+const url = {
   BackeEndServerLessonPrefix : "http://localhost:9005/api/v1",
   frontEndServerPrefix : "http://localhost:3000"
-}
+};
 
-export const vapidKeys = {
+const vapidKeys = {
   publicVapidKey: 'BJvqz0UAiX-m62ElxLfR-g8kjkuUmos3-YJx9JwEoMxnJzkVYzQzOJcAdr3zkLa3D8Lbv7D3-y8RuqZuLFKAG9M',
   privateVapidKey: 'k5c3sss-1XauZuaDFvHaixOo2xWechDRQBP7LbQsX8U'
 };
 
+module.exports = {sendMetaData, getContent, addContent, updateContent, getPostData, resetUserPassword, saveUpdateUserOnLogin,
+  verifyUser, saveUpdatedData, getVideoFileMeta, sendResponseToStorage, videoObject, updateFileData, updatedData, base64ToImageConverter,
+  getDocumentObjectToUpdate, sendSubscriptions, webPushSendNotification, url, vapidKeys };  
 

@@ -1,12 +1,12 @@
-import express from 'express';
+const express = require('express');
 
-import fullTextSearchModel from '../model/fullTextSearchModel.js';
+const fullTextSearchModel = require('../model/fullTextSearchModel.js');
 
-import { 
+const { 
 FULLTEXTSEARCHROUTE,
-handleBackEndLogs } from '../helpers/logHelper.js';
+handleBackEndLogs } = require('../helpers/logHelper.js');
 
-import { 
+const { 
 verifyRoute,
 getRoute,
 getByIdRoute,
@@ -16,7 +16,7 @@ paginatedSearchResults,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo } from '../middleWare/index.js';
+logRouteInfo } = require('../middleWare/index.js');
 
 const fullTextSearchRoute = express.Router();
 
@@ -62,4 +62,4 @@ fullTextSearchRoute.delete('/:searchId', deleteRoute(fullTextSearchModel, 'searc
     return res.status(200).json(res?.newResult);
 });
 
-export default fullTextSearchRoute;
+module.exports = fullTextSearchRoute;

@@ -1,2 +1,4 @@
-export const SENDGRID = 'SENDGRID';
-export const NODEMAILER = 'NODEMAILER';
+const SENDGRID = 'SENDGRID';
+const NODEMAILER = 'NODEMAILER';
+
+module.exports = { SENDGRID, NODEMAILER };

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema; 
 
@@ -34,4 +34,4 @@ const formQuestionPointsSchema = new Schema ({
     }
 });
 
-export default formQuestionPointsSchema;
+module.exports = formQuestionPointsSchema;

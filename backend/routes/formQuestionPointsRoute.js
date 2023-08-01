@@ -1,8 +1,8 @@
-import express from 'express';
+const express = require('express');
 
-import formQuestionPointsModel from '../model/formQuestionPointsModel.js';
+const formQuestionPointsModel = require('../model/formQuestionPointsModel.js');
 
-import { 
+const { 
 verifyRoute,
 getRoute,
 getByIdRoute,
@@ -10,7 +10,7 @@ getByObjectIdRoute,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo } from '../middleWare/index.js'; 
+logRouteInfo } = require('../middleWare/index.js'); 
 
 const formQuestionPointsRoute = express.Router();
 
@@ -44,4 +44,4 @@ formQuestionPointsRoute.delete('/:formFieldId', deleteRoute(formQuestionPointsMo
     return res.status(200).json(res?.newResult);
 });
 
-export default formQuestionPointsRoute;
+module.exports = formQuestionPointsRoute;

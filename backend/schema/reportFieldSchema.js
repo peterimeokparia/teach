@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema; 
 
@@ -115,4 +115,4 @@ const reportFieldSchema = new Schema ({
     },
 });
 
-export default reportFieldSchema;
+module.exports = reportFieldSchema;

@@ -1,8 +1,8 @@
-import express from 'express';
+const express = require('express');
 
-import meetingNotesModel from '../model/meetingNotesModel.js';
+const meetingNotesModel = require('../model/meetingNotesModel.js');
 
-import { 
+const { 
 verifyRoute,
 getRoute,
 getByIdRoute,
@@ -10,7 +10,7 @@ getByObjectIdRoute,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo } from '../middleWare/index.js';
+logRouteInfo } = require('../middleWare/index.js');
 
 const meetingNotesRoute = express.Router();
 
@@ -44,4 +44,4 @@ meetingNotesRoute.delete('/:notesId', deleteRoute(meetingNotesModel, 'notesId'),
     return res.status(200).json(res?.newResult);
 });
 
-export default meetingNotesRoute;
+module.exports = meetingNotesRoute;

@@ -1,8 +1,8 @@
-import express from 'express';
+const express = require('express');
 
-import sessionModel from '../model/sessionModel.js';
+const sessionModel = require('../model/sessionModel.js');
 
-import { 
+const { 
 verifyRoute,
 getRoute,
 getByIdRoute,
@@ -10,7 +10,7 @@ getByObjectIdRoute,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo } from '../middleWare/index.js';
+logRouteInfo } = require('../middleWare/index.js');
 
 const sessionRoute = express.Router();
 
@@ -40,7 +40,7 @@ sessionRoute.delete('/:sessionId', deleteRoute(sessionModel, 'sessionId'), (req,
   return res.status(200).json(res?.newResult);
 });
 
-export default sessionRoute;
+module.exports = sessionRoute;
 
 
 

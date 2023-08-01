@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
-import gradeSchema from '../schema/gradeSchema.js';
+const mongoose = require('mongoose');
+const gradeSchema = require('../schema/gradeSchema.js');
 
 
 const gradeModel = mongoose.model('grades', gradeSchema);
 
 
-export default gradeModel;
+module.exports = gradeModel;

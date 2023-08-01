@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema; 
 
@@ -7,11 +7,19 @@ const outcomesSchema = new Schema ({
         type: String,
         required: false,
     },
+    type: { 
+        type: String,
+        required: false,
+    },
     courseId: { 
         type: String, 
         required: false  
     },
     lessonId: { 
+        type: String, 
+        required: false  
+    },
+    lessonDetailId: { 
         type: String, 
         required: false  
     },
@@ -69,6 +77,10 @@ const outcomesSchema = new Schema ({
         type: String, 
         required: false,
     },
+    outcomeVerbListId: { 
+        type: String, 
+        required: false  
+    },
     lessonConcepts: { 
         type: Array, 
         required: false  
@@ -79,4 +91,4 @@ const outcomesSchema = new Schema ({
     }
 });
 
-export default outcomesSchema;
+module.exports = outcomesSchema;

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema; 
 
@@ -26,4 +26,4 @@ const timeLineSchema = new Schema ({
 });
 
 
-export default timeLineSchema;
+module.exports = timeLineSchema;

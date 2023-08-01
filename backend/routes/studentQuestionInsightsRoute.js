@@ -1,8 +1,8 @@
-import express from 'express';
+const express = require('express');
 
-import studentQuestionInsightsModel from '../model/studentQuestionInsightsModel.js';
+const studentQuestionInsightsModel = require('../model/studentQuestionInsightsModel.js');
 
-import { 
+const { 
 verifyRoute,
 getRoute,
 getByIdRoute,
@@ -10,7 +10,7 @@ paginatedResults,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo  } from '../middleWare/index.js'; 
+logRouteInfo  } = require('../middleWare/index.js'); 
 
 const studentQuestionInsightsRoute = express.Router();
 
@@ -52,4 +52,4 @@ studentQuestionInsightsRoute.delete('/:studentQuestionInsightsId', deleteRoute( 
     return res.status(200).json(res?.newResult);
 });
 
-export default studentQuestionInsightsRoute;
+module.exports = studentQuestionInsightsRoute;

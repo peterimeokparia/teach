@@ -1,28 +1,26 @@
-import express from 'express';
+const express = require('express');
 
-import multer from 'multer';
+const multer = require('multer');
 
-import { 
+const { 
 sendMetaData, 
 getContent,
 getVideoFileMeta,
 videoObject,
 sendResponseToStorage,
-url } from '../helpers/storageHelper.js';
+url } = require('../helpers/storageHelper.js');
 
-import { 
+const { 
 getLogObject,
-handleBackEndLogs } from '../helpers/logHelper.js';
+handleBackEndLogs } = require('../helpers/logHelper.js');
 
-import { 
+const { 
 verifyRoute,
-logRouteInfo } from '../middleWare/index.js'; 
+logRouteInfo } = require('../middleWare/index.js'); 
 
 const videoRoute = express.Router();
 
 videoRoute.use(logRouteInfo);
-
-const logs = getLogObject();
 
 let backeEndServerRoute, videoFileName, videoMeta;
 
@@ -59,4 +57,4 @@ const uploadVideo = multer({ storage });
    return response.send({data: responseWithDataToSend?.data[0], videoUrl: videoConfigData?.videoUrl });
 });
 
-export default videoRoute;
+module.exports = videoRoute;

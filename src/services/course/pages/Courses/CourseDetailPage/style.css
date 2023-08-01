@@ -109,6 +109,7 @@
 }
 .CourseDetail .content {
   display: flex;
+  /* height: 10vh; */
   height: 100vh;
 }
 .CourseDetail .content-not-visible {
@@ -127,14 +128,14 @@
   position: absolute;
   z-index: 1000;
   margin-left: -38.7%;
-  width: 2px;
+  /* width: 2px; */
 }
 .CourseDetail .sidebar .lessons::-webkit-scrollbar {
   display: none;
   overflow-y: scroll;
 }
 .CourseDetail .sidebar .lessons {
-  list-style: none;
+  /* list-style: none;
   height: 80vh;
   width: 31.5vh;
   margin: 0;
@@ -146,38 +147,38 @@
   margin-top: 2%;
   -ms-overflow-style: none;  
   scrollbar-width: none; 
-  overflow-y: scroll; 
+  overflow-y: scroll;  */
 }
 .CourseDetail .sidebar .lessons div {
   /* display: none; */
-  -ms-overflow-style: none;  
+  /* -ms-overflow-style: none;  
   scrollbar-width: none; 
-  overflow-y: scroll;
+  overflow-y: scroll; */
 }
 .CourseDetail .sidebar .lessons div::-webkit-scrollbar {
-  display: none;
+  /* display: none;
   overflow-y: scroll;
   -ms-overflow-style: none;  
   scrollbar-width: none; 
-  overflow-y: scroll; 
+  overflow-y: scroll;  */
 }
 
 .CourseDetail .sidebar-outcomes {
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   width: 0px;
   height: 100%;
   box-sizing: border-box;
   text-align: center;
-  flex-grow: 1;
+  flex-grow: 1; */
 }
 
 .CourseDetail .sidebar-outcomes .lessons::-webkit-scrollbar {
-  display: none;
-  overflow-y: scroll;
+  /* display: none;
+  overflow-y: scroll; */
 }
 .CourseDetail .sidebar-outcomes .lessons {
-  list-style: none;
+  /* list-style: none;
   height: 80vh;
   width: 31.5vh;
   margin: 0;
@@ -189,40 +190,44 @@
   margin-top: 2%;
   -ms-overflow-style: none;  
   scrollbar-width: none; 
-  overflow-y: scroll; 
+  overflow-y: scroll;  
+  */
 }
 .CourseDetail .sidebar-outcomes .lessons div {
-  -ms-overflow-style: none;  
+  /* -ms-overflow-style: none;  
   scrollbar-width: none; 
-  overflow-y: scroll;
+  overflow-y: scroll; */
 }
 .CourseDetail .sidebar-outcomes .lessons div::-webkit-scrollbar {
-  display: none;
+  /* display: none;
   overflow-y: scroll;
   -ms-overflow-style: none;  
   scrollbar-width: none; 
-  overflow-y: scroll; 
+  overflow-y: scroll;  */
 }
 .CourseDetail .sidebar-2 {
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   width: 0px;
   height: 100%;
   box-sizing: border-box;
   text-align: center;
   flex-grow: 1;
-  margin-left: 65%;
+  margin-left: 65%; */
+  height: 5vh;
 }
 
 .CourseDetail .sidebar-3 {
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   width: 0px;
   height: 100%;
   box-sizing: border-box;
   text-align: center;
   flex-grow: 1;
-  margin-left: 1%;
+  margin-left: 1%; */
+
+
   /* display: flex;
   flex-direction: column;
   width: 0px;
@@ -232,8 +237,6 @@
   flex-grow: 1;
   margin-left: 90%; */
 }
-
-
 .lessons .lessonMultiColor{
   background-color: #673ab7;
   margin: 0;
@@ -247,18 +250,25 @@
   color: transparent;
 }
 .lesson {
-  margin-left: 280px;
+  /* margin-left: 280px;
   padding-top: 10px;
-  height: 110vh;
+  height: 110vh; */
 }
 .CourseDetail .content .lesson-content {
-  margin-top: -1%;
-  margin-left: -52%;
+  margin-left: -8%; 
+  /* margin-top: -1%;
+  margin-left: -40%; */
+
+  /* margin-top: -1%;
+  margin-left: -8%; */
+
   /* margin-left: 0%; update for production - 0 */
-  width: 50vh; 
+  width: 0vh; 
+  
+  /* height: 5%; */
 } 
 .CourseDetail .content .lesson-content .content {
-  margin-left: -85px;
+  /* margin-left: -85px; */
 }
 .CourseDetail .content .lesson-content .content .whiteBoardSideBar {
   flex-basis: 100px;
@@ -296,12 +306,31 @@
    /* width: auto; */
    /* width: 10vh;
    text-align: justify; */
-   text-align: justify
+  height: 5vh;
+  text-align: justify;
+  -ms-overflow-style: none;  
+  scrollbar-width: none; 
+  overflow-y: scroll;  
 } 
 .CourseDetail .content .lesson-content .lesson2:after {
   content: "";
   display: inline-block;
   width: 100%;
+  -ms-overflow-style: none;  
+  scrollbar-width: none; 
+  overflow-y: scroll;
+}
+.CourseDetail .content .lesson-content .lesson2 div {
+  -ms-overflow-style: none;  
+  scrollbar-width: none; 
+  overflow-y: scroll;
+}
+.CourseDetail .content .lesson-content .lesson2 div::-webkit-scrollbar {
+  display: none;
+  overflow-y: scroll;
+  -ms-overflow-style: none;  
+  scrollbar-width: none; 
+  overflow-y: scroll; 
 }
 .CourseDetail .content .lesson-content .lesson2 .lessonPage {
   text-align: left;
@@ -315,8 +344,8 @@
 .CourseDetail .content .lesson-content .toggleItems {
   /* margin-left: 130px; development */
   /* margin-left: 1642px; */
-  margin-top: 25px;
-  margin-left: 220%; 
+  /* margin-top: 25px;
+  margin-left: 220%;  */
 } 
 .CourseDetail .content .lesson-content .toggleItems .lesson-video { 
   /* margin-left: 130px; development */

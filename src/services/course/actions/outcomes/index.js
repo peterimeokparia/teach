@@ -19,6 +19,7 @@ export const SET_SELECTED_OUTCOME = "SET SELECTED OUTCOME";
 export const TOGGLE_CONCEPTS = "TOGGLE CONCEPTS";
 export const TOGGLE_FURTHER_STUDY_MODAL = "TOGGLE FURTHER STUDY MODAL";
 export const SET_CURRENT_OUTCOME = "SET CURRENT OUTCOME";
+
 export const addNewOutcome = ( outcome ) => {
     return dispatch => {
         dispatch({ type: ADD_NEW_OUTCOME_BEGIN });
@@ -64,6 +65,20 @@ export const loadOutcomeByOutcomeId = ( outcomeId ) => {
     return dispatch => {
         dispatch({ type: LOAD_OUTCOMES_BEGIN });
         return getById( outcomeId, `/outcomes?outcomeId=`)
+            .then( resp => {
+                dispatch({ type: LOAD_OUTCOMES_SUCCESS, payload: resp });
+                return resp;
+            })
+            .catch( error => {
+                dispatch({ type: LOAD_OUTCOMES_ERROR , error });
+        });
+    };
+};
+
+export const loadOutcomesByType = ( type ) => {
+    return dispatch => {
+        dispatch({ type: LOAD_OUTCOMES_BEGIN });
+        return getById( type, `/outcomes?type=`)
             .then( resp => {
                 dispatch({ type: LOAD_OUTCOMES_SUCCESS, payload: resp });
                 return resp;

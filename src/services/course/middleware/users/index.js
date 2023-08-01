@@ -31,7 +31,7 @@ setAuthToken } from 'services/course/api';
 
 import jstz from 'jstz';
 
-export const users = store => next =>  action => {
+export const users = store => next => action => {
      const timeZone = jstz?.determine();
 
      switch(action.type){

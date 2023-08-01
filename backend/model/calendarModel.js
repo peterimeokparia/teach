@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-import calendarSchema from '../schema/calendarSchema.js';
+const mongoose = require('mongoose');
+const calendarSchema = require('../schema/calendarSchema.js');
 
 const calendarModel = mongoose.model('calendar', calendarSchema);
 
-export default calendarModel;
+module.exports = calendarModel;

@@ -1,12 +1,12 @@
-import express from 'express';
+const express = require('express');
 
-import onlineCommentModel from '../model/onlineCommentModel.js';
+const onlineCommentModel = require('../model/onlineCommentModel.js');
 
-import { 
+const { 
 ONLINECOMMENTSROUTE,
-handleBackEndLogs } from '../helpers/logHelper.js';
+handleBackEndLogs } = require('../helpers/logHelper.js');
 
-import { 
+const { 
 verifyRoute,
 getRoute,
 getByIdRoute,
@@ -14,7 +14,7 @@ getByObjectIdRoute,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo } from '../middleWare/index.js';
+logRouteInfo } = require('../middleWare/index.js');
 
 const onlineQuestionAnswersCommentsRoute = express.Router();
 
@@ -66,7 +66,7 @@ onlineQuestionAnswersCommentsRoute.delete('/:commentId', deleteRoute(onlineComme
     return res.status(200).json(res?.newResult);
 });
 
-export default onlineQuestionAnswersCommentsRoute;
+module.exports = onlineQuestionAnswersCommentsRoute;
 
 
 

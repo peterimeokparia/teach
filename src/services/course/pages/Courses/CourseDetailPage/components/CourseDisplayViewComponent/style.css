@@ -1,3 +1,189 @@
+h1 {
+    position: relative;
+}
+.animate-border {
+    margin-left: -19%;
+    top: 15.5%;
+    position: absolute;
+    z-index: 1;
+    height: 29%;
+    width: 69%;
+    cursor: 'pointer'
+}
+.animate-border::before {
+    content: "";
+    position: absolute;
+    top: 25px;
+    left: -2px;
+    width: 0;
+    height: 0;
+    background: transparent;
+    border: 2px solid transparent;
+    cursor: 'pointer'
+}
+.animate-border:hover::before {
+    animation: animate 1s linear forwards;
+    cursor: 'pointer'
+}
+@keyframes animate {
+    0% {
+        width: 0;
+        height: 0;
+        border-top-color: #f44336;
+        border-right-color: transparent;
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+        cursor: 'pointer'
+    }
+    50% {
+        width: 100%;
+        height: 0;
+        border-top-color: #f44336;
+        border-right-color: yellow;
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+        background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+        cursor: 'pointer'
+    }
+    100% {
+        width: 100%;
+        height: 100%;
+        border-top-color: #f44336;
+        border-right-color: lightblue;
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+        background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+        cursor: 'pointer'
+    }
+}
+.animate-border::after {
+    content: "";
+    position: absolute;
+    top: 25px;
+    left: -2px;
+    width: 0;
+    height: 0;
+    background: transparent;
+    border: 2px solid transparent;
+    cursor: 'pointer'
+}
+.animate-border:hover::after {
+    animation: animates 1s linear forwards;
+    cursor: 'pointer'
+}
+@keyframes animates {
+    0% {
+        width: 0;
+        height: 0;
+        border-top-color: transparent;
+        border-right-color: transparent;
+        border-bottom-color: transparent;
+        border-left-color: black;
+        cursor: 'pointer'
+    }
+    50% {
+        width: 0;
+        height: 100%;
+        border-top-color: transparent;
+        border-right-color: transparent;
+        border-bottom-color: green;
+        border-left-color: gold;
+        cursor: 'pointer'
+    }
+    100% {
+        width: 100%;
+        height: 100%;
+        border-top-color: transparent;
+        border-right-color: transparent;
+        border-bottom-color: green;
+        border-left-color: gold;
+        cursor: 'pointer'
+    }
+}
+
+
+@media (min-width: 1281px) {
+}
+  /* 
+    ##Device = Laptops, Desktops
+    ##Screen = B/w 1025px to 1280px
+  */
+  
+  @media (min-width: 1025px) and (max-width: 1280px) {  
+    
+  }
+  /* 
+    ##Device = Tablets, Ipads (portrait)
+    ##Screen = B/w 768px to 1024px
+  */
+  @media (min-width: 768px) and (max-width: 1024px) { 
+    
+  }
+  /* 
+    ##Device = Tablets, Ipads (landscape)
+    ##Screen = B/w 768px to 1024px
+  */
+  
+  @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    
+  }
+  /* 
+    ##Device = Low Resolution Tablets, Mobiles (Landscape)
+    ##Screen = B/w 481px to 767px
+    @@@ Gets mobile landscape
+  */
+  @media (min-width: 480px) and (max-width: 767px)  {    
+   
+  
+  }
+  @media  only screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation:landscape)  {    
+    
+  }
+  /* 
+    ##Device = Most of the Smartphones Mobiles (Portrait)
+    ##Screen = B/w 320px to 479px
+    ## Safari - mobile
+  */
+  @media (min-width: 320px) and (max-width: 480px)  {
+   
+  
+  }
+  
+.courseDetailColumnGrid {
+}
+.courseDetailColumnGrid .grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-gap: 10px;
+  /* background-color: #2196F3; */
+  padding: 10px;
+}
+.testVideoBody {
+    height: 120pt;
+    width: 75%;
+    margin-left: 11%;
+    background: white;
+    border: 3px solid transparent;
+    cursor: 'pointer'
+}
+.testVideoBodyPlay {
+    height: 55pt;
+    width: 40%;
+    margin-top: 15%;
+    margin-left: 27%;
+    background: white;
+    border: 3px solid transparent;
+    cursor: 'pointer'
+} 
+.testVideoBodyInner {
+    height: 120pt;
+    width: 75%;
+    margin-left: 11%;
+    background: white;
+    border: 3px solid lightblue;
+    cursor: 'pointer'
+}
+ 
 .courseDetailFilelist{
     margin-left: 200px;
 }
@@ -24,7 +210,11 @@
     margin-left: 250px;
     font: black;
 }
-/* .CourseDetail row {
-    margin-bottom: 255px;
-    padding-bottom: 255px;
-} */
+.media-position {
+    margin-bottom: 50%;
+}
+.playIcon {
+    background: 'red' !important;
+    color: 'red' !important;
+}
+

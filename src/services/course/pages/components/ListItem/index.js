@@ -1,37 +1,35 @@
-import { 
-Match } from '@reach/router';
+import { Match } from '@reach/router';
 
 const ListItem = ({
-id, 
-altLinkPath,
-collection, 
-onMatchListItem,
-main = 'listItem',
-ul = 'lessons', 
-li = 'lesson-item',
-path,
-children,
+  id, 
+  altLinkPath,
+  collection, 
+  onMatchListItem,
+  main,
+  ul, 
+  li,
+  path,
+  children
 }) => {
 const getPath = ( item ) => { return ( path ) ? `${ path }/${ item?._id }`  : `${ altLinkPath }/${ id }`; };
 
 return (
-      <div className={main}>
+      <div className={main ?? 'listItem'}>
         { collection?.length === 0 && (
           <div> <h1>{'No items to display.'}</h1> </div>
         )}
         { collection?.length > 0 && ( 
-            <ul className={ul}> 
+            <ul className={ul ?? 'lessons'}> 
               { collection.map((item, index) => 
                 (
-                 <Match 
-                    key={item.id}
-                    path={ getPath( item )}
-                  > 
+                 <Match key={item?.id ?? item?._id} path={ getPath( item )}> 
                   {({ match } ) => {             
                     onMatchListItem( match, item ); 
-                    return <li className={li} >
-                    { children( item, index ) }
-                    </li>;
+                    return <div className={`course_detail_list_body-border`}>
+                    <li key={item?.id ?? item?._id} className={li ?? 'lesson-item'} >
+                       { children( item, index ) }
+                     </li>
+                    </div>;
                     }}
                  </Match>
                 ))}

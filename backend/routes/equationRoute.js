@@ -1,15 +1,15 @@
-import express from 'express';
+const express = require('express');
 
-import equationModel from '../model/equationModel.js';
+const equationModel = require('../model/equationModel.js');
 
-import { 
+const { 
 verifyRoute,
 getByIdRoute,
 getRoute,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo } from '../middleWare/index.js'; 
+logRouteInfo } = require('../middleWare/index.js'); 
 
 const equationRoute = express.Router();
 
@@ -31,4 +31,4 @@ equationRoute.delete('/:equationId', deleteRoute( equationModel, 'equationId' ),
     return res.status(200).json(res?.newResult);
 });
 
-export default equationRoute;
+module.exports = equationRoute;

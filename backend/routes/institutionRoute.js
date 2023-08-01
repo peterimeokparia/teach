@@ -1,15 +1,15 @@
-import express from 'express';
+const express = require('express');
 
-import institutionModel from '../model/institutionModel.js';
+const institutionModel = require('../model/institutionModel.js');
 
-import { 
+const { 
 verifyRoute,
 getRoute,
 getByIdRoute,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo  } from '../middleWare/index.js'; 
+logRouteInfo  } = require('../middleWare/index.js'); 
 
 const institutionRoute = express.Router();
 
@@ -35,4 +35,4 @@ institutionRoute.delete('/:institutionId', deleteRoute(institutionModel, 'instit
     return res.status(200).json(res?.newResult);
 });
 
-export default institutionRoute;
+module.exports = institutionRoute;

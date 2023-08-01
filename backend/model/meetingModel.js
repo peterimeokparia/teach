@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
-import meetingSchema from '../schema/meetingSchema.js';
+const mongoose = require('mongoose');
+const meetingSchema = require('../schema/meetingSchema.js');
 
 
 const meetingModel = mongoose.model('meetings', meetingSchema);
 
 
-export default meetingModel;
+module.exports = meetingModel;

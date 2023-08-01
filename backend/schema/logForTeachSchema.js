@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema; 
 
@@ -14,4 +14,4 @@ const logForTeachSchema = new Schema ({
 });
 
 
-export default logForTeachSchema;
+module.exports = logForTeachSchema;

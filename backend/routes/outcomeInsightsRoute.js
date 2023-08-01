@@ -1,8 +1,8 @@
-import express from 'express';
+const express = require('express');
 
-import outcomeInsightsModel from '../model/outcomeInsightsModel.js';
+const outcomeInsightsModel = require('../model/outcomeInsightsModel.js');
 
-import { 
+const { 
 verifyRoute,
 getRoute,
 getByIdRoute,
@@ -10,7 +10,7 @@ paginatedResults,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo  } from '../middleWare/index.js'; 
+logRouteInfo  } = require('../middleWare/index.js'); 
 
 const outcomeInsightsRoute = express.Router();
 
@@ -48,4 +48,4 @@ outcomeInsightsRoute.delete('/:outcomeInsightsId', deleteRoute(outcomeInsightsMo
     return res.status(200).json(res?.newResult);
 });
 
-export default outcomeInsightsRoute;
+module.exports = outcomeInsightsRoute;

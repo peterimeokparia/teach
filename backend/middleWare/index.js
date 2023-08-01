@@ -1,11 +1,12 @@
-import { getPostData, saveUpdatedData } from '../helpers/storageHelper.js';
-import { FORMFIELDROUTE, handleBackEndLogs } from '../helpers/logHelper.js';
-import Jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
+// refactor too large
+const { getPostData, saveUpdatedData } = require('../helpers/storageHelper.js');
+const { FORMFIELDROUTE, handleBackEndLogs } = require('../helpers/logHelper.js');
+const Jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
-export const privateKey = "secret_nsa_key"; 
+const privateKey = "secret_nsa_key"; 
 
-export function verifyRoute( req, res, next ){ // deprecated...?
+function verifyRoute( req, res, next ){ // deprecated...?
     if( req.headers['authorization'] ) {
         try {
             let authorizationHeader = req.headers['authorization'].split(" ");
@@ -23,7 +24,7 @@ export function verifyRoute( req, res, next ){ // deprecated...?
     }
 };
 
-export function generateSignOnCredentialToken( req, res, next ){
+function generateSignOnCredentialToken( req, res, next ){
     const emailField = req.body['email'];
     const passwordField = req.body['unHarshedPassword'];
 
@@ -39,12 +40,12 @@ export function generateSignOnCredentialToken( req, res, next ){
     }
 };
 
-export const tokenGenerator = ( user, key ) => {
+const tokenGenerator = ( user, key ) => {
     const token = Jwt.sign({ user }, key);
     return token;
 };
 
-export async function hashPasswordField( req, res, next ){
+async function hashPasswordField( req, res, next ){
     const passwordField = req.body['password'];
     if( req.body['password'] ) {
         try {
@@ -60,7 +61,7 @@ export async function hashPasswordField( req, res, next ){
 };
 
 
-export async function verifyToken( token, key ){
+async function verifyToken( token, key ){
   let verificationResult = Jwt.verify(token, key, (err, data) => {
     if (err) {
         console.log(err);
@@ -72,19 +73,18 @@ export async function verifyToken( token, key ){
    return verificationResult
 };
 
-export function logRouteInfo( req, res, next ){
+function logRouteInfo( req, res, next ){
     console.log('Request Method:', req?.method);
     console.log('Request Route:',req?.originalUrl);
     console.log('Request Body:',req?.body);
     console.log('Full Request:',req);
     next();
 };
-
 // MyModel.find({$text: {$search: searchString}})
 //        .skip(20)
 //        .limit(10)
 //        .exec(function(err, docs) { ... });
-export function paginatedSearchResults( model, Id ){
+function paginatedSearchResults( model, Id ){
     return async ( req, res, next ) => {
 
         const searchString = req.query[Id];
@@ -119,7 +119,7 @@ export function paginatedSearchResults( model, Id ){
     }
 };
 
-export function paginatedResults( model, Id ){
+function paginatedResults( model, Id ){
     return async ( req, res, next ) => {
         const id = {};
 
@@ -154,7 +154,7 @@ export function paginatedResults( model, Id ){
     }
 };
 
-export function getRoute(model){
+function getRoute(model){
     return async ( req, res, next ) => {
         try {
             let result = await model.find({});
@@ -168,7 +168,7 @@ export function getRoute(model){
     }
 };
 
-export function getByIdRoute(model, param){
+function getByIdRoute(model, param){
     return async ( req, res, next ) => {
         try {
             let field = {};
@@ -185,7 +185,7 @@ export function getByIdRoute(model, param){
     }
 };
 
-export function getByObjectIdRoute(model, param){
+function getByObjectIdRoute(model, param){
     return async ( req, res, next ) => {
         try {
             let id = { _id: req.query[ param ] }
@@ -200,7 +200,7 @@ export function getByObjectIdRoute(model, param){
     }
 };
 
-export function postRoute(model){
+function postRoute(model){
     return async ( req, res, next ) => {
         try {
             let formData = getPostData(req);
@@ -216,7 +216,7 @@ export function postRoute(model){
     }
 };
 
-export function putRoute(model, param){
+function putRoute(model, param){
     return async ( req, res, next ) => {
         try {
             let Id = req.params[ param ];
@@ -231,7 +231,7 @@ export function putRoute(model, param){
     }
 };
 
-export function deleteRoute(model, param){
+function deleteRoute(model, param){
     return async ( req, res, next ) => {
         try {
             let id = { _id: req.params[ param ] }
@@ -246,3 +246,6 @@ export function deleteRoute(model, param){
         }
     }
 };
+
+module.exports = { privateKey, verifyRoute, generateSignOnCredentialToken, tokenGenerator, hashPasswordField, verifyToken, logRouteInfo,   
+    paginatedSearchResults, paginatedResults, getRoute, getByIdRoute, getByObjectIdRoute, postRoute, putRoute, deleteRoute };

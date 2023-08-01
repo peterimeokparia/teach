@@ -1,16 +1,16 @@
-import express from 'express';
+const express = require('express');
 
-import onlineSurveyModel from '../model/onlineSurveyModel.js';
+const onlineSurveyModel = require('../model/onlineSurveyModel.js');
 
-import {
+const {
 getPostData,    
-saveUpdatedData } from '../helpers/storageHelper.js';
+saveUpdatedData } = require('../helpers/storageHelper.js');
 
-import { 
+const { 
 ONLINESURVEYROUTE,
-handleBackEndLogs } from '../helpers/logHelper.js';
+handleBackEndLogs } = require('../helpers/logHelper.js');
 
-import { 
+const { 
 verifyRoute,
 getRoute,
 getByIdRoute,
@@ -18,7 +18,7 @@ getByObjectIdRoute,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo } from '../middleWare/index.js';
+logRouteInfo } = require('../middleWare/index.js');
 
 const onlineSurveyRoute = express.Router();
 
@@ -64,7 +64,7 @@ onlineSurveyRoute.delete('/:surveyId', deleteRoute(onlineSurveyModel, 'surveyId'
     return res.status(200).json(res?.newResult);
 });
 
-export default onlineSurveyRoute;
+module.exports = onlineSurveyRoute;
 
 
 

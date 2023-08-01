@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-import answerFormSchema from '../schema/answerFormSchema.js';
+const mongoose = require('mongoose');
+const answerFormSchema = require('../schema/answerFormSchema.js');
 
 const answerFormModel = mongoose.model('answerforms', answerFormSchema);
 
-export default answerFormModel;
+module.exports = answerFormModel;

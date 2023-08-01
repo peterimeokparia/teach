@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-import formQuestionPointsSchema from '../schema/formQuestionPointsSchema.js';
+const mongoose = require('mongoose');
+const formQuestionPointsSchema = require('../schema/formQuestionPointsSchema.js');
 
 const formQuestionPointsModel = mongoose.model('formquestionpoints', formQuestionPointsSchema);
 
-export default formQuestionPointsModel;
+module.exports = formQuestionPointsModel;

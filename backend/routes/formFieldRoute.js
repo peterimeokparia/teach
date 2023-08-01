@@ -1,15 +1,15 @@
-import express from 'express';
+const express = require('express');
 
-import formFieldModel from '../model/formFieldModel.js';
+const formFieldModel = require('../model/formFieldModel.js');
 
-import { 
+const { 
 verifyRoute,
 getRoute,
 getByIdRoute,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo  } from '../middleWare/index.js'; 
+logRouteInfo  } = require('../middleWare/index.js'); 
 
 const formFieldRoute = express.Router();
 
@@ -51,4 +51,4 @@ formFieldRoute.delete('/:formFieldId', deleteRoute(formFieldModel, 'formFieldId'
     return res.status(200).json(res?.newResult);
 });
 
-export default formFieldRoute;
+module.exports = formFieldRoute;

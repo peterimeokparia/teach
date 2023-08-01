@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema; 
 
@@ -24,4 +24,4 @@ const notificationSchema = new Schema ({
 });
 
 
-export default notificationSchema;
+module.exports = notificationSchema;

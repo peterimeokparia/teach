@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
-import sessionSchema from '../schema/sessionSchema.js';
+const mongoose = require('mongoose');
+const sessionSchema = require('../schema/sessionSchema.js');
 
 
 const sessionModel = mongoose.model('sessions', sessionSchema);
 
 
-export default sessionModel;
+module.exports = sessionModel;

@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-import formFieldSchema from '../schema/formFieldSchema.js';
+const mongoose = require('mongoose');
+const formFieldSchema = require('../schema/formFieldSchema.js');
 
 const formFieldModel = mongoose.model('formfields', formFieldSchema);
 
-export default formFieldModel;
+module.exports = formFieldModel;

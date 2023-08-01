@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema; 
 
@@ -184,4 +184,4 @@ const eventSchema = new Schema ({
     }
 });
 
-export default eventSchema;
+module.exports = eventSchema;

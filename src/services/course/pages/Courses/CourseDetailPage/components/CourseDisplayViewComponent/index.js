@@ -1,10 +1,10 @@
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { role } from 'services/course/helpers/PageHelpers';
 import { deleteFileByFileName } from 'services/course/api';
 import { setItemInSessionStorage } from 'services/course/helpers/ServerHelper';
 import { lessonHeaderEditIconStyle } from '../inlineStyles';
-import { mapState, mapDispatch } from './connector';
-import { setSelectedOutcome, toggleConcepts } from 'services/course/actions/outcomes';
+import { mapState, mapDispatch } from '../../../storeConnector';
 import useCourseDisplayHook from 'services/course/pages/Courses/hooks/useCourseDisplayHook';
 import EditIcon from '@material-ui/icons/Edit';
 import MainMenu from 'services/course/pages/components/MainMenu';
@@ -16,6 +16,7 @@ import CourseDisplayViewOutcomeComponent from './components/CourseDisplayViewOut
 import  'services/course/pages/components/styles/course_detail_styles/style.css';
 import  'services/course/pages/components/styles/course_detail_outcome_styles/style.css';
 import  'services/course/pages/components/styles/sidebar_styles/style.css';
+import './style.css';
 
 const CourseDisplayViewComponent = ({
     previewMode,
@@ -39,11 +40,11 @@ const CourseDisplayViewComponent = ({
     setCurrentLesson,
     selectLessonFromLessonPlanDropDown,
     selectCourseFromLessonPlanCourseDropDown,
+    saveLessonInProgress,
     sessions,
     course,
     lessons,
     togglePreviewMode,
-    toggleQuestionModal,
     searchItem,
     operatorBusinessName,
     currentOutcome,
@@ -53,7 +54,6 @@ const CourseDisplayViewComponent = ({
     selectedLessonPlanLesson,
     event,
     concepts,
-    selectedOutcome,
     outcomeInsights,
     toggleConcepts,
     setSelectedOutcome,
@@ -67,7 +67,8 @@ const CourseDisplayViewComponent = ({
         deleteFileByFileName, startLesson, users, calendars, calendar, addCalendar, operatorBusinessName, concepts,
         operator, courseId, lessonId, event, allEvents, addNotes, loadAllNotes, allNotes, studentsNote, tutorsNote,
         toggleLessonOutcomeInsightModal, selectLessonFromLessonPlanDropDown, selectCourseFromLessonPlanCourseDropDown,
-        setSelectedOutcome, onLessonError, addNewLesson, outcomes, outcomeInsights, toggleConcepts, currentOutcome
+        setSelectedOutcome, onLessonError, addNewLesson, outcomes, outcomeInsights, toggleConcepts, currentOutcome,
+        saveLessonInProgress
     };
 
     let { 
@@ -80,44 +81,46 @@ const CourseDisplayViewComponent = ({
     } = displayProps;
 
 return (
-    <div className="CourseDetail"> 
+    // <div className="CourseDetail"> 
+    <div className="courseDetailColumnGrid"> 
         <header>
-            <div>
+          <div>
             <MainMenu navContent={navigationContent} />
              <div className="multiColor"> { ( courseId ) ? selectedCourse?.name : course?.name} </div>
-            </div>
-            <>
+          </div>
+          <>
             { courseDetailChildren }
-            </>
-            <Roles role={ currentUser?.role === role.Tutor }>
-                <EditIcon 
-                    onClick={setPreviewEditMode}
-                    color="action"
-                    className="comment-round-button-1"
-                    style={ lessonHeaderEditIconStyle() }
-                />
-            </Roles>
-            <LoginLogout
-                operatorBusinessName={operatorBusinessName}
-                user={currentUser} 
-                operator={operator}
+          </>
+          <Roles role={ currentUser?.role === role.Tutor }>
+            <EditIcon 
+                onClick={setPreviewEditMode}
+                color="action"
+                className="comment-round-button-1"
+                style={ lessonHeaderEditIconStyle() }
             />
+          </Roles>
+          <LoginLogout
+              operatorBusinessName={operatorBusinessName}
+              user={currentUser} 
+              operator={operator}
+          />
         </header>
-        <div className={'content'}> 
-            <CourseDisplayViewLeftSideBarComponent 
-                onMatchListItem={onMatchListItem} 
-                courseDisplayProps={courseDisplayProps} 
-                displayProps={displayProps}
-            />
-            <CourseDisplayViewToggleDisplayComponent
-                courseDisplayProps={courseDisplayProps} 
-                displayProps={displayProps}
-            />
-            <CourseDisplayViewOutcomeComponent 
-                onMatchListItem={onMatchListItem} 
-                courseDisplayProps={courseDisplayProps} 
-                displayProps={displayProps}
-            />
+        {/* <div className={'content'}>  */}
+        <div className={'grid-container'}> 
+          <CourseDisplayViewLeftSideBarComponent 
+            onMatchListItem={onMatchListItem} 
+            courseDisplayProps={courseDisplayProps} 
+            displayProps={displayProps}
+          />
+          <CourseDisplayViewToggleDisplayComponent
+            courseDisplayProps={courseDisplayProps} 
+            displayProps={displayProps}
+          />
+          <CourseDisplayViewOutcomeComponent 
+            onMatchListItem={onMatchListItem} 
+            courseDisplayProps={courseDisplayProps} 
+            displayProps={displayProps}
+          />
         </div>
     </div>
     );

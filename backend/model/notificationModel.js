@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-import notificationSchema from '../schema/notificationSchema.js';
+const mongoose = require('mongoose');
+const notificationSchema = require('../schema/notificationSchema.js');
 
 const notificationModel = mongoose.model('notifications', notificationSchema);
 
-export default notificationModel;
+module.exports = notificationModel;

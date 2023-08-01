@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
-import operatorSchema from '../schema/operatorSchema.js';
+const mongoose = require('mongoose');
+const operatorSchema = require('../schema/operatorSchema.js');
 
 
 const operatorModel = mongoose.model('operators', operatorSchema);
 
 
-export default operatorModel;
+module.exports = operatorModel;

@@ -1,8 +1,8 @@
-import express from 'express';
+const express = require('express');
 
-import calendarModel from '../model/calendarModel.js';
+const calendarModel = require('../model/calendarModel.js');
 
-import { 
+const { 
 verifyRoute,
 getRoute,
 getByIdRoute,
@@ -10,7 +10,7 @@ getByObjectIdRoute,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo } from '../middleWare/index.js'; 
+logRouteInfo } = require('../middleWare/index.js'); 
 
 const calendarRoute = express.Router();
 
@@ -40,4 +40,4 @@ calendarRoute.delete('/:calendarId', deleteRoute(calendarModel, 'calendarId'), (
     return res.status(200).json(res?.newResult);
 });
 
-export default calendarRoute;
+module.exports = calendarRoute;

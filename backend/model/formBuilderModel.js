@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-import formBuilderSchema from '../schema/formBuilderSchema.js';
+const mongoose = require('mongoose');
+const formBuilderSchema = require('../schema/formBuilderSchema.js');
 
 const formBuilderModel = mongoose.model('formbuilder', formBuilderSchema);
 
-export default formBuilderModel;
+module.exports = formBuilderModel;

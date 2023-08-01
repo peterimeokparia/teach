@@ -1,8 +1,8 @@
-import express from 'express';
+const express = require('express');
 
-import timeLineModel from '../model/timeLineModel.js';
+const timeLineModel = require('../model/timeLineModel.js');
 
-import { 
+const { 
 verifyRoute,
 getRoute,
 getByIdRoute,
@@ -10,7 +10,7 @@ getByObjectIdRoute,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo } from '../middleWare/index.js';
+logRouteInfo } = require('../middleWare/index.js');
 
 const timeLineRoute = express.Router();
 
@@ -36,7 +36,7 @@ timeLineRoute.delete('/:timeLineId', deleteRoute(timeLineModel, 'timeLineId'), (
    return res.status(200).json(res?.newResult);
 });
 
-export default timeLineRoute;
+module.exports = timeLineRoute;
 
 
 

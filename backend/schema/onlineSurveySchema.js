@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema; 
 
@@ -46,5 +46,5 @@ const onlineSurveySchema = new Schema ({
     }
 });
 
-export default onlineSurveySchema;
+module.exports = onlineSurveySchema;
 

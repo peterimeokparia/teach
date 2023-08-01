@@ -28,7 +28,6 @@ export const mapState = (state, ownProps) => {
         videoUrl: state.lessons.videoUrl,
         lessonPlanUrl: state.lessons.lessonPlanUrl,
         selectedLessonPlanLesson: state.lessons.selectedLessonPlanLesson,
-        // course: state.courses.selectedCourseFromLessonPlanCourseDropDown,
         course: getCoursesByCourseIdSelector(state, ownProps),
         onLessonError: state.lessons.onSaveLessonError,
         courses: Object.values( state.courses.courses ),

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema; 
 
@@ -62,5 +62,5 @@ const onlineQuestionAnswersCommentsSchema = new Schema ({
     }
 });
 
-export default onlineQuestionAnswersCommentsSchema;
+module.exports = onlineQuestionAnswersCommentsSchema;
 

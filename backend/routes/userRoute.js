@@ -1,23 +1,23 @@
-import {
+const {
 getPostData,      
 saveUpdatedData,
 saveUpdateUserOnLogin,
 verifyUser,
-resetUserPassword } from '../helpers/storageHelper.js';
+resetUserPassword } = require('../helpers/storageHelper.js');
 
-import { 
+const { 
 USERROUTE,
-handleBackEndLogs } from '../helpers/logHelper.js';
+handleBackEndLogs } = require('../helpers/logHelper.js');
 
-import express from 'express';
-import bcrypt from 'bcrypt';
-import userModel from '../model/userModel.js';
+const express = require('express');
+const bcrypt = require('bcrypt');
+const userModel = require('../model/userModel.js');
 
-import { 
+const { 
 verifyRoute,
 generateSignOnCredentialToken,
 logRouteInfo,
-paginatedResults } from '../middleWare/index.js';
+paginatedResults } = require('../middleWare/index.js');
 
 const userRoute = express.Router();
 
@@ -176,4 +176,4 @@ userRoute.post('/register', async (req, res) => {
     }
 });
 
-export default userRoute;
+module.exports = userRoute;

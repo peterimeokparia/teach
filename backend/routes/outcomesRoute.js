@@ -1,8 +1,8 @@
-import express from 'express';
+const express = require('express');
 
-import outcomesModel from '../model/outcomesModel.js';
+const outcomesModel = require('../model/outcomesModel.js');
 
-import { 
+const { 
 verifyRoute,
 getRoute,
 getByIdRoute,
@@ -10,7 +10,7 @@ getByObjectIdRoute,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo } from '../middleWare/index.js';
+logRouteInfo } = require('../middleWare/index.js');
 
 const outcomesRoute = express.Router();
 
@@ -20,15 +20,19 @@ outcomesRoute.get('/', getRoute( outcomesModel ),  (req, res) => {
     return res.status(200).json(res?.newResult);
 });
 
-outcomesRoute.get('/', getByObjectIdRoute( outcomesModel, 'outcomeId' ),  (req, res) => {
+outcomesRoute.get('/:outcomeId', getByIdRoute( outcomesModel, '_id' ),  (req, res) => {
     return res.status(200).json(res?.newResult);
 });
 
-outcomesRoute.get('/', getByIdRoute( outcomesModel, 'parentId' ),  (req, res) => {
+outcomesRoute.get('/', getByObjectIdRoute( outcomesModel, 'parentId' ),  (req, res) => {
     return res.status(200).json(res?.newResult);
 });
 
-outcomesRoute.get('/', getByIdRoute( outcomesModel, 'lessonId' ),  (req, res) => {
+outcomesRoute.get('/', getByObjectIdRoute( outcomesModel, 'lessonId' ),  (req, res) => {
+    return res.status(200).json(res?.newResult);
+});
+
+outcomesRoute.get('/:type', getByObjectIdRoute( outcomesModel, 'type' ),  (req, res) => {
     return res.status(200).json(res?.newResult);
 });
 
@@ -44,4 +48,4 @@ outcomesRoute.delete('/:outcomeId', deleteRoute(outcomesModel, 'outcomeId'), (re
     return res.status(200).json(res?.newResult);
 });
 
-export default outcomesRoute;
+module.exports = outcomesRoute;

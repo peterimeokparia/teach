@@ -51,6 +51,8 @@ import courseOutcomeInsights from './courseOutcomeInsights/index.js'
 import studentQuestionInsights from './studentQuestionInsights/index.js';
 import insights from './insights/index.js';
 import teachBotProps from './teachbot/index.js';
+import lessonDetailLessonPlan from './lessonDetailLessonPlan/index.js'
+import lessonDetail from './lessonDetail/index.js';
 
 let reducers = { 
     courses, 
@@ -104,7 +106,9 @@ let reducers = {
     studentQuestionInsights,
     insights,
     courseOutcomeInsights,
-    teachBotProps
+    teachBotProps,
+    lessonDetail,
+    lessonDetailLessonPlan
 };
 
 export default combineReducers( reducers );

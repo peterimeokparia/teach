@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-import configSchema from '../schema/configSchema.js';
+const mongoose = require('mongoose');
+const configSchema = require('../schema/configSchema.js');
 
 const configModel = mongoose.model('configs', configSchema);
 
-export default configModel;
+module.exports = configModel;

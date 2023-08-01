@@ -1,4 +1,4 @@
-import { 
+const { 
 verifyRoute,
 getRoute,
 getByIdRoute,
@@ -7,11 +7,11 @@ paginatedResults,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo } from '../middleWare/index.js'; 
+logRouteInfo } = require('../middleWare/index.js'); 
 
-import express from 'express';
+const express = require('express');
 
-import loginModel from '../model/loginModel.js';
+const loginModel = require('../model/loginModel.js');
 
 const loginRoute = express.Router();
 
@@ -45,4 +45,4 @@ loginRoute.delete('/:loginId', deleteRoute(loginModel, 'loginId'), (req, res) =>
     return res.status(200).json(res?.newResult);
 });
 
-export default loginRoute;
+module.exports = loginRoute;

@@ -1052,4 +1052,7 @@ react-chartjs-2 chart event methods
 import { Chart,  getDatasetAtEvent, getElementAtEvent, getElementsAtEvent } from 'react-chartjs-2';
 
 
+Craco
+if you name craco configuration as craco.config.cjs, does it ease your pain?
 
+https://github.com/dilanx/craco/issues/429

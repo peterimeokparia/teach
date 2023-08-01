@@ -1,4 +1,4 @@
-// import { 
+// const { 
 // generateKeyPairSync,
 // publicEncrypt,
 // privateDecrypt,

@@ -84,11 +84,13 @@ const reducer = produce((draft, action) => {
         case SET_SELECTED_OUTCOME:
         case SET_CURRENT_OUTCOME:    
             let selected = action?.payload;
+
             draft.selectedOutcome = selected;
             draft.currentOutcome = selected;
         return;
         case TOGGLE_FURTHER_STUDY_MODAL:
             draft.furtherStudyModal = !draft.furtherStudyModal;
+        return;    
         case DELETE_OUTCOME_SUCCESS:
             delete draft.outcomes[action.payload?._id];
         return;

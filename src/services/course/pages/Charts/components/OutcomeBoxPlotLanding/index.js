@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
 import { useState } from 'react';
 import { buildBoxPlotLegendData } from 'services/course/pages/Charts/components/BoxPlot/helpers'; 
-import { Box, ThemeProvider, createTheme } from '@mui/system'; 
+import { Box, ThemeProvider } from '@mui/system'; 
+import { createTheme } from '@mui/material';
 import { boxPlotOrientation } from 'services/course/pages/Charts/components/BoxPlot/helpers';
 import { CardHeader } from '@mui/material';
 import BoxPlot from 'services/course/pages/Charts/components/BoxPlot';

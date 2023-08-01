@@ -1,8 +1,8 @@
-import express from 'express';
+const express = require('express');
 
-import formBuilderModel from '../model/formBuilderModel.js';
+const formBuilderModel = require('../model/formBuilderModel.js');
 
-import { 
+const { 
 verifyRoute,
 getRoute,
 getByIdRoute,
@@ -10,7 +10,7 @@ paginatedResults,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo  } from '../middleWare/index.js'; 
+logRouteInfo  } = require('../middleWare/index.js'); 
 
 const formBuilderRoute = express.Router();
 
@@ -44,4 +44,4 @@ formBuilderRoute.delete('/:formBuilderId', deleteRoute(formBuilderModel, 'formBu
     return res.status(200).json(res?.newResult);
 });
 
-export default formBuilderRoute;
+module.exports = formBuilderRoute;

@@ -1,8 +1,8 @@
-import express from 'express';
+const express = require('express');
 
-import gradeModel from '../model/gradeModel.js';
+const gradeModel = require('../model/gradeModel.js');
 
-import { 
+const { 
 verifyRoute,
 getRoute,
 getByIdRoute,
@@ -10,7 +10,7 @@ getByObjectIdRoute,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo  } from '../middleWare/index.js'; 
+logRouteInfo  } = require('../middleWare/index.js'); 
 
 const gradeRoute = express.Router();
 
@@ -40,4 +40,4 @@ gradeRoute.delete('/:gradeId', deleteRoute(gradeModel, 'gradeId'), (req, res) =>
   return res.status(200).json(res?.newResult);
 });
 
-export default gradeRoute;
+module.exports = gradeRoute;

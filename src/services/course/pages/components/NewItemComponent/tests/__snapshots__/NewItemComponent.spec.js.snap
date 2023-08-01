@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewItemComponent renders as expected 1`] = `
+<form
+  className=" editing "
+  onSubmit={[Function]}
+>
+  <input
+    onBlur={[Function]}
+    onChange={[Function]}
+  />
+</form>
+`;

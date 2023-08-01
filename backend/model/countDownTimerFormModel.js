@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-import countDownTimerFormSchema from '../schema/countDownTimerFormSchema.js';
+const mongoose = require('mongoose');
+const countDownTimerFormSchema = require('../schema/countDownTimerFormSchema.js');
 
 const countDownTimerFormModel = mongoose.model('testtimers', countDownTimerFormSchema);
 
-export default countDownTimerFormModel;
+module.exports = countDownTimerFormModel;

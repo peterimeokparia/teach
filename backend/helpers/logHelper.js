@@ -1,54 +1,47 @@
-import {
+const {
 url,
 addContent,
 getContent,
-updateContent } from './storageHelper.js'; 
+updateContent } = require('./storageHelper.js'); 
 
-import axios from 'axios';
-import fetch from 'node-fetch';
+const axios = require('axios');
+const fetch = require('node-fetch');
 
-export const ASSIGNMENTROUTE = "assignmentModel";
-export const ATTENDANCEROUTE = "attendanceModel";
-export const CALENDARROUTE = "calendarModel";
-export const CLASSROOMROUTE = "classRoomModel";
-export const COURSEROUTE = "courseModel";
-export const EMAILROUTE = "emailModel";
-export const EVENTROUTE = "eventModel";
-export const EXAMROUTE = "examModel";
-export const GRADEROUTE = "gradeModel";
-export const LESSONROUTE = "lessonModel";
-export const MEETINGROUTE = "meetingModel";
-export const NOTIFICATIONROUTE = "notificationModel";
-export const ONLINEANSWERSROUTE = "onlineAnswerModel";
-export const ONLINECOMMENTSROUTE = "onlineCommentModel";
-export const ONLINEQUESTIONSROUTE = "onlineQuestionModel";
-export const ONLINESURVEYROUTE = "onlineSurveyModel";
-export const OPERATORROUTE = "operatorModel";
-export const QUESTIONROUTE = "questionModel";
-export const QUESTIONFORMROUTE = "questionFormModel";
-export const ANSWERFORMROUTE = "answerFormModel";
-export const FORMFIELDROUTE = "formFieldModel";
-export const FORMFIELDANSWERSROUTE = "formFieldModel";
-export const FAILEDEMAILNOTIFICATIONSROUTE = "retryFailedEmailNotificationsModel";
-export const FAILEDPUSHNOTIFICATIONSROUTE = "retryFailedPushNotificationsModel";
-export const SESSIONROUTE = "sessionModel";
-export const TIMELINEROUTE = "timeLineModel";
-export const USERROUTE = "userModel";
-export const WHITEBOARDROUTE = "whiteBoardModel";
-export const MEETINGNOTESROUTE = "meetingNotesModel";
-export const LOGINROUTE = "loginModel";
-export const FORMQUESTIONPOINTSROUTE = "formQuestionPointsModel";
-export const COUNTDOWNTIMERFORMROUTE = "countDownTimerFormModel";
-export const FULLTEXTSEARCHROUTE = "fullTextSearchModel";
+const ASSIGNMENTROUTE = "assignmentModel";
+const ATTENDANCEROUTE = "attendanceModel";
+const CALENDARROUTE = "calendarModel";
+const CLASSROOMROUTE = "classRoomModel";
+const COURSEROUTE = "courseModel";
+const EMAILROUTE = "emailModel";
+const EVENTROUTE = "eventModel";
+const EXAMROUTE = "examModel";
+const GRADEROUTE = "gradeModel";
+const LESSONROUTE = "lessonModel";
+const MEETINGROUTE = "meetingModel";
+const NOTIFICATIONROUTE = "notificationModel";
+const ONLINEANSWERSROUTE = "onlineAnswerModel";
+const ONLINECOMMENTSROUTE = "onlineCommentModel";
+const ONLINEQUESTIONSROUTE = "onlineQuestionModel";
+const ONLINESURVEYROUTE = "onlineSurveyModel";
+const OPERATORROUTE = "operatorModel";
+const QUESTIONROUTE = "questionModel";
+const QUESTIONFORMROUTE = "questionFormModel";
+const ANSWERFORMROUTE = "answerFormModel";
+const FORMFIELDROUTE = "formFieldModel";
+const FORMFIELDANSWERSROUTE = "formFieldModel";
+const FAILEDEMAILNOTIFICATIONSROUTE = "retryFailedEmailNotificationsModel";
+const FAILEDPUSHNOTIFICATIONSROUTE = "retryFailedPushNotificationsModel";
+const SESSIONROUTE = "sessionModel";
+const TIMELINEROUTE = "timeLineModel";
+const USERROUTE = "userModel";
+const WHITEBOARDROUTE = "whiteBoardModel";
+const MEETINGNOTESROUTE = "meetingNotesModel";
+const LOGINROUTE = "loginModel";
+const FORMQUESTIONPOINTSROUTE = "formQuestionPointsModel";
+const COUNTDOWNTIMERFORMROUTE = "countDownTimerFormModel";
+const FULLTEXTSEARCHROUTE = "fullTextSearchModel";
 
-export const getLogObject = () => {
-}
-
-export async function handleBackEndLogs( modelName, errormessage ){
-    // let message = JSON.stringify( errormessage );
-    // console.log('modelName modelName')
-    // console.log(modelName)
-
+async function handleBackEndLogs( modelName, errormessage ){
     return fetchData(`${url.BackeEndServerLessonPrefix}/logforteach/byObjectName?objectName=${modelName}`)
      .then(resp =>  { return resp.json() })
      .then( logs => {
@@ -57,18 +50,18 @@ export async function handleBackEndLogs( modelName, errormessage ){
          if ( logs && errorMessage ) {
             const {  _id, objectName } = errorMessage;
             if ( objectName && _id ) {
-                //console.log('.SAVING')
+                console.log('.SAVING')
                return handleFetch(`${url.BackeEndServerLessonPrefix}/logforteach/${_id}`, 'PUT', { ...logs, errorMessage: [...errorMessage?.errorMessage, { message, time: Date.now() } ]  });  
             }
          } else {
             return handleFetch(`${url.BackeEndServerLessonPrefix}/logforteach`, 'POST', { objectName: modelName, errorMessage: [{ message, time: Date.now() }]  });
          }
      }).catch( error => {
-         //console.log( error );
+         console.log( error );
      });
 };
 
-export async function fetchData(url){
+async function fetchData(url){
 return fetch(url) 
     .then( resp => { 
         console.log(resp);
@@ -80,7 +73,7 @@ return fetch(url)
     });
 };
 
-export async function handleFetch( url, method, data ){
+async function handleFetch( url, method, data ){
 return fetch( url, {
         method,
         headers: {
@@ -97,3 +90,12 @@ return fetch( url, {
         return error;
     });
 };
+
+module.exports = { handleBackEndLogs, fetchData, handleFetch,
+    ASSIGNMENTROUTE, ATTENDANCEROUTE, CALENDARROUTE, CLASSROOMROUTE, COURSEROUTE, EMAILROUTE, EVENTROUTE,
+    EXAMROUTE, GRADEROUTE, LESSONROUTE, MEETINGROUTE, NOTIFICATIONROUTE, ONLINEANSWERSROUTE, ONLINECOMMENTSROUTE,
+    ONLINEQUESTIONSROUTE, ONLINESURVEYROUTE, OPERATORROUTE, QUESTIONROUTE, QUESTIONFORMROUTE, ANSWERFORMROUTE,
+    FORMFIELDROUTE, FORMFIELDANSWERSROUTE, FAILEDEMAILNOTIFICATIONSROUTE, FAILEDPUSHNOTIFICATIONSROUTE, SESSIONROUTE,
+    TIMELINEROUTE, USERROUTE, WHITEBOARDROUTE, MEETINGNOTESROUTE, LOGINROUTE, FORMQUESTIONPOINTSROUTE, COUNTDOWNTIMERFORMROUTE,
+    FULLTEXTSEARCHROUTE 
+  };

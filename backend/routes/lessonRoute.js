@@ -1,8 +1,8 @@
-import express from 'express';
+const express = require('express');
 
-import lessonModel from '../model/lessonModel.js';
+const lessonModel = require('../model/lessonModel.js');
 
-import { 
+const { 
 verifyRoute,
 getRoute,
 getByIdRoute,
@@ -10,7 +10,7 @@ getByObjectIdRoute,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo } from '../middleWare/index.js';
+logRouteInfo } = require('../middleWare/index.js');
 
 const lessonRoute = express.Router();
 
@@ -48,4 +48,4 @@ lessonRoute.delete('/:lessonId', deleteRoute(lessonModel, 'lessonId'), (req, res
     return res.status(200).json(res?.newResult);
 });
 
-export default lessonRoute;
+module.exports = lessonRoute;

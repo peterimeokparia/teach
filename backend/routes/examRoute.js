@@ -1,15 +1,15 @@
-import express from 'express';
+const express = require('express');
 
-import examModel from '../model/examModel.js';
+const examModel = require('../model/examModel.js');
 
-import { 
+const { 
 verifyRoute,
 getRoute,
 getByIdRoute,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo } from '../middleWare/index.js'; 
+logRouteInfo } = require('../middleWare/index.js'); 
 
 const examRoute = express.Router();
 
@@ -35,4 +35,4 @@ examRoute.delete('/:examId', deleteRoute(examModel, 'examId'), (req, res) => {
     return res.status(200).json(res?.newResult);
 });
 
-export default examRoute;
+module.exports = examRoute;

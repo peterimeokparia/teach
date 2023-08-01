@@ -1,8 +1,8 @@
-import express from 'express';
+const express = require('express');
 
-import retryFailedEmailNotificationsModel from '../model/retryFailedEmailNotificationsModel.js';
+const retryFailedEmailNotificationsModel = require('../model/retryFailedEmailNotificationsModel.js');
 
-import { 
+const { 
 verifyRoute,
 getRoute,
 getByIdRoute,
@@ -10,7 +10,7 @@ getByObjectIdRoute,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo } from '../middleWare/index.js';
+logRouteInfo } = require('../middleWare/index.js');
 
 const retryFailedOnlineQuestionsEmailNotificationsRoute = express.Router();
 
@@ -40,7 +40,7 @@ retryFailedOnlineQuestionsEmailNotificationsRoute.delete('/email/:notificationId
     return res.status(200).json(res?.newResult);
 });
 
-export default retryFailedOnlineQuestionsEmailNotificationsRoute;
+module.exports = retryFailedOnlineQuestionsEmailNotificationsRoute;
 
 
 

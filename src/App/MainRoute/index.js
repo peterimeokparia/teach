@@ -69,6 +69,9 @@ import CustomHorizontalBarChart from 'services/course/pages/Charts/components/Cu
 import CustomStackedBarChart from 'services/course/pages/Charts/components/CustomChart'; // fix
 import CustomGroupedBarChart from 'services/course/pages/Charts/components/CustomChart';
 import TeachChatbot  from 'services/course/pages/TeachChatbot';
+import OutcomeBuilderComponent from 'services/course/pages/components/OutcomeBuilderComponent';
+import LessonDetails from 'services/course/pages/LessonDetails';
+import LessonDetailsDetailPage from 'services/course/pages/LessonDetails/components/LessonDetailsDetailPage';
 
 //import Bible from 'services/course/pages/Test001/components/Bible/index.txt';
 //import Test002 from 'services/course/pages/Test002';
@@ -83,8 +86,9 @@ const MainRoute = () => {
             <ClassRoomPage path="/:operatorBusinessName/classroom/:selectedUserId" /> 
             <CourseListPage path="/:operatorBusinessName/courses"/>
             <CourseDetailPage path="/:operatorBusinessName/tutor/:selectedTutorId/courses/:courseId">   
-                <LessonPage path="lessons/:lessonId" /> 
+                <LessonPage path="lessons/:lessonId"/>  
             </CourseDetailPage>
+            <LessonDetailsDetailPage path="/:operatorBusinessName/tutor/:selectedTutorId/courses/:courseId/lessons/:lessonId/lessondetails/:lessonDetailId"/>  
             <SalesPage  path="/:operatorBusinessName/courses/:courseId/buy">
                 <Cart path="/:operatorBusinessName/cart" />
                 <CourseRatingsPage path="course/:courseId/user/:userId/review" />
@@ -193,6 +197,7 @@ const MainRoute = () => {
              <CustomStackedBarChart path="/teach/stackedbarchart" />
              <CustomGroupedBarChart path="/teach/groupedbarchart" />
              <TeachChatbot path="/teach/chatbot"/>
+             <OutcomeBuilderComponent  path='/teach/outcomeBuilder'/>
         </Router>
     );
 };

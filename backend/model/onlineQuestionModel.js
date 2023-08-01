@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-import onlineQuestionSchema from '../schema/onlineQuestionSchema.js';
+const mongoose = require('mongoose');
+const onlineQuestionSchema = require('../schema/onlineQuestionSchema.js');
 
 const onlineQuestionModel = mongoose.model('onlinequestions', onlineQuestionSchema);
 
-export default onlineQuestionModel;
+module.exports = onlineQuestionModel;

@@ -1,40 +1,33 @@
 import { role } from 'services/course/helpers/PageHelpers';
-import { formTypes } from 'services/course/pages/FormBuilder/helpers';
-import { eventEnum } from 'services/course/pages/CalendarPage/helpers';
-import { goToCalendar } from 'services/course/pages/Users/helpers';
-import { incrementDisplayedItemCount } from 'services/course/pages/Courses/CourseDetailPage/components/CourseDisplayViewComponent/helpers';
-import { restrictTextLength } from 'services/course/helpers/PageHelpers';
-import { Link } from '@reach/router';
-import { sideBarEditIconStyle, sideBarDeleteIconStyle,sideBarHomeWorkIconStyle,sideBarHelpIconStyle,
-    swapHorizIconStyle, calendarStyle, sideBarFurtherStudyIconStyle } from 'services/course/pages/Courses/CourseDetailPage/components/inlineStyles';
-import SportsScoreIcon from '@mui/icons-material/SportsScore';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
-import HelpIcon from '@material-ui/icons/Help';
-import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
-import AutoStoriesIcon from '@mui/icons-material/AutoStories';
-import NewLessonPage from 'services/course/pages/Lessons/NewLessonPage';
+import NewItemComponent from 'services/course/pages/components/NewItemComponent';
+import NewLessonPageDetails from 'services/course/pages/Lessons/NewLessonPage/components/NewLessonPageDetails';
 import Roles from 'services/course/pages/components/Roles';
 import ListItem from 'services/course/pages/components/ListItem';
 import FullTextSearchComponentTest from 'services/course/pages/components/FullTextSearchComponentTest';
+import useNewLessonPageHook from 'services/course/pages/Lessons/hooks/useNewLessonPageHook';
 import  'services/course/pages/components/styles/course_detail_styles/style.css';
 import  'services/course/pages/components/styles/course_detail_outcome_styles/style.css';
 import  'services/course/pages/components/styles/sidebar_styles/style.css';
 
-const CourseDisplayViewLeftSideBarComponent = ({ courseDisplayProps, displayProps, onMatchListItem }) => {
+const CourseDisplayViewLeftSideBarComponent = ({ 
+    courseDisplayProps, 
+    displayProps, 
+    onMatchListItem,
+}) => {
     let {
-        currentUser, searchItem, saveLesson, operatorBusinessName, courseId, onLessonError, addNewLesson
+        currentUser, searchItem, courseId, onLessonError, saveLessonInProgress, addNewLesson, saveLesson
     } = courseDisplayProps;
 
     let { 
-        toggleLessonItemDisplayCount, setToggleLessonItemDisplayCount, lessonsByCourseId, startLessonSession, calendarProps, 
-        formProps, searchItemCollection, handleSearch, resetSelectedSearchItem
+        lessonsByCourseId, searchItemCollection
     } = displayProps;
 
+    let { 
+        newLessonItemProps, 
+    } = useNewLessonPageHook( onLessonError, saveLessonInProgress );
+
     return <div className="sidebar"> 
-        <div className="sidebar-search">
+        {/* <div className="sidebar-search">
         <FullTextSearchComponentTest 
             searchContent={lessonsByCourseId}
             searchKeysPropArray={[ 'title', 'introduction' ]}
@@ -42,7 +35,7 @@ const CourseDisplayViewLeftSideBarComponent = ({ courseDisplayProps, displayProp
             searchKeys={[ 'title', 'introduction', 'markDownContent' ]}
             width={300}                  
         />
-        </div>
+        </div> */}
         <ListItem
             collection={ searchItem ? searchItemCollection : lessonsByCourseId }
             onMatchListItem={onMatchListItem}
@@ -51,92 +44,34 @@ const CourseDisplayViewLeftSideBarComponent = ({ courseDisplayProps, displayProp
             path={"lessons"}
         >
             {( lesson ) => (
-                < NewLessonPage
+                <NewItemComponent
                     className="lesson-item"
-                    lessons={lessonsByCourseId}
-                    lesson={lesson}
-                    courseId={courseId}
+                    items={lessonsByCourseId}
+                    item={lesson}
+                    initialValue={lesson?.title ?? ""}
                     onSubmit={(title) => saveLesson({...lesson, title})}
-                    operatorBusinessName={ operatorBusinessName }
+                    {...newLessonItemProps}
                 >
-                { (edit, remove, forms) => (
-                    <div>
-                    <div onClick={resetSelectedSearchItem}>
-                    {
-                     <Link to={`lessons/${lesson._id}`}> <span title={lesson?._id} className="lessonMultiColor">{ restrictTextLength( lesson?.title, 10, 10 ) }</span></Link>
-                    } 
-                    </div>
-                    <div className="row justify-content-center"> 
-                        <span>
-                        <SportsScoreIcon 
-                            onClick={() => startLessonSession()}
-                            color="action"
-                            className="comment-round-button-2"
-                            style={ calendarStyle() }
-                        />
-                        <CalendarMonthIcon 
-                            onClick={() => goToCalendar( calendarProps, currentUser, eventEnum?.Lessons )}
-                            color="action"
-                            className="comment-round-button-4"
-                            style={ calendarStyle() }
-                        />
-                        </span>
-                    </div>
-                    <div className="row justify-content-center">
-                    <span> 
-                    <Roles role={ currentUser?.role === role.Tutor }>
-                        <EditIcon 
-                            onClick={() => { edit(lesson.title); } }
-                            color="action"
-                            className="comment-round-button-1"
-                            style={ sideBarEditIconStyle() }
-                        />
-                    </Roles>
-                    <Roles role={currentUser?.role === role.Tutor }>
-                        <DeleteIcon 
-                            onClick={remove}
-                            color="action"
-                            className="comment-round-button-3"
-                            style={ sideBarDeleteIconStyle() }
-                        />
-                    </Roles>
-                        <HelpIcon 
-                            onClick={() => { forms( lesson, formTypes.quizzwithpoints, formProps ); } }
-                            color="action"
-                            className="comment-round-button-2"
-                            style={ sideBarHelpIconStyle(currentUser) }
-                        />
-                        <HomeOutlinedIcon 
-                            onClick={() => { forms( lesson, formTypes.homework, formProps ); } }
-                            color="action"
-                            className="comment-round-button-4"
-                            style={ sideBarHomeWorkIconStyle() }
-                        />
-                        <AutoStoriesIcon
-                            onClick={() => { forms( lesson, formTypes.lessoninsights, formProps ); } }
-                            color="action"
-                            className="comment-round-button-9"
-                            style={ sideBarFurtherStudyIconStyle() }
-                        />
-                        <SwapHorizIcon 
-                            onClick={() => incrementDisplayedItemCount(  toggleLessonItemDisplayCount, setToggleLessonItemDisplayCount ) }
-                            color="action"
-                            className="comment-round-button-6"
-                            style={ swapHorizIconStyle() }
-                        />
-                    </span> 
-                    </div>   
-                </div>
+                {( edit, remove, forms ) => (
+                    <NewLessonPageDetails
+                        edit={edit}
+                        remove={remove}
+                        forms={forms} 
+                        lesson={lesson}
+                        {...displayProps}
+                        {...courseDisplayProps}
+                    />
                 )}
-                </NewLessonPage> 
+                </NewItemComponent>
             )}
         </ListItem>    
-        <Roles role={currentUser?.role === role.Tutor } >
-            < NewLessonPage 
+        <Roles role={ currentUser?.role === role.Tutor }>
+            <NewItemComponent
                 className="add-lesson-button"
-                onSubmit={title => addNewLesson(title, title, courseId, Date.now(), currentUser?._id)} 
-                lessons={lessonsByCourseId}
-                courseId={courseId}
+                items={lessonsByCourseId}
+                initialValue={""}
+                onSubmit={title => addNewLesson({ title, introduction: title, courseId, lessonDate: Date.now(), userId: currentUser?._id })}
+                {...newLessonItemProps} 
             >
                 {(edit) =>  (
                     <div>
@@ -148,10 +83,10 @@ const CourseDisplayViewLeftSideBarComponent = ({ courseDisplayProps, displayProp
                     { onLessonError && onLessonError?.message  }
                     </div>
                 )}
-            </NewLessonPage>
+            </NewItemComponent>
         </Roles>
-    </div>  
-}
+    </div>;  
+};
 
 export default CourseDisplayViewLeftSideBarComponent;
 

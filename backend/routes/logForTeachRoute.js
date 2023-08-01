@@ -1,10 +1,10 @@
-import express from 'express';
+const express = require('express');
 
-import logForTeachModel from '../model/logForTeachModel.js';
+const logForTeachModel = require('../model/logForTeachModel.js');
 
-import {
+const {
 getPostData,    
-saveUpdatedData } from '../helpers/storageHelper.js';
+saveUpdatedData } = require('../helpers/storageHelper.js');
 
 const logForTeachRoute = express.Router();
 
@@ -66,4 +66,4 @@ logForTeachRoute.put('/:logId', (req, res) => {
     });
 });
 
-export default logForTeachRoute;
+module.exports = logForTeachRoute;

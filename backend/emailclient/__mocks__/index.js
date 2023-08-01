@@ -1,10 +1,6 @@
-import {
-SENDGRID,
-NODEMAILER } from '../providers/index.js';
-
+const { SENDGRID, NODEMAILER } = require('../providers/index.js');
 
 export function emailClient( mailOptions, emailProvider  ){
-    console.log(`@@@@@@ i am in the mock implementation emailClient email was sent successfully`);
     const fromEmail = "teachpadsconnect247@gmail.com";
     let providers = [ SENDGRID, NODEMAILER  ];
     let emailSentStatusCollection = [];
@@ -41,21 +37,21 @@ export function emailClient( mailOptions, emailProvider  ){
 
 
 export const nodeMailerEmailServiceProvider = ( mailOptions, fromEmail  ) => {
-    console.log("...in Mock implementation nodeMailerEmailServiceProvider");
-            if ( mailOptions?.to !== undefined )   {
-                return {value: true, provider:'nodemailer'};
-            } else {
-                throw Error(`NODEMAILEREMAILSERVICEPROVIDER: There was a problem sending the message`);
-            }          
+    if ( mailOptions?.to !== undefined )   {
+        return {value: true, provider:'nodemailer'};
+    } else {
+        throw Error(`NODEMAILEREMAILSERVICEPROVIDER: There was a problem sending the message`);
+    }          
 };
 
 
 export const sendGridEmailServiceProvider = ( mailOptions, fromEmail  ) => {
-            console.log("Mock implementation sendGridEmailServiceProvider");
-            if ( mailOptions?.to !== undefined )   {
-                console.log("..in Mock implementation sendGridEmailServiceProvider");
-                return {value: true, provider:'sendgrid'};
-            } else {
-                throw Error( `SENDGRIDEMAILSERVICEPROVIDER: There was a problem sending the message` );
-            }       
+    if ( mailOptions?.to !== undefined )   {
+        console.log("..in Mock implementation sendGridEmailServiceProvider");
+        return {value: true, provider:'sendgrid'};
+    } else {
+        throw Error( `SENDGRIDEMAILSERVICEPROVIDER: There was a problem sending the message` );
+    }       
 };
+
+module.exports = { emailClient, nodeMailerEmailServiceProvider, sendGridEmailServiceProvider };

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema; 
 
@@ -33,4 +33,4 @@ const courseSchema = new Schema ({
     }
 });
 
-export default courseSchema;
+module.exports = courseSchema;

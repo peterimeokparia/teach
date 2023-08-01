@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema; 
 
@@ -47,5 +47,5 @@ const retryFailedNotificationsSchema = new Schema ({
         }
 });
 
-export default retryFailedNotificationsSchema;
+module.exports = retryFailedNotificationsSchema;
 

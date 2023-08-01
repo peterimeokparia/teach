@@ -1,16 +1,16 @@
-import express from 'express';
+const express = require('express');
 
-import configModel from '../model/configModel.js';
+const configModel = require('../model/configModel.js');
 
-import {
+const {
 getPostData,    
-saveUpdatedData } from '../helpers/storageHelper.js';
+saveUpdatedData } = require('../helpers/storageHelper.js');
 
-import { 
-generateKeyPairSync } from 'crypto';
+const { 
+generateKeyPairSync } = require('crypto');
 
-import bcrypt from 'bcrypt';
-import { appendFile, readdir, readFile } from 'fs';
+const bcrypt = require('bcrypt');
+const { appendFile, readdir, readFile } = require('fs');
 
 const configRoute = express.Router();
 
@@ -229,4 +229,4 @@ const configRoute = express.Router();
 //     return { jwPublicKey, jwPrivateKey  };
 // };
 
-export default configRoute;
+module.exports = configRoute;

@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListItem renders as expected 1`] = `
+<div
+  className="listItem"
+>
+  <ul
+    className="lessons"
+  >
+    <li
+      className="lesson-item"
+    >
+      <div />
+    </li>
+  </ul>
+</div>
+`;

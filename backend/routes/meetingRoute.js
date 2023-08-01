@@ -1,8 +1,8 @@
-import express from 'express';
+const express = require('express');
 
-import meetingModel from '../model/meetingModel.js';
+const meetingModel = require('../model/meetingModel.js');
 
-import { 
+const { 
 verifyRoute,
 getRoute,
 getByIdRoute,
@@ -10,7 +10,7 @@ getByObjectIdRoute,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo } from '../middleWare/index.js';
+logRouteInfo } = require('../middleWare/index.js');
 
 const meetingRoute = express.Router();
 
@@ -36,4 +36,4 @@ meetingRoute.delete('/:meetingId', deleteRoute(meetingModel, 'meetingId'), (req,
     return res.status(200).json(res?.newResult);
 });
 
-export default meetingRoute;
+module.exports = meetingRoute;

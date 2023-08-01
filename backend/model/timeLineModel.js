@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-import timeLineSchema from '../schema/timeLineSchema.js';
+const mongoose = require('mongoose');
+const timeLineSchema = require('../schema/timeLineSchema.js');
 
 const timeLineModel = mongoose.model( 'timelines', timeLineSchema );
 
-export default timeLineModel;
+module.exports = timeLineModel;

@@ -1,4 +1,4 @@
-import { 
+const { 
 verifyRoute,
 generateSignOnCredentialToken,
 hashPasswordField,
@@ -8,10 +8,10 @@ getByObjectIdRoute,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo } from '../middleWare/index.js';
+logRouteInfo } = require('../middleWare/index.js');
 
-import express from 'express';
-import operatorModel from '../model/operatorModel.js';
+const express = require('express');
+const operatorModel = require('../model/operatorModel.js');
 
 const operatorRoute = express.Router();
 
@@ -44,4 +44,4 @@ operatorRoute.delete('/:operatorId', deleteRoute(operatorModel, 'operatorId'), (
   return res.status(200).json(res?.newResult);
 });
 
-export default operatorRoute;
+module.exports = operatorRoute;

@@ -1,26 +1,25 @@
 .outcomes {
-    width: 50vw;
+    width: 78vw;
     list-style: none;
     margin: 0;
     padding: 0;
-    margin-left: -25px;
 }
 .outcomes .cardItem {
     margin-bottom: 5px;
-    /* -webkit-transform: perspective(1px) translateZ(0);
+    -webkit-transform: perspective(1px) translateZ(0);
     transform: perspective(1px) translateZ(0);
     -webkit-transition-duration: 0.5s;
-    transition-duration: 0.5s; */
+    transition-duration: 0.5s;
     cursor: pointer;
     box-shadow: 7px 7px black;
     transition: transform .1s ease-in-out;
 }
 .outcomes .cardItem:hover {
     margin-bottom: 5px;
-    /* -webkit-transform: perspective(1px) translateZ(0);
+    -webkit-transform: perspective(1px) translateZ(0);
     transform: perspective(1px) translateZ(0);
     -webkit-transition-duration: 0.5s;
-    transition-duration: 0.5s; */
+    transition-duration: 0.5s;
     cursor: pointer;
     box-shadow: 5px 5px #999;
     transform: translateY(4px);
@@ -30,10 +29,10 @@
 }
 .outcomes:hover {
     margin-bottom: 5px;
-    /* -webkit-transform: perspective(1px) translateZ(0);
+    -webkit-transform: perspective(1px) translateZ(0);
     transform: perspective(1px) translateZ(0);
     -webkit-transition-duration: 0.5s;
-    transition-duration: 0.5s; */
+    transition-duration: 0.5s;
     cursor: pointer;
     color: violet;
 }

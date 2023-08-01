@@ -1,8 +1,8 @@
-import express from 'express';
+const express = require('express');
 
-import eventModel from '../model/eventModel.js';
+const eventModel = require('../model/eventModel.js');
 
-import { 
+const { 
 verifyRoute,
 getRoute,
 getByIdRoute,
@@ -10,7 +10,7 @@ getByObjectIdRoute,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo } from '../middleWare/index.js'; 
+logRouteInfo } = require('../middleWare/index.js'); 
 
 const eventRoute = express.Router();
 
@@ -40,4 +40,4 @@ eventRoute.delete('/:eventId', deleteRoute(eventModel, 'eventId'), (req, res) =>
     return res.status(200).json(res?.newResult);
 });
 
-export default eventRoute;
+module.exports = eventRoute;

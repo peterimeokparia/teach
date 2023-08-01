@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-import fullTextSearchSchema from '../schema/fullTextSearchSchema.js';
+const mongoose = require('mongoose');
+const fullTextSearchSchema = require('../schema/fullTextSearchSchema.js');
 
 const fullTextSearchModel = mongoose.model('fulltextsearch', fullTextSearchSchema);
 
-export default fullTextSearchModel;
+module.exports = fullTextSearchModel;

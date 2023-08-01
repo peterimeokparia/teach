@@ -30,10 +30,12 @@ export const START_NEW_LESSON_SUCCESS = "START NEW LESSON SUCCESS";
 export const HANDLE_CURRENT_LESSON_MEETING = "HANDLE CURRENT LESSON MEETING";
 export const HANDLE_CURRENT_LESSON_ITEMS = "HANDLE CURRENT LESSON ITEMS";
 
-export const addNewLesson = ( title, introduction,  courseId, lessonDate, userId ) => {
+export const addNewLesson = ( addNewLessonProps ) => {
+    let { title } = addNewLessonProps;
+    
     return dispatch => {
         dispatch({ type: ADD_NEW_LESSON_BEGIN });
-        return add({ title, introduction, courseId, lessonDate, userId }, '/lessons')  
+        return add( addNewLessonProps, '/lessons')  
         .then( lesson => { 
             dispatch({ type: ADD_NEW_LESSON_SUCCESS, payload: lesson }); 
             return lesson;

@@ -1,15 +1,15 @@
-import express from 'express';
+const express = require('express');
 
-import assignmentModel from '../model/assignmentModel.js';
+const assignmentModel = require('../model/assignmentModel.js');
 
-import { 
+const { 
 verifyRoute,
 getRoute,
 getByIdRoute,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo  } from '../middleWare/index.js'; 
+logRouteInfo  } = require('../middleWare/index.js'); 
 
 const assignmentRoute = express.Router();
 
@@ -35,4 +35,4 @@ assignmentRoute.delete('/:assignmentId', deleteRoute(assignmentModel, 'assignmen
     return res.status(200).json(res?.newResult);
 });
 
-export default assignmentRoute;
+module.exports = assignmentRoute;

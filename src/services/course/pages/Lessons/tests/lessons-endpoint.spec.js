@@ -1,11 +1,8 @@
-import {
-get, 
-add,
-update } from 'services/course/api';
+import { get, add, update } from 'services/course/api';
 
-const PREFIX = "http://localhost:3000/api/v1";
+const PREFIX = "http://localhost:3000/api/v1"
 
-jest.mock('../../../Api');
+jest.mock('../../../api');
 
 let lesson = {
   courseId: "COURSE7fab4846c2a96278c56381c9",

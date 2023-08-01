@@ -1,8 +1,8 @@
-import express from 'express';
+const express = require('express');
 
-import onlineAnswerModel from '../model/onlineAnswerModel.js';
+const onlineAnswerModel = require('../model/onlineAnswerModel.js');
 
-import { 
+const { 
 verifyRoute,
 getRoute,
 getByIdRoute,
@@ -10,7 +10,7 @@ getByObjectIdRoute,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo } from '../middleWare/index.js';
+logRouteInfo } = require('../middleWare/index.js');
 
 const onlineQuestionAnswersRoute = express.Router();
 
@@ -48,7 +48,7 @@ onlineQuestionAnswersRoute.delete('/:answerId', deleteRoute(onlineAnswerModel, '
     return res.status(200).json(res?.newResult);
 });
 
-export default onlineQuestionAnswersRoute;
+module.exports = onlineQuestionAnswersRoute;
 
 
 

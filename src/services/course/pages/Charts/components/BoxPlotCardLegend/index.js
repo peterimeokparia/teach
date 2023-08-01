@@ -1,26 +1,74 @@
 import * as React from 'react';
-import { Box, ThemeProvider, createTheme } from '@mui/system';
+import { Box, ThemeProvider } from '@mui/system';
+import { createTheme } from '@mui/material';
 import Icon from '@mui/material/Icon';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 
-const theme = createTheme({
-  palette: {
-    background: {
-      paper: '#fff',
-    },
-    text: {
-      primary: '#173A5E',
-      secondary: '#46505A',
-    },
-    action: {
-      active: '#001E3C',
-    },
-    success: {
-      dark: '#009688',
-    },
+export const shades = {
+  primary: {
+    100: "#cccccc",
+    200: "#999999",
+    300: "#666666",
+    400: "#333333",
+    500: "#000000",
+    600: "#000000",
   },
+
+  secondary: {
+    100: "#f7ccd2",
+    200: "#ef99a4",
+    300: "#e66677",
+    400: "#de3349",
+    500: "#d6001c",
+    600: "#ab0016",
+    700: "#800011",
+    800: "#56000b",
+    900: "#2b0006",
+  },
+  neutral: {
+    100: "#f5f5f5",
+    200: "#ecebeb",
+    300: "#e2e1e1",
+    400: "#d9d7d7",
+    500: "#cfcdcd",
+    600: "#a6a4a4",
+  },
+};
+
+export const theme = createTheme({
+  palette: {
+    primary: {
+      main:shades.primary[500],
+    },
+    secondary: {
+      main: shades.secondary[500],
+    },
+    neutral: {
+      dark: shades.neutral[700],
+      main: shades.neutral[500],
+      light: shades.neutral[100],
+    },
+  }
 });
+
+// const theme = createTheme({
+//   palette: {
+//     background: {
+//       paper: '#fff',
+//     },
+//     text: {
+//       primary: '#173A5E',
+//       secondary: '#46505A',
+//     },
+//     action: {
+//       active: '#001E3C',
+//     },
+//     success: {
+//       dark: '#009688',
+//     },
+//   },
+// });
 
 export default function BoxPlotCardLegend({header, rate, title, passFailRate, minWidth=50, width=50, iconColor, avatarText}) {
   return (

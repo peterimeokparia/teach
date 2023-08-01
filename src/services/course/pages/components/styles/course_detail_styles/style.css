@@ -3,43 +3,43 @@
     overflow-y: none;
 }
 .course_detail_list {
-    height: 81vh;
-    width: 31.5vh;
+    height: 80vh;
+    width: 32.5vh;
     padding: 5px;
     margin-top: 2%;
-    /* display: flex; */
-    /* flex-direction: column; */
     list-style: none;
     -ms-overflow-style: none;  
     scrollbar-width: none; 
     overflow-y: scroll; 
 }
 .course_detail_list .course_detail_list_body {
-    border-radius: 25px;
-    background: whitesmoke;
+    border-radius: 2px;
+    background: transparent;
     text-decoration: underline burlywood;
     padding: 10px;
     padding-top: 25px;
-    margin-top: 45px;
-    height: 220px;
+    margin-top: 4px;
+    height: 219px;
+    /* box-shadow: 10px 10px;
     box-shadow: 10px 10px;
-    box-shadow: 10px 10px;
-    box-shadow: 0 6px rgb(255 0 0), 0 9px rgb(0 255 0), 0 9px rgb(255 174 0);
+    box-shadow: 0 6px rgb(255 0 0), 0 9px rgb(0 255 0), 0 9px rgb(255 174 0); */
+
+    border-radius: 4px;
+    box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);
+
     vertical-align: middle;
     transform: perspective(1px) translateZ(0);
     transition-duration: 0.5s;
 } 
 .course_detail_list .course_detail_list_body .lessonMultiColor {
     text-transform: capitalize;
-
-        /* background-image: linear-gradient(to left, violet, indigo, green, blue, yellow, orange, red); */
-    /* background-image: linear-gradient(to left, violet, red, white, yellow, orange, red); */
     background-image: linear-gradient(to left, violet, red, white, green, yellow, orange, red);
     -webkit-background-clip: text;
     -moz-background-clip: text;
     background-clip: text;
     color: transparent;
     text-shadow: 1px 1px black;
+    margin-left: 30.5%;
 }
 .course_detail_list .course_detail_list_body .course_detail_list_body_items {
     padding-top: 10px;
@@ -49,4 +49,109 @@
     text-transform: uppercase;
     font-weight: bold;
     letter-spacing: 0.5rem;
+}
+
+.course_detail_list .course_detail_list_body-border {
+    border-radius: 2px;
+    background: transparent;
+    text-decoration: underline burlywood;
+    padding: 10px;
+    padding-top: 5px;
+    margin-top: 20px;
+    height: 220px;
+
+
+    
+    vertical-align: middle;
+    transform: perspective(1px) translateZ(0);
+    transition-duration: 0.5s;
+}
+.course_detail_list .course_detail_list_body-border::before {
+    content: "";
+    position: absolute;
+    /* top: 25px; */
+    top: 8px;
+    left: -2px;
+    width: 0;
+    height: 0;
+    background: transparent;
+    border: 2px solid transparent;
+}
+.course_detail_list .course_detail_list_body-border:hover::before {
+    animation: animate 1s linear forwards;
+}
+@keyframes animate {
+    0% {
+        width: 0;
+        height: 0;
+        border-top-color: #f44336;
+        border-right-color: transparent;
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+    }
+
+    50% {
+        width: 100%;
+        height: 0;
+        border-top-color: #f44336;
+        border-right-color: yellow;
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+        background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+    }
+
+    100% {
+        width: 100%;
+        height: 100%;
+        border-top-color: #f44336;
+        border-right-color: lightblue;
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+        background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+    }
+}
+
+.course_detail_list .course_detail_list_body-border::after {
+    content: "";
+    position: absolute;
+    z-index: -1000;
+    /* top: 25px; */
+    top: 8px;
+    left: -2px;
+    width: 0;
+    height: 0;
+    background: transparent;
+    border: 2px solid transparent;
+}
+
+.course_detail_list .course_detail_list_body-border:hover::after {
+    animation: animates 1s linear forwards;
+}
+@keyframes animates {
+    0% {
+        width: 0;
+        height: 0;
+        border-top-color: transparent;
+        border-right-color: transparent;
+        border-bottom-color: transparent;
+        border-left-color: black;
+    }
+
+    50% {
+        width: 0;
+        height: 100%;
+        border-top-color: transparent;
+        border-right-color: transparent;
+        border-bottom-color: green;
+        border-left-color: gold;
+    }
+
+    100% {
+        width: 100%;
+        height: 100%;
+        border-top-color: transparent;
+        border-right-color: transparent;
+        border-bottom-color: green;
+        border-left-color: gold;
+    }
 }

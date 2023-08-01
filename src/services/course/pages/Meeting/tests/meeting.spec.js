@@ -1,16 +1,8 @@
-import {
-UPDATE_INVITEE_SESSION_URL,
-LAST_LOGGEDIN_USER } from 'services/course/actions/users';
+import { UPDATE_INVITEE_SESSION_URL, LAST_LOGGEDIN_USER } from 'services/course/actions/users';
+import { addNewMeeting } from 'services/course/actions/meetings';
+import { updateUserInvitationUrl } from 'services/course/actions/users';
 
-import {
-addNewMeeting } from 'services/course/actions/meetings';
-
-import {
-updateUserInvitationUrl } from 'services/course/actions/users';
-
-import { meetingConfig } from 'services/course/pages/classroompage';
-
-jest.mock('../../../Api');
+jest.mock('../../../api');
 
 describe('addNewMeeting', () => {
    const meetingId = "5fab4846c2a96278c56381c9";
@@ -44,7 +36,6 @@ describe('addNewMeeting', () => {
    };
 
 it('should add a new meeting', async () => {
-
       const mockDispatch = jest.fn();
 
       await addNewMeeting(
@@ -55,8 +46,7 @@ it('should add a new meeting', async () => {
       expect(mockDispatch.mock.calls[0][0]).toEqual({
          type: 'ADD NEW MEETING BEGIN'
       });
-      expect(mockDispatch.mock.calls[1][0]).toEqual(
-         {
+      expect(mockDispatch.mock.calls[1][0]).toEqual({
          type: 'ADD NEW MEETING SUCCESS',
          payload: {
             invitees: [ 'one', 'two', 'three', 'four' ],
@@ -78,9 +68,7 @@ it('should add a new meeting', async () => {
                   "two",
                "three" 
             ]
-         }
-         }
-      );  
+      }});  
    });
 });
 
@@ -125,7 +113,5 @@ it('should call 1 action', () => {
             nameOfLessonInProgress: nameOfLessonInProgress
          }
       });   
-   
    });
-   
 });

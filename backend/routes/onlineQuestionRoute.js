@@ -1,12 +1,12 @@
-import express from 'express';
+const express = require('express');
 
-import onlineQuestionModel from '../model/onlineQuestionModel.js';
+const onlineQuestionModel = require('../model/onlineQuestionModel.js');
 
-import { 
+const { 
 ONLINEQUESTIONSROUTE,
-handleBackEndLogs } from '../helpers/logHelper.js';
+handleBackEndLogs } = require('../helpers/logHelper.js');
 
-import { 
+const { 
 verifyRoute,
 getRoute,
 getByIdRoute,
@@ -14,7 +14,7 @@ getByObjectIdRoute,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo } from '../middleWare/index.js';
+logRouteInfo } = require('../middleWare/index.js');
 
 const onlineQuestionRoute = express.Router();
 
@@ -64,4 +64,4 @@ onlineQuestionRoute.delete('/:questionId', deleteRoute(onlineQuestionModel, 'que
     return res.status(200).json(res?.newResult);
 });
 
-export default onlineQuestionRoute;
+module.exports = onlineQuestionRoute;

@@ -1,15 +1,15 @@
-import express from 'express';
+const express = require('express');
 
-import countDownTimerFormModel from '../model/countDownTimerFormModel.js';
+const countDownTimerFormModel = require('../model/countDownTimerFormModel.js');
 
-import { 
+const { 
 verifyRoute,
 getRoute,
 getByIdRoute,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo } from '../middleWare/index.js'; 
+logRouteInfo } = require('../middleWare/index.js'); 
 
 const countDownTimerFormRoute = express.Router();
 
@@ -35,4 +35,4 @@ countDownTimerFormRoute.delete('/:formUuId', deleteRoute( countDownTimerFormMode
     return res.status(200).json(res?.newResult);
 });
 
-export default countDownTimerFormRoute;
+module.exports = countDownTimerFormRoute;

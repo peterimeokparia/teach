@@ -1,19 +1,19 @@
-import {    
+const {    
 saveUpdatedData,
 sendSubscriptions,
-vapidKeys } from '../helpers/storageHelper.js';
+vapidKeys } = require('../helpers/storageHelper.js');
 
-import express from 'express';
-import webpush  from 'web-push';
-import notificationModel from '../model/notificationModel.js';
+const express = require('express');
+const webpush = require('web-push');
+const notificationModel = require('../model/notificationModel.js');
 
-import {
+const {
 NOTIFICATIONROUTE,
-handleBackEndLogs } from '../helpers/logHelper.js';
+handleBackEndLogs } = require('../helpers/logHelper.js');
 
-import { 
+const { 
 verifyRoute,
-logRouteInfo } from '../middleWare/index.js';
+logRouteInfo } = require('../middleWare/index.js');
 
 const notificationRoute = express.Router();
 
@@ -183,4 +183,4 @@ notificationRoute.post('/sendPushNotifications/users', ( request, response ) => 
 notificationRoute.get('/delete',  ( request, response) => { 
 });
 
-export default notificationRoute;
+module.exports = notificationRoute;

@@ -1,8 +1,8 @@
-import { 
+const { 
 sendMetaData, 
 getContent, 
 base64ToImageConverter,
-url } from '../helpers/storageHelper.js';
+url } = require('../helpers/storageHelper.js');
 
 fileRoute.post('/croppedAvatarImage',  ( request, response ) => {
     let teachConfig = teachObject( request );
@@ -36,3 +36,5 @@ fileRoute.post('/croppedAvatarImage',  ( request, response ) => {
       });
    }  
 });
+
+module.exports = fileRoute;

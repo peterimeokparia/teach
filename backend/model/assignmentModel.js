@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
-import assignmentSchema from '../schema/assignmentSchema.js';
+const mongoose = require('mongoose');
+const assignmentSchema = require('../schema/assignmentSchema.js');
 
 
 const assignmentModel = mongoose.model('assignments', assignmentSchema);
 
 
-export default assignmentModel;
+module.exports = assignmentModel;

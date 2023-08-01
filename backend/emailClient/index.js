@@ -1,10 +1,8 @@
-import {
-SENDGRID,
-NODEMAILER } from '../emailclient/providers/index.js';
-import NodeMailer from 'nodemailer';
-// import sgMail from '@sendgrid/mail';
+const { SENDGRID, NODEMAILER } = require('./providers/index.js');
+const NodeMailer = require('nodemailer');
+//const sgMail from '@sendgrid/mail';
 
-export function emailClient( mailOptions, emailProvider ) {
+ function emailClient( mailOptions, emailProvider ) {
     const fromEmail = "teachpadsconnect247@gmail.com";
     let providers = [ SENDGRID, NODEMAILER ];
     let emailSentStatusCollection = [];
@@ -40,7 +38,7 @@ export function emailClient( mailOptions, emailProvider ) {
     return emailSentStatus;
 }
 
-export function nodeMailerEmailServiceProvider( mailOptions, fromEmail ){
+ function nodeMailerEmailServiceProvider( mailOptions, fromEmail ){
     const  passWord = "Teach777!!!"; // will move to private location// test
     let emailSent = false;
     const transporter = NodeMailer?.createTransport({
@@ -60,7 +58,7 @@ export function nodeMailerEmailServiceProvider( mailOptions, fromEmail ){
     return emailSent;  
 };
 
-export function sendGridEmailServiceProvider( mailOptions, fromEmail  ){
+ function sendGridEmailServiceProvider( mailOptions, fromEmail  ){
     let key="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"; // will move to private location// test
     sgMail.setApiKey(key);
     let emailSent = false;
@@ -71,7 +69,6 @@ export function sendGridEmailServiceProvider( mailOptions, fromEmail  ){
         text: mailOptions.text,
         html: '<strong>' + mailOptions.text + '</strong>',
     };
-
     sgMail
         .send(msg)
         .then(() => {
@@ -84,3 +81,5 @@ export function sendGridEmailServiceProvider( mailOptions, fromEmail  ){
         });
     return emailSent;
 };
+
+module.exports = { emailClient, nodeMailerEmailServiceProvider, sendGridEmailServiceProvider };

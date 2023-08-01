@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
-import emailSchema from '../schema/emailSchema.js';
+const mongoose = require('mongoose');
+const emailSchema = require('../schema/emailSchema.js');
 
 
 const emailModel = mongoose.model('emails', emailSchema);
 
 
-export default emailModel;
+module.exports = emailModel;

@@ -29,23 +29,28 @@ const CourseDisplayViewToggleDisplayComponent = ({ displayProps, courseDisplayPr
         lessonPieChartData
     };
 
-    return <div className="lesson-content"> 
-            <div className="lesson2"/>   
-                <div className="toggleItems"> 
-                { !isEmptyObject( coursePieChartData ) && <CourseOutcomeChartLanding pieChartData={coursePieChartData}/> }
-                {/* { (!lessonItem && !toggleLessonOutcomeInsightModal ) && 
-                    <div>
-                    { 
-                        !isEmptyObject( coursePieChartData ) && <CourseOutcomeChartLanding pieChartData={coursePieChartData}/> 
-                    }
-                    </div>
-                } */}
-                {
-                    lessonItem && toggleDisplayedItems( toggleDisplayItemProps )  
-                }
-            </div> 
-            </div>
+    return <> 
+            {
+                lessonItem && toggleDisplayedItems( toggleDisplayItemProps )  
+            }
+            </>
 
+    // return <div className="lesson-content"> 
+    //         <div className="lesson2"/>   
+    //             <div className="toggleItems"> 
+    //             {/* { !isEmptyObject( coursePieChartData ) && <CourseOutcomeChartLanding pieChartData={coursePieChartData}/> } */}
+    //             {/* { (!lessonItem && !toggleLessonOutcomeInsightModal ) && 
+    //                 <div>
+    //                 { 
+    //                     !isEmptyObject( coursePieChartData ) && <CourseOutcomeChartLanding pieChartData={coursePieChartData}/> 
+    //                 }
+    //                 </div>
+    //             } */}
+    //             {
+    //                 lessonItem && toggleDisplayedItems( toggleDisplayItemProps )  
+    //             }
+    //             </div> 
+    //         </div>
 }
 
 export default CourseDisplayViewToggleDisplayComponent;

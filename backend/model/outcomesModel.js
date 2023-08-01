@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-import outcomesSchema from '../schema/outcomesSchema.js';
+const mongoose = require('mongoose');
+const outcomesSchema = require('../schema/outcomesSchema.js');
 
 const outcomesModel = mongoose.model('outcomes', outcomesSchema);
 
-export default outcomesModel;
+module.exports = outcomesModel;

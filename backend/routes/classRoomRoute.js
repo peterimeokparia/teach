@@ -1,15 +1,15 @@
-import express from 'express';
+const express = require('express');
 
-import classRoomModel from '../model/classRoomModel.js';
+const classRoomModel = require('../model/classRoomModel.js');
 
-import { 
+const { 
 verifyRoute,
 getRoute,
 getByIdRoute,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo } from '../middleWare/index.js'; 
+logRouteInfo } = require('../middleWare/index.js'); 
 
 const classRoomRoute = express.Router();
 
@@ -31,4 +31,4 @@ classRoomRoute.delete('/:classRoomId', deleteRoute(classRoomModel, 'classRoomId'
     return res.status(200).json(res?.newResult);
 });
 
-export default classRoomRoute;
+module.exports = classRoomRoute;

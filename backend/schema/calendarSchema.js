@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema; 
 
@@ -67,4 +67,4 @@ const calendarSchema = new Schema ({
     }
 });
 
-export default calendarSchema;
+module.exports = calendarSchema;

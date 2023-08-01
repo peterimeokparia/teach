@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
-import equationSchema from './../schema/equationSchema.js';
+const mongoose = require('mongoose');
+const equationSchema = require('../schema/equationSchema.js');
 
 
 const equationModel = mongoose.model( 'equations', equationSchema );
 
 
-export default equationModel;
+module.exports = equationModel;

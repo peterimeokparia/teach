@@ -1,23 +1,23 @@
-import { 
-emailClient } from '../emailClient/index.js';
+const { 
+emailClient } = require('../emailClient/index.js');
 
-import {
+const {
 getPostData,    
-saveUpdatedData } from '../helpers/storageHelper.js';
+saveUpdatedData } = require('../helpers/storageHelper.js');
 
-import { 
+const { 
 EMAILROUTE,
-handleBackEndLogs } from '../helpers/logHelper.js';
+handleBackEndLogs } = require('../helpers/logHelper.js');
 
-import { 
-SENDGRID } from '../emailclient/providers/index.js';
+const { 
+SENDGRID } = require('../emailclient/providers/index.js');
 
-import { 
+const { 
 verifyRoute,
-logRouteInfo } from '../middleWare/index.js'; 
+logRouteInfo } = require('../middleWare/index.js'); 
 
-import express from 'express';
-import emailModel from '../model/emailModel.js';
+const express = require('express');
+const emailModel = require('../model/emailModel.js');
 
 const emailRoute = express.Router();
 
@@ -77,4 +77,4 @@ emailRoute.delete('/:emailId', (req, res) => {
     });
 });
 
-export default emailRoute;
+module.exports = emailRoute;

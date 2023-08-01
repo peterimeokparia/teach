@@ -1,15 +1,15 @@
-import express from 'express';
+const express = require('express');
 
-import reportFieldModel from '../model/reportFieldModel.js';
+const reportFieldModel = require('../model/reportFieldModel.js');
 
-import { 
+const { 
 verifyRoute,
 getRoute,
 getByIdRoute,
 postRoute,
 putRoute,
 deleteRoute,
-logRouteInfo  } from '../middleWare/index.js'; 
+logRouteInfo  } = require('../middleWare/index.js'); 
 
 const reportFieldRoute = express.Router();
 
@@ -47,4 +47,4 @@ reportFieldRoute.delete('/:reportFieldId', deleteRoute(reportFieldModel, 'report
     return res.status(200).json(res?.newResult);
 });
 
-export default reportFieldRoute;
+module.exports = reportFieldRoute;

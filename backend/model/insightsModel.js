@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-import insightsSchema from '../schema/insightsSchema.js';
+const mongoose = require('mongoose');
+const insightsSchema = require('../schema/insightsSchema.js');
 
 const insightsModel = mongoose.model('insights', insightsSchema);
 
-export default insightsModel;
+module.exports = insightsModel;

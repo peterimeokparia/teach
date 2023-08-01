@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-// import Email from 'mongoose-type-email';
+const mongoose = require('mongoose');
+// const Email from 'mongoose-type-email';
 
 const Schema = mongoose.Schema; 
 
@@ -46,4 +46,4 @@ const operatorSchema = new Schema ({
 });
 
 
-export default operatorSchema;
+module.exports = operatorSchema;

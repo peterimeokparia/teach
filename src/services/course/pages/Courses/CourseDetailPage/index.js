@@ -1,11 +1,7 @@
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { mapState, mapDispatch } from '../storeConnector';
 import { Redirect } from '@reach/router';
-import { setCurrentLesson, getLessonVideoUrl, setLessonCourse, 
-    loadLessons, addNewLesson,  saveLesson } from 'services/course/actions/lessons';
-import { loadSessions } from 'services/course/actions/sessions';
-import { getUsersByOperatorId, getLessonsByCourseIdSelector, getCoursesByCourseIdSelector,
- getCoursesByCreatedByIdSelector, getOperatorFromOperatorBusinessName } from 'services/course/selectors';
 import { getLastUsersState } from 'services/course/api';
 import { role } from 'services/course/helpers/PageHelpers';
 import { toast } from 'react-toastify';
@@ -18,24 +14,14 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const CourseDetailPage = ({
     operatorBusinessName,
-    operator,    
     currentUser,
     courseTutor,
     courseId,
     lessonId,
     course,
-    lessons,
     isLessonsLoading,
     selectedTutorId, 
     loadLessons,
-    addNewLesson,
-    saveLesson,
-    previewMode,
-    setCurrentLesson,
-    selectedLessonPlanLesson,
-    studentsSubscribedToThisCourse,
-    sessions,
-    currentOutcome,
     setLessonCourse,
     onLessonError,
     children }) => {
@@ -85,37 +71,5 @@ return (
         />     
     </div>   
 ); };
-
-const mapDispatch = {
-    setCurrentLesson,
-    loadSessions,
-    loadLessons, 
-    addNewLesson, 
-    saveLesson, 
-    getLessonVideoUrl,
-    setLessonCourse
-};
-
-const mapState = (state, ownProps) => {
-    return {
-        operator: getOperatorFromOperatorBusinessName(state, ownProps),
-        courseTutor: state.courses.courseTutor,
-        currentUser: state.users.user,
-        previewMode: state.app.previewMode,
-        lessonPlanUrl: state.lessons.lessonPlanUrl,
-        course: state.courses.selectedCourseFromLessonPlanCourseDropDown,
-        selectedLessonPlanLesson: state.lessons.selectedLessonPlanLesson,
-        isLessonsLoading:state.lessons.lessonsLoading,
-        onLessonError: state.lessons.onSaveLessonError,
-        courses: getCoursesByCourseIdSelector( state, ownProps ),
-        lessons: getLessonsByCourseIdSelector( state, ownProps ),
-        coursesByTutor: getCoursesByCreatedByIdSelector( state, ownProps ),
-        currentVideoUrl: state.lessons.currentVideoUrl,
-        studentsSubscribedToThisCourse : getUsersByOperatorId(state, ownProps)?.filter(user => user?.role === role.Student && user?.courses?.includes(ownProps?.courseId)),
-        lessonStarted: state.lessons.lessonStarted,
-        sessions: Object.values(state?.sessions?.sessions)?.filter(session => session?.courseId === ownProps?.courseId),
-        onSessionRenewal: state.sessions.autoRenewedPackageSuccess
-    };
-};
 
 export default connect(mapState, mapDispatch)(CourseDetailPage);

@@ -1,10 +1,10 @@
-import express from 'express';
-import multer from 'multer';
-import fs from 'fs';
+const express = require('express');
+const multer = require('multer');
+const fs = require('fs');
 
-import { 
+const { 
 verifyRoute,
-logRouteInfo } from '../middleWare/index.js';
+logRouteInfo } = require('../middleWare/index.js');
 
 const fileRoute = express.Router();
 
@@ -91,4 +91,4 @@ fileRoute.get('/delete',  ( request, response) => {
    }
 } );
 
-export default fileRoute;
+module.exports = fileRoute;

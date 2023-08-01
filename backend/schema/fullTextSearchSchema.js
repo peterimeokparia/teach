@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema; 
 
@@ -64,4 +64,4 @@ const fullTextSearchSchema = new Schema ({
 
 //fullTextSearchSchema.index({ fullTextSearchContent: 'text',  fullTextSearchMarkDownContent: 'text', fullTextSearchExplanationMarkDownContent: 'text', });
 
-export default fullTextSearchSchema;
+module.exports = fullTextSearchSchema;

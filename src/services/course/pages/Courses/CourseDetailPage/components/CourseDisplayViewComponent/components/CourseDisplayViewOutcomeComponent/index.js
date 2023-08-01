@@ -8,16 +8,18 @@ import  'services/course/pages/components/styles/sidebar_styles/style.css';
 
 const CourseDisplayViewOutcomeComponent = ({ displayProps, courseDisplayProps, onMatchListItem }) => {
     let {
-        concepts,toggleLessonOutcomeInsightModal,outcomes, toggleConcepts, currentOutcome
+        concepts, toggleLessonOutcomeInsightModal, outcomes, toggleConcepts, currentOutcome
     } = courseDisplayProps;
 
     let { 
         lessonItem, updateQuestionOutcomeId,
     } = displayProps;
-    
+
 return <> 
-    <div className="sidebar-2"> 
-    { concepts &&
+    {/* <div className="sidebar-2">  */}
+    <div>
+        {/* { concepts &&  */}
+    { 
         <div>
             <ListItem
                 collection={ outcomes.filter(lessonOutcome => lessonOutcome?.lessonId === lessonItem?._id  ) }
@@ -45,11 +47,11 @@ return <>
         </div>       
         }
     </div>    
-    <div className="sidebar-3"> 
+    {/* <div className="sidebar-3"> 
     { ( lessonItem && toggleLessonOutcomeInsightModal ) && 
         <OutcomeChartSidePanel outcome={currentOutcome}/> 
     } 
-    </div>  
+    </div>   */}
     </>
 }
 

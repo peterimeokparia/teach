@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-import onlineSurveySchema from '../schema/onlineSurveySchema.js';
+const mongoose = require('mongoose');
+const onlineSurveySchema = require('../schema/onlineSurveySchema.js');
 
 const onlineSurveyModel = mongoose.model('onlinesurveys', onlineSurveySchema);
 
-export default onlineSurveyModel;
+module.exports = onlineSurveyModel;

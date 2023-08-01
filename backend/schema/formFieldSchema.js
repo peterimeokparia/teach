@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema; 
 
@@ -133,4 +133,4 @@ const formFieldSchema = new Schema ({
     }
 });
 
-export default formFieldSchema;
+module.exports = formFieldSchema;
